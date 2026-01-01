@@ -18,11 +18,14 @@ Target users: Tax researchers, lawyers, and compliance professionals analyzing S
 ### Three Core Components
 
 **1. Main Processing Pipeline** (`residenciafiscal.py`)
+- Asynchronous processing of multiple PDFs concurrently
 - Reads PDF files from input directory
 - Extracts text with page markers (`--- PÁGINA N ---`)
-- Calls OpenAI Responses API with system prompt from `prompt.py`
-- Handles retries with exponential backoff (base 1.8)
-- Repairs malformed JSON responses using model-guided recovery
+- Calls universal `gpt_request()` function via `ai_service_adapter.py`
+- Supports multiple AI providers: OpenAI, Groq, Gemini, OpenRouter with automatic fallback
+- Intelligent provider detection from model name
+- Validates required API keys at startup (fail-fast)
+- Repairs malformed JSON responses with multiple parsing strategies
 - Writes results to JSONL (append mode for resumability)
 - Converts JSONL to CSV with flattened structure
 
@@ -104,18 +107,37 @@ python residenciafiscal.py --input ./pdfs --output ./output --jsonl-name results
 
 ### Testing
 
-No automated test suite exists. Testing is manual:
+**Automated single-PDF test suite** available in `/test/` directory:
 
 ```bash
-# Test with single PDF or small batch
-python residenciafiscal.py --input ./test_pdfs --output ./test_output --model gpt-4-mini
+# Quick test with single PDF (recommended before full batch)
+./test/run_test.sh
 
-# Inspect output
+# Or run directly with Python
+python test/test_single_pdf.py
+```
+
+The test script:
+- Creates temporary input/output directories (auto-cleanup)
+- Copies 1 PDF from `sentencias/` folder
+- Runs full pipeline with `--max-pages 5` (fast testing)
+- Displays formatted JSONL and CSV output
+- Shows extraction quality metrics
+
+**Manual testing** for development:
+
+```bash
+# Test with single PDF
+python residenciafiscal.py --input ./test_pdfs --output ./test_output --max-pages 5
+
+# Inspect JSONL output
 head -1 ./test_output/output.jsonl | python -m json.tool
 
 # Check CSV structure
 head ./test_output/output.csv
 ```
+
+See `test/README.md` for detailed testing documentation.
 
 ### Code Quality
 
@@ -190,22 +212,43 @@ No version pinning because project is research-focused (not production). Upgradi
 
 ## API Integration Details
 
-### OpenAI Responses API Usage
+### Universal AI Client Integration
 
-Uses OpenAI's **Responses API** (not Chat Completions):
+Uses **universal `gpt_request()` function** from `ai_client_service.py`:
+
 ```python
-resp = client.responses.create(
-    model=args.model,
-    instructions=system_prompt,  # System-level instructions
-    input=user_input,            # Document text + filename
+# Called via ai_service_adapter.py
+result = await gpt_request_for_sentencia(
+    ai_model=model_name,
+    system_prompt=SYSTEM_PROMPT,
+    pdf_text=extracted_text,
+    logger=logger,
+    temperature=0,
+    response_format="json_object",
+    reasoning_effort=REASONING_EFFORT if "gpt-5" in model else None,
 )
-text_out = resp.output_text
 ```
 
-- **Advantage**: Optimized for structured output (faster, cheaper than Chat)
-- **Model support**: gpt-4-mini, gpt-4, gpt-5-mini, gpt-5.2, gpt-4.1 (as of Jan 2026)
-- **Rate limits**: Standard OpenAI rate limits apply; exponential backoff handles throttling
-- **Cost**: Charged per output token; long documents → higher costs
+**Key Features**:
+- **Multi-provider support**: OpenAI (GPT-5+), Groq, Gemini, OpenRouter
+- **Automatic provider detection**: Parses model name to determine provider
+- **Smart reasoning**: Adds `reasoning_effort` for GPT-5+ models automatically
+- **Robust JSON parsing**: Multiple strategies to repair malformed responses
+- **Automatic fallback**: Switches providers if one fails
+- **Error recovery**: Detailed logging and graceful degradation
+- **Async support**: Non-blocking API calls for better concurrency
+
+**Supported Models**:
+- OpenAI: `gpt-5`, `gpt-5-mini`, `gpt-4`, `gpt-4-turbo`, `o1-preview`
+- Groq: `groq-mixtral`, `llama-*` models
+- Gemini: `gemini-*` models
+- OpenRouter: Any model via OpenRouter API
+
+**Rate Limits & Cost**:
+- Each provider has standard rate limits
+- Costs vary by model and token usage
+- `--max-pages` flag controls token budget
+- `REASONING_EFFORT` setting impacts cost/quality trade-off
 
 ### Environment Variable
 
@@ -225,14 +268,23 @@ Load with `load_dotenv()` at start of `main()`.
 
 ```
 residenciafiscal/
-├── residenciafiscal.py      # Main processing pipeline (392 lines)
-├── prompt.py                # System prompt definition (131 lines)
-├── sentencias/              # Directory for input PDFs (user-created)
+├── residenciafiscal.py      # Main processing pipeline (async with gpt_request integration)
+├── ai_service_adapter.py    # Wrapper for universal gpt_request() function
+├── config.py                # Centralized configuration (models, paths, constants)
+├── prompt.py                # System prompt definition
+├── sentencias/              # Directory for input PDFs
 ├── output/                  # Default output directory (auto-created)
-│   ├── output.jsonl         # Raw extracted data (one per line)
+│   ├── output.jsonl         # Raw extracted data (one JSON per line)
 │   └── output.csv           # Flattened CSV export
-├── README.md                # Minimal project description
-└── .env                     # Local environment (gitignored)
+├── test/                    # Test suite directory
+│   ├── test_single_pdf.py   # Automated single-PDF test script
+│   ├── run_test.sh          # Convenience test runner shell script
+│   └── README.md            # Testing documentation
+├── .env                     # Local environment (gitignored)
+├── .env.example             # Environment template
+├── requirements.txt         # Python dependencies
+├── CLAUDE.md                # This file
+└── README.md                # Project overview
 ```
 
 ## Important Constraints & Limitations
@@ -300,20 +352,31 @@ python residenciafiscal.py --input ./pdfs --output ./output --max-pages 5
 
 ## Performance Notes
 
-- **Average time per PDF**: 5-15 seconds (depends on length and model)
-- **Cost per PDF**: $0.01-$0.10 (varies by model, document length)
-- **Bottleneck**: LLM API latency (not Python code)
-- **Optimization**: Parallel processing not implemented (would require async/threading)
+- **Average time per PDF**: 5-20 seconds (depends on length, model, reasoning_effort)
+- **Cost per PDF**: $0.01-$0.10+ (varies by provider and model; GPT-5 with reasoning_effort costs more)
+- **Bottleneck**: LLM API latency (async helps with I/O parallelization)
+- **With async**: Multiple PDFs can be processed with better I/O concurrency
+- **Optimization**: Use `--max-pages N` to limit token usage and reduce cost per PDF
 
-## Future Enhancements
+## Recent Enhancements (Jan 2026)
+
+Recently implemented improvements:
+1. ✅ **Async processing** - Full asyncio support for concurrent PDF processing
+2. ✅ **Multi-provider support** - OpenAI, Groq, Gemini, OpenRouter with automatic fallback
+3. ✅ **Client initialization** - Validates API keys at startup, provider auto-detection
+4. ✅ **Centralized configuration** - All settings in `config.py` (models, paths, constants)
+5. ✅ **Automated testing** - Single-PDF test suite for quick validation
+6. ✅ **Reasoning effort** - Intelligent GPT-5+ reasoning control via config
+
+## Future Enhancement Ideas
 
 Potential improvements (not currently implemented):
-1. **Parallel PDF processing** (asyncio, thread pool) to reduce wall-clock time
+1. **Concurrent PDF processing** - Batch multiple PDFs in parallel
 2. **Local LLM fallback** (Ollama, Llama 2) for cost reduction or offline use
-3. **Auto-repair for common JSON errors** (missing commas, unescaped quotes)
+3. **Schema validation** (Pydantic models) to ensure output completeness
 4. **Keyword extraction** from frases_clave for full-text search indexing
-5. **Schema validation** (Pydantic models) to ensure output completeness
-6. **Progress persistence** (SQLite checkpoint) instead of JSONL append-only
+5. **Progress persistence** (SQLite checkpoint) for large-scale runs
+6. **Cost estimation** - Pre-calculate total cost before processing
 
 ## References
 
