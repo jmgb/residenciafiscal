@@ -51,6 +51,12 @@ from config import (
     REASONING_EFFORT,
     GPT_5_MINI,
     BATCH_SIZE,
+    # Enums para validación de schema
+    VALID_CRITERIOS,
+    VALID_CATEGORIAS_PRUEBA,
+    VALID_TIEBREAKER_PASOS,
+    VALID_RESULTADO_FINAL,
+    ALLOWED_KEYS,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -188,8 +194,103 @@ def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None)
 
 
 # ============================================================================
-# FIELD VALIDATION
+# SCHEMA CLEANING AND VALIDATION
 # ============================================================================
+
+def clean_schema(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
+    """Limpia el schema eliminando keys no permitidas y normalizando enums."""
+
+    # 1. Eliminar keys no permitidas
+    keys_to_remove = [k for k in obj.keys() if k not in ALLOWED_KEYS]
+    for key in keys_to_remove:
+        logger.debug(f"🧹 {filename}: Eliminando key no permitida: {key}")
+        del obj[key]
+
+    # 2. Normalizar criterios (eliminar paréntesis y modificadores)
+    for field in ["Criterios_residencia_detectados", "Criterio_decisivo"]:
+        if field in obj and isinstance(obj[field], list):
+            normalized = []
+            for crit in obj[field]:
+                if isinstance(crit, str):
+                    # Extraer solo el CRIT_* base (antes de cualquier paréntesis o espacio)
+                    base_crit = crit.split("(")[0].split(" ")[0].strip()
+                    if base_crit in VALID_CRITERIOS:
+                        if base_crit not in normalized:
+                            normalized.append(base_crit)
+                    elif base_crit.startswith("CRIT_"):
+                        # Mapear a CRIT_OTRO si no es válido
+                        if "CRIT_OTRO" not in normalized:
+                            normalized.append("CRIT_OTRO")
+            obj[field] = normalized
+
+    # 3. Normalizar categorías de prueba en Pruebas_AEAT y Pruebas_contribuyente
+    for field in ["Pruebas_AEAT", "Pruebas_contribuyente", "Pruebas_rechazadas_clave"]:
+        if field in obj and isinstance(obj[field], list):
+            for prueba in obj[field]:
+                if isinstance(prueba, dict) and "categoria" in prueba:
+                    cat = prueba["categoria"]
+                    if isinstance(cat, str):
+                        # Limpiar espacios, typos comunes
+                        cat_clean = cat.replace(" Y_", "_Y_").replace("_ ", "_").strip()
+                        if cat_clean not in VALID_CATEGORIAS_PRUEBA:
+                            # Intentar mapear categorías cercanas
+                            if "VINCULOS" in cat_clean and "ADMIN" in cat_clean:
+                                cat_clean = "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+                            elif "FAMILIA" in cat_clean or "PERSONAL" in cat_clean:
+                                cat_clean = "FAMILIA_Y_ENTORNO_PERSONAL"
+                            elif "ACTIVIDAD" in cat_clean or "ECONOMICA" in cat_clean:
+                                cat_clean = "ACTIVIDAD_ECONOMICA_Y_GESTION"
+                            elif "DOCUM" in cat_clean and "FISCAL" in cat_clean:
+                                cat_clean = "DOCUMENTACION_FISCAL_EXTRANJERA"
+                            else:
+                                # Si no se puede mapear, usar OTROS y mover detalle a subcategoria
+                                if "subcategoria" not in prueba or not prueba["subcategoria"]:
+                                    prueba["subcategoria"] = cat[:30]  # Máx 30 chars
+                                cat_clean = "OTROS"
+                        prueba["categoria"] = cat_clean
+
+    # 4. Normalizar tiebreaker_paso_decisivo
+    if "tiebreaker_paso_decisivo" in obj:
+        tb = obj["tiebreaker_paso_decisivo"]
+        if isinstance(tb, str) and tb not in VALID_TIEBREAKER_PASOS:
+            # Intentar mapear
+            tb_upper = tb.upper().replace(" ", "_")
+            if "VIVIENDA" in tb_upper:
+                obj["tiebreaker_paso_decisivo"] = "VIVIENDA_PERMANENTE"
+            elif "VITAL" in tb_upper:
+                obj["tiebreaker_paso_decisivo"] = "CENTRO_INTERESES_VITALES"
+            elif "MORADA" in tb_upper:
+                obj["tiebreaker_paso_decisivo"] = "MORADA_HABITUAL"
+            elif "NACIONAL" in tb_upper:
+                obj["tiebreaker_paso_decisivo"] = "NACIONALIDAD"
+            elif "ACUERDO" in tb_upper or "MUTUO" in tb_upper:
+                obj["tiebreaker_paso_decisivo"] = "ACUERDO_MUTUO"
+            else:
+                obj["tiebreaker_paso_decisivo"] = "NO_CONSTA"
+
+    # 5. Normalizar resultado_final
+    if "resultado_final" in obj:
+        rf = obj["resultado_final"]
+        if isinstance(rf, str):
+            rf_norm = rf.upper().replace(" ", "_")
+            # Mapear variantes comunes
+            if "CONTRIBUYENTE" in rf_norm or "GANA" in rf_norm and "AEAT" not in rf_norm:
+                obj["resultado_final"] = "GANA_CONTRIBUYENTE"
+            elif "AEAT" in rf_norm:
+                obj["resultado_final"] = "GANA_AEAT"
+            elif "PARCIAL" in rf_norm:
+                obj["resultado_final"] = "PARCIAL"
+            elif "RETROAC" in rf_norm:
+                obj["resultado_final"] = "RETROACCION"
+            elif "INADMIS" in rf_norm:
+                obj["resultado_final"] = "INADMISION"
+            elif "FUERA" in rf_norm or "ALCANCE" in rf_norm:
+                obj["resultado_final"] = "FUERA_DE_ALCANCE"
+            elif rf_norm not in VALID_RESULTADO_FINAL:
+                obj["resultado_final"] = "OTROS"
+
+    return obj
+
 
 def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
     """Asegura que haya claves mínimas para no romper el pipeline."""
@@ -210,6 +311,9 @@ def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
         else:
             set_default(key, default_value)
 
+    # Aplicar limpieza de schema
+    obj = clean_schema(obj, filename)
+
     return obj
 
 
@@ -223,9 +327,9 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
         return json.dumps(x, ensure_ascii=False)
 
     row: Dict[str, Any] = {}
-    row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
 
-    # Campos de control de alcance (BLOQUE 0)
+    # Identificación y filtrado
+    row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
     row["es_caso_residencia_irpf"] = obj.get("es_caso_residencia_irpf", DEFAULT_MISSING_VALUE)
     row["fuera_de_alcance"] = obj.get("motivo_fuera_de_alcance", DEFAULT_MISSING_VALUE)
 
@@ -236,25 +340,40 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     row["organo"] = obj.get("organo", DEFAULT_MISSING_VALUE)
     row["fecha_resolucion"] = obj.get("fecha_resolucion", DEFAULT_MISSING_VALUE)
     row["ejercicios_afectados"] = obj.get("ejercicios_afectados", DEFAULT_MISSING_VALUE)
-    row["pais_alegado_residencia"] = obj.get("pais_alegado_residencia", DEFAULT_MISSING_VALUE)
+
+    # Residencia y CDI
     row["pais_alegado_residencia_pf"] = obj.get("pais_alegado_residencia_pf", DEFAULT_MISSING_VALUE)
     row["pais_CDI_aplicado"] = obj.get("pais_CDI_aplicado", DEFAULT_MISSING_VALUE)
     row["se_invoca_CDI"] = obj.get("se_invoca_CDI", DEFAULT_MISSING_VALUE)
+    row["tiebreaker_paso_decisivo"] = obj.get("tiebreaker_paso_decisivo", DEFAULT_MISSING_VALUE)
 
+    # Criterios
     row["criterios_detectados"] = jdump(obj.get("Criterios_residencia_detectados", []))
     row["criterio_decisivo"] = jdump(obj.get("Criterio_decisivo", []))
     row["resumen_criterios"] = obj.get("Resumen_criterios", DEFAULT_MISSING_VALUE)
 
+    # Pruebas detalladas
     row["pruebas_aeat"] = jdump(obj.get("Pruebas_AEAT", []))
     row["pruebas_contribuyente"] = jdump(obj.get("Pruebas_contribuyente", []))
-    row["pruebas_rechazadas_clave"] = jdump(obj.get("Pruebas_rechazadas_clave", []))
 
+    # Agregados para análisis (admitidas/rechazadas por parte)
+    row["categorias_admitidas_aeat"] = jdump(obj.get("categorias_admitidas_aeat", []))
+    row["categorias_rechazadas_aeat"] = jdump(obj.get("categorias_rechazadas_aeat", []))
+    row["categorias_admitidas_contribuyente"] = jdump(obj.get("categorias_admitidas_contribuyente", []))
+    row["categorias_rechazadas_contribuyente"] = jdump(obj.get("categorias_rechazadas_contribuyente", []))
+
+    # Pruebas clave
+    row["pruebas_rechazadas_clave"] = jdump(obj.get("Pruebas_rechazadas_clave", []))
     row["bala_de_plata"] = jdump(obj.get("Prueba_o_bala_de_plata", {}))
+
+    # Resultado
     row["resultado_final"] = obj.get("resultado_final", DEFAULT_MISSING_VALUE)
 
+    # Metadata
     row["frases_clave"] = jdump(obj.get("frases_clave", []))
     row["confianza_extraccion"] = obj.get("confianza_extraccion", DEFAULT_MISSING_VALUE)
     row["observaciones"] = obj.get("observaciones", DEFAULT_MISSING_VALUE)
+
     return row
 
 

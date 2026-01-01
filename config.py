@@ -47,7 +47,7 @@ GEMINI_FLASH = "gemini-3-flash-preview"
 REASONING_EFFORT = "medium"
 
 # Modelo por defecto a usar
-DEFAULT_MODEL = GPT_5_MINI
+DEFAULT_MODEL = GPT_5
 
 
 # ============================================================================
@@ -101,6 +101,85 @@ SHOW_PROGRESS_BAR = True
 VERBOSE = False
 
 # ============================================================================
+# ENUMS VÁLIDOS (para validación de schema)
+# ============================================================================
+
+VALID_CRITERIOS = {
+    "CRIT_183_DIAS",
+    "CRIT_AUSENCIAS_ESPORADICAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS",
+    "CRIT_CENTRO_INTERESES_VITALES",
+    "CRIT_PRESUNCION_FAMILIA",
+    "CRIT_CDI_TIEBREAKER",
+    "CRIT_OTRO",
+}
+
+VALID_CATEGORIAS_PRUEBA = {
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "VIVIENDA_Y_USO_EFECTIVO",
+    "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+    "CONSUMOS_FINANCIEROS",
+    "FAMILIA_Y_ENTORNO_PERSONAL",
+    "SALUD_Y_SERVICIOS_PERSONALES",
+    "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+    "TRAZAS_DIGITALES",
+    "TESTIFICAL_Y_PERICIAL",
+    "OTROS",
+}
+
+VALID_TIEBREAKER_PASOS = {
+    "VIVIENDA_PERMANENTE",
+    "CENTRO_INTERESES_VITALES",
+    "MORADA_HABITUAL",
+    "NACIONALIDAD",
+    "ACUERDO_MUTUO",
+    "NO_CONSTA",
+    "NO_APLICA",
+}
+
+VALID_RESULTADO_FINAL = {
+    "GANA_AEAT",
+    "GANA_CONTRIBUYENTE",
+    "PARCIAL",
+    "RETROACCION",
+    "INADMISION",
+    "OTROS",
+    "FUERA_DE_ALCANCE",
+}
+
+# Keys permitidas en el JSON (para schema clean)
+ALLOWED_KEYS = {
+    "archivo",
+    "identificadores",
+    "organo",
+    "fecha_resolucion",
+    "es_caso_residencia_irpf",
+    "motivo_fuera_de_alcance",
+    "ejercicios_afectados",
+    "pais_alegado_residencia_pf",
+    "pais_CDI_aplicado",
+    "se_invoca_CDI",
+    "tiebreaker_paso_decisivo",
+    "Criterios_residencia_detectados",
+    "Criterio_decisivo",
+    "Resumen_criterios",
+    "Pruebas_AEAT",
+    "Pruebas_contribuyente",
+    "categorias_admitidas_aeat",
+    "categorias_rechazadas_aeat",
+    "categorias_admitidas_contribuyente",
+    "categorias_rechazadas_contribuyente",
+    "Pruebas_rechazadas_clave",
+    "Prueba_o_bala_de_plata",
+    "resultado_final",
+    "frases_clave",
+    "confianza_extraccion",
+    "observaciones",
+}
+
+# ============================================================================
 # CAMPOS REQUERIDOS EN OUTPUT JSON
 # ============================================================================
 
@@ -113,19 +192,24 @@ REQUIRED_FIELDS = {
     "es_caso_residencia_irpf": DEFAULT_MISSING_VALUE,
     "motivo_fuera_de_alcance": DEFAULT_MISSING_VALUE,
     "ejercicios_afectados": DEFAULT_MISSING_VALUE,
-    "pais_alegado_residencia": DEFAULT_MISSING_VALUE,
     "pais_alegado_residencia_pf": DEFAULT_MISSING_VALUE,
     "pais_CDI_aplicado": DEFAULT_MISSING_VALUE,
     "se_invoca_CDI": DEFAULT_MISSING_VALUE,
+    "tiebreaker_paso_decisivo": DEFAULT_MISSING_VALUE,
     "Criterios_residencia_detectados": [],
     "Criterio_decisivo": [],
     "Resumen_criterios": DEFAULT_MISSING_VALUE,
     "Pruebas_AEAT": [],
     "Pruebas_contribuyente": [],
+    "categorias_admitidas_aeat": [],
+    "categorias_rechazadas_aeat": [],
+    "categorias_admitidas_contribuyente": [],
+    "categorias_rechazadas_contribuyente": [],
     "Pruebas_rechazadas_clave": [],
     "Prueba_o_bala_de_plata": {
         "parte": DEFAULT_MISSING_VALUE,
         "categoria": DEFAULT_MISSING_VALUE,
+        "subcategoria": DEFAULT_MISSING_VALUE,
         "detalle": DEFAULT_MISSING_VALUE,
         "cita": {"pagina": DEFAULT_MISSING_VALUE, "texto": DEFAULT_MISSING_VALUE},
     },
@@ -140,6 +224,7 @@ REQUIRED_FIELDS = {
 # ============================================================================
 
 CSV_COLUMN_ORDER = [
+    # Identificación y filtrado
     "archivo",
     "es_caso_residencia_irpf",
     "fuera_de_alcance",
@@ -148,18 +233,29 @@ CSV_COLUMN_ORDER = [
     "organo",
     "fecha_resolucion",
     "ejercicios_afectados",
-    "pais_alegado_residencia",
+    # Residencia y CDI
     "pais_alegado_residencia_pf",
     "pais_CDI_aplicado",
     "se_invoca_CDI",
+    "tiebreaker_paso_decisivo",
+    # Criterios
     "criterios_detectados",
     "criterio_decisivo",
     "resumen_criterios",
+    # Pruebas detalladas
     "pruebas_aeat",
     "pruebas_contribuyente",
+    # Agregados para análisis (admitidas/rechazadas por parte)
+    "categorias_admitidas_aeat",
+    "categorias_rechazadas_aeat",
+    "categorias_admitidas_contribuyente",
+    "categorias_rechazadas_contribuyente",
+    # Pruebas clave
     "pruebas_rechazadas_clave",
     "bala_de_plata",
+    # Resultado
     "resultado_final",
+    # Metadata
     "frases_clave",
     "confianza_extraccion",
     "observaciones",
