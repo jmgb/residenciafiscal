@@ -362,9 +362,18 @@ async def main_async(
     jsonl_mode = "a" if jsonl_path.exists() else "w"
 
     with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
-        for batch_idx in range(0, len(pdfs_to_process), BATCH_SIZE):
+        total_pdfs = len(pdfs_to_process)
+        for batch_idx in range(0, total_pdfs, BATCH_SIZE):
             batch = pdfs_to_process[batch_idx:batch_idx + BATCH_SIZE]
-            logger.info(f"⚡ Procesando batch {batch_idx // BATCH_SIZE + 1} ({len(batch)} PDFs en paralelo)")
+            batch_num = batch_idx // BATCH_SIZE + 1
+            total_batches = (total_pdfs + BATCH_SIZE - 1) // BATCH_SIZE
+
+            # Mostrar inicio del batch
+            pdf_names = ", ".join([p.name for p in batch[:3]])
+            if len(batch) > 3:
+                pdf_names += f", ... +{len(batch) - 3} más"
+            logger.info(f"⚡ Batch {batch_num}/{total_batches} | Procesando {len(batch)} PDFs en paralelo")
+            logger.info(f"   📁 {pdf_names}")
 
             # Procesar todos los PDFs en el batch de forma concurrente
             results = await asyncio.gather(
@@ -376,9 +385,10 @@ async def main_async(
                 jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
             jf.flush()
 
-            # Mostrar progreso
-            processed_count = min(batch_idx + batch_size, len(pdfs_to_process))
-            logger.info(f"✅ Progreso: {processed_count}/{len(pdfs_to_process)} PDFs completados")
+            # Mostrar progreso detallado
+            processed_count = batch_idx + len(batch)
+            percentage = (processed_count / total_pdfs) * 100
+            logger.info(f"✅ Progreso: {processed_count}/{total_pdfs} PDFs completados ({percentage:.1f}%)\n")
 
     # Convertir JSONL -> CSV
     logger.info("🔄 Convirtiendo JSONL a CSV...")
