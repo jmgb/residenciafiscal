@@ -208,6 +208,10 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     row: Dict[str, Any] = {}
     row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
 
+    # Campos de control de alcance (BLOQUE 0)
+    row["es_caso_residencia_irpf"] = obj.get("es_caso_residencia_irpf", DEFAULT_MISSING_VALUE)
+    row["fuera_de_alcance"] = obj.get("motivo_fuera_de_alcance", DEFAULT_MISSING_VALUE)
+
     ids = obj.get("identificadores", {}) or {}
     row["ROJ"] = ids.get("ROJ", DEFAULT_MISSING_VALUE)
     row["ECLI"] = ids.get("ECLI", DEFAULT_MISSING_VALUE)
@@ -216,6 +220,8 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     row["fecha_resolucion"] = obj.get("fecha_resolucion", DEFAULT_MISSING_VALUE)
     row["ejercicios_afectados"] = obj.get("ejercicios_afectados", DEFAULT_MISSING_VALUE)
     row["pais_alegado_residencia"] = obj.get("pais_alegado_residencia", DEFAULT_MISSING_VALUE)
+    row["pais_alegado_residencia_pf"] = obj.get("pais_alegado_residencia_pf", DEFAULT_MISSING_VALUE)
+    row["pais_CDI_aplicado"] = obj.get("pais_CDI_aplicado", DEFAULT_MISSING_VALUE)
     row["se_invoca_CDI"] = obj.get("se_invoca_CDI", DEFAULT_MISSING_VALUE)
 
     row["criterios_detectados"] = jdump(obj.get("Criterios_residencia_detectados", []))
