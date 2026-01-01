@@ -79,6 +79,77 @@ logger = logging.getLogger(__name__)
 
 
 # ============================================================================
+# CLIENT INITIALIZATION
+# ============================================================================
+
+def initialize_client(ai_model: str) -> str:
+    """Initialize the AI client needed for the selected model.
+
+    Detects the provider from the model name and validates required API keys
+    are available before processing starts. Fails fast if credentials missing.
+
+    Args:
+        ai_model: Model identifier (e.g., "gpt-5-mini", "groq-llama")
+
+    Returns:
+        Provider name (openai, groq, gemini, openrouter, etc.)
+
+    Raises:
+        RuntimeError: If required API key is missing for the detected provider
+    """
+    ai_model_lower = ai_model.lower()
+
+    # Detect provider from model name
+    if "gpt" in ai_model_lower or "o1" in ai_model_lower:
+        provider = "openai"
+    elif "groq" in ai_model_lower or "mixtral" in ai_model_lower or "llama" in ai_model_lower:
+        provider = "groq"
+    elif "gemini" in ai_model_lower or "claude" in ai_model_lower:
+        provider = "gemini"
+    else:
+        provider = "openrouter"  # default fallback provider
+
+    logger.info(f"🔌 Model: {ai_model}")
+    logger.info(f"📡 Provider detected: {provider.upper()}")
+
+    # Validate required API keys are available
+    if provider == "openai":
+        if not os.getenv("OPENAI_API_KEY"):
+            raise RuntimeError(
+                "❌ OPENAI_API_KEY not found in environment. "
+                "Please set it in .env file before running."
+            )
+        logger.info("✅ OPENAI_API_KEY found")
+
+    elif provider == "groq":
+        if not os.getenv("GROQ_API_KEY"):
+            raise RuntimeError(
+                "❌ GROQ_API_KEY not found in environment. "
+                "Please set it in .env file before running."
+            )
+        logger.info("✅ GROQ_API_KEY found")
+
+    elif provider == "gemini":
+        if not os.getenv("GEMINI_API_KEY"):
+            raise RuntimeError(
+                "❌ GEMINI_API_KEY not found in environment. "
+                "Please set it in .env file before running."
+            )
+        logger.info("✅ GEMINI_API_KEY found")
+
+    else:  # openrouter
+        if not os.getenv("OPENROUTER_API_KEY"):
+            raise RuntimeError(
+                "❌ OPENROUTER_API_KEY not found in environment. "
+                "Please set it in .env file before running."
+            )
+        logger.info("✅ OPENROUTER_API_KEY found")
+
+    logger.info(f"🚀 Client initialized for provider: {provider.upper()}")
+    return provider
+
+
+# ============================================================================
 # PDF EXTRACTION
 # ============================================================================
 
@@ -357,6 +428,14 @@ def main() -> None:
     logger.info(f"   📤 Salida: {out_dir}")
     logger.info(f"   🤖 Modelo: {args.model}")
     logger.info(f"   ⚙️ Reasoning Effort: {REASONING_EFFORT}")
+
+    # Initialize client for selected model (fails fast if API key missing)
+    try:
+        provider = initialize_client(args.model)
+        logger.info(f"   ✅ Provider: {provider.upper()}")
+    except RuntimeError as e:
+        logger.error(str(e))
+        raise
 
     # Ejecutar bucle async
     asyncio.run(
