@@ -23,8 +23,8 @@ DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
 # NOMBRES DE ARCHIVOS DE SALIDA
 # ============================================================================
 
-DEFAULT_JSONL_NAME = "output.jsonl"
-DEFAULT_CSV_NAME = "output.csv"
+DEFAULT_JSONL_NAME = "analisis.jsonl"
+DEFAULT_CSV_NAME = "analisis.csv"
 
 # ============================================================================
 # CONFIGURACIÓN DE OPENAI
