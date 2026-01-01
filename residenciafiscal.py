@@ -4,6 +4,9 @@
 #  - output.jsonl (una línea JSON por sentencia PDF)
 #  - output.csv (una fila por sentencia PDF, con datos estructurados)
 #
+# Usa la función gpt_request() universal que soporta múltiples proveedores
+# y reasoning_effort para modelos GPT-5+.
+#
 # Requisitos:
 #   pip install -r requirements.txt
 #
@@ -13,32 +16,23 @@
 #
 # Uso con argumentos personalizados:
 #   python residenciafiscal.py --input /ruta/a/pdfs --output /ruta/salida --model gpt-4
-#
-# Nota:
-# - Script asume SYSTEM_PROMPT en prompt.py
-# - Requiere OPENAI_API_KEY en entorno o .env
-# - Busca PDFs recursivamente en subcarpetas
-# - Genera una fila CSV por cada sentencia procesada
 
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
+import logging
 import os
-import re
 import time
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 from dotenv import load_dotenv
 from pypdf import PdfReader
 from tqdm import tqdm
 
-from openai import OpenAI
-
-# Importa configuración centralizada
 from config import (
     DEFAULT_INPUT_DIR,
     DEFAULT_OUTPUT_DIR,
@@ -47,22 +41,23 @@ from config import (
     DEFAULT_MODEL,
     DEFAULT_MAX_PAGES,
     PAGE_MARKER_FMT,
-    LLM_MAX_RETRIES,
-    LLM_BACKOFF_BASE,
     DEFAULT_MISSING_VALUE,
     REQUIRED_FIELDS,
     CSV_COLUMN_ORDER,
-    SHOW_PROGRESS_BAR,
     ARGUMENT_HELP,
     SCRIPT_DESCRIPTION,
-    ERROR_CODES,
     REASONING_EFFORT,
-    GPT_5,
     GPT_5_MINI,
-    GPT_5_NANO,
 )
 
-# Importa tu prompt (ya lo tienes)
+# Intenta importar gpt_request de ai_service_adapter
+try:
+    from ai_service_adapter import gpt_request_for_sentencia
+    USE_GPT_REQUEST = True
+except ImportError:
+    USE_GPT_REQUEST = False
+
+# Importa tu prompt
 try:
     from prompt import system_prompt as SYSTEM_PROMPT  # type: ignore
 except Exception as e:
@@ -71,6 +66,21 @@ except Exception as e:
         "Asegúrate de tener system_prompt = '''...''' en prompt.py."
     ) from e
 
+
+# ============================================================================
+# LOGGING
+# ============================================================================
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# PDF EXTRACTION
+# ============================================================================
 
 def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None) -> str:
     """Extrae texto del PDF e inserta marcadores de página (1-indexed)."""
@@ -89,150 +99,22 @@ def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None)
     return "\n".join(parts).strip()
 
 
-def strip_code_fences(s: str) -> str:
-    """El modelo a veces devuelve JSON dentro de ```...```. Lo quitamos."""
-    s = s.strip()
-    # ```json ... ```
-    if s.startswith("```"):
-        s = re.sub(r"^```[a-zA-Z0-9_-]*\s*", "", s)
-        s = re.sub(r"\s*```$", "", s)
-    return s.strip()
-
-
-def first_json_object_from_text(s: str) -> str:
-    """
-    Extrae el primer objeto JSON válido dentro de un texto.
-    Si el texto ya es JSON, lo devuelve.
-    """
-    s = strip_code_fences(s)
-    if s.startswith("{") and s.endswith("}"):
-        return s
-
-    # Búsqueda del primer bloque {...} balanceado
-    start = s.find("{")
-    if start == -1:
-        raise ValueError("No se encontró '{' para iniciar JSON.")
-
-    depth = 0
-    for idx in range(start, len(s)):
-        ch = s[idx]
-        if ch == "{":
-            depth += 1
-        elif ch == "}":
-            depth -= 1
-            if depth == 0:
-                return s[start : idx + 1]
-
-    raise ValueError("No se pudo extraer un objeto JSON balanceado.")
-
-
-def safe_json_loads(s: str) -> Dict[str, Any]:
-    """Carga JSON con extracción robusta."""
-    s2 = first_json_object_from_text(s)
-    try:
-        obj = json.loads(s2)
-    except json.JSONDecodeError as e:
-        raise ValueError(f"JSON inválido: {e}") from e
-    if not isinstance(obj, dict):
-        raise ValueError("El JSON devuelto no es un objeto (dict).")
-    return obj
-
-
-@dataclass
-class CallResult:
-    ok: bool
-    data: Optional[Dict[str, Any]] = None
-    raw_text: Optional[str] = None
-    error: Optional[str] = None
-
-
-def call_llm_extract(
-    client: OpenAI,
-    model: str,
-    system_prompt: str,
-    pdf_filename: str,
-    pdf_text: str,
-    max_retries: int = LLM_MAX_RETRIES,
-    backoff_base: float = LLM_BACKOFF_BASE,
-) -> CallResult:
-    """
-    Llama al modelo para extraer el JSON (1 línea) según tu system prompt.
-    Reintenta con backoff y repara si el JSON sale roto.
-    Si el modelo es GPT-5+, aplica reasoning_effort configurado.
-    """
-    user_input = (
-        "INPUT_DOCUMENTO:\n"
-        f"ARCHIVO: {pdf_filename}\n\n"
-        f"{pdf_text}\n"
-    )
-
-    # Determinar si aplicar reasoning_effort (solo para GPT-5+)
-    is_gpt5_model = any(gpt5 in model for gpt5 in [GPT_5, GPT_5_MINI, GPT_5_NANO, "gpt-5"])
-
-    last_error = None
-    for attempt in range(max_retries):
-        try:
-            # Construir argumentos de llamada al modelo
-            create_kwargs: Dict[str, Any] = {
-                "model": model,
-                "instructions": system_prompt,
-                "input": user_input,
-            }
-
-            # Agregar reasoning_effort solo si es GPT-5+
-            if is_gpt5_model:
-                create_kwargs["reasoning_effort"] = REASONING_EFFORT
-
-            resp = client.responses.create(**create_kwargs)
-            text_out = (resp.output_text or "").strip()
-            if not text_out:
-                raise RuntimeError("Respuesta vacía del modelo.")
-
-            # Parse JSON
-            try:
-                obj = safe_json_loads(text_out)
-                return CallResult(ok=True, data=obj, raw_text=text_out)
-            except Exception as parse_err:
-                # Intento de reparación: 1 ronda extra con el propio modelo
-                repair_prompt = (
-                    "La salida anterior NO es un JSON válido según el formato requerido.\n"
-                    "Devuelve SOLO un objeto JSON válido en UNA sola línea, sin texto adicional.\n"
-                    "Aquí tienes la salida inválida:\n\n"
-                    f"{text_out}\n"
-                )
-                # Reutilizar kwargs con reasoning_effort si corresponde
-                create_kwargs["input"] = repair_prompt
-                resp2 = client.responses.create(**create_kwargs)
-                text_out2 = (resp2.output_text or "").strip()
-                obj2 = safe_json_loads(text_out2)
-                return CallResult(ok=True, data=obj2, raw_text=text_out2)
-
-        except Exception as e:
-            last_error = str(e)
-            # Backoff
-            sleep_s = (backoff_base ** attempt) + (0.1 * attempt)
-            time.sleep(sleep_s)
-
-    return CallResult(ok=False, error=last_error)
-
+# ============================================================================
+# FIELD VALIDATION
+# ============================================================================
 
 def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
-    """
-    Asegura que haya claves mínimas para no romper el pipeline,
-    sin inventar: si faltan, se completan con los valores por defecto de config.
-    """
+    """Asegura que haya claves mínimas para no romper el pipeline."""
     def set_default(path: str, default: Any) -> None:
         if path not in obj:
             obj[path] = default
 
-    # Aplicar estructura de campos requeridos desde config
     obj["archivo"] = filename
 
     for key, default_value in REQUIRED_FIELDS.items():
         if key == "archivo":
-            continue  # Ya fue asignado arriba
+            continue
 
-        # Para nested dicts, hacer deep copy del default
         if isinstance(default_value, dict):
             set_default(key, {k: v for k, v in default_value.items()})
         elif isinstance(default_value, list):
@@ -243,11 +125,12 @@ def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
     return obj
 
 
+# ============================================================================
+# CSV FLATTENING
+# ============================================================================
+
 def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Aplana a columnas "amigables CSV".
-    Las listas/dicts se guardan como JSON-string para no perder detalle.
-    """
+    """Aplana a columnas 'amigables CSV'."""
     def jdump(x: Any) -> str:
         return json.dumps(x, ensure_ascii=False)
 
@@ -268,7 +151,6 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     row["criterio_decisivo"] = jdump(obj.get("Criterio_decisivo", []))
     row["resumen_criterios"] = obj.get("Resumen_criterios", DEFAULT_MISSING_VALUE)
 
-    # Pruebas (guardar completo)
     row["pruebas_aeat"] = jdump(obj.get("Pruebas_AEAT", []))
     row["pruebas_contribuyente"] = jdump(obj.get("Pruebas_contribuyente", []))
     row["pruebas_rechazadas_clave"] = jdump(obj.get("Pruebas_rechazadas_clave", []))
@@ -282,7 +164,165 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     return row
 
 
+# ============================================================================
+# MAIN ASYNC PROCESSING LOOP
+# ============================================================================
+
+async def process_pdf_async(
+    pdf_path: Path,
+    ai_model: str,
+    max_pages: Optional[int],
+) -> Dict[str, Any]:
+    """Procesa un PDF usando gpt_request."""
+    fname = pdf_path.name
+    
+    try:
+        pdf_text = extract_pdf_text_with_pages(pdf_path, max_pages=max_pages)
+        
+        if not pdf_text.strip():
+            logger.warning(f"⚠️ {fname}: No se pudo extraer texto")
+            return ensure_required_keys(
+                {
+                    "archivo": fname,
+                    "observaciones": "PDF sin texto extraíble",
+                    "confianza_extraccion": "BAJA"
+                },
+                fname
+            )
+
+        # Usar gpt_request si está disponible
+        if USE_GPT_REQUEST:
+            logger.info(f"📨 Procesando {fname} con gpt_request ({ai_model})")
+            result = await gpt_request_for_sentencia(
+                ai_model=ai_model,
+                system_prompt=SYSTEM_PROMPT,
+                pdf_text=pdf_text,
+                logger=logger,
+                temperature=0,
+                response_format="json_object",
+                reasoning_effort=REASONING_EFFORT if "gpt-5" in ai_model else None,
+            )
+            
+            if "error" in result:
+                logger.error(f"❌ {fname}: Error en gpt_request: {result.get('error')}")
+                return ensure_required_keys(
+                    {
+                        "archivo": fname,
+                        "observaciones": f"ERROR_GPT_REQUEST: {result.get('error')}",
+                        "confianza_extraccion": "BAJA",
+                    },
+                    fname,
+                )
+            
+            # Eliminar campos de metadata
+            obj = {k: v for k, v in result.items() if k not in ["tiempo_ejecucion", "error"]}
+        else:
+            logger.warning(f"⚠️ gpt_request no disponible, usando fallback")
+            return ensure_required_keys(
+                {
+                    "archivo": fname,
+                    "observaciones": "ERROR: gpt_request no disponible",
+                    "confianza_extraccion": "BAJA",
+                },
+                fname,
+            )
+
+        return ensure_required_keys(obj, fname)
+
+    except Exception as e:
+        logger.error(f"🚨 Error procesando {fname}: {e}")
+        return ensure_required_keys(
+            {
+                "archivo": fname,
+                "observaciones": f"ERROR_PROCESO: {str(e)}",
+                "confianza_extraccion": "BAJA",
+            },
+            fname,
+        )
+
+
+async def main_async(
+    in_dir: Path,
+    out_dir: Path,
+    jsonl_path: Path,
+    csv_path: Path,
+    ai_model: str,
+    max_pages: Optional[int],
+    skip_existing: bool,
+) -> None:
+    """Bucle principal de procesamiento."""
+    
+    if not in_dir.exists() or not in_dir.is_dir():
+        raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
+
+    # Buscar PDFs recursivamente
+    pdf_files = sorted([p for p in in_dir.glob("**/*.pdf") if p.is_file()])
+    if not pdf_files:
+        raise RuntimeError(f"No encontré PDFs en: {in_dir}")
+
+    logger.info(f"📁 Encontrados {len(pdf_files)} PDFs para procesar")
+
+    # Cargar ya procesados si skip-existing
+    processed = set()
+    if skip_existing and jsonl_path.exists():
+        with jsonl_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    obj = json.loads(line)
+                    processed.add(obj.get("archivo"))
+                except Exception:
+                    continue
+
+    # Procesar PDFs
+    jsonl_mode = "a" if jsonl_path.exists() else "w"
+    with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
+        for pdf_path in tqdm(pdf_files, desc="📄 Procesando PDFs"):
+            fname = pdf_path.name
+            if skip_existing and fname in processed:
+                logger.debug(f"⏭️ Saltando {fname} (ya procesado)")
+                continue
+
+            # Procesar PDF
+            obj = await process_pdf_async(pdf_path, ai_model, max_pages)
+            
+            # Guardar en JSONL
+            jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
+            jf.flush()
+
+    # Convertir JSONL -> CSV
+    logger.info("🔄 Convirtiendo JSONL a CSV...")
+    rows: List[Dict[str, Any]] = []
+    with jsonl_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+                rows.append(flatten_for_csv(obj))
+            except Exception:
+                continue
+
+    df = pd.DataFrame(rows)
+
+    # Reordenar columnas
+    cols = [c for c in CSV_COLUMN_ORDER if c in df.columns] + [
+        c for c in df.columns if c not in CSV_COLUMN_ORDER
+    ]
+    df = df[cols]
+
+    df.to_csv(csv_path, index=False, encoding="utf-8")
+    logger.info(f"\n✅ Procesamiento completado!")
+    logger.info(f"   📄 JSONL: {jsonl_path}")
+    logger.info(f"   📊 CSV:   {csv_path}")
+    logger.info(f"   📈 Filas: {len(df)}")
+
+
 def main() -> None:
+    """Punto de entrada principal."""
     load_dotenv()
 
     parser = argparse.ArgumentParser(description=SCRIPT_DESCRIPTION)
@@ -312,99 +352,24 @@ def main() -> None:
 
     max_pages = args.max_pages if args.max_pages and args.max_pages > 0 else None
 
-    if not in_dir.exists() or not in_dir.is_dir():
-        raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
+    logger.info(f"🚀 Iniciando procesamiento de sentencias")
+    logger.info(f"   📁 Entrada: {in_dir}")
+    logger.info(f"   📤 Salida: {out_dir}")
+    logger.info(f"   🤖 Modelo: {args.model}")
+    logger.info(f"   ⚙️ Reasoning Effort: {REASONING_EFFORT}")
 
-    # Busca PDFs recursivamente en subdirectorios también
-    pdf_files = sorted([p for p in in_dir.glob("**/*.pdf") if p.is_file()])
-    if not pdf_files:
-        raise RuntimeError(f"No encontré PDFs en: {in_dir}")
-
-    # Cargar ya procesados si skip-existing
-    processed = set()
-    if args.skip_existing and jsonl_path.exists():
-        with jsonl_path.open("r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    obj = json.loads(line)
-                    processed.add(obj.get("archivo"))
-                except Exception:
-                    continue
-
-    client = OpenAI()  # Usa OPENAI_API_KEY del entorno
-
-    # Abrimos JSONL en append
-    jsonl_mode = "a" if jsonl_path.exists() else "w"
-    with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
-        for pdf_path in tqdm(pdf_files, desc="Procesando PDFs"):
-            fname = pdf_path.name
-            if args.skip_existing and fname in processed:
-                continue
-
-            try:
-                pdf_text = extract_pdf_text_with_pages(pdf_path, max_pages=max_pages)
-                if not pdf_text.strip():
-                    # Guardar fila mínima si no hay texto
-                    obj = ensure_required_keys({"archivo": fname, "observaciones": "PDF sin texto extraíble"}, fname)
-                    jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
-                    jf.flush()
-                    continue
-
-                result = call_llm_extract(
-                    client=client,
-                    model=args.model,
-                    system_prompt=SYSTEM_PROMPT,
-                    pdf_filename=fname,
-                    pdf_text=pdf_text,
-                )
-
-                if not result.ok or not result.data:
-                    obj = ensure_required_keys(
-                        {
-                            "archivo": fname,
-                            "observaciones": f"ERROR_LLM: {result.error or 'desconocido'}",
-                            "confianza_extraccion": "BAJA",
-                        },
-                        fname,
-                    )
-                else:
-                    obj = ensure_required_keys(result.data, fname)
-
-                jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
-                jf.flush()
-
-            except Exception as e:
-                obj = ensure_required_keys(
-                    {"archivo": fname, "observaciones": f"ERROR_PROCESO: {str(e)}", "confianza_extraccion": "BAJA"},
-                    fname,
-                )
-                jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
-                jf.flush()
-
-    # Convertir JSONL -> CSV
-    rows: List[Dict[str, Any]] = []
-    with jsonl_path.open("r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                obj = json.loads(line)
-                rows.append(flatten_for_csv(obj))
-            except Exception:
-                continue
-
-    df = pd.DataFrame(rows)
-
-    # Reordenar columnas según CSV_COLUMN_ORDER de config
-    cols = [c for c in CSV_COLUMN_ORDER if c in df.columns] + [c for c in df.columns if c not in CSV_COLUMN_ORDER]
-    df = df[cols]
-
-    df.to_csv(csv_path, index=False, encoding="utf-8")
-    print(f"\nOK ✅\n- JSONL: {jsonl_path}\n- CSV:  {csv_path}\n- Filas: {len(df)}\n")
+    # Ejecutar bucle async
+    asyncio.run(
+        main_async(
+            in_dir=in_dir,
+            out_dir=out_dir,
+            jsonl_path=jsonl_path,
+            csv_path=csv_path,
+            ai_model=args.model,
+            max_pages=max_pages,
+            skip_existing=args.skip_existing,
+        )
+    )
 
 
 if __name__ == "__main__":
