@@ -78,17 +78,21 @@ def main() -> int:
     print_info(f"Found {len(pdf_files)} PDFs total")
     print_success(f"Using PDF: {test_pdf.name}")
 
-    # Create temporary directories
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmpdir = Path(tmpdir)
-        test_input_dir = tmpdir / "input"
-        test_output_dir = tmpdir / "output"
+    # Create persistent test output directories (not temporary)
+    test_output_base = project_root / "test" / "test_outputs"
+    test_input_dir = test_output_base / "input"
+    test_output_dir = test_output_base / "output"
 
-        test_input_dir.mkdir(parents=True)
-        test_output_dir.mkdir(parents=True)
+    test_input_dir.mkdir(parents=True, exist_ok=True)
+    test_output_dir.mkdir(parents=True, exist_ok=True)
 
-        print_info(f"Temp input directory: {test_input_dir}")
-        print_info(f"Temp output directory: {test_output_dir}")
+    print_info(f"Test input directory: {test_input_dir}")
+    print_info(f"Test output directory: {test_output_dir}")
+
+    # Note: Not using 'with' context manager so output persists after test completes
+    tmpdir = test_output_base
+
+    try:
 
         # Copy single PDF to test input directory
         dest_pdf = test_input_dir / test_pdf.name
@@ -190,7 +194,12 @@ def main() -> int:
                 print_warning(f"Could not extract key fields: {e}")
 
         print(f"\n{GREEN}{BOLD}✅ Test completed successfully!{RESET}\n")
+        print_info(f"📂 Test outputs saved to: {test_output_base}")
         return 0
+
+    except Exception as e:
+        print_error(f"Test failed with error: {e}")
+        return 1
 
 
 if __name__ == "__main__":

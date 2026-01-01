@@ -60,6 +60,7 @@ results/
 *.jsonl
 *.csv
 test_output/
+test/test_outputs/
 
 # PDFs (input)
 pdfs/
