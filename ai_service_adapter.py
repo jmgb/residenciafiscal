@@ -5,14 +5,37 @@ adapted for the residenciafiscal project.
 """
 
 import logging
+import sys
+from pathlib import Path
 from typing import Any, Optional
 
+# Try to import gpt_request from multiple possible locations
+HAS_UNIVERSAL_GPT = False
+universal_gpt_request = None
+
 try:
-    # Try importing from app structure if available
+    # Try standard app structure first
     from app.services.ai_client_service import gpt_request as universal_gpt_request
     HAS_UNIVERSAL_GPT = True
-except ImportError:
-    HAS_UNIVERSAL_GPT = False
+except ImportError as e1:
+    # Try adding parent project to path and import from there
+    try:
+        # Get absolute path to backend project
+        # File: /home/ubuntu/ai_projects/residenciafiscal/ai_service_adapter.py
+        # Backend: /home/ubuntu/ai_projects/apps/backend
+        current_file = Path(__file__).resolve()
+        parent_backend = current_file.parent.parent / "apps" / "backend"
+
+        if parent_backend.exists() and parent_backend.is_dir():
+            sys.path.insert(0, str(parent_backend))
+            try:
+                from app.services.ai_client_service import gpt_request as universal_gpt_request
+                HAS_UNIVERSAL_GPT = True
+            except Exception as e2:
+                # Log but don't fail - we'll handle this gracefully in gpt_request_for_sentencia
+                logging.debug(f"Failed to import gpt_request from backend: {e2}")
+    except Exception as e3:
+        logging.debug(f"Failed backend path check: {e3}")
 
 
 async def gpt_request_for_sentencia(
@@ -41,38 +64,97 @@ async def gpt_request_for_sentencia(
         dict: Response with parsed data or error information
     """
     
-    if not HAS_UNIVERSAL_GPT:
-        # Fallback: return error indicating gpt_request not available
-        return {
-            "error": "gpt_request not available",
-            "detail": "Universal AI service not accessible",
-            "archive": "unknown"
-        }
-    
-    # Call universal gpt_request with adapted parameters
+    import os
+    import json
+
+    # Try using universal gpt_request if available
+    if HAS_UNIVERSAL_GPT and universal_gpt_request:
+        try:
+            result = await universal_gpt_request(
+                ai_model=ai_model,
+                system_prompt=system_prompt,
+                user_message=pdf_text,
+                user_examples=[],
+                assistant_examples=[],
+                logger=logger,
+                temperature=temperature,
+                response_format=response_format,
+                source="residenciafiscal_processor",
+                client=None,
+                file_ids=None,
+                file_paths=None,
+                max_tokens=max_tokens,
+                reasoning_effort=reasoning_effort,
+            )
+            return result
+        except Exception as e:
+            logger.warning(f"Universal gpt_request failed, using fallback: {e}")
+
+    # Fallback: Use OpenAI directly for GPT models
     try:
-        result = await universal_gpt_request(
-            ai_model=ai_model,
-            system_prompt=system_prompt,
-            user_message=pdf_text,
-            user_examples=[],  # No examples for residencia fiscal
-            assistant_examples=[],
-            logger=logger,
-            temperature=temperature,
-            response_format=response_format,
-            source="residenciafiscal_processor",
-            client=None,  # Use default client
-            file_ids=None,
-            file_paths=None,
-            max_tokens=max_tokens,
-            reasoning_effort=reasoning_effort,
-        )
-        return result
+        from openai import AsyncOpenAI
+
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            return {
+                "error": "OPENAI_API_KEY not set",
+                "detail": "No API key available for OpenAI models"
+            }
+
+        client = AsyncOpenAI(api_key=api_key)
+
+        # Prepare kwargs for the API call
+        kwargs = {
+            "model": ai_model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": pdf_text}
+            ],
+        }
+
+        # Add temperature only if not 0 (some models like gpt-5 don't support 0)
+        # Use 1 as default for models that don't support 0
+        if temperature != 0:
+            kwargs["temperature"] = temperature
+        # For models that need temperature, use 1 as minimum instead of 0
+        elif "gpt-5" in ai_model.lower() or "o1" in ai_model.lower():
+            kwargs["temperature"] = 1
+        else:
+            kwargs["temperature"] = temperature
+
+        # Add response format if specified
+        if response_format == "json_object":
+            kwargs["response_format"] = {"type": "json_object"}
+
+        # Add reasoning effort for GPT-5 models
+        if reasoning_effort and ("gpt-5" in ai_model.lower() or "o1" in ai_model.lower()):
+            kwargs["reasoning_effort"] = reasoning_effort
+
+        # Add max tokens if specified
+        if max_tokens:
+            kwargs["max_tokens"] = max_tokens
+
+        response = await client.chat.completions.create(**kwargs)
+
+        # Extract response text
+        response_text = response.choices[0].message.content
+
+        # Try to parse as JSON if requested
+        if response_format == "json_object":
+            try:
+                parsed = json.loads(response_text)
+                return parsed
+            except json.JSONDecodeError:
+                # Return as-is if not valid JSON
+                return safe_json_parse(response_text, logger, ai_model, "residenciafiscal")
+
+        return {"response": response_text}
+
     except Exception as e:
-        logger.error(f"Error calling gpt_request: {e}")
+        logger.error(f"Fallback gpt_request failed: {e}")
         return {
             "error": str(e),
-            "archive": "unknown"
+            "detail": "Both universal and OpenAI fallback failed"
         }
 
 
