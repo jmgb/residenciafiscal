@@ -40,6 +40,7 @@ from config import (
     DEFAULT_CSV_NAME,
     DEFAULT_MODEL,
     DEFAULT_MAX_PAGES,
+    DEFAULT_MAX_FILES,
     PAGE_MARKER_FMT,
     DEFAULT_MISSING_VALUE,
     REQUIRED_FIELDS,
@@ -338,9 +339,14 @@ async def main_async(
     csv_path: Path,
     ai_model: str,
     max_pages: Optional[int],
+    max_files: Optional[int],
     skip_existing: bool,
 ) -> None:
-    """Bucle principal de procesamiento en batches paralelos."""
+    """Bucle principal de procesamiento en batches paralelos.
+
+    Args:
+        max_files: Máximo número de PDFs a procesar (0 o None = sin límite)
+    """
 
     if not in_dir.exists() or not in_dir.is_dir():
         raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
@@ -349,6 +355,10 @@ async def main_async(
     pdf_files = sorted([p for p in in_dir.glob("**/*.pdf") if p.is_file()])
     if not pdf_files:
         raise RuntimeError(f"No encontré PDFs en: {in_dir}")
+
+    # Limitar PDFs si se especifica max_files
+    if max_files and max_files > 0:
+        pdf_files = pdf_files[:max_files]
 
     logger.info(f"📁 Encontrados {len(pdf_files)} PDFs para procesar")
 
@@ -480,6 +490,7 @@ def main() -> None:
     )
     parser.add_argument("--model", default=DEFAULT_MODEL, help=ARGUMENT_HELP["model"])
     parser.add_argument("--max-pages", type=int, default=DEFAULT_MAX_PAGES, help=ARGUMENT_HELP["max_pages"])
+    parser.add_argument("--max-files", type=int, default=DEFAULT_MAX_FILES, help=ARGUMENT_HELP["max_files"])
     parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
     parser.add_argument("--skip-existing", action="store_true", help=ARGUMENT_HELP["skip_existing"])
@@ -493,12 +504,17 @@ def main() -> None:
     csv_path = out_dir / args.csv_name
 
     max_pages = args.max_pages if args.max_pages and args.max_pages > 0 else None
+    max_files = args.max_files if args.max_files and args.max_files > 0 else None
 
     logger.info(f"🚀 Iniciando procesamiento de sentencias")
     logger.info(f"   📁 Entrada: {in_dir}")
     logger.info(f"   📤 Salida: {out_dir}")
     logger.info(f"   🤖 Modelo: {args.model}")
     logger.info(f"   ⚙️ Reasoning Effort: {REASONING_EFFORT}")
+    if max_files:
+        logger.info(f"   📄 Límite de archivos: {max_files}")
+    if max_pages:
+        logger.info(f"   📄 Páginas por PDF: {max_pages}")
 
     # Initialize client for selected model (fails fast if API key missing)
     try:
@@ -517,6 +533,7 @@ def main() -> None:
             csv_path=csv_path,
             ai_model=args.model,
             max_pages=max_pages,
+            max_files=max_files,
             skip_existing=args.skip_existing,
         )
     )

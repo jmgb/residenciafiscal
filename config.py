@@ -60,6 +60,10 @@ PAGE_MARKER_FMT = "\n\n--- PÁGINA {page_num} ---\n\n"
 # Máximo de páginas a procesar por defecto (0 = sin límite)
 DEFAULT_MAX_PAGES = 0
 
+# Máximo de archivos PDF a procesar (0 = sin límite)
+# Útil para pruebas rápidas con 1, 5, 10 archivos, etc.
+DEFAULT_MAX_FILES = 0
+
 # ============================================================================
 # PARÁMETROS DE LLM (RETRIES Y BACKOFF)
 # ============================================================================
@@ -172,6 +176,7 @@ ARGUMENT_HELP = {
     "output": f"Carpeta de salida (default: {DEFAULT_OUTPUT_DIR})",
     "model": f"Modelo OpenAI a usar (default: {DEFAULT_MODEL})",
     "max_pages": "Máximo de páginas a procesar por PDF (0 = todas) (default: 0)",
+    "max_files": "Máximo de archivos PDF a procesar (0 = todos) - Útil para pruebas (default: 0)",
     "jsonl_name": f"Nombre del archivo JSONL de salida (default: {DEFAULT_JSONL_NAME})",
     "csv_name": f"Nombre del archivo CSV de salida (default: {DEFAULT_CSV_NAME})",
     "skip_existing": "Si existe JSONL previo, salta PDFs ya procesados",
