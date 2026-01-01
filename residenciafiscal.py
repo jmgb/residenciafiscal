@@ -25,6 +25,7 @@ import json
 import logging
 import os
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -78,6 +79,20 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+
+# ============================================================================
+# UTILIDADES
+# ============================================================================
+
+def get_timestamp_suffix() -> str:
+    """Genera un sufijo con fecha y hora en formato DDMMYYYY_HHMMSS.
+
+    Returns:
+        str: Sufijo timestamp (e.g., "21122026_120012")
+    """
+    now = datetime.now()
+    return now.strftime("%d%m%Y_%H%M%S")
 
 
 # ============================================================================
@@ -500,8 +515,13 @@ def main() -> None:
     out_dir = Path(args.output).expanduser().resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    jsonl_path = out_dir / args.jsonl_name
-    csv_path = out_dir / args.csv_name
+    # Agregar timestamp a los nombres de salida (DDMMYYYY_HHMMSS)
+    timestamp = get_timestamp_suffix()
+    jsonl_name = args.jsonl_name.replace(".jsonl", f"_{timestamp}.jsonl")
+    csv_name = args.csv_name.replace(".csv", f"_{timestamp}.csv")
+
+    jsonl_path = out_dir / jsonl_name
+    csv_path = out_dir / csv_name
 
     max_pages = args.max_pages if args.max_pages and args.max_pages > 0 else None
     max_files = args.max_files if args.max_files and args.max_files > 0 else None
@@ -511,6 +531,9 @@ def main() -> None:
     logger.info(f"   📤 Salida: {out_dir}")
     logger.info(f"   🤖 Modelo: {args.model}")
     logger.info(f"   ⚙️ Reasoning Effort: {REASONING_EFFORT}")
+    logger.info(f"   ⏰ Timestamp: {timestamp}")
+    logger.info(f"   📋 JSONL: {jsonl_name}")
+    logger.info(f"   📊 CSV: {csv_name}")
     if max_files:
         logger.info(f"   📄 Límite de archivos: {max_files}")
     if max_pages:
