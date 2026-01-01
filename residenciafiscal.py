@@ -424,16 +424,25 @@ async def main_async(
             for idx, obj in enumerate(results):
                 # Extraer coste si está disponible
                 metadata = obj.pop("_metadata", {})
+                tokens_in = metadata.get("tokens_in", 0)
+                tokens_out = metadata.get("tokens_out", 0)
                 cost_usd = metadata.get("cost_usd", 0.0)
                 batch_cost += cost_usd
                 total_cost += cost_usd
+
+                # Agregar información de auditoría de costes al objeto para guardar
+                obj["_tokens"] = {
+                    "input": tokens_in,
+                    "output": tokens_out,
+                    "cost_usd": cost_usd
+                }
 
                 jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
                 # Log por PDF
                 pdf_name = obj.get("archivo", "unknown")
                 if cost_usd > 0:
-                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f} ({metadata.get('tokens_in', 0)} in, {metadata.get('tokens_out', 0)} out)")
+                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f} ({tokens_in} in, {tokens_out} out)")
 
             jf.flush()
 
