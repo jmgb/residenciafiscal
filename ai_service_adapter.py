@@ -6,8 +6,18 @@ adapted for the residenciafiscal project.
 
 import logging
 import sys
+import warnings
 from pathlib import Path
 from typing import Any, Optional
+
+# Suppress deprecated warnings from optional dependencies
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", message=".*google.generativeai.*")
+
+# Suppress root logger errors from failed optional imports
+logging.getLogger().setLevel(logging.WARNING)
+root_logger = logging.getLogger()
+root_logger.handlers = [h for h in root_logger.handlers if not isinstance(h, logging.StreamHandler)]
 
 # Try to import gpt_request from multiple possible locations
 HAS_UNIVERSAL_GPT = False
@@ -29,13 +39,23 @@ except ImportError as e1:
         if parent_backend.exists() and parent_backend.is_dir():
             sys.path.insert(0, str(parent_backend))
             try:
-                from app.services.ai_client_service import gpt_request as universal_gpt_request
-                HAS_UNIVERSAL_GPT = True
+                # Suppress warnings during import
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore")
+                    # Suppress logging during import
+                    old_level = logging.root.level
+                    logging.root.setLevel(logging.CRITICAL)
+                    try:
+                        from app.services.ai_client_service import gpt_request as universal_gpt_request
+                        HAS_UNIVERSAL_GPT = True
+                    finally:
+                        logging.root.setLevel(old_level)
             except Exception as e2:
-                # Log but don't fail - we'll handle this gracefully in gpt_request_for_sentencia
-                logging.debug(f"Failed to import gpt_request from backend: {e2}")
+                # Silently fail - we'll use OpenAI fallback
+                pass
     except Exception as e3:
-        logging.debug(f"Failed backend path check: {e3}")
+        # Silently fail
+        pass
 
 
 async def gpt_request_for_sentencia(
