@@ -69,7 +69,7 @@ async def gpt_request_for_sentencia(
     max_tokens: Optional[int] = None,
 ) -> dict[str, Any]:
     """Simplified gpt_request wrapper for sentencia analysis.
-    
+
     Args:
         ai_model: Model identifier (e.g., "gpt-5-mini")
         system_prompt: System prompt with analysis instructions
@@ -79,13 +79,47 @@ async def gpt_request_for_sentencia(
         response_format: "json_object" or "text"
         reasoning_effort: "minimal", "low", "medium", "high" (for GPT-5+)
         max_tokens: Maximum tokens to generate
-    
+
     Returns:
-        dict: Response with parsed data or error information
+        dict: Response with parsed data or error information (includes 'tokens_in', 'tokens_out', 'cost_usd')
     """
     
     import os
     import json
+    from config import MODEL_PRICING
+
+    def calculate_cost(model: str, tokens_in: int, tokens_out: int) -> float:
+        """Calculate cost based on token usage and model pricing.
+
+        Args:
+            model: Model identifier
+            tokens_in: Input tokens used
+            tokens_out: Output tokens used
+
+        Returns:
+            float: Cost in USD
+        """
+        # Find matching model in pricing table
+        pricing = None
+        model_lower = model.lower()
+
+        # Exact match first
+        if model_lower in MODEL_PRICING:
+            pricing = MODEL_PRICING[model_lower]
+        else:
+            # Partial match (e.g., "gpt-5-mini-2025-08-07" matches "gpt-5-mini")
+            for key in MODEL_PRICING:
+                if key in model_lower:
+                    pricing = MODEL_PRICING[key]
+                    break
+
+        if not pricing:
+            # Default to gpt-4-mini if no match
+            pricing = MODEL_PRICING.get("gpt-4-mini", {"input": 0.0, "output": 0.0})
+
+        # Calculate cost: (tokens / 1M) * price_per_million_tokens
+        cost = (tokens_in / 1_000_000 * pricing["input"]) + (tokens_out / 1_000_000 * pricing["output"])
+        return round(cost, 6)
 
     # Try using universal gpt_request if available
     if HAS_UNIVERSAL_GPT and universal_gpt_request:
@@ -159,16 +193,33 @@ async def gpt_request_for_sentencia(
         # Extract response text
         response_text = response.choices[0].message.content
 
+        # Extract token usage and calculate cost
+        tokens_in = response.usage.prompt_tokens
+        tokens_out = response.usage.completion_tokens
+        cost_usd = calculate_cost(ai_model, tokens_in, tokens_out)
+
         # Try to parse as JSON if requested
         if response_format == "json_object":
             try:
                 parsed = json.loads(response_text)
+                # Add token and cost info
+                parsed["tokens_in"] = tokens_in
+                parsed["tokens_out"] = tokens_out
+                parsed["cost_usd"] = cost_usd
                 return parsed
             except json.JSONDecodeError:
                 # Return as-is if not valid JSON
-                return safe_json_parse(response_text, logger, ai_model, "residenciafiscal")
+                parsed = safe_json_parse(response_text, logger, ai_model, "residenciafiscal")
+                parsed["tokens_in"] = tokens_in
+                parsed["tokens_out"] = tokens_out
+                parsed["cost_usd"] = cost_usd
+                return parsed
 
-        return {"response": response_text}
+        result = {"response": response_text}
+        result["tokens_in"] = tokens_in
+        result["tokens_out"] = tokens_out
+        result["cost_usd"] = cost_usd
+        return result
 
     except Exception as e:
         logger.error(f"Fallback gpt_request failed: {e}")

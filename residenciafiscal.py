@@ -49,6 +49,7 @@ from config import (
     REASONING_EFFORT,
     GPT_5_MINI,
     BATCH_SIZE,
+    MODEL_PRICING,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -292,8 +293,20 @@ async def process_pdf_async(
                     fname,
                 )
             
-            # Eliminar campos de metadata
+            # Extraer información de tokens y coste
+            tokens_in = result.pop("tokens_in", 0)
+            tokens_out = result.pop("tokens_out", 0)
+            cost_usd = result.pop("cost_usd", 0)
+
+            # Eliminar otros campos de metadata
             obj = {k: v for k, v in result.items() if k not in ["tiempo_ejecucion", "error"]}
+
+            # Agregar información de coste al objeto
+            obj["_metadata"] = {
+                "tokens_in": tokens_in,
+                "tokens_out": tokens_out,
+                "cost_usd": cost_usd,
+            }
         else:
             logger.warning(f"⚠️ gpt_request no disponible, usando fallback")
             return ensure_required_keys(
@@ -360,6 +373,8 @@ async def main_async(
     logger.info(f"⚡ Modo paralelo: {BATCH_SIZE} PDFs por batch\n")
 
     jsonl_mode = "a" if jsonl_path.exists() else "w"
+    total_cost = 0.0
+    batch_costs = {}
 
     with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
         total_pdfs = len(pdfs_to_process)
@@ -380,15 +395,29 @@ async def main_async(
                 *[process_pdf_async(pdf_path, ai_model, max_pages) for pdf_path in batch]
             )
 
-            # Guardar resultados en JSONL
-            for obj in results:
+            # Guardar resultados en JSONL y acumular costes
+            batch_cost = 0.0
+            for idx, obj in enumerate(results):
+                # Extraer coste si está disponible
+                metadata = obj.pop("_metadata", {})
+                cost_usd = metadata.get("cost_usd", 0.0)
+                batch_cost += cost_usd
+                total_cost += cost_usd
+
                 jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
+
+                # Log por PDF
+                pdf_name = obj.get("archivo", "unknown")
+                if cost_usd > 0:
+                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f} ({metadata.get('tokens_in', 0)} in, {metadata.get('tokens_out', 0)} out)")
+
             jf.flush()
 
-            # Mostrar progreso detallado
+            # Mostrar progreso detallado con coste
             processed_count = batch_idx + len(batch)
             percentage = (processed_count / total_pdfs) * 100
-            logger.info(f"✅ Progreso: {processed_count}/{total_pdfs} PDFs completados ({percentage:.1f}%)\n")
+            logger.info(f"✅ Progreso: {processed_count}/{total_pdfs} PDFs completados ({percentage:.1f}%) | Batch: ${batch_cost:.2f}\n")
+            batch_costs[batch_num] = batch_cost
 
     # Convertir JSONL -> CSV
     logger.info("🔄 Convirtiendo JSONL a CSV...")
@@ -413,10 +442,26 @@ async def main_async(
     df = df[cols]
 
     df.to_csv(csv_path, index=False, encoding="utf-8")
-    logger.info(f"\n✅ Procesamiento completado!")
-    logger.info(f"   📄 JSONL: {jsonl_path}")
-    logger.info(f"   📊 CSV:   {csv_path}")
-    logger.info(f"   📈 Filas: {len(df)}")
+
+    # Mostrar resumen final con costes
+    logger.info(f"\n{'='*60}")
+    logger.info(f"✅ PROCESAMIENTO COMPLETADO")
+    logger.info(f"{'='*60}")
+    logger.info(f"📄 JSONL: {jsonl_path}")
+    logger.info(f"📊 CSV:   {csv_path}")
+    logger.info(f"📈 Filas: {len(df)}")
+    logger.info(f"\n💰 COSTES DE API:")
+    logger.info(f"   Total: ${total_cost:.2f} USD")
+    logger.info(f"   PDFs procesados: {len(pdfs_to_process)}")
+    if len(pdfs_to_process) > 0:
+        logger.info(f"   Coste promedio: ${total_cost / len(pdfs_to_process):.4f} USD por PDF")
+
+    if batch_costs:
+        logger.info(f"\n📊 Desglose por batch:")
+        for batch_num in sorted(batch_costs.keys()):
+            logger.info(f"   Batch {batch_num}: ${batch_costs[batch_num]:.2f}")
+
+    logger.info(f"{'='*60}\n")
 
 
 def main() -> None:
