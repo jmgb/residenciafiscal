@@ -48,6 +48,7 @@ from config import (
     SCRIPT_DESCRIPTION,
     REASONING_EFFORT,
     GPT_5_MINI,
+    BATCH_SIZE,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -327,8 +328,8 @@ async def main_async(
     max_pages: Optional[int],
     skip_existing: bool,
 ) -> None:
-    """Bucle principal de procesamiento."""
-    
+    """Bucle principal de procesamiento en batches paralelos."""
+
     if not in_dir.exists() or not in_dir.is_dir():
         raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
 
@@ -353,21 +354,31 @@ async def main_async(
                 except Exception:
                     continue
 
-    # Procesar PDFs
-    jsonl_mode = "a" if jsonl_path.exists() else "w"
-    with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
-        for pdf_path in tqdm(pdf_files, desc="📄 Procesando PDFs"):
-            fname = pdf_path.name
-            if skip_existing and fname in processed:
-                logger.debug(f"⏭️ Saltando {fname} (ya procesado)")
-                continue
+    # Filtrar PDFs ya procesados
+    pdfs_to_process = [p for p in pdf_files if not (skip_existing and p.name in processed)]
+    logger.info(f"📄 Procesarán {len(pdfs_to_process)} PDFs (saltando {len(pdf_files) - len(pdfs_to_process)} ya procesados)")
+    logger.info(f"⚡ Modo paralelo: {BATCH_SIZE} PDFs por batch\n")
 
-            # Procesar PDF
-            obj = await process_pdf_async(pdf_path, ai_model, max_pages)
-            
-            # Guardar en JSONL
-            jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
+    jsonl_mode = "a" if jsonl_path.exists() else "w"
+
+    with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
+        for batch_idx in range(0, len(pdfs_to_process), BATCH_SIZE):
+            batch = pdfs_to_process[batch_idx:batch_idx + BATCH_SIZE]
+            logger.info(f"⚡ Procesando batch {batch_idx // BATCH_SIZE + 1} ({len(batch)} PDFs en paralelo)")
+
+            # Procesar todos los PDFs en el batch de forma concurrente
+            results = await asyncio.gather(
+                *[process_pdf_async(pdf_path, ai_model, max_pages) for pdf_path in batch]
+            )
+
+            # Guardar resultados en JSONL
+            for obj in results:
+                jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
             jf.flush()
+
+            # Mostrar progreso
+            processed_count = min(batch_idx + batch_size, len(pdfs_to_process))
+            logger.info(f"✅ Progreso: {processed_count}/{len(pdfs_to_process)} PDFs completados")
 
     # Convertir JSONL -> CSV
     logger.info("🔄 Convirtiendo JSONL a CSV...")

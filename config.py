@@ -72,6 +72,14 @@ LLM_MAX_RETRIES = 4
 LLM_BACKOFF_BASE = 1.8
 
 # ============================================================================
+# PROCESAMIENTO EN PARALELO
+# ============================================================================
+
+# Tamaño del batch: cuántos PDFs procesar en paralelo simultáneamente
+# Mayor = más rápido pero más carga en API (respeta rate limits)
+BATCH_SIZE = 10
+
+# ============================================================================
 # VALORES PREDETERMINADOS PARA CAMPOS FALTANTES
 # ============================================================================
 
