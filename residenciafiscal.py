@@ -49,7 +49,6 @@ from config import (
     REASONING_EFFORT,
     GPT_5_MINI,
     BATCH_SIZE,
-    MODEL_PRICING,
 )
 
 # Intenta importar gpt_request de ai_service_adapter

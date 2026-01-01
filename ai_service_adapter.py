@@ -86,40 +86,7 @@ async def gpt_request_for_sentencia(
     
     import os
     import json
-    from config import MODEL_PRICING
-
-    def calculate_cost(model: str, tokens_in: int, tokens_out: int) -> float:
-        """Calculate cost based on token usage and model pricing.
-
-        Args:
-            model: Model identifier
-            tokens_in: Input tokens used
-            tokens_out: Output tokens used
-
-        Returns:
-            float: Cost in USD
-        """
-        # Find matching model in pricing table
-        pricing = None
-        model_lower = model.lower()
-
-        # Exact match first
-        if model_lower in MODEL_PRICING:
-            pricing = MODEL_PRICING[model_lower]
-        else:
-            # Partial match (e.g., "gpt-5-mini-2025-08-07" matches "gpt-5-mini")
-            for key in MODEL_PRICING:
-                if key in model_lower:
-                    pricing = MODEL_PRICING[key]
-                    break
-
-        if not pricing:
-            # Default to gpt-4-mini if no match
-            pricing = MODEL_PRICING.get("gpt-4-mini", {"input": 0.0, "output": 0.0})
-
-        # Calculate cost: (tokens / 1M) * price_per_million_tokens
-        cost = (tokens_in / 1_000_000 * pricing["input"]) + (tokens_out / 1_000_000 * pricing["output"])
-        return round(cost, 6)
+    from model_pricing import calculate_cost as calc_cost_fn
 
     # Try using universal gpt_request if available
     if HAS_UNIVERSAL_GPT and universal_gpt_request:
@@ -196,7 +163,8 @@ async def gpt_request_for_sentencia(
         # Extract token usage and calculate cost
         tokens_in = response.usage.prompt_tokens
         tokens_out = response.usage.completion_tokens
-        cost_usd = calculate_cost(ai_model, tokens_in, tokens_out)
+        cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
+        cost_usd = cost_info.get("total_cost", 0.0) or 0.0
 
         # Try to parse as JSON if requested
         if response_format == "json_object":

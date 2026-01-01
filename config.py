@@ -49,25 +49,6 @@ REASONING_EFFORT = "medium"
 # Modelo por defecto a usar
 DEFAULT_MODEL = GPT_5_MINI
 
-# ============================================================================
-# PRECIOS DE MODELOS (USD por 1M tokens - actualizado Enero 2025)
-# ============================================================================
-# Estructura: {"input_per_mtok": float, "output_per_mtok": float}
-# Fuente: OpenAI Pricing (https://openai.com/pricing)
-
-MODEL_PRICING = {
-    "gpt-5": {"input": 15.00, "output": 60.00},  # GPT-5.2 (2025-12-11)
-    "gpt-5-mini": {"input": 0.30, "output": 1.20},  # GPT-5-mini (2025-08-07)
-    "gpt-5-nano": {"input": 0.20, "output": 0.80},  # GPT-5-nano (2025-08-07)
-    "gpt-4": {"input": 0.03, "output": 0.06},
-    "gpt-4-turbo": {"input": 0.01, "output": 0.03},
-    "gpt-4-mini": {"input": 0.00015, "output": 0.0006},
-    # Groq models (free tier)
-    "groq-mixtral": {"input": 0.0, "output": 0.0},
-    "llama": {"input": 0.0, "output": 0.0},
-    # Gemini models
-    "gemini": {"input": 0.075, "output": 0.30},
-}
 
 # ============================================================================
 # PARÁMETROS DE EXTRACCIÓN DE PDF
