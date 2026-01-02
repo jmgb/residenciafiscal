@@ -54,18 +54,21 @@ htmlcov/
 .hypothesis/
 *.cover
 
-# Output directories
-output/
+# Output directories (generated files)
+output/*.jsonl
+output/*.csv
+output/*.xlsx
 results/
-*.jsonl
-*.csv
 test_output/
 test/test_outputs/
 test_results/
 
-# PDFs (input)
+# PDFs (keep sentencias/ but ignore generated output)
 pdfs/
-sentencias/*.pdf
+
+# Temporary/analysis files
+informe.txt
+*.tmp
 
 # OS
 .DS_Store

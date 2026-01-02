@@ -1,383 +1,247 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guía para Claude Code en el proyecto **Residencia Fiscal**.
 
-## Project Overview
-
-**Residencia Fiscal** is a Python pipeline that processes Spanish court rulings (sentencias) on fiscal residency disputes to extract structured data about tax law arguments, evidence, and outcomes. The system:
-
-1. **Reads PDFs** from a specified directory and extracts text with page markers
-2. **Calls an LLM** (OpenAI Responses API) with a specialized prompt to analyze each ruling
-3. **Extracts structured data** about criteria, evidence, and legal outcomes
-4. **Outputs JSONL** (one JSON object per line) and converts to **CSV** for analysis
-
-Target users: Tax researchers, lawyers, and compliance professionals analyzing Spanish IRPF (Impuesto sobre la Renta de las Personas Físicas) residency case law.
-
-## Architecture
-
-### Three Core Components
-
-**1. Main Processing Pipeline** (`residenciafiscal.py`)
-- Asynchronous processing of multiple PDFs concurrently
-- Reads PDF files from input directory
-- Extracts text with page markers (`--- PÁGINA N ---`)
-- Calls universal `gpt_request()` function via `ai_service_adapter.py`
-- Supports multiple AI providers: OpenAI, Groq, Gemini, OpenRouter with automatic fallback
-- Intelligent provider detection from model name
-- Validates required API keys at startup (fail-fast)
-- Repairs malformed JSON responses with multiple parsing strategies
-- Writes results to JSONL (append mode for resumability)
-- Converts JSONL to CSV with flattened structure
-
-**2. Analysis Prompt** (`prompt.py`)
-- Contains `SYSTEM_PROMPT` string that instructs the LLM on analysis rules
-- Defines 7 residency criteria categories (CRIT_* constants)
-- Specifies 12 evidence categories (PRESENCIA_FISICA, VIVIENDA, etc.)
-- Requires exhaustive listing of all evidence with acceptance/rejection status
-- Enforces mandatory fields with "NO CONSTA" fallback
-- Critical: Output must be valid JSON in a single line
-
-**3. Output Structure**
-- **JSONL format**: One complete JSON object per line (resumable, streamable)
-- **CSV format**: Flattened version with complex fields as JSON strings
-- **Key fields**: archivo, ROJ, ECLI, organo, fecha_resolucion, ejercicios_afectados, pais_alegado_residencia, se_invoca_CDI, Criterios_residencia_detectados, Criterio_decisivo, Pruebas_AEAT, Pruebas_contribuyente, Pruebas_rechazadas_clave, resultado_final, confianza_extraccion
-
-## Key Design Patterns
-
-### JSON Extraction Robustness
-The pipeline includes sophisticated JSON parsing:
-- Strips markdown code fences (```json...```)
-- Finds first balanced `{...}` object within text
-- Attempts parse with detailed error messages
-- Falls back to model-guided repair if JSON is malformed
-- Never invents missing data (uses "NO CONSTA")
-
-### Resumable Processing
-- JSONL appends rather than overwrites (maintains progress)
-- `--skip-existing` flag detects already-processed files
-- Failed PDFs (extraction errors, LLM failures) still write minimal entries
-- Graceful degradation: partial success > total failure
-
-### Retry Strategy
-- Max 4 retries per PDF
-- Exponential backoff: `(1.8 ^ attempt) + (0.1 * attempt)` seconds
-- Retries only on transient failures (timeout, rate limits)
-- Permanent failures (invalid PDF, model errors) stop retrying
-
-### CSV Flattening
-- Nested structures (lists, dicts) saved as JSON strings (not lost to CSV limitations)
-- Maintains original information density while enabling spreadsheet analysis
-- Preferred column order ensures critical fields appear first
-
-## Development Workflow
-
-### Installation & Setup
+## Quick Start
 
 ```bash
-# Using uv (recommended)
-uv pip install openai pypdf pandas tqdm python-dotenv
+# Instalar dependencias
+pip install -r requirements.txt
 
-# Using pip
-pip install openai pypdf pandas tqdm python-dotenv
-
-# Set environment variable
+# Configurar API key
 export OPENAI_API_KEY="sk-..."
-# OR create .env file in project root
-echo "OPENAI_API_KEY=sk-..." > .env
+
+# Ejecutar pipeline completo (106 PDFs → ~$2.80 USD, ~2-3h)
+python residenciafiscal.py --input ./sentencias --output ./output
+
+# Test rápido con 1 PDF
+python residenciafiscal.py --input ./sentencias --output ./output --max-files 1
 ```
 
-### Running the Pipeline
+## Resumen del Proyecto
 
-```bash
-# Basic usage (processes all PDFs, outputs to ./output/)
-python residenciafiscal.py --input ./pdfs --output ./output
+Pipeline Python que analiza **106 sentencias judiciales españolas** sobre residencia fiscal (Art. 9 LIRPF) usando LLMs para extraer:
 
-# With specific model
-python residenciafiscal.py --input ./pdfs --output ./output --model gpt-4
+- **Criterios de residencia** aplicados (183 días, centro de intereses, familia, CDI)
+- **Pruebas aportadas** por AEAT y contribuyente (aceptadas/rechazadas)
+- **Razonamiento judicial** (doctrina, carga de prueba, motivación)
+- **Resultado** (GANA_AEAT / GANA_CONTRIBUYENTE / PARCIAL)
 
-# Resume interrupted run (skips already-processed files)
-python residenciafiscal.py --input ./pdfs --output ./output --skip-existing
+**Usuarios objetivo**: Investigadores fiscales, abogados tributaristas, compliance.
 
-# Custom output filenames
-python residenciafiscal.py --input ./pdfs --output ./output --jsonl-name results.jsonl --csv-name results.csv
+## Arquitectura
+
+```
+┌─────────────────┐     ┌──────────────┐     ┌─────────────────────┐
+│  sentencias/    │────▶│ residencia   │────▶│  output/            │
+│  106 PDFs       │     │ fiscal.py    │     │  ├─ analisis.jsonl  │
+│  (STS + SAN)    │     │              │     │  ├─ sentencias.csv  │
+└─────────────────┘     │  + prompt.py │     │  ├─ pruebas.csv     │
+                        │  + config.py │     │  └─ analisis.xlsx   │
+                        └──────────────┘     └─────────────────────┘
+                               │
+                               ▼
+                        ┌──────────────┐
+                        │ OpenAI API   │
+                        │ GPT-5 / Nano │
+                        └──────────────┘
 ```
 
-### Testing
+| Archivo | Función |
+|---------|---------|
+| `residenciafiscal.py` | Pipeline principal (async, batches de 10 PDFs) |
+| `prompt.py` | System prompt con contexto legal y schema JSON |
+| `config.py` | Modelos, rutas, enums, campos requeridos |
+| `ai_service_adapter.py` | Wrapper para llamadas LLM con retry y cost tracking |
 
-**Automated single-PDF test suite** available in `/test/` directory:
+## Dataset
 
-```bash
-# Quick test with single PDF (recommended before full batch)
-./test/run_test.sh
+| Concepto | Valor |
+|----------|-------|
+| Total PDFs | 106 sentencias |
+| Tribunal Supremo (STS) | 74 |
+| Audiencia Nacional (SAN) | 32 |
+| Período | 2015-2025 |
+| Sentencias clave | 23 (modelo premium GPT-5) |
 
-# Or run directly with Python
-python test/test_single_pdf.py
-```
+## Outputs Generados
 
-The test script:
-- Creates temporary input/output directories (auto-cleanup)
-- Copies 1 PDF from `sentencias/` folder
-- Runs full pipeline (all pages)
-- Displays formatted JSONL and CSV output
-- Shows extraction quality metrics
+Cada ejecución genera 5 archivos con timestamp:
 
-**Manual testing** for development:
+| Archivo | Formato | Uso |
+|---------|---------|-----|
+| `analisis_*.jsonl` | 1 JSON/línea | Raw data completo, resumable |
+| `analisis_*.csv` | Flat | Campos complejos como JSON strings |
+| `sentencias_*.csv` | 1 fila/sentencia | Agregados de pruebas |
+| `pruebas_*.csv` | 1 fila/prueba | Detalle judicial completo |
+| `analisis_*.xlsx` | 2 hojas | Excel con Sentencias + Pruebas |
 
-```bash
-# Test with single PDF
-python residenciafiscal.py --input ./test_pdfs --output ./test_output
+## Campos Principales del Schema
 
-# Inspect JSONL output
-head -1 ./test_output/analisis_*.jsonl | python -m json.tool
+### Identificación
+- `archivo`, `ROJ`, `ECLI`, `organo`, `fecha_resolucion`
 
-# Check CSV structure
-head ./test_output/analisis_*.csv
-```
+### Residencia
+- `es_caso_residencia_irpf`: SI/NO
+- `pais_alegado_residencia_pf`, `pais_CDI_aplicado`
+- `se_invoca_CDI`, `tiebreaker_paso_decisivo`
 
-See `test/README.md` for detailed testing documentation.
+### Criterios (CRIT_*)
+- `CRIT_183_DIAS` - Permanencia >183 días
+- `CRIT_AUSENCIAS_ESPORADICAS` - Art. 9.1.a) segundo párrafo
+- `CRIT_CENTRO_INTERESES_ECONOMICOS` - Núcleo principal de actividades
+- `CRIT_CENTRO_INTERESES_VITALES` - Vínculos personales y familiares
+- `CRIT_PRESUNCION_FAMILIA` - Cónyuge e hijos menores en España
+- `CRIT_CDI_TIEBREAKER` - Reglas de desempate Art. 4 CDI
+- `CRIT_OTRO`
 
-### Code Quality
-
-No linter/formatter is configured. Follow these conventions:
-- **4-space indentation** (Python standard)
-- **Type hints** where practical (dataclass, function signatures)
-- **Docstrings** for functions (especially public APIs)
-- **Snake_case** for variables, functions, and modules
-- **PascalCase** for classes
-
-## Common Development Tasks
-
-### Adding a New Evidence Category
-
-1. Define in `prompt.py` under "PRUEBAS / INDICIOS (CATÁLOGO NORMALIZADO)"
-2. Add example types and sub-categories
-3. Update schema in JSON output format section if needed
-4. Update `flatten_for_csv()` in `residenciafiscal.py` if new top-level fields
-
-Example:
-```python
-# In prompt.py:
-# 13) DEUDA_TRIBUTARIA
-#    - sentencias previas, recursos, multas, embargos, etc.
-
-# Then update ensure_required_keys() and flatten_for_csv() if needed
-```
-
-### Modifying the Extraction Prompt
-
-Edit `SYSTEM_PROMPT` in `prompt.py`:
-- Critical: Keep JSON format example valid (single-line output required)
-- Critical: All field names must match the JSON schema
-- Keep "NO CONSTA" as fallback for missing data
-- Use "SI/NO/NO CONSTA" for boolean/ternary fields
-
-After changes:
-```bash
-python residenciafiscal.py --input ./test_pdfs --output ./test_output
-```
-
-### Handling Failed PDFs
-
-Failed PDFs write entries with minimal data:
+### Pruebas (por parte: AEAT / Contribuyente)
 ```json
-{"archivo":"failed.pdf","observaciones":"ERROR_PROCESO: [error message]","confianza_extraccion":"BAJA","identificadores":{"ROJ":"NO CONSTA","ECLI":"NO CONSTA"},...}
+{
+  "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+  "subcategoria": "sellos_pasaporte",
+  "detalle": "Pasaporte con sellos de entrada/salida",
+  "objetivo_probatorio": "Acreditar estancia fuera de España",
+  "criterio_atacado": "CRIT_183_DIAS",
+  "tipo_prueba": "DIRECTA | INDICIARIA | PRESUNCION",
+  "origen": "APORTADA_PARTE | REQUERIDA_INSPECCION | OBTENIDA_TERCEROS",
+  "aceptada": "SI | NO",
+  "peso": 1-5,
+  "motivo_valoracion": "Razón del juez para aceptar/rechazar",
+  "cita": {"pagina": "12", "texto": "...extracto literal..."}
+}
 ```
 
-To investigate:
-1. Check PDF validity: `pypdf` may fail on corrupted PDFs
-2. Check text extraction: some PDFs have no readable text (images only)
-3. Increase `max_retries` or backoff multiplier for rate-limit issues
+### Categorías de Prueba (12)
+1. `PRESENCIA_FISICA_Y_DESPLAZAMIENTOS`
+2. `VIVIENDA_Y_USO_EFECTIVO`
+3. `SUMINISTROS_Y_CONSUMOS_DOMESTICOS`
+4. `CONSUMOS_FINANCIEROS`
+5. `FAMILIA_Y_ENTORNO_PERSONAL`
+6. `SALUD_Y_SERVICIOS_PERSONALES`
+7. `ACTIVIDAD_ECONOMICA_Y_GESTION`
+8. `DOCUMENTACION_FISCAL_EXTRANJERA`
+9. `VINCULOS_ADMINISTRATIVOS_EN_ESPANA`
+10. `TRAZAS_DIGITALES`
+11. `TESTIFICAL_Y_PERICIAL`
+12. `OTROS`
 
-### Modifying CSV Output
+### Razonamiento Judicial
+- `doctrina_citada`: Lista de sentencias precedentes
+- `carga_prueba`: {quien_tenia_carga, motivo, cumplida, cita}
+- `razonamiento_residencia`: Texto explicando la decisión
 
-Edit `flatten_for_csv()` function:
-- Add new row keys for new fields
-- Use `jdump()` helper to serialize complex types
-- Update `preferred_order` list to control column sequence
+### Resultado
+- `resultado_final`: GANA_AEAT | GANA_CONTRIBUYENTE | PARCIAL | RETROACCION | INADMISION
+- `confianza_extraccion`: ALTA | MEDIA | BAJA
+- `tiempo_ejecucion`, `costo_usd`
 
-## Dependencies & Versions
+## Sentencias Clave
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| openai | Latest | Responses API client |
-| pypdf | Latest | PDF text extraction |
-| pandas | Latest | DataFrame → CSV conversion |
-| tqdm | Latest | Progress bar for PDF loop |
-| python-dotenv | Latest | .env file loading |
+23 sentencias en `sentencias/sentencias_CLAVE.txt` usan automáticamente **GPT-5** (modelo premium) independientemente del `--model` indicado:
 
-No version pinning because project is research-focused (not production). Upgrading is generally safe.
+```
+STS_107_2018.pdf    # Caso ICEX - 183 días
+STS_4305_2017.pdf   # Doctrina TS sobre centro intereses
+STS_3942_2021.pdf   # CDI España-Suiza
+...
+```
 
-## API Integration Details
+**Coste**: ~$0.10/sentencia clave vs ~$0.006/sentencia normal
 
-### Universal AI Client Integration
+## Comandos Útiles
 
-Uses **universal `gpt_request()` function** from `ai_client_service.py`:
+```bash
+# Procesamiento completo
+python residenciafiscal.py --input ./sentencias --output ./output
+
+# Limitar archivos (testing)
+python residenciafiscal.py --max-files 5
+
+# Continuar ejecución interrumpida
+python residenciafiscal.py --skip-existing
+
+# Modelo específico (ignorado para sentencias clave)
+python residenciafiscal.py --model gpt-4-turbo
+
+# Reasoning effort (minimal/low/medium/high)
+python residenciafiscal.py --reasoning-effort high
+
+# Lista específica de PDFs
+python residenciafiscal.py --pdf-list ./mi_lista.txt
+```
+
+## Costes Estimados
+
+| Modelo | Coste/PDF | 106 PDFs |
+|--------|-----------|----------|
+| gpt-5-nano (default) | $0.006 | $0.50 |
+| gpt-5 (clave) | $0.10 | $2.30 |
+| **Total mixto** | $0.026 avg | **$2.80** |
+
+## Configuración (config.py)
 
 ```python
-# Called via ai_service_adapter.py
-result = await gpt_request_for_sentencia(
-    ai_model=model_name,
-    system_prompt=SYSTEM_PROMPT,
-    pdf_text=extracted_text,
-    logger=logger,
-    temperature=0,
-    response_format="json_object",
-    reasoning_effort=REASONING_EFFORT if "gpt-5" in model else None,
-)
+# Modelos
+DEFAULT_MODEL = GPT_5_NANO           # gpt-5-nano-2025-08-07
+SENTENCIA_CLAVE_MODEL = GPT_5        # gpt-5.2-2025-12-11
+REASONING_EFFORT = "medium"
+
+# Procesamiento
+BATCH_SIZE = 10                      # PDFs en paralelo
+LLM_MAX_RETRIES = 4
+LLM_BACKOFF_BASE = 1.8
+
+# Rutas
+DEFAULT_INPUT_DIR = PROJECT_ROOT / "sentencias"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
+KEY_SENTENCIAS_FILE = DEFAULT_INPUT_DIR / "sentencias_CLAVE.txt"
 ```
 
-**Key Features**:
-- **Multi-provider support**: OpenAI (GPT-5+), Groq, Gemini, OpenRouter
-- **Automatic provider detection**: Parses model name to determine provider
-- **Smart reasoning**: Adds `reasoning_effort` for GPT-5+ models automatically
-- **Robust JSON parsing**: Multiple strategies to repair malformed responses
-- **Automatic fallback**: Switches providers if one fails
-- **Error recovery**: Detailed logging and graceful degradation
-- **Async support**: Non-blocking API calls for better concurrency
+## Dependencias
 
-**Supported Models**:
-- OpenAI: `gpt-5`, `gpt-5-mini`, `gpt-4`, `gpt-4-turbo`, `o1-preview`
-- Groq: `groq-mixtral`, `llama-*` models
-- Gemini: `gemini-*` models
-- OpenRouter: Any model via OpenRouter API
-
-**Rate Limits & Cost**:
-- Each provider has standard rate limits
-- Costs vary by model and token usage
-- Document length controls token budget (all pages are processed)
-- `REASONING_EFFORT` setting impacts cost/quality trade-off
-
-### Environment Variable
-
-Must set `OPENAI_API_KEY` before running:
-```bash
-export OPENAI_API_KEY="sk-proj-..."
+```
+openai>=1.0.0       # LLM API
+pypdf>=5.0.0        # PDF extraction
+pandas>=2.0.0       # DataFrames
+openpyxl>=3.1.0     # Excel export
+tqdm>=4.65.0        # Progress bars
+python-dotenv>=1.0.0
+aiohttp>=3.8.0
+pydantic>=2.0.0
 ```
 
-Or create `.env`:
-```
-OPENAI_API_KEY=sk-proj-...
-```
+## Troubleshooting
 
-Load with `load_dotenv()` at start of `main()`.
+| Problema | Solución |
+|----------|----------|
+| `OPENAI_API_KEY not set` | `export OPENAI_API_KEY="sk-..."` o crear `.env` |
+| PDF sin texto | Solo PDFs con texto (no scans/OCR) |
+| Rate limits | Reducir `BATCH_SIZE` o aumentar `LLM_BACKOFF_BASE` |
+| JSON parse error | El pipeline auto-repara; revisar logs si persiste |
+| Ejecución interrumpida | Usar `--skip-existing` para continuar |
 
-## File Structure
+## Estructura de Archivos
 
 ```
 residenciafiscal/
-├── residenciafiscal.py      # Main processing pipeline (async with gpt_request integration)
-├── ai_service_adapter.py    # Wrapper for universal gpt_request() function
-├── config.py                # Centralized configuration (models, paths, constants)
-├── prompt.py                # System prompt definition
-├── sentencias/              # Directory for input PDFs
-├── output/                  # Default output directory (auto-created)
-│   ├── output.jsonl         # Raw extracted data (one JSON per line)
-│   └── output.csv           # Flattened CSV export
-├── test/                    # Test suite directory
-│   ├── test_single_pdf.py   # Automated single-PDF test script
-│   ├── run_test.sh          # Convenience test runner shell script
-│   └── README.md            # Testing documentation
-├── .env                     # Local environment (gitignored)
-├── .env.example             # Environment template
-├── requirements.txt         # Python dependencies
-├── CLAUDE.md                # This file
-└── README.md                # Project overview
+├── residenciafiscal.py      # Pipeline principal
+├── prompt.py                # System prompt + schema
+├── config.py                # Configuración centralizada
+├── ai_service_adapter.py    # Wrapper LLM
+├── model_pricing.py         # Cálculo de costes
+├── sentencias/              # 106 PDFs entrada
+│   ├── sentencias_CLAVE.txt # 23 sentencias premium
+│   └── readme.txt           # Inventario
+├── output/                  # Resultados generados
+├── requirements.txt
+├── .env                     # API keys (gitignored)
+└── CLAUDE.md                # Este archivo
 ```
 
-## Important Constraints & Limitations
+## Referencias
 
-### PDF Extraction Limitations
-- **OCR not included**: Only reads text PDFs (prints to PDF work; scans do not)
-- **Page markers inserted**: `--- PÁGINA N ---` added before each page for LLM context
-- **All pages processed**: El sistema lee el PDF completo para evitar pérdida de información
-
-### LLM Output Constraints
-- **Single-line JSON required**: Cannot span multiple lines (validated in `safe_json_loads()`)
-- **All fields must be present**: Missing fields trigger "NO CONSTA" fallback
-- **Citation format strict**: Field must be `{"pagina":"...","texto":"..."}`
-
-### CSV Flattening Trade-offs
-- **Loss of nesting**: Complex structures become JSON strings (not ideal for Excel pivot tables)
-- **Workaround**: Parse JSON in processing layer, or use JSONL directly for analysis
-
-### Scale Considerations
-- **Memory**: Entire dataset held in pandas DataFrame before CSV write (OK for <50K PDFs)
-- **API costs**: Long documents → many tokens → higher costs (monitoriza por modelo)
-- **Rate limiting**: Backoff handles this; exponential delay can be slow for large batches
-
-## Debugging & Troubleshooting
-
-### Empty or Missing Output
-
-```bash
-# Check if JSONL was created
-ls -lh ./output/analisis_*.jsonl
-
-# Check first few lines
-head -3 ./output/analisis_*.jsonl | python -m json.tool
-
-# If JSONL missing: ensure --output directory exists and is writable
-mkdir -p ./output
-```
-
-### PDF Not Processed (--skip-existing)
-
-```bash
-# Remove existing JSONL to reprocess
-rm ./output/output.jsonl
-python residenciafiscal.py --input ./pdfs --output ./output
-```
-
-### JSON Parsing Failures
-
-```bash
-# Inspect raw output
-# 1. Add print() in call_llm_extract() to see raw response
-# 2. Check if response contains ```json...``` fences
-# 3. Check if response is multi-line JSON (not allowed)
-```
-
-### Rate Limit or Timeout Errors
-
-```bash
-# Increase backoff multiplier (change line 130)
-backoff_base: float = 2.5,  # Was 1.8
-
-# Reduce batch size
-python residenciafiscal.py --input ./pdfs --output ./output
-```
-
-## Performance Notes
-
-- **Average time per PDF**: 5-20 seconds (depends on length, model, reasoning_effort)
-- **Cost per PDF**: $0.01-$0.10+ (varies by provider and model; GPT-5 with reasoning_effort costs more)
-- **Bottleneck**: LLM API latency (async helps with I/O parallelization)
-- **With async**: Multiple PDFs can be processed with better I/O concurrency
-- **Optimization**: Ajusta `BATCH_SIZE` y el modelo para balancear coste/tiempo
-
-## Recent Enhancements (Jan 2026)
-
-Recently implemented improvements:
-1. ✅ **Async processing** - Full asyncio support for concurrent PDF processing
-2. ✅ **Multi-provider support** - OpenAI, Groq, Gemini, OpenRouter with automatic fallback
-3. ✅ **Client initialization** - Validates API keys at startup, provider auto-detection
-4. ✅ **Centralized configuration** - All settings in `config.py` (models, paths, constants)
-5. ✅ **Automated testing** - Single-PDF test suite for quick validation
-6. ✅ **Reasoning effort** - Intelligent GPT-5+ reasoning control via config
-
-## Future Enhancement Ideas
-
-Potential improvements (not currently implemented):
-1. **Concurrent PDF processing** - Batch multiple PDFs in parallel
-2. **Local LLM fallback** (Ollama, Llama 2) for cost reduction or offline use
-3. **Schema validation** (Pydantic models) to ensure output completeness
-4. **Keyword extraction** from frases_clave for full-text search indexing
-5. **Progress persistence** (SQLite checkpoint) for large-scale runs
-6. **Cost estimation** - Pre-calculate total cost before processing
-
-## References
-
-- **OpenAI API Docs**: https://platform.openai.com/docs
-- **Responses API Guide**: https://platform.openai.com/docs/guides/responses
-- **pypdf Documentation**: https://pypdf.readthedocs.io/
-- **Spanish IRPF Law**: Real Decreto Legislativo 5/2004
+- [Art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) - Residencia habitual
+- [Modelo OCDE Art. 4](https://www.oecd.org/tax/treaties/) - CDI tie-breaker rules
+- [CENDOJ](https://www.poderjudicial.es/search/) - Fuente de sentencias
+- [OpenAI API](https://platform.openai.com/docs)
