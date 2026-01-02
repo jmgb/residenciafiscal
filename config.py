@@ -19,6 +19,9 @@ DEFAULT_INPUT_DIR = PROJECT_ROOT / "sentencias"
 # Directorio donde se guardan los resultados
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
 
+# Archivo con lista de sentencias clave (procesadas con modelo premium)
+KEY_SENTENCIAS_FILE = DEFAULT_INPUT_DIR / "sentencias_CLAVE.txt"
+
 # ============================================================================
 # NOMBRES DE ARCHIVOS DE SALIDA
 # ============================================================================
@@ -47,7 +50,8 @@ GEMINI_FLASH = "gemini-3-flash-preview"
 REASONING_EFFORT = "medium"
 
 # Modelo por defecto a usar
-DEFAULT_MODEL = GPT_5
+DEFAULT_MODEL = GPT_5_MINI
+SENTENCIA_CLAVE_MODEL = GPT_5
 
 
 # ============================================================================

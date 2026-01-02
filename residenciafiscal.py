@@ -50,6 +50,9 @@ from config import (
     REASONING_EFFORT,
     GPT_5_MINI,
     BATCH_SIZE,
+    # Sentencias clave (modelo premium)
+    KEY_SENTENCIAS_FILE,
+    SENTENCIA_CLAVE_MODEL,
     # Enums para validación de schema
     VALID_CRITERIOS,
     VALID_CATEGORIAS_PRUEBA,
@@ -246,6 +249,26 @@ def load_pdf_list(list_path: Path, input_dir: Path) -> List[Path]:
         raise RuntimeError(f"No se encontraron PDFs válidos en: {list_path}")
 
     return pdfs
+
+
+def load_key_sentencias() -> set:
+    """Carga el conjunto de nombres de sentencias clave desde archivo.
+
+    Las sentencias clave se procesan con modelo premium (SENTENCIA_CLAVE_MODEL).
+    Retorna set vacío si el archivo no existe.
+    """
+    if not KEY_SENTENCIAS_FILE.exists():
+        logger.warning(f"⚠️ Archivo de sentencias clave no encontrado: {KEY_SENTENCIAS_FILE}")
+        return set()
+
+    key_sentencias = set()
+    for line in KEY_SENTENCIAS_FILE.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#"):
+            key_sentencias.add(line)
+
+    logger.info(f"📌 Cargadas {len(key_sentencias)} sentencias clave (modelo: {SENTENCIA_CLAVE_MODEL})")
+    return key_sentencias
 
 
 # ============================================================================
@@ -792,6 +815,13 @@ async def main_async(
     # Filtrar PDFs ya procesados
     pdfs_to_process = [p for p in pdf_files if not (skip_existing and p.name in processed)]
     logger.info(f"📄 Procesarán {len(pdfs_to_process)} PDFs (saltando {len(pdf_files) - len(pdfs_to_process)} ya procesados)")
+
+    # Cargar sentencias clave (modelo premium)
+    key_sentencias = load_key_sentencias()
+    key_in_batch = [p.name for p in pdfs_to_process if p.name in key_sentencias]
+    if key_in_batch:
+        logger.info(f"   🔑 {len(key_in_batch)} sentencias clave en cola (usarán {SENTENCIA_CLAVE_MODEL})")
+
     logger.info(f"⚡ Modo paralelo: {BATCH_SIZE} PDFs por batch\n")
 
     jsonl_mode = "a" if jsonl_path.exists() else "w"
@@ -813,8 +843,14 @@ async def main_async(
             logger.info(f"   📁 {pdf_names}")
 
             # Procesar todos los PDFs en el batch de forma concurrente
+            # Usar modelo premium para sentencias clave
+            def get_model_for_pdf(pdf_path: Path) -> str:
+                if pdf_path.name in key_sentencias:
+                    return SENTENCIA_CLAVE_MODEL
+                return ai_model
+
             results = await asyncio.gather(
-                *[process_pdf_async(pdf_path, ai_model, max_pages, reasoning_effort) for pdf_path in batch]
+                *[process_pdf_async(pdf_path, get_model_for_pdf(pdf_path), max_pages, reasoning_effort) for pdf_path in batch]
             )
 
             # Guardar resultados en JSONL y acumular costes
