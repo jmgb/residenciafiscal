@@ -849,8 +849,7 @@ TIEMPO (segundos)
 ```bash
 # Paso 1: Ejecutar pruebas
 python test_reasoning_effort_comparison.py \
-    --pdf sentencias/STS_371_2020.pdf \
-    --max-pages 15
+    --pdf sentencias/STS_371_2020.pdf
 
 # Paso 2: Analizar CSV generado
 #   test_results/reasoning_effort_comparison_*.csv
@@ -947,7 +946,7 @@ cat test_results/reasoning_effort_comparison_*.json | \
 
 **Solución:**
 1. Verificar que `prompt.py` incluye instrucción de confianza
-2. Aumentar `--max-pages` (pocos tokens pueden causar respuestas incompletas)
+2. Usar el PDF completo (todas las páginas) para evitar respuestas incompletas
 3. Cambiar a `reasoning_effort="high"` (más contexto)
 
 ---
@@ -967,5 +966,4 @@ Si encuentras discrepancias o resultados inesperados:
 1. Revisa la sección **Troubleshooting** arriba
 2. Verifica que `OPENAI_API_KEY` está configurada
 3. Consulta los logs detallados: `tail -100 test_reasoning_effort_comparison.log`
-4. Intenta con `--max-pages 5` primero (simple test case)
-
+4. Intenta primero con un PDF pequeño (test case simple)

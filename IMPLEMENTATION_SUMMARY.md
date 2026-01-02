@@ -67,18 +67,17 @@ parser.add_argument(
 
 - ✅ **Opcionalmente:**
   - Elige PDF automáticamente o pasa uno específico
-  - Limita páginas con `--max-pages`
+  - Procesa siempre todas las páginas
   - Delayos entre requests para evitar rate-limiting
 
 **Uso:**
 ```bash
 # Opción 1: Automático
-python test_reasoning_effort_comparison.py --max-pages 10
+python test_reasoning_effort_comparison.py
 
 # Opción 2: Específico
 python test_reasoning_effort_comparison.py \
-    --pdf sentencias/STS_371_2020.pdf \
-    --max-pages 15
+    --pdf sentencias/STS_371_2020.pdf
 ```
 
 ---
@@ -155,7 +154,7 @@ python residenciafiscal.py \
 
 ```bash
 # Ejecutar pruebas
-python test_reasoning_effort_comparison.py --max-pages 10
+python test_reasoning_effort_comparison.py
 
 # Ver resultados → elegir GPT-5 + medium o GPT-5-mini + high
 # Implementar en config.py
@@ -175,7 +174,7 @@ python residenciafiscal.py --input ./sentencias --output ./output
 
 ```bash
 # Ejecutar pruebas rápido
-python test_reasoning_effort_comparison.py --max-pages 5
+python test_reasoning_effort_comparison.py
 
 # Ver resultados → elegir GPT-5-mini + minimal o low
 # Implementar por CLI
@@ -301,8 +300,8 @@ python test_reasoning_effort_comparison.py --help
 ### Fase 2: Ejecutar Pruebas (5-10 min)
 
 ```bash
-# Con una sentencia pequeña primero (máximo 5 páginas)
-python test_reasoning_effort_comparison.py --max-pages 5
+# Con una sentencia pequeña primero
+python test_reasoning_effort_comparison.py
 
 # Esto ejecuta:
 # - 8 configuraciones
@@ -478,7 +477,7 @@ python residenciafiscal.py --help | grep -A 3 "reasoning-effort"
 python test_reasoning_effort_comparison.py --help
 ```
 
-✅ Debe mostrar opciones de `--pdf`, `--max-pages`, `--output-dir`
+✅ Debe mostrar opciones de `--pdf`, `--output-dir`
 
 ### Test 3: Verificar que la documentación es accesible
 
@@ -500,7 +499,7 @@ head -20 TEST_README.md
 
 2. **NEXT:** Ejecutar pruebas
    ```bash
-   python test_reasoning_effort_comparison.py --max-pages 5
+   python test_reasoning_effort_comparison.py
    ```
 
 3. **THEN:** `TEST_REASONING_EFFORT_GUIDE.md` (30 min)
@@ -518,7 +517,7 @@ head -20 TEST_README.md
 
 | Pregunta | Respuesta |
 |----------|-----------|
-| ¿Cómo ejecuto las pruebas? | `python test_reasoning_effort_comparison.py --max-pages 10` |
+| ¿Cómo ejecuto las pruebas? | `python test_reasoning_effort_comparison.py` |
 | ¿Dónde está la documentación? | `TEST_REASONING_EFFORT_GUIDE.md` (5000 palabras) |
 | ¿Cómo cambio reasoning_effort? | CLI: `--reasoning-effort high` O config.py: `REASONING_EFFORT = "high"` |
 | ¿Qué es "reasoning_effort"? | Parámetro de GPT-5 que controla nivel de razonamiento (más = mejor pero caro) |

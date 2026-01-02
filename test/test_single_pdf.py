@@ -107,7 +107,6 @@ def main() -> int:
             str(project_root / "residenciafiscal.py"),
             "--input", str(test_input_dir),
             "--output", str(test_output_dir),
-            "--max-pages", "5",  # Limit to 5 pages for faster testing
         ]
 
         print_info(f"Command: {' '.join(cmd)}\n")
@@ -126,22 +125,25 @@ def main() -> int:
         # Check output files
         print_header("📊 Generated Output Files")
 
-        jsonl_file = test_output_dir / "output.jsonl"
-        csv_file = test_output_dir / "output.csv"
+        jsonl_files = list(test_output_dir.glob("*.jsonl"))
+        csv_files = list(test_output_dir.glob("*.csv"))
 
-        if not jsonl_file.exists():
-            print_error(f"JSONL file not found: {jsonl_file}")
+        jsonl_file = max(jsonl_files, key=lambda p: p.stat().st_mtime) if jsonl_files else None
+        csv_file = max(csv_files, key=lambda p: p.stat().st_mtime) if csv_files else None
+
+        if not jsonl_file or not jsonl_file.exists():
+            print_error(f"JSONL file not found in: {test_output_dir}")
             return 1
 
-        if not csv_file.exists():
-            print_error(f"CSV file not found: {csv_file}")
+        if not csv_file or not csv_file.exists():
+            print_error(f"CSV file not found in: {test_output_dir}")
             return 1
 
         print_success(f"JSONL: {jsonl_file.name} ({jsonl_file.stat().st_size} bytes)")
         print_success(f"CSV:  {csv_file.name} ({csv_file.stat().st_size} bytes)")
 
         # Display JSONL content
-        print_header("📄 JSONL Content (output.jsonl)")
+        print_header(f"📄 JSONL Content ({jsonl_file.name})")
 
         with jsonl_file.open("r", encoding="utf-8") as f:
             jsonl_lines = f.readlines()
@@ -159,7 +161,7 @@ def main() -> int:
                 print(f"Raw: {line[:200]}...")
 
         # Display CSV content
-        print_header("📊 CSV Content (output.csv)")
+        print_header(f"📊 CSV Content ({csv_file.name})")
 
         with csv_file.open("r", encoding="utf-8") as f:
             csv_lines = f.readlines()
@@ -187,7 +189,7 @@ def main() -> int:
                 print(f"  • archivo: {first_record.get('archivo', 'N/A')}")
                 print(f"  • organo: {first_record.get('organo', 'N/A')}")
                 print(f"  • fecha_resolucion: {first_record.get('fecha_resolucion', 'N/A')}")
-                print(f"  • pais_alegado_residencia: {first_record.get('pais_alegado_residencia', 'N/A')}")
+                print(f"  • pais_alegado_residencia: {first_record.get('pais_alegado_residencia_pf', 'N/A')}")
                 print(f"  • resultado_final: {first_record.get('resultado_final', 'N/A')}")
                 print(f"  • confianza_extraccion: {first_record.get('confianza_extraccion', 'N/A')}")
             except Exception as e:

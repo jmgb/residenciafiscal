@@ -13,14 +13,14 @@ It measures:
 - Quality metrics from the extraction
 
 Usage:
-    python test_reasoning_effort_comparison.py [--pdf PATH] [--max-pages N]
+    python test_reasoning_effort_comparison.py [--pdf PATH]
 
 Examples:
-    # Test with first available PDF, limit to 10 pages
-    python test_reasoning_effort_comparison.py --max-pages 10
+    # Test with default PDF
+    python test_reasoning_effort_comparison.py
 
     # Test with specific PDF
-    python test_reasoning_effort_comparison.py --pdf sentencias/STS_371_2020.pdf --max-pages 20
+    python test_reasoning_effort_comparison.py --pdf sentencias/STS_4220_2024.pdf
 """
 
 from __future__ import annotations
@@ -55,15 +55,11 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).parent
 
 # Test configurations: (model, reasoning_effort)
+# Ordenado de más barato/rápido a más lento/caro.
 TEST_CONFIGURATIONS = [
-    ("gpt-5.2-2025-12-11", "high"),
-    ("gpt-5.2-2025-12-11", "medium"),
-    ("gpt-5.2-2025-12-11", "low"),
-    ("gpt-5.2-2025-12-11", "minimal"),
-    ("gpt-5-mini-2025-08-07", "high"),
     ("gpt-5-mini-2025-08-07", "medium"),
-    ("gpt-5-mini-2025-08-07", "low"),
-    ("gpt-5-mini-2025-08-07", "minimal"),
+    ("gpt-5-mini-2025-08-07", "high"),
+    ("gpt-5.2-2025-12-11", "medium"),
 ]
 
 # Colors for CLI output
@@ -121,14 +117,9 @@ def find_available_pdf() -> Optional[Path]:
     return pdfs[0] if pdfs else None
 
 
-def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
-    """Extract metrics from generated JSONL file."""
-    if not jsonl_path.exists():
-        return {"error": "JSONL file not found"}
-
-    metrics = {
-        "tokens_in": 0,
-        "tokens_out": 0,
+def default_metrics() -> dict[str, Any]:
+    """Default metrics shape to keep outputs consistent."""
+    return {
         "cost_usd": 0.0,
         "confianza_extraccion": "NO CONSTA",
         "resultado_final": "NO CONSTA",
@@ -140,8 +131,33 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
         "error": None,
     }
 
+
+def serialize_for_csv(value: Any) -> Any:
+    """Serialize nested structures to JSON strings for CSV safety."""
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False)
+    return value
+
+
+def find_jsonl_output(output_dir: Path) -> Optional[Path]:
+    """Find the most recent JSONL file in the output directory."""
+    jsonl_files = list(output_dir.glob("*.jsonl"))
+    if not jsonl_files:
+        return None
+    return max(jsonl_files, key=lambda p: p.stat().st_mtime)
+
+
+def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
+    """Extract metrics from generated JSONL file."""
+    metrics = default_metrics()
+
+    if not jsonl_path.exists():
+        metrics["error"] = "JSONL file not found"
+        return metrics
+
     try:
         with open(jsonl_path, 'r') as f:
+            first_record = None
             for line in f:
                 line = line.strip()
                 if not line:
@@ -149,11 +165,10 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
 
                 try:
                     data = json.loads(line)
+                    if first_record is None:
+                        first_record = data
 
-                    # Extract token and cost info
-                    metrics["tokens_in"] += data.get("tokens_in", 0)
-                    metrics["tokens_out"] += data.get("tokens_out", 0)
-                    metrics["cost_usd"] += data.get("cost_usd", 0.0)
+                    metrics["cost_usd"] += data.get("costo_usd", data.get("cost_usd", 0.0))
 
                     # Extract quality metrics
                     if data.get("confianza_extraccion"):
@@ -183,16 +198,25 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
                 except json.JSONDecodeError:
                     continue
 
+        if first_record:
+            for key, value in first_record.items():
+                if key == "error" and metrics["error"] in (None, "NO CONSTA"):
+                    metrics["error"] = serialize_for_csv(value)
+                    continue
+                if key in metrics:
+                    continue
+                metrics[key] = serialize_for_csv(value)
+
         return metrics
     except Exception as e:
-        return {"error": f"Failed to parse JSONL: {str(e)}"}
+        metrics["error"] = f"Failed to parse JSONL: {str(e)}"
+        return metrics
 
 
 async def run_single_test(
     pdf_path: Path,
     model: str,
     reasoning_effort: str,
-    max_pages: int,
     temp_dir: Path
 ) -> dict[str, Any]:
     """Run a single configuration test.
@@ -201,7 +225,6 @@ async def run_single_test(
         pdf_path: Path to the PDF to process
         model: Model name
         reasoning_effort: Reasoning effort level
-        max_pages: Maximum pages to process
         temp_dir: Temporary directory for output
 
     Returns:
@@ -224,9 +247,6 @@ async def run_single_test(
         "--reasoning-effort", reasoning_effort,
         "--max-files", "1",  # Process only one PDF
     ]
-
-    if max_pages > 0:
-        cmd.extend(["--max-pages", str(max_pages)])
 
     try:
         # Record start time
@@ -251,16 +271,17 @@ async def run_single_test(
                 "reasoning_effort": reasoning_effort,
                 "time_seconds": elapsed_time,
                 "error": f"Process exited with code {result.returncode}",
-                "tokens_in": 0,
-                "tokens_out": 0,
-                "cost_usd": 0.0,
+                **default_metrics(),
                 "confianza_extraccion": "ERROR",
                 "resultado_final": "ERROR",
             }
 
-        # Extract metrics from JSONL output
-        jsonl_path = output_subdir / "analisis.jsonl"
-        metrics = extract_metrics_from_jsonl(jsonl_path)
+        # Extract metrics from JSONL output (timestamped name)
+        jsonl_path = find_jsonl_output(output_subdir)
+        if jsonl_path is None:
+            metrics = extract_metrics_from_jsonl(output_subdir / "analisis.jsonl")
+        else:
+            metrics = extract_metrics_from_jsonl(jsonl_path)
 
         # Combine metrics
         result_dict = {
@@ -271,10 +292,9 @@ async def run_single_test(
         }
 
         print_success(f"Completed in {elapsed_time:.2f}s")
-        print(f"  Tokens: {metrics['tokens_in']} in, {metrics['tokens_out']} out")
-        print(f"  Cost: ${metrics['cost_usd']:.4f}")
-        print(f"  Confidence: {metrics['confianza_extraccion']}")
-        print(f"  Criteria detected: {metrics['criterios_detectados']}")
+        print(f"  Cost: ${metrics.get('cost_usd', 0.0):.4f}")
+        print(f"  Confidence: {metrics.get('confianza_extraccion', 'NO CONSTA')}")
+        print(f"  Criteria detected: {metrics.get('criterios_detectados', 0)}")
 
         return result_dict
 
@@ -286,9 +306,7 @@ async def run_single_test(
             "reasoning_effort": reasoning_effort,
             "time_seconds": elapsed_time if 'elapsed_time' in locals() else 0,
             "error": str(e),
-            "tokens_in": 0,
-            "tokens_out": 0,
-            "cost_usd": 0.0,
+            **default_metrics(),
             "confianza_extraccion": "ERROR",
             "resultado_final": "ERROR",
         }
@@ -296,14 +314,11 @@ async def run_single_test(
 
 async def run_all_tests(
     pdf_path: Path,
-    max_pages: int = 0,
 ) -> list[dict[str, Any]]:
-    """Run all test configurations sequentially.
+    """Run all test configurations in parallel.
 
     Args:
         pdf_path: Path to the PDF to test
-        max_pages: Maximum pages to process per PDF
-
     Returns:
         List of result dictionaries
     """
@@ -313,26 +328,20 @@ async def run_all_tests(
     try:
         print_header("REASONING EFFORT COMPARISON TEST")
         print(f"Testing PDF: {pdf_path.name}")
-        print(f"Max pages per PDF: {max_pages if max_pages > 0 else 'unlimited'}")
         print(f"Configurations: {len(TEST_CONFIGURATIONS)}")
+        print("Running all configurations in parallel...\n")
 
-        for i, (model, reasoning_effort) in enumerate(TEST_CONFIGURATIONS, 1):
-            print(f"\n[{i}/{len(TEST_CONFIGURATIONS)}]", end=" ")
-
-            result = await run_single_test(
+        tasks = [
+            run_single_test(
                 pdf_path=pdf_path,
                 model=model,
                 reasoning_effort=reasoning_effort,
-                max_pages=max_pages,
                 temp_dir=temp_dir,
             )
+            for model, reasoning_effort in TEST_CONFIGURATIONS
+        ]
 
-            results.append(result)
-
-            # Small delay between requests to avoid rate limiting
-            if i < len(TEST_CONFIGURATIONS):
-                await asyncio.sleep(2)
-
+        results = await asyncio.gather(*tasks)
         return results
 
     finally:
@@ -374,15 +383,6 @@ def print_results_summary(results: list[dict[str, Any]]) -> None:
     print(f"GPT-5-mini total cost: ${gpt5mini_costs:.4f}")
     print(f"Overall cost:          ${total_cost:.4f}")
     print(f"Cost difference:       ${abs(gpt5_costs - gpt5mini_costs):.4f} ({(abs(gpt5_costs - gpt5mini_costs) / max(gpt5_costs, gpt5mini_costs) * 100):.1f}%)")
-
-    print_section("Token Usage Comparison")
-    gpt5_tokens_in = df[df["model"] == "5"]["tokens_in"].sum()
-    gpt5_tokens_out = df[df["model"] == "5"]["tokens_out"].sum()
-    gpt5mini_tokens_in = df[df["model"] == "5-mini"]["tokens_in"].sum()
-    gpt5mini_tokens_out = df[df["model"] == "5-mini"]["tokens_out"].sum()
-
-    print(f"GPT-5:      {gpt5_tokens_in} in, {gpt5_tokens_out} out")
-    print(f"GPT-5-mini: {gpt5mini_tokens_in} in, {gpt5mini_tokens_out} out")
 
     print_section("Time Comparison")
     gpt5_time = df[df["model"] == "5"]["time_seconds"].sum()
@@ -426,14 +426,8 @@ async def main():
     parser.add_argument(
         "--pdf",
         type=Path,
-        default=None,
-        help="Path to PDF to test (default: first PDF in sentencias/)",
-    )
-    parser.add_argument(
-        "--max-pages",
-        type=int,
-        default=10,
-        help="Maximum pages per PDF (default: 10)",
+        default=PROJECT_ROOT / "sentencias" / "STS_4220_2024.pdf",
+        help="Path to PDF to test (default: sentencias/STS_4220_2024.pdf)",
     )
     parser.add_argument(
         "--output-dir",
@@ -461,7 +455,7 @@ async def main():
 
     # Run tests
     try:
-        results = await run_all_tests(pdf_path, args.max_pages)
+        results = await run_all_tests(pdf_path)
     except Exception as e:
         print_error(f"Test execution failed: {e}")
         logger.exception("Full traceback:")

@@ -40,7 +40,6 @@ from config import (
     DEFAULT_JSONL_NAME,
     DEFAULT_CSV_NAME,
     DEFAULT_MODEL,
-    DEFAULT_MAX_PAGES,
     DEFAULT_MAX_FILES,
     PAGE_MARKER_FMT,
     DEFAULT_MISSING_VALUE,
@@ -645,7 +644,6 @@ def main() -> None:
         help=ARGUMENT_HELP["output"]
     )
     parser.add_argument("--model", default=DEFAULT_MODEL, help=ARGUMENT_HELP["model"])
-    parser.add_argument("--max-pages", type=int, default=DEFAULT_MAX_PAGES, help=ARGUMENT_HELP["max_pages"])
     parser.add_argument("--max-files", type=int, default=DEFAULT_MAX_FILES, help=ARGUMENT_HELP["max_files"])
     parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
@@ -670,7 +668,7 @@ def main() -> None:
     jsonl_path = out_dir / jsonl_name
     csv_path = out_dir / csv_name
 
-    max_pages = args.max_pages if args.max_pages and args.max_pages > 0 else None
+    max_pages = None
     max_files = args.max_files if args.max_files and args.max_files > 0 else None
 
     logger.info(f"🚀 Iniciando procesamiento de sentencias")
@@ -683,8 +681,6 @@ def main() -> None:
     logger.info(f"   📊 CSV: {csv_name}")
     if max_files:
         logger.info(f"   📄 Límite de archivos: {max_files}")
-    if max_pages:
-        logger.info(f"   📄 Páginas por PDF: {max_pages}")
 
     # Initialize client for selected model (fails fast if API key missing)
     try:

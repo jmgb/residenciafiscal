@@ -8,12 +8,11 @@
 cd /home/ubuntu/ai_projects/residenciafiscal
 
 # Opción A: Automático (usa primer PDF disponible)
-python test_reasoning_effort_comparison.py --max-pages 10
+python test_reasoning_effort_comparison.py
 
 # Opción B: PDF específico
 python test_reasoning_effort_comparison.py \
-    --pdf sentencias/STS_371_2020.pdf \
-    --max-pages 15
+    --pdf sentencias/STS_371_2020.pdf
 ```
 
 **Qué hace:**
@@ -76,7 +75,7 @@ python residenciafiscal.py \
 
 ## 📊 Resultados Esperados
 
-Cuando ejecutes `python test_reasoning_effort_comparison.py --max-pages 10`:
+Cuando ejecutes `python test_reasoning_effort_comparison.py`:
 
 ```
 ================================================================================
@@ -84,7 +83,6 @@ Cuando ejecutes `python test_reasoning_effort_comparison.py --max-pages 10`:
 ================================================================================
 
 Testing PDF: STS_371_2020.pdf
-Max pages per PDF: 10
 Configurations: 8
 
 [1/8] Testing: gpt-5.2-2025-12-11 with reasoning_effort=high
@@ -259,7 +257,7 @@ Results saved to:
 ## ✅ Checklist Rápido
 
 - [ ] He leído este archivo (QUICK_START.md)
-- [ ] Ejecuté: `python test_reasoning_effort_comparison.py --max-pages 10`
+- [ ] Ejecuté: `python test_reasoning_effort_comparison.py`
 - [ ] Vi la tabla comparativa en consola
 - [ ] Leí `TEST_README.md` para entender las métricas
 - [ ] Elegí configuración basada en mi caso de uso
@@ -275,9 +273,9 @@ Results saved to:
    echo $OPENAI_API_KEY
    ```
 
-2. **Intenta primero con --max-pages 5:**
+2. **Intenta primero con un PDF pequeño (si aplica):**
    ```bash
-   python test_reasoning_effort_comparison.py --max-pages 5
+   python test_reasoning_effort_comparison.py
    ```
 
 3. **Lee la sección "Troubleshooting" en TEST_REASONING_EFFORT_GUIDE.md**
@@ -311,6 +309,5 @@ Results saved to:
 
 Próximo comando a ejecutar:
 ```bash
-python test_reasoning_effort_comparison.py --max-pages 10
+python test_reasoning_effort_comparison.py
 ```
-

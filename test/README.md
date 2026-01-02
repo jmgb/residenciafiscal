@@ -23,7 +23,7 @@ python test/test_single_pdf.py
 1. **Creates temporary directories** for isolated input/output
 2. **Copies 1 PDF** from `sentencias/` folder (the first one found)
 3. **Runs residenciafiscal.py** with:
-   - `--max-pages 5` (limits to first 5 pages for speed)
+   - No page limit (always processes full PDF)
    - Temporary input/output paths
 4. **Displays results**:
    - Generated JSONL content (all fields)
@@ -51,7 +51,7 @@ The test will show:
 [PDF processing logs here]
 
 ========================================================================
-📄 JSONL Content (output.jsonl)
+📄 JSONL Content (latest .jsonl)
 ========================================================================
 
 Line 1:
@@ -63,7 +63,7 @@ Line 1:
 }
 
 ========================================================================
-📊 CSV Content (output.csv)
+📊 CSV Content (latest .csv)
 ========================================================================
 
 archivo,ROJ,ECLI,organo,fecha_resolucion,...
@@ -107,7 +107,7 @@ Before running the test, ensure:
 ### Interpreting Results
 
 ✅ **Success**:
-- Both `output.jsonl` and `output.csv` files generated
+- Both `*.jsonl` and `*.csv` files generated (timestamped)
 - JSONL contains valid JSON with all required fields
 - CSV has proper structure with column headers
 - No API errors in the logs
@@ -138,7 +138,6 @@ cmd = [
     "--input", str(test_input_dir),
     "--output", str(test_output_dir),
     "--model", "groq-mixtral-8x7b-32k",  # Change model
-    "--max-pages", "10",  # Change page limit
 ]
 ```
 
@@ -148,19 +147,14 @@ After successful test:
 
 1. **Run with more PDFs**:
    ```bash
-   python residenciafiscal.py --max-pages 5
+   python residenciafiscal.py
    ```
 
-2. **Run with all pages** (slower, more accurate):
-   ```bash
-   python residenciafiscal.py --max-pages 0
-   ```
-
-3. **Check output files**:
+2. **Check output files**:
    ```bash
    ls -lh output/
-   head -c 500 output/output.jsonl
-   head output/output.csv
+   head -c 500 output/analisis_*.jsonl
+   head output/analisis_*.csv
    ```
 
 ### Debugging

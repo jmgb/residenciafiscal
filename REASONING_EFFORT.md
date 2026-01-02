@@ -57,7 +57,7 @@ resp = client.responses.create(**create_kwargs)
 python residenciafiscal.py --model gpt-5-mini
 
 # With custom model
-python residenciafiscal.py --model gpt-5 --max-pages 5
+python residenciafiscal.py --model gpt-5
 ```
 
 ### Changing Reasoning Effort

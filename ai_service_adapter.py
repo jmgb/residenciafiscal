@@ -98,24 +98,45 @@ async def gpt_request_for_sentencia(
         return result_dict
 
     # Try using universal gpt_request if available
+    request_timeout = 200
+
     if HAS_UNIVERSAL_GPT and universal_gpt_request:
         try:
-            result = await universal_gpt_request(
-                ai_model=ai_model,
-                system_prompt=system_prompt,
-                user_message=pdf_text,
-                user_examples=[],
-                assistant_examples=[],
-                logger=logger,
-                temperature=temperature,
-                response_format=response_format,
-                source="residenciafiscal_processor",
-                client=None,
-                file_ids=None,
-                file_paths=None,
-                max_tokens=max_tokens,
-                reasoning_effort=reasoning_effort,
-            )
+            try:
+                result = await universal_gpt_request(
+                    ai_model=ai_model,
+                    system_prompt=system_prompt,
+                    user_message=pdf_text,
+                    user_examples=[],
+                    assistant_examples=[],
+                    logger=logger,
+                    temperature=temperature,
+                    response_format=response_format,
+                    source="residenciafiscal_processor",
+                    client=None,
+                    file_ids=None,
+                    file_paths=None,
+                    max_tokens=max_tokens,
+                    reasoning_effort=reasoning_effort,
+                    timeout=request_timeout,
+                )
+            except TypeError:
+                result = await universal_gpt_request(
+                    ai_model=ai_model,
+                    system_prompt=system_prompt,
+                    user_message=pdf_text,
+                    user_examples=[],
+                    assistant_examples=[],
+                    logger=logger,
+                    temperature=temperature,
+                    response_format=response_format,
+                    source="residenciafiscal_processor",
+                    client=None,
+                    file_ids=None,
+                    file_paths=None,
+                    max_tokens=max_tokens,
+                    reasoning_effort=reasoning_effort,
+                )
             return add_execution_metadata(result)
         except Exception as e:
             logger.warning(f"Universal gpt_request failed, using fallback: {e}")
@@ -131,7 +152,7 @@ async def gpt_request_for_sentencia(
                 "detail": "No API key available for OpenAI models"
             }
 
-        client = AsyncOpenAI(api_key=api_key)
+        client = AsyncOpenAI(api_key=api_key, timeout=request_timeout)
 
         # Prepare kwargs for the API call
         kwargs = {

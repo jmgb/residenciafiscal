@@ -61,6 +61,7 @@ results/
 *.csv
 test_output/
 test/test_outputs/
+test_results/
 
 # PDFs (input)
 pdfs/

@@ -95,9 +95,6 @@ python residenciafiscal.py --input ./pdfs --output ./output
 # With specific model
 python residenciafiscal.py --input ./pdfs --output ./output --model gpt-4
 
-# Limit pages per PDF (useful for testing)
-python residenciafiscal.py --input ./pdfs --output ./output --max-pages 10
-
 # Resume interrupted run (skips already-processed files)
 python residenciafiscal.py --input ./pdfs --output ./output --skip-existing
 
@@ -120,7 +117,7 @@ python test/test_single_pdf.py
 The test script:
 - Creates temporary input/output directories (auto-cleanup)
 - Copies 1 PDF from `sentencias/` folder
-- Runs full pipeline with `--max-pages 5` (fast testing)
+- Runs full pipeline (all pages)
 - Displays formatted JSONL and CSV output
 - Shows extraction quality metrics
 
@@ -128,13 +125,13 @@ The test script:
 
 ```bash
 # Test with single PDF
-python residenciafiscal.py --input ./test_pdfs --output ./test_output --max-pages 5
+python residenciafiscal.py --input ./test_pdfs --output ./test_output
 
 # Inspect JSONL output
-head -1 ./test_output/output.jsonl | python -m json.tool
+head -1 ./test_output/analisis_*.jsonl | python -m json.tool
 
 # Check CSV structure
-head ./test_output/output.csv
+head ./test_output/analisis_*.csv
 ```
 
 See `test/README.md` for detailed testing documentation.
@@ -247,7 +244,7 @@ result = await gpt_request_for_sentencia(
 **Rate Limits & Cost**:
 - Each provider has standard rate limits
 - Costs vary by model and token usage
-- `--max-pages` flag controls token budget
+- Document length controls token budget (all pages are processed)
 - `REASONING_EFFORT` setting impacts cost/quality trade-off
 
 ### Environment Variable
@@ -292,7 +289,7 @@ residenciafiscal/
 ### PDF Extraction Limitations
 - **OCR not included**: Only reads text PDFs (prints to PDF work; scans do not)
 - **Page markers inserted**: `--- PÁGINA N ---` added before each page for LLM context
-- **Max pages configurable**: `--max-pages` limits processing (useful for cost control)
+- **All pages processed**: El sistema lee el PDF completo para evitar pérdida de información
 
 ### LLM Output Constraints
 - **Single-line JSON required**: Cannot span multiple lines (validated in `safe_json_loads()`)
@@ -305,7 +302,7 @@ residenciafiscal/
 
 ### Scale Considerations
 - **Memory**: Entire dataset held in pandas DataFrame before CSV write (OK for <50K PDFs)
-- **API costs**: Long documents → many tokens → higher costs (monitor with `--max-pages`)
+- **API costs**: Long documents → many tokens → higher costs (monitoriza por modelo)
 - **Rate limiting**: Backoff handles this; exponential delay can be slow for large batches
 
 ## Debugging & Troubleshooting
@@ -314,10 +311,10 @@ residenciafiscal/
 
 ```bash
 # Check if JSONL was created
-ls -lh ./output/output.jsonl
+ls -lh ./output/analisis_*.jsonl
 
 # Check first few lines
-head -3 ./output/output.jsonl | python -m json.tool
+head -3 ./output/analisis_*.jsonl | python -m json.tool
 
 # If JSONL missing: ensure --output directory exists and is writable
 mkdir -p ./output
@@ -347,7 +344,7 @@ python residenciafiscal.py --input ./pdfs --output ./output
 backoff_base: float = 2.5,  # Was 1.8
 
 # Reduce batch size
-python residenciafiscal.py --input ./pdfs --output ./output --max-pages 5
+python residenciafiscal.py --input ./pdfs --output ./output
 ```
 
 ## Performance Notes
@@ -356,7 +353,7 @@ python residenciafiscal.py --input ./pdfs --output ./output --max-pages 5
 - **Cost per PDF**: $0.01-$0.10+ (varies by provider and model; GPT-5 with reasoning_effort costs more)
 - **Bottleneck**: LLM API latency (async helps with I/O parallelization)
 - **With async**: Multiple PDFs can be processed with better I/O concurrency
-- **Optimization**: Use `--max-pages N` to limit token usage and reduce cost per PDF
+- **Optimization**: Ajusta `BATCH_SIZE` y el modelo para balancear coste/tiempo
 
 ## Recent Enhancements (Jan 2026)
 

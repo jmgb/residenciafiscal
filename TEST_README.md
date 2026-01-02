@@ -37,14 +37,9 @@ Documento exhaustivo (5000+ palabras) que incluye:
 
 ```bash
 # Con PDF automático (primera disponible)
-python test_reasoning_effort_comparison.py --max-pages 10
+python test_reasoning_effort_comparison.py
 
 # Con PDF específico
-python test_reasoning_effort_comparison.py \
-    --pdf sentencias/STS_371_2020.pdf \
-    --max-pages 15
-
-# Sin límites
 python test_reasoning_effort_comparison.py \
     --pdf sentencias/STS_371_2020.pdf
 ```
@@ -261,7 +256,7 @@ Si encuentras problemas:
 
 1. **Lee** `TEST_REASONING_EFFORT_GUIDE.md` (secciones "Troubleshooting")
 2. **Verifica** que `OPENAI_API_KEY` está configurada
-3. **Intenta** primero con `--max-pages 5` (test case simple)
+3. **Intenta** primero con un PDF pequeño (test case simple)
 4. **Revisar** logs: `tail -50 test_reasoning_effort_comparison.py`
 
 ---
