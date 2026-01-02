@@ -4,7 +4,7 @@ Documento detallado sobre las pruebas comparativas de `reasoning_effort` para mo
 
 ## 📋 Descripción General
 
-El script `test_reasoning_effort_comparison.py` ejecuta el pipeline de análisis de sentencias con **8 configuraciones diferentes** usando el mismo documento PDF para comparar:
+El script `test/test_reasoning_effort_comparison.py` ejecuta el pipeline de análisis de sentencias con **8 configuraciones diferentes** usando el mismo documento PDF para comparar:
 
 1. **Coste de API** (USD)
 2. **Consumo de tokens** (entrada/salida)
@@ -848,7 +848,7 @@ TIEMPO (segundos)
 
 ```bash
 # Paso 1: Ejecutar pruebas
-python test_reasoning_effort_comparison.py \
+python test/test_reasoning_effort_comparison.py \
     --pdf sentencias/STS_371_2020.pdf
 
 # Paso 2: Analizar CSV generado

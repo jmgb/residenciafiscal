@@ -55,7 +55,7 @@ if is_gpt5_model:
 resp = client.responses.create(**create_kwargs)
 ```
 
-### 3. New File: REASONING_EFFORT.md
+### 3. New File: docs/REASONING_EFFORT.md
 Comprehensive documentation on:
 - Configuration options
 - Model support matrix

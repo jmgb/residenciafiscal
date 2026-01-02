@@ -5,9 +5,7 @@ adapted for the residenciafiscal project.
 """
 
 import logging
-import sys
 import warnings
-from pathlib import Path
 from typing import Any, Optional
 
 # Suppress deprecated warnings from optional dependencies
@@ -19,43 +17,18 @@ logging.getLogger().setLevel(logging.WARNING)
 root_logger = logging.getLogger()
 root_logger.handlers = [h for h in root_logger.handlers if not isinstance(h, logging.StreamHandler)]
 
-# Try to import gpt_request from multiple possible locations
+# Always use direct OpenAI client in this project.
 HAS_UNIVERSAL_GPT = False
 universal_gpt_request = None
 
-try:
-    # Try standard app structure first
-    from app.services.ai_client_service import gpt_request as universal_gpt_request
-    HAS_UNIVERSAL_GPT = True
-except ImportError as e1:
-    # Try adding parent project to path and import from there
-    try:
-        # Get absolute path to backend project
-        # File: /home/ubuntu/ai_projects/residenciafiscal/ai_service_adapter.py
-        # Backend: /home/ubuntu/ai_projects/apps/backend
-        current_file = Path(__file__).resolve()
-        parent_backend = current_file.parent.parent / "apps" / "backend"
 
-        if parent_backend.exists() and parent_backend.is_dir():
-            sys.path.insert(0, str(parent_backend))
-            try:
-                # Suppress warnings during import
-                with warnings.catch_warnings():
-                    warnings.filterwarnings("ignore")
-                    # Suppress logging during import
-                    old_level = logging.root.level
-                    logging.root.setLevel(logging.CRITICAL)
-                    try:
-                        from app.services.ai_client_service import gpt_request as universal_gpt_request
-                        HAS_UNIVERSAL_GPT = True
-                    finally:
-                        logging.root.setLevel(old_level)
-            except Exception as e2:
-                # Silently fail - we'll use OpenAI fallback
-                pass
-    except Exception as e3:
-        # Silently fail
-        pass
+def _detect_provider(ai_model: str) -> str:
+    ai_model_lower = ai_model.lower()
+    if "gemini" in ai_model_lower or "claude" in ai_model_lower:
+        return "gemini"
+    if "groq" in ai_model_lower or "mixtral" in ai_model_lower or "llama" in ai_model_lower:
+        return "groq"
+    return "openai"
 
 
 async def gpt_request_for_sentencia(
@@ -97,62 +70,102 @@ async def gpt_request_for_sentencia(
         result_dict["tiempo_ejecucion"] = f"{ai_model} - {elapsed}s"
         return result_dict
 
-    # Try using universal gpt_request if available
     request_timeout = 200
 
-    if HAS_UNIVERSAL_GPT and universal_gpt_request:
-        try:
-            try:
-                result = await universal_gpt_request(
-                    ai_model=ai_model,
-                    system_prompt=system_prompt,
-                    user_message=pdf_text,
-                    user_examples=[],
-                    assistant_examples=[],
-                    logger=logger,
-                    temperature=temperature,
-                    response_format=response_format,
-                    source="residenciafiscal_processor",
-                    client=None,
-                    file_ids=None,
-                    file_paths=None,
-                    max_tokens=max_tokens,
-                    reasoning_effort=reasoning_effort,
-                    timeout=request_timeout,
-                )
-            except TypeError:
-                result = await universal_gpt_request(
-                    ai_model=ai_model,
-                    system_prompt=system_prompt,
-                    user_message=pdf_text,
-                    user_examples=[],
-                    assistant_examples=[],
-                    logger=logger,
-                    temperature=temperature,
-                    response_format=response_format,
-                    source="residenciafiscal_processor",
-                    client=None,
-                    file_ids=None,
-                    file_paths=None,
-                    max_tokens=max_tokens,
-                    reasoning_effort=reasoning_effort,
-                )
-            return add_execution_metadata(result)
-        except Exception as e:
-            logger.warning(f"Universal gpt_request failed, using fallback: {e}")
-
-    # Fallback: Use OpenAI directly for GPT models
     try:
         from openai import AsyncOpenAI
 
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            return {
-                "error": "OPENAI_API_KEY not set",
-                "detail": "No API key available for OpenAI models"
-            }
+        provider = _detect_provider(ai_model)
 
-        client = AsyncOpenAI(api_key=api_key, timeout=request_timeout)
+        if provider == "gemini":
+            try:
+                import google.generativeai as genai
+            except Exception as e:
+                return {
+                    "error": f"Gemini client unavailable: {e}",
+                    "detail": "google-generativeai not installed",
+                }
+
+            api_key = os.getenv("GEMINI_API_KEY")
+            if not api_key:
+                return {
+                    "error": "GEMINI_API_KEY not set",
+                    "detail": "No API key available for Gemini models",
+                }
+
+            genai.configure(api_key=api_key)
+            try:
+                model = genai.GenerativeModel(model_name=ai_model, system_instruction=system_prompt)
+                prompt_text = pdf_text
+            except TypeError:
+                model = genai.GenerativeModel(model_name=ai_model)
+                prompt_text = f"{system_prompt}\n\n{pdf_text}"
+
+            generation_config: dict[str, Any] = {"temperature": temperature}
+            if max_tokens is not None:
+                generation_config["max_output_tokens"] = max_tokens
+            if response_format == "json_object":
+                generation_config["response_mime_type"] = "application/json"
+
+            try:
+                response = await model.generate_content_async(
+                    prompt_text, generation_config=generation_config
+                )
+            except AttributeError:
+                response = model.generate_content(prompt_text, generation_config=generation_config)
+            except TypeError:
+                response = await model.generate_content_async(prompt_text)
+
+            response_text = getattr(response, "text", "") or ""
+
+            tokens_in = 0
+            tokens_out = 0
+            cost_usd = 0.0
+            usage = getattr(response, "usage_metadata", None)
+            if usage:
+                tokens_in = getattr(usage, "prompt_token_count", 0) or 0
+                tokens_out = getattr(usage, "candidates_token_count", 0) or 0
+                cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
+                cost_usd = cost_info.get("total_cost", 0.0) or 0.0
+                logger.info(
+                    f"💰 Gemini - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}"
+                )
+            else:
+                logger.info("💰 Gemini - Uso de tokens no disponible")
+
+            if response_format == "json_object":
+                try:
+                    parsed = json.loads(response_text)
+                    parsed["cost_usd"] = cost_usd
+                    return add_execution_metadata(parsed)
+                except json.JSONDecodeError:
+                    parsed = safe_json_parse(response_text, logger, ai_model, "residenciafiscal")
+                    parsed["cost_usd"] = cost_usd
+                    return add_execution_metadata(parsed)
+
+            result = {"response": response_text, "cost_usd": cost_usd}
+            return add_execution_metadata(result)
+
+        if provider == "groq":
+            api_key = os.getenv("GROQ_API_KEY")
+            if not api_key:
+                return {
+                    "error": "GROQ_API_KEY not set",
+                    "detail": "No API key available for Groq models",
+                }
+            client = AsyncOpenAI(
+                api_key=api_key,
+                base_url="https://api.groq.com/openai/v1",
+                timeout=request_timeout,
+            )
+        else:
+            api_key = os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                return {
+                    "error": "OPENAI_API_KEY not set",
+                    "detail": "No API key available for OpenAI models",
+                }
+            client = AsyncOpenAI(api_key=api_key, timeout=request_timeout)
 
         # Prepare kwargs for the API call
         kwargs = {
@@ -177,8 +190,8 @@ async def gpt_request_for_sentencia(
         if response_format == "json_object":
             kwargs["response_format"] = {"type": "json_object"}
 
-        # Add reasoning effort for GPT-5 models
-        if reasoning_effort and ("gpt-5" in ai_model.lower() or "o1" in ai_model.lower()):
+        # Add reasoning effort for GPT-5 models (OpenAI only)
+        if provider == "openai" and reasoning_effort and ("gpt-5" in ai_model.lower() or "o1" in ai_model.lower()):
             kwargs["reasoning_effort"] = reasoning_effort
 
         # Add max tokens if specified
@@ -200,7 +213,8 @@ async def gpt_request_for_sentencia(
             tokens_out = response.usage.completion_tokens or 0
             cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
             cost_usd = cost_info.get("total_cost", 0.0) or 0.0
-            logger.info(f"💰 Fallback OpenAI - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}")
+            label = "Groq" if provider == "groq" else "OpenAI"
+            logger.info(f"💰 {label} - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}")
         else:
             logger.warning(f"⚠️ response.usage es None para {ai_model}")
 
@@ -222,10 +236,10 @@ async def gpt_request_for_sentencia(
         return add_execution_metadata(result)
 
     except Exception as e:
-        logger.error(f"Fallback gpt_request failed: {e}")
+        logger.error(f"LLM request failed: {e}")
         return {
             "error": str(e),
-            "detail": "Both universal and OpenAI fallback failed"
+            "detail": "LLM request failed"
         }
 
 

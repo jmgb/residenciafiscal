@@ -47,7 +47,7 @@ parser.add_argument(
 
 ### 2. **Script de Pruebas Automáticas**
 
-#### `test_reasoning_effort_comparison.py` (600+ líneas)
+#### `test/test_reasoning_effort_comparison.py` (600+ líneas)
 
 **Características:**
 - ✅ Ejecuta **8 configuraciones** automáticamente:
@@ -73,10 +73,10 @@ parser.add_argument(
 **Uso:**
 ```bash
 # Opción 1: Automático
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Opción 2: Específico
-python test_reasoning_effort_comparison.py \
+python test/test_reasoning_effort_comparison.py \
     --pdf sentencias/STS_371_2020.pdf
 ```
 
@@ -84,7 +84,7 @@ python test_reasoning_effort_comparison.py \
 
 ### 3. **Documentación Exhaustiva**
 
-#### `TEST_REASONING_EFFORT_GUIDE.md` (5000+ palabras)
+#### `docs/TEST_REASONING_EFFORT_GUIDE.md` (5000+ palabras)
 
 **Secciones:**
 
@@ -115,7 +115,7 @@ python test_reasoning_effort_comparison.py \
    - Matriz de decisión (research vs producción vs prototipado)
    - Troubleshooting común
 
-#### `TEST_README.md` (500+ palabras)
+#### `docs/TEST_README.md` (500+ palabras)
 
 **Propósito:** Guía rápida de inicio
 
@@ -134,7 +134,7 @@ python test_reasoning_effort_comparison.py \
 
 ```bash
 # Ejecutar pruebas
-python test_reasoning_effort_comparison.py --pdf sentencias/STS_371_2020.pdf
+python test/test_reasoning_effort_comparison.py --pdf sentencias/STS_371_2020.pdf
 
 # Ver resultados → elegir GPT-5 + high
 # Implementar
@@ -154,7 +154,7 @@ python residenciafiscal.py \
 
 ```bash
 # Ejecutar pruebas
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Ver resultados → elegir GPT-5 + medium o GPT-5-mini + high
 # Implementar en config.py
@@ -174,7 +174,7 @@ python residenciafiscal.py --input ./sentencias --output ./output
 
 ```bash
 # Ejecutar pruebas rápido
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Ver resultados → elegir GPT-5-mini + minimal o low
 # Implementar por CLI
@@ -200,12 +200,12 @@ residenciafiscal/
 │   ├── process_pdf_async() con nuevo param
 │   └── main_async() propaga reasoning_effort
 │
-├── test_reasoning_effort_comparison.py    [NUEVO]
+├── test/test_reasoning_effort_comparison.py    [NUEVO]
 │   ├── Ejecuta 8 configuraciones
 │   ├── Captura 20+ métricas
 │   └── Genera CSV + JSON
 │
-├── TEST_REASONING_EFFORT_GUIDE.md         [NUEVO - 5000+ palabras]
+├── docs/TEST_REASONING_EFFORT_GUIDE.md         [NUEVO - 5000+ palabras]
 │   ├── Descripción detallada de métricas
 │   ├── Estructura de pruebas
 │   ├── 3 escenarios prácticos
@@ -213,13 +213,13 @@ residenciafiscal/
 │   ├── Ejemplos de análisis
 │   └── Troubleshooting
 │
-├── TEST_README.md                         [NUEVO - 500+ palabras]
+├── docs/TEST_README.md                         [NUEVO - 500+ palabras]
 │   ├── Guía rápida de inicio
 │   ├── Paso a paso de ejecución
 │   ├── Tips prácticos
 │   └── Matriz de decisión
 │
-├── IMPLEMENTATION_SUMMARY.md              [ESTE ARCHIVO]
+├── docs/IMPLEMENTATION_SUMMARY.md              [ESTE ARCHIVO]
 │   ├── Resumen de cambios
 │   ├── Estructura de archivos
 │   └── Verificación de cambios
@@ -262,9 +262,9 @@ reasoning_effort: Optional[str] = None,
 ### Verificar que test script existe:
 
 ```bash
-ls -lh test_reasoning_effort_comparison.py
-file test_reasoning_effort_comparison.py
-wc -l test_reasoning_effort_comparison.py  # ~600 líneas
+ls -lh test/test_reasoning_effort_comparison.py
+file test/test_reasoning_effort_comparison.py
+wc -l test/test_reasoning_effort_comparison.py  # ~600 líneas
 ```
 
 ---
@@ -272,10 +272,10 @@ wc -l test_reasoning_effort_comparison.py  # ~600 líneas
 ### Verificar que documentación existe:
 
 ```bash
-ls -lh TEST_*.md IMPLEMENTATION_SUMMARY.md
+ls -lh TEST_*.md docs/IMPLEMENTATION_SUMMARY.md
 
 # Ver cantidad de palabras
-wc -w TEST_REASONING_EFFORT_GUIDE.md  # ~5000 palabras
+wc -w docs/TEST_REASONING_EFFORT_GUIDE.md  # ~5000 palabras
 ```
 
 ---
@@ -289,10 +289,10 @@ wc -w TEST_REASONING_EFFORT_GUIDE.md  # ~5000 palabras
 python residenciafiscal.py --help | grep reasoning
 
 # 2. Ver que la guía existe
-less TEST_README.md
+less docs/TEST_README.md
 
 # 3. Ver que el script de pruebas existe
-python test_reasoning_effort_comparison.py --help
+python test/test_reasoning_effort_comparison.py --help
 ```
 
 ---
@@ -301,7 +301,7 @@ python test_reasoning_effort_comparison.py --help
 
 ```bash
 # Con una sentencia pequeña primero
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Esto ejecuta:
 # - 8 configuraciones
@@ -328,7 +328,7 @@ print(df[['model', 'reasoning_effort', 'cost_usd', 'time_seconds', 'confianza_ex
 "
 
 # 3. Leer la guía para interpretación
-less TEST_REASONING_EFFORT_GUIDE.md +/Casos\ de\ Uso
+less docs/TEST_REASONING_EFFORT_GUIDE.md +/Casos\ de\ Uso
 ```
 
 ---
@@ -357,7 +357,7 @@ python residenciafiscal.py \
 
 ## 📈 Resultados Esperados
 
-Cuando ejecutes `test_reasoning_effort_comparison.py`:
+Cuando ejecutes `test/test_reasoning_effort_comparison.py`:
 
 ✅ **En consola:**
 ```
@@ -448,10 +448,10 @@ Results saved to:
 | `residenciafiscal.py` | Pasar reasoning_effort a main_async | +1 |
 | `residenciafiscal.py` | Aceptar reasoning_effort en process_pdf_async | +5 |
 | `residenciafiscal.py` | Aceptar reasoning_effort en main_async | +5 |
-| `test_reasoning_effort_comparison.py` | NUEVO - Script de pruebas | +600 |
-| `TEST_REASONING_EFFORT_GUIDE.md` | NUEVO - Guía detallada | +800 |
-| `TEST_README.md` | NUEVO - Guía rápida | +350 |
-| `IMPLEMENTATION_SUMMARY.md` | NUEVO - Este resumen | +300 |
+| `test/test_reasoning_effort_comparison.py` | NUEVO - Script de pruebas | +600 |
+| `docs/TEST_REASONING_EFFORT_GUIDE.md` | NUEVO - Guía detallada | +800 |
+| `docs/TEST_README.md` | NUEVO - Guía rápida | +350 |
+| `docs/IMPLEMENTATION_SUMMARY.md` | NUEVO - Este resumen | +300 |
 
 **Total:** +2000 líneas de código y documentación
 
@@ -474,7 +474,7 @@ python residenciafiscal.py --help | grep -A 3 "reasoning-effort"
 ### Test 2: Verificar que el script de pruebas funciona
 
 ```bash
-python test_reasoning_effort_comparison.py --help
+python test/test_reasoning_effort_comparison.py --help
 ```
 
 ✅ Debe mostrar opciones de `--pdf`, `--output-dir`
@@ -482,8 +482,8 @@ python test_reasoning_effort_comparison.py --help
 ### Test 3: Verificar que la documentación es accesible
 
 ```bash
-head -20 TEST_REASONING_EFFORT_GUIDE.md
-head -20 TEST_README.md
+head -20 docs/TEST_REASONING_EFFORT_GUIDE.md
+head -20 docs/TEST_README.md
 ```
 
 ✅ Ambos deben ser legibles y contener contenido
@@ -494,21 +494,21 @@ head -20 TEST_README.md
 
 **Lectura recomendada en orden:**
 
-1. **START HERE:** `TEST_README.md` (5 min)
+1. **START HERE:** `docs/TEST_README.md` (5 min)
    - Qué hay, cómo se usa, pasos rápidos
 
 2. **NEXT:** Ejecutar pruebas
    ```bash
-   python test_reasoning_effort_comparison.py
+   python test/test_reasoning_effort_comparison.py
    ```
 
-3. **THEN:** `TEST_REASONING_EFFORT_GUIDE.md` (30 min)
+3. **THEN:** `docs/TEST_REASONING_EFFORT_GUIDE.md` (30 min)
    - Entender las métricas
    - Ver ejemplos
    - Aprender análisis avanzado
 
 4. **FINALLY:** Leer el código
-   - `test_reasoning_effort_comparison.py`
+   - `test/test_reasoning_effort_comparison.py`
    - Modificaciones en `residenciafiscal.py`
 
 ---
@@ -517,11 +517,11 @@ head -20 TEST_README.md
 
 | Pregunta | Respuesta |
 |----------|-----------|
-| ¿Cómo ejecuto las pruebas? | `python test_reasoning_effort_comparison.py` |
-| ¿Dónde está la documentación? | `TEST_REASONING_EFFORT_GUIDE.md` (5000 palabras) |
+| ¿Cómo ejecuto las pruebas? | `python test/test_reasoning_effort_comparison.py` |
+| ¿Dónde está la documentación? | `docs/TEST_REASONING_EFFORT_GUIDE.md` (5000 palabras) |
 | ¿Cómo cambio reasoning_effort? | CLI: `--reasoning-effort high` O config.py: `REASONING_EFFORT = "high"` |
 | ¿Qué es "reasoning_effort"? | Parámetro de GPT-5 que controla nivel de razonamiento (más = mejor pero caro) |
-| ¿Cuánto cuesta cada configuración? | Mira tabla en `TEST_README.md` o ejecuta pruebas |
+| ¿Cuánto cuesta cada configuración? | Mira tabla en `docs/TEST_README.md` o ejecuta pruebas |
 
 ---
 

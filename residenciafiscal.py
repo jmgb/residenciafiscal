@@ -82,7 +82,8 @@ except Exception as e:
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    force=True,
 )
 logger = logging.getLogger(__name__)
 
@@ -191,6 +192,60 @@ def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None)
         parts.append(PAGE_MARKER_FMT.format(page_num=i + 1) + text)
 
     return "\n".join(parts).strip()
+
+
+def load_pdf_list(list_path: Path, input_dir: Path) -> List[Path]:
+    """Carga una lista de PDFs desde un .txt (uno por línea)."""
+    if not list_path.exists():
+        raise RuntimeError(f"Archivo de lista no encontrado: {list_path}")
+
+    entries = []
+    for line in list_path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        entries.append(line)
+
+    if not entries:
+        raise RuntimeError(f"Lista vacía en: {list_path}")
+
+    has_relative = any(not Path(item).is_absolute() for item in entries)
+    if has_relative and (not input_dir.exists() or not input_dir.is_dir()):
+        raise RuntimeError(
+            f"Directorio de entrada no válido para rutas relativas: {input_dir}"
+        )
+
+    pdfs: List[Path] = []
+    missing: List[str] = []
+    seen: set[Path] = set()
+
+    for item in entries:
+        candidate = Path(item)
+        if not candidate.is_absolute():
+            candidate = input_dir / candidate
+        if candidate.suffix.lower() != ".pdf":
+            with_pdf = candidate.with_suffix(".pdf")
+            if with_pdf.exists():
+                candidate = with_pdf
+        if candidate.exists() and candidate.is_file():
+            resolved = candidate.resolve()
+            if resolved not in seen:
+                pdfs.append(resolved)
+                seen.add(resolved)
+        else:
+            missing.append(item)
+
+    if missing:
+        logger.warning(
+            "⚠️ PDFs no encontrados en lista (%s): %s",
+            len(missing),
+            ", ".join(missing[:5]) + ("..." if len(missing) > 5 else ""),
+        )
+
+    if not pdfs:
+        raise RuntimeError(f"No se encontraron PDFs válidos en: {list_path}")
+
+    return pdfs
 
 
 # ============================================================================
@@ -425,7 +480,8 @@ async def process_pdf_async(
 
         # Usar gpt_request si está disponible
         if USE_GPT_REQUEST:
-            logger.info(f"📨 Procesando {fname} con gpt_request ({ai_model})")
+            effort_log = reasoning_effort if reasoning_effort else "default"
+            logger.info(f"📨 Procesando {fname} con gpt_request ({ai_model}, reasoning_effort={effort_log})")
             result = await gpt_request_for_sentencia(
                 ai_model=ai_model,
                 system_prompt=SYSTEM_PROMPT,
@@ -495,6 +551,7 @@ async def main_async(
     max_pages: Optional[int],
     max_files: Optional[int],
     skip_existing: bool,
+    pdf_list: Optional[List[Path]] = None,
     reasoning_effort: Optional[str] = None,
 ) -> None:
     """Bucle principal de procesamiento en batches paralelos.
@@ -504,13 +561,15 @@ async def main_async(
         reasoning_effort: Reasoning effort level (minimal, low, medium, high)
     """
 
-    if not in_dir.exists() or not in_dir.is_dir():
-        raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
-
-    # Buscar PDFs recursivamente
-    pdf_files = sorted([p for p in in_dir.glob("**/*.pdf") if p.is_file()])
-    if not pdf_files:
-        raise RuntimeError(f"No encontré PDFs en: {in_dir}")
+    if pdf_list is not None:
+        pdf_files = list(pdf_list)
+    else:
+        if not in_dir.exists() or not in_dir.is_dir():
+            raise RuntimeError(f"Carpeta de entrada no válida: {in_dir}")
+        # Buscar PDFs recursivamente
+        pdf_files = sorted([p for p in in_dir.glob("**/*.pdf") if p.is_file()])
+        if not pdf_files:
+            raise RuntimeError(f"No encontré PDFs en: {in_dir}")
 
     # Limitar PDFs si se especifica max_files
     if max_files and max_files > 0:
@@ -644,6 +703,7 @@ def main() -> None:
         help=ARGUMENT_HELP["output"]
     )
     parser.add_argument("--model", default=DEFAULT_MODEL, help=ARGUMENT_HELP["model"])
+    parser.add_argument("--pdf-list", help=ARGUMENT_HELP["pdf_list"])
     parser.add_argument("--max-files", type=int, default=DEFAULT_MAX_FILES, help=ARGUMENT_HELP["max_files"])
     parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
@@ -690,6 +750,12 @@ def main() -> None:
         logger.error(str(e))
         raise
 
+    pdf_list = None
+    if args.pdf_list:
+        list_path = Path(args.pdf_list).expanduser().resolve()
+        pdf_list = load_pdf_list(list_path, in_dir)
+        logger.info(f"   📄 Lista PDF: {list_path} ({len(pdf_list)} archivos)")
+
     # Ejecutar bucle async
     asyncio.run(
         main_async(
@@ -701,6 +767,7 @@ def main() -> None:
             max_pages=max_pages,
             max_files=max_files,
             skip_existing=args.skip_existing,
+            pdf_list=pdf_list,
             reasoning_effort=args.reasoning_effort,
         )
     )

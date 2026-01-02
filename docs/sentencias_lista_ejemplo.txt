@@ -1,0 +1,7 @@
+# Lista de PDFs a procesar (uno por línea)
+# Puedes usar nombres relativos a la carpeta --input
+# o rutas absolutas.
+
+STS_4220_2024.pdf
+STS_371_2020.pdf
+# /ruta/absoluta/a/otra_sentencia.pdf

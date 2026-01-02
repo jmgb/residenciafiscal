@@ -47,7 +47,7 @@ GEMINI_FLASH = "gemini-3-flash-preview"
 REASONING_EFFORT = "medium"
 
 # Modelo por defecto a usar
-DEFAULT_MODEL = GPT_5_MINI
+DEFAULT_MODEL = GPT_5
 
 
 # ============================================================================
@@ -294,6 +294,7 @@ ARGUMENT_HELP = {
     "input": f"Carpeta con PDFs (default: {DEFAULT_INPUT_DIR})",
     "output": f"Carpeta de salida (default: {DEFAULT_OUTPUT_DIR})",
     "model": f"Modelo OpenAI a usar (default: {DEFAULT_MODEL})",
+    "pdf_list": "Ruta a .txt con lista de PDFs a procesar (uno por línea)",
     "max_files": "Máximo de archivos PDF a procesar (0 = todos) - Útil para pruebas (default: 0)",
     "jsonl_name": f"Nombre del archivo JSONL de salida (default: {DEFAULT_JSONL_NAME})",
     "csv_name": f"Nombre del archivo CSV de salida (default: {DEFAULT_CSV_NAME})",

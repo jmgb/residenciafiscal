@@ -8,11 +8,19 @@
 cd /home/ubuntu/ai_projects/residenciafiscal
 
 # Opción A: Automático (usa primer PDF disponible)
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Opción B: PDF específico
-python test_reasoning_effort_comparison.py \
+python test/test_reasoning_effort_comparison.py \
     --pdf sentencias/STS_371_2020.pdf
+```
+
+**Procesar una lista de PDFs (archivo .txt):**
+```bash
+python residenciafiscal.py \
+    --input ./sentencias \
+    --pdf-list docs/sentencias_lista_ejemplo.txt \
+    --output ./output
 ```
 
 **Qué hace:**
@@ -75,7 +83,7 @@ python residenciafiscal.py \
 
 ## 📊 Resultados Esperados
 
-Cuando ejecutes `python test_reasoning_effort_comparison.py`:
+Cuando ejecutes `python test/test_reasoning_effort_comparison.py`:
 
 ```
 ================================================================================
@@ -231,23 +239,23 @@ Results saved to:
 ## 📚 Documentación Disponible
 
 ### Para empezar rápido:
-- 📄 **Este archivo** (QUICK_START.md) - 5 minutos
+- 📄 **Este archivo** (docs/QUICK_START.md) - 5 minutos
 
 ### Para entender detalles:
-- 📚 **TEST_README.md** - 15 minutos
+- 📚 **docs/TEST_README.md** - 15 minutos
   - Qué se mide
   - Cómo se mide
   - Cómo interpretar resultados
 
 ### Para análisis profundo:
-- 📖 **TEST_REASONING_EFFORT_GUIDE.md** - 30+ minutos
+- 📖 **docs/TEST_REASONING_EFFORT_GUIDE.md** - 30+ minutos
   - 5000+ palabras de detalle
   - Ejemplos prácticos
   - Análisis de casos reales
   - Troubleshooting
 
 ### Contexto técnico:
-- 🔧 **IMPLEMENTATION_SUMMARY.md** - 10 minutos
+- 🔧 **docs/IMPLEMENTATION_SUMMARY.md** - 10 minutos
   - Qué cambió en el código
   - Estructura de archivos
   - Verificación de cambios
@@ -256,10 +264,10 @@ Results saved to:
 
 ## ✅ Checklist Rápido
 
-- [ ] He leído este archivo (QUICK_START.md)
-- [ ] Ejecuté: `python test_reasoning_effort_comparison.py`
+- [ ] He leído este archivo (docs/QUICK_START.md)
+- [ ] Ejecuté: `python test/test_reasoning_effort_comparison.py`
 - [ ] Vi la tabla comparativa en consola
-- [ ] Leí `TEST_README.md` para entender las métricas
+- [ ] Leí `docs/TEST_README.md` para entender las métricas
 - [ ] Elegí configuración basada en mi caso de uso
 - [ ] Implementé la configuración (CLI o config.py)
 - [ ] Verifiqué que funciona con: `python residenciafiscal.py --help | grep reasoning`
@@ -275,10 +283,10 @@ Results saved to:
 
 2. **Intenta primero con un PDF pequeño (si aplica):**
    ```bash
-   python test_reasoning_effort_comparison.py
+   python test/test_reasoning_effort_comparison.py
    ```
 
-3. **Lee la sección "Troubleshooting" en TEST_REASONING_EFFORT_GUIDE.md**
+3. **Lee la sección "Troubleshooting" en docs/TEST_REASONING_EFFORT_GUIDE.md**
 
 4. **Verifica que tienes un PDF en sentencias/:**
    ```bash
@@ -309,5 +317,5 @@ Results saved to:
 
 Próximo comando a ejecutar:
 ```bash
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 ```

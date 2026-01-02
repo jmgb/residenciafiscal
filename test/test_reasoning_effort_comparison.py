@@ -13,14 +13,14 @@ It measures:
 - Quality metrics from the extraction
 
 Usage:
-    python test_reasoning_effort_comparison.py [--pdf PATH]
+    python test/test_reasoning_effort_comparison.py [--pdf PATH]
 
 Examples:
     # Test with default PDF
-    python test_reasoning_effort_comparison.py
+    python test/test_reasoning_effort_comparison.py
 
     # Test with specific PDF
-    python test_reasoning_effort_comparison.py --pdf sentencias/STS_4220_2024.pdf
+    python test/test_reasoning_effort_comparison.py --pdf sentencias/STS_4220_2024.pdf
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 # CONFIGURATION
 # ============================================================================
 
-PROJECT_ROOT = Path(__file__).parent
+PROJECT_ROOT = Path(__file__).parent.parent
 
 # Test configurations: (model, reasoning_effort)
 # Ordenado de más barato/rápido a más lento/caro.

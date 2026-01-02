@@ -4,7 +4,7 @@ Documentación completa sobre el sistema de pruebas para comparar diferentes niv
 
 ## 📚 Documentación Disponible
 
-### 1. **Guía Detallada de Pruebas** → `TEST_REASONING_EFFORT_GUIDE.md`
+### 1. **Guía Detallada de Pruebas** → `docs/TEST_REASONING_EFFORT_GUIDE.md`
 
 Documento exhaustivo (5000+ palabras) que incluye:
 
@@ -37,11 +37,20 @@ Documento exhaustivo (5000+ palabras) que incluye:
 
 ```bash
 # Con PDF automático (primera disponible)
-python test_reasoning_effort_comparison.py
+python test/test_reasoning_effort_comparison.py
 
 # Con PDF específico
-python test_reasoning_effort_comparison.py \
+python test/test_reasoning_effort_comparison.py \
     --pdf sentencias/STS_371_2020.pdf
+```
+
+### Procesar una lista de sentencias desde .txt
+
+```bash
+python residenciafiscal.py \
+    --input ./sentencias \
+    --pdf-list docs/sentencias_lista_ejemplo.txt \
+    --output ./output
 ```
 
 **Duración estimada:** 3-5 minutos (8 configuraciones × ~30-50s cada una)
@@ -237,7 +246,7 @@ with open("analisis.jsonl") as f:
 - `ai_service_adapter.py` - Integración con OpenAI (gestiona parámetros)
 - `config.py` - Configuración central (REASONING_EFFORT)
 - `prompt.py` - Definición del análisis (qué campos extraer)
-- `test_reasoning_effort_comparison.py` - Script de pruebas
+- `test/test_reasoning_effort_comparison.py` - Script de pruebas
 
 **Cambios implementados:**
 
@@ -254,19 +263,19 @@ with open("analisis.jsonl") as f:
 
 Si encuentras problemas:
 
-1. **Lee** `TEST_REASONING_EFFORT_GUIDE.md` (secciones "Troubleshooting")
+1. **Lee** `docs/TEST_REASONING_EFFORT_GUIDE.md` (secciones "Troubleshooting")
 2. **Verifica** que `OPENAI_API_KEY` está configurada
 3. **Intenta** primero con un PDF pequeño (test case simple)
-4. **Revisar** logs: `tail -50 test_reasoning_effort_comparison.py`
+4. **Revisar** logs: `tail -50 test/test_reasoning_effort_comparison.py`
 
 ---
 
 ## 📋 Checklist de Uso
 
-- [ ] He leído `TEST_REASONING_EFFORT_GUIDE.md`
+- [ ] He leído `docs/TEST_REASONING_EFFORT_GUIDE.md`
 - [ ] Tengo un PDF válido en `sentencias/`
 - [ ] He configurado `OPENAI_API_KEY`
-- [ ] He ejecutado `python test_reasoning_effort_comparison.py`
+- [ ] He ejecutado `python test/test_reasoning_effort_comparison.py`
 - [ ] He analizado los resultados en CSV/JSON
 - [ ] He elegido configuración basada en mis necesidades
 - [ ] He actualizado `config.py` o uso CLI `--reasoning-effort`
@@ -328,6 +337,6 @@ Results saved to:
 
 ---
 
-Documento creado: `TEST_REASONING_EFFORT_GUIDE.md` (con 800+ líneas de detalle)
+Documento creado: `docs/TEST_REASONING_EFFORT_GUIDE.md` (con 800+ líneas de detalle)
 
 ¡Listo para usar! 🚀
