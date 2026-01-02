@@ -608,6 +608,15 @@ def expand_pruebas_for_excel(obj: Dict[str, Any]) -> List[Dict[str, Any]]:
     return rows
 
 
+def _sanitize_cell_value(value: Any) -> Any:
+    """Sanitiza valores para Excel: elimina caracteres de control no permitidos."""
+    if not isinstance(value, str):
+        return value
+    # Elimina caracteres de control (ASCII 0-31) excepto tab(9), newline(10), CR(13)
+    # Excel no permite estos caracteres en las celdas
+    return ''.join(c for c in value if ord(c) >= 32 or c in '\t\n\r')
+
+
 def generate_normalized_exports(
     jsonl_path: Path,
     output_dir: Path,
@@ -657,13 +666,15 @@ def generate_normalized_exports(
     ws_sentencias.title = "Sentencias"
     for r_idx, row in enumerate(dataframe_to_rows(df_sentencias, index=False, header=True), 1):
         for c_idx, value in enumerate(row, 1):
-            ws_sentencias.cell(row=r_idx, column=c_idx, value=value)
+            clean_value = _sanitize_cell_value(value)
+            ws_sentencias.cell(row=r_idx, column=c_idx, value=clean_value)
 
     # Hoja 2: Pruebas
     ws_pruebas = wb.create_sheet("Pruebas")
     for r_idx, row in enumerate(dataframe_to_rows(df_pruebas, index=False, header=True), 1):
         for c_idx, value in enumerate(row, 1):
-            ws_pruebas.cell(row=r_idx, column=c_idx, value=value)
+            clean_value = _sanitize_cell_value(value)
+            ws_pruebas.cell(row=r_idx, column=c_idx, value=clean_value)
 
     wb.save(xlsx_path)
     logger.info(f"📊 Excel: {xlsx_path}")
