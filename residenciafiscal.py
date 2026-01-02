@@ -452,6 +452,203 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
 
 
 # ============================================================================
+# EXCEL EXPORT (DOS PESTAÑAS: SENTENCIAS + PRUEBAS)
+# ============================================================================
+
+def flatten_sentencia_for_excel(obj: Dict[str, Any]) -> Dict[str, Any]:
+    """Aplana datos de sentencia para pestaña 'Sentencias' (sin pruebas detalladas)."""
+    row: Dict[str, Any] = {}
+
+    # Identificación
+    row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
+    ids = obj.get("identificadores", {}) or {}
+    row["ROJ"] = ids.get("ROJ", DEFAULT_MISSING_VALUE)
+    row["ECLI"] = ids.get("ECLI", DEFAULT_MISSING_VALUE)
+    row["organo"] = obj.get("organo", DEFAULT_MISSING_VALUE)
+    row["fecha_resolucion"] = obj.get("fecha_resolucion", DEFAULT_MISSING_VALUE)
+
+    # Filtrado
+    row["es_caso_residencia_irpf"] = obj.get("es_caso_residencia_irpf", DEFAULT_MISSING_VALUE)
+    row["motivo_fuera_de_alcance"] = obj.get("motivo_fuera_de_alcance", DEFAULT_MISSING_VALUE)
+    row["ejercicios_afectados"] = obj.get("ejercicios_afectados", DEFAULT_MISSING_VALUE)
+
+    # Residencia y CDI
+    row["pais_alegado_residencia_pf"] = obj.get("pais_alegado_residencia_pf", DEFAULT_MISSING_VALUE)
+    row["pais_CDI_aplicado"] = obj.get("pais_CDI_aplicado", DEFAULT_MISSING_VALUE)
+    row["se_invoca_CDI"] = obj.get("se_invoca_CDI", DEFAULT_MISSING_VALUE)
+    row["tiebreaker_paso_decisivo"] = obj.get("tiebreaker_paso_decisivo", DEFAULT_MISSING_VALUE)
+
+    # Criterios
+    criterios = obj.get("Criterios_residencia_detectados", [])
+    row["criterios_detectados"] = ", ".join(criterios) if criterios else DEFAULT_MISSING_VALUE
+    criterio_dec = obj.get("Criterio_decisivo", [])
+    row["criterio_decisivo"] = ", ".join(criterio_dec) if criterio_dec else DEFAULT_MISSING_VALUE
+    row["resumen_criterios"] = obj.get("resumen_criterios", DEFAULT_MISSING_VALUE)
+
+    # Razonamiento judicial
+    doctrina = obj.get("doctrina_citada", [])
+    row["doctrina_citada"] = ", ".join(doctrina) if doctrina else DEFAULT_MISSING_VALUE
+
+    carga = obj.get("carga_prueba", {}) or {}
+    row["carga_prueba_quien"] = carga.get("quien_tenia_carga", DEFAULT_MISSING_VALUE)
+    row["carga_prueba_cumplida"] = carga.get("cumplida", DEFAULT_MISSING_VALUE)
+    row["carga_prueba_motivo"] = carga.get("motivo", DEFAULT_MISSING_VALUE)
+
+    row["razonamiento_residencia"] = obj.get("razonamiento_residencia", DEFAULT_MISSING_VALUE)
+
+    # Agregados de pruebas
+    pruebas_aeat = obj.get("Pruebas_AEAT", []) or []
+    pruebas_contrib = obj.get("Pruebas_contribuyente", []) or []
+
+    row["total_pruebas_aeat"] = len(pruebas_aeat)
+    row["total_pruebas_contribuyente"] = len(pruebas_contrib)
+    row["pruebas_aeat_aceptadas"] = sum(1 for p in pruebas_aeat if p.get("aceptada") == "SI")
+    row["pruebas_aeat_rechazadas"] = sum(1 for p in pruebas_aeat if p.get("aceptada") == "NO")
+    row["pruebas_contrib_aceptadas"] = sum(1 for p in pruebas_contrib if p.get("aceptada") == "SI")
+    row["pruebas_contrib_rechazadas"] = sum(1 for p in pruebas_contrib if p.get("aceptada") == "NO")
+
+    # Categorías
+    row["categorias_admitidas_aeat"] = ", ".join(obj.get("categorias_admitidas_aeat", []))
+    row["categorias_rechazadas_aeat"] = ", ".join(obj.get("categorias_rechazadas_aeat", []))
+    row["categorias_admitidas_contribuyente"] = ", ".join(obj.get("categorias_admitidas_contribuyente", []))
+    row["categorias_rechazadas_contribuyente"] = ", ".join(obj.get("categorias_rechazadas_contribuyente", []))
+
+    # Bala de plata
+    bala = obj.get("Prueba_o_bala_de_plata", {}) or {}
+    row["bala_plata_parte"] = bala.get("parte", DEFAULT_MISSING_VALUE)
+    row["bala_plata_categoria"] = bala.get("categoria", DEFAULT_MISSING_VALUE)
+    row["bala_plata_detalle"] = bala.get("detalle", DEFAULT_MISSING_VALUE)
+    row["bala_plata_por_que"] = bala.get("por_que_decisiva", DEFAULT_MISSING_VALUE)
+
+    # Resultado
+    row["resultado_final"] = obj.get("resultado_final", DEFAULT_MISSING_VALUE)
+    row["confianza_extraccion"] = obj.get("confianza_extraccion", DEFAULT_MISSING_VALUE)
+    row["observaciones"] = obj.get("observaciones", DEFAULT_MISSING_VALUE)
+
+    # Metadata
+    row["tiempo_ejecucion"] = obj.get("tiempo_ejecucion", DEFAULT_MISSING_VALUE)
+    row["costo_usd"] = obj.get("costo_usd", 0.0)
+
+    return row
+
+
+def expand_pruebas_for_excel(obj: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Expande cada prueba a una fila para pestaña 'Pruebas'."""
+    rows = []
+    archivo = obj.get("archivo", "unknown")
+    resultado = obj.get("resultado_final", DEFAULT_MISSING_VALUE)
+
+    # Pruebas AEAT
+    for prueba in obj.get("Pruebas_AEAT", []) or []:
+        row = {
+            "archivo": archivo,
+            "resultado_sentencia": resultado,
+            "parte": "AEAT",
+            "categoria": prueba.get("categoria", DEFAULT_MISSING_VALUE),
+            "subcategoria": prueba.get("subcategoria", DEFAULT_MISSING_VALUE),
+            "detalle": prueba.get("detalle", DEFAULT_MISSING_VALUE),
+            "objetivo_probatorio": prueba.get("objetivo_probatorio", DEFAULT_MISSING_VALUE),
+            "criterio_atacado": prueba.get("criterio_atacado", DEFAULT_MISSING_VALUE),
+            "tipo_prueba": prueba.get("tipo_prueba", DEFAULT_MISSING_VALUE),
+            "origen": prueba.get("origen", DEFAULT_MISSING_VALUE),
+            "aceptada": prueba.get("aceptada", DEFAULT_MISSING_VALUE),
+            "peso": prueba.get("peso", 0),
+            "motivo_valoracion": prueba.get("motivo_valoracion", DEFAULT_MISSING_VALUE),
+            "contradiccion_con": prueba.get("contradiccion_con", DEFAULT_MISSING_VALUE),
+            "cita_pagina": (prueba.get("cita") or {}).get("pagina", DEFAULT_MISSING_VALUE),
+            "cita_texto": (prueba.get("cita") or {}).get("texto", DEFAULT_MISSING_VALUE),
+        }
+        rows.append(row)
+
+    # Pruebas CONTRIBUYENTE
+    for prueba in obj.get("Pruebas_contribuyente", []) or []:
+        row = {
+            "archivo": archivo,
+            "resultado_sentencia": resultado,
+            "parte": "CONTRIBUYENTE",
+            "categoria": prueba.get("categoria", DEFAULT_MISSING_VALUE),
+            "subcategoria": prueba.get("subcategoria", DEFAULT_MISSING_VALUE),
+            "detalle": prueba.get("detalle", DEFAULT_MISSING_VALUE),
+            "objetivo_probatorio": prueba.get("objetivo_probatorio", DEFAULT_MISSING_VALUE),
+            "criterio_atacado": prueba.get("criterio_atacado", DEFAULT_MISSING_VALUE),
+            "tipo_prueba": prueba.get("tipo_prueba", DEFAULT_MISSING_VALUE),
+            "origen": prueba.get("origen", DEFAULT_MISSING_VALUE),
+            "aceptada": prueba.get("aceptada", DEFAULT_MISSING_VALUE),
+            "peso": prueba.get("peso", 0),
+            "motivo_valoracion": prueba.get("motivo_valoracion", DEFAULT_MISSING_VALUE),
+            "contradiccion_con": prueba.get("contradiccion_con", DEFAULT_MISSING_VALUE),
+            "cita_pagina": (prueba.get("cita") or {}).get("pagina", DEFAULT_MISSING_VALUE),
+            "cita_texto": (prueba.get("cita") or {}).get("texto", DEFAULT_MISSING_VALUE),
+        }
+        rows.append(row)
+
+    return rows
+
+
+def generate_normalized_exports(
+    jsonl_path: Path,
+    output_dir: Path,
+    timestamp: str,
+    logger: logging.Logger
+) -> None:
+    """Genera CSVs normalizados y Excel con dos pestañas."""
+    from openpyxl import Workbook
+    from openpyxl.utils.dataframe import dataframe_to_rows
+
+    sentencias_rows = []
+    pruebas_rows = []
+
+    with jsonl_path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                obj = json.loads(line)
+                sentencias_rows.append(flatten_sentencia_for_excel(obj))
+                pruebas_rows.extend(expand_pruebas_for_excel(obj))
+            except Exception:
+                continue
+
+    # Crear DataFrames
+    df_sentencias = pd.DataFrame(sentencias_rows)
+    df_pruebas = pd.DataFrame(pruebas_rows)
+
+    # Rutas de salida
+    sentencias_csv = output_dir / f"sentencias_{timestamp}.csv"
+    pruebas_csv = output_dir / f"pruebas_{timestamp}.csv"
+    xlsx_path = output_dir / f"analisis_{timestamp}.xlsx"
+
+    # 1. Guardar CSVs
+    df_sentencias.to_csv(sentencias_csv, index=False, encoding="utf-8")
+    logger.info(f"📄 CSV Sentencias: {sentencias_csv} ({len(df_sentencias)} filas)")
+
+    df_pruebas.to_csv(pruebas_csv, index=False, encoding="utf-8")
+    logger.info(f"📄 CSV Pruebas: {pruebas_csv} ({len(df_pruebas)} filas)")
+
+    # 2. Crear Excel con dos hojas
+    wb = Workbook()
+
+    # Hoja 1: Sentencias
+    ws_sentencias = wb.active
+    ws_sentencias.title = "Sentencias"
+    for r_idx, row in enumerate(dataframe_to_rows(df_sentencias, index=False, header=True), 1):
+        for c_idx, value in enumerate(row, 1):
+            ws_sentencias.cell(row=r_idx, column=c_idx, value=value)
+
+    # Hoja 2: Pruebas
+    ws_pruebas = wb.create_sheet("Pruebas")
+    for r_idx, row in enumerate(dataframe_to_rows(df_pruebas, index=False, header=True), 1):
+        for c_idx, value in enumerate(row, 1):
+            ws_pruebas.cell(row=r_idx, column=c_idx, value=value)
+
+    wb.save(xlsx_path)
+    logger.info(f"📊 Excel: {xlsx_path}")
+    logger.info(f"   - Pestaña 'Sentencias': {len(df_sentencias)} filas")
+    logger.info(f"   - Pestaña 'Pruebas': {len(df_pruebas)} filas")
+
+
+# ============================================================================
 # MAIN ASYNC PROCESSING LOOP
 # ============================================================================
 
@@ -553,6 +750,7 @@ async def main_async(
     skip_existing: bool,
     pdf_list: Optional[List[Path]] = None,
     reasoning_effort: Optional[str] = None,
+    timestamp: str = "",
 ) -> None:
     """Bucle principal de procesamiento en batches paralelos.
 
@@ -666,6 +864,10 @@ async def main_async(
 
     df.to_csv(csv_path, index=False, encoding="utf-8")
 
+    # Generar exports normalizados (CSVs + Excel con pestañas)
+    if timestamp:
+        generate_normalized_exports(jsonl_path, out_dir, timestamp, logger)
+
     # Mostrar resumen final con costes
     logger.info(f"\n{'='*60}")
     logger.info(f"✅ PROCESAMIENTO COMPLETADO")
@@ -769,6 +971,7 @@ def main() -> None:
             skip_existing=args.skip_existing,
             pdf_list=pdf_list,
             reasoning_effort=args.reasoning_effort,
+            timestamp=timestamp,
         )
     )
 
