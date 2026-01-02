@@ -57,6 +57,7 @@ from config import (
     VALID_TIEBREAKER_PASOS,
     VALID_RESULTADO_FINAL,
     ALLOWED_KEYS,
+    ENFORCE_ALLOWED_KEYS,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -201,10 +202,11 @@ def clean_schema(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
     """Limpia el schema eliminando keys no permitidas y normalizando enums."""
 
     # 1. Eliminar keys no permitidas
-    keys_to_remove = [k for k in obj.keys() if k not in ALLOWED_KEYS]
-    for key in keys_to_remove:
-        logger.debug(f"🧹 {filename}: Eliminando key no permitida: {key}")
-        del obj[key]
+    if ENFORCE_ALLOWED_KEYS:
+        keys_to_remove = [k for k in obj.keys() if k not in ALLOWED_KEYS]
+        for key in keys_to_remove:
+            logger.debug(f"🧹 {filename}: Eliminando key no permitida: {key}")
+            del obj[key]
 
     # 2. Normalizar criterios (eliminar paréntesis y modificadores)
     for field in ["Criterios_residencia_detectados", "Criterio_decisivo"]:
@@ -350,7 +352,12 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     # Criterios
     row["criterios_detectados"] = jdump(obj.get("Criterios_residencia_detectados", []))
     row["criterio_decisivo"] = jdump(obj.get("Criterio_decisivo", []))
-    row["resumen_criterios"] = obj.get("Resumen_criterios", DEFAULT_MISSING_VALUE)
+    row["resumen_criterios"] = obj.get("resumen_criterios", DEFAULT_MISSING_VALUE)
+
+    # Razonamiento judicial (nuevos campos)
+    row["doctrina_citada"] = jdump(obj.get("doctrina_citada", []))
+    row["carga_prueba"] = jdump(obj.get("carga_prueba", {}))
+    row["razonamiento_residencia"] = obj.get("razonamiento_residencia", DEFAULT_MISSING_VALUE)
 
     # Pruebas detalladas
     row["pruebas_aeat"] = jdump(obj.get("Pruebas_AEAT", []))
@@ -374,6 +381,19 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
     row["confianza_extraccion"] = obj.get("confianza_extraccion", DEFAULT_MISSING_VALUE)
     row["observaciones"] = obj.get("observaciones", DEFAULT_MISSING_VALUE)
 
+    # Ejecución y costes
+    row["tiempo_ejecucion"] = obj.get("tiempo_ejecucion", DEFAULT_MISSING_VALUE)
+    row["costo_usd"] = obj.get("costo_usd", 0.0)
+
+    # Incluir automáticamente cualquier campo top-level no mapeado
+    for key, value in obj.items():
+        if key in row:
+            continue
+        if isinstance(value, (dict, list)):
+            row[key] = jdump(value)
+        else:
+            row[key] = value
+
     return row
 
 
@@ -385,6 +405,7 @@ async def process_pdf_async(
     pdf_path: Path,
     ai_model: str,
     max_pages: Optional[int],
+    reasoning_effort: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Procesa un PDF usando gpt_request."""
     fname = pdf_path.name
@@ -413,7 +434,7 @@ async def process_pdf_async(
                 logger=logger,
                 temperature=0,
                 response_format="json_object",
-                reasoning_effort=REASONING_EFFORT if "gpt-5" in ai_model else None,
+                reasoning_effort=reasoning_effort if "gpt-5" in ai_model else None,
             )
             
             if "error" in result:
@@ -427,20 +448,20 @@ async def process_pdf_async(
                     fname,
                 )
             
-            # Extraer información de tokens y coste
-            tokens_in = result.pop("tokens_in", 0)
-            tokens_out = result.pop("tokens_out", 0)
+            # Extraer información de tiempo y coste
+            tiempo_ejecucion = result.pop("tiempo_ejecucion", "NO CONSTA")
             cost_usd = result.pop("cost_usd", 0)
 
-            # Eliminar otros campos de metadata
-            obj = {k: v for k, v in result.items() if k not in ["tiempo_ejecucion", "error"]}
+            # Eliminar tokens (no se guardan)
+            result.pop("tokens_in", None)
+            result.pop("tokens_out", None)
 
-            # Agregar información de coste al objeto
-            obj["_metadata"] = {
-                "tokens_in": tokens_in,
-                "tokens_out": tokens_out,
-                "cost_usd": cost_usd,
-            }
+            # Eliminar otros campos de metadata
+            obj = {k: v for k, v in result.items() if k not in ["error"]}
+
+            # Agregar metadata de ejecución y coste directamente en el objeto
+            obj["tiempo_ejecucion"] = tiempo_ejecucion
+            obj["costo_usd"] = cost_usd
         else:
             logger.warning(f"⚠️ gpt_request no disponible, usando fallback")
             return ensure_required_keys(
@@ -475,11 +496,13 @@ async def main_async(
     max_pages: Optional[int],
     max_files: Optional[int],
     skip_existing: bool,
+    reasoning_effort: Optional[str] = None,
 ) -> None:
     """Bucle principal de procesamiento en batches paralelos.
 
     Args:
         max_files: Máximo número de PDFs a procesar (0 o None = sin límite)
+        reasoning_effort: Reasoning effort level (minimal, low, medium, high)
     """
 
     if not in_dir.exists() or not in_dir.is_dir():
@@ -535,33 +558,23 @@ async def main_async(
 
             # Procesar todos los PDFs en el batch de forma concurrente
             results = await asyncio.gather(
-                *[process_pdf_async(pdf_path, ai_model, max_pages) for pdf_path in batch]
+                *[process_pdf_async(pdf_path, ai_model, max_pages, reasoning_effort) for pdf_path in batch]
             )
 
             # Guardar resultados en JSONL y acumular costes
             batch_cost = 0.0
             for idx, obj in enumerate(results):
-                # Extraer coste si está disponible
-                metadata = obj.pop("_metadata", {})
-                tokens_in = metadata.get("tokens_in", 0)
-                tokens_out = metadata.get("tokens_out", 0)
-                cost_usd = metadata.get("cost_usd", 0.0)
+                # Extraer coste (ya está en el objeto como costo_usd)
+                cost_usd = obj.get("costo_usd", 0.0)
                 batch_cost += cost_usd
                 total_cost += cost_usd
-
-                # Agregar información de auditoría de costes al objeto para guardar
-                obj["_tokens"] = {
-                    "input": tokens_in,
-                    "output": tokens_out,
-                    "cost_usd": cost_usd
-                }
 
                 jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
 
                 # Log por PDF
                 pdf_name = obj.get("archivo", "unknown")
                 if cost_usd > 0:
-                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f} ({tokens_in} in, {tokens_out} out)")
+                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f}")
 
             jf.flush()
 
@@ -637,6 +650,12 @@ def main() -> None:
     parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
     parser.add_argument("--skip-existing", action="store_true", help=ARGUMENT_HELP["skip_existing"])
+    parser.add_argument(
+        "--reasoning-effort",
+        default=REASONING_EFFORT,
+        choices=["minimal", "low", "medium", "high"],
+        help="Reasoning effort level for GPT-5 models (default: medium)"
+    )
     args = parser.parse_args()
 
     in_dir = Path(args.input).expanduser().resolve()
@@ -658,7 +677,7 @@ def main() -> None:
     logger.info(f"   📁 Entrada: {in_dir}")
     logger.info(f"   📤 Salida: {out_dir}")
     logger.info(f"   🤖 Modelo: {args.model}")
-    logger.info(f"   ⚙️ Reasoning Effort: {REASONING_EFFORT}")
+    logger.info(f"   ⚙️ Reasoning Effort: {args.reasoning_effort}")
     logger.info(f"   ⏰ Timestamp: {timestamp}")
     logger.info(f"   📋 JSONL: {jsonl_name}")
     logger.info(f"   📊 CSV: {csv_name}")
@@ -686,6 +705,7 @@ def main() -> None:
             max_pages=max_pages,
             max_files=max_files,
             skip_existing=args.skip_existing,
+            reasoning_effort=args.reasoning_effort,
         )
     )
 

@@ -47,7 +47,7 @@ GEMINI_FLASH = "gemini-3-flash-preview"
 REASONING_EFFORT = "medium"
 
 # Modelo por defecto a usar
-DEFAULT_MODEL = GPT_5
+DEFAULT_MODEL = GPT_5_NANO
 
 
 # ============================================================================
@@ -103,6 +103,9 @@ VERBOSE = False
 # ============================================================================
 # ENUMS VÁLIDOS (para validación de schema)
 # ============================================================================
+
+# Control de limpieza de schema: si es False, no se eliminan keys extra
+ENFORCE_ALLOWED_KEYS = False
 
 VALID_CRITERIOS = {
     "CRIT_183_DIAS",
@@ -164,7 +167,12 @@ ALLOWED_KEYS = {
     "tiebreaker_paso_decisivo",
     "Criterios_residencia_detectados",
     "Criterio_decisivo",
-    "Resumen_criterios",
+    "resumen_criterios",
+    # Nuevos campos de razonamiento judicial
+    "doctrina_citada",
+    "carga_prueba",
+    "razonamiento_residencia",
+    # Pruebas
     "Pruebas_AEAT",
     "Pruebas_contribuyente",
     "categorias_admitidas_aeat",
@@ -177,6 +185,9 @@ ALLOWED_KEYS = {
     "frases_clave",
     "confianza_extraccion",
     "observaciones",
+    # Metadata de ejecución
+    "tiempo_ejecucion",
+    "costo_usd",
 }
 
 # ============================================================================
@@ -198,7 +209,17 @@ REQUIRED_FIELDS = {
     "tiebreaker_paso_decisivo": DEFAULT_MISSING_VALUE,
     "Criterios_residencia_detectados": [],
     "Criterio_decisivo": [],
-    "Resumen_criterios": DEFAULT_MISSING_VALUE,
+    "resumen_criterios": DEFAULT_MISSING_VALUE,
+    # Nuevos campos de razonamiento judicial
+    "doctrina_citada": [],
+    "carga_prueba": {
+        "quien_tenia_carga": DEFAULT_MISSING_VALUE,
+        "motivo": DEFAULT_MISSING_VALUE,
+        "cumplida": DEFAULT_MISSING_VALUE,
+        "cita": {"pagina": DEFAULT_MISSING_VALUE, "texto": DEFAULT_MISSING_VALUE},
+    },
+    "razonamiento_residencia": DEFAULT_MISSING_VALUE,
+    # Pruebas
     "Pruebas_AEAT": [],
     "Pruebas_contribuyente": [],
     "categorias_admitidas_aeat": [],
@@ -211,6 +232,7 @@ REQUIRED_FIELDS = {
         "categoria": DEFAULT_MISSING_VALUE,
         "subcategoria": DEFAULT_MISSING_VALUE,
         "detalle": DEFAULT_MISSING_VALUE,
+        "por_que_decisiva": DEFAULT_MISSING_VALUE,
         "cita": {"pagina": DEFAULT_MISSING_VALUE, "texto": DEFAULT_MISSING_VALUE},
     },
     "resultado_final": DEFAULT_MISSING_VALUE,
@@ -242,6 +264,10 @@ CSV_COLUMN_ORDER = [
     "criterios_detectados",
     "criterio_decisivo",
     "resumen_criterios",
+    # Razonamiento judicial (nuevos campos)
+    "doctrina_citada",
+    "carga_prueba",
+    "razonamiento_residencia",
     # Pruebas detalladas
     "pruebas_aeat",
     "pruebas_contribuyente",

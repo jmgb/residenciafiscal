@@ -86,7 +86,16 @@ async def gpt_request_for_sentencia(
     
     import os
     import json
+    import time
     from model_pricing import calculate_cost as calc_cost_fn
+
+    start_time = time.perf_counter()
+
+    def add_execution_metadata(result_dict: dict) -> dict:
+        """Añade metadata de ejecución al resultado."""
+        elapsed = round(time.perf_counter() - start_time, 1)
+        result_dict["tiempo_ejecucion"] = f"{ai_model} - {elapsed}s"
+        return result_dict
 
     # Try using universal gpt_request if available
     if HAS_UNIVERSAL_GPT and universal_gpt_request:
@@ -107,7 +116,7 @@ async def gpt_request_for_sentencia(
                 max_tokens=max_tokens,
                 reasoning_effort=reasoning_effort,
             )
-            return result
+            return add_execution_metadata(result)
         except Exception as e:
             logger.warning(f"Universal gpt_request failed, using fallback: {e}")
 
@@ -161,33 +170,35 @@ async def gpt_request_for_sentencia(
         response_text = response.choices[0].message.content
 
         # Extract token usage and calculate cost
-        tokens_in = response.usage.prompt_tokens
-        tokens_out = response.usage.completion_tokens
-        cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
-        cost_usd = cost_info.get("total_cost", 0.0) or 0.0
+        tokens_in = 0
+        tokens_out = 0
+        cost_usd = 0.0
+
+        if response.usage:
+            tokens_in = response.usage.prompt_tokens or 0
+            tokens_out = response.usage.completion_tokens or 0
+            cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
+            cost_usd = cost_info.get("total_cost", 0.0) or 0.0
+            logger.info(f"💰 Fallback OpenAI - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}")
+        else:
+            logger.warning(f"⚠️ response.usage es None para {ai_model}")
 
         # Try to parse as JSON if requested
         if response_format == "json_object":
             try:
                 parsed = json.loads(response_text)
-                # Add token and cost info
-                parsed["tokens_in"] = tokens_in
-                parsed["tokens_out"] = tokens_out
+                # Add cost info
                 parsed["cost_usd"] = cost_usd
-                return parsed
+                return add_execution_metadata(parsed)
             except json.JSONDecodeError:
                 # Return as-is if not valid JSON
                 parsed = safe_json_parse(response_text, logger, ai_model, "residenciafiscal")
-                parsed["tokens_in"] = tokens_in
-                parsed["tokens_out"] = tokens_out
                 parsed["cost_usd"] = cost_usd
-                return parsed
+                return add_execution_metadata(parsed)
 
         result = {"response": response_text}
-        result["tokens_in"] = tokens_in
-        result["tokens_out"] = tokens_out
         result["cost_usd"] = cost_usd
-        return result
+        return add_execution_metadata(result)
 
     except Exception as e:
         logger.error(f"Fallback gpt_request failed: {e}")
