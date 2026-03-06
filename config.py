@@ -38,6 +38,7 @@ GPT_4_MINI = "gpt-4-mini"
 GPT_4 = "gpt-4"
 GPT_4_TURBO = "gpt-4-turbo"
 GPT_5 = "gpt-5.2-2025-12-11"
+GPT_5_4 = "gpt-5.4-2026-03-05"
 GPT_5_MINI = "gpt-5-mini-2025-08-07"
 GPT_5_NANO = "gpt-5-nano-2025-08-07"
 
