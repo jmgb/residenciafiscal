@@ -1,0 +1,50 @@
+{
+  "mcpServers": {
+    "MCP_DOCKER": {
+      "command": "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "docker mcp gateway run"
+      ]
+    },
+    "Context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    },
+    "sentry": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@sentry/mcp-server"
+      ],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "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"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "serena": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "/home/ubuntu/ai_projects/residenciafiscal"
+      ],
+      "env": {}
+    }
+  }
+}
