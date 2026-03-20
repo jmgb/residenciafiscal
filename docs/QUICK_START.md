@@ -208,7 +208,7 @@ Results saved to:
 │                                                          │
 │ Comando:                                                │
 │ python residenciafiscal.py \                            │
-│     --model gpt-5-mini-2025-08-07 \                     │
+│     --model gpt-5.4-mini-2026-03-17 \                     │
 │     --reasoning-effort high \                           │
 │     --input ./sentencias \                              │
 │     --output ./output                                   │
@@ -226,7 +226,7 @@ Results saved to:
 │                                                          │
 │ Comando:                                                │
 │ python residenciafiscal.py \                            │
-│     --model gpt-5-mini-2025-08-07 \                     │
+│     --model gpt-5.4-mini-2026-03-17 \                     │
 │     --reasoning-effort minimal \                        │
 │     --input ./sentencias \                              │
 │     --output ./output \                                 │

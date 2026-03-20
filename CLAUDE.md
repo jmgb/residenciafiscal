@@ -183,7 +183,7 @@ python residenciafiscal.py --pdf-list ./mi_lista.txt
 
 ```python
 # Modelos
-DEFAULT_MODEL = GPT_5_NANO           # gpt-5-nano-2025-08-07
+DEFAULT_MODEL = GPT_5_NANO           # gpt-5.4-nano-2026-03-17
 SENTENCIA_CLAVE_MODEL = GPT_5        # gpt-5.2-2025-12-11
 REASONING_EFFORT = "medium"
 

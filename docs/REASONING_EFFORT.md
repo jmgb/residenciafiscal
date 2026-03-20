@@ -21,8 +21,8 @@ REASONING_EFFORT = "medium"  # Options: low | medium | high | minimal
 
 Reasoning Effort is **only** applied to GPT-5+ models:
 - ✅ `gpt-5.2-2025-12-11`
-- ✅ `gpt-5-mini-2025-08-07`
-- ✅ `gpt-5-nano-2025-08-07`
+- ✅ `gpt-5.4-mini-2026-03-17`
+- ✅ `gpt-5.4-nano-2026-03-17`
 - ✅ Any model string containing `"gpt-5"`
 
 For other models (gpt-4, gpt-4-mini, etc.), the parameter is **automatically skipped**.
