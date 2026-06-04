@@ -245,3 +245,17 @@ residenciafiscal/
 - [Modelo OCDE Art. 4](https://www.oecd.org/tax/treaties/) - CDI tie-breaker rules
 - [CENDOJ](https://www.poderjudicial.es/search/) - Fuente de sentencias
 - [OpenAI API](https://platform.openai.com/docs)
+
+## 🔍 Cross-review con Codex (segundo par de ojos)
+
+Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --wait` como gate de IA antes del primer commit.
+
+**Posición en el flujo**: tests/lint verdes → `/codex:review --wait` → (aplicar fixes) → `git add/commit/push`. Pre-commit (no pre-push) para que los fixes entren en el mismo commit y la historia git quede limpia.
+
+**Lanzar SÍ**: features nuevas, refactors multi-archivo, cambios en lógica crítica/seguridad/auth, infra/deploy, migraciones DB, o cualquier cambio donde el coste de un bug sea alto.
+**Lanzar NO**: typos, comentarios, logging, formateo, cambios de 1 línea o exploración.
+**En duda**: lanzar (coste bajo, upside alto).
+
+**Si hay hallazgos serios**: `/codex:rescue --resume "aplica los fixes propuestos"` antes de commit.
+
+**Features grandes con commits incrementales**: una sola review al cerrar la feature con `--scope branch --base main`; los fixes van en un commit final "address codex review" antes del push.

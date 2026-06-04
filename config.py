@@ -44,7 +44,7 @@ GPT_5_NANO = "gpt-5.4-nano-2026-03-17"
 
 # Modelos Gemini (si se implementa soporte)
 GEMINI_PRO = "gemini-3-pro-preview"
-GEMINI_FLASH = "gemini-3-flash-preview"
+GEMINI_FLASH = "gemini-flash-latest"
 
 # Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high|minimal)
 # Mayor esfuerzo = mayor precisión pero más lento y caro

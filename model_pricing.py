@@ -31,16 +31,26 @@ MODEL_PRICING: dict[str, ModelPrice] = {
     # Google Gemini Models
     "gemini-2.5-flash": {"input": 0.30, "output": 2.50, "provider": "Google"},
     "gemini-2.5-flash-lite": {"input": 0.10, "output": 0.40, "provider": "Google"},
+    # gemini-3.1-flash-lite-preview: official Google rate (text/image/video share).
+    "gemini-3.1-flash-lite-preview": {"input": 0.25, "output": 1.50, "provider": "Google"},
     "gemini-2.5-flash-image": {"input": 0.30, "output": 2.50, "provider": "Google"},
     "gemini-3.1-flash-image-preview": {"input": 0.50, "output": 3.00, "provider": "Google"},
     "gemini-3-flash-preview": {"input": 0.50, "output": 3.00, "provider": "Google"},
     "gemini-3-pro-preview": {"input": 2.00, "output": 12.00, "provider": "Google"},
     "gemini-3.1-pro-preview": {"input": 2.00, "output": 12.00, "provider": "Google"},
-    "gemini-flash-latest": {"input": 0.30, "output": 2.50, "provider": "Google"},
+    "gemini-pro-latest": {"input": 2.00, "output": 12.00, "provider": "Google"},
+    "gemini-flash-latest": {"input": 1.50, "output": 9.00, "provider": "Google"},
+    "gemini-flash-lite-latest": {"input": 0.25, "output": 1.50, "provider": "Google"},
+    "gemini-3.5-flash": {"input": 1.50, "output": 9.00, "provider": "Google"},
     # OpenRouter Models
     "google/gemini-2.5-flash-lite": {
         "input": 0.10,
         "output": 0.40,
+        "provider": "OpenRouter",
+    },
+    "google/gemini-3.1-flash-lite-preview": {
+        "input": 0.25,
+        "output": 1.50,
         "provider": "OpenRouter",
     },
     "google/gemini-2.5-flash-image": {
@@ -61,6 +71,11 @@ MODEL_PRICING: dict[str, ModelPrice] = {
     "google/gemini-3.1-pro-preview": {
         "input": 2.00,
         "output": 12.00,
+        "provider": "OpenRouter",
+    },
+    "google/gemini-3.5-flash": {
+        "input": 1.50,
+        "output": 9.00,
         "provider": "OpenRouter",
     },
     "deepseek/deepseek-chat-v3.1": {
