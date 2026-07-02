@@ -34,6 +34,9 @@ MODEL_PRICING: dict[str, ModelPrice] = {
     # gemini-3.1-flash-lite-preview: official Google rate (text/image/video share).
     "gemini-3.1-flash-lite-preview": {"input": 0.25, "output": 1.50, "provider": "Google"},
     "gemini-2.5-flash-image": {"input": 0.30, "output": 2.50, "provider": "Google"},
+    "gemini-3.1-flash-lite-image": {"input": 0.25, "output": 1.50, "provider": "Google"},
+    "gemini-3.1-flash-image": {"input": 0.50, "output": 3.00, "provider": "Google"},
+    "gemini-3-pro-image": {"input": 2.00, "output": 12.00, "provider": "Google"},
     "gemini-3.1-flash-image-preview": {"input": 0.50, "output": 3.00, "provider": "Google"},
     "gemini-3-flash-preview": {"input": 0.50, "output": 3.00, "provider": "Google"},
     "gemini-3-pro-preview": {"input": 2.00, "output": 12.00, "provider": "Google"},
@@ -53,11 +56,8 @@ MODEL_PRICING: dict[str, ModelPrice] = {
         "output": 1.50,
         "provider": "OpenRouter",
     },
-    "google/gemini-2.5-flash-image": {
-        "input": 0.30,
-        "output": 2.50,
-        "provider": "OpenRouter",
-    },
+    "google/gemini-3.1-flash-image": {"input": 0.50, "output": 3.00, "provider": "OpenRouter"},
+    "google/gemini-2.5-flash-image": {"input": 0.30, "output": 2.50, "provider": "OpenRouter"},
     "google/gemini-3-flash-preview": {
         "input": 0.50,
         "output": 3.00,
