@@ -24,7 +24,7 @@ El script `test/test_reasoning_effort_comparison.py` ejecuta el pipeline de aná
 └──────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────┐
-│ Configuración 5-8: GPT-5-mini (gpt-5.4-mini-2026-03-17)   │
+│ Configuración 5-8: GPT-5-mini (gpt-5.6-terra)  │
 ├──────────────────────────────────────────────────────────┤
 │ Config 5: reasoning_effort = "high"     (máximo esfuerzo) │
 │ Config 6: reasoning_effort = "medium"   (equilibrado)     │

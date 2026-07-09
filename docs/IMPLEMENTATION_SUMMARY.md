@@ -179,7 +179,7 @@ python test/test_reasoning_effort_comparison.py
 # Ver resultados → elegir GPT-5-mini + minimal o low
 # Implementar por CLI
 python residenciafiscal.py \
-    --model gpt-5.4-mini-2026-03-17 \
+    --model gpt-5.6-terra \
     --reasoning-effort low \
     --input ./sentencias \
     --output ./output \

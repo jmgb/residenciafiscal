@@ -37,10 +37,9 @@ DEFAULT_CSV_NAME = "analisis.csv"
 GPT_4_MINI = "gpt-4-mini"
 GPT_4 = "gpt-4"
 GPT_4_TURBO = "gpt-4-turbo"
-GPT_5 = "gpt-5.2-2025-12-11"
-GPT_5_4 = "gpt-5.4-2026-03-05"
-GPT_5_MINI = "gpt-5.4-mini-2026-03-17"
-GPT_5_NANO = "gpt-5.4-nano-2026-03-17"
+GPT_5 = "gpt-5.6-sol"
+GPT_5_MINI = "gpt-5.6-terra"
+GPT_5_NANO = "gpt-5.6-luna"
 
 # Modelos Gemini (si se implementa soporte)
 GEMINI_PRO = "gemini-3-pro-preview"

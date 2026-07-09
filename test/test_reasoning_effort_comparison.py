@@ -57,8 +57,8 @@ PROJECT_ROOT = Path(__file__).parent.parent
 # Test configurations: (model, reasoning_effort)
 # Ordenado de más barato/rápido a más lento/caro.
 TEST_CONFIGURATIONS = [
-    ("gpt-5.4-mini-2026-03-17", "medium"),
-    ("gpt-5.4-mini-2026-03-17", "high"),
+    ("gpt-5.6-terra", "medium"),
+    ("gpt-5.6-terra", "high"),
     ("gpt-5.2-2025-12-11", "medium"),
 ]
 

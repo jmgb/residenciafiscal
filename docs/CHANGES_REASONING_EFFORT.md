@@ -18,7 +18,7 @@ DEFAULT_MODEL = "gpt-4-mini"
 
 # After
 REASONING_EFFORT = "medium"  # low|medium|high|minimal
-DEFAULT_MODEL = GPT_5_MINI  # gpt-5.4-mini-2026-03-17
+DEFAULT_MODEL = GPT_5_MINI  # gpt-5.6-terra
 ```
 
 ### 2. residenciafiscal.py
