@@ -38,12 +38,12 @@ GPT_4_MINI = "gpt-4-mini"
 GPT_4 = "gpt-4"
 GPT_4_TURBO = "gpt-4-turbo"
 GPT_5 = "gpt-5.6-sol"
-GPT_5_MINI = "gpt-5.6-terra"
+GPT_5_MINI = "gpt-5.6-luna"
 GPT_5_NANO = "gpt-5.6-luna"
 
 # Modelos Gemini (si se implementa soporte)
-GEMINI_PRO = "gemini-3-pro-preview"
-GEMINI_FLASH = "gemini-flash-latest"
+GEMINI_PRO = "gemini-3.6-flash"
+GEMINI_FLASH = "gemini-3.6-flash"
 
 # Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high|minimal)
 # Mayor esfuerzo = mayor precisión pero más lento y caro
