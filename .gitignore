@@ -5,7 +5,12 @@
 venv/
 env/
 ENV/
+.venv/
 .venv
+
+# uv (uv.lock SÍ se versiona)
+.uv-cache/
+.uv_cache/
 
 # Python
 __pycache__/
@@ -47,6 +52,8 @@ pip-delete-this-directory.txt
 
 # Testing
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .coverage
 .coverage.*
 htmlcov/

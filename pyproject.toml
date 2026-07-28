@@ -1,0 +1,107 @@
+# UV project configuration
+[project]
+name = "residenciafiscal"
+version = "0.1.0"
+description = "Análisis LLM de sentencias judiciales españolas sobre residencia fiscal (Art. 9 LIRPF)"
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    # LLM providers
+    "openai>=2.41.0,<3.0.0",
+    "groq>=0.11.0,<2.0.0",
+    "google-generativeai>=0.8.6,<0.9.0",
+    # PDF / datos / exports
+    "pypdf>=5.0.0,<7.0.0",
+    "pandas>=2.0.0,<3.0.0",
+    "openpyxl>=3.1.0,<4.0.0",
+    # Runtime
+    "aiohttp>=3.8.0,<4.0.0",
+    "pydantic>=2.0.0,<3.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "tqdm>=4.65.0,<5.0.0",
+    # API HTTP (make dev)
+    "fastapi[standard]>=0.115.0,<1.0.0",
+    "uvicorn[standard]>=0.30.0,<1.0.0",
+    "python-multipart>=0.0.9,<1.0.0",
+]
+
+[tool.uv]
+# NO instalar el proyecto como paquete: los módulos viven en la raíz
+# (residenciafiscal.py, config.py, prompt.py...) y se importan por sys.path.
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-timeout>=2.3.0",
+    "ruff>=0.14.0",
+    "mypy>=1.13.0",
+    "pandas-stubs>=2.2.0",
+    "types-tqdm>=4.66.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]
+timeout = 300
+# Los tests que llaman a LLMs reales (con coste) se excluyen por defecto.
+# Para correrlos: `make test-llm` o `pytest -m manual_real_llm`.
+addopts = "-m 'not manual_real_llm'"
+markers = [
+    "manual_real_llm: invoca un proveedor LLM real (coste + red); excluido por defecto",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+exclude = ["venv", ".venv", "output", "test/test_outputs"]
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long, lo gestiona el formatter
+    "B008",  # llamadas en defaults de argumentos (patrón de FastAPI Depends/File)
+    "C901",  # demasiado complejo
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["config", "prompt", "ai_service_adapter", "model_pricing", "api"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.13"
+plugins = ["pydantic.mypy"]
+warn_redundant_casts = true
+check_untyped_defs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+disallow_untyped_calls = false
+warn_return_any = false
+warn_unreachable = false
+# El pipeline usa libs sin stubs (pypdf, groq, google.generativeai)
+ignore_missing_imports = true
+exclude = [
+    "^venv/",
+    "^\\.venv/",
+    "^test/",
+    "^output/",
+]

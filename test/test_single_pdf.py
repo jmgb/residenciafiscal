@@ -17,7 +17,6 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 # Colors for terminal output
@@ -90,7 +89,6 @@ def main() -> int:
     print_info(f"Test output directory: {test_output_dir}")
 
     # Note: Not using 'with' context manager so output persists after test completes
-    tmpdir = test_output_base
 
     try:
 
@@ -168,7 +166,7 @@ def main() -> int:
 
         print_info(f"Rows in CSV: {len(csv_lines)} (including header)\n")
 
-        for i, line in enumerate(csv_lines[:3], 1):  # Show first 3 rows
+        for line in csv_lines[:3]:  # Show first 3 rows
             print(line.rstrip())
 
         if len(csv_lines) > 3:

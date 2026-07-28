@@ -3,19 +3,19 @@
 
 cd "$(dirname "$0")/.." || exit 1
 
-# Check if venv exists
-if [ ! -d "venv" ]; then
-    echo "❌ Virtual environment not found!"
-    echo "Please run: python -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
+if ! command -v uv >/dev/null 2>&1; then
+    echo "❌ uv no está instalado."
+    echo "Instálalo con: curl -LsSf https://astral.sh/uv/install.sh | sh"
     exit 1
 fi
 
-# Activate venv
-source venv/bin/activate
+if [ ! -d ".venv" ]; then
+    echo "⚠️ Entorno no encontrado. Ejecutando 'make setup'..."
+    make setup || exit 1
+fi
 
-# Run test
 echo "🧪 Starting single PDF test..."
-python test/test_single_pdf.py
+uv run python test/test_single_pdf.py
 
 exit_code=$?
 

@@ -8,14 +8,17 @@
 # y reasoning_effort para modelos GPT-5+.
 #
 # Requisitos:
-#   pip install -r requirements.txt
+#   make setup          (uv crea .venv con Python 3.13 e instala desde uv.lock)
 #
-# Uso básico (automático):
-#   source venv/bin/activate
-#   python residenciafiscal.py
+# Uso básico:
+#   make run            (equivale a: uv run python residenciafiscal.py)
+#   make run-sample     (1 solo PDF, prueba rápida)
 #
 # Uso con argumentos personalizados:
-#   python residenciafiscal.py --input /ruta/a/pdfs --output /ruta/salida --model gpt-4
+#   make run MODEL=gpt-4 INPUT=/ruta/a/pdfs OUTPUT=/ruta/salida
+#   uv run python residenciafiscal.py --help
+#
+# Este mismo pipeline se expone por HTTP en api/main.py (`make dev`).
 
 from __future__ import annotations
 
@@ -24,42 +27,38 @@ import asyncio
 import json
 import logging
 import os
-import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import pandas as pd
 from dotenv import load_dotenv
 from pypdf import PdfReader
-from tqdm import tqdm
 
 from config import (
-    DEFAULT_INPUT_DIR,
-    DEFAULT_OUTPUT_DIR,
-    DEFAULT_JSONL_NAME,
-    DEFAULT_CSV_NAME,
-    DEFAULT_MODEL,
-    DEFAULT_MAX_FILES,
-    PAGE_MARKER_FMT,
-    DEFAULT_MISSING_VALUE,
-    REQUIRED_FIELDS,
-    CSV_COLUMN_ORDER,
+    ALLOWED_KEYS,
     ARGUMENT_HELP,
-    SCRIPT_DESCRIPTION,
-    REASONING_EFFORT,
-    GPT_5_MINI,
     BATCH_SIZE,
-    # Sentencias clave (modelo premium)
+    CSV_COLUMN_ORDER,
+    DEFAULT_CSV_NAME,
+    DEFAULT_INPUT_DIR,
+    DEFAULT_JSONL_NAME,
+    DEFAULT_MAX_FILES,
+    DEFAULT_MISSING_VALUE,
+    DEFAULT_MODEL,
+    DEFAULT_OUTPUT_DIR,
+    ENFORCE_ALLOWED_KEYS,
     KEY_SENTENCIAS_FILE,
+    PAGE_MARKER_FMT,
+    REASONING_EFFORT,
+    REQUIRED_FIELDS,
+    SCRIPT_DESCRIPTION,
     SENTENCIA_CLAVE_MODEL,
+    VALID_CATEGORIAS_PRUEBA,
     # Enums para validación de schema
     VALID_CRITERIOS,
-    VALID_CATEGORIAS_PRUEBA,
-    VALID_TIEBREAKER_PASOS,
     VALID_RESULTADO_FINAL,
-    ALLOWED_KEYS,
-    ENFORCE_ALLOWED_KEYS,
+    VALID_TIEBREAKER_PASOS,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -180,10 +179,10 @@ def initialize_client(ai_model: str) -> str:
 # PDF EXTRACTION
 # ============================================================================
 
-def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None) -> str:
+def extract_pdf_text_with_pages(pdf_path: Path, max_pages: int | None = None) -> str:
     """Extrae texto del PDF e inserta marcadores de página (1-indexed)."""
     reader = PdfReader(str(pdf_path))
-    parts: List[str] = []
+    parts: list[str] = []
     num_pages = len(reader.pages)
     limit = min(num_pages, max_pages) if max_pages else num_pages
 
@@ -197,7 +196,7 @@ def extract_pdf_text_with_pages(pdf_path: Path, max_pages: Optional[int] = None)
     return "\n".join(parts).strip()
 
 
-def load_pdf_list(list_path: Path, input_dir: Path) -> List[Path]:
+def load_pdf_list(list_path: Path, input_dir: Path) -> list[Path]:
     """Carga una lista de PDFs desde un .txt (uno por línea)."""
     if not list_path.exists():
         raise RuntimeError(f"Archivo de lista no encontrado: {list_path}")
@@ -218,8 +217,8 @@ def load_pdf_list(list_path: Path, input_dir: Path) -> List[Path]:
             f"Directorio de entrada no válido para rutas relativas: {input_dir}"
         )
 
-    pdfs: List[Path] = []
-    missing: List[str] = []
+    pdfs: list[Path] = []
+    missing: list[str] = []
     seen: set[Path] = set()
 
     for item in entries:
@@ -275,7 +274,7 @@ def load_key_sentencias() -> set:
 # SCHEMA CLEANING AND VALIDATION
 # ============================================================================
 
-def clean_schema(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
+def clean_schema(obj: dict[str, Any], filename: str) -> dict[str, Any]:
     """Limpia el schema eliminando keys no permitidas y normalizando enums."""
 
     # 1. Eliminar keys no permitidas
@@ -371,7 +370,7 @@ def clean_schema(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
     return obj
 
 
-def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
+def ensure_required_keys(obj: dict[str, Any], filename: str) -> dict[str, Any]:
     """Asegura que haya claves mínimas para no romper el pipeline."""
     def set_default(path: str, default: Any) -> None:
         if path not in obj:
@@ -384,7 +383,7 @@ def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
             continue
 
         if isinstance(default_value, dict):
-            set_default(key, {k: v for k, v in default_value.items()})
+            set_default(key, dict(default_value))
         elif isinstance(default_value, list):
             set_default(key, [])
         else:
@@ -400,12 +399,12 @@ def ensure_required_keys(obj: Dict[str, Any], filename: str) -> Dict[str, Any]:
 # CSV FLATTENING
 # ============================================================================
 
-def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
+def flatten_for_csv(obj: dict[str, Any]) -> dict[str, Any]:
     """Aplana a columnas 'amigables CSV'."""
     def jdump(x: Any) -> str:
         return json.dumps(x, ensure_ascii=False)
 
-    row: Dict[str, Any] = {}
+    row: dict[str, Any] = {}
 
     # Identificación y filtrado
     row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
@@ -478,9 +477,9 @@ def flatten_for_csv(obj: Dict[str, Any]) -> Dict[str, Any]:
 # EXCEL EXPORT (DOS PESTAÑAS: SENTENCIAS + PRUEBAS)
 # ============================================================================
 
-def flatten_sentencia_for_excel(obj: Dict[str, Any]) -> Dict[str, Any]:
+def flatten_sentencia_for_excel(obj: dict[str, Any]) -> dict[str, Any]:
     """Aplana datos de sentencia para pestaña 'Sentencias' (sin pruebas detalladas)."""
-    row: Dict[str, Any] = {}
+    row: dict[str, Any] = {}
 
     # Identificación
     row["archivo"] = obj.get("archivo", DEFAULT_MISSING_VALUE)
@@ -555,7 +554,7 @@ def flatten_sentencia_for_excel(obj: Dict[str, Any]) -> Dict[str, Any]:
     return row
 
 
-def expand_pruebas_for_excel(obj: Dict[str, Any]) -> List[Dict[str, Any]]:
+def expand_pruebas_for_excel(obj: dict[str, Any]) -> list[dict[str, Any]]:
     """Expande cada prueba a una fila para pestaña 'Pruebas'."""
     rows = []
     archivo = obj.get("archivo", "unknown")
@@ -689,15 +688,15 @@ def generate_normalized_exports(
 async def process_pdf_async(
     pdf_path: Path,
     ai_model: str,
-    max_pages: Optional[int],
-    reasoning_effort: Optional[str] = None,
-) -> Dict[str, Any]:
+    max_pages: int | None,
+    reasoning_effort: str | None = None,
+) -> dict[str, Any]:
     """Procesa un PDF usando gpt_request."""
     fname = pdf_path.name
-    
+
     try:
         pdf_text = extract_pdf_text_with_pages(pdf_path, max_pages=max_pages)
-        
+
         if not pdf_text.strip():
             logger.warning(f"⚠️ {fname}: No se pudo extraer texto")
             return ensure_required_keys(
@@ -722,7 +721,7 @@ async def process_pdf_async(
                 response_format="json_object",
                 reasoning_effort=reasoning_effort if "gpt-5" in ai_model else None,
             )
-            
+
             if "error" in result:
                 logger.error(f"❌ {fname}: Error en gpt_request: {result.get('error')}")
                 return ensure_required_keys(
@@ -733,7 +732,7 @@ async def process_pdf_async(
                     },
                     fname,
                 )
-            
+
             # Extraer información de tiempo y coste
             tiempo_ejecucion = result.pop("tiempo_ejecucion", "NO CONSTA")
             cost_usd = result.pop("cost_usd", 0)
@@ -749,7 +748,7 @@ async def process_pdf_async(
             obj["tiempo_ejecucion"] = tiempo_ejecucion
             obj["costo_usd"] = cost_usd
         else:
-            logger.warning(f"⚠️ gpt_request no disponible, usando fallback")
+            logger.warning("⚠️ gpt_request no disponible, usando fallback")
             return ensure_required_keys(
                 {
                     "archivo": fname,
@@ -779,11 +778,11 @@ async def main_async(
     jsonl_path: Path,
     csv_path: Path,
     ai_model: str,
-    max_pages: Optional[int],
-    max_files: Optional[int],
+    max_pages: int | None,
+    max_files: int | None,
     skip_existing: bool,
-    pdf_list: Optional[List[Path]] = None,
-    reasoning_effort: Optional[str] = None,
+    pdf_list: list[Path] | None = None,
+    reasoning_effort: str | None = None,
     timestamp: str = "",
 ) -> None:
     """Bucle principal de procesamiento en batches paralelos.
@@ -866,7 +865,7 @@ async def main_async(
 
             # Guardar resultados en JSONL y acumular costes
             batch_cost = 0.0
-            for idx, obj in enumerate(results):
+            for obj in results:
                 # Extraer coste (ya está en el objeto como costo_usd)
                 cost_usd = obj.get("costo_usd", 0.0)
                 batch_cost += cost_usd
@@ -889,7 +888,7 @@ async def main_async(
 
     # Convertir JSONL -> CSV
     logger.info("🔄 Convirtiendo JSONL a CSV...")
-    rows: List[Dict[str, Any]] = []
+    rows: list[dict[str, Any]] = []
     with jsonl_path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -917,19 +916,19 @@ async def main_async(
 
     # Mostrar resumen final con costes
     logger.info(f"\n{'='*60}")
-    logger.info(f"✅ PROCESAMIENTO COMPLETADO")
+    logger.info("✅ PROCESAMIENTO COMPLETADO")
     logger.info(f"{'='*60}")
     logger.info(f"📄 JSONL: {jsonl_path}")
     logger.info(f"📊 CSV:   {csv_path}")
     logger.info(f"📈 Filas: {len(df)}")
-    logger.info(f"\n💰 COSTES DE API:")
+    logger.info("\n💰 COSTES DE API:")
     logger.info(f"   Total: ${total_cost:.2f} USD")
     logger.info(f"   PDFs procesados: {len(pdfs_to_process)}")
     if len(pdfs_to_process) > 0:
         logger.info(f"   Coste promedio: ${total_cost / len(pdfs_to_process):.4f} USD por PDF")
 
     if batch_costs:
-        logger.info(f"\n📊 Desglose por batch:")
+        logger.info("\n📊 Desglose por batch:")
         for batch_num in sorted(batch_costs.keys()):
             logger.info(f"   Batch {batch_num}: ${batch_costs[batch_num]:.2f}")
 
@@ -980,7 +979,7 @@ def main() -> None:
     max_pages = None
     max_files = args.max_files if args.max_files and args.max_files > 0 else None
 
-    logger.info(f"🚀 Iniciando procesamiento de sentencias")
+    logger.info("🚀 Iniciando procesamiento de sentencias")
     logger.info(f"   📁 Entrada: {in_dir}")
     logger.info(f"   📤 Salida: {out_dir}")
     logger.info(f"   🤖 Modelo: {args.model}")

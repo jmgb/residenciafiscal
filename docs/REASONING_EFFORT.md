@@ -1,5 +1,10 @@
 # Reasoning Effort Configuration
 
+> **Nota de entorno (2026-07):** el proyecto usa **uv** y un `Makefile`. Los comandos
+> `python ...` de este documento se lanzan como `uv run python ...`, o bien activando
+> el entorno con `source .venv/bin/activate`. Ver `make help` para los atajos.
+
+
 ## Overview
 
 The `residenciafiscal.py` script now supports OpenAI's **Reasoning Effort** parameter for GPT-5 models. This allows fine-tuning the balance between:

@@ -1,5 +1,22 @@
 # 🧪 Test Suite for residenciafiscal.py
 
+## Overview
+
+| Fichero | Qué cubre | Coste |
+|---------|-----------|-------|
+| `test_api.py` | Capa HTTP (`api/main.py`): health, config, validación de uploads | Ninguno |
+| `test_gemini_model_policy.py` | Que los IDs de modelos Gemini en `config.py` son los soportados | Ninguno |
+| `test_single_pdf.py` | Smoke test end-to-end del pipeline con 1 PDF | ~$0.01–0.04 |
+| `test_reasoning_effort_comparison.py` | Comparativa de reasoning effort entre modelos | Alto |
+
+```bash
+make test          # pytest: solo lo que no gasta (test_api + gemini policy)
+make test-single   # smoke test end-to-end con 1 PDF (gasta)
+```
+
+Los tests que llaman a LLMs reales se marcan `@pytest.mark.manual_real_llm` y quedan
+excluidos del `pytest` por defecto (ver `addopts` en `pyproject.toml`).
+
 ## Single PDF Test
 
 ### Purpose
@@ -14,9 +31,11 @@ Test the main processing pipeline with a single PDF to verify:
 
 ```bash
 cd /home/ubuntu/ai_projects/residenciafiscal
-source venv/bin/activate
-python test/test_single_pdf.py
+make test-single
 ```
+
+Equivalente directo: `uv run python test/test_single_pdf.py`. No hace falta activar
+ningún entorno — `uv run` lo resuelve solo.
 
 ### What the Test Does
 
@@ -82,24 +101,19 @@ STS_107_2018.pdf,AN/2018/107,...
 
 Before running the test, ensure:
 
-1. **Virtual environment activated**:
+1. **Entorno instalado** (uv crea `.venv` con Python 3.13):
    ```bash
-   source venv/bin/activate
+   make setup
    ```
 
-2. **Dependencies installed**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **API key configured**:
+2. **API key configured**:
    ```bash
    # Copy .env.example to .env and add your API key
    cp .env.example .env
    # Edit .env and add OPENAI_API_KEY (or GROQ_API_KEY, etc.)
    ```
 
-4. **PDF files in sentencias/ folder**:
+3. **PDF files in sentencias/ folder**:
    ```bash
    ls sentencias/*.pdf  # Should show at least 1 PDF
    ```
@@ -147,7 +161,7 @@ After successful test:
 
 1. **Run with more PDFs**:
    ```bash
-   python residenciafiscal.py
+   make run
    ```
 
 2. **Check output files**:
@@ -163,7 +177,7 @@ If test fails, check logs:
 
 ```bash
 # Run with verbose logging
-python test/test_single_pdf.py 2>&1 | tee test.log
+uv run python test/test_single_pdf.py 2>&1 | tee test.log
 
 # Check residenciafiscal logs
 grep "ERROR\|WARNING" test.log
@@ -173,6 +187,10 @@ grep "ERROR\|WARNING" test.log
 
 ```
 test/
-├── README.md              # This file
-└── test_single_pdf.py     # Main test script
+├── README.md                              # This file
+├── run_test.sh                            # Wrapper de test_single_pdf.py
+├── test_api.py                            # Tests de la API HTTP (sin coste)
+├── test_gemini_model_policy.py            # Política de modelos Gemini
+├── test_single_pdf.py                     # Smoke test end-to-end (con coste)
+└── test_reasoning_effort_comparison.py    # Comparativa de reasoning effort (coste alto)
 ```

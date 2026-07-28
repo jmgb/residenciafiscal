@@ -6,7 +6,7 @@ adapted for the residenciafiscal project.
 
 import logging
 import warnings
-from typing import Any, Optional
+from typing import Any
 
 # Suppress deprecated warnings from optional dependencies
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -38,8 +38,8 @@ async def gpt_request_for_sentencia(
     logger: logging.Logger,
     temperature: float = 0,
     response_format: str = "json_object",
-    reasoning_effort: Optional[str] = None,
-    max_tokens: Optional[int] = None,
+    reasoning_effort: str | None = None,
+    max_tokens: int | None = None,
 ) -> dict[str, Any]:
     """Simplified gpt_request wrapper for sentencia analysis.
 
@@ -56,10 +56,11 @@ async def gpt_request_for_sentencia(
     Returns:
         dict: Response with parsed data or error information (includes 'tokens_in', 'tokens_out', 'cost_usd')
     """
-    
-    import os
+
     import json
+    import os
     import time
+
     from model_pricing import calculate_cost as calc_cost_fn
 
     start_time = time.perf_counter()
@@ -109,10 +110,15 @@ async def gpt_request_for_sentencia(
 
             try:
                 response = await model.generate_content_async(
-                    prompt_text, generation_config=generation_config
+                    prompt_text,
+                    generation_config=generation_config,  # type: ignore[arg-type]
                 )
             except AttributeError:
-                response = model.generate_content(prompt_text, generation_config=generation_config)
+                # Fallback síncrono para versiones antiguas del SDK sin *_async
+                response = model.generate_content(  # type: ignore[assignment]
+                    prompt_text,
+                    generation_config=generation_config,  # type: ignore[arg-type]
+                )
             except TypeError:
                 response = await model.generate_content_async(prompt_text)
 
@@ -126,7 +132,7 @@ async def gpt_request_for_sentencia(
                 tokens_in = getattr(usage, "prompt_token_count", 0) or 0
                 tokens_out = getattr(usage, "candidates_token_count", 0) or 0
                 cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
-                cost_usd = cost_info.get("total_cost", 0.0) or 0.0
+                cost_usd = float(cost_info.get("total_cost", 0.0) or 0.0)  # type: ignore[arg-type]
                 logger.info(
                     f"💰 Gemini - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}"
                 )
@@ -168,7 +174,7 @@ async def gpt_request_for_sentencia(
             client = AsyncOpenAI(api_key=api_key, timeout=request_timeout)
 
         # Prepare kwargs for the API call
-        kwargs = {
+        kwargs: dict[str, Any] = {
             "model": ai_model,
             "messages": [
                 {"role": "system", "content": system_prompt},
@@ -212,7 +218,7 @@ async def gpt_request_for_sentencia(
             tokens_in = response.usage.prompt_tokens or 0
             tokens_out = response.usage.completion_tokens or 0
             cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
-            cost_usd = cost_info.get("total_cost", 0.0) or 0.0
+            cost_usd = float(cost_info.get("total_cost", 0.0) or 0.0)  # type: ignore[arg-type]
             label = "Groq" if provider == "groq" else "OpenAI"
             logger.info(f"💰 {label} - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}")
         else:
@@ -250,7 +256,7 @@ def safe_json_parse(
     source: str = "residenciafiscal",
 ) -> dict[str, Any]:
     """Safe JSON parsing with fallback handling.
-    
+
     Attempts to parse JSON with multiple strategies:
     1. Direct JSON parsing
     2. Fix missing opening brace
@@ -258,7 +264,7 @@ def safe_json_parse(
     4. Return as text with error flag
     """
     import json
-    
+
     # Clean text of backticks
     cleaned_text = text.strip()
     if cleaned_text.endswith("```"):
@@ -267,13 +273,13 @@ def safe_json_parse(
         cleaned_text = cleaned_text[7:].strip()
     elif cleaned_text.startswith("```"):
         cleaned_text = cleaned_text[3:].strip()
-    
+
     # Try direct parsing
     try:
         return json.loads(cleaned_text)
     except json.JSONDecodeError:
         pass
-    
+
     # Try fixing missing opening brace
     if cleaned_text and not cleaned_text.startswith("{") and "}" in cleaned_text:
         if '"' in cleaned_text and ":" in cleaned_text:
@@ -287,7 +293,7 @@ def safe_json_parse(
                     return result
             except json.JSONDecodeError:
                 pass
-    
+
     # Try extracting between braces
     start_idx = cleaned_text.find("{")
     end_idx = cleaned_text.rfind("}") + 1
@@ -297,7 +303,7 @@ def safe_json_parse(
             return json.loads(json_str)
         except json.JSONDecodeError:
             pass
-    
+
     # Return error response
     logger.error(f"❌ JSON parse failed for {ai_model}: {text[:200]}...")
     return {

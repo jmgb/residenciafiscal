@@ -4,19 +4,30 @@ Guía para Claude Code en el proyecto **Residencia Fiscal**.
 
 ## Quick Start
 
-```bash
-# Instalar dependencias
-pip install -r requirements.txt
+El proyecto usa **uv** (no pip/venv a mano) y un **Makefile** como interfaz única.
 
-# Configurar API key
-export OPENAI_API_KEY="sk-..."
+```bash
+# Instalar dependencias (crea .venv con Python 3.13 e instala desde uv.lock)
+make setup
+
+# Configurar API key: rellenar OPENAI_API_KEY en .env
+cp .env.example .env
+
+# Ver todos los comandos disponibles
+make help
 
 # Ejecutar pipeline completo (106 PDFs → ~$2.80 USD, ~2-3h)
-python residenciafiscal.py --input ./sentencias --output ./output
+make run
 
 # Test rápido con 1 PDF
-python residenciafiscal.py --input ./sentencias --output ./output --max-files 1
+make run-sample
+
+# Levantar la API HTTP (Swagger en http://127.0.0.1:8010/docs)
+make dev
 ```
+
+> Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python residenciafiscal.py --help`).
+> Nunca hace falta activar el entorno: `uv run` lo resuelve solo.
 
 ## Resumen del Proyecto
 
@@ -31,14 +42,20 @@ Pipeline Python que analiza **106 sentencias judiciales españolas** sobre resid
 
 ## Arquitectura
 
+Dos frontends sobre el mismo núcleo: el **CLI por lotes** y la **API HTTP**. Ambos
+llaman a `process_pdf_async()`, así que producen exactamente el mismo objeto.
+
 ```
 ┌─────────────────┐     ┌──────────────┐     ┌─────────────────────┐
 │  sentencias/    │────▶│ residencia   │────▶│  output/            │
-│  106 PDFs       │     │ fiscal.py    │     │  ├─ analisis.jsonl  │
+│  106 PDFs       │ CLI │ fiscal.py    │     │  ├─ analisis.jsonl  │
 │  (STS + SAN)    │     │              │     │  ├─ sentencias.csv  │
 └─────────────────┘     │  + prompt.py │     │  ├─ pruebas.csv     │
                         │  + config.py │     │  └─ analisis.xlsx   │
-                        └──────────────┘     └─────────────────────┘
+┌─────────────────┐     │              │     └─────────────────────┘
+│  POST /analizar │────▶│ process_pdf  │────▶  JSON en la respuesta
+│  (api/main.py)  │ API │  _async()    │
+└─────────────────┘     └──────────────┘
                                │
                                ▼
                         ┌──────────────┐
@@ -50,9 +67,12 @@ Pipeline Python que analiza **106 sentencias judiciales españolas** sobre resid
 | Archivo | Función |
 |---------|---------|
 | `residenciafiscal.py` | Pipeline principal (async, batches de 10 PDFs) |
+| `api/main.py` | API HTTP (FastAPI) que envuelve el pipeline, 1 PDF por request |
 | `prompt.py` | System prompt con contexto legal y schema JSON |
 | `config.py` | Modelos, rutas, enums, campos requeridos |
 | `ai_service_adapter.py` | Wrapper para llamadas LLM con retry y cost tracking |
+| `pyproject.toml` | Dependencias (uv) + config de ruff, mypy y pytest |
+| `Makefile` | Interfaz única de comandos (`make help`) |
 
 ## Dataset
 
@@ -151,25 +171,82 @@ STS_3942_2021.pdf   # CDI España-Suiza
 
 ## Comandos Útiles
 
+Todo pasa por el Makefile. `make help` los lista todos.
+
 ```bash
-# Procesamiento completo
-python residenciafiscal.py --input ./sentencias --output ./output
+# --- Pipeline ---
+make run                                  # procesamiento completo
+make run-sample                           # 1 PDF (prueba rápida)
+make run-resume                           # continuar ejecución interrumpida
+make run MAX_FILES=5                      # limitar archivos (testing)
+make run MODEL=gpt-4-turbo                # modelo específico (ignorado en sentencias clave)
+make run EFFORT=high                      # reasoning effort (low/medium/high)
+make run-list LIST=./mi_lista.txt         # lista específica de PDFs
+make run INPUT=./otros OUTPUT=./out2      # rutas alternativas
 
-# Limitar archivos (testing)
-python residenciafiscal.py --max-files 5
+# --- API ---
+make dev                                  # FastAPI con reload en 127.0.0.1:8010
+make dev-public                           # accesible desde la red local (0.0.0.0)
+make serve                                # sin reload
+make dev PORT=9000                        # otro puerto
 
-# Continuar ejecución interrumpida
-python residenciafiscal.py --skip-existing
+# --- Calidad ---
+make fast-check                           # lint + typecheck + tests (gate pre-commit)
+make lint / format / fix / typecheck
+make test                                 # pytest sin llamadas LLM reales
+make test-llm                             # incluye tests marcados manual_real_llm (con coste)
+make test-single                          # smoke test end-to-end con 1 PDF
 
-# Modelo específico (ignorado para sentencias clave)
-python residenciafiscal.py --model gpt-4-turbo
+# --- Dependencias ---
+make lock                                 # regenera uv.lock
+make upgrade                              # actualiza dentro de los rangos de pyproject.toml
+make export-requirements                  # requirements.txt derivado del lock (para terceros)
 
-# Reasoning effort (low/medium/high)
-python residenciafiscal.py --reasoning-effort high
-
-# Lista específica de PDFs
-python residenciafiscal.py --pdf-list ./mi_lista.txt
+# --- Limpieza ---
+make clean                                # caches
+make clean-output                         # artefactos de ./output
 ```
+
+El CLI subyacente sigue disponible: `uv run python residenciafiscal.py --help`.
+
+## API HTTP
+
+`make dev` levanta FastAPI en `127.0.0.1:8010` (puerto 8010 y no 8000 para no chocar
+con el backend de presupuestor).
+
+| Método | Ruta        | Descripción                                          |
+|--------|-------------|------------------------------------------------------|
+| GET    | `/health`   | Estado + qué API keys están presentes                |
+| GET    | `/config`   | Modelos, criterios y categorías vigentes             |
+| POST   | `/analizar` | Sube un PDF → análisis estructurado (mismo schema)   |
+| GET    | `/docs`     | Swagger UI                                            |
+
+```bash
+curl -X POST -F "archivo=@sentencias/SAN_1226_2021.pdf" \
+  http://127.0.0.1:8010/analizar | jq .
+```
+
+`POST /analizar` acepta además los campos de formulario `modelo`, `reasoning_effort`
+(`low|medium|high`) y `max_pages` (entero positivo). Reutiliza `process_pdf_async()`, así
+que devuelve el mismo objeto que una línea del JSONL, envuelto en
+`{"modelo_usado": ..., "analisis": {...}}`. Si el nombre del fichero está en
+`sentencias_CLAVE.txt`, se fuerza el modelo premium.
+
+**Importante**: la API es de un PDF por request y **no persiste nada** en `output/`.
+Para lotes, sigue usando `make run`.
+
+### Guardarraíles de la API
+
+`POST /analizar` es la única ruta que gasta dinero, así que lleva:
+
+| Guardarraíl | Detalle |
+|-------------|---------|
+| Token opcional | Si `RESIDENCIAFISCAL_API_TOKEN` está en `.env`, exige la cabecera `X-API-Token`. Sin definir, la ruta queda abierta (cómodo en localhost, imprudente con `make dev-public`, que además avisa al arrancar). |
+| Límite de subida | 25 MB, cortado por `Content-Length` en un middleware **antes** de parsear el multipart, con un contador en el handler como respaldo para peticiones `chunked`. |
+| Allowlist de modelos | `modelo` solo acepta IDs declarados en `config.py` (ver `/config` → `modelos_permitidos`). Motivo: `initialize_client()` cae a **openrouter** para IDs desconocidos mientras `_detect_provider()` del adaptador cae a **openai**, así que un ID arbitrario validaría una API key y usaría otra. |
+| Validación de entrada | Solo `.pdf`; `reasoning_effort` ∈ {low, medium, high}; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
+
+No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
 
 ## Costes Estimados
 
@@ -183,8 +260,8 @@ python residenciafiscal.py --pdf-list ./mi_lista.txt
 
 ```python
 # Modelos
-DEFAULT_MODEL = GPT_5_NANO           # gpt-5.6-luna
-SENTENCIA_CLAVE_MODEL = GPT_5        # gpt-5.2-2025-12-11
+DEFAULT_MODEL = GPT_5_MINI           # gpt-5.6-luna
+SENTENCIA_CLAVE_MODEL = GPT_5        # gpt-5.6-sol
 REASONING_EFFORT = "medium"
 
 # Procesamiento
@@ -198,43 +275,82 @@ DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
 KEY_SENTENCIAS_FILE = DEFAULT_INPUT_DIR / "sentencias_CLAVE.txt"
 ```
 
-## Dependencias
+## Gestión de dependencias (uv)
+
+La fuente de verdad es `pyproject.toml`; `uv.lock` fija las versiones exactas y **se
+versiona en git**. No hay `requirements.txt` en el repo (se genera bajo demanda con
+`make export-requirements` si algún consumidor externo lo necesita).
+
+```bash
+uv add pandas          # añadir una dependencia (actualiza pyproject + lock)
+uv add --dev pytest    # dependencia solo de desarrollo
+uv remove groq         # quitarla
+make lock              # regenerar el lock tras editar pyproject a mano
+make upgrade           # subir versiones dentro de los rangos declarados
+```
+
+Runtime: Python **3.13** (fijado en `.python-version`; `uv` lo instala solo).
+
+Dependencias principales:
 
 ```
-openai>=1.0.0       # LLM API
-pypdf>=5.0.0        # PDF extraction
-pandas>=2.0.0       # DataFrames
-openpyxl>=3.1.0     # Excel export
-tqdm>=4.65.0        # Progress bars
-python-dotenv>=1.0.0
-aiohttp>=3.8.0
-pydantic>=2.0.0
+openai, groq, google-generativeai   # proveedores LLM
+pypdf                               # extracción de texto de PDF
+pandas, openpyxl                    # DataFrames y export a Excel
+fastapi[standard], uvicorn          # API HTTP
+pydantic, python-dotenv, aiohttp, tqdm
+# dev: pytest, pytest-asyncio, ruff, mypy
 ```
+
+## Calidad de código
+
+Configurado todo en `pyproject.toml`:
+
+- **ruff** — lint + format, `line-length = 100`, reglas `E W F I B C4 UP`
+- **mypy** — `check_untyped_defs`, `ignore_missing_imports` (libs sin stubs)
+- **pytest** — `testpaths = ["test"]`, `asyncio_mode = "auto"`. Los tests que llaman a
+  LLMs reales van marcados `@pytest.mark.manual_real_llm` y **quedan excluidos por
+  defecto** (evita gasto accidental); se lanzan con `make test-llm`.
+
+Gate antes de commitear: `make fast-check`.
 
 ## Troubleshooting
 
 | Problema | Solución |
 |----------|----------|
-| `OPENAI_API_KEY not set` | `export OPENAI_API_KEY="sk-..."` o crear `.env` |
+| `OPENAI_API_KEY not set` | Rellenar `.env` (`cp .env.example .env`) |
+| `uv: command not found` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| Entorno desincronizado | `uv sync` (o `make setup` para recrearlo) |
+| `Address already in use` en `make dev` | `make dev PORT=9000` |
 | PDF sin texto | Solo PDFs con texto (no scans/OCR) |
 | Rate limits | Reducir `BATCH_SIZE` o aumentar `LLM_BACKOFF_BASE` |
 | JSON parse error | El pipeline auto-repara; revisar logs si persiste |
-| Ejecución interrumpida | Usar `--skip-existing` para continuar |
+| Ejecución interrumpida | `make run-resume` |
 
 ## Estructura de Archivos
 
 ```
 residenciafiscal/
+├── Makefile                 # Interfaz de comandos (make help)
+├── pyproject.toml           # Dependencias (uv) + ruff/mypy/pytest
+├── uv.lock                  # Versiones exactas (versionado)
+├── .python-version          # 3.13
 ├── residenciafiscal.py      # Pipeline principal
 ├── prompt.py                # System prompt + schema
 ├── config.py                # Configuración centralizada
 ├── ai_service_adapter.py    # Wrapper LLM
 ├── model_pricing.py         # Cálculo de costes
+├── api/
+│   └── main.py              # API HTTP (FastAPI)
+├── test/
+│   ├── test_api.py          # Tests de la capa HTTP (sin coste)
+│   ├── test_gemini_model_policy.py
+│   └── test_single_pdf.py   # Smoke test end-to-end (con coste)
 ├── sentencias/              # 106 PDFs entrada
 │   ├── sentencias_CLAVE.txt # 23 sentencias premium
 │   └── readme.txt           # Inventario
 ├── output/                  # Resultados generados
-├── requirements.txt
+├── .venv/                   # Entorno gestionado por uv (gitignored)
 ├── .env                     # API keys (gitignored)
 └── CLAUDE.md                # Este archivo
 ```

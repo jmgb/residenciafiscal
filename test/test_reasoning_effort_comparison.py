@@ -30,13 +30,12 @@ import asyncio
 import json
 import logging
 import shutil
-import subprocess
 import sys
 import tempfile
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import pandas as pd
 
@@ -107,7 +106,7 @@ def print_warning(text: str) -> None:
     print(f"{Colors.YELLOW}⚠ {text}{Colors.ENDC}")
 
 
-def find_available_pdf() -> Optional[Path]:
+def find_available_pdf() -> Path | None:
     """Find an available PDF in sentencias directory."""
     sentencias_dir = PROJECT_ROOT / "sentencias"
     if not sentencias_dir.exists():
@@ -139,7 +138,7 @@ def serialize_for_csv(value: Any) -> Any:
     return value
 
 
-def find_jsonl_output(output_dir: Path) -> Optional[Path]:
+def find_jsonl_output(output_dir: Path) -> Path | None:
     """Find the most recent JSONL file in the output directory."""
     jsonl_files = list(output_dir.glob("*.jsonl"))
     if not jsonl_files:
@@ -156,7 +155,7 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
         return metrics
 
     try:
-        with open(jsonl_path, 'r') as f:
+        with open(jsonl_path) as f:
             first_record = None
             for line in f:
                 line = line.strip()

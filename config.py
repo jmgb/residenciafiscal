@@ -5,6 +5,7 @@ Externaliza variables, rutas y parámetros de LLM en un solo lugar.
 """
 
 from pathlib import Path
+from typing import Any
 
 # ============================================================================
 # RUTAS POR DEFECTO
@@ -196,7 +197,7 @@ ALLOWED_KEYS = {
 # ============================================================================
 
 # Estructura de campos mínimos que debe tener cada registro
-REQUIRED_FIELDS = {
+REQUIRED_FIELDS: dict[str, Any] = {
     "archivo": None,
     "identificadores": {"ROJ": DEFAULT_MISSING_VALUE, "ECLI": DEFAULT_MISSING_VALUE},
     "organo": DEFAULT_MISSING_VALUE,

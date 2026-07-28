@@ -1,5 +1,10 @@
 # Guía de Pruebas: Comparación de Reasoning Effort
 
+> **Nota de entorno (2026-07):** el proyecto usa **uv** y un `Makefile`. Los comandos
+> `python ...` de este documento se lanzan como `uv run python ...`, o bien activando
+> el entorno con `source .venv/bin/activate`. Ver `make help` para los atajos.
+
+
 Documento detallado sobre las pruebas comparativas de `reasoning_effort` para modelos GPT-5 en el pipeline de Residencia Fiscal.
 
 ## 📋 Descripción General

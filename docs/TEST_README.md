@@ -1,5 +1,10 @@
 # Testing Suite: Reasoning Effort Comparison
 
+> **Nota de entorno (2026-07):** el proyecto usa **uv** y un `Makefile`. Los comandos
+> `python ...` de este documento se lanzan como `uv run python ...`, o bien activando
+> el entorno con `source .venv/bin/activate`. Ver `make help` para los atajos.
+
+
 Documentación completa sobre el sistema de pruebas para comparar diferentes niveles de `reasoning_effort` en modelos GPT-5.
 
 ## 📚 Documentación Disponible
