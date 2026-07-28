@@ -50,7 +50,7 @@ async def gpt_request_for_sentencia(
         logger: Logger instance
         temperature: Temperature parameter (0-1)
         response_format: "json_object" or "text"
-        reasoning_effort: "minimal", "low", "medium", "high" (for GPT-5+)
+        reasoning_effort: "low", "medium", "high" (for GPT-5+)
         max_tokens: Maximum tokens to generate
 
     Returns:

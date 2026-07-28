@@ -164,7 +164,7 @@ python residenciafiscal.py --skip-existing
 # Modelo específico (ignorado para sentencias clave)
 python residenciafiscal.py --model gpt-4-turbo
 
-# Reasoning effort (minimal/low/medium/high)
+# Reasoning effort (low/medium/high)
 python residenciafiscal.py --reasoning-effort high
 
 # Lista específica de PDFs

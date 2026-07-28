@@ -45,7 +45,7 @@ GPT_5_NANO = "gpt-5.6-luna"
 GEMINI_PRO = "gemini-3.6-flash"
 GEMINI_FLASH = "gemini-3.6-flash"
 
-# Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high|minimal)
+# Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high)
 # Mayor esfuerzo = mayor precisión pero más lento y caro
 REASONING_EFFORT = "medium"
 

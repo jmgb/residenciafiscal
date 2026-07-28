@@ -790,7 +790,7 @@ async def main_async(
 
     Args:
         max_files: Máximo número de PDFs a procesar (0 o None = sin límite)
-        reasoning_effort: Reasoning effort level (minimal, low, medium, high)
+        reasoning_effort: Reasoning effort level (low, medium, high)
     """
 
     if pdf_list is not None:
@@ -960,7 +960,7 @@ def main() -> None:
     parser.add_argument(
         "--reasoning-effort",
         default=REASONING_EFFORT,
-        choices=["minimal", "low", "medium", "high"],
+        choices=["low", "medium", "high"],
         help="Reasoning effort level for GPT-5 models (default: medium)"
     )
     args = parser.parse_args()
