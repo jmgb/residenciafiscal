@@ -309,7 +309,9 @@ Dominio: residenciafiscal.org, apuntado a Netlify con HTTPS automático.
   Es el precio de no montar un monorepo compartido y se acepta.
 - **Contenido simulado**: el aviso del stub debe ser inequívoco. Publicar
   respuestas jurídicas simuladas sin marcar sería un problema real de confianza.
-- **Motor RAG por decidir**: las tres opciones evaluadas siguen abiertas
-  (Netlify Functions + OpenAI file_search, Netlify Functions + Supabase
-  pgvector, backend FastAPI en el VPS). La interfaz `ChatEngine` sirve a las
-  tres.
+- **Motor RAG por decidir**: las opciones evaluadas siguen abiertas y la
+  interfaz `ChatEngine` sirve a todas. El repositorio ya expone una **API
+  FastAPI** (`api/main.py`, puerto 8010) que envuelve el pipeline, así que
+  ampliarla con un endpoint `/chat` es hoy el camino de menor fricción; las
+  alternativas son Netlify Functions + OpenAI file_search o Netlify Functions +
+  Supabase pgvector.
