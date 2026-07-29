@@ -33,7 +33,7 @@ Test the main processing pipeline with a single PDF to verify:
 ### Quick Start
 
 ```bash
-cd /home/ubuntu/ai_projects/residenciafiscal
+# desde la raíz del repositorio
 make test-single
 ```
 

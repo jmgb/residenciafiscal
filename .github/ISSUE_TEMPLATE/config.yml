@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Vulnerabilidad de seguridad
+    url: https://github.com/jmgb/residenciafiscal/security/advisories/new
+    about: No abras una issue pública. Repórtala en privado por aquí.
+  - name: Error en un análisis concreto
+    url: https://github.com/jmgb/residenciafiscal/issues/new?template=bug_report.yml
+    about: El análisis de una sentencia es incorrecto. Indica el fichero y qué campo falla.
+  - name: Documentación del proyecto
+    url: https://github.com/jmgb/residenciafiscal/blob/main/CLAUDE.md
+    about: Arquitectura, schema de campos, costes y troubleshooting antes de preguntar.

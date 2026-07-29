@@ -1,0 +1,76 @@
+name: Informe de fallo
+description: Algo no funciona como debería en el pipeline, la API o el frontend
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por reportarlo. Si el fallo implica una clave de API, un dato
+        personal o una vulnerabilidad, **no sigas aquí**: abre un
+        [aviso privado de seguridad](https://github.com/jmgb/residenciafiscal/security/advisories/new)
+        ([política completa](https://github.com/jmgb/residenciafiscal/blob/main/SECURITY.md)).
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área afectada
+      options:
+        - Pipeline CLI (residenciafiscal.py)
+        - API HTTP (api/main.py)
+        - Frontend (frontend/)
+        - Extracción / calidad del análisis
+        - Documentación
+        - Otro
+    validations:
+      required: true
+
+  - type: textarea
+    id: que-pasa
+    attributes:
+      label: Qué ocurre
+      description: Qué esperabas y qué ha pasado en su lugar.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducir
+    attributes:
+      label: Pasos para reproducirlo
+      description: Comando exacto, PDF usado si aplica, y salida obtenida.
+      placeholder: |
+        1. make run MAX_FILES=1
+        2. ...
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: entorno
+    attributes:
+      label: Entorno
+      description: Sistema operativo, versión de Python (`uv run python -V`), commit o versión del repo, y modelo LLM usado.
+      placeholder: |
+        SO: Ubuntu 24.04 (WSL2)
+        Python: 3.13.1
+        Commit: e5204f5
+        Modelo: gpt-5.6-luna
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs o traza
+      description: Pega el error completo. Revisa antes que no contenga claves de API.
+      render: shell
+
+  - type: checkboxes
+    id: comprobaciones
+    attributes:
+      label: Comprobaciones previas
+      options:
+        - label: He buscado si ya existe una issue con este fallo.
+          required: true
+        - label: He verificado que el error persiste tras `make setup`.
+        - label: Los logs que pego no contienen claves de API ni datos personales.
+          required: true

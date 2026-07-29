@@ -1,7 +1,10 @@
 # Environment
+# `.env.*` con negación explícita para el ejemplo. El patrón anterior
+# (.env.local + .env.*.local) dejaba fuera .env.production, .env.development,
+# .env.backup y .env.old, que sí llevan valores reales.
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 venv/
 env/
 ENV/
@@ -95,6 +98,9 @@ Thumbs.db
 *.swp
 *~
 
+# Node (el frontend tiene su propio .gitignore; esto cubre la raíz)
+node_modules/
+
 # Tool caches and process state
 .cache/
 .vite/
@@ -110,3 +116,7 @@ SUPABASE_ACCOUNTS.md
 
 # Compañero visual de brainstorming (superpowers)
 .superpowers/
+
+# Specs y planes de implementación internos: citan rutas y decisiones de otros
+# proyectos privados, así que no se publican. Se conservan en local.
+docs/superpowers/

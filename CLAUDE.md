@@ -380,7 +380,7 @@ y procesa todo.
 ```
 residenciafiscal/
 ├── Makefile                 # Interfaz de comandos (make help)
-├── pyproject.toml           # Dependencias (uv) + ruff/mypy/pytest
+├── pyproject.toml           # Dependencias (uv) + ruff/mypy/pytest + metadatos
 ├── uv.lock                  # Versiones exactas (versionado)
 ├── .python-version          # 3.13
 ├── residenciafiscal.py      # Pipeline principal
@@ -390,8 +390,13 @@ residenciafiscal/
 ├── model_pricing.py         # Cálculo de costes
 ├── api/
 │   └── main.py              # API HTTP (FastAPI)
-├── .github/workflows/
-│   └── ci.yml               # Gate de CI: ruff + mypy + pytest (sin secrets)
+├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml           # Gate de CI Python: ruff + mypy + pytest (sin secrets)
+│   │   └── frontend.yml     # Gate de CI frontend: biome + tsc + vitest + build
+│   ├── ISSUE_TEMPLATE/      # Plantillas de bug y de propuesta (formularios YAML)
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── dependabot.yml       # uv + npm semanal, github-actions mensual
 ├── test/
 │   ├── test_api.py          # Tests de la capa HTTP (sin coste)
 │   ├── test_resume.py       # Reanudación (find_latest_jsonl)
@@ -399,17 +404,39 @@ residenciafiscal/
 │   └── test_single_pdf.py   # Smoke test end-to-end (con coste)
 ├── sentencias/              # 106 PDFs entrada
 │   ├── sentencias_CLAVE.txt # 23 sentencias premium
-│   └── readme.txt           # Inventario
+│   ├── readme.txt           # Inventario
+│   └── AVISO_LEGAL.md       # Origen CENDOJ y condiciones de reutilización
 ├── output/                  # Resultados generados
 ├── frontend/                # SPA React (residenciafiscal.org)
 │   ├── src/                 # Código de la aplicación
 │   ├── scripts/             # build-corpus.mjs
 │   └── tests/               # Suites Vitest
 ├── netlify.toml             # Despliegue en Netlify (ver docs/operations/)
+├── README.md                # Portada pública del repositorio
+├── LICENSE                  # MIT (solo código y documentación)
+├── CONTRIBUTING.md          # Entorno, gates y expectativas de un PR
+├── SECURITY.md              # Reporte de vulnerabilidades y alcance
+├── CODE_OF_CONDUCT.md       # Contributor Covenant 2.1 adaptado
 ├── .venv/                   # Entorno gestionado por uv (gitignored)
 ├── .env                     # API keys (gitignored)
 └── CLAUDE.md                # Este archivo
 ```
+
+### Ficheros públicos del repositorio
+
+El repo está preparado para ser público. Al tocar estas piezas, ten en cuenta:
+
+- **`LICENSE` (MIT) cubre código y documentación, no los PDFs.** Las sentencias
+  de `sentencias/` son documentos del CENDOJ con sus propias condiciones de
+  reutilización, recogidas en `sentencias/AVISO_LEGAL.md`. Si añades PDFs,
+  actualiza el inventario (`readme.txt`) y comprueba ese aviso.
+- **Nada de rutas absolutas** (`/home/ubuntu/...`) en código ni en documentación
+  pública: usa rutas relativas a la raíz del repositorio.
+- **Ningún workflow de CI usa secrets**, y debe seguir así. Ver la sección de
+  calidad de código.
+- El correo personal no aparece en ningún fichero versionado: los canales de
+  contacto de `SECURITY.md` y `CODE_OF_CONDUCT.md` son los avisos privados de
+  GitHub.
 
 ## Frontend (residenciafiscal.org)
 
@@ -418,9 +445,11 @@ de sentencias en lenguaje natural.
 
 ### Stack
 
-Vite 7 + React 19 + TypeScript + Tailwind CSS v4 + Radix UI + zustand +
-react-router-dom. Gestión de dependencias con `npm` (no hay Makefile de
-frontend; el Makefile de la raíz solo cubre la parte Python).
+Vite 8 + React 19 + TypeScript 7 + Tailwind CSS v4 + Radix UI + zustand +
+`react-router` v8 (el paquete es `react-router`, **no** `react-router-dom`:
+importar de `react-router-dom` falla, no está instalado). Gestión de
+dependencias con `npm` (no hay Makefile de frontend; el Makefile de la raíz
+solo cubre la parte Python).
 
 ### Comandos
 

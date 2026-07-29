@@ -1,0 +1,50 @@
+# Actualizaciones automáticas de dependencias.
+#
+# Agrupadas para que no lleguen 15 PRs sueltos: el gate de CI corre entero en
+# cada PR, así que un PR agrupado por ecosistema cuesta lo mismo de revisar que
+# uno individual y da mucho menos ruido.
+#
+# `uv` es un ecosistema soportado nativamente por Dependabot y actualiza
+# pyproject.toml + uv.lock a la vez, que es justo lo que exige `uv sync --locked`
+# en ci.yml.
+version: 2
+
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      python-dev:
+        dependency-type: "development"
+      python-runtime:
+        dependency-type: "production"
+
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      frontend-dev:
+        dependency-type: "development"
+      frontend-runtime:
+        dependency-type: "production"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      actions:
+        patterns:
+          - "*"

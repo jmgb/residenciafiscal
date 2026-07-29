@@ -1,149 +1,127 @@
-# Reasoning Effort Configuration
+# Reasoning effort
 
-> **Nota de entorno (2026-07):** el proyecto usa **uv** y un `Makefile`. Los comandos
-> `python ...` de este documento se lanzan como `uv run python ...`, o bien activando
-> el entorno con `source .venv/bin/activate`. Ver `make help` para los atajos.
+El parámetro `reasoning_effort` regula cuánto "piensa" un modelo GPT-5 antes de
+responder. En este pipeline es la palanca principal del compromiso entre
+**precisión de la extracción**, **tiempo** y **coste**.
 
+## Dónde se configura
 
-## Overview
+Hay tres niveles, de menor a mayor prioridad:
 
-The `residenciafiscal.py` script now supports OpenAI's **Reasoning Effort** parameter for GPT-5 models. This allows fine-tuning the balance between:
-- **Speed**: How fast the model generates responses
-- **Accuracy**: How thoroughly the model thinks through the problem
-- **Cost**: More reasoning = higher token usage
-
-## Configuration
-
-### Default Setting
-
-Located in `config.py`:
-
-```python
-REASONING_EFFORT = "medium"  # Options: low | medium | high | minimal
-```
-
-## Model Support
-
-Reasoning Effort is **only** applied to GPT-5+ models:
-- ✅ `gpt-5.2-2025-12-11`
-- ✅ `gpt-5.6-terra`
-- ✅ `gpt-5.6-luna`
-- ✅ Any model string containing `"gpt-5"`
-
-For other models (gpt-4, gpt-4-mini, etc.), the parameter is **automatically skipped**.
-
-## Implementation Details
-
-In `residenciafiscal.py`, the `call_llm_extract()` function:
-
-```python
-# Detect if model is GPT-5+
-is_gpt5_model = any(gpt5 in model for gpt5 in [GPT_5, GPT_5_MINI, GPT_5_NANO, "gpt-5"])
-
-# Build API call with reasoning_effort if applicable
-create_kwargs = {
-    "model": model,
-    "instructions": system_prompt,
-    "input": user_input,
-}
-
-if is_gpt5_model:
-    create_kwargs["reasoning_effort"] = REASONING_EFFORT
-
-resp = client.responses.create(**create_kwargs)
-```
-
-## Usage
-
-### Command Line
+| Nivel | Dónde | Alcance |
+|-------|-------|---------|
+| Por defecto | `REASONING_EFFORT = "medium"` en `config.py` | Todo el proyecto |
+| Por ejecución | `make run EFFORT=high` → `--reasoning-effort high` | Un run del CLI |
+| Por petición | campo `reasoning_effort` del formulario en `POST /analizar` | Una llamada a la API |
 
 ```bash
-# Uses default reasoning effort (medium)
-python residenciafiscal.py --model gpt-5-mini
+make run EFFORT=high                                    # vía Makefile
+uv run python residenciafiscal.py --reasoning-effort low # CLI directo
 
-# With custom model
-python residenciafiscal.py --model gpt-5
+curl -X POST -F "archivo=@sentencias/SAN_1226_2021.pdf" \
+     -F "reasoning_effort=high" http://127.0.0.1:8010/analizar
 ```
 
-### Changing Reasoning Effort
+La API solo acepta `low`, `medium` o `high` (validado en `api/main.py`); un valor
+distinto devuelve 400. El valor vigente por defecto se consulta en
+`GET /config` → `reasoning_effort_default`.
 
-Edit `config.py`:
+## A qué modelos se aplica
+
+El parámetro **solo se envía a modelos GPT-5**. En `residenciafiscal.py`:
 
 ```python
-# config.py
-REASONING_EFFORT = "high"  # For maximum accuracy (slower, more expensive)
+reasoning_effort=reasoning_effort if "gpt-5" in ai_model else None,
 ```
 
-Then run normally:
+Para cualquier otro modelo (GPT-4, Gemini, Groq, OpenRouter) se omite
+silenciosamente, así que fijar `EFFORT=high` con un modelo no-GPT-5 no cambia
+nada ni da error.
+
+Ojo con las sentencias clave: los 23 ficheros de `sentencias/sentencias_CLAVE.txt`
+fuerzan el modelo premium (`SENTENCIA_CLAVE_MODEL`) al margen de `--model`, pero
+**sí respetan** el `reasoning_effort` que le pases.
+
+## Niveles
+
+| Nivel | Coste relativo | Cuándo usarlo |
+|-------|----------------|---------------|
+| `low` | Base | Prototipado, validar que el pipeline corre de punta a punta, sentencias cortas y de criterio único |
+| `medium` | ~1,5× | **Por defecto.** Equilibrio razonable para el grueso del corpus |
+| `high` | ~2–4× | Sentencias largas, aplicación de CDI con tie-breaker, casos con muchas pruebas cruzadas |
+
+Los multiplicadores son órdenes de magnitud, no medidas: el sobrecoste llega por
+los *reasoning tokens*, que se facturan como salida y varían mucho según el
+documento. Para cifras reales de tu corpus, usa el comparador.
+
+## Comparador
+
+`test/test_reasoning_effort_comparison.py` procesa **el mismo PDF** con varias
+configuraciones y tabula lo que cuesta cada una. Es un script manual, **no entra
+en `pytest`** y **gasta dinero real**.
 
 ```bash
-python residenciafiscal.py
+uv run python test/test_reasoning_effort_comparison.py
+uv run python test/test_reasoning_effort_comparison.py --pdf sentencias/STS_4220_2024.pdf
 ```
 
-## Effort Levels Comparison
-
-| Level | Speed | Accuracy | Cost | Use Case |
-|-------|-------|----------|------|----------|
-| **minimal** | ⚡ Very Fast | ⚠️ Low | $ Cheap | Quick testing |
-| **low** | 🚀 Fast | 📊 Medium | $$ Low | Initial analysis |
-| **medium** | ⚙️ Balanced | 🎯 High | $$$ Medium | **Default - Recommended** |
-| **high** | 🐢 Slow | 🔍 Very High | $$$$ High | Complex documents |
-
-## Performance Impact
-
-Based on OpenAI's guidance:
-
-- **medium** (default): 
-  - ~20-30% more tokens than minimal
-  - Good balance for legal document analysis
-  - ~2-3x the cost of gpt-4-mini but better accuracy
-
-- **high**:
-  - ~50-100% more tokens than minimal
-  - Recommended for critical analysis
-  - 5-10x the cost of gpt-4-mini
-
-## Example: Cost Estimation
-
-Processing 100 PDFs (~5 pages each):
-
-```
-Model: gpt-5-mini
-Effort: medium
-
-Estimated:
-- Input tokens: 5,000 per PDF
-- Output tokens: 500 per PDF (with reasoning overhead)
-- Total: ~550,000 tokens per run
-- Cost: ~$2.75 at typical GPT-5 pricing
-```
-
-## Troubleshooting
-
-### Error: "reasoning_effort not supported for this model"
-
-**Solution**: The model doesn't support reasoning_effort.
-- Change to GPT-5+ in config.py
-- Or edit the script to force-disable it
-
-### Timeout errors with high reasoning effort
-
-**Solution**: Increase retry backoff or use lower effort:
+Las configuraciones viven en `TEST_CONFIGURATIONS`, al principio del script.
+Hoy son tres, de más barata a más cara:
 
 ```python
-# config.py
-REASONING_EFFORT = "low"  # Instead of "high"
+TEST_CONFIGURATIONS = [
+    ("gpt-5.6-luna", "medium"),
+    ("gpt-5.6-luna", "high"),
+    ("gpt-5.2-2025-12-11", "medium"),
+]
 ```
 
-## Future Enhancements
+Edita esa lista para añadir o quitar combinaciones. Cada entrada es una llamada
+completa al modelo sobre el PDF entero: el coste crece de forma lineal con el
+número de filas.
 
-Planned features:
-- [ ] CLI flag to override REASONING_EFFORT: `--reasoning low|medium|high|minimal`
-- [ ] Adaptive reasoning effort based on document complexity
-- [ ] Cost estimation before processing
-- [ ] Support for other models' equivalent parameters
+### Qué mide
 
-## References
+Vuelca a consola y a `test_results/reasoning_effort_comparison_<timestamp>.{csv,json}`
+(directorio ignorado por git):
 
-- [OpenAI Reasoning Effort Docs](https://platform.openai.com/docs/)
-- [GPT-5 API Reference](https://platform.openai.com/docs/api-reference)
+- **Coste y rendimiento**: `time_seconds` y `cost_usd`.
+- **Cobertura de la extracción**: `criterios_detectados`, `pruebas_aeat` y
+  `pruebas_contribuyente`.
+- **Resultado y calidad declarada**: `confianza_extraccion` (ALTA / MEDIA /
+  BAJA), `resultado_final`, `es_caso_residencia_irpf` y `se_invoca_CDI`.
+
+No hay conteo de tokens: `process_pdf_async()` descarta `tokens_in` y
+`tokens_out` antes de escribir el JSONL (`residenciafiscal.py`), así que el
+comparador no puede leerlos. Si te hace falta el desglose por tokens, hay que
+dejar de descartarlos primero.
+
+### Cómo leerlo
+
+La señal útil no es el coste aislado, sino **cuánto compras con él**:
+
+- Si al subir de `medium` a `high` no cambian ni los criterios detectados ni la
+  confianza, el gasto extra no aporta: quédate en `medium`.
+- Si `confianza_extraccion` sube de BAJA a ALTA, o aparecen criterios que
+  `medium` no veía, `high` está pagando por sí mismo en ese tipo de sentencia.
+- Si `confianza_extraccion` sale BAJA en **todas** las configuraciones, el
+  problema no es el esfuerzo: comprueba que el PDF tiene capa de texto, porque
+  el pipeline no hace OCR.
+
+Un patrón razonable en producción es `medium` para todo el corpus y `high` solo
+para el subconjunto que lo justifique, mediante `make run-list`.
+
+## Problemas frecuentes
+
+| Síntoma | Causa probable |
+|---------|----------------|
+| El esfuerzo no cambia nada | El modelo no es GPT-5; el parámetro se omite por diseño |
+| `cost_usd = 0` en toda la tabla | El modelo no está en `model_pricing.py`; añade sus precios |
+| Timeouts con `high` | Baja a `medium`, o reduce `BATCH_SIZE` en `config.py` |
+| 400 en `/analizar` | La API solo admite `low`, `medium` o `high`; `minimal` no está permitido |
+
+## Referencias
+
+- [OpenAI — Reasoning models](https://platform.openai.com/docs/guides/reasoning)
+- `config.py` — valores por defecto
+- `test/README.md` — inventario de tests y coste de cada uno

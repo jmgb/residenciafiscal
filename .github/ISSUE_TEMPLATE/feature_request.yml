@@ -1,0 +1,54 @@
+name: Propuesta de mejora
+description: Sugerir una funcionalidad, un campo nuevo del schema o un cambio de comportamiento
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrirla, echa un vistazo al
+        [backlog del proyecto](https://github.com/jmgb/residenciafiscal/blob/main/docs/tasks.md):
+        puede que ya esté recogida.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Área
+      options:
+        - Pipeline CLI (residenciafiscal.py)
+        - API HTTP (api/main.py)
+        - Frontend (frontend/)
+        - Schema de extracción (prompt.py)
+        - Documentación
+        - Otro
+    validations:
+      required: true
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qué problema resuelve
+      description: Describe la situación real, no la solución. Qué no puedes hacer hoy.
+    validations:
+      required: true
+
+  - type: textarea
+    id: propuesta
+    attributes:
+      label: Propuesta
+      description: Cómo lo resolverías. Si afecta al schema de extracción, indica el nombre del campo y sus valores posibles.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas
+      description: Qué otras opciones has descartado y por qué.
+
+  - type: checkboxes
+    id: coste
+    attributes:
+      label: Impacto
+      options:
+        - label: Este cambio aumentaría el coste por sentencia analizada.
+        - label: Este cambio rompería la compatibilidad del schema de salida.

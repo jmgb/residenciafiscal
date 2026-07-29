@@ -10,13 +10,55 @@ git:
   author_email: claude-code-autofix@users.noreply.github.com
   commit_title_prefix: "fix: [Sentry]"
 
+# ⚠️ PENDIENTE: este repo todavía no emite incidencias a Sentry.
+# No hay `sentry-sdk` en pyproject.toml ni `@sentry/react` en frontend/package.json,
+# así que ningún error llega a Sentry y el autofix nunca se dispara. Rellenar los
+# slugs de abajo solo tiene efecto DESPUÉS de instrumentar la aplicación.
+# Los SENTRY_PROJECT_IDS del .env apuntan hoy a los proyectos de otro repo.
+incident_sources:
+  sentry_projects: []
+  # - residenciafiscal-api
+  # - residenciafiscal-frontend
+
 validation:
   required_before_publish:
     - read_claude_md
     - read_autofix_contract
     - run_linters_on_modified_code
     - run_related_tests
+    # Un fix de código debe venir con un test de regresión que reproduzca la
+    # incidencia. Un diff sin test no se auto-publica: va a revisión humana.
+    - add_regression_test_or_route_to_human
     - do_not_publish_if_validations_fail
+
+  # Este repo no es un monorepo con workspaces: la parte Python vive en la raíz
+  # (interfaz `make`) y el frontend es un paquete npm independiente en frontend/.
+  backend:
+    lint_commands:
+      - uv run ruff check . --fix
+      - uv run ruff format .
+    extra_validation_commands:
+      - uv run mypy .
+    test_examples:
+      - uv run pytest -q
+      - uv run pytest -q test/test_api.py
+    # Los tests con marker `manual_real_llm` gastan dinero real y están excluidos
+    # por `addopts`. El autofix NO debe lanzarlos ni retirar la exclusión.
+    forbidden_commands:
+      - make run
+      - make test-llm
+      - make test-single
+      - uv run pytest -m manual_real_llm
+
+  frontend:
+    lint_commands:
+      - cd frontend && npx biome check src --fix
+    extra_validation_commands:
+      - cd frontend && npm run typecheck
+      - cd frontend && npm run build
+    test_examples:
+      - cd frontend && npm run test
+      - cd frontend && npx vitest run tests/path/to/related/
 
 delivery:
   create_pr: true
@@ -30,3 +72,11 @@ guardrails:
   never_edit_live_production_checkout: true
   keep_changes_minimal_and_incident_scoped: true
   require_non_github_token_for_merge_that_triggers_deploy: true
+  # Específicos de este repo:
+  # El endpoint POST /analizar y el pipeline gastan presupuesto de API en cada
+  # llamada. Ningún fix automático puede ampliar el gasto ni relajar los
+  # guardarraíles de la API (token, límite de 25 MB, allowlist de modelos).
+  never_run_commands_that_spend_llm_budget: true
+  never_relax_api_guardrails: true
+  # Los workflows de CI no usan secrets a propósito. Un fix no puede añadirlos.
+  never_add_secrets_to_ci_workflows: true

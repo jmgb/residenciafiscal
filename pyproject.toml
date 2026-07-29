@@ -5,6 +5,16 @@ version = "0.1.0"
 description = "Análisis LLM de sentencias judiciales españolas sobre residencia fiscal (Art. 9 LIRPF)"
 readme = "README.md"
 requires-python = ">=3.13"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["llm", "jurisprudencia", "residencia-fiscal", "irpf", "legal-tech", "nlp"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Legal Industry",
+    "Natural Language :: Spanish",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Text Processing :: Linguistic",
+]
 
 dependencies = [
     # LLM providers
@@ -25,6 +35,14 @@ dependencies = [
     "uvicorn[standard]>=0.30.0,<1.0.0",
     "python-multipart>=0.0.9,<1.0.0",
 ]
+
+# Va después de `dependencies`: en TOML todo lo que sigue a una cabecera de tabla
+# pertenece a esa tabla, así que declarar [project.urls] antes convertiría
+# `dependencies` en `project.urls.dependencies` y uv vaciaría el lock.
+[project.urls]
+Homepage = "https://residenciafiscal.org"
+Repository = "https://github.com/jmgb/residenciafiscal"
+Issues = "https://github.com/jmgb/residenciafiscal/issues"
 
 [tool.uv]
 # NO instalar el proyecto como paquete: los módulos viven en la raíz

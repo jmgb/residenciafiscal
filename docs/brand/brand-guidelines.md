@@ -2,7 +2,6 @@
 
 > **Documento canónico de marca.** Desde aquí cualquiera —persona o agente— debe poder
 > producir una pieza on-brand sin abrir el CSS a adivinar el criterio.
-> Spec de origen: [`docs/superpowers/specs/2026-07-29-marca-y-brandbook-design.md`](../superpowers/specs/2026-07-29-marca-y-brandbook-design.md).
 > Narrativa completa: [`docs/brand/manifiesto.md`](manifiesto.md).
 > Gate automático: `frontend/tests/brand-tokens.test.ts` (dentro de `npm run fast-check`).
 

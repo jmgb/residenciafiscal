@@ -8,9 +8,9 @@ This script:
 3. Runs residenciafiscal.py
 4. Displays the generated JSONL and CSV outputs
 
-Usage:
-    cd /home/ubuntu/ai_projects/residenciafiscal
-    python test/test_single_pdf.py
+Usage (desde la raíz del repositorio):
+    make test-single
+    uv run python test/test_single_pdf.py
 """
 
 import json

@@ -2,9 +2,9 @@
 
 > **Estado:** aprobado 2026-07-29 · documento canónico de narrativa.
 > El manifiesto desarrolla la narrativa definida en
-> [`docs/superpowers/specs/2026-07-29-marca-y-brandbook-design.md`](../superpowers/specs/2026-07-29-marca-y-brandbook-design.md)
-> (§1 y §6). Los vetos de lenguaje y el claim canónico de ese documento mandan sobre
-> cualquier pieza derivada de este.
+> [`docs/brand/brand-guidelines.md`](brand-guidelines.md) (§1 «La marca en dos
+> frases» y §6 «Voz y mensaje»). Los vetos de lenguaje y el claim canónico del
+> brandbook mandan sobre cualquier pieza derivada de este documento.
 
 ---
 
