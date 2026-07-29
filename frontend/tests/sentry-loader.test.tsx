@@ -54,6 +54,18 @@ describe('Sentry lazy loader', () => {
     expect(loaderSource).not.toContain("from '@sentry/react'");
   });
 
+  it('uses SENTRY_TOKEN as the only source-map authentication variable', () => {
+    const viteConfigSource = readFileSync(path.resolve(process.cwd(), 'vite.config.ts'), 'utf8');
+    const envExampleSource = readFileSync(path.resolve(process.cwd(), '../.env.example'), 'utf8');
+
+    expect(viteConfigSource).toContain('env.SENTRY_TOKEN');
+    expect(viteConfigSource).toContain('process.env.SENTRY_TOKEN');
+    expect(viteConfigSource).not.toContain('SENTRY_PERSONAL_API_TOKEN');
+    expect(viteConfigSource).not.toContain('SENTRY_AUTH_TOKEN');
+    expect(envExampleSource).toContain('\nSENTRY_TOKEN=\n');
+    expect(envExampleSource).not.toContain('SENTRY_AUTH_TOKEN');
+  });
+
   it('captures render errors after showing the fallback', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const error = new Error('render failed');

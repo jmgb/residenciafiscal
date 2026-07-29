@@ -25,11 +25,7 @@ export default defineConfig(({ mode }) => {
   const revision =
     env.VITE_SENTRY_RELEASE || process.env.COMMIT_REF?.slice(0, 12) || getGitRevision();
   const release = `residencia-fiscal-frontend@${revision}`;
-  const authToken =
-    env.SENTRY_AUTH_TOKEN ||
-    env.SENTRY_PERSONAL_API_TOKEN ||
-    process.env.SENTRY_AUTH_TOKEN ||
-    process.env.SENTRY_PERSONAL_API_TOKEN;
+  const authToken = env.SENTRY_TOKEN || process.env.SENTRY_TOKEN;
   const sentryOrg = env.SENTRY_ORG_SLUG || process.env.SENTRY_ORG_SLUG;
   const sentryProject =
     env.SENTRY_FRONTEND_PROJECT_SLUG ||

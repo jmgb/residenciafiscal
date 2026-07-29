@@ -5,21 +5,15 @@ contra el dominio público después de cada deploy.
 
 ## Prioridad alta
 
-- [ ] **Rotar el token de Sentry filtrado en la historia de git.** Un
-  `SENTRY_AUTH_TOKEN` real (prefijo `sntryu_e3ea…`) se commiteó dentro de
-  `.mcp.json` el 2026-03-19 (commits `13dc89c` y `098e492`). El fichero se borró
-  después, pero el token sigue en la historia y **es el que continúa activo hoy
-  en `.env` y en `frontend/.env`**. Lleva cuatro meses en los servidores de
-  GitHub y está también en la rama remota `agent/disable-us-waf-challenge`.
-  - Revocarlo y emitir uno nuevo en Sentry → `.env` (no hace falta en
-    `frontend/.env`, ver tarea siguiente).
+- [x] **Rotar el token de Sentry filtrado en la historia de git.** El token real
+  commiteado dentro de `.mcp.json` el 2026-03-19 (commits `13dc89c` y
+  `098e492`) se revocó y sustituyó el 2026-07-29. La variable canónica vigente
+  es `SENTRY_TOKEN`.
   - Purgar la historia **no sustituye a rotar**: un force-push no borra el objeto
-    del servidor, que sigue siendo alcanzable por su SHA. Rotar es lo único que
-    cierra el riesgo.
-  - Bloquea publicar el repositorio.
-- [ ] Borrar `frontend/.env`: duplica seis secretos de Sentry sin aportar nada.
-  El frontend no lee ninguna variable de entorno salvo las `VITE_*`, y ese
-  fichero no define ninguna.
+    del servidor, que sigue siendo alcanzable por su SHA. El secreto histórico
+    permanece documentado como revocado.
+- [x] Mantener un único `.env` en la raíz: `frontend/.env` ya no existe y Vite
+  carga la configuración desde el directorio raíz.
 - [x] Verificar el deploy público de `https://residenciafiscal.org/`: home y recursos
   públicos responden correctamente detrás de Netlify y Cloudflare, también desde EE. UU.
 - [x] Implementar la ruta pública `/metodologia` con el método, el corpus de 106
