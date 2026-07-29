@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { COUNTRY_ROUTES } from '@/data/countryRoutes';
+import { COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
 import { CountryPage } from '@/pages/CountryPage';
 import { ManifiestoPage } from '@/pages/ManifiestoPage';
@@ -18,11 +18,25 @@ export function App() {
         <Route path='/españa' element={<SpainPage />} />
         <Route
           path='/consulta'
-          element={<ChatView engine={chatEngine} isStub={isStub} canonicalPath='/consulta' />}
+          element={
+            <ChatView
+              engine={chatEngine}
+              isStub={isStub}
+              canonicalPath='/consulta'
+              country={SPAIN_ROUTE}
+            />
+          }
         />
         <Route
           path='/c/:conversationId'
-          element={<ChatView engine={chatEngine} isStub={isStub} canonicalPath='/consulta' />}
+          element={
+            <ChatView
+              engine={chatEngine}
+              isStub={isStub}
+              canonicalPath='/consulta'
+              country={SPAIN_ROUTE}
+            />
+          }
         />
         {COUNTRY_ROUTES.filter((country) => country.path !== '/españa').map((country) => (
           <Route

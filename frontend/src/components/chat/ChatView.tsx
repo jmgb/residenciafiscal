@@ -1,6 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { type CountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
 import type { ChatEngine, ChatMessage, ChatSource } from '@/types/chat';
@@ -58,6 +59,8 @@ export interface ChatViewProps {
   isStub: boolean;
   /** Ruta canónica de la vista que contiene el chat. */
   canonicalPath?: string;
+  /** País cuyo corpus debe utilizar el motor. */
+  country?: CountryRoute;
 }
 
 /**
@@ -66,7 +69,12 @@ export interface ChatViewProps {
  * La conversación se crea de forma perezosa con el primer mensaje, para no
  * llenar el historial de conversaciones vacías cada vez que alguien abre `/`.
  */
-export function ChatView({ engine, isStub, canonicalPath = '/' }: ChatViewProps) {
+export function ChatView({
+  engine,
+  isStub,
+  canonicalPath = '/',
+  country = SPAIN_ROUTE,
+}: ChatViewProps) {
   usePageTitle(undefined, canonicalPath);
   const { conversationId } = useParams();
   const navigate = useNavigate();
@@ -196,7 +204,10 @@ export function ChatView({ engine, isStub, canonicalPath = '/' }: ChatViewProps)
       let sources: ChatSource[] | undefined;
 
       try {
-        for await (const chunk of engine.askQuestion(history, controller.signal)) {
+        for await (const chunk of engine.askQuestion(history, controller.signal, {
+          countryPath: country.path,
+          countryName: country.name,
+        })) {
           if (chunk.type === 'token') {
             buffer += chunk.text;
             updateMessage(targetId, assistantId, { content: buffer });
@@ -225,7 +236,7 @@ export function ChatView({ engine, isStub, canonicalPath = '/' }: ChatViewProps)
         }
       }
     },
-    [appendMessage, conversationId, createConversation, engine, navigate, updateMessage]
+    [appendMessage, conversationId, country, createConversation, engine, navigate, updateMessage]
   );
 
   const hasMessages = messages.length > 0;

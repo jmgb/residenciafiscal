@@ -40,4 +40,31 @@ describe('chatEngine', () => {
       .join('');
     expect(text).toContain('No se han podido cargar las sentencias');
   });
+
+  it('no consulta el corpus español cuando recibe otro país', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => ({
+        ok: true,
+        status: 200,
+        json: async () => [],
+      }))
+    );
+
+    const chunks: ChatChunk[] = [];
+    for await (const chunk of chatEngine.askQuestion(messages, new AbortController().signal, {
+      countryPath: '/mexico',
+      countryName: 'México',
+    })) {
+      chunks.push(chunk);
+    }
+
+    const text = chunks
+      .filter((chunk): chunk is Extract<ChatChunk, { type: 'token' }> => chunk.type === 'token')
+      .map((chunk) => chunk.text)
+      .join('');
+    expect(text).toContain('México');
+    expect(text).toContain('corpus');
+    expect(chunks.some((chunk) => chunk.type === 'sources')).toBe(false);
+  });
 });

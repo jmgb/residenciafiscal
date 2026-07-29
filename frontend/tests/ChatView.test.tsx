@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatView } from '@/components/chat/ChatView';
+import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { useConversations } from '@/stores/useConversations';
 import type { ChatChunk, ChatEngine, CorpusEntry } from '@/types/chat';
 
@@ -124,6 +125,32 @@ describe('ChatView', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
     expect(await screen.findByText('¿Y los 183 días?')).toBeInTheDocument();
+  });
+
+  it('pasa el país seleccionado al motor de consulta', async () => {
+    const user = userEvent.setup();
+    const askQuestion = vi.fn(async function* () {
+      yield { type: 'done' as const };
+    });
+    const engine: ChatEngine = { askQuestion };
+
+    render(
+      <MemoryRouter initialEntries={['/mexico']}>
+        <ChatView
+          engine={engine}
+          isStub
+          country={COUNTRY_ROUTES.find((route) => route.path === '/mexico')}
+        />
+      </MemoryRouter>
+    );
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(askQuestion).toHaveBeenCalledWith(expect.any(Array), expect.any(AbortSignal), {
+      countryPath: '/mexico',
+      countryName: 'México',
+    });
   });
 
   it('pinta la respuesta del asistente al terminar el streaming', async () => {

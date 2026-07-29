@@ -1,4 +1,5 @@
-import { BookOpen, Compass, MessageSquarePlus, Trash2 } from 'lucide-react';
+import { BookOpen, Compass, Globe2, MessageSquarePlus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
@@ -43,6 +44,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
   const { conversationId } = useParams();
   const conversations = useConversations((state) => state.conversations);
   const deleteConversation = useConversations((state) => state.deleteConversation);
+  const [showAllCountries, setShowAllCountries] = useState(false);
 
   // La conversación se crea de forma perezosa en `ChatView` con el primer
   // mensaje, así que «Nueva consulta» solo navega a la raíz.
@@ -122,33 +124,52 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
         aria-label='Países'
         className={cn('mt-6 flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}
       >
-        {!collapsed && (
-          <h2 className='px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground'>
-            Países
-          </h2>
+        {collapsed ? (
+          <Link
+            to='/españa'
+            onClick={onNavigate}
+            aria-label='Países'
+            title='Países'
+            className='flex justify-center rounded-lg p-2 text-muted-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+          >
+            <Globe2 className='h-4 w-4' aria-hidden='true' />
+          </Link>
+        ) : (
+          <>
+            <h2 className='flex items-center gap-2 px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground'>
+              <Globe2 className='h-3.5 w-3.5' aria-hidden='true' />
+              Países
+            </h2>
+            {(showAllCountries ? COUNTRY_ROUTES : COUNTRY_ROUTES.slice(0, 3)).map((country) => {
+              const isActive = pathname === country.path;
+              return (
+                <Link
+                  key={country.path}
+                  to={country.path}
+                  onClick={onNavigate}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={cn(
+                    'truncate rounded-lg px-2 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sidebar-ring',
+                    isActive
+                      ? 'bg-sidebar-accent font-semibold text-sidebar-accent-foreground'
+                      : 'text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'
+                  )}
+                >
+                  {country.name}
+                </Link>
+              );
+            })}
+            {!showAllCountries && (
+              <button
+                type='button'
+                onClick={() => setShowAllCountries(true)}
+                className='rounded-lg px-2 py-1.5 text-left text-sm font-medium text-muted-foreground outline-none transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+              >
+                Mostrar más
+              </button>
+            )}
+          </>
         )}
-        {COUNTRY_ROUTES.map((country) => {
-          const isActive = pathname === country.path;
-          return (
-            <Link
-              key={country.path}
-              to={country.path}
-              onClick={onNavigate}
-              aria-current={isActive ? 'page' : undefined}
-              aria-label={collapsed ? country.name : undefined}
-              title={collapsed ? country.name : undefined}
-              className={cn(
-                'rounded-lg px-2 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sidebar-ring',
-                collapsed ? 'text-center text-xs font-semibold uppercase' : 'truncate',
-                isActive
-                  ? 'bg-sidebar-accent font-semibold text-sidebar-accent-foreground'
-                  : 'text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'
-              )}
-            >
-              {collapsed ? country.name.slice(0, 2) : country.name}
-            </Link>
-          );
-        })}
       </nav>
     </>
   );

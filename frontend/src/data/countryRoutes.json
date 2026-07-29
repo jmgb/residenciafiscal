@@ -1,0 +1,128 @@
+[
+  {
+    "name": "España",
+    "path": "/españa",
+    "description": "Consulta en lenguaje natural 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia fiscal de personas físicas en España.",
+    "indexable": true
+  },
+  {
+    "name": "Argentina",
+    "path": "/argentina",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Argentina.",
+    "indexable": false
+  },
+  {
+    "name": "Bolivia",
+    "path": "/bolivia",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Bolivia.",
+    "indexable": false
+  },
+  {
+    "name": "Brasil",
+    "path": "/brasil",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Brasil.",
+    "indexable": false
+  },
+  {
+    "name": "Chile",
+    "path": "/chile",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Chile.",
+    "indexable": false
+  },
+  {
+    "name": "Colombia",
+    "path": "/colombia",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Colombia.",
+    "indexable": false
+  },
+  {
+    "name": "Costa Rica",
+    "path": "/costa-rica",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Costa Rica.",
+    "indexable": false
+  },
+  {
+    "name": "Cuba",
+    "path": "/cuba",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Cuba.",
+    "indexable": false
+  },
+  {
+    "name": "Ecuador",
+    "path": "/ecuador",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Ecuador.",
+    "indexable": false
+  },
+  {
+    "name": "El Salvador",
+    "path": "/el-salvador",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de El Salvador.",
+    "indexable": false
+  },
+  {
+    "name": "Guatemala",
+    "path": "/guatemala",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Guatemala.",
+    "indexable": false
+  },
+  {
+    "name": "Haití",
+    "path": "/haiti",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Haití.",
+    "indexable": false
+  },
+  {
+    "name": "Honduras",
+    "path": "/honduras",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Honduras.",
+    "indexable": false
+  },
+  {
+    "name": "México",
+    "path": "/mexico",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de México.",
+    "indexable": false
+  },
+  {
+    "name": "Nicaragua",
+    "path": "/nicaragua",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Nicaragua.",
+    "indexable": false
+  },
+  {
+    "name": "Panamá",
+    "path": "/panama",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Panamá.",
+    "indexable": false
+  },
+  {
+    "name": "Paraguay",
+    "path": "/paraguay",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Paraguay.",
+    "indexable": false
+  },
+  {
+    "name": "Perú",
+    "path": "/peru",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Perú.",
+    "indexable": false
+  },
+  {
+    "name": "República Dominicana",
+    "path": "/republica-dominicana",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de República Dominicana.",
+    "indexable": false
+  },
+  {
+    "name": "Uruguay",
+    "path": "/uruguay",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Uruguay.",
+    "indexable": false
+  },
+  {
+    "name": "Venezuela",
+    "path": "/venezuela",
+    "description": "Estamos preparando la página de jurisprudencia fiscal de Venezuela.",
+    "indexable": false
+  }
+]

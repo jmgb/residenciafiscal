@@ -17,6 +17,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -27,15 +28,19 @@ const publicDir = join(frontendDir, 'public');
 const SITE_URL = 'https://residenciafiscal.org';
 
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
+const COUNTRY_ROUTES = countryRoutes.map((route) => ({
+  dir: route.path.slice(1),
+  title:
+    route.path === '/españa'
+      ? 'Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF'
+      : `Residencia fiscal en ${route.name} — Residencia Fiscal`,
+  description: route.description,
+  url: `${SITE_URL}${route.path}`,
+  image: null,
+}));
+
 const ROUTES = [
-  {
-    dir: 'españa',
-    title: 'Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF',
-    description:
-      'Consulta en lenguaje natural 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia fiscal de personas físicas en España.',
-    url: `${SITE_URL}/españa`,
-    image: null,
-  },
+  ...COUNTRY_ROUTES,
   {
     dir: 'manifiesto',
     title: 'Manifiesto — Residencia Fiscal',

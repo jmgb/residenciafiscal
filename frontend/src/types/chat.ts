@@ -35,6 +35,12 @@ export interface ChatSource extends CorpusEntry {
 
 export type ChatRole = 'user' | 'assistant';
 
+/** Contexto nacional que debe acompañar cada consulta al motor. */
+export interface ChatRequestContext {
+  countryPath: string;
+  countryName: string;
+}
+
 export interface ChatMessage {
   id: string;
   role: ChatRole;
@@ -53,7 +59,11 @@ export type ChatChunk =
   | { type: 'done' };
 
 export interface ChatEngine {
-  askQuestion(messages: ChatMessage[], signal: AbortSignal): AsyncIterable<ChatChunk>;
+  askQuestion(
+    messages: ChatMessage[],
+    signal: AbortSignal,
+    context?: ChatRequestContext
+  ): AsyncIterable<ChatChunk>;
 }
 
 export interface Conversation {

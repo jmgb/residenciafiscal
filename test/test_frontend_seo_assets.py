@@ -72,3 +72,34 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
         },
     ]
     assert redirects[-1] == {"from": "/*", "to": "/index.html", "status": 200}
+
+
+def test_country_routes_have_prerender_redirects() -> None:
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    redirects = config["redirects"]
+    redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in redirects}
+
+    for path in (
+        "/españa",
+        "/argentina",
+        "/bolivia",
+        "/brasil",
+        "/chile",
+        "/colombia",
+        "/costa-rica",
+        "/cuba",
+        "/ecuador",
+        "/el-salvador",
+        "/guatemala",
+        "/haiti",
+        "/honduras",
+        "/mexico",
+        "/nicaragua",
+        "/panama",
+        "/paraguay",
+        "/peru",
+        "/republica-dominicana",
+        "/uruguay",
+        "/venezuela",
+    ):
+        assert (path, f"{path}/index.html") in redirect_pairs

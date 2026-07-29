@@ -7,7 +7,7 @@ interface CountryPageProps {
 }
 
 export function CountryPage({ country }: CountryPageProps) {
-  usePageTitle(`Residencia fiscal en ${country.name}`, country.path);
+  usePageTitle(`Residencia fiscal en ${country.name}`, country.path, country.description);
 
   return (
     <div className='w-full overflow-y-auto'>
