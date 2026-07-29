@@ -3,6 +3,15 @@
 Backlog operativo del proyecto. Las tareas SEO y de despliegue deben verificarse
 contra el dominio público después de cada deploy.
 
+> **Si retomas el backend del chat**, empieza por las dos entradas bloqueadas de
+> «Producto y arquitectura»: la **fase 0b** (decisión sobre cuotas y presupuesto)
+> y el **corpus OKF**, que decide de qué lee el chat. Ambas están anotadas con lo
+> que hay que leer y por qué. La fase 0 ya está ejecutada y medida.
+>
+> El diseño y el plan viven en `docs/superpowers/`, que está en `.gitignore`: esos
+> dos ficheros son excepciones añadidas con `git add -f`. Si creas más documentos
+> ahí, no se versionarán solos.
+
 ## Prioridad alta
 
 - [x] **Rotar el token de Sentry filtrado en la historia de git.** El token real
@@ -40,14 +49,65 @@ contra el dominio público después de cada deploy.
     gasto no es una garantía. Tres opciones en la sección 4 del diseño: clave por
     petición con recuento por listado (validada en el mismo spike, cuesta 130–420 ms),
     almacén con atomicidad real (proveedor externo) o cuotas best-effort.
+
+    > **Para quien retome esto.** Lee en este orden: la sección 5 de
+    > [`docs/operations/NETLIFY_EDGE.md`](operations/NETLIFY_EDGE.md) (la evidencia del
+    > fallo y la alternativa medida) y la sección 4 del diseño (las tres opciones con
+    > sus contrapartidas). **Es una decisión de producto, no técnica**: cuánto vale
+    > que el techo de gasto sea una garantía dura frente a 130–420 ms de latencia
+    > extra o un proveedor más en el stack. No la tomes tú solo; pregúntala.
+    >
+    > Una vez decidida, la tarea 9 del plan deja de estar bloqueada. Su API pública
+    > (`consumirCuota`, `reservar`, `reconciliar`, microdólares enteros, fallo
+    > cerrado) sigue siendo válida y sus tests de concurrencia también: solo cambia
+    > el mecanismo de escritura por debajo.
+    >
+    > El trabajo vive en la rama `spike/chat-edge-platform`, **sin push**. El código
+    > del spike se borró a propósito; `NETLIFY_EDGE.md` explica cómo reconstruirlo si
+    > hace falta volver a medir.
   - [ ] **Fase 1 — implementación detrás del stub.** 15 tareas TDD: nueve módulos puros
     con Vitest y un `chat.ts` delgado. Producción sigue simulada. La tarea del
     presupuesto queda bloqueada por la fase 0b; el resto no depende de ella.
+
+    > **Antes de arrancar, resuelve de qué corpus lee el chat.** El plan genera
+    > `lib/corpus.ts` desde `output/analisis_*.jsonl`, pero el pipeline OKF está
+    > produciendo perfiles con **citas verificadas contra la página del PDF**, y
+    > `docs/VERBATIM_CORPUS.md` documenta una representación por páginas pensada
+    > explícitamente para RAG. Construir sobre el JSONL significa reescribir después
+    > las tareas 3, 4 y 6 del plan, y parte de la 5.
+    >
+    > Las otras doce tareas son agnósticas al corpus. No es un rediseño, es un cambio
+    > de fuente de datos: las facetas (criterios, resultado, categorías) son las
+    > mismas, porque el manifiesto OKF declara ese mismo JSONL como origen. Lo que
+    > cambiaría es que las tarjetas `S1…S12` llevarían fragmentos verbatim
+    > verificados en vez de `frases_clave` seleccionadas por el LLM, y el marcador
+    > podría resolverse a **sentencia + página** en lugar de solo al ROJ.
+    >
+    > Depende de que el corpus OKF pase de 1 a 106 sentencias, que a su vez está
+    > bloqueado por revisión humana (ver la entrada del pipeline OKF más abajo).
   - [ ] **Fase 2 — evaluación.** Banco de 40 preguntas versionado. Bloquean los gates
     binarios (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
   - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
     rollback es quitar la variable y redesplegar.
+- [ ] **Llevar el corpus OKF de 1 a 106 sentencias.** Está parado esperando **revisión
+  humana**, no código, y bloquea la fase 1 del chat. Estado en
+  [`docs/OKF_PIPELINE.md`](OKF_PIPELINE.md).
+  - [ ] Revisar el piloto `san-1071-2025`: 3 cuestiones jurídicas propuestas y **0
+    aprobadas**, más 5 textos del análisis pendientes. Las decisiones se registran en
+    `knowledge/annotations/san-1071-2025.yaml` con `status: approved`,
+    `reviewed_by: human:<identidad>` y `reviewed_at`. Solo puede hacerlo una persona.
+  - [ ] Definir la lista de responsables autorizados a aprobar, que el pipeline exige
+    antes de publicar el corpus como revisado y que hoy no existe.
+  - [ ] Añadir la orquestación batch que `export_okf.py` no tiene (acepta un solo
+    `source_file` a propósito), con el contrato de la sección «Siguiente fase» del
+    pipeline: manifiesto explícito, orden determinista, sin descubrir PDFs por
+    defecto y reanudable por hash.
+  - [ ] Ejecutar la muestra de 5 de `sentencias/verificacion_citas_muestra_5.json`,
+    revisarla y solo entonces autorizar las 106.
+  - [ ] Decidir si se materializa el corpus verbatim por páginas de
+    [`docs/VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md), documentado pero sin implementar.
+    Es lo que decide de qué lee el chat.
 - [ ] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
   ASCII (`/espana`, `/portugal`, etc.) y redirecciones para variantes con caracteres especiales.
 - [x] Definir el contrato del endpoint de chat, manejo de errores, cancelación de peticiones,

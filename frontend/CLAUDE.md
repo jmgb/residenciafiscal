@@ -56,10 +56,28 @@ El chat funciona hoy con un **stub**. `chatEngineMode` en
 simulado en la UI. Al conectar el backend real hay que cambiarlo a `'live'`,
 que apaga el aviso automáticamente.
 
-Opciones de backend evaluadas y aún abiertas: ampliar la **API FastAPI ya
-existente** (`api/main.py`) con un endpoint `/chat` — hoy el camino de menor
-fricción —, Netlify Functions + OpenAI file_search, o Netlify Functions +
-Supabase pgvector.
+**El backend ya está decidido, diseñado y con la plataforma validada**: una
+Netlify Edge Function en `/api/chat` que recupera por facetas del corpus y
+streamea por SSE resolviendo marcadores `[S<n>]` a ROJ reales en el servidor.
+No sigue abierta la elección entre FastAPI, file_search o pgvector.
+
+- Diseño: `docs/superpowers/specs/2026-07-29-chat-backend-design.md`
+- Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
+- Límites de plataforma medidos: [`docs/operations/NETLIFY_EDGE.md`](../docs/operations/NETLIFY_EDGE.md)
+
+Si vas a escribir la edge function, lee primero el último: tiene tres trampas
+que cuestan un deploy cada una. La más cara es que **todo `.ts` en la raíz de
+`netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime—, así que
+los módulos compartidos van en `lib/`.
+
+Está **bloqueado en la fase 0b**: el mecanismo de cuotas y presupuesto necesita
+una decisión, porque el compare-and-swap de Netlify Blobs no es atómico. Ver
+`docs/tasks.md`.
+
+Las dependencias del backend (`openai`, `zod`, `@netlify/blobs`,
+`@netlify/edge-functions`) ya están instaladas y verificadas en Deno.
+`netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
+del repositorio.
 
 ## Despliegue y analítica
 
