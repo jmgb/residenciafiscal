@@ -333,12 +333,14 @@ tests de pytest que leen ficheros del frontend (`test_frontend_seo_assets.py` va
 tests sin gate, porque `frontend.yml` no corre pytest. Si añades un test Python que
 lea otra ruta, comprueba que no esté en `paths-ignore`.
 
-Dos cosas que el gate del frontend **no** hace todavía, y por qué:
+El gate del frontend cubre lint, tipos, tests y build, en ese orden:
 
-- **No corre `npm run build`**: su `prebuild` invoca `frontend/scripts/build-corpus.mjs`,
-  que aún no existe en el repo. Añadir el paso cuando ese script aterrice.
-- **Pasa `--passWithNoTests` a vitest**: aún no hay ficheros de test. Quitar el flag en
-  cuanto exista la primera suite, para que borrar los tests vuelva a poner el gate rojo.
+- **Corre `npm run build`**, y con él los hooks `prebuild`/`postbuild` de npm. No
+  necesita `output/`, que no se versiona: sin JSONL del pipeline,
+  `frontend/scripts/build-corpus.mjs` conserva el `frontend/public/data/corpus.json`
+  versionado y avisa por stderr.
+- **Vitest corre sin `--passWithNoTests`**: ya hay suites en `frontend/tests/`, así que
+  borrarlas accidentalmente vuelve a poner el gate rojo.
 
 `frontend/biome.json` necesita `css.parser.tailwindDirectives: true` (el CSS usa
 `@theme`/`@apply` de Tailwind 4) y `css.formatter.quoteStyle: "single"` (coherente con
