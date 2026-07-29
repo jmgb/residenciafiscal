@@ -248,6 +248,21 @@ el hash del prompt. El manifiesto lo declara como `null` y
 Las futuras ejecuciones deberían persistir modelo, hash del prompt y versión del
 schema en el momento de generar cada registro.
 
+### Experimento de autoría por agente
+
+Se ha preparado una versión paralela, no productiva, elaborada desde el PDF para
+comparar cobertura jurídica y garantías operativas:
+
+- [perfil experimental](../experiments/okf-agent/san-1071-2025.agent.md);
+- [informe agente frente a pipeline](experiments/AGENT_VS_PIPELINE_SAN_1071_2025.md).
+
+El experimento no sobrescribe el perfil canónico ni sus hashes. Su conclusión es
+usar agentes para producir o revisar datos estructurados y mantener en Python la
+validación, recuperación literal y generación del Markdown.
+`agent_profile_validation.py` y su test de regresión comprueban el hash del PDF,
+la unicidad de IDs, las páginas y la literalidad de todos los bloques
+`SOURCE_EXCERPT`.
+
 ## Ejecución
 
 ```bash
