@@ -32,6 +32,7 @@
   /* Acento — ámbar sobrio para citas y destacados */
   --color-accent: #fffbeb;
   --color-accent-foreground: #78350f;
+  --color-accent-400: #f59e0b; /* solo ámbar sobre superficie primary (isotipo): 5.36:1 */
   --color-accent-500: #d97706;
   --color-accent-600: #b45309;
 

@@ -53,7 +53,7 @@ export function ChatSources({ sources }: ChatSourcesProps) {
                 <span className='truncate text-muted-foreground'>
                   {shortOrgano(source.organo)} · {year(source.fecha)}
                 </span>
-                <span className='ml-auto shrink-0 rounded bg-muted px-1.5 py-0.5 text-[0.6875rem] text-muted-foreground'>
+                <span className='ml-auto shrink-0 rounded bg-muted px-1.5 py-0.5 text-[0.6875rem] text-secondary-foreground'>
                   {RESULTADO_LABEL[source.resultado] ?? source.resultado}
                 </span>
                 <ChevronDown
@@ -65,7 +65,7 @@ export function ChatSources({ sources }: ChatSourcesProps) {
                 />
               </button>
               {isExpanded && (
-                <div className='mt-1 rounded-lg bg-muted px-3 py-2 text-xs leading-relaxed text-muted-foreground'>
+                <div className='mt-1 rounded-lg bg-muted px-3 py-2 text-xs leading-relaxed text-secondary-foreground'>
                   <p>{source.extracto}</p>
                   <p className='mt-1.5 font-mono text-[0.6875rem]'>{source.ecli}</p>
                 </div>

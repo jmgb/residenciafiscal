@@ -17,6 +17,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "og": "bash og/render.sh",
+    "favicon": "bash og/render-favicon.sh",
     "fast-check": "npm run lint && npm run typecheck && npm run test"
   },
   "dependencies": {

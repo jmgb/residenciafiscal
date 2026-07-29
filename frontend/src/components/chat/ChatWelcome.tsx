@@ -1,4 +1,3 @@
-import { Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/shared/components/ui/button';
 
@@ -19,9 +18,7 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
       data-testid='chat-welcome'
       className='flex flex-1 flex-col items-center justify-center px-4 py-8 text-center'
     >
-      <span className='mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground'>
-        <Scale className='h-7 w-7' aria-hidden='true' />
-      </span>
+      <img src='/favicon.svg' alt='' className='mb-4 h-14 w-14' />
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
         Consulta la jurisprudencia de residencia fiscal
       </h1>

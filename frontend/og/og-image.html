@@ -1,0 +1,96 @@
+<!doctype html>
+<!--
+  Fuente única de la imagen Open Graph (1200×630).
+  Los HEX se inyectan en el render: render.sh lee los tokens de ../src/index.css
+  y sustituye los placeholders __TOKEN__ antes de capturar con Chrome headless.
+  No editar public/og-image.png a mano: regenerar con `npm run og`.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        background: __BACKGROUND__;
+        font-family: 'Inter', system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .filete {
+        height: 14px;
+        background: __PRIMARY__;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 96px;
+      }
+      .lockup {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin-bottom: 48px;
+      }
+      .lockup img {
+        width: 78px;
+        height: 78px;
+      }
+      .wordmark {
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 56px;
+        font-weight: 600;
+        color: __FOREGROUND__;
+        letter-spacing: -0.01em;
+      }
+      .wordmark span {
+        font-weight: 500;
+        color: __MUTED_FOREGROUND__;
+      }
+      .claim {
+        font-size: 40px;
+        line-height: 1.35;
+        font-weight: 400;
+        color: __MUTED_FOREGROUND__;
+        max-width: 900px;
+      }
+      .claim strong {
+        font-weight: 500;
+        color: __FOREGROUND__;
+      }
+      footer {
+        padding: 0 96px 56px;
+        font-family: ui-monospace, monospace;
+        font-size: 22px;
+        color: __MUTED_FOREGROUND__;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="filete"></div>
+    <main>
+      <div class="lockup">
+        <img src="../public/favicon.svg" alt="" />
+        <div class="wordmark">Residencia <span>Fiscal</span></div>
+      </div>
+      <p class="claim">
+        <strong>Reside donde mejor te traten.</strong><br />
+        Decide con las sentencias en la mano.
+      </p>
+    </main>
+    <footer>106 sentencias · Tribunal Supremo y Audiencia Nacional · 2015–2025</footer>
+  </body>
+</html>

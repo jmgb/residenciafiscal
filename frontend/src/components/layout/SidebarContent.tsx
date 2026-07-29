@@ -1,4 +1,4 @@
-import { BookOpen, Compass, MessageSquarePlus, Scale, Trash2 } from 'lucide-react';
+import { BookOpen, Compass, MessageSquarePlus, Trash2 } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
@@ -25,9 +25,7 @@ export function SidebarBrand({ collapsed = false, onNavigate }: SidebarContentPr
         aria-label='Ir al inicio'
         className='flex shrink-0 items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring'
       >
-        <span className='flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground'>
-          <Scale className='h-5 w-5' aria-hidden='true' />
-        </span>
+        <img src='/favicon.svg' alt='' className='h-9 w-9' />
       </Link>
       {!collapsed && (
         <div className='min-w-0'>

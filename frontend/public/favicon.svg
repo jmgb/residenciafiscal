@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#1e3a5f"/>
-  <path d="M9 22V10h5.6c2.5 0 4 1.3 4 3.4 0 1.6-.9 2.7-2.4 3.1L19.6 22h-3.1l-2.9-4.9h-1.8V22H9zm2.8-7.1h2.4c1.1 0 1.7-.5 1.7-1.4s-.6-1.4-1.7-1.4h-2.4v2.8z" fill="#fff"/>
-  <rect x="20.5" y="9.5" width="2.2" height="13" rx="1.1" fill="#d97706"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Fuente única del isotipo RF. HEX literales a propósito: un SVG estático
+       no lee var(). primary #1e3a5f / primary-foreground #f8fafc /
+       accent-400 #f59e0b. Letras Space Grotesk 600 convertidas a trazado. -->
+  <rect width="64" height="64" rx="14" fill="#1e3a5f"/>
+  <path transform="translate(6.24 47.00) scale(0.042857 -0.042857)" d="M69 0V700H368Q434 700 483.0 677.0Q532 654 559.5 612.5Q587 571 587 513V502Q587 437 556.0 398.0Q525 359 481 341V325Q520 323 542.5 298.0Q565 273 565 231V0H445V214Q445 239 431.5 254.5Q418 270 388 270H190V0ZM190 379H356Q408 379 437.5 406.5Q467 434 467 480V489Q467 536 438.0 563.5Q409 591 356 591H190Z" fill="#f8fafc"/>
+  <path transform="translate(34.83 47.00) scale(0.042857 -0.042857)" d="M69 0V700H505V591H190V406H480V296H190V0Z" fill="#f59e0b"/>
 </svg>
