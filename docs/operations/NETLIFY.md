@@ -16,6 +16,15 @@ El build usa `output/analisis_*.jsonl` si existe en el checkout. Como `output/`
 se ignora por contener resultados generados, el prebuild conserva el corpus
 versionado cuando Netlify construye desde un clon limpio.
 
+## Edge Functions
+
+El backend del chat correrá sobre Edge Functions. Sus límites reales —CPU,
+streaming, Blobs— están **medidos**, no leídos de la documentación, en
+[`NETLIFY_EDGE.md`](NETLIFY_EDGE.md). Léelo antes de escribir una edge function
+en este proyecto: incluye tres trampas que cuestan un deploy cada una (los
+ficheros de la raíz son todos endpoints, el compare-and-swap de Blobs no es
+atómico y `netlify dev` no arranca aquí).
+
 ## Dominio y DNS
 
 En Netlify deben estar configurados como dominios personalizados:
