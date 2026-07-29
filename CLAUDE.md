@@ -319,13 +319,19 @@ En CI hay dos workflows, uno por área, ambos en push y PR contra `main`:
 
 | Workflow | Cubre | Pasos |
 |----------|-------|-------|
-| `.github/workflows/ci.yml` | Python (todo salvo `frontend/`, `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
+| `.github/workflows/ci.yml` | Python (todo salvo `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
 | `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest |
 
 **Ninguno usa secrets, a propósito**: la suite Python por defecto no llama a ningún
 LLM. Si algún día hace falta un job con API real, va en un workflow aparte con
 `workflow_dispatch`, nunca en estos. `uv sync --locked` además falla si `uv.lock` se
 queda desincronizado de `pyproject.toml`.
+
+`ci.yml` **no ignora `frontend/**`** aunque el frontend tenga su propio workflow: hay
+tests de pytest que leen ficheros del frontend (`test_frontend_seo_assets.py` valida
+`frontend/public/robots.txt`, `sitemap.xml` y `llms.txt`). Ignorarlo dejaría esos
+tests sin gate, porque `frontend.yml` no corre pytest. Si añades un test Python que
+lea otra ruta, comprueba que no esté en `paths-ignore`.
 
 Dos cosas que el gate del frontend **no** hace todavía, y por qué:
 

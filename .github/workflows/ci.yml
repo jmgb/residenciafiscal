@@ -13,20 +13,24 @@ name: CI
 # y citarla, nunca inline en el shell.
 
 # paths-ignore en vez de paths: así un fichero .py nuevo en la raíz dispara el gate
-# sin tener que acordarse de añadirlo a una lista. El frontend tiene su propio
-# workflow (frontend.yml).
+# sin tener que acordarse de añadirlo a una lista.
+#
+# `frontend/**` NO se ignora, aunque tenga su propio workflow: hay tests de pytest
+# que leen ficheros del frontend (test_frontend_seo_assets.py valida
+# frontend/public/robots.txt, sitemap.xml y llms.txt). Si lo ignorásemos, tocar
+# robots.txt no dispararía este gate y frontend.yml no corre pytest, así que ese
+# test se podría romper sin que ningún workflow se enterase. Correr el gate de
+# Python de más en cambios solo-frontend cuesta ~1 min; el agujero costaba más.
 on:
   push:
     branches: [main]
     paths-ignore:
-      - 'frontend/**'
       - 'docs/**'
       - 'sentencias/**'
       - '**.md'
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'frontend/**'
       - 'docs/**'
       - 'sentencias/**'
       - '**.md'

@@ -159,8 +159,11 @@ export-requirements:
 # =============================================================================
 # 5. LIMPIEZA
 # =============================================================================
+# -prune corta la recursión en .venv/.git/node_modules en vez de recorrerlos enteros
+# para descartarlos después: frontend/node_modules son decenas de miles de ficheros.
 clean:
-	find . -type d -name __pycache__ -not -path "./.venv/*" -not -path "./venv/*" -exec rm -rf {} + 2>/dev/null || true
+	find . -type d \( -name .venv -o -name .git -o -name node_modules \) -prune -o \
+		-type d -name __pycache__ -print0 | xargs -0 -r rm -rf
 	rm -rf .ruff_cache .pytest_cache .mypy_cache
 	@echo "✅ Caches eliminadas"
 
