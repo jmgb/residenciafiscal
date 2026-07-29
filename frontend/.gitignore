@@ -1,6 +1,11 @@
-node_modules
-dist
-coverage
-.netlify
+node_modules/
+dist/
+coverage/
+.vite/
+.netlify/
 public/data/corpus.json
 *.local
+.env
+.env.*
+!.env.example
+*.tsbuildinfo

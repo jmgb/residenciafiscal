@@ -32,6 +32,7 @@ lleva un panel de fuentes.
 - Script que genera un corpus ligero de metadatos desde el JSONL de salida.
 - Tests unitarios (Vitest + Testing Library).
 - Configuración de despliegue en Netlify.
+- Google Analytics 4 global, montado en el footer común y con page views de la SPA.
 - Actualización de `README.md` y `CLAUDE.md` con el dominio y el frontend.
 
 ### Fuera
@@ -39,7 +40,7 @@ lleva un panel de fuentes.
 - Backend RAG (Netlify Functions, Supabase pgvector o VPS).
 - Autenticación, cuentas de usuario y sincronización de conversaciones.
 - Explorador tabular de sentencias y dashboards de estadísticas.
-- Tests E2E, analítica, PWA, i18n.
+- Tests E2E, PWA, i18n.
 
 ## 3. Decisiones tomadas
 
@@ -104,7 +105,7 @@ Origen: `/home/ubuntu/ai_projects/presupuestor/frontend/src/`.
 | `shared/lib/utils.ts` (`cn`) | `src/shared/lib/utils.ts` | Verbatim |
 | `shared/components/ui/{button,input,textarea,scroll-area,tooltip,separator,sheet,skeleton,dialog}.tsx` | `src/shared/components/ui/` | Verbatim; se añaden más solo si algún componente portado los exige |
 | `index.css` | `src/index.css` | Podado a los tokens en uso + paleta jurídica |
-| `components/layout/private/PrivateLayout.tsx` | `src/components/layout/AppLayout.tsx` | Se eliminan analytics, personas, `SimulationBanner`, `OfflineIndicator`, `useActiveProjectNavContext`, `usePersonaNavigation`. Se conservan: shell de dos columnas, barra fina sticky, medición de `--header-height`, scroll-reset y foco a11y |
+| `components/layout/private/PrivateLayout.tsx` | `src/components/layout/AppLayout.tsx` | Se eliminan personas, `SimulationBanner`, `OfflineIndicator`, `useActiveProjectNavContext`, `usePersonaNavigation`. Se conservan: shell de dos columnas, barra fina sticky, medición de `--header-height`, scroll-reset y foco a11y. El layout monta el `SiteFooter` común. |
 | `components/layout/private/PrivateSidebar.tsx` + `PrivateSidebarHeader.tsx` | `src/components/layout/AppSidebar.tsx` | Sin `PlanWidget`, `ProjectsListSection`, `PersonaSwitcher`, `UserMenu` |
 | `components/layout/private/PrivateMobileNavigation.tsx` | `src/components/layout/MobileNavigation.tsx` | Drawer con el mismo contenido del sidebar |
 | `components/layout/private/PrivateTopbar.tsx` | `src/components/layout/Topbar.tsx` | Contexto de título y slot de acciones; sin lo demás |
@@ -118,6 +119,11 @@ Origen: `/home/ubuntu/ai_projects/presupuestor/frontend/src/`.
 **No se copia** `UnifiedChatWidget.tsx` (1258 líneas acopladas a presupuestos,
 project picker, acciones y adjuntos). Se escribe en su lugar `ChatView.tsx`,
 un contenedor limpio.
+
+El footer común vive en `src/components/layout/SiteFooter.tsx` y monta
+`GoogleAnalyticsFooter`, que instala la propiedad GA4 `G-XKX3N9KVJH` una sola vez
+y envía `page_view` en las navegaciones internas. Las páginas individuales no
+deben duplicar el snippet. Ver `docs/ANALYTICS.md`.
 
 ## 6. Identidad visual
 
@@ -272,6 +278,7 @@ Vitest con entorno jsdom y Testing Library.
 | `tests/useConversations.test.ts` | Alta, anexado, borrado, persistencia y rehidratación desde localStorage |
 | `tests/ChatView.test.tsx` | Envío de mensaje, estado de streaming, render de fuentes, prompts sugeridos, botón de detener |
 | `tests/AppLayout.test.tsx` | Colapso del sidebar y persistencia del estado |
+| `tests/SiteFooter.test.tsx` | Instalación única del script y configuración de GA4 |
 
 Se sigue TDD: test primero, implementación después.
 
@@ -284,9 +291,10 @@ Se sigue TDD: test primero, implementación después.
 - Redirect SPA `/* → /index.html` con status 200.
 - Cabeceras de seguridad adaptadas de Presupuestor: `X-Frame-Options: DENY`,
   `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
-  `Strict-Transport-Security`, y una CSP restrictiva (`default-src 'self'`) sin
-  los orígenes de terceros de Presupuestor. Cuando se conecte el backend habrá
-  que ampliar `connect-src`.
+  `Strict-Transport-Security`, y una CSP restrictiva (`default-src 'self'`) que
+  permita `script-src https://www.googletagmanager.com` y
+  `connect-src https://www.google-analytics.com`. Cuando se conecte el backend
+  habrá que ampliar `connect-src`.
 - Cache inmutable para `/assets/*`, sin caché para `/index.html`.
 
 Dominio: residenciafiscal.org, apuntado a Netlify con HTTPS automático.

@@ -12,6 +12,11 @@ ENV/
 .uv-cache/
 .uv_cache/
 
+# Local agent/workspace state
+.serena/
+.codex/
+.claude/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -58,15 +63,16 @@ pip-delete-this-directory.txt
 .ruff_cache/
 .coverage
 .coverage.*
+coverage/
 htmlcov/
 .tox/
 .hypothesis/
 *.cover
+*.tsbuildinfo
 
 # Output directories (generated files)
-output/*.jsonl
-output/*.csv
-output/*.xlsx
+output/*
+!output/.gitkeep
 results/
 test_output/
 test/test_outputs/
@@ -89,6 +95,12 @@ Thumbs.db
 *.bak
 *.swp
 *~
+
+# Tool caches and process state
+.cache/
+.vite/
+*.pid
+*.seed
 
 # Symlink a doc personal fuera del repo
 SUPABASE_ACCOUNTS.md

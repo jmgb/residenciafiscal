@@ -38,6 +38,8 @@ Todo lo nuevo cuelga de `frontend/`, salvo `netlify.toml` y las actualizaciones 
 | `frontend/src/lib/chat-engine.stub.ts` | Implementación simulada con streaming y fuentes reales |
 | `frontend/src/stores/useConversations.ts` | Historial de conversaciones (zustand + localStorage) |
 | `frontend/src/components/layout/AppLayout.tsx` | Shell de dos columnas |
+| `frontend/src/components/layout/SiteFooter.tsx` | Footer común de todas las rutas |
+| `frontend/src/components/layout/GoogleAnalyticsFooter.tsx` | GA4 global y page views de la SPA |
 | `frontend/src/components/layout/AppSidebar.tsx` | Sidebar: marca, nueva consulta, historial, pie |
 | `frontend/src/components/layout/MobileNavigation.tsx` | Drawer con el mismo contenido |
 | `frontend/src/components/layout/SidebarContent.tsx` | Contenido compartido sidebar/drawer |
@@ -52,6 +54,17 @@ Todo lo nuevo cuelga de `frontend/`, salvo `netlify.toml` y las actualizaciones 
 | `frontend/tests/*` | Suites de Vitest |
 
 **Desviación respecto a la spec §5:** la spec preveía portar `ChatPanelFrame` recortado. En la práctica su única responsabilidad aquí (contenedor con scroll de mensajes + composer anclado) cabe en `ChatView`, que además necesita ese scroll para el autoscroll. Portar el fichero aparte solo añadiría una capa vacía, así que `ChatView` lo absorbe. `ChatPanelHeader` no se porta: la cabecera la aporta la barra fina del `AppLayout`.
+
+---
+
+### Convención global de footer y analítica
+
+`AppLayout` es el único punto de montaje del footer común. Debe renderizar
+`<SiteFooter />` una vez después de `<Outlet />`; las páginas no deben repetirlo
+ni montar directamente `GoogleAnalyticsFooter`. El helper instala la propiedad
+GA4 `G-XKX3N9KVJH` una sola vez y registra las navegaciones internas de la SPA.
+La implementación y el procedimiento de verificación están documentados en
+`docs/ANALYTICS.md`.
 
 ---
 
@@ -1810,6 +1823,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { MobileNavigation } from './MobileNavigation';
+import { SiteFooter } from './SiteFooter';
 import { useSidebarCollapsed } from './useSidebarCollapsed';
 
 const SIDEBAR_ID = 'app-sidebar';
@@ -1876,7 +1890,10 @@ export function AppLayout() {
             </span>
           </div>
 
-          <Outlet />
+          <div className='flex min-h-0 flex-1 flex-col'>
+            <Outlet />
+            <SiteFooter />
+          </div>
         </main>
       </div>
     </div>
