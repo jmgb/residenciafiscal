@@ -12,6 +12,45 @@
 
 ---
 
+## Revisión 2026-07-29 — trabajo concurrente
+
+Mientras se escribía este plan, otra sesión ejecutó parte de él a mano sobre `main`.
+Comprobado en el árbol de trabajo:
+
+- **Task 1 (manifiesto): hecha y commiteada** en `47304d9`.
+- **Task 2, mitad del token: hecha.** `--color-accent-400: #f59e0b` ya está en
+  `src/index.css` con su comentario y su ratio. Falta el test.
+- **Task 4, los dos SVG principales: hechos a mano.** `public/favicon.svg` y
+  `src/assets/logo.svg` existen, con las letras trazadas desde **Space Grotesk 600**
+  (verificado: el `d` de la «R» es byte a byte idéntico a la salida de fontTools con el
+  peso 600) y la R en `primary-foreground` `#f8fafc` en vez de blanco puro — mejor
+  tokenizado que lo que proponía este plan.
+
+**Decisión: no se rehacen.** Su isotipo y su lockup son correctos y regenerarlos solo
+produciría un conflicto con trabajo en vuelo. Las tareas se renumeran como **R1…R8** y
+se ajustan así:
+
+| Original | Nuevo | Cambio |
+| --- | --- | --- |
+| Task 1 | — | Ya hecha, se elimina |
+| Task 2 | **R1** | Solo el test; el token ya está |
+| Task 3 | **R1** | Se fusiona: un solo gate con las cuatro reglas |
+| Task 4 | **R2** | El generador pasa a **peso 600** y produce **solo las tres variantes que faltan** (`iso-16`, `iso-fullbleed`, `logo-inverse`). No sobrescribe `favicon.svg` ni `logo.svg` |
+| Task 5–9 | **R3–R7** | Sin cambios de fondo |
+| Task 10 | **R8** | Sin cambios |
+
+**Deuda que esto deja abierta, declarada:** `favicon.svg` y `logo.svg` quedan mantenidos
+a mano mientras el generador cubre solo las variantes derivadas. Unificar los cinco bajo
+`build-identity.py` es un follow-up para cuando el trabajo concurrente haya aterrizado;
+hasta entonces, tocar el isotipo obliga a editar dos sitios. Está anotado en los
+Pendientes del brandbook (R6).
+
+**Regla de convivencia para todas las tareas:** cada commit lista sus rutas una a una.
+Nunca `git add -A` ni `git add frontend/src`. Si el gate de R1 señala código de la otra
+sesión, se reporta — no se edita.
+
+---
+
 ## Desviaciones del spec (decididas al verificar, no al escribir)
 
 Tres cosas del spec no sobreviven al contacto con la realidad. Se corrigen aquí y el brandbook (Task 9) documenta la versión corregida:
