@@ -125,6 +125,27 @@ def test_rechaza_holdings_huerfanos() -> None:
         JurisprudenceCase.model_validate(raw)
 
 
+@pytest.mark.parametrize(
+    ("collection", "issue_field"),
+    [
+        ("facts", "fact_ids"),
+        ("evidence_findings", "evidence_ids"),
+        ("legal_rules", "legal_rule_ids"),
+    ],
+)
+def test_exige_relaciones_reciprocas_con_la_cuestion(
+    collection: str,
+    issue_field: str,
+) -> None:
+    from jurisprudence_case_models import JurisprudenceCase
+
+    raw = deepcopy(valid_case())
+    raw["legal_issues"][0][issue_field] = []
+
+    with pytest.raises(ValidationError, match="no recíproca"):
+        JurisprudenceCase.model_validate(raw)
+
+
 @pytest.mark.parametrize("invalid_source", ["hash", "page"])
 def test_los_anclajes_pertenecen_al_pdf_y_a_una_pagina_existente(
     invalid_source: str,

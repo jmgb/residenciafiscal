@@ -1,7 +1,7 @@
 # Contrato `residenciafiscal-case/3`
 
-**Estado:** contrato inicial implementado y validado; pendiente de poblar con la
-primera sentencia.
+**Estado:** contrato implementado y validado con el caso piloto
+`SAN 1210/2023`.
 **Ámbito:** análisis jurídico estructurado de una sentencia.
 **No incluye:** extracción del PDF ni almacenamiento verbatim por páginas.
 
@@ -66,6 +66,10 @@ uv run python -c 'from pathlib import Path; from jurisprudence_case_schema impor
 Los modelos están separados por responsabilidad en
 `jurisprudence_case_{source,entities,evidence,timeline,analysis,reference_validation,validation}.py`;
 `jurisprudence_case_models.py` contiene únicamente el agregado raíz.
+
+La compilación, los artefactos y el reparto agente/Python/persona están
+documentados en
+[`JURISPRUDENCE_CASE_PIPELINE.md`](JURISPRUDENCE_CASE_PIPELINE.md).
 
 ## 4. Raíz `JurisprudenceCase`
 
@@ -133,7 +137,10 @@ Reglas:
 
 `AnalysisProvenance` no reconstruye datos históricos ausentes. Modelo, hash del
 prompt o ID de ejecución pueden ser `null`, pero deben explicar esa ausencia en
-`notes`.
+`notes`. `input_artifacts` contiene exactamente una entrada `VERBATIM` y puede
+añadir entradas `LEGACY_ANALYSIS`, `ANNOTATIONS` u `OTHER`, todas con ruta
+relativa portable y SHA-256. De esta forma el análisis queda ligado a los bytes
+concretos que lo produjeron.
 
 ## 7. Anclajes de fuente
 
@@ -163,7 +170,8 @@ Invariantes:
 - `EXACT` contiene exactamente un fragmento;
 - `EXACT_WITH_ELLIPSIS` contiene al menos dos;
 - los fragmentos permanecen en orden de página y offset;
-- la validación contra el texto por páginas se realiza en el pipeline verbatim.
+- la validación contra el texto por páginas exige que `verbatim_text` sea
+  exactamente `raw_page_text[start_offset:end_offset]`.
 
 ## 8. Cuestiones jurídicas
 

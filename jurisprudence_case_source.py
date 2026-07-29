@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 from datetime import date, datetime
+from enum import StrEnum
+from pathlib import PurePosixPath
 from typing import Annotated, Self
 
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 
 from jurisprudence_case_catalogs import (
     AnchorFidelity,
@@ -46,13 +48,47 @@ class ExtractorIdentity(JurisprudenceCaseModel):
     version: NonEmptyText
 
 
+class AnalysisInputKind(StrEnum):
+    VERBATIM = "VERBATIM"
+    LEGACY_ANALYSIS = "LEGACY_ANALYSIS"
+    ANNOTATIONS = "ANNOTATIONS"
+    OTHER = "OTHER"
+
+
+class AnalysisInputArtifact(JurisprudenceCaseModel):
+    kind: AnalysisInputKind
+    source_path: NonEmptyText
+    sha256: Sha256
+
+    @field_validator("source_path")
+    @classmethod
+    def validate_source_path(cls, value: str) -> str:
+        source = PurePosixPath(value)
+        if source.is_absolute() or ".." in source.parts or "\\" in value:
+            raise ValueError("source_path debe ser una ruta relativa y portable")
+        return value
+
+
 class AnalysisProvenance(JurisprudenceCaseModel):
     producer: NonEmptyText
     model_id: str | None = None
     prompt_sha256: Sha256 | None = None
     run_id: str | None = None
     generated_at: datetime
+    input_artifacts: Annotated[
+        tuple[AnalysisInputArtifact, ...],
+        Field(min_length=1),
+    ]
     notes: str | None = None
+
+    @model_validator(mode="after")
+    def validate_verbatim_input(self) -> Self:
+        verbatim_count = sum(
+            artifact.kind == AnalysisInputKind.VERBATIM for artifact in self.input_artifacts
+        )
+        if verbatim_count != 1:
+            raise ValueError("input_artifacts exige exactamente una entrada VERBATIM")
+        return self
 
 
 class JudgmentIdentity(JurisprudenceCaseModel):

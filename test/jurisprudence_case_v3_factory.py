@@ -47,6 +47,13 @@ def valid_case() -> dict[str, Any]:
                 "prompt_sha256": "b" * 64,
                 "run_id": "case-v3-pilot-san-1210-2023",
                 "generated_at": "2026-07-29T12:00:00Z",
+                "input_artifacts": [
+                    {
+                        "kind": "VERBATIM",
+                        "source_path": "knowledge/verbatim/san-1210-2023.pages.json",
+                        "sha256": "c" * 64,
+                    }
+                ],
                 "notes": None,
             },
             "review": review(),
@@ -60,7 +67,7 @@ def valid_case() -> dict[str, Any]:
                         "page_index": 8,
                         "printed_page": "8",
                         "start_offset": 100,
-                        "end_offset": 124,
+                        "end_offset": 128,
                         "verbatim_text": "tiene su residencia efectiva",
                     }
                 ],

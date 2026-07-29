@@ -63,6 +63,54 @@ def validate_holding_ownership(case: JurisprudenceCase) -> None:
             raise ValueError(f"{holding.holding_id} no pertenece a la cuestión {issue.issue_id}")
 
 
+def validate_reciprocal_issue_relations(case: JurisprudenceCase) -> None:
+    """Evita que las facetas de una cuestión diverjan de sus elementos."""
+
+    relations = (
+        (
+            "facts",
+            {
+                (issue.issue_id, item_id)
+                for issue in case.legal_issues
+                for item_id in issue.fact_ids
+            },
+            {(issue_id, item.fact_id) for item in case.facts for issue_id in item.issue_ids},
+        ),
+        (
+            "evidence_findings",
+            {
+                (issue.issue_id, item_id)
+                for issue in case.legal_issues
+                for item_id in issue.evidence_ids
+            },
+            {
+                (issue_id, item.evidence_id)
+                for item in case.evidence_findings
+                for issue_id in item.issue_ids
+            },
+        ),
+        (
+            "legal_rules",
+            {
+                (issue.issue_id, item_id)
+                for issue in case.legal_issues
+                for item_id in issue.legal_rule_ids
+            },
+            {
+                (issue_id, item.legal_rule_id)
+                for item in case.legal_rules
+                for issue_id in item.issue_ids
+            },
+        ),
+    )
+    for collection_name, issue_side, item_side in relations:
+        if issue_side != item_side:
+            differences = sorted(issue_side ^ item_side)
+            raise ValueError(
+                f"{collection_name} contiene una relación con cuestión no recíproca: {differences}"
+            )
+
+
 def validate_anchor_source(case: JurisprudenceCase) -> None:
     """Liga cada anclaje al PDF y a una página física existente."""
 
@@ -90,5 +138,6 @@ def validate_jurisprudence_case(case: JurisprudenceCase) -> None:
     validate_unique_ids(case)
     validate_references(case)
     validate_holding_ownership(case)
+    validate_reciprocal_issue_relations(case)
     validate_anchor_source(case)
     validate_burden_sequence(case)

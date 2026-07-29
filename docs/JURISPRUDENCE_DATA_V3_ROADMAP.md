@@ -332,9 +332,10 @@ real pertenece a las fases B y C.
 
 ### Fase B — una sentencia
 
-**Estado (2026-07-29): en curso.** B1 —contrato y extractor— y B2
-—materialización reproducible del verbatim de `SAN 1210/2023`— están
-completados. B3 debe construir el caso jurídico v3 mediante el flujo híbrido.
+**Estado (2026-07-29): en curso.** B1 —contrato y extractor—, B2
+—materialización reproducible del verbatim de `SAN 1210/2023`— y B3 —caso
+jurídico v3 compilado mediante el flujo híbrido— están completados. B4 debe
+derivar el perfil OKF y la unidad de recuperación.
 
 Se utilizará `SAN 1210/2023` porque combina permanencia, centro económico,
 familia, vivienda, documentación extranjera, carga de la prueba, regularización
@@ -344,9 +345,9 @@ Entregables:
 
 - [x] contrato y extractor verbatim;
 - [x] verbatim JSON de `SAN 1210/2023`;
-- caso v3;
+- [x] caso v3;
 - perfil OKF derivado;
-- informe de validación;
+- [x] informe de validación del caso;
 - sidecar de revisión;
 - índice de recuperación unitario.
 
@@ -358,6 +359,12 @@ Gates:
 - toda valoración atribuida al tribunal tiene anclaje;
 - dos builds producen los mismos hashes;
 - se responden desde v3 las preguntas aplicables del piloto.
+
+B3 produce 3 cuestiones, 8 hechos, 9 hallazgos probatorios, 5 reglas, 3
+holdings y 17 anclajes exactos. El gate de preguntas liga 18 consultas
+aplicables a datos y citas existentes. El estado jurídico sigue siendo
+`AGENT_REVIEWED`: ninguna de estas cifras implica aprobación humana. Pipeline y
+resultado: [`JURISPRUDENCE_CASE_PIPELINE.md`](JURISPRUDENCE_CASE_PIPELINE.md).
 
 ### Fase C — cinco sentencias
 
@@ -496,7 +503,7 @@ Métricas de calidad:
 1. Escribir el contrato campo por campo de v3.
 2. Implementar los modelos y tests antes del extractor jurídico.
 3. Materializar el verbatim JSON de `SAN 1210/2023`.
-4. Crear el caso v3 híbrido para esa sentencia.
+4. Crear el caso v3 híbrido para esa sentencia. **Completado.**
 5. Renderizar su Markdown desde v3.
 6. Responder desde datos las preguntas del piloto que le corresponden.
 7. Corregir el schema una sola vez con lo aprendido.

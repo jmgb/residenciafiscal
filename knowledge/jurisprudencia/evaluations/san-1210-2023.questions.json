@@ -1,0 +1,186 @@
+{
+  "schema_version": "residenciafiscal-case-question-evaluation/1",
+  "judgment_id": "san-1210-2023",
+  "questions": [
+    {
+      "question_id": "GEN-01",
+      "question": "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-residencia-efectiva-espana"],
+      "required_evidence_ids": ["evidence-viviendas-consumos", "evidence-vigilancia-aduanera", "evidence-vinculos-economicos"],
+      "required_anchor_ids": ["anchor-viviendas-consumos", "anchor-vigilancia-domicilio", "anchor-vinculos-economicos", "anchor-residencia-conclusion"],
+      "expected_behavior": "Describir el conjunto de indicios del caso y separar prueba, valoración y conclusión.",
+      "limitations": "Un solo caso no permite afirmar frecuencia general ni predecir el caso del usuario."
+    },
+    {
+      "question_id": "GEN-02",
+      "question": "¿Qué pruebas consideró importantes el tribunal?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-conducta-habitual-domicilio", "fact-vinculos-economicos-espana"],
+      "required_evidence_ids": ["evidence-vigilancia-aduanera", "evidence-vinculos-economicos", "evidence-movimientos-bancarios"],
+      "required_anchor_ids": ["anchor-vigilancia-domicilio", "anchor-movimientos-bancarios", "anchor-residencia-conclusion"],
+      "expected_behavior": "Explicar la valoración conjunta e identificar la vigilancia y los vínculos económicos.",
+      "limitations": "La etiqueta de prueba decisiva es análisis estructurado pendiente de aprobación humana."
+    },
+    {
+      "question_id": "DAY-01",
+      "question": "Si sostengo que pasé menos de 183 días en España, ¿qué indicios utilizó Hacienda en este caso?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-viviendas-consumos-espana", "fact-conducta-habitual-domicilio"],
+      "required_evidence_ids": ["evidence-entregas-domicilio", "evidence-vigilancia-aduanera"],
+      "required_anchor_ids": ["anchor-entregas-domicilio", "anchor-vigilancia-domicilio"],
+      "expected_behavior": "Enumerar indicios de presencia y uso de vivienda sin inventar un calendario diario.",
+      "limitations": "El caso no contiene un cómputo diario estructurado."
+    },
+    {
+      "question_id": "DAY-08",
+      "question": "¿Bastaron consumos y movimientos sin un calendario completo?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-viviendas-consumos-espana", "fact-vinculos-economicos-espana"],
+      "required_evidence_ids": ["evidence-viviendas-consumos", "evidence-movimientos-bancarios"],
+      "required_anchor_ids": ["anchor-viviendas-consumos", "anchor-movimientos-bancarios", "anchor-residencia-conclusion"],
+      "expected_behavior": "Indicar que fueron parte de un conjunto más amplio, no presentarlos como suficientes de forma aislada.",
+      "limitations": "No atribuir a la sentencia una regla general sobre cualquier consumo."
+    },
+    {
+      "question_id": "DAY-10",
+      "question": "¿Quién debía probar la residencia y cuándo se desplazó la carga?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-documentacion-monaco-aportada"],
+      "required_evidence_ids": ["evidence-carte-resident"],
+      "required_anchor_ids": ["anchor-carga-prueba", "anchor-doctrina-carga", "anchor-documentacion-insuficiente"],
+      "expected_behavior": "Reproducir la secuencia AEAT aporta indicios suficientes y contribuyente debe desvirtuarlos.",
+      "limitations": "No convertir la secuencia del caso en una inversión automática de la carga."
+    },
+    {
+      "question_id": "ECO-02",
+      "question": "¿Influyen sociedades o consejos de administración españoles?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-vinculos-economicos-espana"],
+      "required_evidence_ids": ["evidence-vinculos-economicos"],
+      "required_anchor_ids": ["anchor-vinculos-economicos", "anchor-indicios-familia"],
+      "expected_behavior": "Mostrar cómo se valoraron cargos, dividendos y retribuciones dentro del conjunto de vínculos.",
+      "limitations": "No afirmar que un cargo societario determina por sí solo la residencia."
+    },
+    {
+      "question_id": "FAM-01",
+      "question": "¿Qué relevancia tuvo que la familia residiera en España?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-familia-espana"],
+      "required_evidence_ids": ["evidence-vinculos-economicos"],
+      "required_anchor_ids": ["anchor-indicios-familia", "anchor-regla-residencia-articulo-9"],
+      "expected_behavior": "Presentar la familia como uno de varios vínculos y citar la presunción legal.",
+      "limitations": "El caso no permite aislar el peso causal de la familia."
+    },
+    {
+      "question_id": "HOM-01",
+      "question": "¿Cómo probó Hacienda el uso de viviendas disponibles en España?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-viviendas-consumos-espana"],
+      "required_evidence_ids": ["evidence-viviendas-consumos", "evidence-entregas-domicilio"],
+      "required_anchor_ids": ["anchor-viviendas-consumos", "anchor-entregas-domicilio"],
+      "expected_behavior": "Relacionar disponibilidad con consumos, entregas y otros signos de uso efectivo.",
+      "limitations": "No equiparar mera titularidad con uso efectivo."
+    },
+    {
+      "question_id": "HOM-02",
+      "question": "¿Qué valor tuvieron electricidad, gasóleo y otros suministros?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-viviendas-consumos-espana"],
+      "required_evidence_ids": ["evidence-viviendas-consumos", "evidence-entregas-domicilio"],
+      "required_anchor_ids": ["anchor-viviendas-consumos", "anchor-entregas-domicilio"],
+      "expected_behavior": "Explicar su función corroborativa dentro de una pluralidad de indicios.",
+      "limitations": "No hay umbral cuantitativo de consumos en el caso."
+    },
+    {
+      "question_id": "HOM-04",
+      "question": "¿Qué se dedujo de paquetería, café, vino o combustible?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-viviendas-consumos-espana"],
+      "required_evidence_ids": ["evidence-entregas-domicilio"],
+      "required_anchor_ids": ["anchor-entregas-domicilio"],
+      "expected_behavior": "Mostrar las entregas literales y su uso como indicios de actividad cotidiana.",
+      "limitations": "No afirmar que una entrega aislada prueba residencia."
+    },
+    {
+      "question_id": "HOM-08",
+      "question": "¿Cómo se valoraron retiradas de efectivo y pagos en España?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-vinculos-economicos-espana"],
+      "required_evidence_ids": ["evidence-movimientos-bancarios"],
+      "required_anchor_ids": ["anchor-movimientos-bancarios"],
+      "expected_behavior": "Describir los movimientos como indicios de vínculos económicos y fines particulares.",
+      "limitations": "El extracto no individualiza todos los pagos ni fechas."
+    },
+    {
+      "question_id": "FOR-01",
+      "question": "¿Bastó la documentación extranjera para acreditar residencia fuera?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-documentacion-monaco-aportada"],
+      "required_evidence_ids": ["evidence-carte-resident", "evidence-certificados-consulares"],
+      "required_anchor_ids": ["anchor-documentacion-monaco", "anchor-documentacion-insuficiente"],
+      "expected_behavior": "Distinguir documentos administrativos de una prueba de residencia fiscal efectiva.",
+      "limitations": "La carte de resident no se identifica como certificado fiscal."
+    },
+    {
+      "question_id": "FOR-02",
+      "question": "¿Qué defecto encontró la Sala en los certificados consulares?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-documentacion-monaco-aportada"],
+      "required_evidence_ids": ["evidence-certificados-consulares"],
+      "required_anchor_ids": ["anchor-documentacion-monaco", "anchor-documentacion-insuficiente"],
+      "expected_behavior": "Explicar que acreditaban aspectos administrativos, no permanencia ni residencia fiscal efectiva.",
+      "limitations": "No extrapolar el rechazo a certificados fiscales con contenido distinto."
+    },
+    {
+      "question_id": "FOR-04",
+      "question": "¿Un contrato de alquiler extranjero demostró residencia efectiva?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-documentacion-monaco-aportada"],
+      "required_evidence_ids": ["evidence-alquileres-monaco"],
+      "required_anchor_ids": ["anchor-documentacion-insuficiente"],
+      "expected_behavior": "Citar que alquiler o posesión no permiten deducir ocupación efectiva ni 183 días.",
+      "limitations": "No negar valor a todo alquiler cuando exista prueba complementaria."
+    },
+    {
+      "question_id": "PRU-01",
+      "question": "¿Qué debía probar inicialmente Hacienda?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-residencia-efectiva-espana"],
+      "required_evidence_ids": ["evidence-vigilancia-aduanera"],
+      "required_anchor_ids": ["anchor-carga-prueba", "anchor-residencia-conclusion"],
+      "expected_behavior": "Exponer que debía aportar datos de los que inferir domicilio fiscal en España.",
+      "limitations": "No omitir el requisito de suficiencia de los indicios."
+    },
+    {
+      "question_id": "PRU-02",
+      "question": "¿Cuándo correspondió al contribuyente desvirtuar los indicios?",
+      "required_issue_ids": ["residencia-fiscal"],
+      "required_fact_ids": ["fact-documentacion-monaco-aportada"],
+      "required_evidence_ids": ["evidence-carte-resident", "evidence-alquileres-monaco"],
+      "required_anchor_ids": ["anchor-carga-prueba", "anchor-doctrina-carga"],
+      "expected_behavior": "Situar el desplazamiento después de que la Administración documentara indicios suficientes.",
+      "limitations": "No afirmar un desplazamiento anterior a la prueba administrativa."
+    },
+    {
+      "question_id": "SAN-01",
+      "question": "Si se confirma la residencia, ¿se mantiene automáticamente la sanción?",
+      "required_issue_ids": ["sancion-tributaria"],
+      "required_fact_ids": ["fact-sancion-motivada"],
+      "required_evidence_ids": ["evidence-liquidacion-importes"],
+      "required_anchor_ids": ["anchor-sancion-regla", "anchor-sancion-conclusion"],
+      "expected_behavior": "Separar liquidación y sanción, explicar la exigencia de motivación y el razonamiento concreto.",
+      "limitations": "Este caso confirma la sanción; no demuestra que siempre deba confirmarse."
+    },
+    {
+      "question_id": "SRC-02",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "required_issue_ids": ["residencia-fiscal", "ganancias-patrimoniales-no-justificadas", "sancion-tributaria"],
+      "required_fact_ids": [],
+      "required_evidence_ids": [],
+      "required_anchor_ids": ["anchor-residencia-conclusion", "anchor-ganancias-conclusion", "anchor-sancion-conclusion"],
+      "expected_behavior": "Devolver texto verbatim, página física e identidad de la sentencia sin presentar paráfrasis como cita.",
+      "limitations": "El estado jurídico es AGENT_REVIEWED y aún no HUMAN_APPROVED."
+    }
+  ]
+}

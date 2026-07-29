@@ -116,9 +116,9 @@ contra el dominio público después de cada deploy.
     - [x] Implementar contrato, extractor crudo, JSON Schema, fixtures y tests
       de `residenciafiscal-verbatim/1`.
     - [x] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
-    - [ ] Construir el caso v3 híbrido de `SAN 1210/2023` y renderizar su
-      Markdown desde el modelo canónico.
-    - [ ] Validar las preguntas aplicables del piloto contra esa sentencia.
+    - [x] Construir y validar el caso v3 híbrido de `SAN 1210/2023`.
+    - [ ] Renderizar su Markdown desde el modelo canónico.
+    - [x] Validar 18 preguntas aplicables del piloto contra esa sentencia.
     - [ ] Regenerar las cinco con el mismo pipeline y ejecutar las 40 preguntas.
     - [ ] Comparar recuperación estructurada/léxica con embeddings antes de
       elegir la estrategia definitiva.

@@ -13,7 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
-	verify-citations export-okf export-okf-sample export-verbatim \
+	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	descargar-normativa export-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -47,6 +47,11 @@ VERBATIM_PDF ?= ./sentencias/SAN_1210_2023.pdf
 VERBATIM_DOCUMENT_ID ?= san-1210-2023
 VERBATIM_SOURCE_FILE ?= sentencias/SAN_1210_2023.pdf
 VERBATIM_OUTPUT ?= ./knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json
+CASE_PROPOSAL ?= ./knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json
+CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
+CASE_EVALUATION ?= ./knowledge/jurisprudencia/evaluations/san-1210-2023.questions.json
+CASE_OUTPUT ?= ./knowledge/jurisprudencia/cases/san-1210-2023.case.json
+CASE_REPORT ?= ./knowledge/jurisprudencia/reports/san-1210-2023.case-validation.json
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -80,6 +85,7 @@ help:
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
 	@echo "  make export-verbatim      Genera y revalida el verbatim piloto (sin LLM)"
+	@echo "  make export-case-v3       Compila y valida el caso v3 piloto (sin LLM)"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
@@ -87,6 +93,7 @@ help:
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
 	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="
 	@echo "  Verbatim: VERBATIM_PDF= VERBATIM_DOCUMENT_ID= VERBATIM_SOURCE_FILE= VERBATIM_OUTPUT="
+	@echo "  Caso v3: CASE_PROPOSAL= CASE_VERBATIM= CASE_EVALUATION= CASE_OUTPUT= CASE_REPORT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -180,6 +187,15 @@ export-verbatim:
 		--document-id $(VERBATIM_DOCUMENT_ID) \
 		--source-file $(VERBATIM_SOURCE_FILE) \
 		--output $(VERBATIM_OUTPUT) \
+		--project-root .
+
+export-case-v3:
+	uv run python export_jurisprudence_case.py \
+		--proposal $(CASE_PROPOSAL) \
+		--verbatim $(CASE_VERBATIM) \
+		--evaluation $(CASE_EVALUATION) \
+		--output $(CASE_OUTPUT) \
+		--report $(CASE_REPORT) \
 		--project-root .
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado

@@ -1,0 +1,1324 @@
+{
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-carga-prueba",
+        "anchor-residencia-conclusion"
+      ],
+      "conclusion": "La Administración aportó indicios plurales y suficientes.",
+      "fact_to_prove": "La existencia de domicilio fiscal y residencia efectiva en España.",
+      "initial_bearer": "AEAT",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": "Desvirtuar los indicios suficientes y acreditar la residencia fiscal en otro Estado.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": "TAXPAYER",
+      "step_id": "burden-aeat-aporta-indicios",
+      "triggering_evidence_ids": [
+        "evidence-viviendas-consumos",
+        "evidence-entregas-domicilio",
+        "evidence-vigilancia-aduanera",
+        "evidence-vinculos-economicos",
+        "evidence-movimientos-bancarios"
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-doctrina-carga",
+        "anchor-documentacion-insuficiente"
+      ],
+      "conclusion": "La documentación aportada no acreditó permanencia, ocupación efectiva ni centro de intereses económicos en Mónaco.",
+      "fact_to_prove": "La residencia fiscal efectiva en Mónaco y la insuficiencia de los indicios españoles.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 2,
+      "shifts_to": null,
+      "step_id": "burden-contribuyente-desvirtua",
+      "triggering_evidence_ids": [
+        "evidence-carte-resident",
+        "evidence-certificados-consulares",
+        "evidence-alquileres-monaco"
+      ]
+    }
+  ],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-viviendas-consumos"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala los integra en el conjunto de indicios que acredita residencia efectiva en España.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Inmuebles vinculados a la esposa y consumos eléctricos asociados a viviendas españolas.",
+      "evidence_id": "evidence-viviendas-consumos",
+      "fact_ids": [
+        "fact-viviendas-consumos-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar disponibilidad y uso efectivo de vivienda en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "inmuebles disponibles y consumos"
+    },
+    {
+      "anchor_ids": [
+        "anchor-entregas-domicilio"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La sentencia los menciona entre los indicios de uso efectivo y presencia.",
+      "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "description": "Proveedores declararon entregas y servicios en domicilios españoles vinculados al recurrente.",
+      "evidence_id": "evidence-entregas-domicilio",
+      "fact_ids": [
+        "fact-viviendas-consumos-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Corroborar ocupación y actividad cotidiana en viviendas españolas.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "gasoil, vehículo, café y paquetería"
+    },
+    {
+      "anchor_ids": [
+        "anchor-vigilancia-domicilio",
+        "anchor-residencia-conclusion"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala reproduce la conclusión de que se observó comportamiento típico de quien vive habitualmente allí.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Tres actuaciones del Servicio de Vigilancia Aduanera en el domicilio español.",
+      "evidence_id": "evidence-vigilancia-aduanera",
+      "fact_ids": [
+        "fact-conducta-habitual-domicilio",
+        "fact-residencia-efectiva-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar conducta compatible con residencia habitual.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "actuaciones de vigilancia"
+    },
+    {
+      "anchor_ids": [
+        "anchor-vinculos-economicos",
+        "anchor-indicios-familia"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala los valora junto al patrimonio inmobiliario y la presencia como indicios concordantes.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Participación en órganos de gobierno de entidades españolas y percepción de dividendos o retribuciones.",
+      "evidence_id": "evidence-vinculos-economicos",
+      "fact_ids": [
+        "fact-vinculos-economicos-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la estrechez de los vínculos económicos con España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "cargos societarios y retribuciones"
+    },
+    {
+      "anchor_ids": [
+        "anchor-movimientos-bancarios"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La sentencia incluye estos movimientos entre la amplia evidencia de estancia y vinculación.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Saldos y retiradas de dinero para fines particulares del recurrente, además de pagos cotidianos en España.",
+      "evidence_id": "evidence-movimientos-bancarios",
+      "fact_ids": [
+        "fact-vinculos-economicos-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Corroborar vínculos económicos y vida cotidiana en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "cuentas y retiradas de efectivo"
+    },
+    {
+      "anchor_ids": [
+        "anchor-documentacion-monaco",
+        "anchor-documentacion-insuficiente"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "Su obtención no acredita permanencia superior a 183 días ni ocupación efectiva como residencia habitual.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Documento administrativo de residencia del Principado de Mónaco.",
+      "evidence_id": "evidence-carte-resident",
+      "fact_ids": [
+        "fact-documentacion-monaco-aportada"
+      ],
+      "foreign_document": {
+        "defects": [
+          "No acredita permanencia superior a 183 días.",
+          "No acredita ocupación efectiva."
+        ],
+        "document_type": "ADMINISTRATIVE_REGISTRATION",
+        "issuing_authority": "Principado de Mónaco",
+        "jurisdiction": "Mónaco",
+        "nature": "ADMINISTRATIVE",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Insuficiente para demostrar residencia fiscal efectiva.",
+        "tax_scope": "RESIDENCE_ONLY"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia efectiva en Mónaco.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CONTRADICTORY",
+      "subtype": "carte de resident"
+    },
+    {
+      "anchor_ids": [
+        "anchor-documentacion-monaco",
+        "anchor-documentacion-insuficiente"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala considera que se refieren a aspectos administrativos y no acreditan residencia fiscal efectiva.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificados de residencia expedidos por el Cónsul General en Marsella e inscripción consular.",
+      "evidence_id": "evidence-certificados-consulares",
+      "fact_ids": [
+        "fact-documentacion-monaco-aportada"
+      ],
+      "foreign_document": {
+        "defects": [
+          "Solo acredita aspectos administrativos.",
+          "No acredita permanencia ni centro de intereses económicos."
+        ],
+        "document_type": "ADMINISTRATIVE_REGISTRATION",
+        "issuing_authority": "Consulado General en Marsella",
+        "jurisdiction": "Mónaco",
+        "nature": "ADMINISTRATIVE",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Insuficiente para desvirtuar los indicios de residencia en España.",
+        "tax_scope": "RESIDENCE_ONLY"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia en Mónaco.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CONTRADICTORY",
+      "subtype": "certificados consulares"
+    },
+    {
+      "anchor_ids": [
+        "anchor-documentacion-monaco",
+        "anchor-documentacion-insuficiente"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La posesión o alquiler no permite deducir ocupación efectiva ni permanencia superior a 183 días.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Tres contratos de alquiler de inmuebles en Mónaco.",
+      "evidence_id": "evidence-alquileres-monaco",
+      "fact_ids": [
+        "fact-documentacion-monaco-aportada"
+      ],
+      "foreign_document": {
+        "defects": [
+          "No acredita ocupación efectiva.",
+          "No acredita permanencia superior a 183 días."
+        ],
+        "document_type": "PRIVATE_CONTRACT",
+        "issuing_authority": null,
+        "jurisdiction": "Mónaco",
+        "nature": "PRIVATE",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Insuficiente para acreditar residencia habitual.",
+        "tax_scope": "NOT_APPLICABLE"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar vivienda y residencia habitual en Mónaco.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CONTRADICTORY",
+      "subtype": "contratos de alquiler"
+    },
+    {
+      "anchor_ids": [
+        "anchor-incrementos-origen",
+        "anchor-ganancias-conclusion"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala recoge el contenido del acuerdo y desestima el motivo al confirmar la residencia en España.",
+      "category": "OTROS",
+      "description": "Importes sin origen probado y sin relación con la renta o patrimonio declarado.",
+      "evidence_id": "evidence-liquidacion-importes",
+      "fact_ids": [
+        "fact-importes-origen-no-probado"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "ganancias-patrimoniales-no-justificadas",
+        "sancion-tributaria"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Sustentar la aplicación del régimen de ganancias patrimoniales no justificadas.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "acuerdo de liquidación"
+    }
+  ],
+  "facts": [
+    {
+      "anchor_ids": [
+        "anchor-viviendas-consumos",
+        "anchor-entregas-domicilio"
+      ],
+      "asserted_by": "COURT",
+      "category": "HOUSING",
+      "country": "España",
+      "description": "El recurrente tenía a su disposición inmuebles en España vinculados a su esposa y existían consumos y servicios asociados a ellos.",
+      "end_date": null,
+      "fact_id": "fact-viviendas-consumos-espana",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-vigilancia-domicilio"
+      ],
+      "asserted_by": "COURT",
+      "category": "PRESENCE",
+      "country": "España",
+      "description": "Tres actuaciones de vigilancia observaron comportamiento propio de quien vive habitualmente en el domicilio español.",
+      "end_date": null,
+      "fact_id": "fact-conducta-habitual-domicilio",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "place": "Barcelona",
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-vinculos-economicos",
+        "anchor-movimientos-bancarios"
+      ],
+      "asserted_by": "COURT",
+      "category": "ECONOMIC_ACTIVITY",
+      "country": "España",
+      "description": "El recurrente mantenía cargos, retribuciones, patrimonio y otros intereses económicos relevantes en España.",
+      "end_date": null,
+      "fact_id": "fact-vinculos-economicos-espana",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-indicios-familia"
+      ],
+      "asserted_by": "COURT",
+      "category": "FAMILY",
+      "country": "España",
+      "description": "La sentencia señala que la mayor parte de la familia residía en España.",
+      "end_date": null,
+      "fact_id": "fact-familia-espana",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-documentacion-monaco"
+      ],
+      "asserted_by": "UNDISPUTED",
+      "category": "FOREIGN_TAX",
+      "country": "Mónaco",
+      "description": "El recurrente aportó carte de resident, certificados consulares de residencia y contratos de alquiler de Mónaco.",
+      "end_date": null,
+      "fact_id": "fact-documentacion-monaco-aportada",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "place": null,
+      "procedural_status": "UNDISPUTED",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "asserted_by": "COURT",
+      "category": "PRESENCE",
+      "country": "España",
+      "description": "La Sala deduce de la prueba aportada que el recurrente tenía su residencia efectiva en España.",
+      "end_date": null,
+      "fact_id": "fact-residencia-efectiva-espana",
+      "issue_ids": [
+        "residencia-fiscal",
+        "ganancias-patrimoniales-no-justificadas",
+        "sancion-tributaria"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-incrementos-origen"
+      ],
+      "asserted_by": "COURT",
+      "category": "INCOME",
+      "country": null,
+      "description": "El acuerdo de liquidación recogía importes obtenidos cuyo origen no se había probado y que no guardaban relación con la renta o patrimonio declarado.",
+      "end_date": null,
+      "fact_id": "fact-importes-origen-no-probado",
+      "issue_ids": [
+        "ganancias-patrimoniales-no-justificadas",
+        "sancion-tributaria"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-sancion-conclusion"
+      ],
+      "asserted_by": "COURT",
+      "category": "PROCEDURAL",
+      "country": "España",
+      "description": "La Sala consideró suficientemente motivada la sanción por la falta de justificación de la residencia efectiva en Mónaco.",
+      "end_date": null,
+      "fact_id": "fact-sancion-motivada",
+      "issue_ids": [
+        "sancion-tributaria"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "ADMINISTRATION",
+      "tax_years": [
+        2011,
+        2012,
+        2013
+      ]
+    }
+  ],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-documentacion-insuficiente"
+      ],
+      "conclusion": "El recurrente tenía su residencia fiscal efectiva en España.",
+      "consequences": [
+        "El recurrente quedó sujeto al IRPF por obligación personal.",
+        "La residencia en Mónaco alegada no quedó acreditada."
+      ],
+      "decisive_reasoning": "La pluralidad de indicios sobre presencia, vivienda, consumos, familia e intereses económicos en España no fue desvirtuada por la documentación administrativa y contractual de Mónaco.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-incrementos-origen",
+        "anchor-ganancias-conclusion"
+      ],
+      "conclusion": "Se desestimó el motivo contra la aplicación del régimen de ganancias patrimoniales no justificadas.",
+      "consequences": [
+        "Se mantuvo la regularización asociada a los importes de origen no probado."
+      ],
+      "decisive_reasoning": "Confirmada la residencia fiscal en España, decaía la premisa de que el recurrente era contribuyente no residente.",
+      "holding_id": "holding-ganancias-patrimoniales",
+      "issue_id": "ganancias-patrimoniales-no-justificadas",
+      "outcome": "GANA_AEAT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-sancion-regla",
+        "anchor-sancion-conclusion"
+      ],
+      "conclusion": "La sanción tributaria se mantuvo.",
+      "consequences": [
+        "Se desestimó el motivo sancionador."
+      ],
+      "decisive_reasoning": "La Sala consideró suficientemente motivada la culpabilidad, al menos negligente, vinculada a declarar residencia en Mónaco sin aportar pruebas sólidas de residencia efectiva.",
+      "holding_id": "holding-sancion-tributaria",
+      "issue_id": "sancion-tributaria",
+      "outcome": "GANA_AEAT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-07-29T18:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1",
+          "source_path": "knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "fab908b78bf165cc53926821557e3ca3da4aa63b4b945a088534ca27f6d8766b",
+          "source_path": "knowledge/jurisprudencia-muestra-5/sources/san-1210-2023.analysis.json"
+        },
+        {
+          "kind": "ANNOTATIONS",
+          "sha256": "59c9f057f5ff6197ce0c0a3be17956dd8bc6e249b7d0351b7ecc98d0963be035",
+          "source_path": "knowledge/annotations/san-1210-2023.yaml"
+        }
+      ],
+      "model_id": "codex-agent",
+      "notes": "Síntesis jurídica propuesta por agente; hashes, offsets y relaciones validados de forma determinista. No implica aprobación jurídica humana.",
+      "producer": "residenciafiscal-hybrid-agent-pipeline",
+      "prompt_sha256": null,
+      "run_id": "case-v3-pilot-san-1210-2023"
+    },
+    "chamber": "Sala de lo Contencioso-Administrativo, Sección Cuarta",
+    "countries": [
+      "España",
+      "Mónaco"
+    ],
+    "court": "Audiencia Nacional",
+    "decision_date": "2023-02-22",
+    "ecli": "ECLI:ES:AN:2023:1210",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-1210-2023",
+    "page_count": 10,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Pendiente de aprobación jurídica humana.",
+      "reviewed_at": "2026-07-29",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 1210/2023",
+    "source_file": "sentencias/SAN_1210_2023.pdf",
+    "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d",
+    "tax_years": [
+      2011,
+      2012,
+      2013
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-regla-residencia-articulo-9",
+        "anchor-carga-prueba",
+        "anchor-residencia-conclusion"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence_ids": [
+        "evidence-viviendas-consumos",
+        "evidence-entregas-domicilio",
+        "evidence-vigilancia-aduanera",
+        "evidence-vinculos-economicos",
+        "evidence-movimientos-bancarios",
+        "evidence-carte-resident",
+        "evidence-certificados-consulares",
+        "evidence-alquileres-monaco"
+      ],
+      "fact_ids": [
+        "fact-viviendas-consumos-espana",
+        "fact-conducta-habitual-domicilio",
+        "fact-vinculos-economicos-espana",
+        "fact-familia-espana",
+        "fact-documentacion-monaco-aportada",
+        "fact-residencia-efectiva-espana"
+      ],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [
+        "rule-articulo-9-lirpf",
+        "rule-doctrina-carga-residencia",
+        "rule-articulo-105-lgt"
+      ],
+      "question": "¿Tenía el recurrente su residencia fiscal en España durante 2011 a 2013?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-incrementos-origen",
+        "anchor-ganancias-conclusion"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [
+        "evidence-liquidacion-importes"
+      ],
+      "fact_ids": [
+        "fact-residencia-efectiva-espana",
+        "fact-importes-origen-no-probado"
+      ],
+      "holding_id": "holding-ganancias-patrimoniales",
+      "issue_id": "ganancias-patrimoniales-no-justificadas",
+      "issue_type": "UNEXPLAINED_CAPITAL_GAIN",
+      "legal_rule_ids": [
+        "rule-articulo-37-rdl-3-2004"
+      ],
+      "question": "¿Era aplicable el régimen de ganancias patrimoniales no justificadas tras determinar la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-sancion-regla",
+        "anchor-sancion-conclusion"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [
+        "evidence-liquidacion-importes"
+      ],
+      "fact_ids": [
+        "fact-residencia-efectiva-espana",
+        "fact-importes-origen-no-probado",
+        "fact-sancion-motivada"
+      ],
+      "holding_id": "holding-sancion-tributaria",
+      "issue_id": "sancion-tributaria",
+      "issue_type": "PENALTY",
+      "legal_rule_ids": [
+        "rule-culpabilidad-sancion"
+      ],
+      "question": "¿Estaba suficientemente motivada la culpabilidad para mantener la sanción tributaria?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [
+    {
+      "anchor_ids": [
+        "anchor-regla-residencia-articulo-9"
+      ],
+      "citation": "Artículo 9 del texto refundido de la Ley del IRPF aplicable a los ejercicios",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "legal_rule_id": "rule-articulo-9-lirpf",
+      "proposition": "La residencia habitual se determina por permanencia, centro de intereses económicos y la presunción familiar en los términos legales.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    },
+    {
+      "anchor_ids": [
+        "anchor-carga-prueba",
+        "anchor-doctrina-carga"
+      ],
+      "citation": "STS de 16 de junio y 13 de octubre de 2011",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "legal_rule_id": "rule-doctrina-carga-residencia",
+      "proposition": "La Administración debe probar los hechos de la liquidación; documentados indicios suficientes, corresponde al contribuyente desvirtuar sus conclusiones y acreditar residencia exterior.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "CASE_LAW"
+    },
+    {
+      "anchor_ids": [
+        "anchor-articulo-105-lgt"
+      ],
+      "citation": "Artículo 105.1 de la Ley 58/2003, General Tributaria",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "legal_rule_id": "rule-articulo-105-lgt",
+      "proposition": "Quien haga valer su derecho debe probar los hechos constitutivos del mismo.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    },
+    {
+      "anchor_ids": [
+        "anchor-ganancias-conclusion"
+      ],
+      "citation": "Artículo 37 del Real Decreto Legislativo 3/2004",
+      "issue_ids": [
+        "ganancias-patrimoniales-no-justificadas"
+      ],
+      "legal_rule_id": "rule-articulo-37-rdl-3-2004",
+      "proposition": "La pretensión de excluir el incremento no justificado por condición de no residente depende de que se estime la residencia fiscal extranjera.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    },
+    {
+      "anchor_ids": [
+        "anchor-sancion-regla"
+      ],
+      "citation": "STS de 15 de marzo de 2017 y doctrina sobre motivación de la culpabilidad",
+      "issue_ids": [
+        "sancion-tributaria"
+      ],
+      "legal_rule_id": "rule-culpabilidad-sancion",
+      "proposition": "La sanción exige motivación específica y prueba de una actuación dolosa o al menos negligente.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "CASE_LAW"
+    }
+  ],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Piloto B3 validado técnicamente; pendiente de aprobación jurídica humana.",
+    "reviewed_at": "2026-07-29",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-regla-residencia-articulo-9",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 943,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 537,
+          "verbatim_text": "b) Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta.\nSe presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual en territorio español\ncuando, de acuerdo con los criterios anteriores, resida habitualmente en España el cónyuge no separado\nlegalmente y los hijos menores de edad que dependan de aquél.\""
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-viviendas-consumos",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4468,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3900,
+          "verbatim_text": "También se ha constatado que si bien el Sr.  Agustín  no dispone en nuestro país de inmuebles a su nombre sí se\nhan identiﬁcado hasta un total de cuatro diferentes inmuebles a nombre de su esposa. Además, a través de la\ninformación obrante en nuestra base de datos se han podido identiﬁcar imputaciones de consumo eléctrico a la\nSra.  Enma  respecto de inmuebles que no habían sido identiﬁcados a su nombre, como es el caso del inmueble\nsituado en la  CALLE000  número  NUM001  de La Escala y el de C/  DIRECCION000   NUM002 , de Sant Martí-\nGolf Guils de la Cerdanya."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-entregas-domicilio",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2063,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1463,
+          "verbatim_text": "Algunos proveedores como ARMENOIL SLU que distribuye gasóleo boniﬁcado reconoció haber entregado el\ngasoil \"en el domicilio del Sr.  Agustín \", que sitúan en Guils de Cardanya,  Salvador  del servicio oﬁcial Honda\nen Puigcerdà, que facturó a D.  Agustín  manifestó que \"en ocasiones se recogía el vehículo en el domicilio del\nSr.  Agustín \" que sitúan en Barri del  DIRECCION001 , de Bolvir de Cerdanya y por último la mercantil DABA\nSA reconoce la entrega de cápsulas Nespresso en el domicilio de C/  AVENIDA000 , donde también entregó\nvino Bodegas Roda y otra paquetería a nombre del Sr.  Agustín ."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-vigilancia-domicilio",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2486,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 2171,
+          "verbatim_text": "Hay que añadir que el Servicio de Vigilancia Aduanera de la Dependencia Regional de Aduanas e Impuestos\nEspeciales realizó tres actuaciones de vigilancia en la calle  AVENIDA000  número  NUM000 , de las que se\nconcluye que \"se observa el comportamiento típico de alguien que vive con habitualidad en ese domicilio\"."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-vinculos-economicos",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3298,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 2886,
+          "verbatim_text": "Estos no son los únicos indicios que exteriorizan las estrechas relaciones del Sr.  Agustín  con España, la\nactuaria ha llevado a cabo un exhaustivo análisis de otras circunstancias que maniﬁestan vínculos profesionales\no económicos, como son entre otros la participación en los órganos de gobierno de Banesto o de COBEGA SA\nde las que percibe dividendos o retribuciones por asistir al Consejo de Administración."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-movimientos-bancarios",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4185,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3664,
+          "verbatim_text": "La actuaria también llevó a cabo un minucioso seguimiento de las cuentas bancarias cuyo titular es D.  Agustín\n. De ellas tres cuentas del Banco de Santander presentan importantes saldos. Aparte de algunas entradas de\ndinero que serán analizadas con mayor profundidad en el Fundamento de Derecho siguiente, es interesante\nresaltar las importantes retiradas de dinero de la cuenta  NUM003  por parte de D.  Daniel , hombre de conﬁanza\ndel Sr.  Agustín , según indica \"para atender los ﬁnes particulares del Sr.  Agustín \"."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-documentacion-monaco",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4810,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 4416,
+          "verbatim_text": "Por tanto, ante esta abundancia de datos que prueban su presencia en España y la estrechez de los vínculos\neconómicos con nuestro país, el obligado sólo aporta para justiﬁcar su presencia en Mónaco la Carte de resident,\nla copia de certiﬁcados de residencia expedidos por el Consul General en Marsella de inscripción en el Registro\nGeneral de residente y el contrato de alquiler de un inmueble."
+        }
+      ],
+      "purpose": "FACT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-indicios-familia",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1697,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 1162,
+          "verbatim_text": "Recordemos a modo de resumen que se ha tenido conocimiento de su estancia en nuestro país en actos privados\no institucionales sin que se haya justiﬁcado su salida con presumible destino Mónaco, se ha sabido de la\nexistencia de intereses económicos en España, donde cobra pensiones y retribuciones, y asiste a consejos de\nadministración y reuniones de socios. Se conoce también que la mayor parte de la familia reside en España,\nexistiendo \"territorios  Agustín \" tanto en la Avenida Pearson de Barcelona como en la zona de la Cerdanya."
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-carga-prueba",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2826,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 2497,
+          "verbatim_text": "SEPTIMO.- Conviene recordar que en materia de residencia ﬁscal corresponde a la Administración aportar\ndatos de los que se inﬁera la existencia de domicilio ﬁscal en España de conformidad con lo establecido en\nla Ley, y si tales indicios son suﬁcientes, corresponde al obligado tributario, demostrar su residencia en otro\nEstado."
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-doctrina-carga",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3546,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 3074,
+          "verbatim_text": "Regla que no es sino una razonable aplicación de la distribución de la carga de la\nprueba en materia tributaria, pues siendo cierto que corresponde a la Administración probar \"los hechos en\nque descansa la liquidación impugnada\", no lo es menos que \"cuando la liquidación tributaria se funda en las\nactuaciones inspectoras practicadas, que constan debidamente documentadas, es al contribuyente a quien\nincumbe desvirtuar las conclusiones alcanzadas por la Administración\"."
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-residencia-conclusion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2959,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2599,
+          "verbatim_text": "En deﬁnitiva, por la Administración se ha aportado prueba suﬁciente de la que poder deducir que el recurrente\ntiene su residencia efectiva en España, sin que por se haya realizado esfuerzo alguno en acreditar la realidad\nde su residencia en el Principado de Mónaco, más allá de la aportación de una documental de la que no se\npuede deducir dicha circunstancia."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-documentacion-insuficiente",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2598,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1796,
+          "verbatim_text": "Dicha documentación es, a juicio de esta Sala, insuﬁciente para justiﬁcar que la recurrente ha residido más\nde 183 días en Mónaco. Ninguna de la documentación aportada sirve para acreditar que la recurrente tiene la\nresidencia efectiva en dicho país, ya que la carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler y la acreditación de medios económicos\nsuﬁcientes, por lo que estar en posesión de la misma no sirve para acreditar que tiene su residencia efectiva\nen dicho país. Además, el mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por más de 183 días, ya que de dicha posesión no se puede deducir, sin más, su\nocupación efectiva como residencia habitual."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-articulo-105-lgt",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1491,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1254,
+          "verbatim_text": "Es de tener en cuenta que el art. 15 de la Ley General Tributaria 58/2003 establece en su art. 105 que \"1.\nEn los procedimientos de aplicación de los tributos quien haga valer su derecho deberá probar los hechos\nconstitutivos del mismo.\""
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-incrementos-origen",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3412,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3214,
+          "verbatim_text": "En el acuerdo de liquidación se hacían constar los importes que el Sr.  Agustín  había obtenido sin que se\nhubiera probado su origen y sin que guardaran relación con la renta o patrimonio declarado."
+        }
+      ],
+      "purpose": "FACT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-ganancias-conclusion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3782,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3615,
+          "verbatim_text": "Habiéndose considerado que su residencia ﬁscal se encontraba en España, decae dicha pretensión al tener la\ncondición de contribuyente del IRPF por obligación personal."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-sancion-regla",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2448,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 2059,
+          "verbatim_text": "E.- Para justiﬁcar la existencia de culpabilidad en el obligado tributario hay que evidenciar la concurrencia de\nuna actuación dolosa o al menos negligente, requisito que se traduce en la necesidad de acreditar que el\nincumplimiento de la obligación tributaria del contribuyente obedece a una intención de defraudar o, al menos,\na la omisión del cuidado y atención exigibles jurídicamente."
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "anchor_id": "anchor-sancion-conclusion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3845,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 3603,
+          "verbatim_text": "Por ello se debe concluir que\nla imposición de la sanción está suﬁcientemente motivada al exponer las razones por las que considera que la\nconducta del demandante es culpable como consecuencia de no justiﬁcar la residencia efectiva en Mónaco."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    }
+  ],
+  "treaty_analyses": []
+}

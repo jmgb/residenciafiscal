@@ -1,5 +1,40 @@
 {
   "$defs": {
+    "AnalysisInputArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/AnalysisInputKind"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "source_path": {
+          "minLength": 1,
+          "title": "Source Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "source_path",
+        "sha256"
+      ],
+      "title": "AnalysisInputArtifact",
+      "type": "object"
+    },
+    "AnalysisInputKind": {
+      "enum": [
+        "VERBATIM",
+        "LEGACY_ANALYSIS",
+        "ANNOTATIONS",
+        "OTHER"
+      ],
+      "title": "AnalysisInputKind",
+      "type": "string"
+    },
     "AnalysisProvenance": {
       "additionalProperties": false,
       "properties": {
@@ -7,6 +42,14 @@
           "format": "date-time",
           "title": "Generated At",
           "type": "string"
+        },
+        "input_artifacts": {
+          "items": {
+            "$ref": "#/$defs/AnalysisInputArtifact"
+          },
+          "minItems": 1,
+          "title": "Input Artifacts",
+          "type": "array"
         },
         "model_id": {
           "anyOf": [
@@ -65,7 +108,8 @@
       },
       "required": [
         "producer",
-        "generated_at"
+        "generated_at",
+        "input_artifacts"
       ],
       "title": "AnalysisProvenance",
       "type": "object"
