@@ -12,6 +12,12 @@ function newMessageId(): string {
   return `msg-${Math.random().toString(36).slice(2)}-${Date.now()}`;
 }
 
+/**
+ * Margen (px) dentro del cual se considera que el usuario sigue "pegado al fondo".
+ * Absorbe el redondeo subpíxel del navegador y los últimos píxeles de inercia.
+ */
+const STICK_TO_BOTTOM_THRESHOLD_PX = 48;
+
 function TypingIndicator() {
   return (
     <div className='flex justify-start' role='status' aria-label='Buscando en las sentencias'>
@@ -71,34 +77,89 @@ export function ChatView({ engine, isStub }: ChatViewProps) {
 
   const [isStreaming, setIsStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+  /**
+   * Conversación DUEÑA del streaming en curso (`null` si no hay ninguno).
+   * Es lo que permite distinguir "el usuario se ha ido a otra conversación" de
+   * "acabamos de navegar de `/` a `/c/:id` por el primer mensaje".
+   */
+  const streamOwnerRef = useRef<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  /** ¿El usuario está al final del hilo? Si ha subido a leer, no lo arrastramos. */
+  const isPinnedToBottomRef = useRef(true);
 
-  // Cancela cualquier streaming en curso al desmontar o al cambiar de conversación.
+  // Cancela cualquier streaming en curso al desmontar.
   useEffect(() => {
     return () => {
       abortRef.current?.abort();
       abortRef.current = null;
+      streamOwnerRef.current = null;
     };
   }, []);
 
-  // `messages.length` es la dependencia DISPARADORA del autoscroll aunque su valor no se
-  // lea dentro del efecto: quitarla dejaría el scroll pegado arriba tras el primer mensaje.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: disparador intencionado.
+  // Cancela el streaming al cambiar a OTRA conversación: si no, la respuesta de la
+  // anterior sigue viva y deja el composer de la nueva bloqueado en "Detener respuesta".
+  //
+  // Depender de `conversationId` a secas no sirve: el primer envío desde `/` navega a
+  // `/c/:id` justo después de arrancar el stream y este efecto abortaría su propia
+  // respuesta. Por eso se compara con la conversación dueña del stream.
   useEffect(() => {
+    const owner = streamOwnerRef.current;
+    if (owner === null || owner === conversationId) return;
+    abortRef.current?.abort();
+    abortRef.current = null;
+    streamOwnerRef.current = null;
+    setIsStreaming(false);
+  }, [conversationId]);
+
+  // Una URL antigua (o un localStorage limpiado) puede apuntar a una conversación que ya
+  // no existe. Sin esto `appendMessage` es un no-op silencioso y el usuario escribe al
+  // vacío: volvemos a `/`, donde el primer mensaje crea una conversación nueva.
+  const isMissingConversation = conversationId !== undefined && conversation === undefined;
+  useEffect(() => {
+    if (isMissingConversation) navigate('/', { replace: true });
+  }, [isMissingConversation, navigate]);
+
+  const handleScroll = useCallback(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const distanceToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    isPinnedToBottomRef.current = distanceToBottom <= STICK_TO_BOTTOM_THRESHOLD_PX;
+  }, []);
+
+  const lastMessage = messages.at(-1);
+  // El contenido del último mensaje es lo único que cambia mientras llegan tokens:
+  // sin él el autoscroll se quedaría congelado en la respuesta larga en curso.
+  const lastMessageContent = lastMessage?.content ?? '';
+
+  // `messages.length` y `lastMessageContent` son las dependencias DISPARADORAS del
+  // autoscroll aunque su valor no se lea dentro del efecto: quitarlas dejaría el scroll
+  // pegado arriba tras el primer mensaje y congelado durante el streaming.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: disparadores intencionados.
+  useEffect(() => {
+    if (!isPinnedToBottomRef.current) return;
     const container = scrollRef.current;
     if (container) container.scrollTop = container.scrollHeight;
-  }, [messages.length]);
+  }, [messages.length, lastMessageContent]);
 
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
     abortRef.current = null;
+    streamOwnerRef.current = null;
     setIsStreaming(false);
   }, []);
 
   const handleSend = useCallback(
     async (content: string) => {
-      const targetId = conversationId ?? createConversation();
-      if (!conversationId) navigate(`/c/${targetId}`, { replace: true });
+      // Si la URL apunta a una conversación inexistente se crea una nueva en vez de
+      // escribir en el vacío (el efecto de arriba ya habrá redirigido en la práctica).
+      const existing = conversationId
+        ? useConversations.getState().getConversation(conversationId)
+        : undefined;
+      const targetId = existing?.id ?? createConversation();
+      if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
+
+      // Enviar es una acción explícita: devuelve al usuario al final del hilo.
+      isPinnedToBottomRef.current = true;
 
       const now = new Date().toISOString();
       const userMessage: ChatMessage = {
@@ -120,6 +181,7 @@ export function ChatView({ engine, isStub }: ChatViewProps) {
 
       const controller = new AbortController();
       abortRef.current = controller;
+      streamOwnerRef.current = targetId;
       setIsStreaming(true);
 
       const history = [
@@ -146,20 +208,29 @@ export function ChatView({ engine, isStub }: ChatViewProps) {
           sources,
           isStreaming: false,
         });
-        if (abortRef.current === controller) abortRef.current = null;
-        setIsStreaming(false);
+        // Solo se libera el composer si este sigue siendo el stream vigente: si el usuario
+        // ya paró, cambió de conversación o lanzó otra consulta, no es nuestro turno.
+        if (abortRef.current === controller) {
+          abortRef.current = null;
+          streamOwnerRef.current = null;
+          setIsStreaming(false);
+        }
       }
     },
     [appendMessage, conversationId, createConversation, engine, navigate, updateMessage]
   );
 
   const hasMessages = messages.length > 0;
-  const lastMessage = messages.at(-1);
   const showTypingIndicator = isStreaming && lastMessage?.isStreaming && !lastMessage.content;
 
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
-      <div ref={scrollRef} className='flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4'>
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        data-testid='chat-scroll'
+        className='flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4'
+      >
         {isStub && <StubBanner />}
 
         {hasMessages ? (

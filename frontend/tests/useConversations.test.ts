@@ -133,6 +133,50 @@ describe('useConversations', () => {
     expect(window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY)).not.toBeNull();
   });
 
+  it('apaga el streaming al rehidratar una respuesta que quedó a medias', async () => {
+    // Estado tal y como lo dejaría una recarga en mitad de una respuesta.
+    window.localStorage.setItem(
+      CONVERSATIONS_STORAGE_KEY,
+      JSON.stringify({
+        version: 0,
+        state: {
+          conversations: [
+            {
+              id: 'c1',
+              title: 'consulta interrumpida',
+              createdAt: '2026-07-29T10:00:00.000Z',
+              updatedAt: '2026-07-29T10:00:05.000Z',
+              messages: [
+                {
+                  id: 'm1',
+                  role: 'user',
+                  content: '¿Y los 183 días?',
+                  createdAt: '2026-07-29T10:00:00.000Z',
+                },
+                {
+                  id: 'a1',
+                  role: 'assistant',
+                  content: 'El Tribunal Supremo',
+                  createdAt: '2026-07-29T10:00:05.000Z',
+                  isStreaming: true,
+                },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await useConversations.persist.rehydrate();
+
+    const messages = useConversations.getState().getConversation('c1')?.messages;
+    expect(messages).toHaveLength(2);
+    // El texto que alcanzó a llegar se conserva; el cursor desaparece.
+    expect(messages?.[1].content).toBe('El Tribunal Supremo');
+    expect(messages?.[1].isStreaming).toBe(false);
+    expect(messages?.some((message) => message.isStreaming)).toBe(false);
+  });
+
   it('ignora operaciones sobre una conversación inexistente', () => {
     const store = useConversations.getState();
     expect(() =>

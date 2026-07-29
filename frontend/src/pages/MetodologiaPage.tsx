@@ -1,4 +1,30 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+function prefersReducedMotion(): boolean {
+  if (typeof window.matchMedia !== 'function') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 export function MetodologiaPage() {
+  const { hash } = useLocation();
+
+  // React Router navega con la History API y NO provoca el salto nativo al ancla; además
+  // el contenido vive dentro de un contenedor de scroll propio, no en el documento, así
+  // que `location.hash` por sí solo no mueve nada. `scrollIntoView` sí recorre los
+  // ancestros desplazables, sea cual sea cuál de ellos scrollea.
+  useEffect(() => {
+    const id = hash.startsWith('#') ? decodeURIComponent(hash.slice(1)) : '';
+    if (!id) return;
+    const target = document.getElementById(id);
+    // jsdom no implementa `scrollIntoView`; en el navegador siempre existe.
+    if (!target || typeof target.scrollIntoView !== 'function') return;
+    target.scrollIntoView({
+      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, [hash]);
+
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
       <h1 className='mb-6 font-heading text-2xl font-semibold'>Metodología</h1>

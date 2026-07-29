@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatView } from '@/components/chat/ChatView';
 import { useConversations } from '@/stores/useConversations';
@@ -30,15 +30,69 @@ function createFakeEngine(): ChatEngine {
   };
 }
 
-function renderChat(engine: ChatEngine = createFakeEngine()) {
+/**
+ * Motor con una pausa CONTROLADA a mitad de respuesta: deja detener el test justo
+ * mientras se está recibiendo la respuesta, sin depender de temporizadores.
+ */
+function createGatedEngine() {
+  let release = () => {};
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const state = { signal: undefined as AbortSignal | undefined, reachedSecondHalf: false };
+
+  const engine: ChatEngine = {
+    async *askQuestion(_messages, signal): AsyncIterable<ChatChunk> {
+      state.signal = signal;
+      if (signal.aborted) return;
+      yield { type: 'token', text: 'primer tramo. ' };
+      await gate;
+      if (signal.aborted) return;
+      state.reachedSecondHalf = true;
+      yield { type: 'token', text: 'segundo tramo.' };
+      yield { type: 'done' };
+    },
+  };
+
+  return { engine, state, release: () => release() };
+}
+
+function LocationProbe() {
+  const location = useLocation();
+  return <div data-testid='location'>{`${location.pathname}${location.hash}`}</div>;
+}
+
+function renderChatAt(
+  initialEntries: string[],
+  engine: ChatEngine = createFakeEngine(),
+  navTargets: string[] = []
+) {
   return render(
-    <MemoryRouter initialEntries={['/']}>
+    <MemoryRouter initialEntries={initialEntries}>
+      <LocationProbe />
+      {navTargets.map((to) => (
+        <Link key={to} to={to}>{`ir a ${to}`}</Link>
+      ))}
       <Routes>
         <Route path='/' element={<ChatView engine={engine} isStub />} />
         <Route path='/c/:conversationId' element={<ChatView engine={engine} isStub />} />
       </Routes>
     </MemoryRouter>
   );
+}
+
+function renderChat(engine: ChatEngine = createFakeEngine()) {
+  return renderChatAt(['/'], engine);
+}
+
+/**
+ * jsdom no calcula layout: `scrollHeight` y `clientHeight` valen 0 y el contenedor nunca
+ * parece desplazable. Se falsean para poder comprobar la lógica de autoscroll.
+ * `scrollTop` sí es una propiedad real y escribible en jsdom, así que se lee tal cual.
+ */
+function fakeLayout(element: HTMLElement, clientHeight: number, scrollHeight: () => number) {
+  Object.defineProperty(element, 'clientHeight', { configurable: true, get: () => clientHeight });
+  Object.defineProperty(element, 'scrollHeight', { configurable: true, get: scrollHeight });
 }
 
 describe('ChatView', () => {
@@ -208,5 +262,134 @@ describe('ChatView', () => {
 
     expect(screen.getByRole('button', { name: 'Enviar consulta' })).toBeDisabled();
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('cambiar de conversación durante el streaming lo aborta y libera el composer', async () => {
+    const user = userEvent.setup();
+    const otherId = useConversations.getState().createConversation();
+    const { engine, state, release } = createGatedEngine();
+    renderChatAt(['/'], engine, [`/c/${otherId}`]);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta larga');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    expect(await screen.findByText(/primer tramo\./)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Detener respuesta' })).toBeInTheDocument();
+
+    const streamingId = useConversations
+      .getState()
+      .conversations.find((conversation) => conversation.id !== otherId)?.id;
+    expect(streamingId).toBeDefined();
+
+    await user.click(screen.getByRole('link', { name: `ir a /c/${otherId}` }));
+
+    expect(screen.getByTestId('location')).toHaveTextContent(`/c/${otherId}`);
+    expect(state.signal?.aborted).toBe(true);
+    // El composer de la conversación nueva no queda bloqueado en "Detener respuesta".
+    expect(screen.getByRole('button', { name: 'Enviar consulta' })).toBeInTheDocument();
+
+    release();
+    await waitFor(() => {
+      const messages = useConversations.getState().getConversation(streamingId as string)?.messages;
+      expect(messages?.at(-1)?.isStreaming).toBe(false);
+    });
+    // La respuesta abortada conserva lo que llegó y no sigue creciendo.
+    const aborted = useConversations.getState().getConversation(streamingId as string);
+    expect(state.reachedSecondHalf).toBe(false);
+    expect(aborted?.messages.at(-1)?.content).toBe('primer tramo. ');
+  });
+
+  it('el primer envío desde / no se autoaborta al navegar a /c/:id', async () => {
+    const user = userEvent.setup();
+    // El motor comprueba `signal.aborted` DESPUÉS de la pausa: si la navegación a
+    // `/c/:id` abortara su propio stream, la respuesta quedaría a medias.
+    const engine: ChatEngine = {
+      async *askQuestion(_messages, signal): AsyncIterable<ChatChunk> {
+        yield { type: 'token', text: 'primera parte. ' };
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        if (signal.aborted) return;
+        yield { type: 'token', text: 'segunda parte.' };
+        yield { type: 'done' };
+      },
+    };
+    renderChatAt(['/'], engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(await screen.findByText('primera parte. segunda parte.')).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/c\/.+/);
+    expect(await screen.findByRole('button', { name: 'Enviar consulta' })).toBeInTheDocument();
+  });
+
+  it('una URL con una conversación inexistente redirige a /', async () => {
+    renderChatAt(['/c/no-existe']);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('location')).toHaveTextContent('/');
+    });
+    expect(screen.getByTestId('location')).not.toHaveTextContent('no-existe');
+    expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
+  });
+
+  it('desde una URL con conversación inexistente la consulta no se pierde', async () => {
+    const user = userEvent.setup();
+    renderChatAt(['/c/no-existe']);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta huérfana');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(await screen.findByText('consulta huérfana')).toBeInTheDocument();
+    expect(await screen.findByText(/Respuesta simulada\./)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(useConversations.getState().conversations).toHaveLength(1);
+    });
+    expect(useConversations.getState().conversations[0].id).not.toBe('no-existe');
+  });
+
+  it('el autoscroll sigue al texto que llega mientras se recibe la respuesta', async () => {
+    const user = userEvent.setup();
+    const { engine, release } = createGatedEngine();
+    renderChatAt(['/'], engine);
+
+    const container = screen.getByTestId('chat-scroll');
+    let scrollHeight = 400;
+    fakeLayout(container, 300, () => scrollHeight);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    await screen.findByText(/primer tramo\./);
+
+    // El texto en streaming crece sin que cambie el número de mensajes.
+    scrollHeight = 1200;
+    release();
+    await screen.findByText(/segundo tramo\./);
+
+    await waitFor(() => {
+      expect(container.scrollTop).toBe(1200);
+    });
+  });
+
+  it('no arrastra al usuario abajo si ha subido a leer durante el streaming', async () => {
+    const user = userEvent.setup();
+    const { engine, release } = createGatedEngine();
+    renderChatAt(['/'], engine);
+
+    const container = screen.getByTestId('chat-scroll');
+    let scrollHeight = 400;
+    fakeLayout(container, 300, () => scrollHeight);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    await screen.findByText(/primer tramo\./);
+
+    // El usuario sube a leer: queda a 100px del fondo, fuera del margen de tolerancia.
+    container.scrollTop = 0;
+    fireEvent.scroll(container);
+
+    scrollHeight = 1200;
+    release();
+    await screen.findByText(/segundo tramo\./);
+
+    expect(container.scrollTop).toBe(0);
   });
 });

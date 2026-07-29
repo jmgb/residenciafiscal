@@ -30,6 +30,32 @@ function byUpdatedDesc(a: Conversation, b: Conversation): number {
   return b.updatedAt.localeCompare(a.updatedAt);
 }
 
+/**
+ * Apaga el flag de streaming de todos los mensajes.
+ *
+ * Un mensaje solo está en streaming mientras vive el generador que lo alimenta, y ese
+ * generador no sobrevive a una recarga. Rehidratar `isStreaming: true` deja un cursor
+ * parpadeando para siempre y sin forma de recuperarse; el texto que alcanzó a llegar se
+ * conserva tal cual. Devuelve el mismo array si no había nada que sanear, para no
+ * invalidar referencias sin motivo.
+ */
+export function clearStreamingFlags(conversations: Conversation[]): Conversation[] {
+  let changed = false;
+
+  const sanitized = conversations.map((conversation) => {
+    if (!conversation.messages.some((message) => message.isStreaming)) return conversation;
+    changed = true;
+    return {
+      ...conversation,
+      messages: conversation.messages.map((message) =>
+        message.isStreaming ? { ...message, isStreaming: false } : message
+      ),
+    };
+  });
+
+  return changed ? sanitized : conversations;
+}
+
 interface ConversationsState {
   conversations: Conversation[];
   createConversation: () => string;
@@ -100,6 +126,19 @@ export const useConversations = create<ConversationsState>()(
       name: CONVERSATIONS_STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ conversations: state.conversations }),
+
+      // El saneado va en la LECTURA, no en la escritura: `partialize` solo limpiaría lo
+      // que se guarde a partir de ahora y dejaría rotos para siempre a los usuarios que
+      // ya tienen un `isStreaming: true` en su localStorage de una recarga a media
+      // respuesta. Aquí se arregla también ese historial.
+      //
+      // La mutación in situ es el idiom del middleware: para `localStorage` (síncrono) la
+      // hidratación termina dentro de `create()`, antes de que ningún componente se haya
+      // suscrito, así que no hay render que invalidar.
+      onRehydrateStorage: () => (state) => {
+        if (!state) return;
+        state.conversations = clearStreamingFlags(state.conversations);
+      },
     }
   )
 );
