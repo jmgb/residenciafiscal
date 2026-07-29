@@ -5,7 +5,7 @@ import { SpainPage } from '@/pages/SpainPage';
 
 function renderPage() {
   return render(
-    <MemoryRouter initialEntries={['/españa']}>
+    <MemoryRouter initialEntries={['/espana']}>
       <SpainPage />
     </MemoryRouter>
   );

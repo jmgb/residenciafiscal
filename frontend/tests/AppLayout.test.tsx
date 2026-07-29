@@ -34,10 +34,10 @@ describe('AppLayout', () => {
 
   it('muestra el país seleccionado en el título superior', () => {
     render(
-      <MemoryRouter initialEntries={['/españa']}>
+      <MemoryRouter initialEntries={['/espana']}>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path='/españa' element={<div>España</div>} />
+            <Route path='/espana' element={<div>España</div>} />
           </Route>
         </Routes>
       </MemoryRouter>

@@ -36,7 +36,43 @@
 
 [[redirects]]
   from = "/españa"
-  to = "/españa/index.html"
+  to = "/espana"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haití"
+  to = "/haiti"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/méxico"
+  to = "/mexico"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/panamá"
+  to = "/panama"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/perú"
+  to = "/peru"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/república-dominicana"
+  to = "/republica-dominicana"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/espana"
+  to = "/espana/index.html"
   status = 200
   force = true
 

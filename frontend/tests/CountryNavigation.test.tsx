@@ -8,12 +8,12 @@ describe('CountryNavigation', () => {
   it('muestra tres países y despliega el resto con Mostrar más', async () => {
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={['/españa']}>
+      <MemoryRouter initialEntries={['/espana']}>
         <SidebarNavigation />
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('link', { name: 'España' })).toHaveAttribute('href', '/españa');
+    expect(screen.getByRole('link', { name: 'España' })).toHaveAttribute('href', '/espana');
     expect(screen.getByRole('link', { name: 'Argentina' })).toHaveAttribute('href', '/argentina');
     expect(screen.getByRole('link', { name: 'Bolivia' })).toHaveAttribute('href', '/bolivia');
     expect(screen.queryByRole('link', { name: 'Brasil' })).not.toBeInTheDocument();

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
+import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
 import { CountryPage } from '@/pages/CountryPage';
 import { ManifiestoPage } from '@/pages/ManifiestoPage';
@@ -14,8 +14,8 @@ export function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path='/' element={<Navigate to='/españa' replace />} />
-        <Route path='/españa' element={<SpainPage />} />
+        <Route path='/' element={<Navigate to={SPAIN_ROUTE.path} replace />} />
+        <Route path={SPAIN_ROUTE.path} element={<SpainPage />} />
         <Route
           path='/consulta'
           element={
@@ -38,12 +38,15 @@ export function App() {
             />
           }
         />
-        {COUNTRY_ROUTES.filter((country) => country.path !== '/españa').map((country) => (
+        {COUNTRY_ROUTES.filter((country) => country.path !== SPAIN_ROUTE.path).map((country) => (
           <Route
             key={country.path}
             path={country.path}
             element={<CountryPage country={country} />}
           />
+        ))}
+        {COUNTRY_ROUTE_REDIRECTS.map(({ from, to }) => (
+          <Route key={from} path={from} element={<Navigate to={to} replace />} />
         ))}
         <Route path='/manifiesto' element={<ManifiestoPage />} />
         <Route path='/metodologia' element={<MetodologiaPage />} />

@@ -1,7 +1,7 @@
 import { BookOpen, Compass, Globe2, MessageSquarePlus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
-import { COUNTRY_ROUTES } from '@/data/countryRoutes';
+import { COUNTRY_ROUTES, getCountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { useConversations } from '@/stores/useConversations';
@@ -22,7 +22,7 @@ export function SidebarBrand({ collapsed = false, onNavigate }: SidebarContentPr
       )}
     >
       <Link
-        to='/españa'
+        to={SPAIN_ROUTE.path}
         onClick={onNavigate}
         aria-label='Ir al inicio'
         className='flex shrink-0 items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring'
@@ -60,7 +60,6 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
   };
 
   const location = useLocation();
-  const pathname = decodeURI(location.pathname);
 
   return (
     <>
@@ -126,7 +125,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
       >
         {collapsed ? (
           <Link
-            to='/españa'
+            to={SPAIN_ROUTE.path}
             onClick={onNavigate}
             aria-label='Países'
             title='Países'
@@ -141,7 +140,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
               Países
             </h2>
             {(showAllCountries ? COUNTRY_ROUTES : COUNTRY_ROUTES.slice(0, 3)).map((country) => {
-              const isActive = pathname === country.path;
+              const isActive = getCountryRoute(location.pathname)?.path === country.path;
               return (
                 <Link
                   key={country.path}

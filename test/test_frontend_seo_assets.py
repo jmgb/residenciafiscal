@@ -29,7 +29,7 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     locations = [location for location in raw_locations if location is not None]
 
     assert locations == [
-        "https://residenciafiscal.org/españa",
+        "https://residenciafiscal.org/espana",
         "https://residenciafiscal.org/manifiesto",
         "https://residenciafiscal.org/metodologia",
     ]
@@ -51,22 +51,46 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
     config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
     redirects = config["redirects"]
 
-    assert redirects[:3] == [
+    assert redirects[:7] == [
         {
             "from": "/españa",
-            "to": "/españa/index.html",
-            "status": 200,
+            "to": "/espana",
+            "status": 301,
             "force": True,
         },
         {
-            "from": "/manifiesto",
-            "to": "/manifiesto/index.html",
-            "status": 200,
+            "from": "/haití",
+            "to": "/haiti",
+            "status": 301,
             "force": True,
         },
         {
-            "from": "/metodologia",
-            "to": "/metodologia/index.html",
+            "from": "/méxico",
+            "to": "/mexico",
+            "status": 301,
+            "force": True,
+        },
+        {
+            "from": "/panamá",
+            "to": "/panama",
+            "status": 301,
+            "force": True,
+        },
+        {
+            "from": "/perú",
+            "to": "/peru",
+            "status": 301,
+            "force": True,
+        },
+        {
+            "from": "/república-dominicana",
+            "to": "/republica-dominicana",
+            "status": 301,
+            "force": True,
+        },
+        {
+            "from": "/espana",
+            "to": "/espana/index.html",
             "status": 200,
             "force": True,
         },
@@ -80,7 +104,7 @@ def test_country_routes_have_prerender_redirects() -> None:
     redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in redirects}
 
     for path in (
-        "/españa",
+        "/espana",
         "/argentina",
         "/bolivia",
         "/brasil",
@@ -103,3 +127,13 @@ def test_country_routes_have_prerender_redirects() -> None:
         "/venezuela",
     ):
         assert (path, f"{path}/index.html") in redirect_pairs
+
+    for legacy_path, canonical_path in (
+        ("/españa", "/espana"),
+        ("/haití", "/haiti"),
+        ("/méxico", "/mexico"),
+        ("/panamá", "/panama"),
+        ("/perú", "/peru"),
+        ("/república-dominicana", "/republica-dominicana"),
+    ):
+        assert (legacy_path, canonical_path) in redirect_pairs

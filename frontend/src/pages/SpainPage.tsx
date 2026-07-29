@@ -7,7 +7,7 @@ export function SpainPage() {
     <ChatView
       engine={chatEngine}
       isStub={chatEngineMode === 'stub'}
-      canonicalPath='/españa'
+      canonicalPath={SPAIN_ROUTE.path}
       country={SPAIN_ROUTE}
     />
   );

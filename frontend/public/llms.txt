@@ -29,7 +29,7 @@ los tribunales. El manifiesto completo está en
 
 ## Fuente pública
 
-- [España](https://residenciafiscal.org/españa): jurisprudencia española disponible.
+- [España](https://residenciafiscal.org/espana): jurisprudencia española disponible.
 - [Residencia Fiscal](https://residenciafiscal.org/): entrada principal del proyecto.
 - [Manifiesto](https://residenciafiscal.org/manifiesto): por qué existe el proyecto.
 - [Metodología](https://residenciafiscal.org/metodologia): cómo se construyó el análisis.
