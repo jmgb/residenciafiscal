@@ -55,7 +55,15 @@ sesión, se reporta — no se edita.
 
 Tres cosas del spec no sobreviven al contacto con la realidad. Se corrigen aquí y el brandbook (Task 9) documenta la versión corregida:
 
-1. **§8 dice que el `.ico` de 16 px sale «de una variante con el trazo de las letras engrosado, igual que Comunicador».** No aplica: la «C» de Comunicador es un `stroke` y se engorda con un `sed` sobre `stroke-width`; nuestro monograma son **contornos rellenos**, que no tienen `stroke-width` que tocar. La variante de 16 px se genera con **más caja llena (cap 38 en vez de 32) y menos radio (10 en vez de 14)**. Verificado a 16 px: la contraforma de la R se conserva.
+1. ~~**§8 dice que el `.ico` de 16 px sale «de una variante con el trazo de las letras engrosado, igual que Comunicador».** No aplica: la «C» de Comunicador es un `stroke` y se engorda con un `sed` sobre `stroke-width`; nuestro monograma son **contornos rellenos**, que no tienen `stroke-width` que tocar.~~
+
+   **Corregido 2026-07-29 — esta desviación era falsa.** Un contorno relleno sí se puede
+   engrosar: basta **añadirle** un `stroke` del mismo color que el `fill`, que expande la
+   silueta hacia fuera. Es lo que hace `og/render-favicon.sh` de la otra sesión
+   (`stroke="#f8fafc" stroke-width="28"`), y funciona. Lo que no aplicaba era el `sed`
+   *literal* de Comunicador, que edita un `stroke-width` ya existente. Generalicé de un
+   caso a una imposibilidad, y no lo era. La solución en vigor es la del stroke añadido;
+   la variante de cap 38 que proponía este plan queda descartada por innecesaria.
 2. **§8 y §10 sitúan las herramientas en `frontend/og/`.** El directorio contiene favicon, lockup y OG, así que se llama **`frontend/brand/`**. `og/` describiría un tercio de su contenido.
 3. **§7 pide el claim canónico en `muted-foreground` en la imagen OG.** El claim es el texto principal de la pieza y en gris al 4.76:1 a 44 px queda lavado. Va en **`foreground`**; `muted-foreground` se reserva a la firma (`106 sentencias · …`), que es donde el spec quería la sobriedad.
 
