@@ -1,0 +1,9 @@
+{
+  "collection": "legal_issues",
+  "index": 0,
+  "field": "fact_ids",
+  "value": [
+    "fact-inexistente"
+  ],
+  "expected_error": "fact-inexistente"
+}

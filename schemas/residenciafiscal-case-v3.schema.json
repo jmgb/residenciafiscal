@@ -1,0 +1,1764 @@
+{
+  "$defs": {
+    "AnalysisProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "generated_at": {
+          "format": "date-time",
+          "title": "Generated At",
+          "type": "string"
+        },
+        "model_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Id"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "producer": {
+          "minLength": 1,
+          "title": "Producer",
+          "type": "string"
+        },
+        "prompt_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt Sha256"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        }
+      },
+      "required": [
+        "producer",
+        "generated_at"
+      ],
+      "title": "AnalysisProvenance",
+      "type": "object"
+    },
+    "AnchorFidelity": {
+      "enum": [
+        "EXACT",
+        "EXACT_WITH_ELLIPSIS"
+      ],
+      "title": "AnchorFidelity",
+      "type": "string"
+    },
+    "AnchorPurpose": {
+      "enum": [
+        "FACT",
+        "EVIDENCE",
+        "HOLDING",
+        "REASONING",
+        "LEGAL_RULE",
+        "BURDEN_OF_PROOF",
+        "TREATY"
+      ],
+      "title": "AnchorPurpose",
+      "type": "string"
+    },
+    "AssertionParty": {
+      "enum": [
+        "AEAT",
+        "TAXPAYER",
+        "COURT",
+        "UNDISPUTED",
+        "OTHER"
+      ],
+      "title": "AssertionParty",
+      "type": "string"
+    },
+    "BurdenOfProofStep": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "conclusion": {
+          "minLength": 1,
+          "title": "Conclusion",
+          "type": "string"
+        },
+        "fact_to_prove": {
+          "minLength": 1,
+          "title": "Fact To Prove",
+          "type": "string"
+        },
+        "initial_bearer": {
+          "$ref": "#/$defs/ProofParty"
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "response_required": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Response Required"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "sequence": {
+          "exclusiveMinimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "shifts_to": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ProofParty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "step_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Step Id",
+          "type": "string"
+        },
+        "triggering_evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Triggering Evidence Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "step_id",
+        "sequence",
+        "issue_ids",
+        "fact_to_prove",
+        "initial_bearer",
+        "triggering_evidence_ids",
+        "conclusion",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "BurdenOfProofStep",
+      "type": "object"
+    },
+    "CaseFact": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "asserted_by": {
+          "$ref": "#/$defs/AssertionParty"
+        },
+        "category": {
+          "$ref": "#/$defs/FactCategory"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "fact_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Fact Id",
+          "type": "string"
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "place": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place"
+        },
+        "procedural_status": {
+          "$ref": "#/$defs/ProceduralFactStatus"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Date"
+        },
+        "subject_role": {
+          "$ref": "#/$defs/SubjectRole"
+        },
+        "tax_years": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Tax Years",
+          "type": "array"
+        }
+      },
+      "required": [
+        "fact_id",
+        "subject_role",
+        "category",
+        "description",
+        "tax_years",
+        "asserted_by",
+        "procedural_status",
+        "issue_ids",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "CaseFact",
+      "type": "object"
+    },
+    "CriterionId": {
+      "enum": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_OTRO"
+      ],
+      "title": "CriterionId",
+      "type": "string"
+    },
+    "DatePrecision": {
+      "enum": [
+        "EXACT",
+        "APPROXIMATE"
+      ],
+      "title": "DatePrecision",
+      "type": "string"
+    },
+    "DocumentNature": {
+      "enum": [
+        "TAX",
+        "ADMINISTRATIVE",
+        "PRIVATE",
+        "OTHER"
+      ],
+      "title": "DocumentNature",
+      "type": "string"
+    },
+    "EvidenceAssessment": {
+      "enum": [
+        "ACCEPTED",
+        "REJECTED",
+        "PARTIAL",
+        "UNRESOLVED",
+        "NOT_ASSESSED"
+      ],
+      "title": "EvidenceAssessment",
+      "type": "string"
+    },
+    "EvidenceCategory": {
+      "enum": [
+        "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+        "VIVIENDA_Y_USO_EFECTIVO",
+        "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+        "CONSUMOS_FINANCIEROS",
+        "FAMILIA_Y_ENTORNO_PERSONAL",
+        "SALUD_Y_SERVICIOS_PERSONALES",
+        "ACTIVIDAD_ECONOMICA_Y_GESTION",
+        "DOCUMENTACION_FISCAL_EXTRANJERA",
+        "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+        "TRAZAS_DIGITALES",
+        "TESTIFICAL_Y_PERICIAL",
+        "OTROS"
+      ],
+      "title": "EvidenceCategory",
+      "type": "string"
+    },
+    "EvidenceFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "assessment": {
+          "$ref": "#/$defs/EvidenceAssessment"
+        },
+        "assessment_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assessment Reason"
+        },
+        "category": {
+          "$ref": "#/$defs/EvidenceCategory"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "fact_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "foreign_document": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ForeignDocumentDetails"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "offered_by": {
+          "$ref": "#/$defs/EvidenceParty"
+        },
+        "probative_purpose": {
+          "minLength": 1,
+          "title": "Probative Purpose",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "role": {
+          "$ref": "#/$defs/EvidenceRole"
+        },
+        "subtype": {
+          "minLength": 1,
+          "title": "Subtype",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "offered_by",
+        "category",
+        "subtype",
+        "description",
+        "probative_purpose",
+        "fact_ids",
+        "issue_ids",
+        "assessment",
+        "role",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "EvidenceFinding",
+      "type": "object"
+    },
+    "EvidenceParty": {
+      "enum": [
+        "AEAT",
+        "TAXPAYER",
+        "COURT_OBTAINED",
+        "OTHER"
+      ],
+      "title": "EvidenceParty",
+      "type": "string"
+    },
+    "EvidenceRole": {
+      "enum": [
+        "DECISIVE",
+        "CORROBORATIVE",
+        "CONTRADICTORY",
+        "CONTEXTUAL",
+        "UNKNOWN"
+      ],
+      "title": "EvidenceRole",
+      "type": "string"
+    },
+    "ExtractorIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ExtractorIdentity",
+      "type": "object"
+    },
+    "FactCategory": {
+      "enum": [
+        "PRESENCE",
+        "TRAVEL",
+        "HOUSING",
+        "FAMILY",
+        "EMPLOYMENT",
+        "ECONOMIC_ACTIVITY",
+        "INCOME",
+        "ASSETS",
+        "BANKING",
+        "CONSUMPTION",
+        "HEALTH",
+        "ADMINISTRATIVE_LINK",
+        "FOREIGN_TAX",
+        "PROCEDURAL",
+        "OTHER"
+      ],
+      "title": "FactCategory",
+      "type": "string"
+    },
+    "ForeignDocumentDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "defects": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Defects",
+          "type": "array"
+        },
+        "document_type": {
+          "$ref": "#/$defs/ForeignDocumentType"
+        },
+        "issuing_authority": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issuing Authority"
+        },
+        "jurisdiction": {
+          "minLength": 1,
+          "title": "Jurisdiction",
+          "type": "string"
+        },
+        "nature": {
+          "$ref": "#/$defs/DocumentNature"
+        },
+        "period_end": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Period End"
+        },
+        "period_start": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Period Start"
+        },
+        "probative_effect": {
+          "minLength": 1,
+          "title": "Probative Effect",
+          "type": "string"
+        },
+        "tax_scope": {
+          "$ref": "#/$defs/TaxScope"
+        }
+      },
+      "required": [
+        "document_type",
+        "jurisdiction",
+        "nature",
+        "tax_scope",
+        "defects",
+        "probative_effect"
+      ],
+      "title": "ForeignDocumentDetails",
+      "type": "object"
+    },
+    "ForeignDocumentType": {
+      "enum": [
+        "TAX_RESIDENCE_CERTIFICATE",
+        "TAX_RETURN",
+        "TAX_ASSESSMENT",
+        "TAX_PAYMENT_CERTIFICATE",
+        "ADMINISTRATIVE_REGISTRATION",
+        "PRIVATE_CONTRACT",
+        "OTHER"
+      ],
+      "title": "ForeignDocumentType",
+      "type": "string"
+    },
+    "IssueHolding": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "conclusion": {
+          "minLength": 1,
+          "title": "Conclusion",
+          "type": "string"
+        },
+        "consequences": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Consequences",
+          "type": "array"
+        },
+        "decisive_reasoning": {
+          "minLength": 1,
+          "title": "Decisive Reasoning",
+          "type": "string"
+        },
+        "holding_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Holding Id",
+          "type": "string"
+        },
+        "issue_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "outcome": {
+          "$ref": "#/$defs/IssueOutcome"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        }
+      },
+      "required": [
+        "holding_id",
+        "issue_id",
+        "outcome",
+        "conclusion",
+        "decisive_reasoning",
+        "consequences",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "IssueHolding",
+      "type": "object"
+    },
+    "IssueOutcome": {
+      "enum": [
+        "GANA_AEAT",
+        "GANA_CONTRIBUYENTE",
+        "PARCIAL",
+        "RETROACCION",
+        "INADMISION",
+        "NO_RESUELTO",
+        "OTROS"
+      ],
+      "title": "IssueOutcome",
+      "type": "string"
+    },
+    "IssueType": {
+      "enum": [
+        "TAX_RESIDENCE",
+        "PHYSICAL_PRESENCE_183_DAYS",
+        "SPORADIC_ABSENCES",
+        "ECONOMIC_INTERESTS",
+        "VITAL_INTERESTS",
+        "FAMILY_PRESUMPTION",
+        "HOUSING_AND_EFFECTIVE_USE",
+        "FOREIGN_TAX_DOCUMENTATION",
+        "TREATY_TIEBREAKER",
+        "BURDEN_OF_PROOF",
+        "TAX_ASSESSMENT",
+        "UNEXPLAINED_CAPITAL_GAIN",
+        "PENALTY",
+        "OTHER"
+      ],
+      "title": "IssueType",
+      "type": "string"
+    },
+    "JudgmentIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_provenance": {
+          "$ref": "#/$defs/AnalysisProvenance"
+        },
+        "chamber": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chamber"
+        },
+        "countries": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Countries",
+          "type": "array"
+        },
+        "court": {
+          "minLength": 1,
+          "title": "Court",
+          "type": "string"
+        },
+        "decision_date": {
+          "format": "date",
+          "title": "Decision Date",
+          "type": "string"
+        },
+        "ecli": {
+          "minLength": 1,
+          "title": "Ecli",
+          "type": "string"
+        },
+        "extractor": {
+          "$ref": "#/$defs/ExtractorIdentity"
+        },
+        "is_tax_residence_case": {
+          "title": "Is Tax Residence Case",
+          "type": "boolean"
+        },
+        "judgment_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Judgment Id",
+          "type": "string"
+        },
+        "page_count": {
+          "exclusiveMinimum": 0,
+          "title": "Page Count",
+          "type": "integer"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "roj": {
+          "minLength": 1,
+          "title": "Roj",
+          "type": "string"
+        },
+        "source_file": {
+          "minLength": 1,
+          "title": "Source File",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        },
+        "tax_years": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Tax Years",
+          "type": "array"
+        }
+      },
+      "required": [
+        "judgment_id",
+        "source_file",
+        "roj",
+        "ecli",
+        "court",
+        "decision_date",
+        "tax_years",
+        "countries",
+        "is_tax_residence_case",
+        "source_sha256",
+        "page_count",
+        "extractor",
+        "analysis_provenance",
+        "review"
+      ],
+      "title": "JudgmentIdentity",
+      "type": "object"
+    },
+    "LegalIssue": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "criterion_ids": {
+          "items": {
+            "$ref": "#/$defs/CriterionId"
+          },
+          "title": "Criterion Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "fact_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "holding_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Holding Id",
+          "type": "string"
+        },
+        "issue_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "issue_type": {
+          "$ref": "#/$defs/IssueType"
+        },
+        "legal_rule_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Legal Rule Ids",
+          "type": "array"
+        },
+        "question": {
+          "minLength": 1,
+          "title": "Question",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        }
+      },
+      "required": [
+        "issue_id",
+        "question",
+        "issue_type",
+        "criterion_ids",
+        "fact_ids",
+        "evidence_ids",
+        "legal_rule_ids",
+        "holding_id",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "LegalIssue",
+      "type": "object"
+    },
+    "LegalReviewState": {
+      "enum": [
+        "UNREVIEWED",
+        "AGENT_REVIEWED",
+        "HUMAN_APPROVED",
+        "REJECTED"
+      ],
+      "title": "LegalReviewState",
+      "type": "string"
+    },
+    "LegalRule": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "citation": {
+          "minLength": 1,
+          "title": "Citation",
+          "type": "string"
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "legal_rule_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Legal Rule Id",
+          "type": "string"
+        },
+        "proposition": {
+          "minLength": 1,
+          "title": "Proposition",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "rule_type": {
+          "$ref": "#/$defs/LegalRuleType"
+        }
+      },
+      "required": [
+        "legal_rule_id",
+        "rule_type",
+        "citation",
+        "proposition",
+        "issue_ids",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "LegalRule",
+      "type": "object"
+    },
+    "LegalRuleType": {
+      "enum": [
+        "STATUTE",
+        "TREATY",
+        "CASE_LAW",
+        "ADMINISTRATIVE_GUIDANCE",
+        "OTHER"
+      ],
+      "title": "LegalRuleType",
+      "type": "string"
+    },
+    "PresenceClassification": {
+      "enum": [
+        "PRESENT",
+        "ABSENT",
+        "SPORADIC_ABSENCE",
+        "UNKNOWN"
+      ],
+      "title": "PresenceClassification",
+      "type": "string"
+    },
+    "PresenceEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "asserted_by": {
+          "$ref": "#/$defs/AssertionParty"
+        },
+        "country": {
+          "minLength": 1,
+          "title": "Country",
+          "type": "string"
+        },
+        "date_precision": {
+          "$ref": "#/$defs/DatePrecision"
+        },
+        "event_date": {
+          "format": "date",
+          "title": "Event Date",
+          "type": "string"
+        },
+        "event_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "$ref": "#/$defs/PresenceEventType"
+        },
+        "evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "fact_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "place": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place"
+        },
+        "procedural_status": {
+          "$ref": "#/$defs/ProceduralFactStatus"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "subject_role": {
+          "$ref": "#/$defs/SubjectRole"
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "event_date",
+        "date_precision",
+        "country",
+        "subject_role",
+        "asserted_by",
+        "procedural_status",
+        "fact_ids",
+        "evidence_ids",
+        "issue_ids",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "PresenceEvent",
+      "type": "object"
+    },
+    "PresenceEventType": {
+      "enum": [
+        "ENTRY",
+        "EXIT",
+        "OBSERVED_PRESENT",
+        "OBSERVED_ABSENT",
+        "TRAVEL",
+        "TRANSACTION",
+        "DOCUMENTED_LOCATION",
+        "OTHER"
+      ],
+      "title": "PresenceEventType",
+      "type": "string"
+    },
+    "PresencePeriod": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "calculation_method": {
+          "minLength": 1,
+          "title": "Calculation Method",
+          "type": "string"
+        },
+        "classification": {
+          "$ref": "#/$defs/PresenceClassification"
+        },
+        "counted_for_183_day_rule": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Counted For 183 Day Rule"
+        },
+        "country": {
+          "minLength": 1,
+          "title": "Country",
+          "type": "string"
+        },
+        "day_count": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Day Count"
+        },
+        "determined_by": {
+          "$ref": "#/$defs/AssertionParty"
+        },
+        "end_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Date"
+        },
+        "evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "fact_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Issue Ids",
+          "type": "array"
+        },
+        "period_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Period Id",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Start Date"
+        }
+      },
+      "required": [
+        "period_id",
+        "classification",
+        "country",
+        "calculation_method",
+        "determined_by",
+        "fact_ids",
+        "evidence_ids",
+        "issue_ids",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "PresencePeriod",
+      "type": "object"
+    },
+    "ProceduralFactStatus": {
+      "enum": [
+        "ALLEGED",
+        "DISPUTED",
+        "PROVEN",
+        "NOT_PROVEN",
+        "UNDISPUTED",
+        "UNKNOWN"
+      ],
+      "title": "ProceduralFactStatus",
+      "type": "string"
+    },
+    "ProofParty": {
+      "enum": [
+        "AEAT",
+        "TAXPAYER",
+        "BOTH",
+        "COURT",
+        "OTHER"
+      ],
+      "title": "ProofParty",
+      "type": "string"
+    },
+    "ReviewStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "legal": {
+          "$ref": "#/$defs/LegalReviewState"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "reviewed_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed By"
+        },
+        "technical": {
+          "$ref": "#/$defs/TechnicalReviewState"
+        }
+      },
+      "required": [
+        "technical",
+        "legal"
+      ],
+      "title": "ReviewStatus",
+      "type": "object"
+    },
+    "SourceAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Anchor Id",
+          "type": "string"
+        },
+        "fidelity": {
+          "$ref": "#/$defs/AnchorFidelity"
+        },
+        "fragments": {
+          "items": {
+            "$ref": "#/$defs/SourceFragment"
+          },
+          "minItems": 1,
+          "title": "Fragments",
+          "type": "array"
+        },
+        "purpose": {
+          "$ref": "#/$defs/AnchorPurpose"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "anchor_id",
+        "source_sha256",
+        "fragments",
+        "fidelity",
+        "purpose",
+        "review"
+      ],
+      "title": "SourceAnchor",
+      "type": "object"
+    },
+    "SourceFragment": {
+      "additionalProperties": false,
+      "properties": {
+        "end_offset": {
+          "exclusiveMinimum": 0,
+          "title": "End Offset",
+          "type": "integer"
+        },
+        "page_index": {
+          "exclusiveMinimum": 0,
+          "title": "Page Index",
+          "type": "integer"
+        },
+        "printed_page": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Printed Page"
+        },
+        "start_offset": {
+          "minimum": 0,
+          "title": "Start Offset",
+          "type": "integer"
+        },
+        "verbatim_text": {
+          "minLength": 1,
+          "title": "Verbatim Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "page_index",
+        "start_offset",
+        "end_offset",
+        "verbatim_text"
+      ],
+      "title": "SourceFragment",
+      "type": "object"
+    },
+    "SubjectRole": {
+      "enum": [
+        "TAXPAYER",
+        "SPOUSE",
+        "DEPENDENT",
+        "ADMINISTRATION",
+        "ENTITY",
+        "THIRD_PARTY",
+        "OTHER"
+      ],
+      "title": "SubjectRole",
+      "type": "string"
+    },
+    "TaxScope": {
+      "enum": [
+        "WORLDWIDE_INCOME",
+        "SOURCE_INCOME",
+        "RESIDENCE_ONLY",
+        "NOT_STATED",
+        "NOT_APPLICABLE"
+      ],
+      "title": "TaxScope",
+      "type": "string"
+    },
+    "TechnicalReviewState": {
+      "enum": [
+        "GENERATED",
+        "VALIDATED",
+        "NEEDS_REVIEW",
+        "REJECTED"
+      ],
+      "title": "TechnicalReviewState",
+      "type": "string"
+    },
+    "TieBreakerCriterion": {
+      "enum": [
+        "VIVIENDA_PERMANENTE",
+        "CENTRO_INTERESES_VITALES",
+        "MORADA_HABITUAL",
+        "NACIONALIDAD",
+        "ACUERDO_MUTUO",
+        "NO_CONSTA",
+        "NO_APLICA"
+      ],
+      "title": "TieBreakerCriterion",
+      "type": "string"
+    },
+    "TreatyAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "countries": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Countries",
+          "type": "array"
+        },
+        "decisive_step_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decisive Step Id"
+        },
+        "domestic_law_issue_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Domestic Law Issue Ids",
+          "type": "array"
+        },
+        "dual_residence_established": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dual Residence Established"
+        },
+        "result_country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Country"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/TreatyTieBreakerStep"
+          },
+          "title": "Steps",
+          "type": "array"
+        },
+        "treaty_analysis_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Treaty Analysis Id",
+          "type": "string"
+        },
+        "treaty_citation": {
+          "minLength": 1,
+          "title": "Treaty Citation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "treaty_analysis_id",
+        "countries",
+        "treaty_citation",
+        "domestic_law_issue_ids",
+        "dual_residence_established",
+        "steps",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "TreatyAnalysis",
+      "type": "object"
+    },
+    "TreatyTieBreakerStep": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Anchor Ids",
+          "type": "array"
+        },
+        "applied": {
+          "title": "Applied",
+          "type": "boolean"
+        },
+        "conclusion": {
+          "minLength": 1,
+          "title": "Conclusion",
+          "type": "string"
+        },
+        "criterion": {
+          "$ref": "#/$defs/TieBreakerCriterion"
+        },
+        "evidence_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "fact_ids": {
+          "items": {
+            "minLength": 1,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "type": "string"
+          },
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/ReviewStatus"
+        },
+        "sequence": {
+          "exclusiveMinimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "step_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Step Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "sequence",
+        "criterion",
+        "applied",
+        "conclusion",
+        "fact_ids",
+        "evidence_ids",
+        "anchor_ids",
+        "review"
+      ],
+      "title": "TreatyTieBreakerStep",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Caso jurisprudencial validado y listo para consumidores derivados.",
+  "properties": {
+    "burden_of_proof_steps": {
+      "items": {
+        "$ref": "#/$defs/BurdenOfProofStep"
+      },
+      "title": "Burden Of Proof Steps",
+      "type": "array"
+    },
+    "evidence_findings": {
+      "items": {
+        "$ref": "#/$defs/EvidenceFinding"
+      },
+      "title": "Evidence Findings",
+      "type": "array"
+    },
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/CaseFact"
+      },
+      "title": "Facts",
+      "type": "array"
+    },
+    "holdings": {
+      "items": {
+        "$ref": "#/$defs/IssueHolding"
+      },
+      "minItems": 1,
+      "title": "Holdings",
+      "type": "array"
+    },
+    "judgment": {
+      "$ref": "#/$defs/JudgmentIdentity"
+    },
+    "legal_issues": {
+      "items": {
+        "$ref": "#/$defs/LegalIssue"
+      },
+      "minItems": 1,
+      "title": "Legal Issues",
+      "type": "array"
+    },
+    "legal_rules": {
+      "items": {
+        "$ref": "#/$defs/LegalRule"
+      },
+      "title": "Legal Rules",
+      "type": "array"
+    },
+    "presence_events": {
+      "items": {
+        "$ref": "#/$defs/PresenceEvent"
+      },
+      "title": "Presence Events",
+      "type": "array"
+    },
+    "presence_periods": {
+      "items": {
+        "$ref": "#/$defs/PresencePeriod"
+      },
+      "title": "Presence Periods",
+      "type": "array"
+    },
+    "review": {
+      "$ref": "#/$defs/ReviewStatus"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-case/3",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_anchors": {
+      "items": {
+        "$ref": "#/$defs/SourceAnchor"
+      },
+      "minItems": 1,
+      "title": "Source Anchors",
+      "type": "array"
+    },
+    "treaty_analyses": {
+      "items": {
+        "$ref": "#/$defs/TreatyAnalysis"
+      },
+      "title": "Treaty Analyses",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "judgment",
+    "legal_issues",
+    "facts",
+    "evidence_findings",
+    "legal_rules",
+    "holdings",
+    "burden_of_proof_steps",
+    "presence_events",
+    "presence_periods",
+    "treaty_analyses",
+    "source_anchors",
+    "review"
+  ],
+  "title": "JurisprudenceCase",
+  "type": "object"
+}

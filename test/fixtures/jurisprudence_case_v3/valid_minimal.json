@@ -1,0 +1,236 @@
+{
+  "schema_version": "residenciafiscal-case/3",
+  "judgment": {
+    "judgment_id": "san-1210-2023",
+    "source_file": "SAN_1210_2023.pdf",
+    "roj": "SAN 1210/2023",
+    "ecli": "ECLI:ES:AN:2023:1210",
+    "court": "Audiencia Nacional",
+    "chamber": "Sala de lo Contencioso-Administrativo, Sección Cuarta",
+    "decision_date": "2023-02-22",
+    "tax_years": [
+      2011,
+      2013
+    ],
+    "countries": [
+      "España",
+      "Mónaco"
+    ],
+    "is_tax_residence_case": true,
+    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "page_count": 10,
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "analysis_provenance": {
+      "producer": "residenciafiscal-agent-pipeline",
+      "model_id": "gpt-5",
+      "prompt_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "run_id": "case-v3-pilot-san-1210-2023",
+      "generated_at": "2026-07-29T12:00:00Z",
+      "notes": null
+    },
+    "review": {
+      "technical": "VALIDATED",
+      "legal": "AGENT_REVIEWED",
+      "reviewed_by": "agent:codex",
+      "reviewed_at": "2026-07-29",
+      "notes": "Pendiente de aprobación jurídica humana."
+    }
+  },
+  "legal_issues": [
+    {
+      "issue_id": "residencia-fiscal",
+      "question": "¿Tenía el recurrente residencia fiscal en España?",
+      "issue_type": "TAX_RESIDENCE",
+      "criterion_ids": [
+        "CRIT_183_DIAS"
+      ],
+      "fact_ids": [
+        "fact-presencia-espana"
+      ],
+      "evidence_ids": [
+        "evidence-vigilancia-vivienda"
+      ],
+      "legal_rule_ids": [
+        "rule-articulo-9-lirpf"
+      ],
+      "holding_id": "holding-residencia-fiscal",
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "fact-presencia-espana",
+      "subject_role": "TAXPAYER",
+      "category": "PRESENCE",
+      "description": "La Sala considera acreditada presencia efectiva en España.",
+      "country": "España",
+      "place": null,
+      "start_date": null,
+      "end_date": null,
+      "tax_years": [
+        2011,
+        2013
+      ],
+      "asserted_by": "COURT",
+      "procedural_status": "PROVEN",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "evidence_findings": [
+    {
+      "evidence_id": "evidence-vigilancia-vivienda",
+      "offered_by": "AEAT",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "subtype": "vigilancia aduanera",
+      "description": "Actuaciones de vigilancia en la vivienda española.",
+      "probative_purpose": "Acreditar el uso habitual de la vivienda.",
+      "fact_ids": [
+        "fact-presencia-espana"
+      ],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se valora junto con otros indicios concordantes.",
+      "role": "CORROBORATIVE",
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "legal_rules": [
+    {
+      "legal_rule_id": "rule-articulo-9-lirpf",
+      "rule_type": "STATUTE",
+      "citation": "Artículo 9 LIRPF",
+      "proposition": "La permanencia superior a 183 días determina residencia.",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "holdings": [
+    {
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "conclusion": "El recurrente tenía residencia fiscal en España.",
+      "decisive_reasoning": "La prueba indiciaria acredita residencia efectiva.",
+      "consequences": [
+        "Sujeción al IRPF por obligación personal."
+      ],
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "burden_of_proof_steps": [
+    {
+      "step_id": "burden-administracion-indicios",
+      "sequence": 1,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "fact_to_prove": "Residencia efectiva en España.",
+      "initial_bearer": "AEAT",
+      "triggering_evidence_ids": [
+        "evidence-vigilancia-vivienda"
+      ],
+      "shifts_to": "TAXPAYER",
+      "response_required": "Desvirtuar los indicios y acreditar residencia exterior.",
+      "conclusion": "La prueba aportada no desvirtuó los indicios.",
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "presence_events": [],
+  "presence_periods": [],
+  "treaty_analyses": [],
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-residencia-conclusion",
+      "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "fragments": [
+        {
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 100,
+          "end_offset": 124,
+          "verbatim_text": "tiene su residencia efectiva"
+        }
+      ],
+      "fidelity": "EXACT",
+      "purpose": "HOLDING",
+      "review": {
+        "technical": "VALIDATED",
+        "legal": "AGENT_REVIEWED",
+        "reviewed_by": "agent:codex",
+        "reviewed_at": "2026-07-29",
+        "notes": "Pendiente de aprobación jurídica humana."
+      }
+    }
+  ],
+  "review": {
+    "technical": "VALIDATED",
+    "legal": "AGENT_REVIEWED",
+    "reviewed_by": "agent:codex",
+    "reviewed_at": "2026-07-29",
+    "notes": "Pendiente de aprobación jurídica humana."
+  }
+}

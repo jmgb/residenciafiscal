@@ -110,9 +110,9 @@ contra el dominio público después de cada deploy.
     [`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
     - [x] Documentar arquitectura, responsabilidades, rollout, gates y estrategia
       RAG.
-    - [ ] Escribir el contrato campo por campo
+    - [x] Escribir el contrato campo por campo
       `docs/JURISPRUDENCE_CASE_SCHEMA_V3.md`.
-    - [ ] Implementar modelos Pydantic, JSON Schema, fixtures y tests.
+    - [x] Implementar modelos Pydantic, JSON Schema, fixtures y tests.
     - [ ] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
     - [ ] Construir el caso v3 híbrido de `SAN 1210/2023` y renderizar su
       Markdown desde el modelo canónico.

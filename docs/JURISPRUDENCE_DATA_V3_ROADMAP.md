@@ -306,17 +306,23 @@ ni texto legal.
 
 ### Fase A — contrato y tests
 
+**Estado (2026-07-29): completada.** El contrato campo por campo, los modelos,
+el JSON Schema, los fixtures y los invariantes están implementados. La
+cobertura de las familias del piloto se documenta en
+[`JURISPRUDENCE_CASE_SCHEMA_V3.md`](JURISPRUDENCE_CASE_SCHEMA_V3.md#18-cobertura-del-piloto-de-40-preguntas).
+
 Entregables:
 
-- `docs/JURISPRUDENCE_CASE_SCHEMA_V3.md`;
-- modelos Pydantic;
-- JSON Schema exportado;
-- catálogos y reglas de IDs;
-- fixtures válidos e inválidos;
-- tests de relaciones, anclajes e invariantes.
+- [x] `docs/JURISPRUDENCE_CASE_SCHEMA_V3.md`;
+- [x] modelos Pydantic;
+- [x] JSON Schema exportado;
+- [x] catálogos y reglas de IDs;
+- [x] fixtures válidos e inválidos;
+- [x] tests de relaciones, anclajes e invariantes.
 
-Gate: el contrato puede representar las 40 preguntas sin recurrir a campos
-genéricos como única solución.
+Gate superado a nivel de diseño: el contrato puede representar las 40 preguntas
+sin recurrir a campos genéricos como única solución. La validación con contenido
+real pertenece a las fases B y C.
 
 ### Fase B — una sentencia
 
