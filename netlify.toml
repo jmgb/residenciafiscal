@@ -35,12 +35,6 @@
     Cache-Control = "public, max-age=3600"
 
 [[redirects]]
-  from = "https://residenciafiscal.org/*"
-  to = "https://www.residenciafiscal.org/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
