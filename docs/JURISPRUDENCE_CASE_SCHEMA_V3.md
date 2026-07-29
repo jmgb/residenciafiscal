@@ -426,8 +426,8 @@ El modelo raíz rechaza:
 11. Referencias huérfanas desde eventos o periodos de presencia.
 12. Documentación fiscal extranjera sin su detalle tipado.
 
-La validación literal contra `raw_page_text` pertenece al pipeline verbatim y se
-añadirá en el siguiente paso.
+La validación literal contra `raw_page_text` está implementada en
+`jurisprudence_case_verbatim_validation.py` y bloquea los derivados B4.
 
 ## 16. Correspondencia con v2
 

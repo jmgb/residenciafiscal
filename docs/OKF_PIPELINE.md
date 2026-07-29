@@ -35,8 +35,9 @@ chat todavía está en:
 | Contrato `residenciafiscal-case/3` | Schema y tests | Implementado |
 | Contrato `residenciafiscal-verbatim/1` | Schema, extractor y tests | Implementado |
 | Verbatim piloto v3 | `SAN 1210/2023` | Generado y validado |
-| Caso jurídico piloto v3 | `SAN 1210/2023` | Pendiente |
-| Muestra v3 | 5 sentencias | Bloqueada por el piloto |
+| Caso jurídico piloto v3 | `SAN 1210/2023` | Generado y validado |
+| Perfil OKF/3 e índice por cuestión | `SAN 1210/2023` | Generados y validados |
+| Muestra v3 | 5 sentencias | Siguiente fase |
 | Corpus v3 | 106 sentencias | No autorizado |
 
 El piloto v2 se hizo con `SAN 1071/2025`. El piloto v3 usa deliberadamente
@@ -45,6 +46,8 @@ tensionar el nuevo contrato antes de regenerar la muestra.
 
 El documento preparado está en
 [`knowledge/jurisprudencia/sentencias/san-1071-2025.md`](../knowledge/jurisprudencia/sentencias/san-1071-2025.md).
+El perfil v3 está en
+[`knowledge/jurisprudencia/sentencias/san-1210-2023.md`](../knowledge/jurisprudencia/sentencias/san-1210-2023.md).
 La muestra está en
 [`knowledge/jurisprudencia-muestra-5/`](../knowledge/jurisprudencia-muestra-5/).
 
@@ -58,14 +61,13 @@ La muestra está en
   generar el texto mostrado.
 - Una coincidencia fuzzy nunca produce un extracto de fuente ni un bloque de
   cita. Se muestra como texto del análisis pendiente de revisión.
-- El JSONL existente es la fuente del análisis jurídico; el exportador no llama
-  a ningún LLM. Esto describe el perfil v2 actual: el futuro v3 tendrá su propio
-  JSON de dominio canónico y no usará el JSONL histórico como fuente directa
-  del chat.
+- El JSONL existente es la fuente del perfil v2. El perfil v3 y el índice del
+  chat usan exclusivamente `residenciafiscal-case/3`; no leen el JSONL
+  histórico.
 - El Markdown es un derivado regenerable y no se edita a mano.
 - El pipeline v2 no persiste ni versiona el texto completo extraído del PDF.
-  El pipeline v3 ya materializa y revalida el piloto en `verbatim/`; falta
-  construir desde él el caso jurídico de `SAN 1210/2023`.
+  El pipeline v3 ya materializa y revalida verbatim, caso, perfil OKF/3 e índice
+  por cuestión para `SAN 1210/2023`.
 - Se versiona únicamente un snapshot JSON del registro seleccionado, suficiente
   para reconstruir el concepto sin llamar de nuevo al LLM.
 - Las decisiones editoriales viven en sidecars YAML. Solo una corrección

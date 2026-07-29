@@ -7,6 +7,12 @@ este contrato fija qué significa cada parte del resultado.
 
 La versión vigente es `residenciafiscal-okf/2`.
 
+Este contrato sigue describiendo el pipeline legado basado en JSONL. El perfil
+`residenciafiscal-okf/3`, derivado exclusivamente de
+`residenciafiscal-case/3`, se documenta en
+[`JURISPRUDENCE_DERIVATIVES_B4.md`](JURISPRUDENCE_DERIVATIVES_B4.md). Las dos
+versiones no comparten fuente canónica y no deben mezclarse en un renderizador.
+
 ## Alcance respecto del chat
 
 Este contrato define una **representación editorial legible de una sentencia**.

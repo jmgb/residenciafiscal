@@ -115,8 +115,11 @@ El hash del caso piloto es
 El resultado reproducible vive en
 `knowledge/jurisprudencia/reports/san-1210-2023.case-validation.json`.
 
-## Siguiente fase
+## Derivados B4
 
-B4 debe derivar del caso v3 el perfil Markdown OKF y una unidad de recuperación
-por cuestión. Ningún renderizador volverá a leer el análisis legado ni a
-reformular citas: consumirá exclusivamente el caso v3 validado.
+B4 ya deriva el perfil Markdown OKF y una unidad de recuperación por cuestión.
+Ningún renderizador vuelve a leer el análisis legado ni a reformular citas:
+consume exclusivamente el caso v3 validado. Contrato, campos y resultado:
+[`JURISPRUDENCE_DERIVATIVES_B4.md`](JURISPRUDENCE_DERIVATIVES_B4.md).
+
+La siguiente fase es regenerar las cinco sentencias mediante el mismo camino.

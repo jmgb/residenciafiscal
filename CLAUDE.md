@@ -127,13 +127,17 @@ El caso v3 híbrido de `SAN 1210/2023` ya está compilado: 17 anclajes literales
 3 cuestiones y 18 preguntas aplicables validadas. Su pipeline, reparto de
 responsabilidades y artefactos se documentan en
 [`docs/JURISPRUDENCE_CASE_PIPELINE.md`](docs/JURISPRUDENCE_CASE_PIPELINE.md).
-El siguiente trabajo es derivar el Markdown OKF y la unidad de recuperación
-desde ese caso canónico; no continuar directamente con el chat ni con las 106.
+El Markdown OKF/3 y las tres unidades de recuperación por cuestión ya se
+derivan del caso canónico. Su contrato está en
+[`docs/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/JURISPRUDENCE_DERIVATIVES_B4.md).
+El siguiente trabajo es regenerar las cinco sentencias por este mismo camino;
+no continuar directamente con el chat ni con las 106.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
 make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
 make export-case-v3  # compila y valida el caso canónico de SAN 1210/2023
+make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
 ```
 
 ### Corpus normativo

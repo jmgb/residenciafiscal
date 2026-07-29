@@ -14,6 +14,7 @@ SHELL := /bin/bash
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
+	export-case-v3-derivatives \
 	descargar-normativa export-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -39,6 +40,7 @@ OKF_JSONL ?= $(CITATION_JSONL)
 OKF_THRESHOLD ?= 85
 OKF_SOURCE_FILE ?= SAN_1071_2025.pdf
 OKF_OUTPUT ?= ./knowledge/jurisprudencia
+NORMATIVA_JURISDICCION ?= es
 NORMATIVA_SOURCES ?= ./normativa
 NORMATIVA_OUTPUT ?= ./knowledge/normativa
 OKF_SAMPLE_MANIFEST ?= ./sentencias/okf_muestra_5.json
@@ -52,6 +54,9 @@ CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
 CASE_EVALUATION ?= ./knowledge/jurisprudencia/evaluations/san-1210-2023.questions.json
 CASE_OUTPUT ?= ./knowledge/jurisprudencia/cases/san-1210-2023.case.json
 CASE_REPORT ?= ./knowledge/jurisprudencia/reports/san-1210-2023.case-validation.json
+CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia/sentencias/san-1210-2023.md
+CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia/retrieval/san-1210-2023.issues.json
+CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia/reports/san-1210-2023.derivatives-validation.json
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -86,6 +91,7 @@ help:
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
 	@echo "  make export-verbatim      Genera y revalida el verbatim piloto (sin LLM)"
 	@echo "  make export-case-v3       Compila y valida el caso v3 piloto (sin LLM)"
+	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
@@ -94,6 +100,7 @@ help:
 	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="
 	@echo "  Verbatim: VERBATIM_PDF= VERBATIM_DOCUMENT_ID= VERBATIM_SOURCE_FILE= VERBATIM_OUTPUT="
 	@echo "  Caso v3: CASE_PROPOSAL= CASE_VERBATIM= CASE_EVALUATION= CASE_OUTPUT= CASE_REPORT="
+	@echo "  Derivados v3: CASE_MARKDOWN_OUTPUT= CASE_RETRIEVAL_OUTPUT= CASE_DERIVATIVES_REPORT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -198,15 +205,26 @@ export-case-v3:
 		--report $(CASE_REPORT) \
 		--project-root .
 
+export-case-v3-derivatives:
+	uv run python export_jurisprudence_case_derivatives.py \
+		--case $(CASE_OUTPUT) \
+		--verbatim $(CASE_VERBATIM) \
+		--markdown $(CASE_MARKDOWN_OUTPUT) \
+		--retrieval $(CASE_RETRIEVAL_OUTPUT) \
+		--report $(CASE_DERIVATIVES_REPORT) \
+		--project-root .
+
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.
 descargar-normativa:
-	uv run python descargar_normativa.py --output-dir $(NORMATIVA_SOURCES)
+	uv run python descargar_normativa.py \
+		--output-dir $(NORMATIVA_SOURCES)/$(NORMATIVA_JURISDICCION)
 
 export-normativa:
 	uv run python export_normativa.py \
-		--sources-dir $(NORMATIVA_SOURCES) \
-		--output-dir $(NORMATIVA_OUTPUT)
+		--jurisdiccion $(NORMATIVA_JURISDICCION) \
+		--sources-root $(NORMATIVA_SOURCES) \
+		--output-root $(NORMATIVA_OUTPUT)
 
 # =============================================================================
 # 3. CALIDAD
