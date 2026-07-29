@@ -63,6 +63,7 @@ describe('Sentry lazy loader', () => {
     expect(viteConfigSource).not.toContain('SENTRY_PERSONAL_API_TOKEN');
     expect(viteConfigSource).not.toContain('SENTRY_AUTH_TOKEN');
     expect(envExampleSource).toContain('\nSENTRY_TOKEN=\n');
+    expect(envExampleSource).not.toContain('SENTRY_PERSONAL_API_TOKEN');
     expect(envExampleSource).not.toContain('SENTRY_AUTH_TOKEN');
   });
 
