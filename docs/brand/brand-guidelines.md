@@ -151,3 +151,48 @@ dependencias npm nuevas.
 
 La comprobación de clases es textual, no de árbol renderizado: cubre el error
 frecuente, no todos.
+
+## 9. Checklist QA
+
+Antes de publicar cualquier pieza —interfaz, OG, copy, correo—:
+
+- [ ] El mensaje se entiende en menos de 10 segundos y no promete nada fuera de lo que
+      el producto hace.
+- [ ] Solo tokens de la paleta; ningún HEX nuevo escrito a mano.
+- [ ] `accent-500` no lleva texto encima ni se usa como color de texto.
+- [ ] Ningún metadato en `muted-foreground` sobre fondo `muted` o `secondary`.
+- [ ] Todo contenido generado que se muestre lleva su cita visible (ROJ/ECLI).
+- [ ] Ninguna palabra de las dos listas de vetos (§6).
+- [ ] Si la pieza usa el manifiesto, lleva el ancla del producto: la cifra del corpus,
+      una cita, o la segunda frase del claim. **La promesa de libertad nunca viaja sola.**
+- [ ] Contraste comprobado en cualquier par nuevo: calculado, no estimado a ojo.
+- [ ] Si el motor sigue en `stub`, la pieza no promete respuestas reales.
+- [ ] Si se tocó un token, los artefactos están regenerados en el mismo commit.
+
+## 10. Pendientes
+
+- **El isotipo y el lockup se mantienen a mano.** `favicon.svg` y `logo.svg` llevan las
+  letras ya trazadas, así que cambiar el wordmark (otro texto, otro peso) obliga a
+  reextraer los contornos de la TTF con fontTools a mano. Un generador
+  (`build-identity.py`) haría el trazado reproducible; se valoró y se dejó fuera para no
+  añadir una tercera capa sobre el pipeline actual, que ya tiene una fuente única por
+  artefacto. Si el wordmark cambia más de una vez, este pendiente pasa a ser prioritario.
+- **Modo oscuro:** no existe. Si se añade, toda la tabla de contraste se recalcula sobre
+  el nuevo fondo — ninguno de los ratios de §3 se conserva al invertir.
+- **Fuentes en CDN:** Space Grotesk e Inter se cargan desde Google Fonts (`index.html`),
+  lo que mete un tercero en la ruta crítica y una petición bloqueante. Auto-hospedarlas
+  es una mejora pendiente, no un problema abierto.
+- **Doble audiencia:** la narrativa habla al ciudadano; el corpus atrae también a
+  abogados tributaristas. El claim de dos frases resuelve la convivencia en superficies
+  grandes, pero cada pieza nueva decide a cuál habla primero. En superficies
+  estrictamente profesionales (README, docs técnicas) manda el claim funcional.
+
+## Change log
+
+- **2026-07-29** — Creado. Isotipo «RF» bicolor elegido entre seis propuestas (se
+  descartaron el anillo de los 183 días y la frontera porque a 16 px pierden el elemento
+  que las hace legibles, y la balanza por ser el recurso más visto del sector). Token
+  `accent-400` añadido: `accent-500` sobre `primary` se queda en 3.61:1 y a 16 px la F
+  se apelmaza contra el azul. Tabla de contraste calculada con dos pares por debajo de
+  AA, declarados prohibidos y comprobados al revés por el gate. Narrativa de movimiento
+  y manifiesto en documento aparte.
