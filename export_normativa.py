@@ -8,7 +8,17 @@ fiscal, no los miles de artículos restantes de la LIRPF o la LGT.
 No hay LLM en ningún paso. El texto legal sale literal del XML consolidado y
 todo lo derivado (selección, rúbrica, hashes) es determinista.
 
-    uv run python export_normativa.py --sources-dir normativa --output-dir knowledge/normativa
+**Alcance por jurisdicción.** Hoy solo existe España, y este módulo mezcla a
+propósito lo genérico (renderizado, invariante de literalidad, hashes) con lo
+específico del BOE (`SELECCION_ESTATAL`, `OVERRIDES_CDI`, el detector del
+artículo de residencia). No se ha construido una abstracción de proveedores para
+una sola jurisdicción: sería adivinar la forma del segundo país antes de tenerlo.
+Lo que sí está preparado es el **dato**: las rutas y el frontmatter llevan el
+código de jurisdicción, de modo que un país nuevo añade un directorio y su
+lector, sin migrar nada de lo ya publicado. El contrato está en
+`docs/NORMATIVA.md`.
+
+    uv run python export_normativa.py --jurisdiccion es
 """
 
 from __future__ import annotations
@@ -34,6 +44,29 @@ from normativa_boe import (
 
 SCHEMA_VERSION = "residenciafiscal-normativa/1"
 GENERADOR = "residenciafiscal-normativa/0.1.0"
+
+# Jurisdicciones con corpus normativo. El código es ISO 3166-1 alfa-2 en
+# minúsculas y da nombre al directorio: `normativa/es/` y
+# `knowledge/normativa/es/`. No coincide por casualidad con las rutas del
+# frontend (`/espana`): aquellas son de presentación y admiten acentos, esta es
+# la clave de máquina del dato.
+JURISDICCIONES: dict[str, str] = {"es": "España"}
+JURISDICCION_POR_DEFECTO = "es"
+
+# Grupos del manifiesto cuya fuente es el XML del diario y no el consolidado:
+# el BOE saca de la base consolidada lo que deroga.
+GRUPOS_DEROGADOS = frozenset({"nucleo_derogado", "cdi_derogado"})
+
+# Grupos en los que el precepto a publicar se localiza por contenido en vez de
+# declararse a mano, porque son convenios que siguen el Modelo OCDE.
+GRUPOS_CONVENIO = frozenset({"cdi", "cdi_derogado"})
+
+# Encabezado bajo el que va el articulado. Una norma derogada no tiene «texto
+# vigente», así que no puede presentarse con el mismo rótulo que el derecho
+# aplicable hoy. Se exportan para que los tests no tengan que fijarlos a mano.
+ENCABEZADO_VIGENTE = "# Texto vigente"
+ENCABEZADO_DEROGADO = "# Texto derogado"
+ENCABEZADO_NOTAS = "# Notas del BOE"
 
 # --- Selección de preceptos --------------------------------------------------
 #
@@ -114,11 +147,17 @@ class PreceptoSeleccionado:
     grupo: str
     source_sha256: str
     fichero_fuente: str
+    nota_derogacion: str | None = None
+    jurisdiccion: str = JURISDICCION_POR_DEFECTO
 
     @property
     def ruta_fuente(self) -> str:
-        """Ruta relativa al XML de origen desde `knowledge/normativa/preceptos/`."""
-        return f"../../../normativa/{self.fichero_fuente}"
+        """Ruta al XML de origen desde `knowledge/normativa/<jurisdiccion>/preceptos/`."""
+        return f"../../../../normativa/{self.jurisdiccion}/{self.fichero_fuente}"
+
+    @property
+    def derogada(self) -> bool:
+        return self.grupo in GRUPOS_DEROGADOS
 
 
 def recortar(texto: str, limite: int) -> str:
@@ -137,7 +176,7 @@ def slug_norma(boe_id: str, grupo: str) -> str:
     """
     if boe_id in SLUG_NORMA:
         return SLUG_NORMA[boe_id]
-    prefijo = "cdi" if grupo == "cdi" else "norma"
+    prefijo = "cdi" if grupo in GRUPOS_CONVENIO else "norma"
     return f"{prefijo}-{boe_id.lower()}"
 
 
@@ -159,7 +198,7 @@ def localizar_precepto_residencia(norma: NormaBOE) -> BloqueNorma | None:
 
 
 def seleccionar(
-    sources_dir: Path, manifiesto: dict
+    sources_dir: Path, manifiesto: dict, jurisdiccion: str = JURISDICCION_POR_DEFECTO
 ) -> tuple[list[PreceptoSeleccionado], list[dict]]:
     """Recorre el manifiesto y decide qué bloques se publican."""
     seleccionados: list[PreceptoSeleccionado] = []
@@ -176,7 +215,7 @@ def seleccionar(
 
         # Una norma derogada ya no está en la base consolidada: su fuente es el
         # XML del diario, con otra estructura.
-        derogada = grupo == "nucleo_derogado"
+        derogada = grupo in GRUPOS_DEROGADOS
         sufijo = "diario" if derogada else "texto"
         norma = (
             cargar_norma_diario(sources_dir, boe_id)
@@ -186,8 +225,9 @@ def seleccionar(
         source_sha256 = hashlib.sha256(
             (sources_dir / f"{boe_id}.{sufijo}.xml").read_bytes()
         ).hexdigest()
+        nota_derogacion = str(registro["nota"]) if derogada and registro.get("nota") else None
 
-        if grupo == "cdi":
+        if grupo in GRUPOS_CONVENIO:
             bloque = localizar_precepto_residencia(norma)
             if bloque is None:
                 incidencias.append(
@@ -200,7 +240,15 @@ def seleccionar(
                 )
                 continue
             seleccionados.append(
-                PreceptoSeleccionado(norma, bloque, grupo, source_sha256, f"{boe_id}.{sufijo}.xml")
+                PreceptoSeleccionado(
+                    norma,
+                    bloque,
+                    grupo,
+                    source_sha256,
+                    f"{boe_id}.{sufijo}.xml",
+                    nota_derogacion,
+                    jurisdiccion,
+                )
             )
             continue
 
@@ -217,7 +265,15 @@ def seleccionar(
                 )
                 continue
             seleccionados.append(
-                PreceptoSeleccionado(norma, bloque, grupo, source_sha256, f"{boe_id}.{sufijo}.xml")
+                PreceptoSeleccionado(
+                    norma,
+                    bloque,
+                    grupo,
+                    source_sha256,
+                    f"{boe_id}.{sufijo}.xml",
+                    nota_derogacion,
+                    jurisdiccion,
+                )
             )
 
     return seleccionados, incidencias
@@ -248,9 +304,11 @@ def _frontmatter(seleccion: PreceptoSeleccionado, precepto_sha256: str) -> dict:
     return {
         "type": "Precepto legal",
         "title": _titulo_precepto(seleccion),
+        "jurisdiccion": seleccion.jurisdiccion,
         "description": recortar(f"{bloque.titulo} de {norma.titulo}".rstrip(), 160),
         "resource": seleccion.ruta_fuente,
-        "tags": ["residencia-fiscal", "normativa", seleccion.grupo],
+        "tags": ["residencia-fiscal", "normativa", seleccion.grupo]
+        + (["derogada"] if seleccion.derogada else []),
         "status": "stable",
         "boe_id": norma.boe_id,
         "norma": norma.titulo,
@@ -259,6 +317,11 @@ def _frontmatter(seleccion: PreceptoSeleccionado, precepto_sha256: str) -> dict:
         "designacion": bloque.titulo,
         "epigrafe": bloque.epigrafe,
         "grupo": seleccion.grupo,
+        # `derogada` la declara el manifiesto, no el BOE: el campo
+        # `estatus_derogacion` del diario viene a «N» incluso en convenios ya
+        # sustituidos, así que no sirve para decidirlo.
+        "derogada": seleccion.derogada,
+        "nota_derogacion": seleccion.nota_derogacion,
         "vigencia_agotada": norma.vigencia_agotada,
         "vigente_desde": formatear_fecha(vigente.fecha_vigencia) if vigente else None,
         "versiones": versiones,
@@ -274,7 +337,7 @@ def _frontmatter(seleccion: PreceptoSeleccionado, precepto_sha256: str) -> dict:
         "schema_version": SCHEMA_VERSION,
         "sources": [
             {
-                "id": "texto-consolidado" if not norma.vigencia_agotada else "texto-publicado",
+                "id": "texto-publicado" if seleccion.derogada else "texto-consolidado",
                 "resource": seleccion.ruta_fuente,
                 "title": f"{norma.boe_id} — texto del BOE",
                 "author": "Agencia Estatal Boletín Oficial del Estado",
@@ -288,14 +351,22 @@ def _cuerpo(seleccion: PreceptoSeleccionado) -> Iterator[str]:
     bloque = seleccion.bloque
     vigente = bloque.version_vigente
 
+    fuente = "el texto publicado en el diario" if seleccion.derogada else "el texto consolidado"
     yield (
-        "**Regla de lectura:** el articulado reproduce literalmente el texto consolidado que "
-        "publica el BOE. Las notas del BOE son anotación editorial y van en su propia sección; "
-        "no forman parte del precepto."
+        f"**Regla de lectura:** el articulado reproduce literalmente {fuente} del BOE. Las notas "
+        "del BOE son anotación editorial y van en su propia sección; no forman parte del precepto."
     )
     yield ""
 
-    yield "# Texto vigente"
+    if seleccion.derogada:
+        yield (
+            f"> ⚠️ **Norma derogada.** {seleccion.nota_derogacion or ''} Se publica porque rige "
+            "ejercicios enjuiciados por sentencias del corpus, no porque sea derecho aplicable "
+            "hoy."
+        ).replace("  ", " ")
+        yield ""
+
+    yield ENCABEZADO_DEROGADO if seleccion.derogada else ENCABEZADO_VIGENTE
     yield ""
     if vigente is None:
         yield "_El bloque no contiene ninguna redacción._"
@@ -324,7 +395,7 @@ def _cuerpo(seleccion: PreceptoSeleccionado) -> Iterator[str]:
                 yield parrafo
                 yield ""
 
-    yield "# Notas del BOE"
+    yield ENCABEZADO_NOTAS
     yield ""
     notas = [nota for version in bloque.versiones for nota in version.notas_boe]
     if not notas:
@@ -363,8 +434,12 @@ def renderizar(seleccion: PreceptoSeleccionado) -> str:
 
 
 def renderizar_indice(seleccionados: list[PreceptoSeleccionado]) -> str:
-    nucleo = [s for s in seleccionados if s.grupo != "cdi"]
+    nucleo = [s for s in seleccionados if s.grupo == "nucleo"]
     cdis = sorted((s for s in seleccionados if s.grupo == "cdi"), key=lambda s: s.norma.titulo)
+    derogados = sorted(
+        (s for s in seleccionados if s.derogada),
+        key=lambda s: (s.norma.titulo, s.bloque.bloque_id),
+    )
 
     lineas = [
         "# Normativa de residencia fiscal",
@@ -381,7 +456,21 @@ def renderizar_indice(seleccionados: list[PreceptoSeleccionado]) -> str:
 
     lineas += [
         "",
-        f"## Convenios de doble imposición ({len(cdis)})",
+        f"## Normas derogadas ({len(derogados)})",
+        "",
+        "Rigen ejercicios enjuiciados por sentencias del corpus. **No son derecho aplicable hoy.**",
+        "",
+    ]
+    for seleccion in derogados:
+        slug = slug_precepto(seleccion.norma.boe_id, seleccion.grupo, seleccion.bloque.bloque_id)
+        lineas.append(
+            f"- [{seleccion.norma.titulo}]({slug}.md) — {seleccion.bloque.titulo}"
+            f" · {seleccion.nota_derogacion or 'derogada'}"
+        )
+
+    lineas += [
+        "",
+        f"## Convenios de doble imposición vigentes ({len(cdis)})",
         "",
         "Artículo que fija la residencia y resuelve la doble residencia de cada convenio.",
         "",
@@ -395,14 +484,30 @@ def renderizar_indice(seleccionados: list[PreceptoSeleccionado]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--sources-dir", type=Path, default=Path("normativa"))
-    parser.add_argument("--output-dir", type=Path, default=Path("knowledge/normativa"))
+    parser.add_argument(
+        "--jurisdiccion",
+        default=JURISDICCION_POR_DEFECTO,
+        help="Código ISO 3166-1 alfa-2 en minúsculas. Hoy solo existe 'es'.",
+    )
+    parser.add_argument("--sources-root", type=Path, default=Path("normativa"))
+    parser.add_argument("--output-root", type=Path, default=Path("knowledge/normativa"))
     args = parser.parse_args()
 
-    manifiesto = json.loads((args.sources_dir / "manifest.json").read_text(encoding="utf-8"))
-    seleccionados, incidencias = seleccionar(args.sources_dir, manifiesto)
+    if args.jurisdiccion not in JURISDICCIONES:
+        print(
+            f"❌ Jurisdicción '{args.jurisdiccion}' no soportada. "
+            f"Disponibles: {', '.join(sorted(JURISDICCIONES))}. "
+            "Añadir una nueva requiere su lector de fuentes; ver docs/NORMATIVA.md."
+        )
+        return 1
 
-    destino = args.output_dir / "preceptos"
+    sources_dir = args.sources_root / args.jurisdiccion
+    output_dir = args.output_root / args.jurisdiccion
+
+    manifiesto = json.loads((sources_dir / "manifest.json").read_text(encoding="utf-8"))
+    seleccionados, incidencias = seleccionar(sources_dir, manifiesto, args.jurisdiccion)
+
+    destino = output_dir / "preceptos"
     destino.mkdir(parents=True, exist_ok=True)
     for fichero in destino.glob("*.md"):
         fichero.unlink()
@@ -412,7 +517,7 @@ def main() -> int:
         (destino / f"{slug}.md").write_text(renderizar(seleccion), encoding="utf-8")
     (destino / "index.md").write_text(renderizar_indice(seleccionados), encoding="utf-8")
 
-    reportes = args.output_dir / "reports"
+    reportes = output_dir / "reports"
     reportes.mkdir(parents=True, exist_ok=True)
     inesperadas = [i for i in incidencias if not i["esperado"]]
     (reportes / "extraccion.json").write_text(
@@ -420,6 +525,7 @@ def main() -> int:
             {
                 "schema_version": SCHEMA_VERSION,
                 "generated_by": GENERADOR,
+                "jurisdiccion": args.jurisdiccion,
                 "normas_en_manifiesto": len(manifiesto["normas"]),
                 "preceptos_generados": len(seleccionados),
                 "por_grupo": {

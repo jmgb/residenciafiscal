@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documento fecha_actualizacion="20241014234752">
+  <metadatos>
+    <identificador>BOE-A-1976-23347</identificador>
+    <origen_legislativo codigo="1">Estatal</origen_legislativo>
+    <departamento codigo="7723">Jefatura del Estado</departamento>
+    <rango codigo="1180">Acuerdo Internacional</rango>
+    <fecha_disposicion>19751021</fecha_disposicion>
+    <numero_oficial/>
+    <titulo>Instrumento de Ratificación de España del Convenio entre España y el Reino Unido de Gran Bretaña e Irlanda del Norte para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio, hecho en Londres el 21 de octubre de 1975.</titulo>
+    <diario codigo="BOE">Boletín Oficial del Estado</diario>
+    <fecha_publicacion>19761118</fecha_publicacion>
+    <diario_numero>277</diario_numero>
+    <seccion>1</seccion>
+    <subseccion/>
+    <pagina_inicial>22912</pagina_inicial>
+    <pagina_final>22919</pagina_final>
+    <suplemento_pagina_inicial/>
+    <suplemento_pagina_final/>
+    <url_pdf>https://www.boe.es/boe/dias/1976/11/18/pdfs/A22912-22919.pdf</url_pdf>
+    <url_epub/>
+    <url_pdf_catalan/>
+    <url_pdf_euskera/>
+    <url_pdf_gallego/>
+    <url_pdf_valenciano/>
+    <estatus_legislativo>L</estatus_legislativo>
+    <fecha_vigencia>19761125</fecha_vigencia>
+    <estatus_derogacion>N</estatus_derogacion>
+    <fecha_derogacion/>
+    <judicialmente_anulada>N</judicialmente_anulada>
+    <fecha_anulacion/>
+    <vigencia_agotada>N</vigencia_agotada>
+    <estado_consolidacion codigo="0"/>
+    <letra_imagen>A</letra_imagen>
+    <suplemento_letra_imagen/>
+  </metadatos>
+  <analisis>
+    <materias>
+      <materia codigo="71" orden="1">Acuerdos internacionales</materia>
+      <materia codigo="3077" orden="2">Doble imposición</materia>
+      <materia codigo="6042" orden="3">Reino Unido de Gran Bretaña e Irlanda del Norte</materia>
+      <materia codigo="6658" orden="4">Sistema tributario</materia>
+    </materias>
+    <notas>
+      <nota codigo="152" orden="100">Ratificación por Instrumento de 17 de febrero de 1976.</nota>
+      <nota codigo="11" orden="360">Fecha Resolución Ministerio de Asuntos Exteriores: 28 de octubre de 1976.</nota>
+    </notas>
+    <referencias>
+      <anteriores>
+        <anterior referencia="BOE-A-1974-1013" orden="5020">
+          <palabra codigo="330">CITA</palabra>
+          <texto>Ley 21/1974, de 27 de junio</texto>
+        </anterior>
+      </anteriores>
+      <posteriores>
+        <posterior referencia="BOE-A-2014-5171" orden="">
+          <palabra codigo="230">SE DEJA SIN EFECTO</palabra>
+          <texto>lo indicado, por Convenio de 14 de marzo de 2013</texto>
+        </posterior>
+        <posterior referencia="BOE-A-1995-12363" orden="1">
+          <palabra codigo="270">SE MODIFICA</palabra>
+          <texto>los arts. 6, 13 y 23, por Canje de Notas de 17 de junio de 1994</texto>
+        </posterior>
+        <posterior referencia="BOE-A-1976-25375" orden="3">
+          <palabra codigo="201">CORRECCIÓN de errores</palabra>
+          <texto>en BOE núm. 300, del 15 de diciembre de 1976</texto>
+        </posterior>
+        <posterior referencia="BOE-A-1977-24681" orden="2">
+          <palabra codigo="440">SE DICTA DE CONFORMIDAD</palabra>
+          <texto>y se publican formularios, por Orden de 22 de septiembre de 1977</texto>
+        </posterior>
+      </posteriores>
+    </referencias>
+    <alertas/>
+  </analisis>
+  <texto>
+    <p class="centro_redonda">JUAN CARLOS I</p>
+    <p class="centro_redonda">REY DE ESPAÑA</p>
+    <p class="parrafo_2">Por cuanto el día 21 de octubre de 1975, el Plenipotenciario de España firmó en Londres, juntamente con el Plenipotenciario del Reino Unido de Gran Bretaña e Irlanda del Norte, nombrado en buena y debida forma al efecto, el Convenio entre España y el Reino Unido de Gran Bretaña e Irlanda del Norte para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio;</p>
+    <p class="parrafo_2"><em>Vistos y examinados </em>los treinta y un artículos que integran dicho Convenio;</p>
+    <p class="parrafo"><em>Oída </em>la Comisión de Asuntos Exteriores de las Cortes Españolas, en cumplimiento de lo prevenido en el artículo 14 de su Ley Constitutiva,</p>
+    <p class="parrafo"><em>Vengo en aprobar y ratificar </em>cuanto en él se dispone, como en virtud del presente lo apruebo y ratifico, prometiendo cumplirlo, observarlo y hacer que se cumpla y observe puntualmente en todas sus partes, a cuyo fin, para su mayor validación y firmeza, mando expedir este Instrumento de Ratificación firmado por Mí, debidamente sellado y refrendado por el infrascrito Ministro de Asuntos Exteriores.</p>
+    <p class="parrafo_2">Dado en Madrid a diecisiete de febrero de mil novecientos setenta y seis.</p>
+    <p class="firma_rey">JUAN CARLOS R.</p>
+    <p class="firma_ministro">El Ministro de Asuntos Exteriores,</p>
+    <p class="firma_ministro">JOSÉ MARÍA DE AREILZA</p>
+    <p class="anexo">[encabezado]CONVENIO ENTRE ESPAÑA Y EL REINO UNIDO DE GRAN BRETAÑA E IRLANDA DEL NORTE PARA EVITAR LA DOBLE IMPOSICIÓN Y PREVENIR LA EVASIÓN FISCAL EN MATERIA DE IMPUESTOS SOBRE LA RENTA Y SOBRE EL PATRIMONIO</p>
+    <p class="parrafo_2">El Gobierno de España y el Gobierno del Reino Unido de Gran Bretaña e lrlanda del Norte;</p>
+    <p class="parrafo_2">Deseando concluir un Convenio para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y el patrimonio,</p>
+    <p class="parrafo_2">Han acordado lo siguiente:</p>
+    <p class="articulo">Artículo 1. Ámbito personal.</p>
+    <p class="parrafo">El presente Convenio se aplica a las personas residentes en uno o en ambos Estados Contratantes.</p>
+    <p class="articulo">Artículo 2. Impuestos a que se extiende.</p>
+    <p class="parrafo">1. Los impuestos objeto del presente Convenio son:</p>
+    <p class="parrafo_2">a) en el Reino Unido de Gran Bretaña e Irlanda del Norte:</p>
+    <p class="parrafo_2">i)	el impuesto sobre la renta;</p>
+    <p class="parrafo">ii)	el impuesto sobre sociedades, y</p>
+    <p class="parrafo">iii)	el impuesto sobre ganancias de capital;</p>
+    <p class="parrafo">(a los que en lo sucesivo se denomina «impuesto del Reino Unido»);</p>
+    <p class="parrafo_2">b) en España:</p>
+    <p class="parrafo_2">i)	el impuesto general sobre la renta de las personas físicas;</p>
+    <p class="parrafo">ii)	el impuesto general sobre la renta de sociedades y demás entidades jurídicas;</p>
+    <p class="parrafo">iii)	los siguientes impuestos a cuenta: la Contribución Territorial sobre la Riqueza Rústica y Pecuaria, la Contribución Territorial sobre la Riqueza Urbana, el Impuesto sobre los Rendimientos del Trabajo Personal, el impuesto sobre las Rentas del Capital y el impuesto sobre Actividades y Beneficios Comerciales e Industriales;</p>
+    <p class="parrafo">iv)	en Sahara, los impuestos sobre la Renta, sobre los rendimientos del trabajo y del patrimonio y sobre los beneficios de las Empresas;</p>
+    <p class="parrafo">v)	el canon de superficie y el impuesto sobre los beneficios, regulados por la Ley de 27 de junio de 1974, aplicables a las empresas que se dedican a la investigación y explotación de hidrocarburos, y</p>
+    <p class="parrafo">vi)	los impuestos locales sobre la renta y el patrimonio;</p>
+    <p class="parrafo">(a los que en lo sucesivo se denomina «impuesto de España»).</p>
+    <p class="parrafo_2">2. El presente Convenio se aplicará también a Ios impuestos futuros de naturaleza idéntica o análoga que uno u otro Estado Contratante añada a los actuales tras la firma de este Convenio o que los sustituyan. A finales de cada año, las autoridades competentes de los Estados contratantes se comunicarán cualquier modificación relevante que se haya introducido en sus respectivas legislaciones fiscales.</p>
+    <p class="articulo">Artículo 3. Definiciones generales.</p>
+    <p class="parrafo">1. En el presente Convenio, a menos que de su texto se infiera una interpretación diferente:</p>
+    <p class="parrafo_2">a) El término «Reino Unido» significa Gran Bretaña e Irlanda del Norte, incluyendo cualquier área que se halle fuera del mar territorial del Reino Unido y que de acuerdo con la ley internacional haya sido designada o pueda serlo en lo sucesivo bajo las leyes del Reino Unido relativas a la Plataforma Continental, como área en la que pueden ejercerse los derechos del Reino Unido en lo concerniente al fondo marino y subsuelo y a sus recursos naturales.</p>
+    <p class="parrafo">b) El término «España» significa el Estado Español y, en sentido geográfico, la España Peninsular, las islas Baleares y las Canarias, las ciudades y territorios españoles de África, incluyendo cualquier área exterior al mar territorial de España que, de acuerdo con la ley internacional, haya sido señalada o pueda serlo en lo sucesivo, bajo las leyes españolas relativas a la Plataforma Continental, como área en la que pueden ejercerse los derechos de España en lo concerniente al fondo marino y subsuelo y a sus recursos naturales.</p>
+    <p class="parrafo">c) El término «nacionales» significa:</p>
+    <p class="parrafo_2">i)	en relación con el Reino Unido, todo ciudadano del Reino Unido y de las colonias que derive su «status» como tal de su conexión con el Reino Unido y todas las personas jurídicas, Asociaciones y otras Entidades que deriven su «status» como tales de las leyes en vigor en el Reino Unido;</p>
+    <p class="parrafo">ii)	en relación con España, todas las personas físicas que posean la nacionalidad española y todas las personas jurídicas, sociedades o asociaciones que ostenten tal condición en virtud de las leyes en vigor en España;</p>
+    <p class="parrafo_2">d) El término «tráfico internacional» significa cualquier transporte por barco o aeronave realizado por una empresa de un Estado Contratante, salvo cuando se efectúe únicamente entre puntos del otro Estado Contratante;</p>
+    <p class="parrafo">e) Las expresiones «un Estado Contratante» y «el otro Estado Contratante» significan España o el Reino Unido, según se derive del texto;</p>
+    <p class="parrafo">f)	El término «persona» comprende las personas físicas, las sociedades y cualquier otra agrupación de personas;</p>
+    <p class="parrafo">g) El término «sociedad» significa cualquier persona jurídica o cualquier entidad que deba considerarse como persona jurídica a efectos impositivos;</p>
+    <p class="parrafo">h) Las expresiones «empresa de un Estado Contratante» y «empresa del otro Estado Contratante» significan respectivamente, una empresa explotada por un residente de un Estado Contratante y una empresa explotada por un residente del otro Estado Contratante;</p>
+    <p class="parrafo">i)	La expresión «Autoridad competente» significa, en el caso de España, el Ministro de Hacienda, el Secretario general Técnico o cualquier otra autoridad en quien el Ministro delegue y, en el caso del Reino Unido, dos Comisarios de la Renta Interna o sus representantes autorizados.</p>
+    <p class="parrafo_2">2. Para la aplicación del presente Convenio por un Estado Contratante, cualquier expresión no definida de otra manera tendrá, a menos que el texto exija una interpretación diferente, el significado que se le atribuya por la legislación de ese Estado contratante relativa a los impuestos que son objeto del presente Convenio.</p>
+    <p class="articulo">Artículo 4. Domicilio fiscal.</p>
+    <p class="parrafo">1. A los efectos del presente Convenio, la expresión «residente de un Estado Contratante» designa, con sujeción a las disposiciones de los párrafos 2 y 3 de este artículo, cualquier persona que, en virtud de la legislación de este Estado, esté sujeta a imposición en él por razón de su domicilio, su residencia, su sede de dirección o cualquier otro criterio de naturaleza análoga; pero la expresión no incluye a una persona que esté sujeta a imposición en ese Estado Contratante sólo por lo que respecta a rentas procedentes de él. Las expresiones «residente de España» y «residente del Reino Unido» se interpretarán, por tanto, de esta forma.</p>
+    <p class="parrafo">2. Cuando en virtud de las disposiciones del párrafo 1, de este artículo, una persona física resulte residente de ambos Estados Contratantes, su residencia se determinará según las siguientes reglas:</p>
+    <p class="parrafo_2">a) esta persona será considerada residente del Estado Contratante donde tenga una vivienda permanente a su disposición; si tuviera una vivienda permanente a su disposición en ambos Estados Contratantes, se considerará residente del Estado Contratante con el que mantenga relaciones personales y económicas más estrechas (centro de intereses vitales);</p>
+    <p class="parrafo">b) si no pudiera determinarse el Estado Contratante en el que dicha persona tiene el centro de sus intereses vitales, o si no tuviera una vivienda permanente a su disposición en ninguno de los Estados Contratantes, se considerará residente del Estado Contratante donde viva de manera habitual;</p>
+    <p class="parrafo">c) si viviera de manera habitual en ambos Estados Contratantes o no lo hiciera en ninguno de ellos, se considerará residente del Estado Contratante del que sea nacional;</p>
+    <p class="parrafo">d) si fuera nacional de ambos Estados Contratantes o no lo fuera de ninguno de ellos, las Autoridades competentes de los Estados Contratantes resolverán el caso de común acuerdo.</p>
+    <p class="parrafo_2">3. Cuando en virtud de las disposiciones del párrafo 1 de este artículo, una sociedad sea residente de ambos Estados Contratantes, se considerará residente del Estado Contratante en que se encuentre su sede de dirección efectiva.</p>
+    <p class="articulo">Artículo 5. Establecimiento permanente.</p>
+    <p class="parrafo">1. Para los fines del presente Convenio, la expresión «establecimiento permanente» designa un lugar fijo de negocios en el que una empresa efectúa toda o parte de su actividad.</p>
+    <p class="parrafo">2. La expresión «establecimiento permanente» comprende en especial:</p>
+    <p class="parrafo_2">a) una sede de dirección;</p>
+    <p class="parrafo">b) una sucursal;</p>
+    <p class="parrafo">c) una oficina;</p>
+    <p class="parrafo">d) una fábrica;</p>
+    <p class="parrafo">e) un taller;</p>
+    <p class="parrafo">f)	una mina, pozo de petróleo, cantera o cualquier otro lugar de extracción de recursos naturales;</p>
+    <p class="parrafo">g) obras de construcción o de montaje cuya duración exceda de doce meses.</p>
+    <p class="parrafo_2">3. La expresión «establecimiento permanente» no comprende:</p>
+    <p class="parrafo_2">a) la utilización de instalaciones con el único fin de almacenar, exponer o entregar bienes o mercancías pertenecientes a la empresa;</p>
+    <p class="parrafo">b) el mantenimiento de un depósito de bienes o mercancías pertenecientes a la Empresa con el único fin de almacenarlas, exponerlas o entregarlas;</p>
+    <p class="parrafo">c) el empleo de un depósito de bienes o mercancías pertenecientes a la empresa con el único fin de que sean transformadas por otra empresa;</p>
+    <p class="parrafo">d) el uso de un lugar fijo de negocios con el único fin de comprar bienes o mercancías o de recoger información para la empresa;</p>
+    <p class="parrafo">e) el mantenimiento de un lugar fijo de negocios con el único fin de hacer publicidad, suministrar información, realizar investigaciones científicas o desarrollar otras actividades similares que tengan carácter preparatorio o auxiliar para la empresa.</p>
+    <p class="parrafo_2">4. Una persona que actúa en un Estado Contratante por cuenta de una empresa del otro Estado Contratante, salvo que se trate de un agente independiente comprendido en el párrafo (5) de este artículo, se considera que constituye un establecimiento permanente en el Estado Contratante primeramente mencionado, si tiene y ejerce habitualmente en este Estado Contratante poderes para concluir contratos en nombre de la empresa, a menos que sus actividades se limiten a la compra de bienes o mercancías para la misma.</p>
+    <p class="parrafo">5. No se considera que una empresa de un Estado Contratante tiene establecimiento permanente en el otro Estado Contratante por el mero hecho de que realice actividades en este otro Estado por medio de un corredor, un comisionista general, o cualquier otro mediador que goce de un estatuto independiente, siempre que estas personas actúen dentro del marco ordinario de su actividad.</p>
+    <p class="parrafo">6. El hecho de que una sociedad residente de un Estado Contratante controle o sea controlada por una sociedad residente del otro Estado Contratante o que realice actividades en ese otro Estado (ya sea por medio de un establecimiento permanente o de otra manera), no convierte por sí solo a cualquiera de estas sociedades en establecimiento permanente de la otra.</p>
+    <p class="articulo">Artículo 6. Rentas de los bienes inmuebles.</p>
+    <p class="parrafo">1. Las rentas procedentes de bienes inmuebles, incluidas las derivadas de explotaciones agrícolas y forestales, pueden someterse a imposición en el Estado Contratante en el que tales bienes estén situados.</p>
+    <p class="parrafo">2. La expresión «bienes inmuebles» se entiende definida con arreglo a la ley del Estado Contratante en que los bienes en cuestión estén situados. Dicha expresión comprende, en todo caso, los accesorios de la propiedad inmobiliaria, el ganado y equipo utilizados en las explotaciones agrícolas y forestales, los derechos a los que se apliquen las disposiciones de derecho privado relativos a la propiedad inmobiliaria, el usufructo de bienes inmuebles y los derechos a percibir cánones variables o fijos por la explotación o la concesión de la explotación de yacimientos minerales, fuentes u otras riquezas del suelo; los buques, embarcaciones y aeronaves no se consideran bienes inmuebles.</p>
+    <p class="parrafo">3. Las disposiciones del párrafo 1 de este artículo se aplican a las rentas derivadas de la utilización directa, del arrendamiento o de cualquier otra forma de explotación de bienes inmuebles.</p>
+    <p class="parrafo">4. Las disposiciones de los párrafos 1 y 3 de este artículo se aplican igualmente a las rentas derivadas de los bienes inmuebles de una empresa y de los bienes inmuebles utilizados para la prestación de servicios profesionales.</p>
+    <p class="articulo">Artículo 7. Beneficios de las empresas.</p>
+    <p class="parrafo">1. Los beneficios de una empresa de un Estado Contratante solamente pueden someterse a imposición en este Estado, a no ser que la empresa efectúe operaciones en el otro Estado por medio de un establecimiento permanente situado en él. En este último caso, los beneficios de la empresa pueden someterse a imposición en el otro Estado, pero sólo en la medida en que puedan atribuirse al establecimiento permanente.</p>
+    <p class="parrafo">2. Sin perjuicio de las disposiciones del párrafo 3 de este artículo, cuando una empresa de un Estado Contratante realice negocios en el otro Estado Contratante por medio de un establecimiento permanente situado en él, en cada Estado Contratante se atribuirán al establecimiento permanente los beneficios que éste obtendría si fuese una empresa distinta y separada que realizase idénticas o similares actividades, en las mismas o similares condiciones, y tratase con total independencia con la empresa de la que es establecimiento permanente.</p>
+    <p class="parrafo">3. Para la determinación del beneficio del establecimiento permanente se permitirá la deducción de los gastos realizados para los fines del establecimiento permanente, comprendidos los gastos de dirección y generales de administración realizados para los mismos fines, tanto si se efectúan en el Estado Contratante en que se halle situado el establecimiento permanente como en otra parte.</p>
+    <p class="parrafo">4. No se atribuirá ningún beneficio a un establecimiento permanente por el mero hecho de que éste compre bienes o mercancías para la empresa.</p>
+    <p class="parrafo">5. A los efectos de lo dispuesto en los párrafos anteriores, los beneficios que hayan de atribuirse al establecimiento permanente se determinarán siguiendo el mismo método todos los años, a no ser que existan razones suficientes para proceder en otra forma.</p>
+    <p class="parrafo">6. Cuando los beneficios comprendan rentas reguladas separadamente en otros artículos de este Convenio, las disposiciones de aquellos artículos no quedarán afectadas por las de éste.</p>
+    <p class="articulo">Artículo 8. Navegación marítima y aérea.</p>
+    <p class="parrafo">1. Un residente de un Estado Contratante no estará sujeto a tributación en el otro Estado Contratante por razón de los beneficios derivados de la explotación de naves o aeronaves con excepción de los derivados del tráfico efectuado entre puntos situados en el otro Estado Contratante.</p>
+    <p class="parrafo">2. Las disposiciones del párrafo 1 se aplicarán también a los beneficios obtenidos a través de la participación en un «pool», en una explotación en común o en un organismo internacional de explotación de la navegación marítima o aérea.</p>
+    <p class="articulo">Artículo 9. Empresas asociadas.</p>
+    <p class="parrafo">Cuando:</p>
+    <p class="parrafo_2">a) una Empresa de un Estado Contratante participe, directa o indirectamente, en la dirección, control o capital de una Empresa del otro Estado Contratante, o</p>
+    <p class="parrafo">b) unas mismas personas participen, directa o indirectamente, en la dirección, control o capital de una Empresa de un Estado Contratante y de una Empresa del otro Estado Contratante, y en uno y otro caso, las dos Empresas estén, en sus relaciones comerciales o financieras, unidas por condiciones aceptadas o impuestas, que difieren de las que serían acordadas por Empresas independientes, los beneficios que una de las Empresas habría obtenido de no existir estas condiciones, y que de hecho no se han producido a causa de las mismas, pueden ser incluidos en los beneficios de esta Empresa y sometidos a imposición en consecuencia.</p>
+    <p class="articulo">Artículo 10. Dividendos.</p>
+    <p class="parrafo">1. Los dividendos pagados por una Sociedad residente en España a un residente del Reino Unido pueden someterse a imposición en el Reino Unido. Estos dividendos pueden también someterse a imposición en España, y de acuerdo con la legislación española, pero siendo el beneficiario efectivo de estos dividendos residente del Reino Unido, el impuesto así exigido no puede exceder:</p>
+    <p class="parrafo_2">a) del 10 por 100 del importe bruto de los dividendos si el beneficiario es una Sociedad que posee, directa o indirectamente, el 10 por 100 o más del derecho al voto en la Sociedad que paga los dividendos;</p>
+    <p class="parrafo">b) en todos los demás casos, del 15 por 100 del importe bruto de los dividendos.</p>
+    <p class="parrafo_2">2. Los dividendos pagados por una Sociedad residente del Reino Unido a un residente de España pueden someterse a imposición en España. Estos dividendos pueden también someterse a imposición en el Reino Unido, y de acuerdo con la legislación del Reino Unido, pero siendo el beneficiario efectivo de estos dividendos residente de España, el impuesto así exigido no puede exceder:</p>
+    <p class="parrafo_2">a) del 10 por 100 del importe bruto de los dividendos si el beneficiario es una Sociedad que posee directa o indirectamente el 10 por 100 o más del derecho al voto en la Sociedad que paga los dividendos;</p>
+    <p class="parrafo">b) en todos los demás casos, del 15 por 100 del importe bruto de los dividendos.</p>
+    <p class="parrafo_2">3. Sin embargo, en tanto en cuanto una persona física residente en el Reino Unido tenga derecho a un crédito fiscal respecto de los dividendos pagados por una Sociedad residente en el Reino Unido, se aplicarán en sustitución de las disposiciones del párrafo 2 de este artículo, las establecidas a continuación:</p>
+    <p class="parrafo_2">a) i) Los dividendos pagados por una Sociedad que es residente del Reino Unido a un residente de España pueden someterse a imposición en España.</p>
+    <p class="parrafo">ii)	Cuando un residente de España tenga derecho a un crédito fiscal respecto de dicho dividendo, de acuerdo con lo establecido en el apartado b) de este párrafo, la suma de éste más el crédito fiscal correspondiente puede someterse a imposición en el Reino Unido y, de acuerdo con la legislación de este Estado, a un tipo que no exceda del 15 por 100.</p>
+    <p class="parrafo">iii)	Salvo lo establecido en el apartado a).ii) de este párrafo, los dividendos pagados por una Sociedad residente del Reino Unido, y cuyo beneficiario efectivo sea residente de España, no se someterán a ningún impuesto sobre dichos dividendos en el Reino Unido.</p>
+    <p class="parrafo_2">b) Un residente de España que perciba dividendos de una Sociedad residente del Reino Unido tendrá derecho, sin perjuicio de lo dispuesto en el apartado c) de este párrafo y siempre que sea beneficiario efectivo de los dividendos, al crédito fiscal en una medida equivalente al que habría disfrutado una persona física residente del Reino Unido que hubiera percibido dichos dividendos y, por tanto, a la devolución de cualquier exceso de tal crédito sobre su deuda tributaria en el Reino Unido.</p>
+    <p class="parrafo">c) Las disposiciones del apartado b) de este párrafo no se aplican cuando el beneficiario efectivo de los dividendos sea una Sociedad que, bien sola o bien junto con una o más Entidades asociadas, posea directa o indirectamente el 10 por 100 o más del derecho al voto de la Sociedad que paga los dividendos. A los efectos de este párrafo, se considera que dos Entidades están asociadas cuando una posea directa o indirectamente más del 50 por 100 del derecho al voto en la otra, o una tercera Sociedad detente más del 50 por 100 del derecho al voto en las dos primeras.</p>
+    <p class="parrafo_2">4. El término «dividendos» empleado en este artículo comprende los rendimientos de las acciones u otros derechos, excepto Ios de crédito, que permitan participar de los beneficios, así como las rentas de otras participaciones sociales asimiladas a los rendimientos de las acciones por la legislación fiscal del Estado en que resida la Sociedad que las distribuya, e incluye también cualquier otro concepto (distinto de los intereses cuyo impuesto se reduzca de acuerdo con lo establecido en el artículo 11 del presente Convenio) que, según la ley del Estado Contratante en que resida la Sociedad que paga el dividendo, sea considerado como dividendo o distribución de beneficios de una Sociedad.</p>
+    <p class="parrafo">5. Las disposiciones del párrafo 1, o en su caso de los párrafos 2 y 3 de este artículo, no se aplican cuando el residente de uno de los Estados Contratantes tiene en el otro Estado Contratante un establecimiento permanente y las acciones o participaciones que generan los dividendos se hallan efectivamente vinculadas a dicho establecimiento permanente. En este caso se aplican las disposiciones del artículo 7.</p>
+    <p class="parrafo">6. Si el beneficiario efectivo de un dividendo, residente de un Estado Contratante, posee el 10 por 100 o más de la clase de acciones a las cuales se paga dicho dividendo, no serán de aplicación el párrafo 1, o en su caso los párrafos 2 y 3 de este artículo, en la medida en que éste pueda haber sido pagado exclusivamente con cargo a los beneficios obtenidos o ingresos recibidos por la Sociedad que los paga, en un período finalizado con doce o más meses de antelación a la «fecha de adquisición». A los efectos de este párrafo, la expresión «fecha de adquisición» se refiere al día en que el beneficiario efectivo del dividendo llegó a ser propietario del 10 por 100 o más de la clase de acciones a las que se paga el rendimiento.</p>
+    <p class="parrafo">No obstante, este párrafo no se aplica si el beneficiario efectivo del dividendo demuestra que adquirió las acciones por razones de buena fe comercial y no con el fin primordial de conseguir los beneficios a que da derecho la aplicación del presente artículo.</p>
+    <p class="parrafo">7. Cuando una Sociedad residente de un Estado Contratante obtenga beneficios o rentas procedentes del otro Estado Contratante, ese otro Estado no puede someter a ninguna imposición a los dividendos pagados por la Sociedad y cuyos beneficiarios efectivos no sean personas residentes de este otro Estado, o someter los beneficios no distribuidos de la Sociedad a un impuesto sobre los mismos, aunque los dividendos pagados o los beneficios no distribuidos consistan, en todo o en parte, en beneficios o rentas procedentes de este otro Estado. No obstante lo anterior, siempre que una Sociedad residente de un Estado Contratante tenga un establecimiento permanente en el otro Estado Contratante, puede ser sometida en él a cualquier impuesto retenido en la fuente establecido por la legislación interna de ese otro Estado Contratante, pero tal impuesto no excederá del 15 por 100 de los beneficios distribuidos de la Sociedad que sean atribuibles al establecimiento, no pudiendo incluirse, naturalmente, como beneficio distribuido el Impuesto de Sociedades.</p>
+    <p class="articulo">Artículo 11. Intereses.</p>
+    <p class="parrafo">1. Los intereses procedentes de un Estado Contratante, y cuyo beneficiario efectivo sea residente del otro Estado Contratante, pueden someterse a imposición en este otro Estado.</p>
+    <p class="parrafo">2. Sin embargo, estos intereses pueden someterse a imposición en el Estado Contratante del que proceden, y de acuerdo con la legislación de este Estado, pero el impuesto así exigido no puede exceder del 12 por 100 del importe bruto de los intereses.</p>
+    <p class="parrafo">3. El término «intereses» usado en este artículo comprende los rendimientos de la Deuda Pública y de los bonos y obligaciones, con o sin garantía hipotecaria y con derecho o no a participar en beneficios, y demás créditos de cualquier clase, así como todas las demás rentas, asimiladas a las procedentes de préstamos, por la legislación fiscal del Estado del que las rentas procedan.</p>
+    <p class="parrafo">4. Las disposiciones de los párrafos 1 y 2 de este artículo no se aplican si el beneficiario efectivo de los intereses, residente de un Estado Contratante, ejerce en el otro Estado Contratante del que proceden los intereses, un comercio o negocio mediante un establecimiento permanente situado en él, o presta en ese otro Estado servicios profesionales mediante una base fija y el crédito que genera los intereses está vinculado efectivamente con dicho establecimiento permanente o base fija. En este caso se aplicarán las disposiciones del artículo 7 o del artículo 14, según proceda.</p>
+    <p class="parrafo">5. Los intereses se consideran procedentes de un Estado Contratante cuando el deudor es el propio Estado, una de sus subdivisiones políticas o Corporaciones locales o un residente de ese Estado. Sin embargo, cuando el deudor de los intereses, sea o no residente de un Estado Contratante, posee en un Estado Contratante un establecimiento permanente en relación con el cual se haya contraído la deuda que da origen a los intereses y este establecimiento soporte el pago de los mismos, los intereses se considerarán procedentes del Estado Contratante donde esté situado el establecimiento permanente.</p>
+    <p class="parrafo">6. Cualquier disposición legal de uno de los Estados Contratantes en virtud de la cual los intereses pagados por una Sociedad a otra se consideren como un dividendo o distribución, que no es deducible como gasto al calcular los beneficios sometidos a imposición de la Sociedad pagadora, no se aplicará cuando los intereses se paguen a una Sociedad residente del otro Estado Contratante que sea su beneficiaria efectiva. Esta norma no será aplicable cuando más del 50 por 100 del derecho al voto de la Sociedad últimamente mencionada sea poseído, directa o indirectamente, por residentes del Estado mencionado en primer lugar.</p>
+    <p class="parrafo">7. La limitación de impuesto establecida en el párrafo 2 de este artículo no se aplicará a los intereses de créditos transmitidos en mercado de valores cuando el beneficiario efectivo de los intereses:</p>
+    <p class="parrafo_2">a) no esté sujeto a imposición respecto a tales intereses en el Estado Contratante del que es residente, y</p>
+    <p class="parrafo">b) ceda o se comprometa a ceder el crédito del que proceden tales intereses, dentro de los tres meses desde la fecha en que dicho beneficiario efectivo lo adquirió.</p>
+    <p class="parrafo_2">8. Cuando debido a relaciones especiales existentes entre el deudor y el beneficiario efectivo de los intereses, o entre ambos y cualquier otra persona, el importe de los intereses pagados, habida cuenta del crédito por el que se paguen, exceda del importe que habría sido acordado por el deudor y el beneficiario en ausencia de tales relaciones, las disposiciones de este artículo se aplicarán solamente a este último importe. En este caso, el exceso podrá someterse a imposición de acuerdo con la legislación de cada Estado Contratante, teniendo en cuenta las demás disposiciones de este Convenio.</p>
+    <p class="parrafo">9. Las disposiciones de este artículo no se aplican si el crédito por el que se pagan los intereses se creó o cedió con el fin primordial de conseguir los beneficios contenidos en este artículo y no por razones de buena fe comercial.</p>
+    <p class="articulo">Artículo 12. Cánones.</p>
+    <p class="parrafo">1. Los cánones procedentes de un Estado Contratante, y cuyo beneficiario efectivo sea un residente del otro Estado Contratante, pueden someterse a imposición en este otro Estado.</p>
+    <p class="parrafo">2. Sin embargo, estos cánones pueden someterse a imposición en el Estado Contratante del que procedan y de acuerdo con la legislación de este Estado, pero el impuesto así exigido no puede exceder del 10 por 100 del importe bruto de los cánones.</p>
+    <p class="parrafo">3. El término «cánones» usado en este artículo comprende las cantidades de cualquier clase pagadas por el uso o la concesión de uso de derechos de autor sobre obras literarias, artísticas o científicas (incluidas las películas cinematográficas, filmes o cintas de grabación de programas de televisión o radiodifusión), de patentes, marcas de fábricas o de comercio, dibujos o modelos, planos, fórmulas o procedimientos secretos, así como por el uso o la concesión de uso de equipos industriales, comerciales o científicos y por informaciones relativas a experiencias industriales, comerciales o científicas.</p>
+    <p class="parrafo">4. Las disposiciones de los párrafos 1 y 2 de este artículo no se aplican si el beneficiario efectivo de los cánones, residente de un Estado Contratante, ejerce en el otro Estado Contratante del que procede los cánones un comercio o negocio mediante un establecimiento permanente, o presta en ese otro Estado servicios profesionales con base fija, y el derecho o propiedad por los que se pagan los cánones está vinculado efectivamente con dicho establecimiento permanente o base fija. En este caso, se aplican las disposiciones del artículo 7 o del artículo 14, según proceda.</p>
+    <p class="parrafo">5. Los cánones se consideran procedentes de un Estado Contratante cuando el deudor es el propio Estado, una de sus subdivisiones políticas o corporaciones locales o un residente de ese Estado. Sin embargo, cuando el deudor de los cánones sea o no residente de un Estado Contratante, tenga en un Estado Contratante un establecimiento permanente al cual está vinculada la obligación de pagar los cánones y este establecimiento soporte el pago de los mismos, los cánones se considerarán procedentes del Estado Contratante donde se halle el establecimiento permanente.</p>
+    <p class="parrafo">6. Cuando debido a relaciones especiales existentes entre el deudor y el beneficiario efectivo de los cánones, o entre ambos y cualquier otra persona, el importe de los cánones pagados, habida cuenta del uso, derecho o información por los que se paguen, exceda del importe que habría sido acordado por el deudor y el beneficiario, en ausencia de tales relaciones, las disposiciones de este artículo no se aplicarán más que a este último importe. En este caso, el exceso podrá someterse a imposición, de acuerdo con la legislación de cada Estado Contratante, teniendo en cuenta las demás disposiciones de este Convenio.</p>
+    <p class="parrafo">7. Las disposiciones de este artículo no se aplican si el derecho o propiedad que generan los cánones se crearon o cedieron con el fin primordial de obtener los beneficios de este artículo, y no por razones de buena fe comercial.</p>
+    <p class="articulo">Artículo 13. Ganancias de capital.</p>
+    <p class="parrafo">1. Las ganancias derivadas de la enajenación de bienes inmuebles, conforme se definen en el párrafo 2 del artículo 6, pueden someterse a imposición en el Estado Contratante en el que estén sitos.</p>
+    <p class="parrafo">2. Las ganancias derivadas de la enajenación de bienes muebles que formen parte del activo de un establecimiento permanente que una empresa de un Estado Contratante tenga en el otro Estado Contratante, o de bienes muebles que pertenezcan a una base fija que un residente de un Estado Contratante posea en el otro Estado Contratante para la prestación de servicios profesionales, comprendidas las ganancias derivadas de la enajenación del establecimiento permanente (sólo o con el conjunto de la empresa) o de la base fija, pueden someterse a imposición en este otro Estado.</p>
+    <p class="parrafo">3. No obstante las disposiciones del párrafo 2 de este artículo, las ganancias obtenidas por un residente de un Estado Contratante por la enajenación de buques o aeronaves utilizados en tráfico internacional y de bienes muebles afectos a la explotación de tales buques y aeronaves sólo pueden someterse a imposición en ese Estado Contratante.</p>
+    <p class="parrafo">4. Las ganancias derivadas de la enajenación de cualquier otro bien distinto de los mencionados en los párrafos 1, 2 y 3 de este artículo, solamente pueden someterse a imposición en el Estado Contratante del que sea residente el transmitente.</p>
+    <p class="articulo">Artículo 14. Profesiones independientes.</p>
+    <p class="parrafo">1. Las rentas obtenidas por un residente de un Estado Contratante por la prestación de servicios profesionales o de otras actividades independientes de carácter análogo sólo pueden someterse a imposición en este Estado, a no ser que disponga regularmente de una base fija en el otro Estado Contratante para la realización de sus actividades. Si dispone de esa base fija, las rentas pueden ser sometidas a imposición en el otro Estado Contratante, pero sólo en la medida en que puedan ser atribuibles a esa base fija.</p>
+    <p class="parrafo">2. La expresión «servicios profesionales» comprende especialmente las actividades independientes de carácter científico, literario, artístico, educativo o docente, así como las actividades independientes de los Médicos, Abogados, Ingenieros, Arquitectos, Odontólogos y Contadores.</p>
+    <p class="articulo">Artículo 15. Profesiones dependientes.</p>
+    <p class="parrafo">1. Sin perjuicio de las disposiciones de los artículos 16, 18, 19 y 21, los sueldos, salarios y remuneraciones similares obtenidas por un residente de un Estado Contratante por razón de un empleo sólo pueden someterse a imposición en este Estado, a no ser que el empleo se ejerza en el otro Estado Contratante. Si el empleo se ejerce en este último Estado, las remuneraciones derivadas del mismo pueden someterse a imposición en este Estado.</p>
+    <p class="parrafo">2. No obstante las disposiciones del párrafo 1 de este artículo, las remuneraciones obtenidas por un residente de un Estado Contratante por razón de un empleo ejercido en el otro Estado Contratante sólo pueden someterse a imposición en el primer Estado si:</p>
+    <p class="parrafo_2">a) el perceptor permanece en el otro Estado durante uno o varios períodos que no excedan en total de ciento ochenta y tres días en el curso del año fiscal de ese otro Estado; y</p>
+    <p class="parrafo">b) las remuneraciones se pagan por, o en nombre de, un empresario que no es residente del otro Estado; y</p>
+    <p class="parrafo">c) las remuneraciones no son pagadas con cargo a un establecimiento permanente o una base fija que la empresa o el profesional tiene en el otro Estado.</p>
+    <p class="parrafo_2">3. No obstante las precedentes disposiciones de este artículo, las remuneraciones obtenidas por razón de un empleo ejercido a bordo de un buque o aeronave en tráfico internacional pueden someterse a imposición en el Estado Contratante del que es residente la persona que obtiene los beneficios de la explotación del buque o aeronave.</p>
+    <p class="articulo">Artículo 16. Participaciones de Consejeros.</p>
+    <p class="parrafo">1. Las participaciones de Consejeros y otras retribuciones similares que un residente de un Estado Contratante obtiene como miembro de un Consejo de Administración de una sociedad residente del otro Estado Contratante pueden someterse a imposición en este otro Estado.</p>
+    <p class="articulo">Artículo 17. Artistas y deportistas.</p>
+    <p class="parrafo">1. No obstante las disposiciones de los artículos 14 y 15, las rentas obtenidas por los profesionales del espectáculo, tales como los artistas de teatro, cine, radiodifusión y televisión y los músicos, así como por los deportistas, por sus actividades personales en este concepto, pueden someterse a imposición en el Estado Contratante donde actúen.</p>
+    <p class="parrafo">2. Cuando las rentas relativas a las actividades personales de uno de estos profesionales del espectáculo o deportista no se imputen a ese profesional o deportista, sino a otra persona interpuesta, esa renta puede, no obstante las disposiciones de los artículos 7, 14 y 15, someterse a imposición en el Estado Contratante en el que tengan lugar las actividades del profesional de espectáculo o el deportista.</p>
+    <p class="articulo">Artículo 18. Pensiones y anualidades.</p>
+    <p class="parrafo">1. Sin perjuicio de las disposiciones del artículo 19, las pensiones y otras remuneraciones similares pagadas en consideración a un empleo pasado a un residente de un Estado Contratante, así como las anualidades pagadas a este residente, sólo podrán someterse a imposición en ese Estado.</p>
+    <p class="parrafo">2. El término «anualidad» significa una suma prefijada que ha de pagarse periódicamente en épocas establecidas a lo largo de la vida de una persona o durante un período de tiempo determinado o determinable a cambio del pago de una cantidad adecuadamente equivalente en dinero o signo que lo represente.</p>
+    <p class="articulo">Artículo 19. Remuneraciones públicas.</p>
+    <p class="parrafo">1. Las remuneraciones, excluidas las pensiones, pagadas a una persona física con cargo a los fondos públicos del Reino Unido o Irlanda del Norte, o a los fondos de cualquier autoridad local del Reino Unido, en consideración a los servicios prestados al Gobierno del Reino Unido o de Irlanda del Norte, o a una autoridad local del Reino Unido, sólo pueden someterse a imposición en el Reino Unido. Sin embargo, tales remuneraciones sólo pueden someterse a imposición en España si los servicios se prestan en España y el beneficiario es un residente de España que:</p>
+    <p class="parrafo_2">a) posee la nacionalidad española; o</p>
+    <p class="parrafo">b) no ha adquirido la condición de residente de España con la sola finalidad de prestar aquellos servicios.</p>
+    <p class="parrafo_2">2. Las remuneraciones, excluidas las pensiones, pagadas a una persona física por el Estado español, una de sus subdivisiones políticas o corporaciones locales, en consideración a servicios prestados al Estado a una de sus subdivisiones políticas o corporaciones locales, sólo pueden someterse a imposición en España. Sin embargo, estas remuneraciones sólo pueden someterse a imposición en el Reino Unido, si los servicios se prestan en el Reino Unido y el beneficiario es un residente del Reino Unido que:</p>
+    <p class="parrafo_2">a) posee la nacionalidad del Reino Unido; o</p>
+    <p class="parrafo">b) no ha adquirido la condición de residente del Reino Unido con la sola finalidad de prestar aquellos servicios.</p>
+    <p class="parrafo_2">3. Las pensiones pagadas a una persona física por, o con cargo a fondos creados por, el Reino Unido o Irlanda del Norte, o por una autoridad local del Reino Unido, en consideración a servicios prestados al Gobierno del Reino Unido, o a Irlanda del Norte, o a una autoridad local del Reino Unido, sólo pueden someterse a imposición en el Reino Unido. Sin embargo, estas pensiones sólo pueden someterse a imposición en España si el beneficiario es nacional y residente de España.</p>
+    <p class="parrafo">4. Las pensiones pagadas a una persona física por, o con cargo a fondos creados por, el Estado español, una de sus subdivisiones políticas o corporaciones locales, a una persona física en consideración a servicios prestados a España, a una de sus subdivisiones políticas o corporaciones locales, sólo pueden someterse a imposición en España. Sin embargo, estas pensiones sólo pueden someterse a imposición en el Reino Unido si el beneficiario es nacional y residente del Reino Unido.</p>
+    <p class="parrafo">5. Las disposiciones de los artículos 15, 16 y 18 se aplican a las remuneraciones y pensiones pagadas en consideración a servicios prestados en desarrollo de una actividad comercial o industrial, ejercida por un Estado Contratante (incluyendo en el caso del Reino Unido las ejercidas por el Gobierno de Irlanda del Norte), o una de sus subdivisiones políticas o corporaciones locales.</p>
+    <p class="articulo">Artículo 20. Estudiantes.</p>
+    <p class="parrafo">1. Un estudiante o una persona en prácticas que es o fue en período inmediatamente anterior a su visita a un Estado Contratante residente del otro Estado Contratante, y que visita el primer Estado Contratante con el único fin de proseguir sus estudios o formación, no estará sometido a impuesto en el primer Estado Contratante respecto a las sumas que reciba para su sostenimiento, estudios o formación, siempre que tales pagos procedan del exterior de ese Estado.</p>
+    <p class="articulo">Artículo 21. Profesores.</p>
+    <p class="parrafo">1. Una persona física que por invitación de una universidad, establecimiento de enseñanza superior, escuela u otra institución educativa análoga, reconocida en uno de los Estados Contratantes, visita ese Estado Contratante con el único fin de enseñar en dicha institución educativa por un período que no exceda de dos años, y que es o fue en el período inmediatamente anterior a su visita residente del otro Estado Contratante, no estará sometida a imposición en ese primer Estado Contratante respecto a las remuneraciones que perciban como consecuencia de tal actividad docente.</p>
+    <p class="articulo">Artículo 22. Rentas no mencionadas expresamente.</p>
+    <p class="parrafo">1. Las rentas de un residente de un Estado Contratante, cualquiera que sea su naturaleza o procedencia y que no se hayan mencionado expresamente en los artículos anteriores de este Convenio, sólo pueden someterse a imposición en ese Estado.</p>
+    <p class="parrafo">2. Las disposiciones del párrafo 1 de este artículo no se aplican si el beneficiario de las rentas, residente de un Estado Contratante, realiza negocios en el otro Estado Contratante mediante un establecimiento permanente situado en él o presta servicios profesionales en ese otro Estado con base fija, y el derecho o propiedad respecto a los cuales se paga la renta se hallan efectivamente vinculados con el citado establecimiento permanente o base fija. En este caso, se aplican las disposiciones del artículo 7 o del artículo 14, según proceda.</p>
+    <p class="articulo">Artículo 23. Patrimonio.</p>
+    <p class="parrafo">1. El patrimonio constituido por bienes inmuebles, tal y como se definen en el párrafo 2 del artículo 6, puede someterse a imposición en el Estado Contratante en el que aquéllos estén sitos.</p>
+    <p class="parrafo">2. El capital representado por bienes muebles que formen parte del activo de un establecimiento permanente de una Empresa, o por los bienes muebles que pertenezcan a una base fija utilizada para la prestación de servicios profesionales, pueden someterse a imposición en el Estado Contratante en el que el establecimiento permanente o la base fija estén sitos.</p>
+    <p class="parrafo">3. Sin perjuicio de las disposiciones del párrafo 2 de este artículo, los buques y aeronaves explotados en tráfico internacional y los bienes muebles afectos a su explotación sólo serán sometidos a imposición en el Estado Contratante del que el empresario sea residente.</p>
+    <p class="parrafo">4. Todos los demás elementos del patrimonio de un residente de un Estado Contratante sólo serán sometidos a imposición en ese Estado.</p>
+    <p class="articulo">Artículo 24. Método para evitar la doble imposición.</p>
+    <p class="parrafo">1. Sin perjuicio de lo establecido en la legislación del Reino Unido respecto de la deducción, en concepto de crédito frente al impuesto del Reino Unido, de cualquier impuesto exigible en el extranjero y no afectando a dicho principio general:</p>
+    <p class="parrafo_2">a) El impuesto español exigible según la legislación española, y de acuerdo con el presente Convenio, ya sea directamente o por retención, sobre beneficios, rentas o ganancias sujetas a gravamen y procedentes de España (excluyendo en el caso de dividendos el impuesto sobre los beneficios con cargo a los que el dividendo se paga), se deducirá, en concepto de crédito, de cualquier impuesto del Reino Unido que tome como base los mismos beneficios, rentas o ganancias sobre los que se calculó el impuesto español.</p>
+    <p class="parrafo">b) En el caso de un dividendo pagado por una sociedad residente de España a una sociedad residente del Reino Unido, y que posea directa o indirectamente el 10 por 100 o más del derecho al voto en la Sociedad que paga el dividendo, la deducción en concepto de crédito tendrá en cuenta el impuesto español que se haya exigido a la sociedad respecto de los beneficios con cargo a los que se paga el dividendo, además de cualquier impuesto español deducible según las disposiciones del apartado a) de este párrafo.</p>
+    <p class="parrafo_2">2. En el caso de España:</p>
+    <p class="parrafo_2">a) Cuando un residente de España obtenga rentas que, de acuerdo con las disposiciones del presente Convenio, puedan someterse a imposición en el Reino Unido, España deducirá del impuesto sobre la renta de esa persona una cantidad igual a la del impuesto pagado en el Reino Unido; sin embargo, dicha deducción no podrá exceder de aquella parte del impuesto computada antes de que fuera efectuada la deducción, que corresponde a las rentas obtenidas en el Reino Unido. El impuesto pagado en el Reino Unido se deducirá también de los impuestos españoles a cuenta de los generales sobre la renta, de acuerdo con las disposiciones de este párrafo.</p>
+    <p class="parrafo">b) Cuando en los beneficios de una sociedad residente de España se incluyan dividendos de una sociedad residente del Reino Unido, la primera Sociedad tiene derecho a la misma deducción que se habría aplicado si ambas sociedades hubieran sido residentes de España.</p>
+    <p class="parrafo">c) Si una sociedad residente del Reino Unido paga dividendos a una sociedad residente de España, respecto de los cuales, de acuerdo con las disposiciones del apartado c) del párrafo 3 del artículo 10, la sociedad últimamente mencionada no tenga derecho al crédito fiscal a que se refiere el apartado b) de aquel párrafo, se considerará, a los efectos de este párrafo, que dichos dividendos se han gravado en el Reino Unido por un importe equivalente a quince ochenta y cincoavos de su importe.</p>
+    <p class="parrafo_2">3. A los efectos del párrafo 1 de este artículo, la expresión «impuesto español exigible» se considera que incluye todo importe que se hubiere exigido en concepto de impuesto español en cualquier ejercicio de no haberse aplicado una reducción en el impuesto devengado en dicho ejercicio o parte del mismo, en virtud de:</p>
+    <p class="parrafo_2">a) el párrafo (2A) del artículo 20 o el artículo 21 del Decreto 3357/1967, de 23 de diciembre, en tanto se hallen en vigor y no hayan sido modificadas desde la fecha de la firma del presente Convenio o, en su caso, de serlo, lo hayan sido sólo en aspectos secundarios que no afecten a su carácter general; o</p>
+    <p class="parrafo">b) cualquier otra disposición que pueda adaptarse en el futuro concediendo una exención o reducción del impuesto, que las Autoridades competentes de los Estados Contratantes convengan que es de carácter sustancialmente similar, mientras no se hayan modificado ulteriormente o, en caso de serlo, lo haya sido solamente en aspectos secundarios que no afecten a su carácter general.</p>
+    <p class="parrafo">Siempre que:</p>
+    <p class="parrafo_2">i)	al determinar la cantidad que habría de exigirse como impuesto español a que se refiere este párrafo, se tengan en cuenta las disposiciones del párrafo 2 del artículo 11 y del párrafo 2 del artículo 12; y</p>
+    <p class="parrafo">ii)	la deducción del impuesto del Reino Unido no se conceda en virtud de este párrafo respecto a la renta de cualquier fuente, si dicha renta se origina después de transcurrir diez años desde que se inició la aplicación de la exención o reducción del impuesto español a la renta de dicha fuente.</p>
+    <p class="parrafo_2">4. A los efectos de los párrafos 1 y 2 de este artículo, los beneficios, rentas y ganancias de capital cuyo beneficiario efectivo sea un residente de un Estado Contratante, y que pueden ser sometidos a imposición en el otro Estado Contratante de acuerdo con el presente Convenio, se considerará que proceden de fuentes radicadas en ese otro Estado Contratante.</p>
+    <p class="articulo">Artículo 25. No discriminación.</p>
+    <p class="parrafo">1. Los nacionales de un Estado Contratante no serán sometidos en el otro Estado Contratante a ningún impuesto ni obligación relativa al mismo, que no se exijan o sean más gravosos que aquellos a los que estén o puedan estar sometidos los nacionales de este último Estado que se encuentran en las mismas condiciones.</p>
+    <p class="parrafo">2. Los apátridas residentes de un Estado Contratante no serán sometidos en ninguno de los Estados Contratantes a ningún impuesto ni obligación relativa al mismo que no se exijan o que sean más gravosos que aquellos a los que estén o puedan estar sometidos los nacionales del Estado de que se trate, que se encuentran en las mismas condiciones.</p>
+    <p class="parrafo">3. Sin perjuicio de las disposiciones del párrafo 7 del artículo 10, un establecimiento permanente que una empresa de un Estado Contratante posea en el otro Estado Contratante no será sometido a imposición en este Estado de manera menos favorable que las empresas de este último Estado que realicen las mismas actividades.</p>
+    <p class="parrafo">4. Las empresas de un Estado Contratante cuyo capital esté en todo o en parte poseído o controlado, directa o indirectamente, por uno o más residentes del otro Estado Contratante, no serán sometidas en el Estado Contratante citado en primer lugar a ningún impuesto ni obligación relativa al mismo que no se exijan o que sean más gravosos que aquellos a los que estén o puedan estar sometidas las empresas similares del primer Estado.</p>
+    <p class="parrafo">5. No podrá interpretarse este artículo en el sentido de considerar que obliga a un Estado Contratante a conceder a las personas físicas que no sean residentes de ese Estado las bonificaciones personales, deducciones y reducciones a fines impositivos que se conceden a las personas físicas que sean residentes.</p>
+    <p class="parrafo">6. En el presente artículo el término «imposición» incluye todos los impuestos, cualquiera que sea su naturaleza y denominación.</p>
+    <p class="articulo">Artículo 26. Procedimiento amistoso.</p>
+    <p class="parrafo">1. Cuando un residente de un Estado Contratante considere que las medidas tomadas por uno o ambos Estados Contratantes implican o pueden implicar para él un gravamen que no esté conforme con el presente Convenio, podrá, con independencia de los recursos previstos por la legislación nacional de los Estados, someter su caso a la Autoridad competente del Estado Contratante del que es residente.</p>
+    <p class="parrafo">2. Esta Autoridad competente, si la reclamación le parece fundada y si ella misma no está en condiciones de adoptar una solución satisfactoria, hará lo posible por resolver la cuestión de común acuerdo con la Autoridad competente del otro Estado Contratante, a fin de evitar la imposición que no se ajuste al presente Convenio.</p>
+    <p class="parrafo">3. Las Autoridades competentes de los Estados Contratante harán lo posible por resolver de común acuerdo las dificultades o dudas que plantee la interpretación o aplicación del presente Convenio.</p>
+    <p class="parrafo">4. Las Autoridades competentes de los Estados Contratante podrán comunicarse directamente entre sí, a fin de lograr los acuerdos a que se refieren los párrafos anteriores.</p>
+    <p class="articulo">Artículo 27. Intercambio de información.</p>
+    <p class="parrafo">1. Las Autoridades competentes de los Estados Contratantes intercambiarán las informaciones necesarias para la aplicación de las disposiciones del presente Convenio, bien para prevenir el fraude, bien para la aplicación de las disposiciones correspondientes contra el fraude de ley en relación con los impuestos objeto del presente Convenio. Las informaciones así intercambiadas serán mantenidas secretas y no se podrán revelar a ninguna persona (incluyendo los Tribunales y organismos administrativos) que no esté encargada de la liquidación o recaudación, los procedimientos o las reclamaciones en relación con los impuestos objeto del presente Convenio.</p>
+    <p class="parrafo">2. Las disposiciones del párrafo 1 no pueden en ningún caso interpretarse en el sentido de que imponen a la Autoridad competente de uno u otro de los Estados Contratantes la obligación de:</p>
+    <p class="parrafo_2">a) adoptar medidas administrativas contrarias a su legislación o práctica administrativa o a las del otro Estado Contratante;</p>
+    <p class="parrafo">b) transmitir informaciones que no pueden obtener sobre la base de su legislación o práctica administrativa normal o de las del otro Estado Contratante;</p>
+    <p class="parrafo">c) facilitar datos que revelen secretos comerciales, industriales, profesionales o de procedimientos comerciales o industriales, o informaciones cuya comunicación sea contraria al orden público.</p>
+    <p class="articulo">Artículo 28. Funcionarios diplomáticos y consulares.</p>
+    <p class="parrafo">Las disposiciones del presente Convenio no afectan a los privilegios fiscales que disfrutan los funcionarios diplomáticos o consulares de acuerdo con los principios generales del Derecho Internacional o en virtud de acuerdos especiales.</p>
+    <p class="articulo">Artículo 29. Extensión territorial.</p>
+    <p class="parrafo">1. El presente Convenio puede extenderse, bien en su totalidad o con modificaciones, a cualquier territorio de cuyas relaciones internacionales sean responsables uno u otro de los Estados Contratantes, y donde se exijan impuestos de naturaleza sustancialmente análoga a aquellos a los que se aplica el presente Convenio. Tal extensión surtirá efectos desde la misma fecha, y estará sometida a las modificaciones y condiciones, incluyendo las relativas a la denuncia, que se especifiquen y concierten entre los Estados Contratantes en Notas que se intercambiarán por vía diplomática.</p>
+    <p class="parrafo">2. A menos que los Estados Contratantes acuerden lo contrario, la denuncia del presente Convenio pondrá fin a su aplicación en cualquier territorio al que se haya extendido siguiendo las disposiciones de este artículo.</p>
+    <p class="articulo">Artículo 30. Entrada en vigor.</p>
+    <p class="parrafo">1. El presente Convenio será sometido a ratificación y los correspondientes instrumentos de ratificación serán intercambiados en Madrid lo antes posible.</p>
+    <p class="parrafo">2. El presente Convenio entrará en vigor el trigésimo día subsiguiente a la fecha en que se intercambien los instrumentos de ratificación y sus disposiciones se aplicarán:</p>
+    <p class="parrafo_2">a) En el Reino Unido:</p>
+    <p class="parrafo_2">i)	respecto al impuesto sobre la renta y al impuesto sobre ganancias de capital, a partir del ejercicio fiscal que empiece el día 6 de abril del año natural en que el presente Convenio entre en vigor, o después;</p>
+    <p class="parrafo">ii)	en cuanto al impuesto sobre sociedades, a partir del ejercicio fiscal que empiece el día 1 de abril del año natural en que el presente Convenio entre en vigor, o más tarde.</p>
+    <p class="parrafo_2">b) En España:</p>
+    <p class="parrafo_2">En lo relativo al impuesto español, a partir del ejercicio que empiece el día 1 del año natural en que el presente Convenio entre en vigor, o con posterioridad.</p>
+    <p class="parrafo_2">3. El Acuerdo entre los Estados Contratantes, establecido por intercambio de notas, de fecha 21 de diciembre de 1968, para la exención recíproca de impuestos a las empresas de transporte aéreo, dejará de tener efecto para los impuestos y períodos en los que lo tenga el presente Convenio.</p>
+    <p class="articulo">Artículo 31. Denuncia.</p>
+    <p class="parrafo">El presente Convenio permanecerá en vigor hasta que sea denunciado por uno de los Estados Contratantes. Cualquiera de los Estados Contratantes puede denunciar el Convenio, mediante notificación escrita de denuncia entregada al otro Estado Contratante por vía diplomática, siempre que tal notificación se curse al menos seis meses antes de la terminación del año natural. En este caso, el Convenio dejará de tener efecto:</p>
+    <p class="parrafo_2">a) En el Reino Unido:</p>
+    <p class="parrafo_2">i)	respecto al impuesto sobre la renta y al impuesto sobre ganancias del capital, a partir del ejercicio fiscal que empiece el día 6 de abril del año natural siguiente a aquel en que se efectúe la notificación, o después;</p>
+    <p class="parrafo">ii)	en cuanto al impuesto de sociedades, a partir del ejercicio fiscal que empiece el día 1 de abril del año natural siguiente a aquel en que se haga la notificación, o más tarde.</p>
+    <p class="parrafo_2">b) En España:</p>
+    <p class="parrafo_2">En lo relativo al impuesto español, a partir del ejercicio que empiece el día 1 de enero del año natural siguiente a aquel en que se efectúe la notificación, o con posterioridad.</p>
+    <p class="parrafo_2">En fe de lo cual, los Plenipotenciarios de los dos Estados Contratantes han firmado el presente Convenio.</p>
+    <p class="parrafo">Hecho por duplicado en Londres el 21 de octubre de 1975, en lengua española e inglesa, siendo ambos textos igualmente fehacientes.</p>
+    <table class="sinbordes">
+      <tr>
+        <td>
+          <p class="cuerpo_tabla_centro">Por el Gobierno del Reino Unido de Gran Bretaña e Irlanda del Norte,</p>
+        </td>
+        <td>
+          <p class="cuerpo_tabla_centro">Por el Gobierno de España,</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="cuerpo_tabla_centro">
+            <em>Roy Hattersley,</em>
+          </p>
+        </td>
+        <td>
+          <p class="cuerpo_tabla_centro">
+            <em>Manuel Fraga Iribarne,</em>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="cuerpo_tabla_centro">Ministro de Estado</p>
+        </td>
+        <td>
+          <p class="cuerpo_tabla_centro">Embajador</p>
+        </td>
+      </tr>
+    </table>
+    <p class="parrafo_2">El presente Convenio entrará en vigor el 25 de noviembre de 1976, treinta días después del Canje de Instrumentos de Ratificación efectuado el 26 de octubre de 1976, en conformidad con lo establecido en su artículo 30.2.</p>
+    <p class="parrafo_2">Lo que se hace público para conocimiento general.</p>
+    <p class="parrafo">[ignorar]Madrid, 28 de octubre de 1976.–El Secretario General Técnico del Ministerio de Asuntos Exteriores, Fernando Arias-Salgado y Montalvo.</p>
+  </texto>
+</documento>

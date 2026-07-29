@@ -1,14 +1,19 @@
 """Descarga de la API de datos abiertos del BOE la normativa de residencia fiscal.
 
-Es el equivalente normativo de bajarse los PDF del CENDOJ: deja en `normativa/`
-el XML tal cual lo sirve el BOE, sin reescribir nada, más un `manifest.json` con
-el hash y la fecha de actualización de cada norma. `export_normativa.py` trabaja
-después sobre esos ficheros, ya sin red.
+Es el equivalente normativo de bajarse los PDF del CENDOJ: deja en
+`normativa/es/` el XML tal cual lo sirve el BOE, sin reescribir nada, más un
+`manifest.json` con el hash y la fecha de actualización de cada norma.
+`export_normativa.py` trabaja después sobre esos ficheros, ya sin red.
+
+**Este script es el lector de España.** Habla solo con la API del BOE y no
+pretende ser genérico: otra jurisdicción tendrá otra fuente, otro formato y otra
+noción de consolidación, y su lector vivirá en su propio módulo escribiendo en
+`normativa/<código ISO>/`. El contrato común está en `docs/NORMATIVA.md`.
 
 Se descarga el **texto íntegro** de cada norma aunque solo se publiquen algunos
 preceptos: la fuente completa es lo que hace auditable la selección.
 
-    uv run python descargar_normativa.py --output-dir normativa
+    uv run python descargar_normativa.py --output-dir normativa/es
 """
 
 from __future__ import annotations
@@ -37,15 +42,29 @@ NUCLEO: tuple[str, ...] = (
 )
 
 # Normas derogadas: ya no están en la base consolidada, así que se descarga su
-# publicación original en el diario.
+# publicación original en el diario. El BOE no las borra, solo las saca del
+# texto consolidado, y varias sentencias del corpus siguen aplicándolas.
 NUCLEO_DEROGADO: dict[str, str] = {
     # Rige los ejercicios 2005-2006, que sí aparecen en el corpus de sentencias.
     "BOE-A-2004-4347": "RDLeg 3/2004, TR del IRPF, derogado por la Ley 35/2006",
 }
 
-# Los convenios de doble imposición no se listan a mano: se localizan por título
-# en el índice de legislación consolidada, que es la lista viva del BOE.
+# Los convenios de doble imposición vigentes no se listan a mano: se localizan
+# por título en el índice de legislación consolidada, que es la lista viva del
+# BOE.
 FILTRO_CDI = "doble imposici"
+
+# Convenios sustituidos, que por eso ya no aparecen en ese índice. Se citan en
+# sentencias del corpus porque regían el ejercicio enjuiciado, así que hay que
+# bajarlos del diario igual que las normas estatales derogadas.
+CDI_DEROGADO: dict[str, str] = {
+    # SAN/STS sobre ejercicios anteriores a 2013 lo aplican; sustituido por el
+    # convenio de 2013 (BOE-A-2014-373) tras la denuncia de 2012.
+    "BOE-A-1994-20084": "CDI España-Argentina de 1992, sustituido por el de 2013",
+    # Sustituido por el convenio de 2013 (BOE-A-2014-5171); una sentencia del
+    # corpus razona expresamente sobre esta redacción.
+    "BOE-A-1976-23347": "CDI España-Reino Unido de 1975, sustituido por el de 2013",
+}
 
 
 def _fetch(url: str, reintentos: int = 3) -> bytes:
@@ -117,13 +136,13 @@ def descargar_consolidada(destino: Path, boe_id: str, grupo: str) -> dict[str, o
     }
 
 
-def descargar_diario(destino: Path, boe_id: str, nota: str) -> dict[str, object]:
+def descargar_diario(destino: Path, boe_id: str, grupo: str, nota: str) -> dict[str, object]:
     documento = _fetch(f"{API_DIARIO}?id={boe_id}")
     (destino / f"{boe_id}.diario.xml").write_bytes(documento)
     texto = documento.decode("utf-8", "replace")
     return {
         "id": boe_id,
-        "grupo": "nucleo_derogado",
+        "grupo": grupo,
         "titulo": _campo(texto, "titulo"),
         "rango": _campo(texto, "rango"),
         "fecha_disposicion": _campo(texto, "fecha_disposicion"),
@@ -137,7 +156,7 @@ def descargar_diario(destino: Path, boe_id: str, nota: str) -> dict[str, object]
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", type=Path, default=Path("normativa"))
+    parser.add_argument("--output-dir", type=Path, default=Path("normativa/es"))
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -148,7 +167,11 @@ def main() -> int:
         for identificador, titulo in indice
         if FILTRO_CDI in titulo.lower() and identificador not in NUCLEO
     ]
-    print(f"Núcleo: {len(NUCLEO)} | derogadas: {len(NUCLEO_DEROGADO)} | CDI: {len(cdis)}")
+    derogadas = {
+        **{boe_id: ("nucleo_derogado", nota) for boe_id, nota in NUCLEO_DEROGADO.items()},
+        **{boe_id: ("cdi_derogado", nota) for boe_id, nota in CDI_DEROGADO.items()},
+    }
+    print(f"Núcleo: {len(NUCLEO)} | CDI vigentes: {len(cdis)} | derogadas: {len(derogadas)}")
 
     registros: list[dict[str, object]] = []
     fallos: list[dict[str, str]] = []
@@ -163,10 +186,10 @@ def main() -> int:
             print(f"    FALLO: {error}", flush=True)
             fallos.append({"id": boe_id, "error": str(error)})
 
-    for boe_id, nota in NUCLEO_DEROGADO.items():
-        print(f"  {boe_id} [nucleo_derogado]", flush=True)
+    for boe_id, (grupo, nota) in derogadas.items():
+        print(f"  {boe_id} [{grupo}]", flush=True)
         try:
-            registros.append(descargar_diario(args.output_dir, boe_id, nota))
+            registros.append(descargar_diario(args.output_dir, boe_id, grupo, nota))
         except Exception as error:  # noqa: BLE001
             print(f"    FALLO: {error}", flush=True)
             fallos.append({"id": boe_id, "error": str(error)})

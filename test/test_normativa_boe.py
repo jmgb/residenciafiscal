@@ -14,6 +14,10 @@ import pytest
 import yaml
 
 from export_normativa import (
+    ENCABEZADO_DEROGADO,
+    ENCABEZADO_NOTAS,
+    ENCABEZADO_VIGENTE,
+    GRUPOS_DEROGADOS,
     SELECCION_ESTATAL,
     SIN_PRECEPTO_RESIDENCIA,
     localizar_precepto_residencia,
@@ -23,11 +27,18 @@ from export_normativa import (
     seleccionar,
     slug_precepto,
 )
-from normativa_boe import cargar_norma, cargar_norma_diario, formatear_fecha, normalizar_espacios
+from normativa_boe import (
+    cargar_norma,
+    cargar_norma_diario,
+    formatear_fecha,
+    normalizar_espacios,
+    parsear_norma_diario,
+)
 
 RAIZ = Path(__file__).parents[1]
-FUENTES = RAIZ / "normativa"
-PRECEPTOS = RAIZ / "knowledge" / "normativa" / "preceptos"
+JURISDICCION = "es"
+FUENTES = RAIZ / "normativa" / JURISDICCION
+PRECEPTOS = RAIZ / "knowledge" / "normativa" / JURISDICCION / "preceptos"
 
 LIRPF = "BOE-A-2006-20764"
 CDI_SUIZA = "BOE-A-1967-3470"
@@ -168,7 +179,8 @@ def _articulado_publicado(contenido: str) -> list[str]:
     hasta las notas del BOE. Descarta encabezados, avisos y los textos de
     ausencia en cursiva, que no son articulado.
     """
-    cuerpo = contenido.split("# Texto vigente", 1)[1].split("# Notas del BOE", 1)[0]
+    encabezado = ENCABEZADO_DEROGADO if ENCABEZADO_DEROGADO in contenido else ENCABEZADO_VIGENTE
+    cuerpo = contenido.split(encabezado, 1)[1].split(ENCABEZADO_NOTAS, 1)[0]
     return [
         linea.strip()
         for linea in cuerpo.splitlines()
@@ -216,7 +228,7 @@ def test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen() -> Non
 
         norma = (
             cargar_norma_diario(FUENTES, boe_id)
-            if str(frontmatter["resource"]).endswith(".diario.xml")
+            if str(frontmatter["grupo"]) in GRUPOS_DEROGADOS
             else cargar_norma(FUENTES, boe_id)
         )
         bloque = norma.bloque(str(frontmatter["bloque_id"]))
@@ -244,7 +256,7 @@ def test_las_notas_editoriales_del_boe_no_se_publican_como_articulado() -> None:
         frontmatter = _frontmatter_publicado(contenido)
         norma = (
             cargar_norma_diario(FUENTES, str(frontmatter["boe_id"]))
-            if str(frontmatter["resource"]).endswith(".diario.xml")
+            if str(frontmatter["grupo"]) in GRUPOS_DEROGADOS
             else cargar_norma(FUENTES, str(frontmatter["boe_id"]))
         )
         bloque = norma.bloque(str(frontmatter["bloque_id"]))
@@ -283,3 +295,81 @@ def test_la_seleccion_estatal_solo_apunta_a_bloques_existentes() -> None:
         )
         for bloque_id in bloques:
             assert norma.bloque(bloque_id) is not None, f"{boe_id}#{bloque_id}"
+
+
+# --- Normas derogadas y jurisdicción -----------------------------------------
+
+
+def test_el_diario_sin_marcas_de_articulo_se_segmenta_por_la_rubrica() -> None:
+    """El CDI con Argentina de 1992 está entero en `class="parrafo"`.
+
+    Sin el fallback por forma de la rúbrica devolvía cero bloques, y el convenio
+    que aplican las sentencias de ejercicios antiguos quedaba sin publicar.
+    """
+    norma = cargar_norma_diario(FUENTES, "BOE-A-1994-20084")
+    assert len(norma.bloques) > 20
+
+    articulo = localizar_precepto_residencia(norma)
+    assert articulo is not None
+    assert articulo.bloque_id == "a4"
+    assert articulo.epigrafe == "Residencia"
+    assert "vivienda permanente" in articulo.texto_completo
+
+
+def test_un_diario_que_no_delimita_preceptos_falla_en_vez_de_quedar_vacio() -> None:
+    """Devolver una norma sin bloques haría que el precepto se omitiera en silencio."""
+    xml = b"""<?xml version="1.0" encoding="UTF-8"?>
+    <documento fecha_actualizacion="20260101000000">
+      <metadatos><identificador>BOE-A-0000-1</identificador><titulo>Prueba</titulo></metadatos>
+      <texto><p class="parrafo">Texto sin ninguna rubrica de articulo.</p></texto>
+    </documento>"""
+    with pytest.raises(ValueError, match="no se ha delimitado ningún precepto"):
+        parsear_norma_diario(xml)
+
+
+def test_los_convenios_sustituidos_se_publican_marcados_como_derogados() -> None:
+    """Un convenio sustituido no puede presentarse como derecho vigente."""
+    for nombre, esperado in (
+        ("cdi-boe-a-1994-20084-a4.md", "Argentina"),
+        ("cdi-boe-a-1976-23347-a4.md", "Reino Unido"),
+    ):
+        contenido = (PRECEPTOS / nombre).read_text(encoding="utf-8")
+        frontmatter = _frontmatter_publicado(contenido)
+
+        assert frontmatter["derogada"] is True
+        assert frontmatter["grupo"] == "cdi_derogado"
+        assert "derogada" in frontmatter["tags"]
+        assert esperado in str(frontmatter["nota_derogacion"])
+        assert ENCABEZADO_DEROGADO in contenido
+        assert ENCABEZADO_VIGENTE not in contenido
+        assert "**Norma derogada.**" in contenido
+
+
+def test_ningun_precepto_vigente_se_rotula_como_derogado() -> None:
+    vigentes = derogados = 0
+    for fichero in PRECEPTOS.glob("*.md"):
+        if fichero.name == "index.md":
+            continue
+        contenido = fichero.read_text(encoding="utf-8")
+        if _frontmatter_publicado(contenido)["derogada"]:
+            derogados += 1
+            assert ENCABEZADO_DEROGADO in contenido, fichero.name
+        else:
+            vigentes += 1
+            assert ENCABEZADO_VIGENTE in contenido, fichero.name
+    assert derogados == 4  # TR IRPF 2004 (arts. 8 y 9) y los dos CDI sustituidos
+    assert vigentes > 100
+
+
+def test_cada_precepto_declara_su_jurisdiccion_y_apunta_a_su_fuente() -> None:
+    """El código de jurisdicción es la clave que permite un segundo país."""
+    for fichero in sorted(PRECEPTOS.glob("*.md")):
+        if fichero.name == "index.md":
+            continue
+        contenido = fichero.read_text(encoding="utf-8")
+        frontmatter = _frontmatter_publicado(contenido)
+        assert frontmatter["jurisdiccion"] == JURISDICCION, fichero.name
+
+        origen = (fichero.parent / str(frontmatter["resource"])).resolve()
+        assert origen.exists(), f"{fichero.name} -> {frontmatter['resource']}"
+        assert origen.parent.name == JURISDICCION

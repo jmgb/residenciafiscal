@@ -26,6 +26,13 @@ RUBRICA = re.compile(
     r"^(?P<designacion>(?:Artículo|Disposición|Capítulo|Título)[^.]*?)\.\s*(?P<epigrafe>.*)$"
 )
 
+# Rúbrica que ocupa un párrafo entero, sin articulado detrás. Es lo único que
+# distingue el inicio de un precepto en las publicaciones antiguas del diario,
+# que no marcan las rúbricas con `class="articulo"`. Se exige que el epígrafe no
+# contenga puntos para no confundirla con un párrafo que empiece citando un
+# artículo («Artículo 5. 1. Las rentas que…» tiene articulado y no abre nada).
+RUBRICA_SUELTA = re.compile(r"^Artículo\s*\d+\s*(?:bis|ter)?\.(?:\s*[^.]{1,90}\.?)?$")
+
 
 def normalizar_espacios(texto: str) -> str:
     """Colapsa cualquier espacio en blanco a un espacio simple.
@@ -200,13 +207,26 @@ def parsear_norma_diario(xml_documento: bytes) -> NormaBOE:
 
     Una norma derogada sale de la base consolidada, así que solo queda su
     publicación original: una secuencia plana de `<p>` sin bloques. Los
-    artículos se delimitan por los `<p class="articulo">`, que es exactamente la
-    marca que usa el BOE para abrir cada precepto.
+    artículos se delimitan normalmente por los `<p class="articulo">`, que es la
+    marca con la que el BOE abre cada precepto.
+
+    Las publicaciones antiguas no siempre la usan: el CDI con Argentina de 1992
+    (BOE de 1994) está entero en `class="parrafo"`, con las rúbricas como
+    párrafos indistinguibles del articulado. Cuando no hay ninguna marca se
+    recurre a la forma de la rúbrica, y si aun así no sale nada se levanta un
+    error en vez de devolver una norma vacía.
     """
     raiz = ET.fromstring(xml_documento)
     boe_id = _campo(raiz, ".//identificador")
     if not boe_id:
         raise ValueError("El XML del diario no declara <identificador>")
+
+    parrafos_documento = [
+        (parrafo.get("class", ""), texto)
+        for parrafo in raiz.iter("p")
+        if (texto := _texto_elemento(parrafo))
+    ]
+    con_marca = any(clase == "articulo" for clase, _ in parrafos_documento)
 
     bloques: list[BloqueNorma] = []
     designacion = ""
@@ -233,11 +253,9 @@ def parsear_norma_diario(xml_documento: bytes) -> NormaBOE:
             )
         )
 
-    for parrafo in raiz.iter("p"):
-        texto = _texto_elemento(parrafo)
-        if not texto:
-            continue
-        if parrafo.get("class") == "articulo":
+    for clase, texto in parrafos_documento:
+        abre_precepto = clase == "articulo" if con_marca else bool(RUBRICA_SUELTA.match(texto))
+        if abre_precepto:
             cerrar()
             match = RUBRICA.match(texto)
             designacion = match.group("designacion") if match else texto
@@ -245,6 +263,12 @@ def parsear_norma_diario(xml_documento: bytes) -> NormaBOE:
         elif designacion:
             parrafos.append(texto)
     cerrar()
+
+    if not bloques:
+        raise ValueError(
+            f"{boe_id}: no se ha delimitado ningún precepto en el XML del diario. "
+            "Revisa la estructura antes de publicar nada de esta norma."
+        )
 
     return NormaBOE(
         boe_id=boe_id,
