@@ -16,7 +16,7 @@ cp .env.example .env
 # Ver todos los comandos disponibles
 make help
 
-# Ejecutar pipeline completo (106 PDFs → ~$2.80 USD, ~2-3h)
+# Ejecutar pipeline completo (106 PDFs → ~$3.40 USD, ~2-3h)
 make run
 
 # Test rápido con 1 PDF
@@ -36,7 +36,8 @@ Pipeline Python que analiza **106 sentencias judiciales españolas** sobre resid
 - **Criterios de residencia** aplicados (183 días, centro de intereses, familia, CDI)
 - **Pruebas aportadas** por AEAT y contribuyente (aceptadas/rechazadas)
 - **Razonamiento judicial** (doctrina, carga de prueba, motivación)
-- **Resultado** (GANA_AEAT / GANA_CONTRIBUYENTE / PARCIAL)
+- **Resultado** (GANA_AEAT / GANA_CONTRIBUYENTE / PARCIAL y 4 más; catálogo
+  canónico de 7 valores en `VALID_RESULTADO_FINAL`, `config.py`)
 
 **Usuarios objetivo**: Investigadores fiscales, abogados tributaristas, compliance.
 
@@ -47,6 +48,20 @@ llaman a `process_pdf_async()`, así que producen exactamente el mismo objeto.
 
 Cada ejecución del CLI escribe los cinco exports (`.jsonl`, dos `.csv` planos,
 `pruebas_*.csv` y `.xlsx`) con el mismo timestamp; la API no persiste nada.
+
+### Extracción de texto de los PDF (no hay OCR)
+
+Los PDF del CENDOJ son digitales con capa de texto embebida, así que el texto se
+extrae con **pypdf** (`extract_pdf_text_with_pages()` en `residenciafiscal.py`):
+Python puro, determinista y sin LLM. La función inserta marcadores de página
+1-indexados y solo limpia `\x00`; el LLM recibe ese texto y **analiza, no
+extrae**. El spike de verificación de citas (`citation_spike.py`) usa el mismo
+extractor.
+
+No hay OCR en el proyecto: un PDF escaneado (imagen, sin capa de texto) devuelve
+texto vacío y no se procesa. Si algún día llega uno, las opciones son OCR
+clásico (`ocrmypdf`/Tesseract) o un modelo de visión — no añadirlo antes de que
+exista el caso real.
 
 ## Schema
 
@@ -74,7 +89,8 @@ Las sentencias listadas en `sentencias/sentencias_CLAVE.txt` usan automáticamen
 **GPT-5** (modelo premium) **independientemente del `--model` indicado**, tanto por
 CLI como por la API.
 
-**Coste**: ~$0.10/sentencia clave vs ~$0.006/sentencia normal
+**Coste real medido**: ~$0.098/sentencia clave vs ~$0.014/sentencia normal
+(ver «Costes Medidos»)
 
 ## Comandos Útiles
 
@@ -115,13 +131,18 @@ Para lotes, sigue usando `make run`.
 
 No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
 
-## Costes Estimados
+## Costes Medidos
 
-| Modelo | Coste/PDF | 106 PDFs |
-|--------|-----------|----------|
-| gpt-5.6-luna (default) | $0.006 | $0.50 |
-| gpt-5.6-sol (clave) | $0.10 | $2.30 |
-| **Total mixto** | $0.026 avg | **$2.80** |
+Medidos sobre el `costo_usd` real del último run completo
+(`analisis_02012026_155032.jsonl`), no estimados. Las cifras antiguas
+($0.006/PDF, $2.80 el lote) eran ~2,5× optimistas e indujeron a error en
+estimaciones posteriores.
+
+| Modelo | Coste/PDF (media real) | Subtotal |
+|--------|-----------------------:|---------:|
+| gpt-5.6-luna (83 normales) | $0.014 | $1.18 |
+| gpt-5.6-sol (23 clave) | $0.098 | $2.24 |
+| **Total mixto (106)** | $0.032 avg | **$3.42** |
 
 ## Gestión de dependencias (uv)
 
