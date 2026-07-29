@@ -451,9 +451,23 @@ npm run fast-check  # lint + typecheck + tests (gate pre-commit, análogo a `mak
 | `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
 | `tests/` | Suites Vitest (`*.test.ts` / `*.test.tsx`) |
 
-Pendientes de aterrizar: `src/main.tsx` y `src/App.tsx` (punto de entrada y
-enrutado de la SPA). Sin ellos el build de producción falla; ver
-[`docs/operations/NETLIFY.md`](docs/operations/NETLIFY.md).
+### Marca
+
+La marca está documentada y tiene gate automático. Antes de producir cualquier
+pieza visual o copy, consultar:
+
+- [`docs/brand/brand-guidelines.md`](docs/brand/brand-guidelines.md) — brandbook
+  canónico: isotipo, color (tabla de contraste), tipografía, voz y vetos.
+- [`docs/brand/manifiesto.md`](docs/brand/manifiesto.md) — narrativa y manifiesto
+  (versiones íntegra, corta y de una línea, con reglas de uso).
+
+Fuentes únicas: `frontend/src/index.css` (tokens), `frontend/public/favicon.svg`
+(isotipo), `frontend/src/assets/logo.svg` (lockup), `frontend/og/og-image.html`
+(imagen OG). `favicon.ico`, `apple-touch-icon.png` y `og-image.png` son
+**artefactos generados** (`npm run favicon` / `npm run og`): no editarlos a mano;
+si cambia un token, regenerarlos en el mismo commit. El gate
+`frontend/tests/brand-tokens.test.ts` (en `fast-check`) recalcula contrastes y
+vigila HEX sueltos, escalas inexistentes y clases `control-*` sin definir.
 
 ### Estado del motor
 
