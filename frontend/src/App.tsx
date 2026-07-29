@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
+import { ManifiestoPage } from '@/pages/ManifiestoPage';
 import { MetodologiaPage } from '@/pages/MetodologiaPage';
 
 const isStub = chatEngineMode === 'stub';
@@ -15,6 +16,7 @@ export function App() {
           path='/c/:conversationId'
           element={<ChatView engine={chatEngine} isStub={isStub} />}
         />
+        <Route path='/manifiesto' element={<ManifiestoPage />} />
         <Route path='/metodologia' element={<MetodologiaPage />} />
         <Route path='*' element={<Navigate to='/' replace />} />
       </Route>

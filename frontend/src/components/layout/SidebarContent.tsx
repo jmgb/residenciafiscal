@@ -1,4 +1,4 @@
-import { BookOpen, MessageSquarePlus, Scale, Trash2 } from 'lucide-react';
+import { BookOpen, Compass, MessageSquarePlus, Scale, Trash2 } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
@@ -121,6 +121,15 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
     return (
       <div className='shrink-0 border-t border-sidebar-border px-2 py-3'>
         <Link
+          to='/manifiesto'
+          onClick={onNavigate}
+          aria-label='Manifiesto'
+          title='Manifiesto'
+          className='flex justify-center rounded-lg p-2 text-muted-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+        >
+          <Compass className='h-4 w-4' aria-hidden='true' />
+        </Link>
+        <Link
           to='/metodologia'
           onClick={onNavigate}
           aria-label='Metodología'
@@ -135,6 +144,13 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
 
   return (
     <div className='shrink-0 border-t border-sidebar-border px-3 py-3 text-xs'>
+      <Link
+        to='/manifiesto'
+        onClick={onNavigate}
+        className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+      >
+        Manifiesto
+      </Link>
       <Link
         to='/metodologia'
         onClick={onNavigate}

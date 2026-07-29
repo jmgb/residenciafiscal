@@ -1,4 +1,5 @@
 import { Scale } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/shared/components/ui/button';
 
 export const SUGGESTED_PROMPTS = [
@@ -24,10 +25,18 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
         Consulta la jurisprudencia de residencia fiscal
       </h1>
-      <p className='mb-8 max-w-xl text-sm leading-relaxed text-muted-foreground'>
+      <p className='mb-3 max-w-xl text-sm leading-relaxed text-muted-foreground'>
         106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre el art. 9 LIRPF,
         analizadas y consultables en lenguaje natural. Cada respuesta cita las resoluciones en las
         que se apoya.
+      </p>
+      <p className='mb-8 text-sm'>
+        <Link
+          to='/manifiesto'
+          className='rounded text-primary underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring'
+        >
+          Por qué existe este proyecto: lee el manifiesto
+        </Link>
       </p>
       <div className='grid w-full max-w-2xl gap-2 sm:grid-cols-2'>
         {SUGGESTED_PROMPTS.map((prompt) => (
