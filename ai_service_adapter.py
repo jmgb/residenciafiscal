@@ -178,7 +178,7 @@ async def gpt_request_for_sentencia(
             "model": ai_model,
             "messages": [
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": pdf_text}
+                {"role": "user", "content": pdf_text},
             ],
         }
 
@@ -197,7 +197,11 @@ async def gpt_request_for_sentencia(
             kwargs["response_format"] = {"type": "json_object"}
 
         # Add reasoning effort for GPT-5 models (OpenAI only)
-        if provider == "openai" and reasoning_effort and ("gpt-5" in ai_model.lower() or "o1" in ai_model.lower()):
+        if (
+            provider == "openai"
+            and reasoning_effort
+            and ("gpt-5" in ai_model.lower() or "o1" in ai_model.lower())
+        ):
             kwargs["reasoning_effort"] = reasoning_effort
 
         # Add max tokens if specified
@@ -220,7 +224,9 @@ async def gpt_request_for_sentencia(
             cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
             cost_usd = float(cost_info.get("total_cost", 0.0) or 0.0)  # type: ignore[arg-type]
             label = "Groq" if provider == "groq" else "OpenAI"
-            logger.info(f"💰 {label} - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}")
+            logger.info(
+                f"💰 {label} - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}"
+            )
         else:
             logger.warning(f"⚠️ response.usage es None para {ai_model}")
 
@@ -243,10 +249,7 @@ async def gpt_request_for_sentencia(
 
     except Exception as e:
         logger.error(f"LLM request failed: {e}")
-        return {
-            "error": str(e),
-            "detail": "LLM request failed"
-        }
+        return {"error": str(e), "detail": "LLM request failed"}
 
 
 def safe_json_parse(
@@ -286,7 +289,7 @@ def safe_json_parse(
             try:
                 last_brace = cleaned_text.rfind("}")
                 if last_brace != -1:
-                    json_content = cleaned_text[:last_brace + 1]
+                    json_content = cleaned_text[: last_brace + 1]
                     fixed_json = "{" + json_content
                     result = json.loads(fixed_json)
                     logger.debug(f"✅ JSON fixed for {ai_model} - added missing '{{' at start")

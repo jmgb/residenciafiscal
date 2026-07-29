@@ -1,6 +1,6 @@
 name: CI
 
-# Gate mínimo: convierte `make fast-check` (lint + typecheck + tests) en un check
+# Gate mínimo: convierte `make fast-check` (lint + format + typecheck + tests) en un check
 # real de CI, en vez de depender de que alguien lo corra en local.
 #
 # NO necesita secrets: los tests de test/ no llaman a ningún LLM. Los que sí
@@ -45,7 +45,7 @@ concurrency:
 
 jobs:
   fast-check:
-    name: lint + typecheck + tests
+    name: lint + format + typecheck + tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -78,6 +78,9 @@ jobs:
 
       - name: Ruff
         run: uv run ruff check .
+
+      - name: Ruff format
+        run: uv run ruff format --check .
 
       - name: Mypy
         run: uv run mypy .

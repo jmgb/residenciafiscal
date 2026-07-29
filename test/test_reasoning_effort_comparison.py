@@ -49,10 +49,7 @@ pytestmark = pytest.mark.manual_real_llm
 
 
 # Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -70,22 +67,24 @@ TEST_CONFIGURATIONS = [
     ("gpt-5.2-2025-12-11", "medium"),
 ]
 
+
 # Colors for CLI output
 class Colors:
-    HEADER = '\033[95m'
-    BLUE = '\033[94m'
-    CYAN = '\033[96m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    HEADER = "\033[95m"
+    BLUE = "\033[94m"
+    CYAN = "\033[96m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 # ============================================================================
 # UTILITY FUNCTIONS
 # ============================================================================
+
 
 def print_header(text: str) -> None:
     """Print a colored header."""
@@ -192,13 +191,17 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
                         metrics["se_invoca_CDI"] = data.get("se_invoca_CDI")
 
                     if data.get("Criterios_residencia_detectados"):
-                        metrics["criterios_detectados"] = len(data.get("Criterios_residencia_detectados", []))
+                        metrics["criterios_detectados"] = len(
+                            data.get("Criterios_residencia_detectados", [])
+                        )
 
                     if data.get("Pruebas_AEAT"):
                         metrics["pruebas_aeat"] = len(data.get("Pruebas_AEAT", []))
 
                     if data.get("Pruebas_contribuyente"):
-                        metrics["pruebas_contribuyente"] = len(data.get("Pruebas_contribuyente", []))
+                        metrics["pruebas_contribuyente"] = len(
+                            data.get("Pruebas_contribuyente", [])
+                        )
 
                     if data.get("observaciones"):
                         metrics["error"] = data.get("observaciones")
@@ -222,10 +225,7 @@ def extract_metrics_from_jsonl(jsonl_path: Path) -> dict[str, Any]:
 
 
 async def run_single_test(
-    pdf_path: Path,
-    model: str,
-    reasoning_effort: str,
-    temp_dir: Path
+    pdf_path: Path, model: str, reasoning_effort: str, temp_dir: Path
 ) -> dict[str, Any]:
     """Run a single configuration test.
 
@@ -249,11 +249,16 @@ async def run_single_test(
     cmd = [
         sys.executable,
         str(PROJECT_ROOT / "residenciafiscal.py"),
-        "--input", str(pdf_path.parent),
-        "--output", str(output_subdir),
-        "--model", model,
-        "--reasoning-effort", reasoning_effort,
-        "--max-files", "1",  # Process only one PDF
+        "--input",
+        str(pdf_path.parent),
+        "--output",
+        str(output_subdir),
+        "--model",
+        model,
+        "--reasoning-effort",
+        reasoning_effort,
+        "--max-files",
+        "1",  # Process only one PDF
     ]
 
     try:
@@ -293,7 +298,7 @@ async def run_single_test(
 
         # Combine metrics
         result_dict = {
-            "model": model.split('-')[2],  # Extract version (5 or 5-mini)
+            "model": model.split("-")[2],  # Extract version (5 or 5-mini)
             "reasoning_effort": reasoning_effort,
             "time_seconds": round(elapsed_time, 2),
             **metrics,
@@ -312,7 +317,7 @@ async def run_single_test(
         return {
             "model": model,
             "reasoning_effort": reasoning_effort,
-            "time_seconds": elapsed_time if 'elapsed_time' in locals() else 0,
+            "time_seconds": elapsed_time if "elapsed_time" in locals() else 0,
             "error": str(e),
             **default_metrics(),
             "confianza_extraccion": "ERROR",
@@ -390,7 +395,9 @@ def print_results_summary(results: list[dict[str, Any]]) -> None:
     print(f"GPT-5 total cost:      ${gpt5_costs:.4f}")
     print(f"GPT-5-mini total cost: ${gpt5mini_costs:.4f}")
     print(f"Overall cost:          ${total_cost:.4f}")
-    print(f"Cost difference:       ${abs(gpt5_costs - gpt5mini_costs):.4f} ({(abs(gpt5_costs - gpt5mini_costs) / max(gpt5_costs, gpt5mini_costs) * 100):.1f}%)")
+    print(
+        f"Cost difference:       ${abs(gpt5_costs - gpt5mini_costs):.4f} ({(abs(gpt5_costs - gpt5mini_costs) / max(gpt5_costs, gpt5mini_costs) * 100):.1f}%)"
+    )
 
     print_section("Time Comparison")
     gpt5_time = df[df["model"] == "5"]["time_seconds"].sum()
@@ -416,7 +423,7 @@ def export_results_csv(results: list[dict[str, Any]], output_path: Path) -> None
 
 def export_results_json(results: list[dict[str, Any]], output_path: Path) -> None:
     """Export results to JSON file."""
-    with open(output_path, 'w') as f:
+    with open(output_path, "w") as f:
         json.dump(results, f, indent=2)
     print_success(f"Results exported to: {output_path}")
 
@@ -424,6 +431,7 @@ def export_results_json(results: list[dict[str, Any]], output_path: Path) -> Non
 # ============================================================================
 # MAIN
 # ============================================================================
+
 
 async def main():
     """Main entry point."""

@@ -64,6 +64,7 @@ from config import (
 # Intenta importar gpt_request de ai_service_adapter
 try:
     from ai_service_adapter import gpt_request_for_sentencia
+
     USE_GPT_REQUEST = True
 except ImportError:
     USE_GPT_REQUEST = False
@@ -84,7 +85,7 @@ except Exception as e:
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     force=True,
 )
 logger = logging.getLogger(__name__)
@@ -93,6 +94,7 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 # UTILIDADES
 # ============================================================================
+
 
 def get_timestamp_suffix() -> str:
     """Genera un sufijo con fecha y hora en formato DDMMYYYY_HHMMSS.
@@ -107,6 +109,7 @@ def get_timestamp_suffix() -> str:
 # ============================================================================
 # CLIENT INITIALIZATION
 # ============================================================================
+
 
 def initialize_client(ai_model: str) -> str:
     """Initialize the AI client needed for the selected model.
@@ -179,6 +182,7 @@ def initialize_client(ai_model: str) -> str:
 # PDF EXTRACTION
 # ============================================================================
 
+
 def extract_pdf_text_with_pages(pdf_path: Path, max_pages: int | None = None) -> str:
     """Extrae texto del PDF e inserta marcadores de página (1-indexed)."""
     reader = PdfReader(str(pdf_path))
@@ -213,9 +217,7 @@ def load_pdf_list(list_path: Path, input_dir: Path) -> list[Path]:
 
     has_relative = any(not Path(item).is_absolute() for item in entries)
     if has_relative and (not input_dir.exists() or not input_dir.is_dir()):
-        raise RuntimeError(
-            f"Directorio de entrada no válido para rutas relativas: {input_dir}"
-        )
+        raise RuntimeError(f"Directorio de entrada no válido para rutas relativas: {input_dir}")
 
     pdfs: list[Path] = []
     missing: list[str] = []
@@ -284,13 +286,16 @@ def load_key_sentencias() -> set:
         if line and not line.startswith("#"):
             key_sentencias.add(line)
 
-    logger.info(f"📌 Cargadas {len(key_sentencias)} sentencias clave (modelo: {SENTENCIA_CLAVE_MODEL})")
+    logger.info(
+        f"📌 Cargadas {len(key_sentencias)} sentencias clave (modelo: {SENTENCIA_CLAVE_MODEL})"
+    )
     return key_sentencias
 
 
 # ============================================================================
 # SCHEMA CLEANING AND VALIDATION
 # ============================================================================
+
 
 def clean_schema(obj: dict[str, Any], filename: str) -> dict[str, Any]:
     """Limpia el schema eliminando keys no permitidas y normalizando enums."""
@@ -390,6 +395,7 @@ def clean_schema(obj: dict[str, Any], filename: str) -> dict[str, Any]:
 
 def ensure_required_keys(obj: dict[str, Any], filename: str) -> dict[str, Any]:
     """Asegura que haya claves mínimas para no romper el pipeline."""
+
     def set_default(path: str, default: Any) -> None:
         if path not in obj:
             obj[path] = default
@@ -417,8 +423,10 @@ def ensure_required_keys(obj: dict[str, Any], filename: str) -> dict[str, Any]:
 # CSV FLATTENING
 # ============================================================================
 
+
 def flatten_for_csv(obj: dict[str, Any]) -> dict[str, Any]:
     """Aplana a columnas 'amigables CSV'."""
+
     def jdump(x: Any) -> str:
         return json.dumps(x, ensure_ascii=False)
 
@@ -460,8 +468,12 @@ def flatten_for_csv(obj: dict[str, Any]) -> dict[str, Any]:
     # Agregados para análisis (admitidas/rechazadas por parte)
     row["categorias_admitidas_aeat"] = jdump(obj.get("categorias_admitidas_aeat", []))
     row["categorias_rechazadas_aeat"] = jdump(obj.get("categorias_rechazadas_aeat", []))
-    row["categorias_admitidas_contribuyente"] = jdump(obj.get("categorias_admitidas_contribuyente", []))
-    row["categorias_rechazadas_contribuyente"] = jdump(obj.get("categorias_rechazadas_contribuyente", []))
+    row["categorias_admitidas_contribuyente"] = jdump(
+        obj.get("categorias_admitidas_contribuyente", [])
+    )
+    row["categorias_rechazadas_contribuyente"] = jdump(
+        obj.get("categorias_rechazadas_contribuyente", [])
+    )
 
     # Pruebas clave
     row["pruebas_rechazadas_clave"] = jdump(obj.get("Pruebas_rechazadas_clave", []))
@@ -494,6 +506,7 @@ def flatten_for_csv(obj: dict[str, Any]) -> dict[str, Any]:
 # ============================================================================
 # EXCEL EXPORT (DOS PESTAÑAS: SENTENCIAS + PRUEBAS)
 # ============================================================================
+
 
 def flatten_sentencia_for_excel(obj: dict[str, Any]) -> dict[str, Any]:
     """Aplana datos de sentencia para pestaña 'Sentencias' (sin pruebas detalladas)."""
@@ -550,8 +563,12 @@ def flatten_sentencia_for_excel(obj: dict[str, Any]) -> dict[str, Any]:
     # Categorías
     row["categorias_admitidas_aeat"] = ", ".join(obj.get("categorias_admitidas_aeat", []))
     row["categorias_rechazadas_aeat"] = ", ".join(obj.get("categorias_rechazadas_aeat", []))
-    row["categorias_admitidas_contribuyente"] = ", ".join(obj.get("categorias_admitidas_contribuyente", []))
-    row["categorias_rechazadas_contribuyente"] = ", ".join(obj.get("categorias_rechazadas_contribuyente", []))
+    row["categorias_admitidas_contribuyente"] = ", ".join(
+        obj.get("categorias_admitidas_contribuyente", [])
+    )
+    row["categorias_rechazadas_contribuyente"] = ", ".join(
+        obj.get("categorias_rechazadas_contribuyente", [])
+    )
 
     # Bala de plata
     bala = obj.get("Prueba_o_bala_de_plata", {}) or {}
@@ -631,14 +648,11 @@ def _sanitize_cell_value(value: Any) -> Any:
         return value
     # Elimina caracteres de control (ASCII 0-31) excepto tab(9), newline(10), CR(13)
     # Excel no permite estos caracteres en las celdas
-    return ''.join(c for c in value if ord(c) >= 32 or c in '\t\n\r')
+    return "".join(c for c in value if ord(c) >= 32 or c in "\t\n\r")
 
 
 def generate_normalized_exports(
-    jsonl_path: Path,
-    output_dir: Path,
-    timestamp: str,
-    logger: logging.Logger
+    jsonl_path: Path, output_dir: Path, timestamp: str, logger: logging.Logger
 ) -> None:
     """Genera CSVs normalizados y Excel con dos pestañas."""
     from openpyxl import Workbook
@@ -703,6 +717,7 @@ def generate_normalized_exports(
 # MAIN ASYNC PROCESSING LOOP
 # ============================================================================
 
+
 async def process_pdf_async(
     pdf_path: Path,
     ai_model: str,
@@ -721,15 +736,17 @@ async def process_pdf_async(
                 {
                     "archivo": fname,
                     "observaciones": "PDF sin texto extraíble",
-                    "confianza_extraccion": "BAJA"
+                    "confianza_extraccion": "BAJA",
                 },
-                fname
+                fname,
             )
 
         # Usar gpt_request si está disponible
         if USE_GPT_REQUEST:
             effort_log = reasoning_effort if reasoning_effort else "default"
-            logger.info(f"📨 Procesando {fname} con gpt_request ({ai_model}, reasoning_effort={effort_log})")
+            logger.info(
+                f"📨 Procesando {fname} con gpt_request ({ai_model}, reasoning_effort={effort_log})"
+            )
             result = await gpt_request_for_sentencia(
                 ai_model=ai_model,
                 system_prompt=SYSTEM_PROMPT,
@@ -842,13 +859,17 @@ async def main_async(
 
     # Filtrar PDFs ya procesados
     pdfs_to_process = [p for p in pdf_files if not (skip_existing and p.name in processed)]
-    logger.info(f"📄 Procesarán {len(pdfs_to_process)} PDFs (saltando {len(pdf_files) - len(pdfs_to_process)} ya procesados)")
+    logger.info(
+        f"📄 Procesarán {len(pdfs_to_process)} PDFs (saltando {len(pdf_files) - len(pdfs_to_process)} ya procesados)"
+    )
 
     # Cargar sentencias clave (modelo premium)
     key_sentencias = load_key_sentencias()
     key_in_batch = [p.name for p in pdfs_to_process if p.name in key_sentencias]
     if key_in_batch:
-        logger.info(f"   🔑 {len(key_in_batch)} sentencias clave en cola (usarán {SENTENCIA_CLAVE_MODEL})")
+        logger.info(
+            f"   🔑 {len(key_in_batch)} sentencias clave en cola (usarán {SENTENCIA_CLAVE_MODEL})"
+        )
 
     logger.info(f"⚡ Modo paralelo: {BATCH_SIZE} PDFs por batch\n")
 
@@ -859,7 +880,7 @@ async def main_async(
     with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
         total_pdfs = len(pdfs_to_process)
         for batch_idx in range(0, total_pdfs, BATCH_SIZE):
-            batch = pdfs_to_process[batch_idx:batch_idx + BATCH_SIZE]
+            batch = pdfs_to_process[batch_idx : batch_idx + BATCH_SIZE]
             batch_num = batch_idx // BATCH_SIZE + 1
             total_batches = (total_pdfs + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -867,7 +888,9 @@ async def main_async(
             pdf_names = ", ".join([p.name for p in batch[:3]])
             if len(batch) > 3:
                 pdf_names += f", ... +{len(batch) - 3} más"
-            logger.info(f"⚡ Batch {batch_num}/{total_batches} | Procesando {len(batch)} PDFs en paralelo")
+            logger.info(
+                f"⚡ Batch {batch_num}/{total_batches} | Procesando {len(batch)} PDFs en paralelo"
+            )
             logger.info(f"   📁 {pdf_names}")
 
             # Procesar todos los PDFs en el batch de forma concurrente
@@ -878,7 +901,12 @@ async def main_async(
                 return ai_model
 
             results = await asyncio.gather(
-                *[process_pdf_async(pdf_path, get_model_for_pdf(pdf_path), max_pages, reasoning_effort) for pdf_path in batch]
+                *[
+                    process_pdf_async(
+                        pdf_path, get_model_for_pdf(pdf_path), max_pages, reasoning_effort
+                    )
+                    for pdf_path in batch
+                ]
             )
 
             # Guardar resultados en JSONL y acumular costes
@@ -901,7 +929,9 @@ async def main_async(
             # Mostrar progreso detallado con coste
             processed_count = batch_idx + len(batch)
             percentage = (processed_count / total_pdfs) * 100
-            logger.info(f"✅ Progreso: {processed_count}/{total_pdfs} PDFs completados ({percentage:.1f}%) | Batch: ${batch_cost:.2f}\n")
+            logger.info(
+                f"✅ Progreso: {processed_count}/{total_pdfs} PDFs completados ({percentage:.1f}%) | Batch: ${batch_cost:.2f}\n"
+            )
             batch_costs[batch_num] = batch_cost
 
     # Convertir JSONL -> CSV
@@ -933,9 +963,9 @@ async def main_async(
         generate_normalized_exports(jsonl_path, out_dir, timestamp, logger)
 
     # Mostrar resumen final con costes
-    logger.info(f"\n{'='*60}")
+    logger.info(f"\n{'=' * 60}")
     logger.info("✅ PROCESAMIENTO COMPLETADO")
-    logger.info(f"{'='*60}")
+    logger.info(f"{'=' * 60}")
     logger.info(f"📄 JSONL: {jsonl_path}")
     logger.info(f"📊 CSV:   {csv_path}")
     logger.info(f"📈 Filas: {len(df)}")
@@ -950,7 +980,7 @@ async def main_async(
         for batch_num in sorted(batch_costs.keys()):
             logger.info(f"   Batch {batch_num}: ${batch_costs[batch_num]:.2f}")
 
-    logger.info(f"{'='*60}\n")
+    logger.info(f"{'=' * 60}\n")
 
 
 def main() -> None:
@@ -958,20 +988,16 @@ def main() -> None:
     load_dotenv()
 
     parser = argparse.ArgumentParser(description=SCRIPT_DESCRIPTION)
-    parser.add_argument(
-        "--input",
-        default=str(DEFAULT_INPUT_DIR),
-        help=ARGUMENT_HELP["input"]
-    )
-    parser.add_argument(
-        "--output",
-        default=str(DEFAULT_OUTPUT_DIR),
-        help=ARGUMENT_HELP["output"]
-    )
+    parser.add_argument("--input", default=str(DEFAULT_INPUT_DIR), help=ARGUMENT_HELP["input"])
+    parser.add_argument("--output", default=str(DEFAULT_OUTPUT_DIR), help=ARGUMENT_HELP["output"])
     parser.add_argument("--model", default=DEFAULT_MODEL, help=ARGUMENT_HELP["model"])
     parser.add_argument("--pdf-list", help=ARGUMENT_HELP["pdf_list"])
-    parser.add_argument("--max-files", type=int, default=DEFAULT_MAX_FILES, help=ARGUMENT_HELP["max_files"])
-    parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
+    parser.add_argument(
+        "--max-files", type=int, default=DEFAULT_MAX_FILES, help=ARGUMENT_HELP["max_files"]
+    )
+    parser.add_argument(
+        "--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"]
+    )
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
     parser.add_argument("--skip-existing", action="store_true", help=ARGUMENT_HELP["skip_existing"])
     parser.add_argument("--resume-from", help=ARGUMENT_HELP["resume_from"])
@@ -979,7 +1005,7 @@ def main() -> None:
         "--reasoning-effort",
         default=REASONING_EFFORT,
         choices=["low", "medium", "high"],
-        help="Reasoning effort level for GPT-5 models (default: medium)"
+        help="Reasoning effort level for GPT-5 models (default: medium)",
     )
     args = parser.parse_args()
 

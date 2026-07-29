@@ -57,7 +57,7 @@ def test_analizar_rechaza_reasoning_effort_invalido(client: TestClient) -> None:
 
 
 def test_analizar_rechaza_max_pages_no_positivo(client: TestClient) -> None:
-    response = client.post("/analizar", files=_pdf(), data={"max_pages": -1})
+    response = client.post("/analizar", files=_pdf(), data={"max_pages": "-1"})
     assert response.status_code == 400
     assert "max_pages" in response.json()["detail"]
 

@@ -100,7 +100,6 @@ def main() -> int:
     # Note: Not using 'with' context manager so output persists after test completes
 
     try:
-
         # Copy single PDF to test input directory
         dest_pdf = test_input_dir / test_pdf.name
         shutil.copy2(test_pdf, dest_pdf)
@@ -112,8 +111,10 @@ def main() -> int:
         cmd = [
             sys.executable,
             str(project_root / "residenciafiscal.py"),
-            "--input", str(test_input_dir),
-            "--output", str(test_output_dir),
+            "--input",
+            str(test_input_dir),
+            "--output",
+            str(test_output_dir),
         ]
 
         print_info(f"Command: {' '.join(cmd)}\n")
@@ -196,9 +197,13 @@ def main() -> int:
                 print(f"  • archivo: {first_record.get('archivo', 'N/A')}")
                 print(f"  • organo: {first_record.get('organo', 'N/A')}")
                 print(f"  • fecha_resolucion: {first_record.get('fecha_resolucion', 'N/A')}")
-                print(f"  • pais_alegado_residencia: {first_record.get('pais_alegado_residencia_pf', 'N/A')}")
+                print(
+                    f"  • pais_alegado_residencia: {first_record.get('pais_alegado_residencia_pf', 'N/A')}"
+                )
                 print(f"  • resultado_final: {first_record.get('resultado_final', 'N/A')}")
-                print(f"  • confianza_extraccion: {first_record.get('confianza_extraccion', 'N/A')}")
+                print(
+                    f"  • confianza_extraccion: {first_record.get('confianza_extraccion', 'N/A')}"
+                )
             except Exception as e:
                 print_warning(f"Could not extract key fields: {e}")
 

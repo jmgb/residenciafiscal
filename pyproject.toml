@@ -60,7 +60,7 @@ markers = [
 [tool.ruff]
 line-length = 100
 target-version = "py313"
-exclude = ["venv", ".venv", "output", "test/test_outputs"]
+exclude = ["venv", ".venv", "output", "test/test_outputs", "**/*.md"]
 
 [tool.ruff.lint]
 select = [
@@ -102,6 +102,5 @@ ignore_missing_imports = true
 exclude = [
     "^venv/",
     "^\\.venv/",
-    "^test/",
     "^output/",
 ]

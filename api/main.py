@@ -210,9 +210,7 @@ async def analizar(
         raise HTTPException(status_code=400, detail="Solo se aceptan ficheros .pdf")
 
     if reasoning_effort is not None and reasoning_effort not in {"low", "medium", "high"}:
-        raise HTTPException(
-            status_code=400, detail="reasoning_effort debe ser low, medium o high"
-        )
+        raise HTTPException(status_code=400, detail="reasoning_effort debe ser low, medium o high")
 
     if max_pages is not None and max_pages < 1:
         # Sin esto, extract_pdf_text_with_pages() calcula un límite negativo, no lee

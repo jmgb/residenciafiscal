@@ -14,7 +14,7 @@ SHELL := /bin/bash
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
 	test test-llm test-single \
-	lint format fix typecheck fast-check \
+	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
 	clean clean-output env-print
 
@@ -62,9 +62,10 @@ help:
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo ""
 	@echo "=== CALIDAD ==="
-	@echo "  make fast-check           Lint + typecheck + tests (gate pre-commit)"
+	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
 	@echo "  make lint                 Ruff check"
 	@echo "  make format               Ruff format"
+	@echo "  make format-check         Comprueba que Ruff format está aplicado"
 	@echo "  make fix                  Ruff format + check --fix"
 	@echo "  make typecheck            Mypy"
 	@echo "  make test                 Pytest (sin tests de LLM real)"
@@ -120,13 +121,16 @@ run-list:
 # =============================================================================
 # 3. CALIDAD
 # =============================================================================
-fast-check: lint typecheck test
+fast-check: lint format-check typecheck test
 
 lint:
 	uv run ruff check .
 
 format:
 	uv run ruff format .
+
+format-check:
+	uv run ruff format --check .
 
 fix:
 	uv run ruff format . && uv run ruff check . --fix
