@@ -1,0 +1,372 @@
+{
+  "Criterio_decisivo": [
+    "CRIT_CDI_TIEBREAKER",
+    "CRIT_CENTRO_INTERESES_VITALES"
+  ],
+  "Criterios_residencia_detectados": [
+    "CRIT_183_DIAS",
+    "CRIT_AUSENCIAS_ESPORADICAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS",
+    "CRIT_CENTRO_INTERESES_VITALES",
+    "CRIT_PRESUNCION_FAMILIA",
+    "CRIT_CDI_TIEBREAKER"
+  ],
+  "Prueba_o_bala_de_plata": {
+    "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "cita": {
+      "pagina": "10",
+      "texto": "\"obra en el expediente... doc. 8... en los que consta como entrada en Suiza del recurrente el día 1 de abril de 2009\""
+    },
+    "detalle": "Documento de inmigración suizo que registra entrada del recurrente en Suiza el 1 de abril de 2009, corroborado por contrato, seguros y movimientos bancarios.",
+    "parte": "CONTRIBUYENTE",
+    "por_que_decisiva": "El tribunal considera la entrada en Suiza como indicio clave que, junto con contrato suizo, seguros, cuentas y vivienda, desvirtúa la presunción de residencia en España y permite concluir residencia suiza desde 1/4/2009.",
+    "subcategoria": "entrada en Suiza 01/04/2009 (Órgano de Inmigración)"
+  },
+  "Pruebas_AEAT": [
+    {
+      "aceptada": "SI",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "4",
+        "texto": "\"La entidad 'Hugo Boss España SA'... le incluyó en el resumen anual modelo 190\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Empleadora incluyó al interesado en el resumen anual modelo 190, declarándole perceptora de rendimientos a cuenta del IRPF.",
+      "motivo_valoracion": "Corrobora que la empleadora practicó retenciones y le incluyó en modelo 190, indicio de vinculación con España.",
+      "objetivo_probatorio": "Acreditar que la empleadora trató al contribuyente como residente en España",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 3,
+      "subcategoria": "inclusión en modelo 190 por Hugo Boss",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "PARCIAL",
+      "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"...carta de despido de fecha 4 de junio de 2009; (Nómina y finiquito de 1 de junio a 30 de junio...)\""
+      },
+      "contradiccion_con": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS (entrada en Suiza 01/04/2009)",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Nóminas y finiquito aportados que reflejan remuneraciones y pago de indemnización por despido en 2009.",
+      "motivo_valoracion": "Admitidas como indicio de vinculación con España, pero el tribunal admite duda sobre la fecha última de nómina y la posible concurrencia con trabajo en Suiza.",
+      "objetivo_probatorio": "Demostrar prestación de servicios en España y presencia durante parte de 2009",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 4,
+      "subcategoria": "nóminas y finiquito (Hugo Boss)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "PARCIAL",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"La fecha de presentación del 030... es 18/01/2010... permite deducir... el 18/10/2009.\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Registro de presentación del modelo 030 en la Delegación de la AEAT el 18/01/2010 indicando traslado de residencia fiscal a Suiza a partir de 2009.",
+      "motivo_valoracion": "Se considera indicativo (la presentación sugiere cambio con efecto administrativo 18/10/2009) pero no concluyente respecto a la fecha real de traslado.",
+      "objetivo_probatorio": "Indicar fecha administrativa de cambio de domicilio fiscal y competir con alegación de traslado",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 3,
+      "subcategoria": "modelo 030 presentado 18/01/2010",
+      "tipo_prueba": "ACTUACION_ADMINISTRATIVA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"Su cónyuge e hijo fueron residentes fiscales en España durante el 2009...\""
+      },
+      "contradiccion_con": "DOCUMENTACION_FISCAL_EXTRANJERA (certificados suizos y demás indicios)",
+      "criterio_atacado": "CRIT_PRESUNCION_FAMILIA",
+      "detalle": "La esposa y el hijo presentaron declaración del IRPF en España en 2009.",
+      "motivo_valoracion": "La presentación de la declaración familiar constituye presunción de residencia en España salvo prueba en contrario; el tribunal exige que se desvirtúe.",
+      "objetivo_probatorio": "Sustentar la presunción de residencia en España por convivencia familiar",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 4,
+      "subcategoria": "declaración IRPF de cónyuge e hijo en España",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "PARCIAL",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"los certificados aportados... no justifican la residencia fiscal del interesado en Suiza\""
+      },
+      "contradiccion_con": "DOCUMENTACION_FISCAL_EXTRANJERA aportada por el contribuyente",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "La Oficina Gestora y el TEAC señalaron que los certificados suizos aportados no justificaban por sí solos la residencia fiscal en Suiza.",
+      "motivo_valoracion": "El tribunal considera que los certificados no contienen expresa mención de domicilio fiscal y, por ello, no son por sí concluyentes; deben valorarse junto al resto de indicios.",
+      "objetivo_probatorio": "Desacreditar la suficiencia de la documentación extranjera aportada por el interesado",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 3,
+      "subcategoria": "valoración crítica de certificados suizos por la Administración",
+      "tipo_prueba": "INDICIARIA"
+    }
+  ],
+  "Pruebas_contribuyente": [
+    {
+      "aceptada": "PARCIAL",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"certificado de residencia fiscal expedido por la Administración tributaria suiza del cantón de Ticino\""
+      },
+      "contradiccion_con": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS (nóminas finiquito)",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "Certificados emitidos por autoridades suizas (Ticino) que indican sujeción ilimitada a impuestos en ese cantón durante 2009.",
+      "motivo_valoracion": "Los certificados son indicativos pero no expresan domicilio; el tribunal los valora junto con otros indicios y les otorga carácter corroborador, no determinante por sí solos.",
+      "objetivo_probatorio": "Acreditar residencia fiscal en Suiza y sujeción a imposición suiza",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "certificados de residencia fiscal Cantón Ticino (16/06/2009 y 17/03/2011)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "cita": {
+        "pagina": "10",
+        "texto": "\"obra en el expediente...doc. 8, documentos del Órgano de Inmigración suizo, en los que consta... entrada en Suiza... el día 1 de abril de 2009\""
+      },
+      "contradiccion_con": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS (nóminas que indican pagos en España)",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Documento del órgano de inmigración suizo que registra entrada del recurrente en Suiza el 1 de abril de 2009.",
+      "motivo_valoracion": "El tribunal considera esta entrada como indicio clave que, junto a contrato y otros documentos, corrobora la residencia en Suiza desde 1/4/2009.",
+      "objetivo_probatorio": "Acreditar fecha de traslado y presencia física habitual en Suiza desde 1/04/2009",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 5,
+      "subcategoria": "entrada en Suiza 01/04/2009 (doc. Órgano de Inmigración)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "9",
+        "texto": "\"...en él consta que se acuerda su incorporación a la empresa con fecha 1 de abril de 2009\""
+      },
+      "contradiccion_con": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS (finiquito/Hugo Boss)",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Contrato con la empresa suiza G.A. Modefine con fecha de incorporación 1 de abril de 2009.",
+      "motivo_valoracion": "El contrato, junto con la entrada, extractos bancarios y seguros, constituye indicio fuerte de transferencia del centro de intereses económicos a Suiza.",
+      "objetivo_probatorio": "Acreditar actividad económica y fuente de rentas en Suiza desde esa fecha",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "contrato de trabajo con G.A. Modefine (1/04/2009)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SALUD_Y_SERVICIOS_PERSONALES",
+      "cita": {
+        "pagina": "9",
+        "texto": "\"documentación respecto del seguro médico... vigente desde el 20 de abril de 2009\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Póliza/seguro médico vigente desde 20 de abril de 2009 en Suiza.",
+      "motivo_valoracion": "Se valora como corroborante junto a contrato y entrada en Suiza.",
+      "objetivo_probatorio": "Indicio de establecimiento de la residencia y cobertura sanitaria en Suiza",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "seguro médico suizo SW/CA desde 20/04/2009",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SALUD_Y_SERVICIOS_PERSONALES",
+      "cita": {
+        "pagina": "9",
+        "texto": "\"certificado por hijos de la seguridad social... con derecho... desde el 1/04/2009 al 31/08/2009\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Certificado por hijos de la seguridad social suiza con derecho económico desde 1/04/2009 al 31/08/2009.",
+      "motivo_valoracion": "Prueba directa de ocupación y vínculo laboral en Suiza durante parte de 2009.",
+      "objetivo_probatorio": "Corroborar afiliación y prestaciones en Suiza",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "certificado seguridad social suizo (200 euros) 01/04/2009-31/08/2009",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "CONSUMOS_FINANCIEROS",
+      "cita": {
+        "pagina": "9",
+        "texto": "\"la documentación bancaria -los extractos bancarios acreditativos de los gastos diarios que tenía el recurrente en Suiza (doc. nº2)\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Extractos bancarios que acreditan gastos cotidianos realizados en Suiza durante 2009.",
+      "motivo_valoracion": "Movimientos bancarios coherentes con residencia efectiva y usados como corroboración del resto de indicios.",
+      "objetivo_probatorio": "Acreditar vida cotidiana y presencia habitual en Suiza",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "extractos bancarios gastos diarios en Suiza (doc.2)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "11",
+        "texto": "\"disponía de un inmueble en Mendrisio en el que vivía, tenía vehículos y era titular de cuentas bancarias\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "Titularidad y uso de un inmueble en Mendrisio donde el recurrente vivía.",
+      "motivo_valoracion": "El tribunal destaca la existencia de vivienda, vehículos y cuentas en Mendrisio como elemento decisivo para entender vivienda permanente y centro de intereses.",
+      "objetivo_probatorio": "Acreditar vivienda permanente a disposición en Suiza (tie‑breaker CDI)",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "inmueble en Mendrisio",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "11",
+        "texto": "\"su hijo es discapacitado, con una limitación del 33 %... (doc. nº1)\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_PRESUNCION_FAMILIA",
+      "detalle": "Resolución de la Comunidad de Madrid que acredita discapacidad del hijo (33%).",
+      "motivo_valoracion": "El tribunal acepta la discapacidad del hijo como motivo para que la familia permaneciera en España y considera que desvirtúa la presunción de residencia por convivencia familiar.",
+      "objetivo_probatorio": "Justificar que cónyuge/hijo permanecieron en España por razones de salud y así desvirtuar la presunción familiar",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "certificado discapacidad hijo 33% (Comunidad de Madrid)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "9",
+        "texto": "\"la comunicación de la empleadora Suiza, G.A. Modefine de 1 de julio de 2009, en la que se indica que ha superado el plazo de prueba\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Comunicado de la empleadora suiza G.A. Modefine indicando que superó el plazo de prueba el 1/7/2009.",
+      "motivo_valoracion": "Documento corroborador de la relación laboral en Suiza y de la verdadera actividad laboral del recurrente.",
+      "objetivo_probatorio": "Corroborar existencia de relación laboral efectiva en Suiza desde abril de 2009",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "comunicación GA Modefine 01/07/2009 (superación plazo de prueba)",
+      "tipo_prueba": "APORTADA_PARTE"
+    }
+  ],
+  "Pruebas_rechazadas_clave": [
+    {
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "4",
+        "texto": "\"el interesado solo parcialmente dio cumplimiento a lo requerido aportando... pero no el contrato de trabajo con la excusa de que se celebró de palabra\""
+      },
+      "detalle": "El interesado no aportó contrato escrito con Hugo Boss requerido por la Administración, alegando contrato verbal.",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "No aportó prueba exigida por requerimiento; ausencia documental impide valorar la alegación.",
+      "subcategoria": "contrato con Hugo Boss (alegado verbal)"
+    },
+    {
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"los certiﬁcados aportados... no justifican la residencia fiscal del interesado en Suiza\""
+      },
+      "detalle": "Certificados del cantón de Ticino que no expresan domicilio fiscal.",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "El tribunal considera que los certificados no acreditan expresamente domicilio ni residencia fiscal por sí solos.",
+      "subcategoria": "certificados suizos (16/06/2009)"
+    },
+    {
+      "categoria": "OTROS",
+      "cita": {
+        "pagina": "11",
+        "texto": "\"la parte... no ha aportado prueba alguna de su alegación... la carta... exige la entrega de tarjetas de crédito, llaves... elemento propio del ejercicio de la gestión\""
+      },
+      "detalle": "Alegación de exención de la indemnización por aplicación art.7 LIRPF (Estatuto de los Trabajadores).",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "No acreditó que no ostentara la condición de alto directivo; la documentación de la empresa señala alto directivo y doctrina interpretativa impide exención.",
+      "subcategoria": "alegación exención indemnización art.7 LIRPF"
+    }
+  ],
+  "archivo": "SAN_1386_2017.pdf",
+  "carga_prueba": {
+    "cita": {
+      "pagina": "4",
+      "texto": "\"El artículo 105.1 de la Ley 58/2003... quien haga valer su derecho deberá probar los hechos constitutivos del mismo.\""
+    },
+    "cumplida": "PARCIAL",
+    "motivo": "El artículo 105.1 LGT exige que quien haga valer su derecho a devolución pruebe los hechos constitutivos; para excluir la contabilización de ausencias ha de acreditarse residencia fiscal en otro país.",
+    "quien_tenia_carga": "CONTRIBUYENTE"
+  },
+  "categorias_admitidas_aeat": [
+    "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "FAMILIA_Y_ENTORNO_PERSONAL"
+  ],
+  "categorias_admitidas_contribuyente": [
+    "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "SALUD_Y_SERVICIOS_PERSONALES",
+    "CONSUMOS_FINANCIEROS",
+    "VIVIENDA_Y_USO_EFECTIVO",
+    "FAMILIA_Y_ENTORNO_PERSONAL"
+  ],
+  "categorias_rechazadas_aeat": [],
+  "categorias_rechazadas_contribuyente": [],
+  "confianza_extraccion": "ALTA",
+  "costo_usd": 0.02716025,
+  "doctrina_citada": [
+    "DGT 2185-00",
+    "STS Sala IV 28-12-1994",
+    "STS 04-07-2006",
+    "SAN 29-06-2006",
+    "TEAC 09-02-2011"
+  ],
+  "ejercicios_afectados": "2009",
+  "es_caso_residencia_irpf": "SI",
+  "fecha_resolucion": "2017-03-30",
+  "frases_clave": [
+    {
+      "pagina": "6",
+      "tema": "criterio",
+      "texto": "\"Se presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual en territorio español\""
+    },
+    {
+      "pagina": "6",
+      "tema": "prueba",
+      "texto": "\"los certiﬁcados aportados... no justifican la residencia fiscal del interesado en Suiza\""
+    },
+    {
+      "pagina": "11",
+      "tema": "prueba",
+      "texto": "\"En el año 2009, el recurrente tenía residencia fiscal en Suiza, aunque en dicho año recibiera su indemnización\""
+    }
+  ],
+  "identificadores": {
+    "ECLI": "ES:AN:2017:1386",
+    "ROJ": "SAN 1386/2017"
+  },
+  "motivo_fuera_de_alcance": "NO APLICA",
+  "observaciones": "NO CONSTA",
+  "organo": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+  "pais_CDI_aplicado": "Suiza",
+  "pais_alegado_residencia_pf": "Suiza",
+  "razonamiento_residencia": "El tribunal considera probados indicios de residencia en Suiza desde 1/04/2009: entrada en Suiza, contrato y empleo suizo, seguro médico, movimientos bancarios y vivienda en Mendrisio. Aunque la familia permaneció en España, la discapacidad del hijo y el conjunto probatorio desvirtúan la presunción familiar. Aplicó el CDI (art.4) analizando vivienda y centro de intereses y concluyó residencia suiza para 2009; no obstante la indemnización se trata por regla de no residentes salvo que concurra exención no acreditada por el actor.",
+  "resultado_final": "PARCIAL",
+  "resumen_criterios": "El tribunal examina los criterios del art. 9 LIRPF (183 días, centro de intereses económicos y vitales y presunción familiar) y aplica asimismo el art.4 del CDI Hispano‑Suizo. Finalmente valora un conjunto de indicios (vivienda en Mendrisio, contrato y entrada en Suiza, seguros, movimientos bancarios) para concluir residencia en Suiza desde 1/04/2009 y aplicar el tratamiento de no residente.",
+  "se_invoca_CDI": "SI",
+  "tiebreaker_paso_decisivo": "VIVIENDA_PERMANENTE",
+  "tiempo_ejecucion": "gpt-5-mini-2025-08-07 - 124.7s"
+}

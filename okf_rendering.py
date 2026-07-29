@@ -92,6 +92,7 @@ def render_judgment_markdown(
     *,
     threshold: float = DEFAULT_THRESHOLD,
     annotations: JudgmentAnnotations | None = None,
+    verification_report_resource: str | None = None,
 ) -> str:
     """Renderiza un concepto estable; exige un resultado por cita y en el mismo orden."""
 
@@ -170,6 +171,14 @@ def render_judgment_markdown(
         f"- PDF: `{provenance.pdf_sha256}` ({provenance.pdf_page_count} páginas, "
         f"{provenance.pdf_size_bytes} bytes).",
         f"- JSONL: `{provenance.analysis_sha256}` (`{provenance.analysis_source}`).",
+        *(
+            [
+                "- Trazabilidad de citas (IDs completos, campo de origen y "
+                f"puntuaciones): [informe de verificación]({verification_report_resource})."
+            ]
+            if verification_report_resource
+            else []
+        ),
         *(f"- Advertencia: {warning}." for warning in judgment.warnings),
         "",
         "[^sentencia-original]: Resolución original del CENDOJ indicada en `sources`.",

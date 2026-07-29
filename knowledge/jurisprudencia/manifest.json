@@ -37,13 +37,17 @@
     {
       "concept_id": "sentencias/san-1071-2025",
       "path": "sentencias/san-1071-2025.md",
-      "sha256": "7f3fc59619d197bc863ed97a782047604d192a838b35f947657ea44326e2a13b",
+      "sha256": "9ab2c0dc80c14731ba5bd2c5fbd678cf270c1324504f2b11e8c45be9aa729bf6",
       "status": "draft",
       "literal_citations": 12,
       "pending_citations": 5,
       "legal_issues": {
         "approved": 0,
         "proposed": 3
+      },
+      "verification_report": {
+        "path": "reports/san-1071-2025.verification.json",
+        "sha256": "61882fe15e43832e3538bfbd5ca2da91dd3cb76ee5b646949bbc5ca52284b054"
       },
       "normalization_warnings": [
         "Pruebas_AEAT[2].criterio_atacado: CRIT_VIVIENDA_Y_USO_EFECTIVO normalizado a CRIT_OTRO"

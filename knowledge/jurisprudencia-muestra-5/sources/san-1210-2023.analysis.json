@@ -1,0 +1,444 @@
+{
+  "Criterio_decisivo": [
+    "CRIT_183_DIAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS"
+  ],
+  "Criterios_residencia_detectados": [
+    "CRIT_183_DIAS",
+    "CRIT_AUSENCIAS_ESPORADICAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS",
+    "CRIT_CENTRO_INTERESES_VITALES",
+    "CRIT_PRESUNCION_FAMILIA"
+  ],
+  "Prueba_o_bala_de_plata": {
+    "categoria": "TESTIFICAL_Y_PERICIAL",
+    "cita": {
+      "pagina": "6",
+      "texto": "\"se observa el comportamiento típico de alguien que vive con habitualidad en ese domicilio\""
+    },
+    "detalle": "Actuaciones de vigilancia que concluyen 'comportamiento típico de alguien que vive con habitualidad en ese domicilio'.",
+    "parte": "AEAT",
+    "por_que_decisiva": "Observación directa y cualificada de presencia habitual en el domicilio que corrobora otros indicios (consumos, entregas, movimientos bancarios) y resulta determinante para afirmar residencia habitual en España.",
+    "subcategoria": "actuaciones Vigilancia Aduanera en AVENIDA000"
+  },
+  "Pruebas_AEAT": [
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "5",
+        "texto": "\"Compras de vino y aceite a la mercantil Bodegas Roca, hasta un total de 12 facturas\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Compras de vino y aceite a Bodegas Roca (12 facturas en 2011, 4 en 2012) entregadas en AVENIDA000 NUM000, dirección donde estuvo domiciliado.",
+      "motivo_valoracion": "Corroborado por otros indicios sobre uso de ese domicilio",
+      "objetivo_probatorio": "Acreditar uso y ocupación de vivienda en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 4,
+      "subcategoria": "facturas Bodegas Roca entregadas en AVENIDA000",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "5",
+        "texto": "\"ha recibido paquetes, algunos enviados a la dirección anterior por Rafael, transportista\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Recepción de paquetes enviados a la dirección anterior por Rafael, transportista que factura a Exalba SL.",
+      "motivo_valoracion": "Indicio concordante con otras entregas y consumos",
+      "objetivo_probatorio": "Acreditar presencia habitual en dirección en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "paquetería enviada por Rafael a dirección previa",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "CONSUMOS_FINANCIEROS",
+      "cita": {
+        "pagina": "5",
+        "texto": "\"Se han domiciliado en las cuentas del Sr. Agustín pagos de cuotas del gimnasio DIR\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Domiciliación en cuentas del obligado de pagos de cuotas de gimnasio DIR hasta baja 2012; pagos a centro IRADIER correspondientes a su hija.",
+      "motivo_valoracion": "Pagos periódicos corroboran presencia y usos cotidianos",
+      "objetivo_probatorio": "Acreditar vida cotidiana y presencia",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 4,
+      "subcategoria": "domiciliación cuotas gimnasio DIR e IRADIER",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "CONSUMOS_FINANCIEROS",
+      "cita": {
+        "pagina": "5",
+        "texto": "\"pagos a diferentes Clubs, entre los que mencionamos el Futbol Club Barcelona...\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Pagos a Futbol Club Barcelona, Real Club Deportivo Español, Real Club de Polo, Club de Golf Vallromanes, entre otros.",
+      "motivo_valoracion": "Consonante con otros indicios de arraigo y uso de servicios",
+      "objetivo_probatorio": "Demostrar vinculación social y uso habitual en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 3,
+      "subcategoria": "pagos a clubs deportivos y asociaciones",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SALUD_Y_SERVICIOS_PERSONALES",
+      "cita": {
+        "pagina": "5",
+        "texto": "\"permiten detectar visitas en diferentes fechas en el hospital Quirón de Barcelona\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Pagos a Generali España que permiten detectar visitas en el hospital Quirón de Barcelona; pagos a Plus Ultra que justifican presencia de su esposa en centros médicos.",
+      "motivo_valoracion": "Vinculan fechas concretas de actos médicos en España con el núcleo familiar",
+      "objetivo_probatorio": "Acreditar estancias por motivos de salud y presencia en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "pagos seguros que señalan visitas hospitalarias",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"Constan reparaciones en el taller de 'recanvis Bombardó'...identifican como dirección Barri de Golf\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Facturas de reparaciones con desplazamientos al domicilio del cliente, identificando dirección Barri de Golf calle 2 -Casa Daurella-.",
+      "motivo_valoracion": "Indicio de uso cotidiano de la finca por terceros y trabajadores",
+      "objetivo_probatorio": "Acreditar utilización efectiva de inmuebles en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "reparaciones recanvis Bombardó a domicilio",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"La mercantil Carlson Wagonlit ha identificado reservas de viajes y hoteles a nombre de Agustín y Enma\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Listado de reservas de viajes y hoteles a nombre de Agustín y Enma con origen y destino y pasajero.",
+      "motivo_valoracion": "Registros de viaje corroboran estancias en fechas concretas",
+      "objetivo_probatorio": "Acreditar desplazamientos y estancias en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "reservas Carlson Wagonlit",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"se han identificado hasta un total de cuatro diferentes inmuebles a nombre de su esposa\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Identificación de hasta cuatro inmuebles a nombre de su esposa; uno corresponde a la dirección declarada antes de no residente.",
+      "motivo_valoracion": "Disponibilidad de múltiples inmuebles y uso por la familia refuerzan arraigo",
+      "objetivo_probatorio": "Acreditar disponibilidad de vivienda en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 4,
+      "subcategoria": "inmuebles a nombre de la esposa Enma",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"imputaciones de consumo eléctrico a la Sra. Enma respecto de inmuebles\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Imputaciones de consumo eléctrico a la Sra. Enma respecto de inmuebles (La Escala, Sant Martí-Golf Guils).",
+      "motivo_valoracion": "Consumos eléctricos son indicios directos del uso cotidiano de las viviendas",
+      "objetivo_probatorio": "Acreditar uso efectivo de inmuebles en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 4,
+      "subcategoria": "consumo eléctrico imputado a Sra. Enma",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"a través de determinadas sociedades (CARAFÓN, LEONORA y TENENCIAS Y SERVICIOS SA) propiedad... de Dª Enma\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Inmuebles accesibles al matrimonio a través de sociedades al 100% propiedad de la esposa.",
+      "motivo_valoracion": "Sociedades y titularidad demuestran control patrimonial y acceso a inmuebles en España",
+      "objetivo_probatorio": "Acreditar disponibilidad de inmuebles y vínculo patrimonial en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 4,
+      "subcategoria": "sociedades propietarias de inmuebles (CARAFÓN, LEONORA, TENENCIAS Y SERVICIOS SA)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "TESTIFICAL_Y_PERICIAL",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"se observa el comportamiento típico de alguien que vive con habitualidad en ese domicilio\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Tres actuaciones de vigilancia en AVENIDA000 NUM000 concluyendo que se observa el comportamiento típico de alguien que vive habitualmente en ese domicilio.",
+      "motivo_valoracion": "Observación directa de comportamiento típico de habitabilidad; la Sala la valora como indicio contundente",
+      "objetivo_probatorio": "Acreditar presencia y conducta habitual en domicilio español",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 5,
+      "subcategoria": "actuaciones Vigilancia Aduanera en AVENIDA000",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "CONSUMOS_FINANCIEROS",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"importantes retiradas de dinero de la cuenta NUM003 por parte de D. Daniel...\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Seguimiento de cuentas: tres cuentas con importantes saldos; importantes retiradas de la cuenta NUM003 por D. Daniel para 'fines particulares' del recurrente.",
+      "motivo_valoracion": "Movimientos y retiradas en efectivo gestionadas por persona de confianza corroboran uso habitual de recursos en España",
+      "objetivo_probatorio": "Acreditar disposición de fondos y gastos en España que evidencian presencia",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 5,
+      "subcategoria": "movimientos cuentas Banco Santander y retiradas por Daniel",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"ARMENOIL SLU...entregado el gasoil 'en el domicilio del Sr. Agustín'...DABA SA reconoce la entrega de cápsulas Nespresso\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "ARMENOIL SLU entregó gasoil en domicilio de Guils de Cerdanya; DABA SA reconoce entrega de cápsulas Nespresso en domicilio de AVENIDA000.",
+      "motivo_valoracion": "Entregas periódicas y suministro refuerzan la idea de ocupación y uso de la vivienda",
+      "objetivo_probatorio": "Acreditar servicios y consumos en domicilio en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "entregas gasoil y cápsulas Nespresso a domicilio",
+      "tipo_prueba": "OBTENIDA_TERCEROS"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"participación en los órganos de gobierno de Banesto o de COBEGA SA\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Participación en órganos de gobierno de Banesto y COBEGA SA de las que percibe dividendos o retribuciones por asistir al Consejo de Administración.",
+      "motivo_valoracion": "Retribuciones y cargos en sociedades españolas denotan intereses económicos en España",
+      "objetivo_probatorio": "Acreditar centro de intereses económicos en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 4,
+      "subcategoria": "cargos en Banesto y COBEGA y percepciones",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"donación... de más de 240 obras de arte... a la fundación AMYC\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Donación del matrimonio de más de 240 obras de arte (valor >9 millones €) a la fundación AMYC y participación en fundaciones.",
+      "motivo_valoracion": "Actos de vinculación patrimonial y cultural en España apoyan arraigo y presencia de intereses económicos",
+      "objetivo_probatorio": "Acreditar vínculos patrimoniales y actividad cultural en España",
+      "origen": "REQUERIDA_INSPECCION",
+      "peso": 3,
+      "subcategoria": "donación y vinculaciones fundacionales",
+      "tipo_prueba": "INDICIARIA"
+    }
+  ],
+  "Pruebas_contribuyente": [
+    {
+      "aceptada": "NO",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "7",
+        "texto": "\"la carta de residencia... no sirve para acreditar que tiene la residencia efectiva en dicho país\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Carte de resident (documento de residencia administrativa del Principado de Mónaco) aportada por el recurrente.",
+      "motivo_valoracion": "La Sala considera que la carte de resident es documentación administrativa insuficiente para acreditar residencia efectiva (>183 días) ni centro de intereses económicos en Mónaco",
+      "objetivo_probatorio": "Acreditar residencia fiscal efectiva en Mónaco",
+      "origen": "APORTADA_PARTE",
+      "peso": 2,
+      "subcategoria": "Carte de resident Principado de Mónaco",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "6",
+        "texto": "\"copia de certificados de residencia expedidos por el Consul General en Marsella\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Copias de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el Registro General de residente.",
+      "motivo_valoracion": "La Sala estima que dichos certificados hacen referencia a aspectos administrativos ajenos a la residencia fiscal y no prueban la permanencia o obtención de rentas en Mónaco",
+      "objetivo_probatorio": "Acreditar residencia administrativa en Mónaco",
+      "origen": "APORTADA_PARTE",
+      "peso": 2,
+      "subcategoria": "certificados de residencia expedidos por el Cónsul en Marsella",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "7",
+        "texto": "\"tres contratos de alquiler... no sirven para acreditar que la recurrente ha residido más de 183 días en Mónaco\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Tres contratos de alquiler en Mónaco aportados por el recurrente.",
+      "motivo_valoracion": "La Sala considera que el mero contrato de alquiler no acredita ocupación efectiva por >183 días ni que el centro de intereses económicos esté en Mónaco",
+      "objetivo_probatorio": "Acreditar morada habitual en Mónaco",
+      "origen": "APORTADA_PARTE",
+      "peso": 2,
+      "subcategoria": "contratos de alquiler en Mónaco",
+      "tipo_prueba": "DIRECTA"
+    }
+  ],
+  "Pruebas_rechazadas_clave": [
+    {
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "7",
+        "texto": "\"la carta de residencia no sirve para acreditar que tiene su residencia efectiva en dicho país\""
+      },
+      "detalle": "Carte de resident del Principado de Mónaco aportada por el recurrente",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "Documento administrativo insuficiente para acreditar residencia fiscal efectiva o permanencia >183 días",
+      "subcategoria": "Carte de resident"
+    },
+    {
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "7",
+        "texto": "\"los certificados aportados hacen referencia únicamente a aspectos administrativos\""
+      },
+      "detalle": "Certificados de residencia consular en Marsella",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "Acreditan aspectos administrativos ajenos a lo que se entiende por residencia fiscal y no prueban permanencia o rentas en Mónaco",
+      "subcategoria": "certificados consul Marsella"
+    },
+    {
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "7",
+        "texto": "\"el mero hecho de poseer o alquilar un inmueble...no es medio suficiente\""
+      },
+      "detalle": "Contratos de alquiler en Mónaco aportados",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "La mera posesión o alquiler de inmueble no acredita ocupación efectiva ni permanencia por más de 183 días",
+      "subcategoria": "contratos alquiler Mónaco"
+    }
+  ],
+  "archivo": "SAN_1210_2023.pdf",
+  "carga_prueba": {
+    "cita": {
+      "pagina": "7",
+      "texto": "\"established la presunción... correspondía a la parte demostrar la residencia en otro Estado\""
+    },
+    "cumplida": "PARCIAL",
+    "motivo": "La Administración debe aportar los hechos de que parte la liquidación; cuando aporta indicios suficientes corresponde al contribuyente desvirtuarlos y probar residencia en otro Estado.",
+    "quien_tenia_carga": "AMBOS"
+  },
+  "categorias_admitidas_aeat": [
+    "VIVIENDA_Y_USO_EFECTIVO",
+    "CONSUMOS_FINANCIEROS",
+    "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+    "TESTIFICAL_Y_PERICIAL",
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "SALUD_Y_SERVICIOS_PERSONALES"
+  ],
+  "categorias_admitidas_contribuyente": [],
+  "categorias_rechazadas_aeat": [],
+  "categorias_rechazadas_contribuyente": [
+    "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "VIVIENDA_Y_USO_EFECTIVO"
+  ],
+  "confianza_extraccion": "ALTA",
+  "costo_usd": 0.021345,
+  "doctrina_citada": [
+    "STC 233/2005",
+    "STS 16-06-2011",
+    "STS 13-10-2011",
+    "STS 11-11-2009",
+    "STS 04-07-2006",
+    "STS 15-03-2017"
+  ],
+  "ejercicios_afectados": "2011-2013",
+  "es_caso_residencia_irpf": "SI",
+  "fecha_resolucion": "2023-02-22",
+  "frases_clave": [
+    {
+      "pagina": "6",
+      "tema": "prueba",
+      "texto": "\"se observa el comportamiento típico de alguien que vive con habitualidad en ese domicilio\""
+    },
+    {
+      "pagina": "7",
+      "tema": "prueba",
+      "texto": "\"esta abundancia de datos creemos que es suficiente y relevante como para poder afirmar la residencia fiscal\""
+    },
+    {
+      "pagina": "7",
+      "tema": "doctrina",
+      "texto": "\"correspondi­a al obligado tributario...desvirtuar las conclusiones alcanzadas por la Administración\""
+    },
+    {
+      "pagina": "7",
+      "tema": "prueba",
+      "texto": "\"la carta de residencia... no sirve para acreditar que tiene la residencia efectiva en dicho país\""
+    }
+  ],
+  "identificadores": {
+    "ECLI": "ES:AN:2023:1210",
+    "ROJ": "SAN 1210/2023"
+  },
+  "motivo_fuera_de_alcance": "NO APLICA",
+  "observaciones": "NO CONSTA",
+  "organo": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+  "pais_CDI_aplicado": "NO CONSTA",
+  "pais_alegado_residencia_pf": "Mónaco",
+  "razonamiento_residencia": "La Sala considera probados múltiples indicios de estancia y uso habitual de inmuebles en España (consumos, entregas, vigilancia, movimientos bancarios y pagos de clubs) y la existencia de intereses económicos y familiares en España. Aplica principalmente el criterio de permanencia (>183 días) y del centro de intereses económicos; estima que la documentación aportada sobre Mónaco (carte de resident, certificados consulares, alquileres) es insuficiente para desvirtuar los indicios, resolviendo a favor de la AEAT.",
+  "resultado_final": "GANA_AEAT",
+  "resumen_criterios": "La Sala aplica el criterio objetivo de permanencia (>183 días) reforzado por indicios del centro de intereses económicos y la proximidad familiar en España. La Administración aportó múltiples indicios de presencia y utilización de inmuebles y gastos en España; la documentación aportada por el recurrente sobre Mónaco es valorada como insuficiente para desvirtuar dichos indicios.",
+  "se_invoca_CDI": "NO",
+  "tiebreaker_paso_decisivo": "NO_APLICA",
+  "tiempo_ejecucion": "gpt-5-mini-2025-08-07 - 112.9s"
+}

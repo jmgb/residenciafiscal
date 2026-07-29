@@ -1,0 +1,285 @@
+{
+  "Criterio_decisivo": [
+    "CRIT_183_DIAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS"
+  ],
+  "Criterios_residencia_detectados": [
+    "CRIT_183_DIAS",
+    "CRIT_AUSENCIAS_ESPORADICAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS",
+    "CRIT_PRESUNCION_FAMILIA",
+    "CRIT_CDI_TIEBREAKER"
+  ],
+  "Prueba_o_bala_de_plata": {
+    "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "cita": {
+      "pagina": "3",
+      "texto": "\"el recurrente ha aportado al proceso su declaración de la renta en el Reino Unido correspondiente al periodo 6 de abril de 2011 a 5 de abril de 2012 (documento nº 5)\""
+    },
+    "detalle": "Declaración de la renta presentada en Reino Unido (documento nº5) que evidencia residencia fiscal en ese país durante el periodo relevante.",
+    "parte": "CONTRIBUYENTE",
+    "por_que_decisiva": "Corrobora de manera concluyente la residencia fiscal en Reino Unido y, junto con el certificado británico y el cómputo de días, permite desvirtuar la presunción de residencia en España.",
+    "subcategoria": "declaración de la renta Reino Unido (6/4/2011-5/4/2012)"
+  },
+  "Pruebas_AEAT": [
+    {
+      "aceptada": "NO",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"La Administración... atribuye... argumentando que en el ejercicio 2011 residieron habitualmente en España su cónyuge...\""
+      },
+      "contradiccion_con": "Billetes de avión de la esposa e hijos con fecha 29/8/2011 y documentos de admisión escolar en Reino Unido",
+      "criterio_atacado": "CRIT_PRESUNCION_FAMILIA",
+      "detalle": "La Administración atribuye la condición de residente alegando que en 2011 residieron habitualmente en España su cónyuge y los hijos menores.",
+      "motivo_valoracion": "No desvirtúa la prueba aportada por el recurrente que acredita el traslado de la esposa e hijos al Reino Unido.",
+      "objetivo_probatorio": "Acreditar residencia en España mediante la presunción por residencia del cónyuge/hijos",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "presunción administrativa sobre residencia familiar",
+      "tipo_prueba": "PRESUNCION"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "TESTIFICAL_Y_PERICIAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"Este añadido dio lugar a que el TEAR negase la residencia del recurrente en Reino Unido...\""
+      },
+      "contradiccion_con": "Certificado de la autoridad tributaria británica y declaración de la renta en Reino Unido",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "Resolución del TEAR que desestimó la petición del recurrente (26/2/2016) y negó la residencia en Reino Unido por el añadido sobre remittance basis del certificado británico.",
+      "motivo_valoracion": "La Sala estima que no existe prueba de que el recurrente formulase la solicitud a que se refiere el certificado británico y rechaza el fundamento del TEAR.",
+      "objetivo_probatorio": "Rebatir la confianza en el certificado británico y negar residencia fiscal en Reino Unido",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 3,
+      "subcategoria": "resolución TEAR 26/02/2016",
+      "tipo_prueba": "INDICIARIA"
+    }
+  ],
+  "Pruebas_contribuyente": [
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"el demandante... fue trasladado por su entidad empleadora con efectos de 1 de junio de 2011 a Londres...\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Acreditado que el recurrente, empleado del BBVA, fue trasladado por su entidad con efectos de 1 de junio de 2011 a Londres para desempeñar cargos directivos por dos años.",
+      "motivo_valoracion": "Corrobora la existencia de un desplazamiento laboral que explica la permanencia fuera de España.",
+      "objetivo_probatorio": "Acreditar motivo laboral y sede de actividad en Reino Unido que justifica el desplazamiento y permanencia",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "traslado BBVA 1-jun-2011",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"en el año 2011 el recurrente permaneció fuera de España durante más de 183 días, en concreto 214 días (desde el día 1 de junio...\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Cómputo de permanencia fuera de España de 214 días entre 1 junio y 31 diciembre de 2011.",
+      "motivo_valoracion": "El cómputo de días corrobora que no se cumple el requisito de permanencia en España de más de 183 días.",
+      "objetivo_probatorio": "Demostrar permanencia superior a 183 días fuera de España",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "conteo días 214 (1/6-31/12/2011)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"su cónyuge... y sus cinco hijos permanecieron en España hasta... trasladándose todos ellos al Reino Unido en fecha 29 de agosto de 2011\""
+      },
+      "contradiccion_con": "Presunción administrativa sobre residencia familiar en España",
+      "criterio_atacado": "CRIT_PRESUNCION_FAMILIA",
+      "detalle": "Billetes de avión expedidos a favor de la esposa y cinco hijos que acreditan traslado al Reino Unido el 29 de agosto de 2011.",
+      "motivo_valoracion": "Acredita el traslado familiar y la búsqueda/instalación del nuevo domicilio en Reino Unido.",
+      "objetivo_probatorio": "Acreditar que la familia se trasladó a Reino Unido, desvirtuando la presunción familiar de residencia en España",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "billetes de avión esposa e hijos 29/8/2011",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"documentos que justifican la aceptación de sus hijos.....para cursar estudios en la escuela...la admisión en la Universidad of Bath...\""
+      },
+      "contradiccion_con": "Presunción administrativa sobre residencia familiar en España",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Documentos que justifican la aceptación de los hijos en escuela de Londres y justificante de pago del depósito para cursos 2011/2012; admisión en la University of Bath de su hijo.",
+      "motivo_valoracion": "Corrobora el traslado y la instalación del nuevo domicilio de la familia en Reino Unido.",
+      "objetivo_probatorio": "Acreditar la intención y efectividad de residir en Reino Unido por motivos educativos y de establecimiento familiar",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "admisión escolar y pago de depósito",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"aportado... un certificado de la autoridad tributaria británica en el que se hace constar... es residente del Reino Unido desde el 1 de junio de 2011\""
+      },
+      "contradiccion_con": "Resolución del TEAR que interpretó el añadido sobre remittance basis",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "Certificado expedido por la autoridad tributaria británica que constata que el recurrente \"es residente del Reino Unido desde el 1 de junio de 2011\" según la normativa británica y el Convenio.",
+      "motivo_valoracion": "La Sala considera que el certificado evidencia residencia en Reino Unido y no puede valorar la conformidad con la ley tributaria británica.",
+      "objetivo_probatorio": "Acreditar residencia fiscal en Reino Unido a partir del 1/6/2011",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "certificado de la autoridad tributaria británica",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"el recurrente ha aportado... su declaración de la renta en el Reino Unido correspondiente al periodo 6 de abril de 2011 a 5 de abril de 2012 (documento nº 5)\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CDI_TIEBREAKER",
+      "detalle": "Declaración de la renta en el Reino Unido correspondiente al periodo 6 de abril de 2011 a 5 de abril de 2012 (documento nº 5 de la demanda).",
+      "motivo_valoracion": "Evidencia su residencia fiscal en Reino Unido; la Sala no entra a valorar su ajuste a la normativa británica.",
+      "objetivo_probatorio": "Probar que tributó/residió fiscalmente en Reino Unido en el periodo relevante",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "declaración de la renta Reino Unido (6/4/2011-5/4/2012)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"el hoy recurrente comunicó su desplazamiento al Reino Unido y ésta emitió acuerdo en fecha 27 de junio de 2011...\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_OTRO",
+      "detalle": "El recurrente comunicó su desplazamiento a la Agencia Tributaria y ésta emitió acuerdo de 27 de junio de 2011 aplicando art.32 del texto refundido de la Ley del IRNR.",
+      "motivo_valoracion": "Corrobora que la Administración conocía y aceptó, en trámite administrativo, el desplazamiento y su tratamiento.",
+      "objetivo_probatorio": "Acreditar reconocimiento administrativo del desplazamiento y tratamiento como no residente a efectos del IRNR",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 4,
+      "subcategoria": "comunicación a la Agencia Tributaria y acuerdo 27/6/2011",
+      "tipo_prueba": "ACTUACION_ADMINISTRATIVA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"la Comunidad de Madrid dictó acuerdo... reconociendo que el Sr. Efrain no tuvo su residencia en España en el ejercicio 2011\""
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_OTRO",
+      "detalle": "Acuerdo de la Comunidad de Madrid de 31 de julio de 2014 reconociendo que el recurrente no tuvo su residencia en España en 2011 a efectos del Impuesto sobre el Patrimonio.",
+      "motivo_valoracion": "Acto administrativo que corrobora la posición de no residencia del recurrente en 2011.",
+      "objetivo_probatorio": "Refuerzo administrativo de la no residencia en España en 2011",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 3,
+      "subcategoria": "acuerdo Comunidad de Madrid 31/7/2014",
+      "tipo_prueba": "ACTUACION_ADMINISTRATIVA"
+    }
+  ],
+  "Pruebas_rechazadas_clave": [
+    {
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"los documentos aportados por el recurrente... trasladándose todos ellos al Reino Unido en fecha 29 de agosto de 2011\""
+      },
+      "detalle": "La presunción administrativa de residencia por el hecho de que el cónyuge e hijos residieran en España fue rechazada tras acreditarse el traslado de la familia a Reino Unido.",
+      "parte": "AEAT",
+      "razon_rechazo": "Documentos aportados por el recurrente acreditan traslado familiar y desvirtúan la presunción",
+      "subcategoria": "presunción por residencia del cónyuge/hijos"
+    },
+    {
+      "categoria": "TESTIFICAL_Y_PERICIAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "\"no hay prueba alguna en las actuaciones que permita afirmar que el actor hiciese la solicitud a que se refiere...\""
+      },
+      "detalle": "La resolución del TEAR que negó la residencia en Reino Unido por el añadido del certificado británico fue desestimada por la Sala por falta de prueba de que el recurrente solicitase la excepción mencionada.",
+      "parte": "AEAT",
+      "razon_rechazo": "No hay prueba de que el actor hiciese la solicitud a que se refiere el certificado británico",
+      "subcategoria": "fundamento TEAR sobre remittance basis"
+    }
+  ],
+  "archivo": "SAN_1226_2021.pdf",
+  "carga_prueba": {
+    "cita": {
+      "pagina": "2",
+      "texto": "\"Se presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual...resida habitualmente en España el cónyuge...\""
+    },
+    "cumplida": "SI",
+    "motivo": "La normativa establece presunción por residencia del cónyuge/hijos, que el contribuyente puede desvirtuar; la Administración debe fundamentar la atribución de residencia en España y el contribuyente puede probar residencia en el extranjero.",
+    "quien_tenia_carga": "AMBOS"
+  },
+  "categorias_admitidas_aeat": [],
+  "categorias_admitidas_contribuyente": [
+    "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "FAMILIA_Y_ENTORNO_PERSONAL",
+    "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+  ],
+  "categorias_rechazadas_aeat": [
+    "FAMILIA_Y_ENTORNO_PERSONAL"
+  ],
+  "categorias_rechazadas_contribuyente": [],
+  "confianza_extraccion": "ALTA",
+  "costo_usd": 0.0187185,
+  "doctrina_citada": [
+    "STSJ Madrid 10/01/2018 (Rec. 418/2016)",
+    "TEAR Resolución 26/02/2016"
+  ],
+  "ejercicios_afectados": "2011",
+  "es_caso_residencia_irpf": "SI",
+  "fecha_resolucion": "2021-03-04",
+  "frases_clave": [
+    {
+      "pagina": "2",
+      "tema": "criterio",
+      "texto": "\"Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando se dé cualquiera de las siguientes circunstancias:\""
+    },
+    {
+      "pagina": "3",
+      "tema": "prueba",
+      "texto": "\"en el año 2011 el recurrente permaneció fuera de España durante más de 183 días, en concreto 214 días\""
+    },
+    {
+      "pagina": "2",
+      "tema": "doctrina",
+      "texto": "\"STSJ de Madrid de 10 de enero de 2018... se considera que durante el ejercicio 2011 el recurrente residió en el Reino Unido.\""
+    }
+  ],
+  "identificadores": {
+    "ECLI": "ECLI:ES:AN:2021:1226",
+    "ROJ": "SAN 1226/2021"
+  },
+  "motivo_fuera_de_alcance": "NO APLICA",
+  "observaciones": "NO CONSTA",
+  "organo": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 2",
+  "pais_CDI_aplicado": "Reino Unido",
+  "pais_alegado_residencia_pf": "Reino Unido",
+  "razonamiento_residencia": "La Sala considera probados: traslado del actor por su empleador a Londres con efectos de 1/6/2011, permanencia fuera de España de 214 días (1/6-31/12/2011), traslado de la esposa e hijos (billetes 29/8/2011) y documentos de admisión escolar/universitaria, certificado de la autoridad fiscal británica y declaración de renta en Reino Unido. Aplicando art.9 LIRPF, no concurre residencia en España (menos de 183 días y no radica núcleo de intereses económicos), por lo que se estima el recurso a favor del recurrente.",
+  "resultado_final": "GANA_CONTRIBUYENTE",
+  "resumen_criterios": "La Sala analiza el art.9.1 LIRPF (183 días y núcleo de intereses). Con los documentos aportados se prueba que el recurrente permaneció fuera de España más de 183 días y que no radicaba en España el núcleo de sus intereses, desvirtuando la presunción familiar.",
+  "se_invoca_CDI": "SI",
+  "tiebreaker_paso_decisivo": "NO_APLICA",
+  "tiempo_ejecucion": "gpt-5-mini-2025-08-07 - 108.5s"
+}

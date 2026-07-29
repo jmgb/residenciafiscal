@@ -1,0 +1,233 @@
+{
+  "schema_version": "residenciafiscal-okf-verification/1",
+  "source_file": "SAN_1136_2016.pdf",
+  "concept_id": "sentencias/san-1136-2016",
+  "threshold": 85.0,
+  "citas": [
+    {
+      "id": "cita-carga-prueba",
+      "owner_id": "carga-prueba",
+      "source_field": "carga_prueba.cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-declaracion-representante-escrito-5-02-2010-7e83fa00eb",
+      "owner_id": "prueba-aeat-declaracion-representante-escrito-5-02-2010-7e83fa00eb",
+      "source_field": "Pruebas_AEAT[0].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-tarjetas-de-residencia-aportadas-f4e883cc95",
+      "owner_id": "prueba-aeat-tarjetas-de-residencia-aportadas-f4e883cc95",
+      "source_field": "Pruebas_AEAT[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-denegacion-de-certificacion-aeat-causante-doc-32-e7afff38bc",
+      "owner_id": "prueba-aeat-denegacion-de-certificacion-aeat-causante-doc-32-e7afff38bc",
+      "source_field": "Pruebas_AEAT[2].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-declaraciones-ip-e-irpf-docs-3-29-673b09ac1e",
+      "owner_id": "prueba-contribuyente-declaraciones-ip-e-irpf-docs-3-29-673b09ac1e",
+      "source_field": "Pruebas_contribuyente[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-solicitud-nacionalidad-doc-36-2b0dc2a071",
+      "owner_id": "prueba-contribuyente-solicitud-nacionalidad-doc-36-2b0dc2a071",
+      "source_field": "Pruebas_contribuyente[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-escritura-manifestacion-y-adjudicacion-herencia--6bf65872ca",
+      "owner_id": "prueba-contribuyente-escritura-manifestacion-y-adjudicacion-herencia--6bf65872ca",
+      "source_field": "Pruebas_contribuyente[2].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-copias-de-pasaportes-doc-33-7a7817646e",
+      "owner_id": "prueba-contribuyente-copias-de-pasaportes-doc-33-7a7817646e",
+      "source_field": "Pruebas_contribuyente[3].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificacion-aeat-sobre-la-actora-doc-31-74bd67a0fb",
+      "owner_id": "prueba-contribuyente-certificacion-aeat-sobre-la-actora-doc-31-74bd67a0fb",
+      "source_field": "Pruebas_contribuyente[4].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-declaracion-representante-escrito-5-02-2010-c438ea569d",
+      "owner_id": "prueba-rechazada-declaracion-representante-escrito-5-02-2010-c438ea569d",
+      "source_field": "Pruebas_rechazadas_clave[0].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-tarjetas-de-residencia-627feab1e6",
+      "owner_id": "prueba-rechazada-tarjetas-de-residencia-627feab1e6",
+      "source_field": "Pruebas_rechazadas_clave[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-decisiva-declaraciones-irpf-e-ip-docs-3-29-7a6439a41f",
+      "owner_id": "prueba-decisiva-declaraciones-irpf-e-ip-docs-3-29-7a6439a41f",
+      "source_field": "Prueba_o_bala_de_plata.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-criterio-da080cede6",
+      "owner_id": "frase-clave-criterio-da080cede6",
+      "source_field": "frases_clave[0]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-295634483e",
+      "owner_id": "frase-clave-prueba-295634483e",
+      "source_field": "frases_clave[1]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-ff74579946",
+      "owner_id": "frase-clave-prueba-ff74579946",
+      "source_field": "frases_clave[2]",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    }
+  ]
+}

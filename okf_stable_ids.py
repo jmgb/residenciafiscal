@@ -32,3 +32,17 @@ def stable_id(
     digest = hashlib.sha256(serialized.encode("utf-8")).hexdigest()[:10]
     readable = slugify(label)[:48] or "sin-etiqueta"
     return f"{prefix}-{readable}-{digest}"
+
+
+_HASH_SUFFIX_RE = re.compile(r"-([0-9a-f]{10})$")
+
+
+def short_id(value: str) -> str:
+    """Forma corta para vistas legibles: el sufijo hash basta como dirección.
+
+    Los IDs sin sufijo hash (fijos, como `cita-carga-prueba`) se devuelven
+    íntegros; el informe de verificación conserva siempre el ID completo.
+    """
+
+    match = _HASH_SUFFIX_RE.search(value)
+    return match.group(1) if match else value

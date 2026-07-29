@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from okf_annotations import AnnotationCorrection, JudgmentAnnotations, LegalIssue
+from okf_stable_ids import short_id
 
 
 def _is_human_reviewed(item: AnnotationCorrection | LegalIssue) -> bool:
@@ -39,7 +40,7 @@ def render_annotation_sections(annotations: JudgmentAnnotations) -> list[str]:
     if not annotations.issues:
         lines.append("No hay resultados desglosados por cuestión jurídica.")
     for issue in annotations.issues:
-        citations = ", ".join(f"`{item}`" for item in issue.support_citation_ids) or "—"
+        citations = ", ".join(f"`{short_id(item)}`" for item in issue.support_citation_ids) or "—"
         lines.extend(
             [
                 f"## {issue.question}",
@@ -68,7 +69,7 @@ def render_annotation_sections(annotations: JudgmentAnnotations) -> list[str]:
     for correction in annotations.corrections:
         lines.extend(
             [
-                f"- `{correction.status}` — `{correction.target_id}.{correction.field}`: "
+                f"- `{correction.status}` — `{short_id(correction.target_id)}.{correction.field}`: "
                 f"`{correction.source_value}` → `{correction.replacement}`. "
                 f"{correction.rationale}",
             ]

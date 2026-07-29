@@ -1,0 +1,30 @@
+schema_version: 1
+source_file: SAN_1136_2016.pdf
+corrections: []
+issues:
+  - id: residencia-habitual-actora-y-causante
+    question: ¿Tenían la actora y el causante residencia habitual en España?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 4
+        source_excerpt_verbatim: |-
+          De lo razonado resulta que tanto la contribuyente como el causante tenía residencia habitual en España al
+          tiempo del fallecimiento de éste y el Impuesto de Sucesiones debe seguir las reglas establecidas para el caso
+          de contribuyente residente en España que convive con el cónyuge causante.
+    rationale: >-
+      Cuestión identificada por revisión asistida del PDF. El anclaje es literal
+      y debe superar la validación automática; la conclusión sigue pendiente de
+      aprobación humana.
+  - id: reducciones-impuesto-sucesiones
+    question: ¿Procedían las reducciones reclamadas en el Impuesto sobre Sucesiones?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 4
+        source_excerpt_verbatim: |-
+          Es igualmente aplicable la reducción del artículo 20.2 a) Grupo II y lo previsto en el artículo 15 de la Ley
+          29/1987 .
+    rationale: >-
+      Resultado tributario diferenciado de la cuestión de residencia,
+      identificado por el agente y pendiente de revisión humana.

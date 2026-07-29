@@ -95,9 +95,8 @@ El cuerpo se renderiza en este orden:
 12. `# Anotaciones y correcciones`.
 13. `# Citas literales verificadas`.
 14. `# Citas pendientes de revisión`.
-15. `# Trazabilidad de citas`.
-16. `# Calidad y procedencia`.
-17. Nota al PDF original.
+15. `# Calidad y procedencia`.
+16. Nota al PDF original.
 
 Las secciones se mantienen aunque no haya elementos. La ausencia se expresa con
 un texto explícito, no eliminando la sección.
@@ -112,7 +111,11 @@ Cada fila conserva:
 - criterio normalizado;
 - valor exacto recibido como criterio de origen;
 - valoración y motivo derivados;
-- peso estructurado.
+- peso estructurado, rotulado como `Peso del análisis (1–5)`.
+
+El peso es una estimación producida por el análisis, no una puntuación atribuida
+por el tribunal. Se conserva por compatibilidad y para ordenar revisiones; no
+debe utilizarse como autoridad jurídica ni mostrarse sin esa etiqueta.
 
 Una normalización nunca elimina el valor de origen. Por ejemplo, un criterio no
 canónico puede publicarse como `CRIT_OTRO`, pero el valor recibido y la regla de
@@ -139,9 +142,12 @@ Un match fuzzy, parcial o no localizado:
 - no se muestra en bloque de cita;
 - conserva el texto del análisis;
 - se etiqueta como «Texto del análisis; no es una cita literal»;
-- registra estado, fidelidad y puntuación para revisión.
+- registra estado y fidelidad; la puntuación queda en el informe técnico.
 
-### Trazabilidad
+### Informe técnico de trazabilidad
+
+La tabla completa no se inserta en el Markdown jurídico. Cada concepto enlaza
+`../reports/<slug>.verification.json`, donde se conserva una fila por cita con:
 
 Cada cita conserva:
 
@@ -153,7 +159,9 @@ Cada cita conserva:
 - puntuación;
 - índices físicos del PDF.
 
-La puntuación ayuda a localizar y priorizar revisión. No mide validez jurídica.
+La puntuación ayuda a localizar y priorizar revisión. No mide validez jurídica
+y por eso no aparece en la vista jurídica principal. El manifiesto fija la ruta
+y el SHA-256 del informe.
 
 ## Sidecars y revisión humana
 

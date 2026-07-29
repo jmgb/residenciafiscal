@@ -1,0 +1,248 @@
+{
+  "Criterio_decisivo": [
+    "CRIT_183_DIAS",
+    "CRIT_PRESUNCION_FAMILIA"
+  ],
+  "Criterios_residencia_detectados": [
+    "CRIT_183_DIAS",
+    "CRIT_PRESUNCION_FAMILIA",
+    "CRIT_CENTRO_INTERESES_VITALES",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS"
+  ],
+  "Prueba_o_bala_de_plata": {
+    "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+    "cita": {
+      "pagina": "3",
+      "texto": "La recurrente aporta en los documentos del 3 al 29, declaraciones...constando en todas ellas el domicilio ... en Marbella, Málaga"
+    },
+    "detalle": "Declaraciones fiscales continuadas (2000-2011) constatando domicilio en Marbella y documentacion complementaria (solicitud nacionalidad, escritura 2009)",
+    "parte": "CONTRIBUYENTE",
+    "por_que_decisiva": "Acreditan de forma concordante y continuada la residencia y domicilio habitual de la actora desde 2000, sustentando además la presunción aplicable al causante",
+    "subcategoria": "declaraciones IRPF e IP (docs.3-29)"
+  },
+  "Pruebas_AEAT": [
+    {
+      "aceptada": "NO",
+      "categoria": "TESTIFICAL_Y_PERICIAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "la manifestación del representante del sujeto pasivo no es suﬁciente, por si sola, para determinar la residencia habitual del causante"
+      },
+      "contradiccion_con": "Declaraciones IRPF e IP (docs 3-29)",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Manifestación de D. Carlos Alberto, representante del sujeto pasivo, indicando que el causante no tenía residencia en España",
+      "motivo_valoracion": "No es suficiente por sí sola; puede ignorar circunstancias y contradicha por otros indicios",
+      "objetivo_probatorio": "Acreditar que el causante no residía habitualmente en España",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 2,
+      "subcategoria": "declaración representante (escrito 5-02-2010)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "las tarjetas de residencia aportadas no acreditan la residencia en España"
+      },
+      "contradiccion_con": "Declaraciones IRPF e IP (docs 3-29)",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Tarjetas de residencia alegadas en el expediente y valoradas por la administración",
+      "motivo_valoracion": "El tribunal considera que las tarjetas no acreditan por sí solas la no residencia",
+      "objetivo_probatorio": "Acreditar ausencia de residencia habitual en España",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 2,
+      "subcategoria": "tarjetas de residencia aportadas",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "NO_VALORADA",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "en el documento 32, la AEAT deniega la certiﬁcación de residencia ﬁscal en España del causante... pues en el año 2013 ... había fallecido"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Respuesta de la AEAT denegando certificación de residencia fiscal del causante por hallarse fallecido al expedirse",
+      "motivo_valoracion": "Denegación por razón material (fallecimiento) y no desvirtúa la prueba aportada por la actora",
+      "objetivo_probatorio": "Impugnar la residencia fiscal del causante",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 1,
+      "subcategoria": "denegación de certificación AEAT causante (doc.32)",
+      "tipo_prueba": "DIRECTA"
+    }
+  ],
+  "Pruebas_contribuyente": [
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "3",
+        "texto": "La recurrente aporta en los documentos del 3 al 29, declaraciones...constando en todas ellas el domicilio de ... en Marbella, Málaga"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Declaraciones del Impuesto sobre el Patrimonio y del IRPF desde 2000 a 2011 con domicilio en DIRECCION000 / URBANIZACIÓN000 en Marbella (Málaga)",
+      "motivo_valoracion": "Acreditan residencia continuada desde 2000 y corroboradas por otros documentos",
+      "objetivo_probatorio": "Acreditar residencia continuada y domicilio habitual en España",
+      "origen": "APORTADA_PARTE",
+      "peso": 5,
+      "subcategoria": "declaraciones IP e IRPF (docs.3-29)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "3",
+        "texto": "en el documento 36 consta la solicitud de la nacionalidad española...haber residido en España desde 1999"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Solicitud de nacionalidad (16-01-2013) donde la actora afirma haber residido en España desde 1999 en URBANIZACIÓN000, Nueva Andalucía, Marbella",
+      "motivo_valoracion": "Confirma la residencia prolongada y es coherente con las declaraciones fiscales",
+      "objetivo_probatorio": "Acreditar antigüedad y permanencia en España",
+      "origen": "APORTADA_PARTE",
+      "peso": 4,
+      "subcategoria": "solicitud nacionalidad (doc.36)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "3",
+        "texto": "Esta misma indicación de residencia consta en la escritura de 1 de octubre de 2009"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Escritura donde consta la indicación de residencia de la actora en Marbella",
+      "motivo_valoracion": "Reitera la misma indicación de residencia consignada en otros documentos",
+      "objetivo_probatorio": "Acreditar domicilio y uso efectivo de vivienda",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "escritura manifestación y adjudicación herencia (1-10-2009, doc.38)",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "cita": {
+        "pagina": "3",
+        "texto": "se aporta copia de los pasaportes... ambos entraron en España reiteradamente en los años 2004, 2005, 2006"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Copias de los pasaportes de la actora y del causante que muestran entradas reiteradas a España en 2004, 2005, 2006 y una en 2007 por aeropuertos Málaga y Madrid",
+      "motivo_valoracion": "Corrobora la permanencia y entradas reiteradas a España",
+      "objetivo_probatorio": "Acreditar presencia física reiterada en España",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "copias de pasaportes (doc.33)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "Como documento 31 se aporta certiﬁcación de la AEAT en la que se aﬁrma la residencia ﬁscal en España de la hoy recurrente"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Certificación emitida por la AEAT en la que se afirma la residencia fiscal en España de la actora",
+      "motivo_valoracion": "Certificación administrativa que corrobora las restantes pruebas documentales",
+      "objetivo_probatorio": "Acreditar formalmente la residencia fiscal de la actora",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 5,
+      "subcategoria": "certificación AEAT sobre la actora (doc.31)",
+      "tipo_prueba": "DIRECTA"
+    }
+  ],
+  "Pruebas_rechazadas_clave": [
+    {
+      "categoria": "TESTIFICAL_Y_PERICIAL",
+      "cita": {
+        "pagina": "3",
+        "texto": "la manifestación del representante del sujeto pasivo no es suﬁciente, por si sola, para determinar la residencia habitual del causante"
+      },
+      "detalle": "Manifestación del representante afirmando que el causante no tenía residencia en España",
+      "parte": "AEAT",
+      "razon_rechazo": "No es suficiente por sí sola y contradicha por otras pruebas documentales",
+      "subcategoria": "declaración representante (escrito 5-02-2010)"
+    },
+    {
+      "categoria": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "cita": {
+        "pagina": "3",
+        "texto": "las tarjetas de residencia aportadas no acreditan la residencia en España"
+      },
+      "detalle": "Tarjetas de residencia valoradas por la Administración como no acreditativas de residencia",
+      "parte": "AEAT",
+      "razon_rechazo": "El tribunal considera que las tarjetas no acreditan la residencia en España por sí mismas",
+      "subcategoria": "tarjetas de residencia"
+    }
+  ],
+  "archivo": "SAN_1136_2016.pdf",
+  "carga_prueba": {
+    "cita": {
+      "pagina": "3",
+      "texto": "Debemos concluir que la Administración debió presentar elementos de prueba suﬁcientes para desvirtuar los elementos fácticos"
+    },
+    "cumplida": "NO",
+    "motivo": "Corresponde a la Administración desvirtuar las pruebas y las presunciones aportadas por la actora",
+    "quien_tenia_carga": "AEAT"
+  },
+  "categorias_admitidas_aeat": [],
+  "categorias_admitidas_contribuyente": [
+    "VIVIENDA_Y_USO_EFECTIVO",
+    "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+    "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+  ],
+  "categorias_rechazadas_aeat": [
+    "TESTIFICAL_Y_PERICIAL",
+    "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+  ],
+  "categorias_rechazadas_contribuyente": [],
+  "confianza_extraccion": "ALTA",
+  "costo_usd": 0.0165135,
+  "doctrina_citada": [
+    "TEAC 09-07-2012"
+  ],
+  "ejercicios_afectados": "2007",
+  "es_caso_residencia_irpf": "SI",
+  "fecha_resolucion": "2016-03-22",
+  "frases_clave": [
+    {
+      "pagina": "3",
+      "tema": "criterio",
+      "texto": "Se presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual en territorio español cuando...resida habitualmente en España el cónyuge"
+    },
+    {
+      "pagina": "3",
+      "tema": "prueba",
+      "texto": "La valoración conjunta de la prueba, nos lleva a concluir que el tiempo que la contribuyente residió en España cumple los requisitos del artículo 9"
+    },
+    {
+      "pagina": "3",
+      "tema": "prueba",
+      "texto": "la manifestación del representante del sujeto pasivo no es suﬁciente, por si sola, para determinar la residencia habitual del causante"
+    }
+  ],
+  "identificadores": {
+    "ECLI": "ECLI:ES:AN:2016:1136",
+    "ROJ": "SAN 1136/2016"
+  },
+  "motivo_fuera_de_alcance": "NO APLICA",
+  "observaciones": "NO CONSTA",
+  "organo": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección Segunda",
+  "pais_CDI_aplicado": "NO CONSTA",
+  "pais_alegado_residencia_pf": "España (discutida frente a Rusia)",
+  "razonamiento_residencia": "El tribunal considera probada la residencia habitual de la actora por la documentación fiscal (IRPF/IP), solicitud de nacionalidad y escritura de 2009, y presencia reiterada acreditada por pasaportes. Aplicando art.9 LIRPF y la presunción por convivencia, estima que el causante también era residente. Rechaza la valoración aislada de la declaración del representante al ser contradictoria con otras pruebas.",
+  "resultado_final": "GANA_CONTRIBUYENTE",
+  "resumen_criterios": "El tribunal aplica el art.9 LIRPF: valora permanencia (entradas por pasaporte, declaraciones fiscales) y la presunción por convivencia conyugal para el causante. Constatada residencia continuada de la actora (2000-2013) y la presunción a favor del causante, estima que ambos eran residentes.",
+  "se_invoca_CDI": "NO",
+  "tiebreaker_paso_decisivo": "NO_APLICA",
+  "tiempo_ejecucion": "gpt-5-mini-2025-08-07 - 92.8s"
+}

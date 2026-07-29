@@ -19,6 +19,19 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def analysis_snapshot_bytes(raw_record: Mapping[str, object]) -> bytes:
+    """Serializa el registro con el mismo contrato usado por el snapshot."""
+
+    content = json.dumps(raw_record, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    return content.encode()
+
+
+def sha256_analysis_record(raw_record: Mapping[str, object]) -> str:
+    """Calcula la huella de la representación canónica del registro."""
+
+    return hashlib.sha256(analysis_snapshot_bytes(raw_record)).hexdigest()
+
+
 def write_analysis_snapshot(
     output_dir: Path,
     slug: str,
@@ -28,10 +41,7 @@ def write_analysis_snapshot(
 
     snapshot_path = output_dir / "sources" / f"{slug}.analysis.json"
     snapshot_path.parent.mkdir(parents=True, exist_ok=True)
-    snapshot_path.write_text(
-        json.dumps(raw_record, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    snapshot_path.write_bytes(analysis_snapshot_bytes(raw_record))
     return snapshot_path
 
 

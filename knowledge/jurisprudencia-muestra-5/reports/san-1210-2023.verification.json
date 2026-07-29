@@ -1,0 +1,409 @@
+{
+  "schema_version": "residenciafiscal-okf-verification/1",
+  "source_file": "SAN_1210_2023.pdf",
+  "concept_id": "sentencias/san-1210-2023",
+  "threshold": 85.0,
+  "citas": [
+    {
+      "id": "cita-carga-prueba",
+      "owner_id": "carga-prueba",
+      "source_field": "carga_prueba.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 88.0,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-facturas-bodegas-roca-entregadas-en-avenida000-531ea80ab5",
+      "owner_id": "prueba-aeat-facturas-bodegas-roca-entregadas-en-avenida000-531ea80ab5",
+      "source_field": "Pruebas_AEAT[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-paqueteria-enviada-por-rafael-a-direccion-previa-a46c202283",
+      "owner_id": "prueba-aeat-paqueteria-enviada-por-rafael-a-direccion-previa-a46c202283",
+      "source_field": "Pruebas_AEAT[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-domiciliacion-cuotas-gimnasio-dir-e-iradier-d96d94aa74",
+      "owner_id": "prueba-aeat-domiciliacion-cuotas-gimnasio-dir-e-iradier-d96d94aa74",
+      "source_field": "Pruebas_AEAT[2].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-pagos-a-clubs-deportivos-y-asociaciones-a1a39826d7",
+      "owner_id": "prueba-aeat-pagos-a-clubs-deportivos-y-asociaciones-a1a39826d7",
+      "source_field": "Pruebas_AEAT[3].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-pagos-seguros-que-senalan-visitas-hospitalarias-487013c3f5",
+      "owner_id": "prueba-aeat-pagos-seguros-que-senalan-visitas-hospitalarias-487013c3f5",
+      "source_field": "Pruebas_AEAT[4].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-reparaciones-recanvis-bombardo-a-domicilio-ac81be7883",
+      "owner_id": "prueba-aeat-reparaciones-recanvis-bombardo-a-domicilio-ac81be7883",
+      "source_field": "Pruebas_AEAT[5].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-reservas-carlson-wagonlit-9eb5cbc6b3",
+      "owner_id": "prueba-aeat-reservas-carlson-wagonlit-9eb5cbc6b3",
+      "source_field": "Pruebas_AEAT[6].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-inmuebles-a-nombre-de-la-esposa-enma-f5bbc864db",
+      "owner_id": "prueba-aeat-inmuebles-a-nombre-de-la-esposa-enma-f5bbc864db",
+      "source_field": "Pruebas_AEAT[7].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-consumo-electrico-imputado-a-sra-enma-7fff5e4c47",
+      "owner_id": "prueba-aeat-consumo-electrico-imputado-a-sra-enma-7fff5e4c47",
+      "source_field": "Pruebas_AEAT[8].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-sociedades-propietarias-de-inmuebles-carafon-leo-6131535338",
+      "owner_id": "prueba-aeat-sociedades-propietarias-de-inmuebles-carafon-leo-6131535338",
+      "source_field": "Pruebas_AEAT[9].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-actuaciones-vigilancia-aduanera-en-avenida000-40511a3f39",
+      "owner_id": "prueba-aeat-actuaciones-vigilancia-aduanera-en-avenida000-40511a3f39",
+      "source_field": "Pruebas_AEAT[10].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-movimientos-cuentas-banco-santander-y-retiradas--5a27d6a4fb",
+      "owner_id": "prueba-aeat-movimientos-cuentas-banco-santander-y-retiradas--5a27d6a4fb",
+      "source_field": "Pruebas_AEAT[11].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-entregas-gasoil-y-capsulas-nespresso-a-domicilio-d5f9d26020",
+      "owner_id": "prueba-aeat-entregas-gasoil-y-capsulas-nespresso-a-domicilio-d5f9d26020",
+      "source_field": "Pruebas_AEAT[12].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-cargos-en-banesto-y-cobega-y-percepciones-3913baed58",
+      "owner_id": "prueba-aeat-cargos-en-banesto-y-cobega-y-percepciones-3913baed58",
+      "source_field": "Pruebas_AEAT[13].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-donacion-y-vinculaciones-fundacionales-32ff8ee407",
+      "owner_id": "prueba-aeat-donacion-y-vinculaciones-fundacionales-32ff8ee407",
+      "source_field": "Pruebas_AEAT[14].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-carte-de-resident-principado-de-monaco-0f617c1697",
+      "owner_id": "prueba-contribuyente-carte-de-resident-principado-de-monaco-0f617c1697",
+      "source_field": "Pruebas_contribuyente[0].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 97.14,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        8
+      ],
+      "matched_printed_page_labels": [
+        "8"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificados-de-residencia-expedidos-por-el-cons-d197a90fdc",
+      "owner_id": "prueba-contribuyente-certificados-de-residencia-expedidos-por-el-cons-d197a90fdc",
+      "source_field": "Pruebas_contribuyente[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-contratos-de-alquiler-en-monaco-f911a5fb13",
+      "owner_id": "prueba-contribuyente-contratos-de-alquiler-en-monaco-f911a5fb13",
+      "source_field": "Pruebas_contribuyente[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 85.0,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        8
+      ],
+      "matched_printed_page_labels": [
+        "8"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-carte-de-resident-e44fee67d5",
+      "owner_id": "prueba-rechazada-carte-de-resident-e44fee67d5",
+      "source_field": "Pruebas_rechazadas_clave[0].cita",
+      "evidence_status": "not_found",
+      "literal_fidelity": "unverified",
+      "score": 84.95,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [],
+      "matched_printed_page_labels": []
+    },
+    {
+      "id": "cita-prueba-rechazada-certificados-consul-marsella-503161a113",
+      "owner_id": "prueba-rechazada-certificados-consul-marsella-503161a113",
+      "source_field": "Pruebas_rechazadas_clave[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-contratos-alquiler-monaco-d5a314e5ea",
+      "owner_id": "prueba-rechazada-contratos-alquiler-monaco-d5a314e5ea",
+      "source_field": "Pruebas_rechazadas_clave[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        8
+      ],
+      "matched_printed_page_labels": [
+        "8"
+      ]
+    },
+    {
+      "id": "cita-prueba-decisiva-actuaciones-vigilancia-aduanera-en-avenida000-f4ceaffb8b",
+      "owner_id": "prueba-decisiva-actuaciones-vigilancia-aduanera-en-avenida000-f4ceaffb8b",
+      "source_field": "Prueba_o_bala_de_plata.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-e58b4519c5",
+      "owner_id": "frase-clave-prueba-e58b4519c5",
+      "source_field": "frases_clave[0]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-b3d4cf8c14",
+      "owner_id": "frase-clave-prueba-b3d4cf8c14",
+      "source_field": "frases_clave[1]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-doctrina-0a5e642c2a",
+      "owner_id": "frase-clave-doctrina-0a5e642c2a",
+      "source_field": "frases_clave[2]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 91.67,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-d986c39c2c",
+      "owner_id": "frase-clave-prueba-d986c39c2c",
+      "source_field": "frases_clave[3]",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 97.14,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        8
+      ],
+      "matched_printed_page_labels": [
+        "8"
+      ]
+    }
+  ]
+}

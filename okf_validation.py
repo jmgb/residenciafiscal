@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import hashlib
-import json
 import re
 from pathlib import Path
 from typing import cast
 
 import yaml
+
+from okf_manifest_validation import validate_manifest
 
 _LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 _REQUIRED_SECTIONS = {
@@ -88,48 +89,6 @@ def _validate_indexes(bundle_dir: Path, issues: list[str]) -> None:
         _validate_links(index_path, body, issues)
 
 
-def _validate_manifest(bundle_dir: Path, issues: list[str]) -> None:
-    manifest_path = bundle_dir / "manifest.json"
-    try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        issues.append(f"{manifest_path}: {exc}")
-        return
-    if manifest.get("okf_version") != "0.2":
-        issues.append(f"{manifest_path}: okf_version debe ser 0.2")
-    documents = manifest.get("documents")
-    if not isinstance(documents, list):
-        issues.append(f"{manifest_path}: documents debe ser una lista")
-        return
-    if manifest.get("scope", {}).get("documents") != len(documents):
-        issues.append(f"{manifest_path}: cardinalidad incoherente")
-    analysis_record = manifest.get("analysis_record")
-    if not isinstance(analysis_record, dict):
-        issues.append(f"{manifest_path}: analysis_record inválido")
-    else:
-        record_path = bundle_dir / str(analysis_record.get("path", ""))
-        if not record_path.is_file():
-            issues.append(f"{manifest_path}: registro de análisis inexistente")
-        elif _sha256(record_path) != analysis_record.get("sha256"):
-            issues.append(f"{manifest_path}: hash del registro de análisis no coincide")
-    annotations_source = manifest.get("annotations_source")
-    if isinstance(annotations_source, dict):
-        annotations_path = bundle_dir / str(annotations_source.get("path", ""))
-        if not annotations_path.is_file():
-            issues.append(f"{manifest_path}: sidecar de anotaciones inexistente")
-        elif _sha256(annotations_path) != annotations_source.get("sha256"):
-            issues.append(f"{manifest_path}: hash de anotaciones no coincide")
-    for document in documents:
-        if not isinstance(document, dict):
-            issues.append(f"{manifest_path}: documento inválido")
-            continue
-        document_path = bundle_dir / str(document.get("path", ""))
-        if not document_path.is_file():
-            issues.append(f"{manifest_path}: documento inexistente {document_path}")
-        elif _sha256(document_path) != document.get("sha256"):
-            issues.append(f"{manifest_path}: hash de documento no coincide")
-
-
 def validate_okf_bundle(bundle_dir: Path) -> tuple[str, ...]:
     """Devuelve incidencias de conformidad OKF, enlaces, secciones y hashes."""
 
@@ -142,5 +101,5 @@ def validate_okf_bundle(bundle_dir: Path) -> tuple[str, ...]:
         issues.append(f"{bundle_dir}: no contiene conceptos")
     for concept_path in concept_paths:
         _validate_concept(concept_path, issues)
-    _validate_manifest(bundle_dir, issues)
+    validate_manifest(bundle_dir, len(concept_paths), issues)
     return tuple(issues)

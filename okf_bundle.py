@@ -1,41 +1,25 @@
-"""Construcción reproducible de un bundle OKF jurisprudencial acotado."""
+"""Construcción reproducible de un bundle OKF para una sentencia."""
 
 from __future__ import annotations
 
 import json
 import os
-from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
 
-from citation_models import ExtractedPage
-from citation_source_validation import validate_publishable_fragments
-from citation_verification import verify_citation_pages
-from okf_annotations import (
-    apply_approved_corrections,
-    load_annotations,
-    validate_annotation_references,
-    validate_source_anchors,
-)
 from okf_bundle_artifacts import (
     build_manifest,
     render_judgments_index,
     render_root_index,
 )
-from okf_models import OkfProvenance
-from okf_normalization import normalize_judgment
-from okf_provenance import (
-    analysis_provenance,
-    extractor_id,
-    sha256_file,
-    write_analysis_snapshot,
+from okf_document_builder import (
+    PageLoader,
+    build_okf_document,
+    load_unique_record,
 )
-from okf_rendering import render_judgment_markdown
+from okf_provenance import sha256_file
 from okf_validation import validate_okf_bundle
 from pdf_page_extraction import extract_pdf_pages
-
-PageLoader = Callable[[Path], tuple[str | ExtractedPage, ...]]
-GENERATOR_ID = "residenciafiscal-pipeline/0.1.0"
 
 
 @dataclass(frozen=True)
@@ -47,26 +31,6 @@ class BundleBuildResult:
     document_count: int
     literal_citation_count: int
     pending_citation_count: int
-
-
-def _load_unique_record(jsonl_path: Path, source_file: str) -> Mapping[str, object]:
-    matches: list[Mapping[str, object]] = []
-    for line_number, line in enumerate(jsonl_path.read_text(encoding="utf-8").splitlines(), 1):
-        if not line.strip():
-            continue
-        try:
-            value = json.loads(line)
-        except json.JSONDecodeError as exc:
-            raise ValueError(f"JSON inválido en {jsonl_path}:{line_number}") from exc
-        if isinstance(value, dict) and value.get("archivo") == source_file:
-            matches.append(value)
-    if len(matches) != 1:
-        raise ValueError(f"Se esperaba un registro para {source_file}; encontrados: {len(matches)}")
-    return matches[0]
-
-
-def _relative_resource(source_path: Path, concept_dir: Path) -> str:
-    return Path(os.path.relpath(source_path.resolve(), concept_dir.resolve())).as_posix()
 
 
 def build_okf_bundle(
@@ -87,61 +51,21 @@ def build_okf_bundle(
     if not pdf_path.is_file():
         raise FileNotFoundError(f"PDF no encontrado: {pdf_path}")
 
-    raw_record = _load_unique_record(jsonl_path, source_file)
-    judgment = normalize_judgment(raw_record)
-    annotation_path = (
-        annotations_dir / f"{judgment.slug}.yaml" if annotations_dir is not None else None
-    )
-    annotations = load_annotations(
-        annotation_path or Path("__sidecar_disabled__"),
-        source_file,
-    )
-    validate_annotation_references(judgment, annotations)
-    judgment = apply_approved_corrections(judgment, annotations)
-    pages = page_loader(pdf_path)
-    validate_source_anchors(annotations, pages)
-    verifications = tuple(
-        verify_citation_pages(
-            quote=citation.texto,
-            declared_page=citation.pagina,
-            pages=pages,
-            threshold=threshold,
-        )
-        for citation in judgment.citas
-    )
-    validate_publishable_fragments(verifications, pages)
-    literal_count = sum(verification.publishable_literal for verification in verifications)
-    pending_count = len(verifications) - literal_count
-    status = "draft" if judgment.warnings or pending_count else "stable"
-
-    judgments_dir = output_dir / "sentencias"
-    document_path = judgments_dir / f"{judgment.slug}.md"
-    snapshot_path = write_analysis_snapshot(output_dir, judgment.slug, raw_record)
-    provenance = OkfProvenance(
-        pdf_resource=_relative_resource(pdf_path, judgments_dir),
-        pdf_sha256=sha256_file(pdf_path),
-        pdf_size_bytes=pdf_path.stat().st_size,
-        pdf_page_count=len(pages),
-        analysis_source=_relative_resource(snapshot_path, judgments_dir),
-        analysis_sha256=sha256_file(snapshot_path),
-        generated_by=GENERATOR_ID,
-    )
-    document = render_judgment_markdown(
-        judgment,
-        provenance,
-        verifications,
+    raw_record = load_unique_record(jsonl_path, source_file)
+    build = build_okf_document(
+        raw_record=raw_record,
+        pdf_path=pdf_path,
+        output_dir=output_dir,
         threshold=threshold,
-        annotations=annotations,
+        annotations_dir=annotations_dir,
+        page_loader=page_loader,
     )
-    description = (
-        f"Residencia fiscal; resultado {judgment.resultado_final}; "
-        f"criterio decisivo {', '.join(judgment.criterios_decisivos)}."
-    )
+    judgments_dir = output_dir / "sentencias"
+    document_path = build.document_path
     judgments_dir.mkdir(parents=True, exist_ok=True)
-    document_path.write_text(document, encoding="utf-8")
     (output_dir / "index.md").write_text(render_root_index(), encoding="utf-8")
     (judgments_dir / "index.md").write_text(
-        render_judgments_index(judgment.title, judgment.slug, description),
+        render_judgments_index(build.title, build.slug, build.description),
         encoding="utf-8",
     )
 
@@ -149,31 +73,29 @@ def build_okf_bundle(
     manifest = build_manifest(
         jsonl_path=jsonl_path,
         analysis_sha256=sha256_file(jsonl_path),
-        analysis_provenance=analysis_provenance(raw_record),
-        source_record_path=snapshot_path.relative_to(output_dir),
-        source_record_sha256=provenance.analysis_sha256,
+        analysis_provenance=build.analysis_provenance,
+        source_record_path=build.snapshot_path.relative_to(output_dir),
+        source_record_sha256=sha256_file(build.snapshot_path),
         pdf_path=pdf_path,
-        pdf_sha256=provenance.pdf_sha256,
-        extractor=extractor_id(),
-        page_count=len(pages),
+        pdf_sha256=build.pdf_sha256,
+        extractor=build.extractor,
+        page_count=build.page_count,
         document_path=relative_document,
         document_sha256=sha256_file(document_path),
-        status=status,
-        literal_count=literal_count,
-        pending_count=pending_count,
-        warnings=judgment.warnings,
+        status=build.status,
+        literal_count=build.literal_count,
+        pending_count=build.pending_count,
+        warnings=build.warnings,
         annotation_path=(
-            Path(_relative_resource(annotation_path, output_dir))
-            if annotation_path and annotation_path.is_file()
+            Path(os.path.relpath(build.annotation_path.resolve(), output_dir.resolve()))
+            if build.annotation_path
             else None
         ),
-        annotation_sha256=(
-            sha256_file(annotation_path)
-            if annotation_path is not None and annotation_path.is_file()
-            else None
-        ),
-        approved_issues=sum(issue.status == "approved" for issue in annotations.issues),
-        proposed_issues=sum(issue.status == "proposed" for issue in annotations.issues),
+        annotation_sha256=build.annotation_sha256,
+        approved_issues=build.approved_issues,
+        proposed_issues=build.proposed_issues,
+        verification_report_path=build.verification_report_path.relative_to(output_dir),
+        verification_report_sha256=build.verification_report_sha256,
     )
     manifest_path = output_dir / "manifest.json"
     manifest_path.write_text(
@@ -187,6 +109,6 @@ def build_okf_bundle(
         document_path=document_path,
         manifest_path=manifest_path,
         document_count=1,
-        literal_citation_count=literal_count,
-        pending_citation_count=pending_count,
+        literal_citation_count=build.literal_count,
+        pending_citation_count=build.pending_count,
     )

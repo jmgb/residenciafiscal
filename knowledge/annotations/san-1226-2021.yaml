@@ -1,0 +1,18 @@
+schema_version: 1
+source_file: SAN_1226_2021.pdf
+corrections: []
+issues:
+  - id: residencia-fiscal-reino-unido
+    question: ¿Fue el recurrente no residente en España durante 2011?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 3
+        source_excerpt_verbatim: |-
+          En consecuencia, concluye la Sala y coincidimos con su parecer, el recurso debe estimarse pues durante el
+          ejercicio 2011 el recurrente no residió en el Reino de España. Lo que tiene su proyección tanto en el IRPF -que
+          ya enjuicio el TSJ de Madrid- como en el IRNR que ahora enjuiciamos.
+    rationale: >-
+      Cuestión principal identificada por revisión asistida del PDF, sustentada
+      además en el efecto reflejo de la sentencia previa. Pendiente de aprobación
+      humana.

@@ -1,0 +1,43 @@
+schema_version: 1
+source_file: SAN_1210_2023.pdf
+corrections: []
+issues:
+  - id: residencia-fiscal
+    question: ¿Tenía el recurrente su residencia fiscal en España?
+    decision: GANA_AEAT
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 8
+        source_excerpt_verbatim: |-
+          En deﬁnitiva, por la Administración se ha aportado prueba suﬁciente de la que poder deducir que el recurrente
+          tiene su residencia efectiva en España, sin que por se haya realizado esfuerzo alguno en acreditar la realidad
+          de su residencia en el Principado de Mónaco, más allá de la aportación de una documental de la que no se
+          puede deducir dicha circunstancia.
+    rationale: >-
+      Cuestión principal identificada por revisión asistida. El texto se conserva
+      literalmente y la conclusión queda pendiente de aprobación humana.
+  - id: ganancias-patrimoniales-no-justificadas
+    question: ¿Era aplicable el régimen de ganancias patrimoniales no justificadas?
+    decision: GANA_AEAT
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 8
+        source_excerpt_verbatim: |-
+          Habiéndose considerado que su residencia ﬁscal se encontraba en España, decae dicha pretensión al tener la
+          condición de contribuyente del IRPF por obligación personal.
+    rationale: >-
+      Motivo autónomo detectado por el agente en el fundamento octavo y
+      pendiente de revisión humana.
+  - id: sancion-tributaria
+    question: ¿Debía mantenerse la sanción tributaria?
+    decision: GANA_AEAT
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 9
+        source_excerpt_verbatim: |-
+          Por ello se debe concluir que
+          la imposición de la sanción está suﬁcientemente motivada al exponer las razones por las que considera que la
+          conducta del demandante es culpable como consecuencia de no justiﬁcar la residencia efectiva en Mónaco.
+    rationale: >-
+      Resultado sancionador separado de la liquidación, identificado por el
+      agente y pendiente de revisión humana.

@@ -1,0 +1,263 @@
+{
+  "schema_version": "residenciafiscal-okf-verification/1",
+  "source_file": "SAN_1071_2025.pdf",
+  "concept_id": "sentencias/san-1071-2025",
+  "threshold": 85.0,
+  "citas": [
+    {
+      "id": "cita-carga-prueba",
+      "owner_id": "carga-prueba",
+      "source_field": "carga_prueba.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-participaciones-y-cargo-administrador-iberdigest-967cd417ec",
+      "owner_id": "prueba-aeat-participaciones-y-cargo-administrador-iberdigest-967cd417ec",
+      "source_field": "Pruebas_AEAT[0].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 88.51,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-movimientos-tarjeta-de-credito-d1c45ee26a",
+      "owner_id": "prueba-aeat-movimientos-tarjeta-de-credito-d1c45ee26a",
+      "source_field": "Pruebas_AEAT[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-suministros-agua-y-electricidad-vivienda-bescano-1ede578fd8",
+      "owner_id": "prueba-aeat-suministros-agua-y-electricidad-vivienda-bescano-1ede578fd8",
+      "source_field": "Pruebas_AEAT[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-declaraciones-en-francia-77168b2f1a",
+      "owner_id": "prueba-aeat-declaraciones-en-francia-77168b2f1a",
+      "source_field": "Pruebas_AEAT[3].cita",
+      "evidence_status": "partial_fragments",
+      "literal_fidelity": "partial",
+      "score": 77.19,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-resolucion-divorcio-perpignan-18-12-2007-a59411ebdc",
+      "owner_id": "prueba-aeat-resolucion-divorcio-perpignan-18-12-2007-a59411ebdc",
+      "source_field": "Pruebas_AEAT[4].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-transmision-participaciones-30-06-2011-8f50b7aa54",
+      "owner_id": "prueba-aeat-transmision-participaciones-30-06-2011-8f50b7aa54",
+      "source_field": "Pruebas_AEAT[5].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificado-de-residencia-fiscal-frances-838bd85a35",
+      "owner_id": "prueba-contribuyente-certificado-de-residencia-fiscal-frances-838bd85a35",
+      "source_field": "Pruebas_contribuyente[0].cita",
+      "evidence_status": "partial_fragments",
+      "literal_fidelity": "partial",
+      "score": 83.87,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-vivienda-en-la-boulou-francia-95f84e3e10",
+      "owner_id": "prueba-contribuyente-vivienda-en-la-boulou-francia-95f84e3e10",
+      "source_field": "Pruebas_contribuyente[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-informe-de-auditoria-valoracion-iberdigest-0376b468d2",
+      "owner_id": "prueba-contribuyente-informe-de-auditoria-valoracion-iberdigest-0376b468d2",
+      "source_field": "Pruebas_contribuyente[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-informe-de-auditoria-valoracion-iberdigest-232a337dd5",
+      "owner_id": "prueba-rechazada-informe-de-auditoria-valoracion-iberdigest-232a337dd5",
+      "source_field": "Pruebas_rechazadas_clave[0].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-vivienda-en-la-boulou-c7cb1bead6",
+      "owner_id": "prueba-rechazada-vivienda-en-la-boulou-c7cb1bead6",
+      "source_field": "Pruebas_rechazadas_clave[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        5
+      ],
+      "matched_printed_page_labels": [
+        "5"
+      ]
+    },
+    {
+      "id": "cita-prueba-decisiva-participaciones-y-cargo-administrador-iberdigest-bff0bf5713",
+      "owner_id": "prueba-decisiva-participaciones-y-cargo-administrador-iberdigest-bff0bf5713",
+      "source_field": "Prueba_o_bala_de_plata.cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 88.51,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-criterio-6ffd0928f6",
+      "owner_id": "frase-clave-criterio-6ffd0928f6",
+      "source_field": "frases_clave[0]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-8f23da1ad2",
+      "owner_id": "frase-clave-prueba-8f23da1ad2",
+      "source_field": "frases_clave[1]",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-a16b9abda2",
+      "owner_id": "frase-clave-prueba-a16b9abda2",
+      "source_field": "frases_clave[2]",
+      "evidence_status": "partial_fragments",
+      "literal_fidelity": "partial",
+      "score": 80.56,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-doctrina-f43ba3ef3c",
+      "owner_id": "frase-clave-doctrina-f43ba3ef3c",
+      "source_field": "frases_clave[3]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    }
+  ]
+}

@@ -92,10 +92,11 @@ make verify-citations  # hoy: SAN_1071_2025.pdf, 4 citas, umbral provisional 85
 ### Exportación jurisprudencial OKF
 
 El ciclo JSONL → perfil jurídico → verificación de todas las citas anidadas →
-sidecars → Markdown OKF está
-implementado únicamente para `SAN_1071_2025.pdf`. Genera un concepto, índices y
-un snapshot del registro, además de un manifiesto de hashes, sin llamadas LLM.
-No editar `knowledge/jurisprudencia/` a mano: se regenera con el pipeline. Las
+sidecars → Markdown OKF está implementado para el piloto y para la muestra fija
+de cinco definida en `sentencias/okf_muestra_5.json`. El enfoque es híbrido:
+el agente propone cuestiones con anclajes literales y Python valida fuentes,
+hashes, modelos, citas y renderizado. No editar `knowledge/jurisprudencia/` ni
+`knowledge/jurisprudencia-muestra-5/` a mano: se regeneran con el pipeline. Las
 revisiones viven en `knowledge/annotations/` y nunca pueden alterar el texto
 legal. Arquitectura, contrato, resultado y gates:
 [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md).
@@ -108,6 +109,7 @@ implementada: el pipeline actual conserva el PDF como única fuente completa.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
+make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
 ```
 
 ## Sentencias Clave

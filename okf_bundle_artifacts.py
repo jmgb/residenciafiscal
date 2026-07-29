@@ -45,6 +45,8 @@ def build_manifest(
     annotation_sha256: str | None,
     approved_issues: int,
     proposed_issues: int,
+    verification_report_path: Path,
+    verification_report_sha256: str,
 ) -> dict[str, object]:
     """Construye el manifiesto de fuentes y derivados sin leer el reloj."""
 
@@ -89,6 +91,10 @@ def build_manifest(
                 "legal_issues": {
                     "approved": approved_issues,
                     "proposed": proposed_issues,
+                },
+                "verification_report": {
+                    "path": verification_report_path.as_posix(),
+                    "sha256": verification_report_sha256,
                 },
                 "normalization_warnings": list(warnings),
             }

@@ -126,6 +126,7 @@ def test_construye_un_bundle_okf_determinista_para_una_sentencia(tmp_path: Path)
     assert set(first_render) == {
         "index.md",
         "manifest.json",
+        "reports/san-1071-2025.verification.json",
         "sentencias/index.md",
         "sentencias/san-1071-2025.md",
         "sources/san-1071-2025.analysis.json",

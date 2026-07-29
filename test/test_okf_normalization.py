@@ -15,6 +15,7 @@ from okf_annotations import JudgmentAnnotations
 from okf_models import OkfProvenance
 from okf_normalization import normalize_judgment
 from okf_rendering import render_judgment_markdown
+from okf_stable_ids import short_id
 
 
 def _raw_judgment() -> dict[str, object]:
@@ -280,13 +281,14 @@ def test_renderiza_okf_y_separa_citas_literales_de_candidatas() -> None:
     assert "# Citas pendientes de revisión" in body
     assert "Texto del análisis; no es una cita literal" in body
     assert "restaurantes y repostaje de gasolina" in body
-    assert "# Trazabilidad de citas" in body
+    assert "# Trazabilidad de citas" not in body
     assert "# Resultado por cuestiones jurídicas" in body
     assert "¿Era residente fiscal en España?" in body
     assert "> núcleo principal de sus actividades o intereses económicos" in body
     assert "`proposed`" in body
     assert "# Anotaciones y correcciones" in body
     assert "Pendiente de revisión jurídica." in body
-    assert judgment.pruebas_aeat[0].id in body
+    assert judgment.pruebas_aeat[0].id not in body
+    assert short_id(judgment.pruebas_aeat[0].id) in body
     assert "CRIT_VIVIENDA_Y_USO_EFECTIVO" in body
     assert "[^sentencia-original]" in body

@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "name": "okf-muestra-5-v1",
+  "expected_documents": 5,
+  "output_schema_version": "residenciafiscal-okf-manifest/3",
+  "analysis_jsonl_sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+  "documents": [
+    {
+      "source_file": "SAN_1071_2025.pdf",
+      "pdf_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf",
+      "analysis_record_sha256": "f0ed2235a2a2d09fe7113ed02820fca11bcbef58fdc11578eb90d442482e0e06"
+    },
+    {
+      "source_file": "SAN_1136_2016.pdf",
+      "pdf_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480",
+      "analysis_record_sha256": "c6596f55ad966aa35f86f6f29d617eb341cef2d7d4ff41212b501313b251680f"
+    },
+    {
+      "source_file": "SAN_1210_2023.pdf",
+      "pdf_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d",
+      "analysis_record_sha256": "fab908b78bf165cc53926821557e3ca3da4aa63b4b945a088534ca27f6d8766b"
+    },
+    {
+      "source_file": "SAN_1226_2021.pdf",
+      "pdf_sha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1",
+      "analysis_record_sha256": "cdeb3d39cd3fc8d16b1598649feb60c151b7ffda968f00e96fa51579dbff24a4"
+    },
+    {
+      "source_file": "SAN_1386_2017.pdf",
+      "pdf_sha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76",
+      "analysis_record_sha256": "445bc9af58ac27b387066158d27224b19ad681c4739eeae20edb0f82f3233c72"
+    }
+  ]
+}

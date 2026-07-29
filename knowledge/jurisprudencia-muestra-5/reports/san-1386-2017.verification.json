@@ -1,0 +1,344 @@
+{
+  "schema_version": "residenciafiscal-okf-verification/1",
+  "source_file": "SAN_1386_2017.pdf",
+  "concept_id": "sentencias/san-1386-2017",
+  "threshold": 85.0,
+  "citas": [
+    {
+      "id": "cita-carga-prueba",
+      "owner_id": "carga-prueba",
+      "source_field": "carga_prueba.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-inclusion-en-modelo-190-por-hugo-boss-c2039fd6f3",
+      "owner_id": "prueba-aeat-inclusion-en-modelo-190-por-hugo-boss-c2039fd6f3",
+      "source_field": "Pruebas_AEAT[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-nominas-y-finiquito-hugo-boss-8a95012dfc",
+      "owner_id": "prueba-aeat-nominas-y-finiquito-hugo-boss-8a95012dfc",
+      "source_field": "Pruebas_AEAT[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 90.11,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-modelo-030-presentado-18-01-2010-878677b20a",
+      "owner_id": "prueba-aeat-modelo-030-presentado-18-01-2010-878677b20a",
+      "source_field": "Pruebas_AEAT[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-declaracion-irpf-de-conyuge-e-hijo-en-espana-f58d849e7f",
+      "owner_id": "prueba-aeat-declaracion-irpf-de-conyuge-e-hijo-en-espana-f58d849e7f",
+      "source_field": "Pruebas_AEAT[3].cita",
+      "evidence_status": "found_other_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-valoracion-critica-de-certificados-suizos-por-la-a73eca0829",
+      "owner_id": "prueba-aeat-valoracion-critica-de-certificados-suizos-por-la-a73eca0829",
+      "source_field": "Pruebas_AEAT[4].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificados-de-residencia-fiscal-canton-ticino--27294f3e1a",
+      "owner_id": "prueba-contribuyente-certificados-de-residencia-fiscal-canton-ticino--27294f3e1a",
+      "source_field": "Pruebas_contribuyente[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-entrada-en-suiza-01-04-2009-doc-organo-de-inmigr-f0f2be3f44",
+      "owner_id": "prueba-contribuyente-entrada-en-suiza-01-04-2009-doc-organo-de-inmigr-f0f2be3f44",
+      "source_field": "Pruebas_contribuyente[1].cita",
+      "evidence_status": "found_other_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 98.48,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        3,
+        7,
+        10
+      ],
+      "matched_printed_page_labels": [
+        "7",
+        "10",
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-contrato-de-trabajo-con-g-a-modefine-1-04-2009-6d4ebe9c9f",
+      "owner_id": "prueba-contribuyente-contrato-de-trabajo-con-g-a-modefine-1-04-2009-6d4ebe9c9f",
+      "source_field": "Pruebas_contribuyente[2].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-seguro-medico-suizo-sw-ca-desde-20-04-2009-46397ef4cb",
+      "owner_id": "prueba-contribuyente-seguro-medico-suizo-sw-ca-desde-20-04-2009-46397ef4cb",
+      "source_field": "Pruebas_contribuyente[3].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificado-seguridad-social-suizo-200-euros-01--72649be3a9",
+      "owner_id": "prueba-contribuyente-certificado-seguridad-social-suizo-200-euros-01--72649be3a9",
+      "source_field": "Pruebas_contribuyente[4].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-extractos-bancarios-gastos-diarios-en-suiza-doc--b14644477f",
+      "owner_id": "prueba-contribuyente-extractos-bancarios-gastos-diarios-en-suiza-doc--b14644477f",
+      "source_field": "Pruebas_contribuyente[5].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-inmueble-en-mendrisio-e91590f142",
+      "owner_id": "prueba-contribuyente-inmueble-en-mendrisio-e91590f142",
+      "source_field": "Pruebas_contribuyente[6].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        11
+      ],
+      "matched_printed_page_labels": [
+        "11"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificado-discapacidad-hijo-33-comunidad-de-ma-3dee96f700",
+      "owner_id": "prueba-contribuyente-certificado-discapacidad-hijo-33-comunidad-de-ma-3dee96f700",
+      "source_field": "Pruebas_contribuyente[7].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-comunicacion-ga-modefine-01-07-2009-superacion-p-85c29c0560",
+      "owner_id": "prueba-contribuyente-comunicacion-ga-modefine-01-07-2009-superacion-p-85c29c0560",
+      "source_field": "Pruebas_contribuyente[8].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        10
+      ],
+      "matched_printed_page_labels": [
+        "10"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-contrato-con-hugo-boss-alegado-verbal-253c5fba86",
+      "owner_id": "prueba-rechazada-contrato-con-hugo-boss-alegado-verbal-253c5fba86",
+      "source_field": "Pruebas_rechazadas_clave[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        4
+      ],
+      "matched_printed_page_labels": [
+        "4"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-certificados-suizos-16-06-2009-b055fe2b35",
+      "owner_id": "prueba-rechazada-certificados-suizos-16-06-2009-b055fe2b35",
+      "source_field": "Pruebas_rechazadas_clave[1].cita",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-alegacion-exencion-indemnizacion-art-7-lirpf-e044a93588",
+      "owner_id": "prueba-rechazada-alegacion-exencion-indemnizacion-art-7-lirpf-e044a93588",
+      "source_field": "Pruebas_rechazadas_clave[2].cita",
+      "evidence_status": "partial_fragments",
+      "literal_fidelity": "partial",
+      "score": 83.72,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        11
+      ],
+      "matched_printed_page_labels": [
+        "11"
+      ]
+    },
+    {
+      "id": "cita-prueba-decisiva-entrada-en-suiza-01-04-2009-organo-de-inmigracio-6ee30c3477",
+      "owner_id": "prueba-decisiva-entrada-en-suiza-01-04-2009-organo-de-inmigracio-6ee30c3477",
+      "source_field": "Prueba_o_bala_de_plata.cita",
+      "evidence_status": "found_other_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7,
+        10
+      ],
+      "matched_printed_page_labels": [
+        "7",
+        "10"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-criterio-aafb7e3eed",
+      "owner_id": "frase-clave-criterio-aafb7e3eed",
+      "source_field": "frases_clave[0]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        6
+      ],
+      "matched_printed_page_labels": [
+        "6"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-134b611433",
+      "owner_id": "frase-clave-prueba-134b611433",
+      "source_field": "frases_clave[1]",
+      "evidence_status": "found_adjacent_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        7
+      ],
+      "matched_printed_page_labels": [
+        "7"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-61618cf646",
+      "owner_id": "frase-clave-prueba-61618cf646",
+      "source_field": "frases_clave[2]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        11
+      ],
+      "matched_printed_page_labels": [
+        "11"
+      ]
+    }
+  ]
+}

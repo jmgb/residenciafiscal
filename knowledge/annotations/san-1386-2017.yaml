@@ -1,0 +1,41 @@
+schema_version: 1
+source_file: SAN_1386_2017.pdf
+corrections: []
+issues:
+  - id: residencia-fiscal-suiza
+    question: ¿Tenía el recurrente residencia fiscal en Suiza desde el 1 de abril de 2009?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 11
+        source_excerpt_verbatim: |-
+          Por tanto, en el año 2009, el recurrente tenía residencia ﬁscal en Suiza, aunque en dicho año recibiera su
+          indemnización por despido de Hugo Boss.
+    rationale: >-
+      Cuestión de residencia identificada por revisión asistida. El anclaje es
+      literal y la conclusión queda pendiente de aprobación humana.
+  - id: exencion-indemnizacion-alta-direccion
+    question: ¿Estaba exenta la indemnización percibida como alto directivo?
+    decision: GANA_AEAT
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 11
+        source_excerpt_verbatim: |-
+          Si ello es así y existe aquella relación -la regulada en el Real Decreto 1382/1985, de 1 de agosto- toda la
+          indemnización satisfecha al recurrente está sujeta al IRPF y a su sistema de retenciones a cuenta, SSTS de 3 de
+          febrero de 2004 y 14 de diciembre de 2016 , no procediendo exención alguna, DGT de 28 de noviembre de 2000 .
+    rationale: >-
+      Motivo autónomo identificado por el agente y pendiente de revisión humana.
+  - id: tipo-no-residentes
+    question: ¿Procedía aplicar a las rentas el tipo fijo de los contribuyentes no residentes?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    source_anchors:
+      - pdf_page_index: 11
+        source_excerpt_verbatim: |-
+          De acuerdo con lo expuesto y como ha quedado acreditada la residencia ﬁscal en Suiza desde el 1 de abril de
+          2009, procede estimar la pretensión subsidiaria, relativa a la aplicación del 24% previsto para los contribuyentes
+          no residentes.
+    rationale: >-
+      Consecuencia tributaria separada de la exención, identificada por el agente
+      y pendiente de revisión humana.

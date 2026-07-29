@@ -1,0 +1,223 @@
+{
+  "schema_version": "residenciafiscal-okf-manifest/3",
+  "okf_version": "0.2",
+  "scope": {
+    "documents": 5,
+    "source_files": [
+      "SAN_1071_2025.pdf",
+      "SAN_1136_2016.pdf",
+      "SAN_1210_2023.pdf",
+      "SAN_1226_2021.pdf",
+      "SAN_1386_2017.pdf"
+    ]
+  },
+  "analysis_source": {
+    "path": "output/analisis_02012026_155032.jsonl",
+    "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4"
+  },
+  "analysis_records": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "path": "sources/san-1071-2025.analysis.json",
+      "sha256": "f0ed2235a2a2d09fe7113ed02820fca11bcbef58fdc11578eb90d442482e0e06",
+      "provenance": {
+        "model_id": "gpt-5-mini-2025-08-07",
+        "prompt_sha256": null,
+        "prompt_provenance": "not_recorded_in_source_analysis"
+      }
+    },
+    {
+      "archivo": "SAN_1136_2016.pdf",
+      "path": "sources/san-1136-2016.analysis.json",
+      "sha256": "c6596f55ad966aa35f86f6f29d617eb341cef2d7d4ff41212b501313b251680f",
+      "provenance": {
+        "model_id": "gpt-5-mini-2025-08-07",
+        "prompt_sha256": null,
+        "prompt_provenance": "not_recorded_in_source_analysis"
+      }
+    },
+    {
+      "archivo": "SAN_1210_2023.pdf",
+      "path": "sources/san-1210-2023.analysis.json",
+      "sha256": "fab908b78bf165cc53926821557e3ca3da4aa63b4b945a088534ca27f6d8766b",
+      "provenance": {
+        "model_id": "gpt-5-mini-2025-08-07",
+        "prompt_sha256": null,
+        "prompt_provenance": "not_recorded_in_source_analysis"
+      }
+    },
+    {
+      "archivo": "SAN_1226_2021.pdf",
+      "path": "sources/san-1226-2021.analysis.json",
+      "sha256": "cdeb3d39cd3fc8d16b1598649feb60c151b7ffda968f00e96fa51579dbff24a4",
+      "provenance": {
+        "model_id": "gpt-5-mini-2025-08-07",
+        "prompt_sha256": null,
+        "prompt_provenance": "not_recorded_in_source_analysis"
+      }
+    },
+    {
+      "archivo": "SAN_1386_2017.pdf",
+      "path": "sources/san-1386-2017.analysis.json",
+      "sha256": "445bc9af58ac27b387066158d27224b19ad681c4739eeae20edb0f82f3233c72",
+      "provenance": {
+        "model_id": "gpt-5-mini-2025-08-07",
+        "prompt_sha256": null,
+        "prompt_provenance": "not_recorded_in_source_analysis"
+      }
+    }
+  ],
+  "annotations_sources": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "path": "../annotations/san-1071-2025.yaml",
+      "sha256": "8bab5b00d2f3c73fda820662362ea652788174447920ce4b801f3c921b8d3898"
+    },
+    {
+      "archivo": "SAN_1136_2016.pdf",
+      "path": "../annotations/san-1136-2016.yaml",
+      "sha256": "9849a31581dc478be887b89f084bd0b89f00a54e32a13773acadb0624dd3a079"
+    },
+    {
+      "archivo": "SAN_1210_2023.pdf",
+      "path": "../annotations/san-1210-2023.yaml",
+      "sha256": "59c9f057f5ff6197ce0c0a3be17956dd8bc6e249b7d0351b7ecc98d0963be035"
+    },
+    {
+      "archivo": "SAN_1226_2021.pdf",
+      "path": "../annotations/san-1226-2021.yaml",
+      "sha256": "eae9e1583c7570ed24ab73d21e139b5dfefd613d4b1359b8d94a8fd6be998b64"
+    },
+    {
+      "archivo": "SAN_1386_2017.pdf",
+      "path": "../annotations/san-1386-2017.yaml",
+      "sha256": "40019b4c2b0097da79aa5088a9d710f98b6b2303f61fdcbdbc03cd77c51bdcf4"
+    }
+  ],
+  "pdf_sources": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf",
+      "size_bytes": 143201,
+      "pages": 6,
+      "extractor": "pypdf/6.14.2"
+    },
+    {
+      "archivo": "SAN_1136_2016.pdf",
+      "sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480",
+      "size_bytes": 129911,
+      "pages": 5,
+      "extractor": "pypdf/6.14.2"
+    },
+    {
+      "archivo": "SAN_1210_2023.pdf",
+      "sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d",
+      "size_bytes": 226483,
+      "pages": 10,
+      "extractor": "pypdf/6.14.2"
+    },
+    {
+      "archivo": "SAN_1226_2021.pdf",
+      "sha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1",
+      "size_bytes": 116579,
+      "pages": 4,
+      "extractor": "pypdf/6.14.2"
+    },
+    {
+      "archivo": "SAN_1386_2017.pdf",
+      "sha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76",
+      "size_bytes": 220754,
+      "pages": 12,
+      "extractor": "pypdf/6.14.2"
+    }
+  ],
+  "documents": [
+    {
+      "concept_id": "sentencias/san-1071-2025",
+      "path": "sentencias/san-1071-2025.md",
+      "sha256": "9ab2c0dc80c14731ba5bd2c5fbd678cf270c1324504f2b11e8c45be9aa729bf6",
+      "status": "draft",
+      "literal_citations": 12,
+      "pending_citations": 5,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 3
+      },
+      "verification_report": {
+        "path": "reports/san-1071-2025.verification.json",
+        "sha256": "61882fe15e43832e3538bfbd5ca2da91dd3cb76ee5b646949bbc5ca52284b054"
+      },
+      "normalization_warnings": [
+        "Pruebas_AEAT[2].criterio_atacado: CRIT_VIVIENDA_Y_USO_EFECTIVO normalizado a CRIT_OTRO"
+      ]
+    },
+    {
+      "concept_id": "sentencias/san-1136-2016",
+      "path": "sentencias/san-1136-2016.md",
+      "sha256": "c36f001c7b2c43fa6de6efcaa8d4bc3dac44f7f23731e946862a1ebf5da1b6f7",
+      "status": "stable",
+      "literal_citations": 15,
+      "pending_citations": 0,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 2
+      },
+      "verification_report": {
+        "path": "reports/san-1136-2016.verification.json",
+        "sha256": "3dae886362333366250827e35c22484cf3ed59a61f14e46552f9f369ff8bbacd"
+      },
+      "normalization_warnings": []
+    },
+    {
+      "concept_id": "sentencias/san-1210-2023",
+      "path": "sentencias/san-1210-2023.md",
+      "sha256": "ce5359a4a3fb2b19d1433043ea6c387ef5ac7d7bc5fa0470376e18c273b04200",
+      "status": "draft",
+      "literal_citations": 21,
+      "pending_citations": 6,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 3
+      },
+      "verification_report": {
+        "path": "reports/san-1210-2023.verification.json",
+        "sha256": "433969b53b9e2a9480f91d600b9b2ce005eaf8ac3e92fb8a486523e19421e2d6"
+      },
+      "normalization_warnings": []
+    },
+    {
+      "concept_id": "sentencias/san-1226-2021",
+      "path": "sentencias/san-1226-2021.md",
+      "sha256": "4f0ac2e55529f495daff3bcc8e7035fc8ae52229d0506aea2ccb0bc9cf74c5dd",
+      "status": "draft",
+      "literal_citations": 14,
+      "pending_citations": 3,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 1
+      },
+      "verification_report": {
+        "path": "reports/san-1226-2021.verification.json",
+        "sha256": "8436844b60f6679d5e7d864383b8c3050ac94c62fff012e54ea4b06300ad3a9f"
+      },
+      "normalization_warnings": []
+    },
+    {
+      "concept_id": "sentencias/san-1386-2017",
+      "path": "sentencias/san-1386-2017.md",
+      "sha256": "01af858666dcc0fd74a35d5f5e57a2ec097d0446f41f73bd0846280447cbfba5",
+      "status": "draft",
+      "literal_citations": 19,
+      "pending_citations": 3,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 3
+      },
+      "verification_report": {
+        "path": "reports/san-1386-2017.verification.json",
+        "sha256": "34996f608f74e32b3e5df5949505dfb2e4d6527cccc26c986deda06ea657c306"
+      },
+      "normalization_warnings": []
+    }
+  ]
+}

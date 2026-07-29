@@ -1,0 +1,259 @@
+{
+  "schema_version": "residenciafiscal-okf-verification/1",
+  "source_file": "SAN_1226_2021.pdf",
+  "concept_id": "sentencias/san-1226-2021",
+  "threshold": 85.0,
+  "citas": [
+    {
+      "id": "cita-carga-prueba",
+      "owner_id": "carga-prueba",
+      "source_field": "carga_prueba.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        2
+      ],
+      "matched_printed_page_labels": [
+        "2"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-presuncion-administrativa-sobre-residencia-famil-842d3cc859",
+      "owner_id": "prueba-aeat-presuncion-administrativa-sobre-residencia-famil-842d3cc859",
+      "source_field": "Pruebas_AEAT[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-aeat-resolucion-tear-26-02-2016-2dbb1cc079",
+      "owner_id": "prueba-aeat-resolucion-tear-26-02-2016-2dbb1cc079",
+      "source_field": "Pruebas_AEAT[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-traslado-bbva-1-jun-2011-8ea39deed1",
+      "owner_id": "prueba-contribuyente-traslado-bbva-1-jun-2011-8ea39deed1",
+      "source_field": "Pruebas_contribuyente[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-conteo-dias-214-1-6-31-12-2011-f67c6dd897",
+      "owner_id": "prueba-contribuyente-conteo-dias-214-1-6-31-12-2011-f67c6dd897",
+      "source_field": "Pruebas_contribuyente[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-billetes-de-avion-esposa-e-hijos-29-8-2011-2e21a695fd",
+      "owner_id": "prueba-contribuyente-billetes-de-avion-esposa-e-hijos-29-8-2011-2e21a695fd",
+      "source_field": "Pruebas_contribuyente[2].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 97.87,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-admision-escolar-y-pago-de-deposito-cc8e53fff3",
+      "owner_id": "prueba-contribuyente-admision-escolar-y-pago-de-deposito-cc8e53fff3",
+      "source_field": "Pruebas_contribuyente[3].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "fuzzy_candidate",
+      "score": 94.59,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-certificado-de-la-autoridad-tributaria-britanica-6f1a95873d",
+      "owner_id": "prueba-contribuyente-certificado-de-la-autoridad-tributaria-britanica-6f1a95873d",
+      "source_field": "Pruebas_contribuyente[4].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-declaracion-de-la-renta-reino-unido-6-4-2011-5-4-fec48fa607",
+      "owner_id": "prueba-contribuyente-declaracion-de-la-renta-reino-unido-6-4-2011-5-4-fec48fa607",
+      "source_field": "Pruebas_contribuyente[5].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-contribuyente-comunicacion-a-la-agencia-tributaria-y-acuerdo-2-eddc921759",
+      "owner_id": "prueba-contribuyente-comunicacion-a-la-agencia-tributaria-y-acuerdo-2-eddc921759",
+      "source_field": "Pruebas_contribuyente[6].cita",
+      "evidence_status": "not_found",
+      "literal_fidelity": "unverified",
+      "score": 78.18,
+      "publishable_literal": false,
+      "matched_pdf_page_indexes": [],
+      "matched_printed_page_labels": []
+    },
+    {
+      "id": "cita-prueba-contribuyente-acuerdo-comunidad-de-madrid-31-7-2014-e544fb0e22",
+      "owner_id": "prueba-contribuyente-acuerdo-comunidad-de-madrid-31-7-2014-e544fb0e22",
+      "source_field": "Pruebas_contribuyente[7].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-presuncion-por-residencia-del-conyuge-hijos-c6f2417b24",
+      "owner_id": "prueba-rechazada-presuncion-por-residencia-del-conyuge-hijos-c6f2417b24",
+      "source_field": "Pruebas_rechazadas_clave[0].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-rechazada-fundamento-tear-sobre-remittance-basis-38f375c537",
+      "owner_id": "prueba-rechazada-fundamento-tear-sobre-remittance-basis-38f375c537",
+      "source_field": "Pruebas_rechazadas_clave[1].cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-prueba-decisiva-declaracion-de-la-renta-reino-unido-6-4-2011-5-4-40b6855f6f",
+      "owner_id": "prueba-decisiva-declaracion-de-la-renta-reino-unido-6-4-2011-5-4-40b6855f6f",
+      "source_field": "Prueba_o_bala_de_plata.cita",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-criterio-249259cce7",
+      "owner_id": "frase-clave-criterio-249259cce7",
+      "source_field": "frases_clave[0]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        2
+      ],
+      "matched_printed_page_labels": [
+        "2"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-prueba-d8ef58f7f0",
+      "owner_id": "frase-clave-prueba-d8ef58f7f0",
+      "source_field": "frases_clave[1]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        3
+      ],
+      "matched_printed_page_labels": [
+        "3"
+      ]
+    },
+    {
+      "id": "cita-frase-clave-doctrina-625df1c8de",
+      "owner_id": "frase-clave-doctrina-625df1c8de",
+      "source_field": "frases_clave[2]",
+      "evidence_status": "found_declared_page",
+      "literal_fidelity": "exact_with_ellipsis",
+      "score": 100.0,
+      "publishable_literal": true,
+      "matched_pdf_page_indexes": [
+        2
+      ],
+      "matched_printed_page_labels": [
+        "2"
+      ]
+    }
+  ]
+}

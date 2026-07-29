@@ -141,7 +141,7 @@ npm run build       # genera el corpus y compila a dist/
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Entorno, gates de CI y qué se espera de un PR |
 | [`SECURITY.md`](SECURITY.md) | Cómo reportar una vulnerabilidad y qué está en el alcance |
 | [`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md) | Pipeline, datos y rollout 1 → 5 → 106 para verificar citas contra los PDF |
-| [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md) | Ciclo JSONL → Markdown OKF, artefactos y piloto completo de una sentencia |
+| [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md) | Ciclo híbrido JSONL/PDF → Markdown OKF y rollout validado de 1 → 5 |
 | [`docs/REASONING_EFFORT.md`](docs/REASONING_EFFORT.md) | El compromiso precisión / coste de los modelos GPT-5 |
 | [`docs/brand/`](docs/brand/) | Brandbook y manifiesto |
 | [`docs/operations/`](docs/operations/) | Despliegue en Netlify y configuración de Cloudflare |

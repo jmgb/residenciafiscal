@@ -13,7 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
-	verify-citations export-okf \
+	verify-citations export-okf export-okf-sample \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -38,6 +38,8 @@ OKF_JSONL ?= $(CITATION_JSONL)
 OKF_THRESHOLD ?= 85
 OKF_SOURCE_FILE ?= SAN_1071_2025.pdf
 OKF_OUTPUT ?= ./knowledge/jurisprudencia
+OKF_SAMPLE_MANIFEST ?= ./sentencias/okf_muestra_5.json
+OKF_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-muestra-5
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -69,9 +71,11 @@ help:
 	@echo "  make run-list LIST=x.txt  Procesa solo los PDFs listados en un .txt"
 	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
+	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
+	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -147,6 +151,16 @@ export-okf:
 		--output-dir $(OKF_OUTPUT) \
 		--annotations-dir knowledge/annotations \
 		--source-file $(OKF_SOURCE_FILE) \
+		--threshold $(OKF_THRESHOLD)
+
+export-okf-sample:
+	@if [ -z "$(OKF_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
+	uv run python export_okf_batch.py \
+		--jsonl $(OKF_JSONL) \
+		--pdf-dir $(INPUT) \
+		--output-dir $(OKF_SAMPLE_OUTPUT) \
+		--annotations-dir knowledge/annotations \
+		--manifest $(OKF_SAMPLE_MANIFEST) \
 		--threshold $(OKF_THRESHOLD)
 
 # =============================================================================
