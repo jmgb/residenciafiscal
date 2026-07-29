@@ -5,8 +5,8 @@ contra el dominio público después de cada deploy.
 
 ## Prioridad alta
 
-- [ ] Verificar el deploy público de `https://residenciafiscal.org/`: el build local está
-  completo, pero la comprobación externa sigue dependiendo de Netlify y del WAF de Cloudflare.
+- [x] Verificar el deploy público de `https://residenciafiscal.org/`: home y recursos
+  públicos responden correctamente detrás de Netlify y Cloudflare, también desde EE. UU.
 - [x] Implementar la ruta pública `/metodologia` con el método, el corpus de 106
   sentencias y sus limitaciones.
 - [x] Añadir `/metodologia` a `frontend/public/sitemap.xml`
@@ -46,7 +46,7 @@ contra el dominio público después de cada deploy.
 
 - [ ] Crear una landing específica por país (`/españa`, `/portugal`, etc.) con información detallada sobre la residencia fiscal, criterios, obligaciones y particularidades de cada país.
 - [ ] Configurar Sentry y PostHog para el frontend y documentar sus variables de entorno.
-- [ ] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
+- [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
   devuelven `200` desde `https://residenciafiscal.org/`.
 - [ ] Registrar `https://residenciafiscal.org/sitemap.xml` en Google Search Console
   y revisar la primera descarga y los errores de cobertura.

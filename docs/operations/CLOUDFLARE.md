@@ -27,8 +27,10 @@ y `www.residenciafiscal.org`, vigente hasta el 2026-10-26. Netlify debe seguir r
   (`655cbe842a2f4120aa857c3c7cb485b6`).
   - Bloquea User-Agents de scanners y probes de archivos sensibles.
   - Excluye `/assets/` y bots verificados de esa regla.
-  - Aplica Managed Challenge a tráfico no verificado desde EE. UU. en el host apex,
-    excluyendo `/assets/` y bots verificados.
+  - La regla de Managed Challenge geográfico para tráfico no verificado desde EE. UU.
+    está desactivada desde el 2026-07-29. Bloqueaba verificadores públicos y usuarios
+    legítimos con `403`, sin aportar una protección proporcional para un frontend estático.
+  - Se mantienen activos el bloqueo de scanners y el ruleset gestionado de Cloudflare.
 - La regla de bypass para la IP del VPS de Presupuestor no se copia: este proyecto no
   tiene un VPS/origen privado equivalente.
 
@@ -47,3 +49,6 @@ curl -A 'Mozilla/5.0 (compatible; residenciafiscal-verifier/1.0)' -I \
 El apex es el dominio canónico. `www` debe redirigir al apex y ambas variantes
 deben mantener TLS válido. Si el verificador recibe un challenge o un `403`, hay
 que revisar primero las reglas custom del WAF antes de atribuirlo a Netlify.
+
+Tras desactivar el challenge geográfico, una verificación distribuida devolvió
+`200` en 30 de 30 nodos, incluidos cuatro nodos de Estados Unidos.
