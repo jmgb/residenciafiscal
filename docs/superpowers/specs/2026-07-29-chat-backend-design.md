@@ -1,13 +1,15 @@
 # Backend del chat de residenciafiscal.org — Diseño
 
 **Fecha**: 2026-07-29
-**Estado**: aprobado con gates de implementación
+**Estado**: aprobado · fase 0 ejecutada el 2026-07-29 · **bloqueado en la fase 0b**
 **Continúa**: [`2026-07-29-frontend-chatbot-design.md`](2026-07-29-frontend-chatbot-design.md), que dejó el backend explícitamente fuera de alcance
 
-Las restricciones de plataforma se volvieron a contrastar el 2026-07-29 con la
-documentación oficial. La arquitectura queda aprobada, pero no se activa en
-producción hasta superar el *spike* de plataforma y los criterios de aceptación
-de la sección 10.
+Las restricciones de plataforma se contrastaron con la documentación oficial y
+después **se midieron** contra un Deploy Preview en el *spike* de la fase 0
+(2026-07-29). Cuatro de los cinco criterios pasaron y la decisión de runtime
+queda confirmada; el quinto invalidó el mecanismo de estado y abrió la fase 0b,
+que bloquea la implementación. Mediciones completas en
+[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
 
 ## 1. Objetivo
 
@@ -108,10 +110,11 @@ Además:
 - Netlify ofrece **rate limiting nativo en el `config` de la Edge Function** en
   todos los planes. El máximo de ventana documentado es 180 s: sirve de
   cortafuegos de ráfagas, pero no sustituye la cuota horaria ni el techo diario.
-- **Netlify Blobs es accesible desde Edge Functions** y admite consistencia fuerte
-  y escrituras condicionales por ETag. Los contadores compartidos deben usar
-  ambas; un `get` seguido de `set` sin compare-and-swap pierde incrementos bajo
-  concurrencia.
+- **Netlify Blobs es accesible desde Edge Functions** y su consistencia fuerte
+  funciona: una lectura refleja siempre la escritura anterior. Pero sus
+  escrituras condicionales por ETag **no dan compare-and-swap bajo concurrencia**:
+  varios escritores con el mismo `onlyIfMatch` reciben todos `modified: true` y
+  se pisan. Medido en la fase 0; ver la sección 4.
 - Las Edge Functions se evalúan **antes** que los redirects, así que el catch-all
   `/* → /index.html` de `netlify.toml` no intercepta la ruta del endpoint.
 - La CSP de `netlify.toml` ya incluye `connect-src 'self'`: al ser el mismo
@@ -186,15 +189,17 @@ frontend/
 ├── tsconfig.edge.json          # tipos del runtime Edge, separado del DOM de React
 ├── netlify/
 │   └── edge-functions/
-│       ├── chat.ts             # endpoint delgado: valida, orquesta y streamea
-│       ├── _chat-config.json   # modelos, precios, enums y límites
-│       ├── _chat-config.ts     # valida/tipa la configuración JSON
-│       ├── _corpus.ts          # GENERADO Y VERSIONADO: índice + fichas
-│       ├── _retrieval.ts       # recuperación y ranking — módulo puro
-│       ├── _router.ts          # Responses API + validación del JSON
-│       ├── _budget.ts          # cuota horaria y reserva diaria con CAS
-│       ├── _citations.ts       # valida [S<n>] y resuelve identificadores
-│       └── _sse.ts             # serialización del protocolo SSE
+│       ├── chat.ts             # ÚNICO endpoint: valida, orquesta y streamea
+│       └── lib/                # módulos compartidos; el bundler NO los escanea
+│           ├── chat-config.json    # modelos, precios, enums y límites
+│           ├── chat-config.ts      # valida/tipa la configuración JSON
+│           ├── corpus.ts           # GENERADO Y VERSIONADO: índice + fichas
+│           ├── corpus-types.ts     # tipos compartidos con el generador
+│           ├── retrieval.ts        # recuperación y ranking — módulo puro
+│           ├── router.ts           # Responses API + validación del JSON
+│           ├── budget.ts           # cuota horaria y reserva diaria
+│           ├── citations.ts        # valida [S<n>] y resuelve identificadores
+│           └── sse.ts              # serialización del protocolo SSE
 ├── scripts/
 │   └── build-corpus.mjs        # AMPLIADO: emite corpus público + corpus del servidor
 └── src/lib/
@@ -203,9 +208,13 @@ frontend/
     └── chat-engine.stub.ts     # se conserva para tests y dev sin claves
 ```
 
-Solo `chat.ts` exporta una declaración de ruta. Los módulos con prefijo `_` se
-importan en su bundle y no declaran endpoints; el prefijo es una convención de
-proyecto, no una barrera de seguridad.
+Los módulos compartidos van en **`lib/`, no en la raíz con prefijo `_`**. Netlify
+trata todo `.ts` de la raíz de `netlify/edge-functions/` como una edge function y
+exige que exporte por defecto una función: un `_corpus.ts` ahí rompe el build con
+`Default export … must be a function`. El subdirectorio no se escanea.
+
+Medido en el spike de la fase 0; ver
+[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
 
 La ruta y el límite nativo se declaran en el propio `chat.ts`; `rateLimit` no se
 puede declarar en `netlify.toml`:
@@ -338,15 +347,24 @@ módulo es **puro y sin globals de Deno**, para que se pueda probar con Vitest.
 
 ### Estado en Netlify Blobs
 
+> ⛔ **Esta sección está invalidada por la medición de la fase 0 y necesita una
+> decisión antes de implementarse.** El compare-and-swap en el que se apoya no
+> es atómico. Ver
+> [`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md) y la
+> subsección «Qué hacer» más abajo.
+
+El diseño original era:
+
 | Clave | Contenido | Uso |
 |---|---|---|
 | `rl:<YYYY-MM-DD-HH>:<hash(ip)>` | `{ count }` | 10 preguntas por hora natural UTC e IP |
 | `spend:<YYYY-MM-DD>` | `{ spentMicros, reservations }` | techo global por día UTC |
 
 La IP se guarda **hasheada con un salt**; nunca en claro. El registro caduca al
-rotar la hora: es un contador, no un log de visitantes.
+rotar la hora: es un contador, no un log de visitantes. Esa parte se conserva sea
+cual sea la decisión.
 
-Cada mutación sigue este algoritmo:
+Cada mutación seguía este algoritmo:
 
 1. Lectura con consistencia fuerte y obtención de ETag.
 2. Cálculo del nuevo estado.
@@ -354,6 +372,40 @@ Cada mutación sigue este algoritmo:
    `onlyIfNew: true`.
 4. Si otro isolate ganó la carrera, releer y reintentar hasta 3 veces. Si sigue
    habiendo contención o Blobs falla, devolver `503` **sin llamar a OpenAI**.
+
+#### Por qué no funciona
+
+Medido el 2026-07-29 contra un Deploy Preview: cinco peticiones concurrentes
+sobre un contador a 0 lo dejaron en **2**. Tres de ellas leyeron el mismo valor
+con el mismo ETag, escribieron con `onlyIfMatch` sobre ese ETag y **las tres
+recibieron `modified: true`**. Nadie pierde la carrera, así que el paso 4 nunca
+se ejecuta y las escrituras se pisan.
+
+Los ETag además son deterministas por contenido —escribir `{n:1}` produce siempre
+el mismo hash—, así que no son tokens de versión.
+
+Consecuencia: la cuota horaria tendría fugas y **el techo de gasto podría
+superarse**, que es la única garantía que protege el dinero.
+
+#### Qué hacer
+
+La alternativa validada en el mismo spike es **una clave por petición**: cada
+petición escribe su propia clave bajo un prefijo y el recuento se obtiene
+listando. Dos escritores nunca tocan la misma clave, así que el *lost update* es
+imposible por construcción. Medido: 50 peticiones concurrentes → 50 entradas
+exactas.
+
+Cuesta 130–420 ms de latencia de red antes del primer token, obliga a iterar el
+listado con `paginate: true`, y deja una ventana entre contar y escribir que
+permite sobrepasar el techo por aproximadamente el factor de concurrencia.
+
+Opciones sobre la mesa, pendientes de decisión:
+
+| Opción | A favor | En contra |
+|---|---|---|
+| Clave por petición y recuento por listado | Sin proveedor nuevo, sin pérdidas | +130–420 ms por comprobación; el techo puede rebasarse por el factor de concurrencia |
+| Almacén con atomicidad real (Upstash Redis, Supabase) | `INCR` atómico de verdad | Añade un proveedor externo al stack, que el spec evitaba a propósito |
+| Cuotas best-effort y protección dura solo en el límite nativo | Cero coste añadido | El techo de gasto deja de ser una garantía |
 
 Antes del router se añade a `reservations[requestId]` un importe conservador
 calculado con los máximos de entrada/salida de las dos llamadas. Para no depender
@@ -629,28 +681,46 @@ anotados aquí como **condición de la fase 3**, no como sugerencia.
 
 ## 10. Plan de entrega y criterios de aceptación
 
-### Fase 0 — *spike* de plataforma
+### Fase 0 — *spike* de plataforma — EJECUTADA (2026-07-29)
 
-Antes de implementar la feature completa, una Edge Function mínima en Deploy
-Preview debe demostrar con el bundle y un corpus del tamaño real:
+Ejecutada contra un Deploy Preview con un corpus sintético de 891 KB, el tamaño
+que tendrá el real. Resultados completos y metodología en
+[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
 
-1. Carga de `openai`, `zod`, `@netlify/blobs` y
-   `@netlify/edge-functions` en Deno.
-2. Streaming simulado de más de 10 s sin corte.
-3. p95 de CPU propio <40 ms en frío y caliente.
-4. Cabeceras emitidas antes de 10 s y dentro del límite absoluto de 40 s.
-5. CAS correcto con al menos 20 peticiones concurrentes.
+| # | Criterio | Objetivo | Medido | |
+|---|---|---|---|---|
+| 1 | Carga de `openai`, `zod` y `@netlify/blobs` en Deno | los tres | los tres `true` | ✅ |
+| 2 | p95 de CPU propio en frío y caliente | < 40 ms | 15,3 ms | ✅ |
+| 3 | Streaming de más de 10 s sin corte | > 10 s | 19,87 s | ✅ |
+| 4 | Cabeceras dentro del límite | < 10 s | 0,30 s | ✅ |
+| 5 | CAS correcto con 20 peticiones concurrentes | exacto | incrementos perdidos | ❌ |
 
-Si falla CPU, se reduce índice/contexto y se repite. Si falla compatibilidad de
-paquetes, se sustituye el SDK de OpenAI por `fetch` tipado manteniendo el mismo
-adaptador. Si Edge no cumple, se reabre la decisión de runtime; no se construye
-la feature sobre una premisa fallida.
+**La decisión de runtime se confirma**: los criterios 1 a 4 validan que las Edge
+Functions soportan esta arquitectura. El criterio 5 no invalida el runtime, sino
+el mecanismo de estado, y su alternativa está validada en el mismo spike.
+
+Dos correcciones que el spike obligó a hacer sobre este documento:
+
+- El reparto del corpus en dos niveles **no es una optimización, es obligatorio**:
+  parsear las 106 fichas en el arranque da 46,6 ms en frío y llega a 53,9 ms, por
+  encima del límite duro de 50.
+- Los módulos compartidos van en `lib/`, no en la raíz con prefijo `_`.
+
+### Fase 0b — decisión sobre el estado de cuotas y presupuesto (BLOQUEANTE)
+
+Antes de la fase 1 hay que elegir entre las tres opciones de la sección 4. La
+implementación de `budget.ts` depende por completo de esa decisión, y con ella la
+única garantía que impide que el endpoint gaste sin techo.
 
 ### Fase 1 — implementación detrás de `stub`
 
 Se desarrolla con TDD, se ejecutan `npm run fast-check` y `npm run build`, y se
-prueba el flujo completo con OpenAI mock en `netlify dev`. Producción sigue en
+prueba el flujo completo con OpenAI mock. Producción sigue en
 `VITE_CHAT_ENGINE_MODE=stub`.
+
+`netlify dev` **no funciona en este proyecto**: el CLI arrastra `ts-api-utils` vía
+`precinct`, incompatible con el TypeScript 7 del repositorio. El workaround
+—instalar el CLI fuera del árbol— está en `NETLIFY_EDGE.md`.
 
 ### Fase 2 — evaluación
 
@@ -722,16 +792,21 @@ se modifica. El pipeline Python tampoco.
 
 Lo que un revisor debería atacar primero:
 
-1. **El presupuesto de 50 ms de CPU puede invalidar Edge.** Ya no se acepta por
-   razonamiento: la fase 0 lo convierte en gate. El plan B dentro de Edge es
-   adelgazar índice y fichas; el plan C es reabrir runtime.
+1. **~~El presupuesto de 50 ms de CPU puede invalidar Edge.~~ RESUELTO.** Medido
+   el 2026-07-29: p95 de 15,3 ms y ninguna petición por encima de 50 ms con el
+   corpus en dos niveles. Queda un margen de 9,4 ms en el peor caso medido, y la
+   implementación real hará más trabajo que el spike, así que conviene volver a
+   medir al cerrar la fase 1.
 2. **La recuperación puede tener recall insuficiente sin embeddings.** La unión
    léxico/facetas elimina el router como punto único de exclusión, pero no
    garantiza semántica. El banco de evaluación decide con datos si 106
    documentos siguen justificando el diseño simple.
-3. **Blobs añade latencia y contención antes de la primera llamada.** Cuota y
-   reserva no pueden diferirse sin abrir una carrera de gasto. Si el p95 no
-   cumple, se cambia de almacén o runtime; no se rebaja la atomicidad.
+3. **El compare-and-swap de Blobs no es atómico. CONFIRMADO Y BLOQUEANTE.** No
+   es un riesgo de latencia como se pensaba, es de corrección: cinco peticiones
+   concurrentes dejaron un contador de 5 incrementos en 2, y todas creyeron haber
+   escrito. La alternativa de clave por petición está validada pero cuesta
+   130–420 ms por comprobación. Es la decisión de la fase 0b y bloquea la
+   implementación de `budget.ts`.
 4. **El techo de gasto es global, no por usuario**: un solo abusador que respete
    el límite por IP puede agotar el cupo diario de todos. Aceptado
    conscientemente para una web de nicho; si ocurre, el siguiente paso es un

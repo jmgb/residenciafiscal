@@ -24,19 +24,24 @@ Al terminar este plan el chat real funciona end-to-end en `netlify dev` y en Dep
 
 Todo lo nuevo del servidor vive en `frontend/netlify/edge-functions/`. Netlify solo publica como endpoint los ficheros sin prefijo `_`; el resto se importan en el bundle.
 
+`chat.ts` va en la raíz de `netlify/edge-functions/` porque es el único endpoint.
+**Todo lo demás va en `lib/`**: Netlify trata cualquier `.ts` de la raíz como una
+edge function y exige que exporte por defecto una función, así que un módulo
+compartido ahí rompe el build. El prefijo `_` no exime de esa regla.
+
 | Fichero | Responsabilidad | Puro |
 |---|---|---|
 | `chat.ts` | Endpoint. Valida, orquesta, streamea. Sin lógica de negocio. | no |
-| `_chat-config.json` | Modelos, precios, enums y límites numéricos. Datos, sin código. | — |
-| `_chat-config.ts` | Carga y valida ese JSON con Zod; exporta tipos. | sí |
-| `_corpus-types.ts` | Tipos del corpus generado, compartidos por generador y consumidores. | sí |
-| `_corpus.ts` | **Generado y versionado.** Manifiesto + índice + fichas serializadas. | — |
-| `_retrieval.ts` | Normalización léxica, búsqueda global, facetas, unión y reranking. | sí |
-| `_packer.ts` | Convierte candidatas en tarjetas `S1…S12` dentro del presupuesto de bytes. | sí |
-| `_citations.ts` | Búfer de salida: valida marcadores, los sustituye por ROJ, decide vaciados. | sí |
-| `_sse.ts` | Serialización del protocolo SSE. | sí |
-| `_budget.ts` | Cuota horaria y reserva de gasto sobre Blobs con CAS. | no (Blobs) |
-| `_router.ts` | Llamada al router con Structured Outputs y validación de la salida. | no (red) |
+| `lib/chat-config.json` | Modelos, precios, enums y límites numéricos. Datos, sin código. | — |
+| `lib/chat-config.ts` | Carga y valida ese JSON con Zod; exporta tipos. | sí |
+| `lib/corpus-types.ts` | Tipos del corpus generado, compartidos por generador y consumidores. | sí |
+| `lib/corpus.ts` | **Generado y versionado.** Manifiesto + índice + fichas serializadas. | — |
+| `lib/retrieval.ts` | Normalización léxica, búsqueda global, facetas, unión y reranking. | sí |
+| `lib/packer.ts` | Convierte candidatas en tarjetas `S1…S12` dentro del presupuesto de bytes. | sí |
+| `lib/citations.ts` | Búfer de salida: valida marcadores, los sustituye por ROJ, decide vaciados. | sí |
+| `lib/sse.ts` | Serialización del protocolo SSE. | sí |
+| `lib/budget.ts` | Cuota horaria y reserva de gasto. **Bloqueada por la fase 0b.** | no (Blobs) |
+| `lib/router.ts` | Llamada al router con Structured Outputs y validación de la salida. | no (red) |
 
 En el cliente:
 
@@ -51,219 +56,42 @@ Los módulos puros se prueban desde `frontend/tests/` como cualquier otro módul
 
 ---
 
-# FASE 0 — Spike de plataforma (GATE)
+# FASE 0 — Spike de plataforma — EJECUTADA (2026-07-29)
 
-**No continúes a la fase 1 si esta tarea no pasa.** El spec apoya toda la arquitectura en que el límite de 50 ms de CPU de las Edge Functions da margen suficiente con un corpus de ~1 MB embebido. Eso está razonado, no medido.
+Se ejecutó contra un Deploy Preview con un corpus sintético de 891 KB. El código
+del spike era temporal y se ha borrado; las mediciones, la metodología y los
+pasos para reproducirlo están en
+[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
 
-### Task 0: Spike de Edge Function en Deploy Preview
+| # | Criterio | Objetivo | Medido | |
+|---|---|---|---|---|
+| 1 | `openai`, `zod` y `@netlify/blobs` cargan en Deno | los tres | los tres `true` | ✅ |
+| 2 | p95 de CPU propio | < 40 ms | 15,3 ms | ✅ |
+| 3 | Streaming más allá de 10 s | > 10 s | 19,87 s | ✅ |
+| 4 | Cabeceras dentro del límite | < 10 s | 0,30 s | ✅ |
+| 5 | CAS sin perder incrementos | exacto | incrementos perdidos | ❌ |
 
-**Files:**
-- Create: `frontend/netlify/edge-functions/spike.ts`
-- Create: `frontend/netlify/edge-functions/_spike-corpus.ts` (generado, temporal)
-- Create: `frontend/scripts/spike-corpus.mjs` (temporal)
+**La decisión de runtime queda confirmada.** Lo que falló no es Edge, es el
+mecanismo de estado sobre Blobs.
 
-- [ ] **Step 1: Generar un corpus sintético del tamaño real**
+Lo que este plan da por bueno y el spike refutó:
 
-Crea `frontend/scripts/spike-corpus.mjs`:
-
-```js
-#!/usr/bin/env node
-/** Genera un corpus del tamaño real para medir el coste de arranque en Edge. */
-import { writeFileSync, mkdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const outDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'netlify', 'edge-functions');
-mkdirSync(outDir, { recursive: true });
-
-const RELLENO =
-  'La Sala considera acreditado que el núcleo principal de actividades e intereses ' +
-  'económicos del recurrente radica en España conforme al artículo 9.1.b) LIRPF. '.repeat(20);
-
-const index = [];
-const fichas = {};
-for (let i = 0; i < 106; i += 1) {
-  const archivo = `STS_${1000 + i}_2024.pdf`;
-  index.push({
-    archivo,
-    roj: `STS ${1000 + i}/2024`,
-    ecli: `ECLI:ES:TS:2024:${1000 + i}`,
-    organo: 'Tribunal Supremo. Sala de lo Contencioso-Administrativo',
-    organoTipo: 'STS',
-    anio: 2024,
-    resultado: 'GANA_AEAT',
-    criteriosDetectados: ['CRIT_183_DIAS', 'CRIT_CENTRO_INTERESES_ECONOMICOS'],
-    criterioDecisivo: ['CRIT_183_DIAS'],
-    categoriasAdmitidas: ['PRESENCIA_FISICA_Y_DESPLAZAMIENTOS'],
-    categoriasRechazadas: ['TRAZAS_DIGITALES'],
-    paisCDI: 'Francia',
-    esCasoResidencia: true,
-    terminos: RELLENO.toLowerCase().split(/[^a-z0-9]+/).filter((t) => t.length > 2).slice(0, 120),
-  });
-  fichas[archivo] = JSON.stringify({ archivo, razonamiento: RELLENO, pruebas: [RELLENO] });
-}
-
-const body = `// GENERADO PARA EL SPIKE. No es código de producción.
-export const INDEX = JSON.parse(${JSON.stringify(JSON.stringify(index))});
-export const FICHAS = JSON.parse(${JSON.stringify(JSON.stringify(fichas))});
-`;
-writeFileSync(join(outDir, '_spike-corpus.ts'), body, 'utf8');
-console.log(`[spike] ${(body.length / 1024).toFixed(0)} KB escritos`);
-```
-
-Ejecuta: `cd frontend && node scripts/spike-corpus.mjs`
-Esperado: imprime un tamaño de al menos 800 KB. Si sale muy por debajo, sube el multiplicador de `RELLENO` hasta acercarte a 1 MB: **el spike solo vale si el bundle pesa lo que pesará en producción**.
-
-- [ ] **Step 2: Escribir la Edge Function del spike**
-
-Crea `frontend/netlify/edge-functions/spike.ts`:
-
-```ts
-import type { Config, Context } from '@netlify/edge-functions';
-import { getStore } from '@netlify/blobs';
-import { z } from 'zod';
-import OpenAI from 'openai';
-import { INDEX, FICHAS } from './_spike-corpus.ts';
-
-// Se referencian para que el bundler no elimine los paquetes del árbol.
-const _libsCargadas = [typeof z.string, typeof OpenAI, typeof getStore].join(',');
-
-export default async (request: Request, context: Context): Promise<Response> => {
-  const t0 = performance.now();
-
-  // Trabajo equivalente al de una petición real: filtrar y puntuar el índice
-  // completo y parsear 12 fichas.
-  const terminos = new Set(['nucleo', 'intereses', 'economicos', 'residencia']);
-  const puntuadas = INDEX.map((entry) => {
-    let score = 0;
-    for (const t of entry.terminos) if (terminos.has(t)) score += 1;
-    return { archivo: entry.archivo, score };
-  })
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 12);
-  const fichas = puntuadas.map((c) => JSON.parse(FICHAS[c.archivo]));
-  const cpuMs = performance.now() - t0;
-
-  const url = new URL(request.url);
-
-  if (url.searchParams.get('modo') === 'cas') {
-    const store = getStore({ name: 'spike', consistency: 'strong' });
-    const clave = 'contador';
-    let intentos = 0;
-    for (; intentos < 5; intentos += 1) {
-      const actual = await store.getWithMetadata(clave, { type: 'json' });
-      const siguiente = { n: (actual?.data?.n ?? 0) + 1 };
-      const opciones = actual ? { onlyIfMatch: actual.etag } : { onlyIfNew: true };
-      const { modified } = await store.setJSON(clave, siguiente, opciones);
-      if (modified) break;
-    }
-    return Response.json({ cpuMs, intentos, region: context.geo?.city ?? null });
-  }
-
-  if (url.searchParams.get('modo') === 'stream') {
-    const encoder = new TextEncoder();
-    const stream = new ReadableStream({
-      async start(controller) {
-        // 20 s de emisión: el doble del límite de las Functions con streaming.
-        for (let i = 0; i < 20; i += 1) {
-          controller.enqueue(encoder.encode(`data: {"i":${i}}\n\n`));
-          await new Promise((r) => setTimeout(r, 1000));
-        }
-        controller.enqueue(encoder.encode('event: done\ndata: {}\n\n'));
-        controller.close();
-      },
-    });
-    return new Response(stream, {
-      headers: {
-        'content-type': 'text/event-stream; charset=utf-8',
-        'cache-control': 'no-store',
-        'x-cpu-ms': String(cpuMs),
-      },
-    });
-  }
-
-  return Response.json({
-    cpuMs,
-    fichasParseadas: fichas.length,
-    registros: INDEX.length,
-    libs: _libsCargadas,
-  });
-};
-
-export const config: Config = { path: '/spike' };
-```
-
-- [ ] **Step 3: Instalar dependencias y desplegar un Deploy Preview**
-
-```bash
-cd frontend
-npm install --save-exact openai zod @netlify/blobs
-npm install --save-exact --save-dev @netlify/edge-functions netlify-cli
-```
-
-Commitea en una rama y abre un PR para que Netlify genere el Deploy Preview.
-
-**`netlify dev` en local NO sirve como evidencia**: no reproduce los límites de CPU ni la latencia del edge real. El gate se mide contra la URL del Deploy Preview.
-
-- [ ] **Step 4: Medir**
-
-Contra la URL del preview (`https://deploy-preview-N--<sitio>.netlify.app`):
-
-```bash
-PREVIEW=https://deploy-preview-N--tu-sitio.netlify.app
-
-# 1. Carga de los cuatro paquetes y CPU en frío
-curl -s "$PREVIEW/spike" | jq
-
-# 2. CPU en caliente, p95 de 30 peticiones
-for i in $(seq 1 30); do curl -s "$PREVIEW/spike" | jq -r .cpuMs; done \
-  | sort -n | awk '{a[NR]=$1} END {print "p50:", a[int(NR*0.5)], " p95:", a[int(NR*0.95)]}'
-
-# 3. Streaming más allá de 10 s
-time curl -N -s "$PREVIEW/spike?modo=stream" | tail -3
-
-# 4. CAS con 20 peticiones concurrentes
-seq 1 20 | xargs -P 20 -I{} curl -s "$PREVIEW/spike?modo=cas" | jq -s 'map(.intentos) | {max: max, total: length}'
-curl -s "$PREVIEW/spike?modo=cas" | jq
-```
-
-Criterios de aceptación, todos obligatorios:
-
-| # | Criterio | Cómo se ve |
+| Afirmación del plan | Realidad medida | Tareas afectadas |
 |---|---|---|
-| 1 | Los cuatro paquetes cargan en Deno | La petición 1 responde `200` con `libs` no vacío |
-| 2 | p95 de CPU propio **< 40 ms** | Salida de la medición 2 |
-| 3 | El streaming supera los 10 s sin corte | `time` marca ~20 s y llega el `event: done` |
-| 4 | Las cabeceras salen antes de 10 s | El primer `data:` aparece en el primer segundo |
-| 5 | El CAS no pierde incrementos | El contador final es exactamente 20 |
+| Los módulos con prefijo `_` no son endpoints | Netlify trata **todo `.ts` de la raíz** como edge function y exige default export función. Los módulos van en `lib/` | Estructura de ficheros y **todas** las tareas que crean módulos |
+| Los dos niveles del corpus son una optimización | Son **obligatorios**: parsear las 106 fichas al arrancar da 46,6–53,9 ms, por encima del límite duro | Tareas 4 y 12 |
+| `onlyIfMatch` da compare-and-swap | No lo da bajo concurrencia | **Tarea 9, bloqueada** |
+| `netlify dev` sirve para la integración local | No arranca en este proyecto (TS 7 vs `ts-api-utils`) | Tarea 15 |
 
-- [ ] **Step 5: Decidir**
+## FASE 0b — Decisión pendiente (BLOQUEA LA TAREA 9)
 
-- **Todo verde** → sigue a la fase 1.
-- **Falla el criterio 2** → reduce el índice (menos `terminos` por entrada, campos más cortos), regenera y repite. Si tras adelgazar sigue fallando, para y reabre la decisión de runtime con el usuario.
-- **Falla el criterio 1** → sustituye el SDK `openai` por `fetch` tipado a mano y repite. Los otros tres paquetes son innegociables.
-- **Falla el 3 o el 4** → la premisa central del spec es falsa. Para y reabre la decisión de runtime.
+Antes de implementar `budget.ts` hay que elegir entre las tres opciones de la
+sección 4 del spec: clave por petición con recuento por listado (validada, +130–420 ms),
+un almacén con atomicidad real (proveedor externo), o cuotas best-effort
+apoyadas solo en el límite nativo (el techo de gasto deja de ser garantía).
 
-No sigas «a ver si luego se arregla». El spec convierte esto en gate precisamente porque construir 14 tareas sobre una premisa falsa es el fallo caro.
-
-- [ ] **Step 6: Limpiar y commitear**
-
-```bash
-cd frontend
-rm netlify/edge-functions/spike.ts netlify/edge-functions/_spike-corpus.ts scripts/spike-corpus.mjs
-cd ..
-git add frontend/package.json frontend/package-lock.json
-git commit -m "chore(frontend): dependencias del backend de chat validadas en Edge
-
-Spike de plataforma superado en Deploy Preview: p95 de CPU propio por
-debajo de 40 ms con un bundle de 1 MB, streaming de 20 s sin corte y
-compare-and-swap sin pérdida de incrementos con 20 peticiones
-concurrentes."
-```
-
-Anota los números medidos en el PR: son la línea base contra la que se comparará cuando el corpus real crezca.
-
----
+Las tareas 1 a 8 y 10 a 14 **no dependen de esa decisión** y pueden ejecutarse en
+cuanto se tome, o incluso antes si se acepta dejar la 9 para el final.
 
 # FASE 1 — Implementación detrás del stub
 
@@ -328,8 +156,8 @@ git commit -m "build(frontend): typecheck del runtime Edge en el gate"
 ### Task 2: Configuración compartida (`_chat-config`)
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_chat-config.json`
-- Create: `frontend/netlify/edge-functions/_chat-config.ts`
+- Create: `frontend/netlify/edge-functions/lib/chat-config.json`
+- Create: `frontend/netlify/edge-functions/lib/chat-config.ts`
 - Test: `frontend/tests/chat-config.test.ts`
 
 - [ ] **Step 1: Escribir el test que falla**
@@ -338,7 +166,7 @@ Crea `frontend/tests/chat-config.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { CHAT_CONFIG } from '../netlify/edge-functions/_chat-config.ts';
+import { CHAT_CONFIG } from '../netlify/edge-functions/lib/chat-config.ts';
 
 describe('CHAT_CONFIG', () => {
   it('expone modelos con precio declarado', () => {
@@ -367,7 +195,7 @@ Expected: FAIL — no encuentra el módulo `_chat-config.ts`.
 
 - [ ] **Step 3: Crear el JSON de configuración**
 
-Crea `frontend/netlify/edge-functions/_chat-config.json`:
+Crea `frontend/netlify/edge-functions/lib/chat-config.json`:
 
 ```json
 {
@@ -438,11 +266,11 @@ Crea `frontend/netlify/edge-functions/_chat-config.json`:
 
 - [ ] **Step 4: Crear el cargador validado**
 
-Crea `frontend/netlify/edge-functions/_chat-config.ts`:
+Crea `frontend/netlify/edge-functions/lib/chat-config.ts`:
 
 ```ts
 import { z } from 'zod';
-import raw from './_chat-config.json' with { type: 'json' };
+import raw from './chat-config.json' with { type: 'json' };
 
 const precioSchema = z.object({
   inputPerMillion: z.number().positive(),
@@ -561,8 +389,8 @@ Expected: PASS, 5 tests. Si falla en criterios o resultados, la copia TS está m
 - [ ] **Step 8: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_chat-config.json \
-        frontend/netlify/edge-functions/_chat-config.ts \
+git add frontend/netlify/edge-functions/lib/chat-config.json \
+        frontend/netlify/edge-functions/lib/chat-config.ts \
         frontend/tests/chat-config.test.ts \
         test/test_chat_config_contract.py
 git commit -m "feat(chat): configuración compartida del backend con contrato contra config.py"
@@ -575,11 +403,11 @@ git commit -m "feat(chat): configuración compartida del backend con contrato co
 Un módulo minúsculo y sin lógica, pero va antes que el generador porque generador y consumidores tienen que estar de acuerdo en la forma.
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_corpus-types.ts`
+- Create: `frontend/netlify/edge-functions/lib/corpus-types.ts`
 
 - [ ] **Step 1: Crear los tipos**
 
-Crea `frontend/netlify/edge-functions/_corpus-types.ts`:
+Crea `frontend/netlify/edge-functions/lib/corpus-types.ts`:
 
 ```ts
 /** Metadatos del artefacto generado, usados para validarlo en el build. */
@@ -633,7 +461,7 @@ Expected: PASS.
 - [ ] **Step 3: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_corpus-types.ts
+git add frontend/netlify/edge-functions/lib/corpus-types.ts
 git commit -m "feat(chat): tipos del corpus embebido"
 ```
 
@@ -717,7 +545,7 @@ describe('build-corpus', () => {
     const publico = JSON.parse(readFileSync(join(tmp, 'frontend/public/data/corpus.json'), 'utf8'));
     expect(publico).toHaveLength(2);
 
-    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/_corpus.ts'), 'utf8');
+    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/lib/corpus.ts'), 'utf8');
     expect(servidor).toContain('export const MANIFEST');
     expect(servidor).toContain('export const INDEX');
     expect(servidor).toContain('export const FICHAS');
@@ -728,7 +556,7 @@ describe('build-corpus', () => {
     writeFileSync(join(outputDir, 'analisis_01012026_000000.jsonl'), `${registro('A.pdf')}\n`);
     ejecutar();
 
-    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/_corpus.ts'), 'utf8');
+    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/lib/corpus.ts'), 'utf8');
     // Los términos van sin tildes y en minúscula: "núcleo" → "nucleo".
     expect(servidor).toContain('nucleo');
     expect(servidor).toContain('STS');
@@ -741,7 +569,7 @@ describe('build-corpus', () => {
     );
     expect(ejecutar().code).toBe(0);
 
-    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/_corpus.ts'), 'utf8');
+    const servidor = readFileSync(join(tmp, 'frontend/netlify/edge-functions/lib/corpus.ts'), 'utf8');
     expect(servidor).toContain('"recordCount":2');
     expect(servidor).toContain('"casosResidencia":1');
   });
@@ -756,7 +584,7 @@ describe('build-corpus', () => {
     // Simula un clon limpio: sin output/, pero con ambos artefactos en git.
     writeFileSync(join(tmp, 'frontend/public/data/corpus.json'), '[]\n');
     writeFileSync(
-      join(tmp, 'frontend/netlify/edge-functions/_corpus.ts'),
+      join(tmp, 'frontend/netlify/edge-functions/lib/corpus.ts'),
       'export const MANIFEST = JSON.parse("{\\"schemaVersion\\":1,\\"recordCount\\":0,' +
         '\\"casosResidencia\\":0,\\"sourceSha256\\":\\"x\\",\\"generatedAt\\":\\"2026-01-01\\"}");\n' +
         'export const INDEX = JSON.parse("[]");\nexport const FICHAS = JSON.parse("{}");\n'
@@ -766,7 +594,7 @@ describe('build-corpus', () => {
 
   it('falla si el artefacto del servidor no parsea', () => {
     writeFileSync(join(tmp, 'frontend/public/data/corpus.json'), '[]\n');
-    writeFileSync(join(tmp, 'frontend/netlify/edge-functions/_corpus.ts'), 'export const ROTO = 1;\n');
+    writeFileSync(join(tmp, 'frontend/netlify/edge-functions/lib/corpus.ts'), 'export const ROTO = 1;\n');
     const resultado = ejecutar();
     expect(resultado.code).not.toBe(0);
   });
@@ -789,7 +617,7 @@ Sustituye por completo `frontend/scripts/build-corpus.mjs`:
  * pipeline Python (`output/analisis_*.jsonl`):
  *
  *   1. `public/data/corpus.json`            metadatos ligeros para la UI
- *   2. `netlify/edge-functions/_corpus.ts`  índice + fichas para el chat
+ *   2. `netlify/edge-functions/lib/corpus.ts`  índice + fichas para el chat
  *
  * Ambos se versionan como fallback: `output/` está en .gitignore y Netlify
  * construye sobre un clon limpio. A diferencia del corpus público, el del
@@ -995,7 +823,7 @@ function generar(source) {
   const cabecera =
     '// GENERADO POR scripts/build-corpus.mjs — NO EDITAR A MANO.\n' +
     '// Se regenera en el prebuild desde output/analisis_*.jsonl.\n' +
-    "import type { CorpusIndexEntry, CorpusManifest } from './_corpus-types.ts';\n\n";
+    "import type { CorpusIndexEntry, CorpusManifest } from './corpus-types.ts';\n\n";
   const cuerpo =
     `export const MANIFEST: CorpusManifest & { casosResidencia: number } = ` +
     `JSON.parse(${JSON.stringify(JSON.stringify(manifest))});\n` +
@@ -1012,7 +840,7 @@ function generar(source) {
 function validarFallback() {
   if (!existsSync(serverFile)) {
     console.error(
-      '[build-corpus] No hay output/ ni netlify/edge-functions/_corpus.ts versionado. ' +
+      '[build-corpus] No hay output/ ni netlify/edge-functions/lib/corpus.ts versionado. ' +
         'El chat quedaría sin corpus; se aborta el build.'
     );
     process.exit(1);
@@ -1068,7 +896,7 @@ Expected: PASS, 6 tests.
 
 ```bash
 cd frontend && node scripts/build-corpus.mjs
-ls -lh netlify/edge-functions/_corpus.ts public/data/corpus.json
+ls -lh netlify/edge-functions/lib/corpus.ts public/data/corpus.json
 ```
 
 Expected: `[build-corpus] 106 sentencias públicas, N en el índice del chat.` El fichero del servidor debe rondar 1 MB. Si supera 5 MB, algo está mal en la normalización de términos: revísalo antes de seguir, porque el bundle tiene un tope de 20 MB comprimidos.
@@ -1080,7 +908,7 @@ El artefacto generado **se versiona**, igual que el corpus público.
 ```bash
 git add frontend/scripts/build-corpus.mjs \
         frontend/tests/build-corpus.test.ts \
-        frontend/netlify/edge-functions/_corpus.ts \
+        frontend/netlify/edge-functions/lib/corpus.ts \
         frontend/public/data/corpus.json
 git commit -m "feat(chat): genera y valida el corpus embebido del servidor
 
@@ -1097,7 +925,7 @@ no parsea o cambia de schemaVersion."
 El módulo con más lógica del backend y el único que decide qué ve el modelo. Es puro: sin red, sin Blobs, sin globals de Deno.
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_retrieval.ts`
+- Create: `frontend/netlify/edge-functions/lib/retrieval.ts`
 - Test: `frontend/tests/retrieval.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -1106,8 +934,8 @@ Crea `frontend/tests/retrieval.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import type { CorpusIndexEntry } from '../netlify/edge-functions/_corpus-types.ts';
-import { retrieve, tokenize, type RouterFacets } from '../netlify/edge-functions/_retrieval.ts';
+import type { CorpusIndexEntry } from '../netlify/edge-functions/lib/corpus-types.ts';
+import { retrieve, tokenize, type RouterFacets } from '../netlify/edge-functions/lib/retrieval.ts';
 
 function entry(over: Partial<CorpusIndexEntry> & { archivo: string }): CorpusIndexEntry {
   return {
@@ -1231,10 +1059,10 @@ Expected: FAIL — no existe `_retrieval.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_retrieval.ts`:
+Crea `frontend/netlify/edge-functions/lib/retrieval.ts`:
 
 ```ts
-import type { CorpusIndexEntry } from './_corpus-types.ts';
+import type { CorpusIndexEntry } from './corpus-types.ts';
 
 const STOPWORDS = new Set([
   'los', 'las', 'del', 'que', 'con', 'por', 'para', 'una', 'unos', 'unas', 'como',
@@ -1415,7 +1243,7 @@ Expected: PASS, 12 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_retrieval.ts frontend/tests/retrieval.test.ts
+git add frontend/netlify/edge-functions/lib/retrieval.ts frontend/tests/retrieval.test.ts
 git commit -m "feat(chat): recuperación por unión de léxico global y facetas
 
 El router puntúa y ordena, pero no excluye: la búsqueda léxica se ejecuta
@@ -1428,7 +1256,7 @@ errónea empeora el orden sin dejar fuera la sentencia relevante."
 ### Task 6: Empaquetado del contexto (`_packer.ts`)
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_packer.ts`
+- Create: `frontend/netlify/edge-functions/lib/packer.ts`
 - Test: `frontend/tests/packer.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -1437,9 +1265,9 @@ Crea `frontend/tests/packer.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import type { CorpusIndexEntry, CorpusFicha } from '../netlify/edge-functions/_corpus-types.ts';
-import { packContext } from '../netlify/edge-functions/_packer.ts';
-import type { Candidate } from '../netlify/edge-functions/_retrieval.ts';
+import type { CorpusIndexEntry, CorpusFicha } from '../netlify/edge-functions/lib/corpus-types.ts';
+import { packContext } from '../netlify/edge-functions/lib/packer.ts';
+import type { Candidate } from '../netlify/edge-functions/lib/retrieval.ts';
 
 function candidata(archivo: string, score = 1): Candidate {
   const entry: CorpusIndexEntry = {
@@ -1535,11 +1363,11 @@ Expected: FAIL — no existe `_packer.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_packer.ts`:
+Crea `frontend/netlify/edge-functions/lib/packer.ts`:
 
 ```ts
-import type { CorpusFicha } from './_corpus-types.ts';
-import type { Candidate } from './_retrieval.ts';
+import type { CorpusFicha } from './corpus-types.ts';
+import type { Candidate } from './retrieval.ts';
 
 /** Ficha ya etiquetada y lista para el prompt y para el panel de fuentes. */
 export interface PackedSource {
@@ -1660,7 +1488,7 @@ Expected: PASS, 7 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_packer.ts frontend/tests/packer.test.ts
+git add frontend/netlify/edge-functions/lib/packer.ts frontend/tests/packer.test.ts
 git commit -m "feat(chat): empaquetado de tarjetas S1..Sn con presupuesto de bytes"
 ```
 
@@ -1671,7 +1499,7 @@ git commit -m "feat(chat): empaquetado de tarjetas S1..Sn con presupuesto de byt
 La pieza que garantiza que ningún identificador mostrado sea inventado, y la que resuelve el fallo de streaming detectado en la revisión del spec.
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_citations.ts`
+- Create: `frontend/netlify/edge-functions/lib/citations.ts`
 - Test: `frontend/tests/citations.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -1680,8 +1508,8 @@ Crea `frontend/tests/citations.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { CitationBuffer } from '../netlify/edge-functions/_citations.ts';
-import type { PackedSource } from '../netlify/edge-functions/_packer.ts';
+import { CitationBuffer } from '../netlify/edge-functions/lib/citations.ts';
+import type { PackedSource } from '../netlify/edge-functions/lib/packer.ts';
 
 function source(marcador: string, roj: string): PackedSource {
   return {
@@ -1788,10 +1616,10 @@ Expected: FAIL — no existe `_citations.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_citations.ts`:
+Crea `frontend/netlify/edge-functions/lib/citations.ts`:
 
 ```ts
-import type { PackedSource } from './_packer.ts';
+import type { PackedSource } from './packer.ts';
 
 export interface CitationLimits {
   flushChars: number;
@@ -1966,7 +1794,7 @@ Expected: PASS, 10 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_citations.ts frontend/tests/citations.test.ts
+git add frontend/netlify/edge-functions/lib/citations.ts frontend/tests/citations.test.ts
 git commit -m "feat(chat): búfer de citas con sustitución de marcadores y vaciado triple
 
 Los marcadores [S<n>] se resuelven en servidor, así que ningún ROJ que
@@ -1980,7 +1808,7 @@ timeout de inactividad: los deltas del proveedor sí están llegando."
 ### Task 8: Protocolo SSE (`_sse.ts`)
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_sse.ts`
+- Create: `frontend/netlify/edge-functions/lib/sse.ts`
 - Test: `frontend/tests/sse.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -1989,7 +1817,7 @@ Crea `frontend/tests/sse.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { SSE_HEADERS, sseEvent } from '../netlify/edge-functions/_sse.ts';
+import { SSE_HEADERS, sseEvent } from '../netlify/edge-functions/lib/sse.ts';
 
 describe('sseEvent', () => {
   it('serializa nombre y datos en una sola línea data terminada en línea en blanco', () => {
@@ -2017,7 +1845,7 @@ Expected: FAIL — no existe `_sse.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_sse.ts`:
+Crea `frontend/netlify/edge-functions/lib/sse.ts`:
 
 ```ts
 export const CHAT_PROTOCOL_VERSION = '1';
@@ -2048,16 +1876,31 @@ Expected: PASS, 3 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_sse.ts frontend/tests/sse.test.ts
+git add frontend/netlify/edge-functions/lib/sse.ts frontend/tests/sse.test.ts
 git commit -m "feat(chat): serialización del protocolo SSE"
 ```
 
 ---
 
-### Task 9: Cuota y presupuesto (`_budget.ts`)
+### Task 9: Cuota y presupuesto (`lib/budget.ts`) — ⛔ BLOQUEADA
+
+**No ejecutes esta tarea hasta que se resuelva la fase 0b.** El spike demostró
+que `onlyIfMatch` no da compare-and-swap bajo concurrencia: cinco peticiones
+simultáneas dejaron un contador de cinco incrementos en dos, y todas creyeron
+haber escrito. El código y los tests de abajo implementan un algoritmo que **no
+funciona en esta plataforma**; se conservan porque la forma de la API (`reservar`,
+`reconciliar`, `consumirCuota`, microdólares enteros, fallo cerrado) sigue siendo
+válida y solo cambia el mecanismo de escritura por debajo.
+
+Si se elige la alternativa de clave por petición, `mutar()` desaparece y cada
+operación pasa a escribir su propia clave bajo un prefijo, contando con
+`list({ paginate: true })`. El doble de tests de concurrencia sigue siendo el
+mismo y debe seguir pasando.
+
+El resto del plan no depende de esta tarea: se puede dejar para el final.
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_budget.ts`
+- Create: `frontend/netlify/edge-functions/lib/budget.ts`
 - Test: `frontend/tests/budget.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -2068,7 +1911,7 @@ Crea `frontend/tests/budget.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { consumirCuota, liberarReserva, reservar, reconciliar, type BlobStore } from '../netlify/edge-functions/_budget.ts';
+import { consumirCuota, liberarReserva, reservar, reconciliar, type BlobStore } from '../netlify/edge-functions/lib/budget.ts';
 
 /** Doble en memoria con la semántica de ETag de Netlify Blobs. */
 function storeFalso(): BlobStore & { valores: Map<string, { data: unknown; etag: string }> } {
@@ -2184,7 +2027,7 @@ Expected: FAIL — no existe `_budget.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_budget.ts`:
+Crea `frontend/netlify/edge-functions/lib/budget.ts`:
 
 ```ts
 /**
@@ -2356,7 +2199,7 @@ Si el test de concurrencia falla de forma intermitente, **no subas `MAX_INTENTOS
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_budget.ts frontend/tests/budget.test.ts
+git add frontend/netlify/edge-functions/lib/budget.ts frontend/tests/budget.test.ts
 git commit -m "feat(chat): cuota horaria y presupuesto diario con compare-and-swap
 
 Un get seguido de set pierde incrementos en cuanto dos isolates coinciden.
@@ -2369,7 +2212,7 @@ flotante sobre dinero."
 ### Task 10: Router (`_router.ts`)
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_router.ts`
+- Create: `frontend/netlify/edge-functions/lib/router.ts`
 - Test: `frontend/tests/router.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -2378,7 +2221,7 @@ Crea `frontend/tests/router.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { FACETAS_VACIAS, parseFacetas, routerPrompt } from '../netlify/edge-functions/_router.ts';
+import { FACETAS_VACIAS, parseFacetas, routerPrompt } from '../netlify/edge-functions/lib/router.ts';
 
 const ENUMS = {
   criterios: ['CRIT_183_DIAS', 'CRIT_PRESUNCION_FAMILIA'],
@@ -2450,11 +2293,11 @@ Expected: FAIL — no existe `_router.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_router.ts`:
+Crea `frontend/netlify/edge-functions/lib/router.ts`:
 
 ```ts
 import { z } from 'zod';
-import type { RouterFacets } from './_retrieval.ts';
+import type { RouterFacets } from './retrieval.ts';
 
 export interface Catalogo {
   criterios: string[];
@@ -2569,7 +2412,7 @@ Expected: PASS, 7 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_router.ts frontend/tests/router.test.ts
+git add frontend/netlify/edge-functions/lib/router.ts frontend/tests/router.test.ts
 git commit -m "feat(chat): router de facetas con catálogo cerrado y revalidación"
 ```
 
@@ -2580,7 +2423,7 @@ git commit -m "feat(chat): router de facetas con catálogo cerrado y revalidaci�
 Se separa de `chat.ts` porque es lógica pura y es la primera línea de defensa contra coste y contra inyección desde metadatos del navegador.
 
 **Files:**
-- Create: `frontend/netlify/edge-functions/_request.ts`
+- Create: `frontend/netlify/edge-functions/lib/request.ts`
 - Test: `frontend/tests/chat-request.test.ts`
 
 - [ ] **Step 1: Escribir los tests que fallan**
@@ -2589,7 +2432,7 @@ Crea `frontend/tests/chat-request.test.ts`:
 
 ```ts
 import { describe, expect, it } from 'vitest';
-import { parseChatRequest } from '../netlify/edge-functions/_request.ts';
+import { parseChatRequest } from '../netlify/edge-functions/lib/request.ts';
 
 const LIMITES = {
   maxHistoryMessages: 6,
@@ -2685,7 +2528,7 @@ Expected: FAIL — no existe `_request.ts`.
 
 - [ ] **Step 3: Implementar**
 
-Crea `frontend/netlify/edge-functions/_request.ts`:
+Crea `frontend/netlify/edge-functions/lib/request.ts`:
 
 ```ts
 import { z } from 'zod';
@@ -2796,7 +2639,7 @@ Expected: PASS, 10 tests.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/_request.ts frontend/tests/chat-request.test.ts
+git add frontend/netlify/edge-functions/lib/request.ts frontend/tests/chat-request.test.ts
 git commit -m "feat(chat): validación de entrada que descarta metadatos del cliente
 
 El store del navegador guarda id, createdAt y sources en cada mensaje.
@@ -2812,14 +2655,14 @@ La única pieza que no se puede probar con Vitest. Por eso lleva exclusivamente 
 
 **Files:**
 - Create: `frontend/netlify/edge-functions/chat.ts`
-- Create: `frontend/netlify/edge-functions/_prompt.ts`
+- Create: `frontend/netlify/edge-functions/lib/prompt.ts`
 
 - [ ] **Step 1: Crear el prompt de redacción**
 
-Crea `frontend/netlify/edge-functions/_prompt.ts`:
+Crea `frontend/netlify/edge-functions/lib/prompt.ts`:
 
 ```ts
-import type { CleanMessage } from './_request.ts';
+import type { CleanMessage } from './request.ts';
 
 /**
  * Prompt de redacción.
@@ -2867,10 +2710,10 @@ Crea `frontend/netlify/edge-functions/chat.ts`:
 import { getStore } from '@netlify/blobs';
 import type { Config, Context } from '@netlify/edge-functions';
 import OpenAI from 'openai';
-import { CHAT_CONFIG } from './_chat-config.ts';
-import { CitationBuffer } from './_citations.ts';
-import { FICHAS, INDEX } from './_corpus.ts';
-import type { CorpusFicha } from './_corpus-types.ts';
+import { CHAT_CONFIG } from './lib/chat-config.ts';
+import { CitationBuffer } from './lib/citations.ts';
+import { FICHAS, INDEX } from './lib/corpus.ts';
+import type { CorpusFicha } from './lib/corpus-types.ts';
 import {
   consumirCuota,
   costeMicros,
@@ -2881,13 +2724,13 @@ import {
   reconciliar,
   reservar,
   type BlobStore,
-} from './_budget.ts';
-import { packContext } from './_packer.ts';
-import { writerInput, writerPrompt } from './_prompt.ts';
-import { leerBodyAcotado, parseChatRequest } from './_request.ts';
-import { retrieve, tokenize } from './_retrieval.ts';
-import { FACETAS_VACIAS, parseFacetas, routerJsonSchema, routerPrompt } from './_router.ts';
-import { SSE_HEADERS, sseEvent } from './_sse.ts';
+} from './lib/budget.ts';
+import { packContext } from './lib/packer.ts';
+import { writerInput, writerPrompt } from './lib/prompt.ts';
+import { leerBodyAcotado, parseChatRequest } from './lib/request.ts';
+import { retrieve, tokenize } from './lib/retrieval.ts';
+import { FACETAS_VACIAS, parseFacetas, routerJsonSchema, routerPrompt } from './lib/router.ts';
+import { SSE_HEADERS, sseEvent } from './lib/sse.ts';
 
 const { limits, models, pricing, enums } = CHAT_CONFIG;
 const encoder = new TextEncoder();
@@ -3158,7 +3001,7 @@ Expected: PASS. Si `tsc` protesta por los tipos de eventos de la Responses API, 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add frontend/netlify/edge-functions/chat.ts frontend/netlify/edge-functions/_prompt.ts
+git add frontend/netlify/edge-functions/chat.ts frontend/netlify/edge-functions/lib/prompt.ts
 git commit -m "feat(chat): endpoint /api/chat sobre Netlify Edge Functions"
 ```
 
@@ -3610,22 +3453,29 @@ git commit -m "feat(chat): modo del motor por entorno, con stub como default seg
 - Modify: `frontend/package.json` (script `dev:netlify`)
 - Modify: `CLAUDE.md`
 
-- [ ] **Step 1: Añadir el script de desarrollo**
+- [ ] **Step 1: No añadas un script `dev:netlify`**
 
-En `frontend/package.json`, dentro de `scripts`:
-
-```json
-"dev:netlify": "netlify dev",
-```
+Sería un script roto: `netlify-cli` no arranca dentro de este proyecto y se
+quitó a propósito de `package.json` tras comprobarlo en la fase 0. El CLI se
+instala fuera del árbol y se invoca por ruta absoluta, como muestra el paso
+siguiente.
 
 - [ ] **Step 2: Probar el flujo completo en local**
 
+> ⚠️ **`netlify dev` no arranca en este proyecto.** El CLI carga `ts-api-utils`
+> vía `precinct`, incompatible con el TypeScript 7 del repositorio, y muere con
+> `Cannot read properties of undefined (reading 'Intrinsic')`. Hay que instalar
+> el CLI **fuera del árbol del proyecto**; el procedimiento está en
+> [`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
+
 ```bash
+mkdir -p /tmp/netlify-cli && (cd /tmp/netlify-cli && npm init -y && npm install netlify-cli)
+
 cd frontend
 export OPENAI_API_KEY=sk-...        # clave de desarrollo, no la de producción
 export CHAT_IP_SALT=$(openssl rand -hex 16)
 export CHAT_DAILY_BUDGET_USD=0.20   # techo bajo mientras se prueba
-npm run dev:netlify
+/tmp/netlify-cli/node_modules/.bin/netlify dev --port 8888
 ```
 
 En otra terminal:
@@ -3761,7 +3611,8 @@ Antes de dar la fase 1 por cerrada, comprueba que se cumple todo esto:
 - [ ] El guion completo del paso 2 de la tarea 15 ejecutado contra un Deploy Preview
 - [ ] Ningún ROJ inventado en las respuestas de prueba
 - [ ] Producción sigue sirviendo el stub (la variable no está puesta)
-- [ ] Los números del spike anotados en el PR, para comparar cuando crezca el corpus
+- [ ] CPU remedido con el corpus real y comparado con la línea base del spike
+      (p95 15,3 ms · máx 40,6 ms · parseo del índice 3,1 ms)
 
 ## Lo que este plan deja pendiente
 

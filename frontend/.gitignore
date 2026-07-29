@@ -8,3 +8,7 @@ coverage/
 .env.*
 !.env.example
 *.tsbuildinfo
+
+# Corpus del servidor del chat: se genera en el prebuild y se versiona
+# (ver docs/operations/NETLIFY_EDGE.md). Este ignore cubre solo temporales.
+netlify/edge-functions/**/*.tmp.ts

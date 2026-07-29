@@ -28,12 +28,21 @@ contra el dominio público después de cada deploy.
   determinista, y citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](superpowers/plans/2026-07-29-chat-backend.md)
-  - [ ] **Fase 0 — spike de plataforma (gate).** Medir en Deploy Preview: p95 de CPU
-    propio <40 ms con el bundle real, streaming >10 s sin corte, carga de los cuatro
-    paquetes en Deno y compare-and-swap sin pérdidas con 20 peticiones concurrentes.
-    Si falla, se reabre la decisión de runtime; no se construye encima.
+  - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
+    Deploy Preview. Cuatro de cinco criterios pasan y **la decisión de runtime queda
+    confirmada**: p95 de CPU 15,3 ms, streaming de 19,87 s, cabeceras en 0,30 s y los
+    tres paquetes cargan en Deno. Mediciones en
+    [`docs/operations/NETLIFY_EDGE.md`](operations/NETLIFY_EDGE.md).
+  - [ ] **Fase 0b — decidir el mecanismo de cuotas y presupuesto (BLOQUEANTE).** El
+    quinto criterio falló: `onlyIfMatch` de Netlify Blobs **no da compare-and-swap**
+    bajo concurrencia. Cinco peticiones simultáneas dejaron un contador de cinco
+    incrementos en dos, y todas creyeron haber escrito. Sin resolverlo, el techo de
+    gasto no es una garantía. Tres opciones en la sección 4 del diseño: clave por
+    petición con recuento por listado (validada en el mismo spike, cuesta 130–420 ms),
+    almacén con atomicidad real (proveedor externo) o cuotas best-effort.
   - [ ] **Fase 1 — implementación detrás del stub.** 15 tareas TDD: nueve módulos puros
-    con Vitest y un `chat.ts` delgado. Producción sigue simulada.
+    con Vitest y un `chat.ts` delgado. Producción sigue simulada. La tarea del
+    presupuesto queda bloqueada por la fase 0b; el resto no depende de ella.
   - [ ] **Fase 2 — evaluación.** Banco de 40 preguntas versionado. Bloquean los gates
     binarios (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
