@@ -31,10 +31,11 @@ const SITE_URL = 'https://residenciafiscal.org';
 const COUNTRY_ROUTES = countryRoutes.map((route) => ({
   dir: route.path.slice(1),
   title:
-    route.path === '/españa'
+    route.path === '/espana'
       ? 'Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF'
       : `Residencia fiscal en ${route.name} — Residencia Fiscal`,
   description: route.description,
+  robots: route.indexable ? 'index, follow' : 'noindex, follow',
   url: `${SITE_URL}${route.path}`,
   image: null,
 }));
@@ -46,6 +47,7 @@ const ROUTES = [
     title: 'Manifiesto — Residencia Fiscal',
     description:
       'Naciste en un país. No le perteneces. Elegir dónde vives — y dónde tributas — es un derecho. La jurisprudencia que decide estos casos, al alcance de cualquiera, siempre dentro de la ley.',
+    robots: 'index, follow',
     url: `${SITE_URL}/manifiesto`,
     image: `${SITE_URL}/og-image-manifiesto.png`,
   },
@@ -54,6 +56,7 @@ const ROUTES = [
     title: 'Metodología — Residencia Fiscal',
     description:
       'Cómo se construyó el análisis: 106 sentencias del Tribunal Supremo y la Audiencia Nacional (2015–2025), con criterios, pruebas y fallo extraídos de forma estructurada y cita literal verificable.',
+    robots: 'index, follow',
     url: `${SITE_URL}/metodologia`,
     image: null,
   },
@@ -66,6 +69,7 @@ const ROUTES = [
 const PATTERNS = {
   title: /<title>[\s\S]*?<\/title>/g,
   description: /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/>/g,
+  robots: /<meta\s+name="robots"\s+content="[\s\S]*?"\s*\/>/g,
   canonical: /<link\s+rel="canonical"\s+href="[^"]*"\s*\/>/g,
   ogTitle: /<meta\s+property="og:title"\s+content="[\s\S]*?"\s*\/>/g,
   ogDescription: /<meta\s+property="og:description"\s+content="[\s\S]*?"\s*\/>/g,
@@ -109,6 +113,12 @@ function renderRoute(shell, route) {
     'meta description',
     PATTERNS.description,
     `<meta name="description" content="${description}" />`
+  );
+  html = replaceOnce(
+    html,
+    'robots',
+    PATTERNS.robots,
+    `<meta name="robots" content="${route.robots}" />`
   );
   html = replaceOnce(
     html,

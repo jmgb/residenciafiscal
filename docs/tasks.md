@@ -117,7 +117,7 @@ contra el dominio público después de cada deploy.
       de `residenciafiscal-verbatim/1`.
     - [x] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
     - [x] Construir y validar el caso v3 híbrido de `SAN 1210/2023`.
-    - [ ] Renderizar su Markdown desde el modelo canónico.
+    - [x] Renderizar su Markdown e índice por cuestión desde el modelo canónico.
     - [x] Validar 18 preguntas aplicables del piloto contra esa sentencia.
     - [ ] Regenerar las cinco con el mismo pipeline y ejecutar las 40 preguntas.
     - [ ] Comparar recuperación estructurada/léxica con embeddings antes de
@@ -196,6 +196,15 @@ contra el dominio público después de cada deploy.
 - [ ] Revisar durante varios días los eventos del WAF. Ajustar la regla custom si
   los User-Agents genéricos (`curl`, `axios`, `python-requests`) bloquean monitores
   o integraciones legítimas.
+
+### Pendientes de evaluación
+
+- [ ] Evaluar si merece la pena mostrar automáticamente en la barra lateral el país activo
+  cuando quede fuera de los tres países visibles inicialmente.
+- [ ] Evaluar si merece la pena generar los redirects de Netlify desde `countryRoutes.json` para
+  evitar mantener una segunda lista manual en `netlify.toml`.
+- [ ] Evaluar si merece la pena añadir tests de aislamiento que garanticen que cada país consulta
+  únicamente su propio corpus cuando existan corpus nacionales adicionales.
 
 ## Criterio de cierre SEO
 

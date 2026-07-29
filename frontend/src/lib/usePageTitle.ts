@@ -16,13 +16,21 @@ const ORIGIN = 'https://residenciafiscal.org';
  * OG de las rutas internas muestran los metadatos de la home hasta que haya
  * prerender. Google sí renderiza JS y respeta este canonical.
  */
-export function usePageTitle(title?: string, canonicalPath = '/', description = BASE_DESCRIPTION) {
+export function usePageTitle(
+  title?: string,
+  canonicalPath = '/',
+  description = BASE_DESCRIPTION,
+  indexable = true
+) {
   useEffect(() => {
     document.title = title ? `${title} — Residencia Fiscal` : BASE_TITLE;
     document
       .querySelector('link[rel="canonical"]')
       ?.setAttribute('href', `${ORIGIN}${canonicalPath}`);
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+    document
+      .querySelector('meta[name="robots"]')
+      ?.setAttribute('content', indexable ? 'index, follow' : 'noindex, follow');
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
     document
@@ -32,5 +40,5 @@ export function usePageTitle(title?: string, canonicalPath = '/', description = 
     document
       .querySelector('meta[name="twitter:description"]')
       ?.setAttribute('content', description);
-  }, [title, canonicalPath, description]);
+  }, [title, canonicalPath, description, indexable]);
 }
