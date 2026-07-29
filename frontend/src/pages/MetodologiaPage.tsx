@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { NormativaAplicada } from '@/components/normativa/NormativaAplicada';
 import { usePageTitle } from '@/lib/usePageTitle';
 
 function prefersReducedMotion(): boolean {
@@ -61,6 +62,22 @@ export function MetodologiaPage() {
           El corpus cubre litigios sobre residencia fiscal de personas físicas. Las resoluciones que
           el análisis identifica como fuera de alcance quedan marcadas y no se citan como apoyo.
         </p>
+      </section>
+
+      <section id='normativa' className='mb-8 scroll-mt-16'>
+        <h2 className='mb-3 font-heading text-lg font-semibold'>Normativa aplicada</h2>
+        <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
+          El corpus incluye el texto de la ley, no solo las sentencias: los preceptos que deciden la
+          residencia fiscal —art. 9 LIRPF y su entorno— y el artículo de residencia de los 96
+          convenios de doble imposición firmados por España. Se descarga del BOE y se publica
+          literal, sin reescribir una palabra.
+        </p>
+        <p className='mb-4 text-sm leading-relaxed text-muted-foreground'>
+          Cada precepto conserva todas sus redacciones con la fecha desde la que rigió, porque una
+          sentencia sobre el ejercicio 2010 aplicó la redacción de entonces y no la de hoy. Estos
+          son los que citan las sentencias analizadas:
+        </p>
+        <NormativaAplicada />
       </section>
 
       <section>

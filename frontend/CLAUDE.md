@@ -24,6 +24,26 @@ de sentencias en lenguaje natural.
 | `src/lib/chat-engine.ts` | Punto **único** de selección del motor. Es el fichero a cambiar al conectar el backend |
 | `src/lib/corpus.ts` | Degrada a corpus vacío si falla la carga, en vez de romper la app |
 | `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
+| `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
+| `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
+
+## Corpus normativo
+
+El frontend sirve también el texto de la ley, no solo las sentencias. Dos
+niveles a propósito: `normativa.json` es el índice de los 108 preceptos (~100 KB)
+y `preceptos/<slug>.json` el articulado literal de uno solo. Cargar los 108
+juntos serían ~480 KB para que alguien lea el artículo 9 LIRPF.
+
+**El articulado es texto legal literal.** No se recorta, une ni reformatea en
+ninguna capa del frontend: `tests/normativa.test.ts` comprueba que cada párrafo
+publicado aparece tal cual en el Markdown de origen. Si hay que abreviar para la
+UI, se abrevia con CSS, no tocando la cadena.
+
+La fuente se regenera desde la raíz con `make export-normativa` y
+`make enlazar-normativa`; `build-normativa.mjs` corre en el `prebuild` y, si no
+encuentra `knowledge/normativa/es/`, conserva lo versionado y avisa por stderr en
+lugar de romper el build. Contrato y decisiones:
+[`docs/NORMATIVA.md`](../docs/NORMATIVA.md).
 
 ## Marca
 
