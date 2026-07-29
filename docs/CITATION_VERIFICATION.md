@@ -30,9 +30,11 @@ El repositorio mantiene o genera estas representaciones:
 | Texto por páginas | Memoria durante la ejecución | Texto extraído mediante `pypdf` | No |
 | Informe | `output/citation-verification/` | JSON detallado y resumen Markdown | No |
 
-No existe un `.txt` completo por sentencia. El verificador extrae las páginas
-directamente del PDF una sola vez por documento y reutiliza esa extracción para
-todas sus citas.
+No existe todavía un `.txt` ni `.md` completo por sentencia. El verificador
+extrae las páginas directamente del PDF una sola vez por documento y reutiliza
+esa extracción para todas sus citas. La representación íntegra propuesta para
+RAG está especificada, pero no implementada, en
+[`VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md).
 
 ## Decisión de modelo: evidencia y literalidad son ejes distintos
 
@@ -331,7 +333,8 @@ Todavía no está autorizado. La muestra debe permitir:
 - Los PDF nunca se modifican.
 - El texto jurídico publicado nunca se corrige ni se reconstruye. Las elipsis
   editoriales añadidas por el renderizador se marcan explícitamente como `[…]`.
-- El texto completo extraído no se versiona.
+- El pipeline actual no persiste el texto completo extraído; la decisión futura
+  está en [`VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md).
 - Los artefactos de `output/` son regenerables y quedan fuera de Git.
 - Las decisiones humanas futuras deben vivir en sidecars; no se edita un
   resultado generado para hacerlo pasar.

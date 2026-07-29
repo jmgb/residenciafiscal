@@ -1,0 +1,224 @@
+# Representación íntegra por páginas para recuperación
+
+## Decisión recomendada
+
+Se recomienda generar una segunda representación por sentencia:
+
+```text
+knowledge/jurisprudencia/verbatim/<slug>.md
+```
+
+Su finalidad sería búsqueda, RAG y comprobación de respuestas. No sustituiría al
+PDF ni al perfil jurídico de `sentencias/<slug>.md`.
+
+La recomendación es implementarla primero para una sentencia, validarla con la
+muestra de cinco y solo después decidir su materialización para las 106. Esta
+decisión está documentada, pero el artefacto todavía no está implementado.
+
+## Por qué conviene
+
+El perfil OKF contiene los campos jurídicos que el análisis ya seleccionó. Es
+compacto y útil para filtros, comparación y respuestas previsibles, pero puede
+omitir un fundamento que una pregunta futura necesite.
+
+El texto por páginas permitiría:
+
+- recuperar pasajes que no fueron seleccionados por el análisis inicial;
+- responder preguntas nuevas sin repetir el análisis LLM del PDF;
+- comprobar una respuesta contra una página concreta;
+- combinar filtros estructurados del perfil con recuperación textual;
+- evitar inyectar todas las sentencias en cada llamada.
+
+En un RAG, el flujo recomendado sería:
+
+```mermaid
+flowchart LR
+    QUERY["Pregunta"] --> FILTER["Filtros del perfil OKF"]
+    FILTER --> SEARCH["Búsqueda sobre texto por páginas"]
+    SEARCH --> TOPK["Fragmentos relevantes"]
+    TOPK --> LLM["LLM + citas + metadatos"]
+    LLM --> CHECK["Comprobación contra PDF/página"]
+```
+
+Solo se enviarían al modelo los fragmentos recuperados y los metadatos
+necesarios. El corpus íntegro no se incluiría en cada prompt.
+
+## Qué significa «íntegro»
+
+«Íntegro» significa que, dentro de cada bloque de página, se conserva carácter
+por carácter la cadena devuelta por el extractor adoptado. No significa que
+`pypdf` reproduzca visualmente el PDF: el orden de lectura, ligaduras o tablas
+pueden depender de cómo esté construido el documento.
+
+Por tanto:
+
+- el PDF sigue siendo la fuente oficial;
+- el Markdown se describe como «texto extraído», no como transcripción oficial;
+- no se eliminan cabeceras, pies, repeticiones, firmas ni avisos;
+- no se corrigen palabras, espacios, ligaduras, guiones ni saltos de línea;
+- no se resumen fundamentos ni se seleccionan solo partes «relevantes»;
+- los marcadores de página son editoriales y se distinguen del texto extraído.
+
+La limpieza jurídica y la selección de relevancia pertenecen al perfil OKF, no
+a la representación íntegra.
+
+## Requisito previo del extractor
+
+El extractor actual de `pdf_page_extraction.py` ejecuta:
+
+```python
+(page.extract_text() or "").replace("\\x00", " ").strip()
+```
+
+Es adecuado para el verificador actual porque conserva los pasajes interiores,
+pero no debe reutilizarse sin cambios para afirmar que una página completa es
+verbatim.
+
+Antes de implementar este artefacto se debe separar:
+
+1. `raw_page_text`: resultado sin modificar de `pypdf`;
+2. texto de trabajo normalizado o saneado para búsqueda;
+3. detección de etiqueta impresa, que puede usar una vista derivada.
+
+El Markdown verbatim debe renderizar `raw_page_text`. Si por una limitación
+técnica fuera imprescindible transformar un carácter de control, la regla, el
+conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
+
+## Contrato propuesto
+
+### Frontmatter
+
+| Campo | Semántica |
+|---|---|
+| `type` | `Texto extraído de sentencia` |
+| `title` | Identificador legible de la resolución |
+| `resource` | Ruta al PDF original |
+| `source_sha256` | SHA-256 binario del PDF |
+| `schema_version` | `residenciafiscal-verbatim/1` |
+| `extractor` | Nombre y versión exacta, por ejemplo `pypdf/6.14.2` |
+| `page_count` | Número de páginas físicas |
+| `pages_sha256` | Hash de la lista canónica y ordenada de registros de página |
+| `status` | `draft` si alguna página no produce texto |
+
+`pages_sha256` se calcula sobre el JSON canónico de los registros de página, no
+sobre el `.md` que contiene el propio frontmatter. El manifiesto debe conservar
+además un hash por página calculado sobre los bytes UTF-8 de `raw_page_text`.
+
+### Cuerpo
+
+Formato propuesto:
+
+```md
+# Texto extraído
+
+<!-- BEGIN EXTRACTED PAGE: pdf_page_index=1; printed_page_label=i -->
+## Página PDF 1
+
+<cadena exacta devuelta por el extractor>
+<!-- END EXTRACTED PAGE -->
+
+<!-- BEGIN EXTRACTED PAGE: pdf_page_index=2; printed_page_label=1 -->
+## Página PDF 2
+
+<cadena exacta devuelta por el extractor>
+<!-- END EXTRACTED PAGE -->
+```
+
+Los comentarios y encabezados son metadatos editoriales. El contenido comprendido
+entre el encabezado de página y el marcador final debe poder recuperarse sin
+confundir esos marcadores con texto judicial.
+
+Para una implementación más robusta, el pipeline puede mantener como fuente
+canónica un JSON por páginas y derivar de él el Markdown:
+
+```json
+{
+  "pdf_page_index": 2,
+  "printed_page_label": "1",
+  "raw_page_text": "..."
+}
+```
+
+Esto evita que un parser de Markdown tenga que deducir dónde termina el formato
+editorial y empieza el contenido. En ese caso, el JSON por páginas sería el
+artefacto canónico para RAG y el `.md` una vista legible.
+
+## Almacenamiento y Git
+
+Recomendación inicial:
+
+- versionar el contrato y los manifiestos;
+- generar el texto íntegro de una y cinco sentencias para validación;
+- no decidir todavía si los 106 `.md` entran en Git;
+- medir tamaño, tokens y estabilidad antes de esa decisión;
+- si el despliegue puede regenerarlos desde los PDF, tratarlos como artefactos
+  de build o caché;
+- si un consumidor no tiene acceso a los PDF, publicarlos como artefacto
+  versionado o almacenamiento de objetos, siempre ligados al hash del PDF.
+
+Duplicar en Git todo el texto que ya contienen los PDF no mejora por sí mismo la
+trazabilidad. La ventaja aparece cuando el formato se usa realmente como fuente
+de indexación o distribución.
+
+## Chunking para RAG
+
+El fichero íntegro no debe cortarse ni reescribirse para almacenarlo. Los chunks
+son una representación derivada adicional.
+
+Cada chunk debería conservar:
+
+- `document_id` y `slug`;
+- ROJ y ECLI;
+- SHA-256 del PDF;
+- índice físico de página;
+- etiqueta impresa si existe;
+- offsets de inicio y fin sobre `raw_page_text`;
+- texto exacto del intervalo;
+- versión de extractor y estrategia de chunking.
+
+Los chunks pueden usar solapamiento, pero nunca fusionar silenciosamente texto de
+páginas distintas. Si un fragmento cruza una página, debe conservar ambos
+anclajes.
+
+## Gates de aceptación
+
+### Una sentencia
+
+- El PDF conserva su SHA-256 antes y después.
+- Existe una entrada por cada página física.
+- Cada `raw_page_text` coincide exactamente con la salida cruda del extractor.
+- Dos ejecuciones producen hashes idénticos con la misma versión de `pypdf`.
+- Los marcadores editoriales no entran en los chunks.
+- Una página vacía se registra como vacía; no se inventa contenido ni se omite.
+
+### Cinco sentencias
+
+- Se inspeccionan documentos con diferentes órganos, longitudes y maquetaciones.
+- Se revisan orden de lectura, ligaduras, tablas, cabeceras y pies.
+- Se mide tamaño total, tokens y número de chunks.
+- Se prueba recuperación con preguntas cuyo fundamento no esté en el perfil OKF.
+- Se documentan defectos de extracción sin corregir el texto fuente.
+
+### Corpus completo
+
+- Cien por cien de los PDF quedan ligados a un hash y versión de extractor.
+- Cien por cien de las páginas tienen registro, incluso si está vacío.
+- Cero transformaciones no declaradas.
+- Los fallos por documento no invalidan ni sobrescriben artefactos válidos.
+- El índice puede reconstruirse desde fuentes y manifiestos sin llamar a un LLM.
+
+## Conclusión
+
+Sí se recomienda esta representación para el futuro RAG. Debe implementarse como
+una capa separada:
+
+| Artefacto | Función |
+|---|---|
+| PDF | Fuente oficial |
+| `verbatim/<slug>.md` o JSON por páginas | Texto íntegro extraído para búsqueda |
+| `sentencias/<slug>.md` | Perfil jurídico estructurado |
+| Sidecar YAML | Revisión y decisiones editoriales |
+| Chunks/índice | Derivado de recuperación |
+
+No se recomienda usarla para inyectar las 106 sentencias completas en cada
+llamada. Su valor está en permitir recuperación selectiva, trazable y económica.

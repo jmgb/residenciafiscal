@@ -5,6 +5,15 @@ registro jurídico del JSONL en un bundle
 [Open Knowledge Format (OKF) v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md).
 El piloto está deliberadamente limitado a `SAN_1071_2025.pdf`.
 
+Documentos complementarios:
+
+- [`OKF_MARKDOWN_CONTRACT.md`](OKF_MARKDOWN_CONTRACT.md): contrato completo del
+  perfil Markdown v2;
+- [`VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md): decisión propuesta para el texto
+  íntegro por páginas y su uso en RAG;
+- [`CITATION_VERIFICATION.md`](CITATION_VERIFICATION.md): matching, puntuaciones
+  y fidelidad literal.
+
 ## Estado
 
 | Etapa | Alcance | Estado |
@@ -29,7 +38,9 @@ El documento preparado está en
 - El JSONL existente es la fuente del análisis jurídico; el exportador no llama
   a ningún LLM.
 - El Markdown es un derivado regenerable y no se edita a mano.
-- El texto completo extraído del PDF no se persiste ni se versiona.
+- El pipeline actual no persiste ni versiona el texto completo extraído del PDF.
+  La representación separada `verbatim/` está recomendada para RAG, pero todavía
+  no está implementada.
 - Se versiona únicamente un snapshot JSON del registro seleccionado, suficiente
   para reconstruir el concepto sin llamar de nuevo al LLM.
 - Las decisiones editoriales viven en sidecars YAML. Solo una corrección
@@ -64,8 +75,8 @@ knowledge/jurisprudencia/
 ├── index.md
 ├── manifest.json
 ├── sentencias/
-    ├── index.md
-    └── san-1071-2025.md
+│   ├── index.md
+│   └── san-1071-2025.md
 └── sources/
     └── san-1071-2025.analysis.json
 ```
@@ -133,7 +144,7 @@ El frontmatter incluye:
 - órgano, fecha, ejercicios y países;
 - criterios detectados y decisivos;
 - resultado y confianza de extracción;
-- hashes del PDF y del JSONL;
+- hashes del PDF y del snapshot JSON de la sentencia;
 - resumen cuantitativo de verificación de citas;
 - estado de revisión humana y cuestiones propuestas/aprobadas;
 - versiones de OKF y del perfil jurídico.
@@ -180,6 +191,33 @@ Están prohibidas las correcciones de `analysis_quote`,
 `razonamiento_residencia`. Para corregir un error del análisis se conserva el
 valor anterior y se añade una anotación; nunca se sobrescribe el texto fuente.
 
+### Procedimiento de revisión humana
+
+La revisión de una sentencia debe seguir este orden:
+
+1. Regenerar el bundle desde el PDF, el snapshot y el sidecar vigente.
+2. Abrir el perfil y el PDF identificado por `source_sha256`.
+3. Comprobar cada cuestión jurídica, corrección propuesta y cita pendiente
+   contra su página.
+4. Registrar la decisión exclusivamente en
+   `knowledge/annotations/<slug>.yaml`.
+5. Mantener `status: proposed` mientras haya duda o falte una segunda
+   comprobación requerida por el equipo.
+6. Para aprobar, usar `status: approved`, `reviewed_by: human:<identidad>` y una
+   fecha ISO en `reviewed_at`.
+7. Regenerar y ejecutar los validadores. El pipeline debe rechazar IDs ausentes,
+   valores fuera de catálogo o anclajes no literales.
+8. Revisar el diff del sidecar y del perfil generado por separado.
+
+Una aprobación no convierte el análisis derivado en texto de la sentencia.
+Significa únicamente que una persona ha revisado esa decisión editorial. Para
+rectificar una aprobación, se modifica el sidecar en otro commit conservando el
+historial de Git; no se reescribe el PDF ni un extracto literal.
+
+La identidad concreta de las personas autorizadas y si determinadas decisiones
+requieren doble revisión son reglas organizativas todavía pendientes. Antes de
+publicar el corpus como revisado deberá existir esa lista de responsables.
+
 ## Resultado del piloto
 
 | Métrica | Resultado |
@@ -196,7 +234,7 @@ valor anterior y se añade una anotación; nunca se sobrescribe el texto fuente.
 | Caracteres del concepto | 17.111 |
 | Coste LLM | 0 |
 
-El documento permanece en `status: draft` por dos motivos observables:
+El documento permanece en `status: draft` por tres motivos observables:
 
 1. cinco entradas no pueden publicarse como citas literales;
 2. una prueba del JSONL usa `CRIT_VIVIENDA_Y_USO_EFECTIVO`, que no pertenece al
@@ -238,6 +276,60 @@ OKF_OUTPUT
 `OKF_SOURCE_FILE` es obligatorio en el CLI y el target mantiene por defecto la
 única sentencia del piloto. No existe una opción implícita de «todas».
 
+## Rollout operativo
+
+### Estado actual: una sentencia
+
+`export_okf.py` acepta exactamente un `source_file`. Esta limitación es
+intencionada: evita ampliar el corpus por accidente y permite validar el
+contrato con una entrada conocida.
+
+### Siguiente fase: muestra fija de cinco
+
+Todavía no existe un comando batch de exportación OKF. Antes de ejecutar la
+muestra debe añadirse una orquestación que reutilice `build_okf_bundle()` por
+documento y cumpla este contrato:
+
+- recibir una lista o manifiesto explícito; nunca descubrir «todos los PDF» por
+  defecto;
+- ordenar de forma determinista por `source_file`;
+- construir cada sentencia de forma independiente;
+- no crear ni sobrescribir sidecars;
+- escribir primero en un directorio temporal y publicar solo artefactos
+  validados;
+- registrar por documento `generated`, `failed` o `out_of_scope`, sin omisiones
+  silenciosas;
+- continuar con los demás documentos ante un fallo aislado y terminar con código
+  distinto de cero si existe algún `failed`;
+- permitir reanudación comparando hashes de entradas y versión de schema;
+- generar índices y manifiesto agregado únicamente desde documentos válidos;
+- conservar un informe de errores sin introducir su mensaje en el concepto
+  jurídico.
+
+La muestra mantendrá las mismas cinco sentencias ya seleccionadas en
+`sentencias/verificacion_citas_muestra_5.json`, pero antes de ejecutarla debe
+crearse un manifiesto específico `sentencias/okf_muestra_5.json`. No se debe
+sobrecargar el contrato del spike de citas. El manifiesto OKF fijará al menos
+`source_file`, SHA-256 del PDF, SHA-256 del registro de análisis y versión de
+schema esperada.
+
+### Fase de corpus: 106 sentencias
+
+La ejecución completa reutilizará la misma orquestación; no tendrá un segundo
+camino de normalización. Antes de autorizarla:
+
+1. Se revisan las cinco salidas y sus PDF.
+2. Se decide si el perfil v2 necesita migración.
+3. Se congela el manifiesto de entrada con nombre y SHA-256 de cada PDF.
+4. Se fijan los gates con los datos observados en la muestra.
+5. Se documenta qué artefactos `draft` pueden generarse y cuáles pueden
+   publicarse.
+6. Se decide dónde se materializa el futuro corpus `verbatim/`.
+
+Generar un perfil `draft` y publicarlo como jurídicamente revisado son acciones
+distintas. La ejecución batch puede producir borradores; la interfaz de consumo
+debe exponer claramente `status` y `human_reviewed`.
+
 ## Componentes
 
 | Archivo | Responsabilidad |
@@ -262,6 +354,10 @@ OKF_OUTPUT
 
 ## Gates antes de pasar a cinco
 
+- Cien por cien de los PDF conservan su SHA-256 durante la exportación.
+- Cien por cien de los fragmentos publicados como literales son subcadenas
+  exactas de su página bruta.
+- Cero IDs, enlaces, hashes o referencias de sidecar inválidos.
 - `make fast-check` verde.
 - Dos ejecuciones consecutivas producen hashes idénticos.
 - Revisión humana del Markdown del piloto.
@@ -273,3 +369,31 @@ OKF_OUTPUT
   `sentencias/verificacion_citas_muestra_5.json`.
 
 Hasta entonces no se genera el bundle de cinco ni el de 106.
+
+## Gates de cinco al corpus completo
+
+Los invariantes anteriores siguen siendo bloqueantes. Además, la muestra debe
+producir y conservar:
+
+- resultado explícito para los cinco documentos, sin omisiones silenciosas;
+- revisión humana de los cinco perfiles frente a sus PDF;
+- clasificación manual de todas las citas fuzzy, parciales y no localizadas;
+- conteo de falsos literales: debe ser cero;
+- inventario de páginas vacías, defectos de orden de lectura y errores de
+  extracción;
+- distribución de `evidence_status`, fidelidad y puntuaciones;
+- tasa de valores no canónicos y reglas de normalización aplicadas;
+- tamaño y coste de almacenamiento de perfiles, snapshots y, si se prueba,
+  representación verbatim;
+- decisión documentada sobre el umbral basada en esos datos;
+- aprobación de cualquier cambio de schema antes de regenerar el corpus.
+
+No se fija ahora un porcentaje mínimo de literalidad: una sentencia puede tener
+menos citas literales porque el análisis de origen sea peor, no porque el
+verificador falle. El gate jurídico es no presentar nunca texto aproximado como
+literal. Las tasas sirven para decidir revisión, calidad del análisis y
+prioridad, no para maquillar el corpus bajando el umbral.
+
+La evaluación de recuperación del futuro chat tendrá su banco de preguntas y
+sus métricas de recall por separado. No bloquea la generación de datos, pero sí
+debe completarse antes de elegir una estrategia RAG para producción.

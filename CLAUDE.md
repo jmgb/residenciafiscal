@@ -100,6 +100,12 @@ revisiones viven en `knowledge/annotations/` y nunca pueden alterar el texto
 legal. Arquitectura, contrato, resultado y gates:
 [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md).
 
+El contrato campo por campo y el orden de secciones están en
+[`docs/OKF_MARKDOWN_CONTRACT.md`](docs/OKF_MARKDOWN_CONTRACT.md). La
+representación íntegra por páginas recomendada para un futuro RAG se especifica
+en [`docs/VERBATIM_CORPUS.md`](docs/VERBATIM_CORPUS.md), pero todavía no está
+implementada: el pipeline actual conserva el PDF como única fuente completa.
+
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
 ```
