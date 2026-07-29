@@ -22,6 +22,7 @@ function renderLayout(initialPath = '/') {
 
 describe('AppLayout', () => {
   beforeEach(() => {
+    vi.restoreAllMocks();
     window.localStorage.clear();
     useConversations.setState({ conversations: [] });
   });

@@ -1,5 +1,5 @@
 /**
- * Gate determinista de marca (spec: docs/superpowers/specs/2026-07-29-marca-y-brandbook-design.md §9).
+ * Gate determinista de marca (ver docs/brand/brand-guidelines.md §8 «Gate automático»).
  *
  * Cuatro reglas:
  *  1. Contraste: los pares permitidos de la tabla del brandbook se recalculan
@@ -190,24 +190,24 @@ describe('fuente única de color', () => {
     }
   });
 
-  it.each([
-    'og-image.html',
-    'og-image-manifiesto.html',
-  ])('%s usa placeholders inyectados, no HEX de diseño propios', (source) => {
-    const og = readFileSync(join(FRONTEND_ROOT, 'og', source), 'utf-8');
-    // Los únicos HEX admisibles son los del comentario de cabecera; el CSS de
-    // la pieza usa __TOKEN__ que render.sh sustituye leyendo index.css.
-    const style = og.slice(og.indexOf('<style>'), og.indexOf('</style>'));
-    expect(style.match(/#[0-9a-fA-F]{6}/g)).toBeNull();
-    for (const placeholder of [
-      '__BACKGROUND__',
-      '__FOREGROUND__',
-      '__PRIMARY__',
-      '__MUTED_FOREGROUND__',
-    ]) {
-      expect(style).toContain(placeholder);
+  it.each(['og-image.html', 'og-image-manifiesto.html'])(
+    '%s usa placeholders inyectados, no HEX de diseño propios',
+    (source) => {
+      const og = readFileSync(join(FRONTEND_ROOT, 'og', source), 'utf-8');
+      // Los únicos HEX admisibles son los del comentario de cabecera; el CSS de
+      // la pieza usa __TOKEN__ que render.sh sustituye leyendo index.css.
+      const style = og.slice(og.indexOf('<style>'), og.indexOf('</style>'));
+      expect(style.match(/#[0-9a-fA-F]{6}/g)).toBeNull();
+      for (const placeholder of [
+        '__BACKGROUND__',
+        '__FOREGROUND__',
+        '__PRIMARY__',
+        '__MUTED_FOREGROUND__',
+      ]) {
+        expect(style).toContain(placeholder);
+      }
     }
-  });
+  );
 });
 
 // --- Clases de color contra tokens inexistentes ---
