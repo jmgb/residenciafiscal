@@ -18,9 +18,40 @@ import type { CorpusEntry } from '@/types/chat';
  * enteraría.
  */
 const CORPUS_URL = '/data/corpus.json';
+const VALID_RESULTS = new Set([
+  'GANA_AEAT',
+  'GANA_CONTRIBUYENTE',
+  'PARCIAL',
+  'RETROACCION',
+  'INADMISION',
+  'DESCONOCIDO',
+]);
 
 let cache: Promise<CorpusEntry[]> | null = null;
 let failed = false;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function isCorpusEntry(value: unknown): value is CorpusEntry {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.archivo === 'string' &&
+    value.archivo.length > 0 &&
+    typeof value.roj === 'string' &&
+    typeof value.ecli === 'string' &&
+    (value.roj.length > 0 || value.ecli.length > 0) &&
+    typeof value.organo === 'string' &&
+    value.organo.length > 0 &&
+    typeof value.fecha === 'string' &&
+    typeof value.resultado === 'string' &&
+    VALID_RESULTS.has(value.resultado) &&
+    Array.isArray(value.criterioDecisivo) &&
+    value.criterioDecisivo.every((criterio) => typeof criterio === 'string') &&
+    typeof value.esCasoResidencia === 'boolean'
+  );
+}
 
 async function fetchCorpus(): Promise<CorpusEntry[]> {
   const res = await fetch(CORPUS_URL);
@@ -37,7 +68,20 @@ async function fetchCorpus(): Promise<CorpusEntry[]> {
     );
   }
 
-  return data as CorpusEntry[];
+  const invalidIndex = data.findIndex((entry) => !isCorpusEntry(entry));
+  if (invalidIndex >= 0) {
+    throw new Error(`entrada inválida en ${CORPUS_URL} (índice ${invalidIndex})`);
+  }
+
+  const files = new Set<string>();
+  for (const entry of data) {
+    if (files.has(entry.archivo)) {
+      throw new Error(`archivo duplicado en ${CORPUS_URL}: ${entry.archivo}`);
+    }
+    files.add(entry.archivo);
+  }
+
+  return data;
 }
 
 export function loadCorpus(): Promise<CorpusEntry[]> {

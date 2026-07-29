@@ -44,7 +44,8 @@ import pytest
 # `test_*`, así que `make test` solo lo importa. El marker está puesto de antemano
 # para que, si alguien añade un `def test_...` aquí, quede excluido del pytest por
 # defecto (`addopts` en pyproject.toml) en vez de empezar a gastar API real sin aviso.
-# Para ejecutarlo a propósito: `make test-llm`.
+# Para ejecutarlo a propósito:
+# `uv run python test/test_reasoning_effort_comparison.py`.
 pytestmark = pytest.mark.manual_real_llm
 
 

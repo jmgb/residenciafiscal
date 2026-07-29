@@ -69,7 +69,7 @@ help:
 	@echo "  make fix                  Ruff format + check --fix"
 	@echo "  make typecheck            Mypy"
 	@echo "  make test                 Pytest (sin tests de LLM real)"
-	@echo "  make test-llm             Pytest incluyendo llamadas LLM reales (con coste)"
+	@echo "  make test-llm             Alias del smoke test real con 1 PDF (con coste)"
 	@echo "  make test-single          Script de humo: 1 PDF end-to-end"
 	@echo ""
 	@echo "=== DEPS ==="
@@ -141,8 +141,7 @@ typecheck:
 test:
 	uv run pytest -q
 
-test-llm:
-	uv run pytest -q -m manual_real_llm
+test-llm: test-single
 
 test-single:
 	uv run python test/test_single_pdf.py

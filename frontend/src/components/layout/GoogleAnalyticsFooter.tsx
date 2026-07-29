@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 export const GOOGLE_ANALYTICS_ID = 'G-XKX3N9KVJH';
 

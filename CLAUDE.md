@@ -195,7 +195,7 @@ make dev PORT=9000                        # otro puerto
 make fast-check                           # lint + typecheck + tests (gate pre-commit)
 make lint / format / fix / typecheck
 make test                                 # pytest sin llamadas LLM reales
-make test-llm                             # incluye tests marcados manual_real_llm (con coste)
+make test-llm                             # alias del smoke test real con 1 PDF (con coste)
 make test-single                          # smoke test end-to-end con 1 PDF
 
 # --- Dependencias ---
@@ -244,7 +244,7 @@ Para lotes, sigue usando `make run`.
 |-------------|---------|
 | Token opcional | Si `RESIDENCIAFISCAL_API_TOKEN` está en `.env`, exige la cabecera `X-API-Token`. Sin definir, la ruta queda abierta (cómodo en localhost, imprudente con `make dev-public`, que además avisa al arrancar). |
 | Límite de subida | 25 MB, cortado por `Content-Length` en un middleware **antes** de parsear el multipart, con un contador en el handler como respaldo para peticiones `chunked`. |
-| Allowlist de modelos | `modelo` solo acepta IDs declarados en `config.py` (ver `/config` → `modelos_permitidos`). Motivo: `initialize_client()` cae a **openrouter** para IDs desconocidos mientras `_detect_provider()` del adaptador cae a **openai**, así que un ID arbitrario validaría una API key y usaría otra. |
+| Allowlist de modelos | `modelo` solo acepta IDs declarados en `config.py` (ver `/config` → `modelos_permitidos`) para que el endpoint de pago no actúe como proxy abierto. El CLI sí admite IDs de OpenAI, Gemini, Groq y OpenRouter; ambos caminos comparten `detect_provider()`. |
 | Validación de entrada | Solo `.pdf`; `reasoning_effort` ∈ {low, medium, high}; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
 
 No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
@@ -253,8 +253,8 @@ No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay qu
 
 | Modelo | Coste/PDF | 106 PDFs |
 |--------|-----------|----------|
-| gpt-5-nano (default) | $0.006 | $0.50 |
-| gpt-5 (clave) | $0.10 | $2.30 |
+| gpt-5.6-luna (default) | $0.006 | $0.50 |
+| gpt-5.6-sol (clave) | $0.10 | $2.30 |
 | **Total mixto** | $0.026 avg | **$2.80** |
 
 ## Configuración (config.py)
@@ -267,9 +267,6 @@ REASONING_EFFORT = "medium"
 
 # Procesamiento
 BATCH_SIZE = 10                      # PDFs en paralelo
-LLM_MAX_RETRIES = 4
-LLM_BACKOFF_BASE = 1.8
-
 # Rutas
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "sentencias"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
@@ -311,7 +308,9 @@ Configurado todo en `pyproject.toml`:
 - **mypy** — `check_untyped_defs`, `ignore_missing_imports` (libs sin stubs)
 - **pytest** — `testpaths = ["test"]`, `asyncio_mode = "auto"`. Los tests que llaman a
   LLMs reales van marcados `@pytest.mark.manual_real_llm` y **quedan excluidos por
-  defecto** (evita gasto accidental); se lanzan con `make test-llm`.
+  defecto** (evita gasto accidental). `make test-llm` lanza el smoke de un PDF; el
+  comparador se ejecuta explícitamente con
+  `uv run python test/test_reasoning_effort_comparison.py`.
 
 Gate antes de commitear: `make fast-check`.
 
@@ -372,7 +371,7 @@ y procesa todo.
 | Entorno desincronizado | `uv sync` (o `make setup` para recrearlo) |
 | `Address already in use` en `make dev` | `make dev PORT=9000` |
 | PDF sin texto | Solo PDFs con texto (no scans/OCR) |
-| Rate limits | Reducir `BATCH_SIZE` o aumentar `LLM_BACKOFF_BASE` |
+| Rate limits | Reducir `BATCH_SIZE` |
 | JSON parse error | El pipeline auto-repara; revisar logs si persiste |
 | Ejecución interrumpida | `make run-resume` (reanuda sobre el JSONL más reciente de `output/`) |
 

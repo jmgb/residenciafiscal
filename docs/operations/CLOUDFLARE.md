@@ -44,6 +44,6 @@ curl -A 'Mozilla/5.0 (compatible; residenciafiscal-verifier/1.0)' -I \
   https://www.residenciafiscal.org/
 ```
 
-El apex debe redirigir a `www`, que es el dominio primario recomendado por Netlify. El smoke realizado tras activar `Full (strict)` no
-devolvió `526`; el apex devolvió `404` de Netlify, que es un problema de contenido/deploy
-del sitio, no de certificado ni de Cloudflare.
+El apex es el dominio canónico. `www` debe redirigir al apex y ambas variantes
+deben mantener TLS válido. Si el verificador recibe un challenge o un `403`, hay
+que revisar primero las reglas custom del WAF antes de atribuirlo a Netlify.

@@ -7,7 +7,7 @@
  */
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import type { ChatMessage, Conversation } from '@/types/chat';
+import type { ChatMessage, ChatSource, Conversation } from '@/types/chat';
 
 export const CONVERSATIONS_STORAGE_KEY = 'rf.conversations.v1';
 
@@ -30,6 +30,63 @@ function byUpdatedDesc(a: Conversation, b: Conversation): number {
   return b.updatedAt.localeCompare(a.updatedAt);
 }
 
+const VALID_RESULTS = new Set([
+  'GANA_AEAT',
+  'GANA_CONTRIBUYENTE',
+  'PARCIAL',
+  'RETROACCION',
+  'INADMISION',
+  'DESCONOCIDO',
+]);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function isStoredSource(value: unknown): value is ChatSource {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.archivo === 'string' &&
+    typeof value.roj === 'string' &&
+    typeof value.ecli === 'string' &&
+    typeof value.organo === 'string' &&
+    typeof value.fecha === 'string' &&
+    typeof value.resultado === 'string' &&
+    VALID_RESULTS.has(value.resultado) &&
+    Array.isArray(value.criterioDecisivo) &&
+    value.criterioDecisivo.every((criterio) => typeof criterio === 'string') &&
+    typeof value.esCasoResidencia === 'boolean' &&
+    typeof value.extracto === 'string'
+  );
+}
+
+function isStoredMessage(value: unknown): value is ChatMessage {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.id === 'string' &&
+    (value.role === 'user' || value.role === 'assistant') &&
+    typeof value.content === 'string' &&
+    typeof value.createdAt === 'string' &&
+    (value.isStreaming === undefined || typeof value.isStreaming === 'boolean') &&
+    (value.sources === undefined ||
+      (Array.isArray(value.sources) && value.sources.every(isStoredSource)))
+  );
+}
+
+function isStoredConversation(value: unknown): value is Conversation {
+  if (!isRecord(value)) return false;
+  if (
+    typeof value.id !== 'string' ||
+    typeof value.title !== 'string' ||
+    typeof value.createdAt !== 'string' ||
+    typeof value.updatedAt !== 'string' ||
+    !Array.isArray(value.messages)
+  ) {
+    return false;
+  }
+  return value.messages.every(isStoredMessage);
+}
+
 /**
  * Apaga el flag de streaming de todos los mensajes.
  *
@@ -39,10 +96,13 @@ function byUpdatedDesc(a: Conversation, b: Conversation): number {
  * conserva tal cual. Devuelve el mismo array si no había nada que sanear, para no
  * invalidar referencias sin motivo.
  */
-export function clearStreamingFlags(conversations: Conversation[]): Conversation[] {
-  let changed = false;
+export function clearStreamingFlags(conversations: unknown): Conversation[] {
+  if (!Array.isArray(conversations)) return [];
 
-  const sanitized = conversations.map((conversation) => {
+  const valid = conversations.filter(isStoredConversation);
+  let changed = valid.length !== conversations.length;
+
+  const sanitized = valid.map((conversation) => {
     if (!conversation.messages.some((message) => message.isStreaming)) return conversation;
     changed = true;
     return {
@@ -53,7 +113,7 @@ export function clearStreamingFlags(conversations: Conversation[]): Conversation
     };
   });
 
-  return changed ? sanitized : conversations;
+  return changed ? sanitized : valid;
 }
 
 interface ConversationsState {

@@ -1,5 +1,5 @@
 import { BookOpen, Compass, MessageSquarePlus, Trash2 } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { useConversations } from '@/stores/useConversations';
@@ -51,6 +51,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
   };
 
   const handleDelete = (id: string) => {
+    if (!window.confirm('¿Borrar esta conversación? Esta acción no se puede deshacer.')) return;
     deleteConversation(id);
     if (id === conversationId) navigate('/');
   };

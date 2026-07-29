@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatView } from '@/components/chat/ChatView';
 import { useConversations } from '@/stores/useConversations';
@@ -226,6 +226,41 @@ describe('ChatView', () => {
     await user.click(await screen.findByRole('button', { name: 'Detener respuesta' }));
 
     expect(await screen.findByRole('button', { name: 'Enviar consulta' })).toBeInTheDocument();
+  });
+
+  it('detener antes del primer token no deja una burbuja vacía', async () => {
+    const user = userEvent.setup();
+    const engine: ChatEngine = {
+      async *askQuestion(_messages, signal): AsyncIterable<ChatChunk> {
+        await new Promise<void>((resolve) => {
+          signal.addEventListener('abort', () => resolve(), { once: true });
+        });
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    await user.click(await screen.findByRole('button', { name: 'Detener respuesta' }));
+
+    expect(await screen.findByText('Respuesta detenida.')).toBeInTheDocument();
+  });
+
+  it('marca una respuesta parcial si el motor falla durante el streaming', async () => {
+    const user = userEvent.setup();
+    const engine: ChatEngine = {
+      async *askQuestion(): AsyncIterable<ChatChunk> {
+        yield { type: 'token', text: 'Respuesta parcial.' };
+        throw new Error('fallo de red');
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(await screen.findByText(/No se ha podido completar la consulta/)).toBeInTheDocument();
+    expect(screen.getByText(/Respuesta parcial/)).toBeInTheDocument();
   });
 
   it('rehidrata los mensajes de una conversación existente', () => {

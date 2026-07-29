@@ -107,6 +107,28 @@ describe('loadCorpus', () => {
     expect(String(consoleError.mock.calls[0]?.[1])).toContain('no devolvió un array');
   });
 
+  it('rechaza entradas sin la trazabilidad mínima de una sentencia', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse([{ ...entry, ecli: '', roj: '' }]))
+    );
+
+    await expect(loadCorpus()).resolves.toEqual([]);
+    expect(corpusLoadFailed()).toBe(true);
+    expect(String(consoleError.mock.calls[0]?.[1])).toContain('entrada inválida');
+  });
+
+  it('rechaza archivos duplicados para no renderizar citas ambiguas', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse([entry, { ...entry }]))
+    );
+
+    await expect(loadCorpus()).resolves.toEqual([]);
+    expect(corpusLoadFailed()).toBe(true);
+    expect(String(consoleError.mock.calls[0]?.[1])).toContain('duplicado');
+  });
+
   it('degrada a corpus vacío y avisa cuando falla la red', async () => {
     vi.stubGlobal(
       'fetch',

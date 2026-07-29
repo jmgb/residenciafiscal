@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { GOOGLE_ANALYTICS_ID } from '@/components/layout/GoogleAnalyticsFooter';
 import { SIDEBAR_COLLAPSED_STORAGE_KEY } from '@/components/layout/useSidebarCollapsed';
@@ -73,6 +73,7 @@ describe('AppLayout', () => {
   });
 
   it('borra una conversación desde el sidebar', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
     const user = userEvent.setup();
     const id = useConversations.getState().createConversation();
     useConversations.getState().appendMessage(id, {
@@ -88,6 +89,26 @@ describe('AppLayout', () => {
     );
 
     expect(screen.queryByRole('link', { name: 'consulta a borrar' })).not.toBeInTheDocument();
+  });
+
+  it('conserva la conversación si se cancela la confirmación de borrado', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(false);
+    const user = userEvent.setup();
+    const id = useConversations.getState().createConversation();
+    useConversations.getState().appendMessage(id, {
+      id: 'm1',
+      role: 'user',
+      content: 'consulta importante',
+      createdAt: '2026-07-29T10:00:00.000Z',
+    });
+
+    renderLayout();
+    await user.click(
+      screen.getByRole('button', { name: 'Borrar conversación: consulta importante' })
+    );
+
+    expect(screen.getByRole('link', { name: 'consulta importante' })).toBeInTheDocument();
+    expect(window.confirm).toHaveBeenCalledOnce();
   });
 
   it('marca como activa la conversación de la ruta', () => {

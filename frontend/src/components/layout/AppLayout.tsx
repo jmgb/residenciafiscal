@@ -1,6 +1,6 @@
 import { PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { MobileNavigation } from './MobileNavigation';

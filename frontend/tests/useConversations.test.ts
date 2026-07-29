@@ -177,6 +177,64 @@ describe('useConversations', () => {
     expect(messages?.some((message) => message.isStreaming)).toBe(false);
   });
 
+  it('descarta un estado persistido con forma incompatible', async () => {
+    window.localStorage.setItem(
+      CONVERSATIONS_STORAGE_KEY,
+      JSON.stringify({ version: 0, state: { conversations: 'datos-corruptos' } })
+    );
+
+    await expect(useConversations.persist.rehydrate()).resolves.toBeUndefined();
+    expect(useConversations.getState().conversations).toEqual([]);
+  });
+
+  it('descarta solo la conversación dañada si una fuente persistida no es renderizable', async () => {
+    const base = {
+      title: 'consulta válida',
+      createdAt: '2026-07-29T10:00:00.000Z',
+      updatedAt: '2026-07-29T10:00:05.000Z',
+    };
+    window.localStorage.setItem(
+      CONVERSATIONS_STORAGE_KEY,
+      JSON.stringify({
+        version: 0,
+        state: {
+          conversations: [
+            { ...base, id: 'c-valida', messages: [] },
+            {
+              ...base,
+              id: 'c-danada',
+              messages: [
+                {
+                  id: 'a1',
+                  role: 'assistant',
+                  content: 'respuesta',
+                  createdAt: '2026-07-29T10:00:05.000Z',
+                  sources: [
+                    {
+                      archivo: 'STS_107_2018.pdf',
+                      roj: 'STS 107/2018',
+                      ecli: 'ECLI:ES:TS:2018:107',
+                      organo: null,
+                      fecha: '2018-01-16',
+                      resultado: 'GANA_AEAT',
+                      criterioDecisivo: ['CRIT_183_DIAS'],
+                      esCasoResidencia: true,
+                      extracto: 'Texto',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await useConversations.persist.rehydrate();
+
+    expect(useConversations.getState().conversations.map(({ id }) => id)).toEqual(['c-valida']);
+  });
+
   it('ignora operaciones sobre una conversación inexistente', () => {
     const store = useConversations.getState();
     expect(() =>

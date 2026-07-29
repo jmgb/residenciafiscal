@@ -63,8 +63,8 @@ def test_analizar_rechaza_max_pages_no_positivo(client: TestClient) -> None:
 
 
 def test_analizar_rechaza_modelo_desconocido(client: TestClient) -> None:
-    # Un ID arbitrario haría que initialize_client() valide OPENROUTER_API_KEY
-    # mientras el adaptador llamaría a OpenAI: la allowlist evita ese desajuste.
+    # La allowlist evita que el endpoint con coste actúe como proxy abierto para
+    # cualquier modelo que proponga el cliente.
     response = client.post("/analizar", files=_pdf(), data={"modelo": "anthropic/claude-x"})
     assert response.status_code == 400
     assert "no soportado" in response.json()["detail"].lower()

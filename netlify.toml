@@ -35,6 +35,18 @@
     Cache-Control = "public, max-age=3600"
 
 [[redirects]]
+  from = "/manifiesto"
+  to = "/manifiesto/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/metodologia"
+  to = "/metodologia/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

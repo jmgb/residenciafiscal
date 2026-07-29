@@ -1,6 +1,6 @@
 import { AlertTriangle } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
 import type { ChatEngine, ChatMessage, ChatSource } from '@/types/chat';
@@ -203,8 +203,12 @@ export function ChatView({ engine, isStub }: ChatViewProps) {
           }
         }
       } catch {
-        buffer = buffer || 'No se ha podido completar la consulta. Inténtalo de nuevo.';
+        if (!controller.signal.aborted) {
+          const errorMessage = 'No se ha podido completar la consulta. Inténtalo de nuevo.';
+          buffer = buffer ? `${buffer}\n\n_${errorMessage}_` : errorMessage;
+        }
       } finally {
+        if (controller.signal.aborted && !buffer) buffer = 'Respuesta detenida.';
         updateMessage(targetId, assistantId, {
           content: buffer,
           sources,

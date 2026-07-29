@@ -59,6 +59,7 @@ from config import (
     VALID_CRITERIOS,
     VALID_RESULTADO_FINAL,
     VALID_TIEBREAKER_PASOS,
+    detect_provider,
 )
 
 # Intenta importar gpt_request de ai_service_adapter
@@ -126,17 +127,7 @@ def initialize_client(ai_model: str) -> str:
     Raises:
         RuntimeError: If required API key is missing for the detected provider
     """
-    ai_model_lower = ai_model.lower()
-
-    # Detect provider from model name
-    if "gpt" in ai_model_lower or "o1" in ai_model_lower:
-        provider = "openai"
-    elif "groq" in ai_model_lower or "mixtral" in ai_model_lower or "llama" in ai_model_lower:
-        provider = "groq"
-    elif "gemini" in ai_model_lower or "claude" in ai_model_lower:
-        provider = "gemini"
-    else:
-        provider = "openrouter"  # default fallback provider
+    provider = detect_provider(ai_model)
 
     logger.info(f"🔌 Model: {ai_model}")
     logger.info(f"📡 Provider detected: {provider.upper()}")

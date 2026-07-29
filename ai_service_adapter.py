@@ -8,6 +8,8 @@ import logging
 import warnings
 from typing import Any
 
+from config import detect_provider
+
 # Suppress deprecated warnings from optional dependencies
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", message=".*google.generativeai.*")
@@ -20,15 +22,6 @@ root_logger.handlers = [h for h in root_logger.handlers if not isinstance(h, log
 # Always use direct OpenAI client in this project.
 HAS_UNIVERSAL_GPT = False
 universal_gpt_request = None
-
-
-def _detect_provider(ai_model: str) -> str:
-    ai_model_lower = ai_model.lower()
-    if "gemini" in ai_model_lower or "claude" in ai_model_lower:
-        return "gemini"
-    if "groq" in ai_model_lower or "mixtral" in ai_model_lower or "llama" in ai_model_lower:
-        return "groq"
-    return "openai"
 
 
 async def gpt_request_for_sentencia(
@@ -76,7 +69,7 @@ async def gpt_request_for_sentencia(
     try:
         from openai import AsyncOpenAI
 
-        provider = _detect_provider(ai_model)
+        provider = detect_provider(ai_model)
 
         if provider == "gemini":
             try:
@@ -164,6 +157,18 @@ async def gpt_request_for_sentencia(
                 base_url="https://api.groq.com/openai/v1",
                 timeout=request_timeout,
             )
+        elif provider == "openrouter":
+            api_key = os.getenv("OPENROUTER_API_KEY")
+            if not api_key:
+                return {
+                    "error": "OPENROUTER_API_KEY not set",
+                    "detail": "No API key available for OpenRouter models",
+                }
+            client = AsyncOpenAI(
+                api_key=api_key,
+                base_url="https://openrouter.ai/api/v1",
+                timeout=request_timeout,
+            )
         else:
             api_key = os.getenv("OPENAI_API_KEY")
             if not api_key:
@@ -223,7 +228,7 @@ async def gpt_request_for_sentencia(
             tokens_out = response.usage.completion_tokens or 0
             cost_info = calc_cost_fn(ai_model, tokens_in, tokens_out)
             cost_usd = float(cost_info.get("total_cost", 0.0) or 0.0)  # type: ignore[arg-type]
-            label = "Groq" if provider == "groq" else "OpenAI"
+            label = {"groq": "Groq", "openrouter": "OpenRouter"}.get(provider, "OpenAI")
             logger.info(
                 f"💰 {label} - Tokens: {tokens_in} entrada, {tokens_out} salida, ${cost_usd:.4f}"
             )

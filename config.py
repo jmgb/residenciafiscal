@@ -55,6 +55,26 @@ DEFAULT_MODEL = GPT_5_MINI
 SENTENCIA_CLAVE_MODEL = GPT_5
 
 
+def detect_provider(ai_model: str) -> str:
+    """Resuelve el proveedor a partir del formato del ID del modelo."""
+    model = ai_model.lower()
+    if model.startswith("openai/gpt-oss"):
+        return "groq"
+    if model.startswith("models/gemini"):
+        return "gemini"
+    if model.startswith("meta-llama/"):
+        return "groq"
+    if "/" in model:
+        return "openrouter"
+    if "gemini" in model:
+        return "gemini"
+    if any(name in model for name in ("groq", "mixtral", "llama")):
+        return "groq"
+    if "gpt" in model or "o1" in model:
+        return "openai"
+    return "openrouter"
+
+
 # ============================================================================
 # PARÁMETROS DE EXTRACCIÓN DE PDF
 # ============================================================================
@@ -65,17 +85,6 @@ PAGE_MARKER_FMT = "\n\n--- PÁGINA {page_num} ---\n\n"
 # Máximo de archivos PDF a procesar (0 = sin límite)
 # Útil para pruebas rápidas con 1, 5, 10 archivos, etc.
 DEFAULT_MAX_FILES = 0
-
-# ============================================================================
-# PARÁMETROS DE LLM (RETRIES Y BACKOFF)
-# ============================================================================
-
-# Número máximo de reintentos cuando la API falla
-LLM_MAX_RETRIES = 4
-
-# Base de backoff exponencial: sleep_time = (base ^ attempt) + (0.1 * attempt)
-# Ejemplo: attempt 0 = 1s, attempt 1 = ~1.8s, attempt 2 = ~3.3s, attempt 3 = ~5.9s
-LLM_BACKOFF_BASE = 1.8
 
 # ============================================================================
 # PROCESAMIENTO EN PARALELO

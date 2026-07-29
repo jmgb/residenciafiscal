@@ -12,10 +12,13 @@
 ```bash
 make test          # pytest: solo lo que no gasta (test_api + gemini policy)
 make test-single   # smoke test end-to-end con 1 PDF (gasta)
+make test-llm      # alias compatible de make test-single
 ```
 
-Los tests que llaman a LLMs reales se marcan `@pytest.mark.manual_real_llm` y quedan
-excluidos del `pytest` por defecto (ver `addopts` en `pyproject.toml`).
+Los módulos de scripts con llamadas reales llevan el marker
+`manual_real_llm`, por lo que quedan excluidos del `pytest` por defecto (ver
+`addopts` en `pyproject.toml`). Los smoke reales se lanzan de forma explícita
+con `make test-single` o `make test-llm`.
 
 ## Single PDF Test
 

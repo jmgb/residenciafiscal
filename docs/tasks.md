@@ -5,12 +5,11 @@ contra el dominio público después de cada deploy.
 
 ## Prioridad alta
 
-- [ ] Resolver el `404` de `https://residenciafiscal.org/` en Netlify y completar el
-  build del frontend. El estado actual referencia `frontend/src/main.tsx` y
-  `frontend/scripts/build-corpus.mjs`, que deben existir en el build publicado.
-- [ ] Implementar la ruta pública `/metodologia` con el método, el corpus de 106
+- [ ] Verificar el deploy público de `https://residenciafiscal.org/`: el build local está
+  completo, pero la comprobación externa sigue dependiendo de Netlify y del WAF de Cloudflare.
+- [x] Implementar la ruta pública `/metodologia` con el método, el corpus de 106
   sentencias y sus limitaciones.
-- [ ] Cuando `/metodologia` devuelva `200`, añadirla a `frontend/public/sitemap.xml`
+- [x] Añadir `/metodologia` a `frontend/public/sitemap.xml`
   y enlazarla desde `frontend/public/llms.txt`.
 
 ## Producto y arquitectura
@@ -33,15 +32,15 @@ contra el dominio público después de cada deploy.
 
 - [ ] Exigir `RESIDENCIAFISCAL_API_TOKEN` en producción, proteger `/analizar` con rate
   limiting y evitar que las consultas sensibles aparezcan completas en logs o analítica.
-- [ ] Añadir validación automática del schema del corpus, detección de duplicados y
+- [x] Añadir validación automática del schema del corpus, detección de duplicados y
   trazabilidad de cada criterio hasta su sentencia de origen.
 
 ## Calidad y despliegue
 
-- [ ] Configurar CI con lint, typecheck, tests y build del frontend y la API.
+- [x] Configurar CI con lint, typecheck, tests y build del frontend y la API.
 - [ ] Añadir smoke tests de navegador para `/`, `/metodologia` y las landings públicas,
   incluyendo comprobación de redirecciones, sitemap, robots y corpus publicado.
-- [ ] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
+- [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
 
 ## SEO y operación
 

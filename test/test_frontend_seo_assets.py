@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import tomllib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 FRONTEND_PUBLIC = Path(__file__).parents[1] / "frontend" / "public"
+PROJECT_ROOT = Path(__file__).parents[1]
 SITEMAP_NAMESPACE = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
@@ -43,3 +45,24 @@ def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:
     assert "106 sentencias" in llms
     assert "https://residenciafiscal.org/" in llms
     assert "/c/" not in llms
+
+
+def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    redirects = config["redirects"]
+
+    assert redirects[:2] == [
+        {
+            "from": "/manifiesto",
+            "to": "/manifiesto/index.html",
+            "status": 200,
+            "force": True,
+        },
+        {
+            "from": "/metodologia",
+            "to": "/metodologia/index.html",
+            "status": 200,
+            "force": True,
+        },
+    ]
+    assert redirects[-1] == {"from": "/*", "to": "/index.html", "status": 200}

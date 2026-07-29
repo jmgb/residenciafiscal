@@ -5,7 +5,7 @@ que es la unidad de trabajo por PDF (extracción de texto + llamada LLM +
 normalización de schema).
 
 Arranque en local:
-    make dev            # uvicorn con reload en 127.0.0.1:8000
+    make dev            # uvicorn con reload en 127.0.0.1:8010
     make dev-public     # accesible desde la red local (0.0.0.0)
 
 Endpoints:
@@ -57,10 +57,8 @@ MAX_UPLOAD_BYTES = 25 * 1024 * 1024
 UPLOAD_CHUNK_BYTES = 1024 * 1024
 
 # Modelos que /analizar acepta en el campo `modelo`. Es una allowlist deliberada:
-# `initialize_client()` y `_detect_provider()` del adaptador difieren en el fallback
-# para IDs desconocidos (openrouter vs openai), así que un ID arbitrario validaría
-# una API key y usaría otra. Restringiendo a los modelos declarados en config.py
-# ambos coinciden siempre.
+# el endpoint gasta dinero y no debe convertirse en un proxy abierto a cualquier
+# modelo disponible en las cuentas configuradas.
 MODELOS_PERMITIDOS = {
     GPT_4,
     GPT_4_MINI,
