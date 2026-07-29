@@ -13,6 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
+	verify-citations \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -30,6 +31,9 @@ OUTPUT ?= ./output
 MODEL ?=
 EFFORT ?=
 MAX_FILES ?=
+CITATION_JSONL ?= $(shell ls -t output/analisis_*.jsonl 2>/dev/null | head -1)
+CITATION_THRESHOLD ?= 85
+CITATION_SOURCE_FILE ?= SAN_1071_2025.pdf
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -59,7 +63,9 @@ help:
 	@echo "  make run-resume           Continúa sobre el JSONL más reciente de $(OUTPUT)"
 	@echo "  make run-resume-from JSONL=x.jsonl  Continúa sobre un JSONL concreto"
 	@echo "  make run-list LIST=x.txt  Procesa solo los PDFs listados en un .txt"
+	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
+	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -117,6 +123,15 @@ run-resume-from:
 run-list:
 	@if [ -z "$(LIST)" ]; then echo "❌ Falta LIST=. Ej: make run-list LIST=./mi_lista.txt"; exit 1; fi
 	uv run python residenciafiscal.py $(RUN_FLAGS) --pdf-list $(LIST)
+
+verify-citations:
+	@if [ -z "$(CITATION_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
+	uv run python verify_citations.py \
+		--jsonl $(CITATION_JSONL) \
+		--pdf-dir $(INPUT) \
+		--output-dir $(OUTPUT)/citation-verification \
+		--source-file $(CITATION_SOURCE_FILE) \
+		--threshold $(CITATION_THRESHOLD)
 
 # =============================================================================
 # 3. CALIDAD

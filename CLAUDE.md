@@ -54,6 +54,18 @@ El schema completo (criterios `CRIT_*`, las 12 categorías de prueba, campos de
 razonamiento y resultado) es fuente única en `prompt.py` y `config.py`, y
 `GET /config` lo expone en vivo. No duplicarlo aquí: se desincroniza.
 
+### Verificación de citas
+
+Las `frases_clave` del JSONL se contrastan con los PDF mediante un pipeline
+determinista, sin llamadas LLM. El rollout está limitado primero a una sentencia,
+después a cinco y solo entonces al corpus completo. La arquitectura, los estados,
+el modelo de datos, el resultado del piloto y los gates están en
+[`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md).
+
+```bash
+make verify-citations  # hoy: SAN_1071_2025.pdf, 4 citas, umbral provisional 85
+```
+
 ## Sentencias Clave
 
 Las sentencias listadas en `sentencias/sentencias_CLAVE.txt` usan automáticamente

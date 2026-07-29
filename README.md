@@ -140,6 +140,7 @@ npm run build       # genera el corpus y compila a dist/
 | [`CLAUDE.md`](CLAUDE.md) | Guía completa: arquitectura, schema de campos, costes, troubleshooting |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Entorno, gates de CI y qué se espera de un PR |
 | [`SECURITY.md`](SECURITY.md) | Cómo reportar una vulnerabilidad y qué está en el alcance |
+| [`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md) | Pipeline, datos y rollout 1 → 5 → 106 para verificar citas contra los PDF |
 | [`docs/REASONING_EFFORT.md`](docs/REASONING_EFFORT.md) | El compromiso precisión / coste de los modelos GPT-5 |
 | [`docs/brand/`](docs/brand/) | Brandbook y manifiesto |
 | [`docs/operations/`](docs/operations/) | Despliegue en Netlify y configuración de Cloudflare |
