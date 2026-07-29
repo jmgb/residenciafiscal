@@ -11,6 +11,7 @@
     "dev": "vite",
     "prebuild": "node scripts/build-corpus.mjs",
     "build": "tsc --noEmit && vite build",
+    "postbuild": "node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "biome check .",
     "format": "biome format --write .",

@@ -190,8 +190,11 @@ describe('fuente única de color', () => {
     }
   });
 
-  it('og-image.html usa placeholders inyectados, no HEX de diseño propios', () => {
-    const og = readFileSync(join(FRONTEND_ROOT, 'og', 'og-image.html'), 'utf-8');
+  it.each([
+    'og-image.html',
+    'og-image-manifiesto.html',
+  ])('%s usa placeholders inyectados, no HEX de diseño propios', (source) => {
+    const og = readFileSync(join(FRONTEND_ROOT, 'og', source), 'utf-8');
     // Los únicos HEX admisibles son los del comentario de cabecera; el CSS de
     // la pieza usa __TOKEN__ que render.sh sustituye leyendo index.css.
     const style = og.slice(og.indexOf('<style>'), og.indexOf('</style>'));

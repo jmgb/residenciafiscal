@@ -1,0 +1,83 @@
+<!doctype html>
+<!--
+  Fuente única de la imagen Open Graph del manifiesto (1200×630).
+  Igual que og-image.html: render.sh inyecta los tokens de ../src/index.css en
+  los placeholders __TOKEN__ y captura con Chrome headless.
+  No editar public/og-image-manifiesto.png a mano: regenerar con `npm run og`.
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 1200px;
+        height: 630px;
+        background: __BACKGROUND__;
+        font-family: 'Inter', system-ui, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .filete {
+        height: 14px;
+        background: __PRIMARY__;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 96px;
+      }
+      .quote {
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 64px;
+        line-height: 1.2;
+        font-weight: 600;
+        color: __FOREGROUND__;
+        max-width: 980px;
+        margin-bottom: 32px;
+      }
+      .kicker {
+        font-size: 30px;
+        color: __MUTED_FOREGROUND__;
+      }
+      footer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 0 96px 56px;
+      }
+      footer img {
+        width: 44px;
+        height: 44px;
+      }
+      .firma {
+        font-family: ui-monospace, monospace;
+        font-size: 21px;
+        color: __MUTED_FOREGROUND__;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="filete"></div>
+    <main>
+      <p class="quote">Naciste en un país.<br />No le perteneces.</p>
+      <p class="kicker">El manifiesto de Residencia Fiscal</p>
+    </main>
+    <footer>
+      <img src="../public/favicon.svg" alt="" />
+      <span class="firma">106 sentencias · Tribunal Supremo y Audiencia Nacional · 2015–2025</span>
+    </footer>
+  </body>
+</html>
