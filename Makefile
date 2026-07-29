@@ -15,7 +15,7 @@ SHELL := /bin/bash
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives \
-	descargar-normativa export-normativa \
+	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -41,6 +41,7 @@ OKF_THRESHOLD ?= 85
 OKF_SOURCE_FILE ?= SAN_1071_2025.pdf
 OKF_OUTPUT ?= ./knowledge/jurisprudencia
 NORMATIVA_JURISDICCION ?= es
+NORMATIVA_JSONL ?= $(CITATION_JSONL)
 NORMATIVA_SOURCES ?= ./normativa
 NORMATIVA_OUTPUT ?= ./knowledge/normativa
 OKF_SAMPLE_MANIFEST ?= ./sentencias/okf_muestra_5.json
@@ -94,6 +95,7 @@ help:
 	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
+	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
@@ -225,6 +227,13 @@ export-normativa:
 		--jurisdiccion $(NORMATIVA_JURISDICCION) \
 		--sources-root $(NORMATIVA_SOURCES) \
 		--output-root $(NORMATIVA_OUTPUT)
+
+enlazar-normativa:
+	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
+	uv run python enlazar_normativa.py \
+		--jsonl $(NORMATIVA_JSONL) \
+		--jurisdiccion $(NORMATIVA_JURISDICCION) \
+		--corpus-root $(NORMATIVA_OUTPUT)
 
 # =============================================================================
 # 3. CALIDAD

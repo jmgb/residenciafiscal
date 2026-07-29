@@ -1,0 +1,1388 @@
+{
+  "schema_version": "residenciafiscal-normativa-enlaces/1",
+  "generated_by": "residenciafiscal-normativa/0.1.0",
+  "jurisdiccion": "es",
+  "jsonl": "analisis_02012026_155032.jsonl",
+  "sentencias": 106,
+  "sentencias_con_precepto": 58,
+  "enlaces": 121,
+  "enlaces_explicitos": 100,
+  "enlaces_inferidos": 21,
+  "citas_no_resueltas": 41,
+  "avisos": [
+    {
+      "archivo": "SAN_4187_2023.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "SAN_4670_2019.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "STS_3574_2023.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    }
+  ],
+  "preceptos_citados": 9,
+  "preceptos": [
+    {
+      "slug": "cdi-boe-a-1967-3470-a4",
+      "titulo": "Artículo 4 — Domicilio fiscal",
+      "sentencias": [
+        {
+          "archivo": "SAN_1386_2017.pdf",
+          "roj": "SAN 1386/2017",
+          "ejercicios": [
+            2009
+          ],
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "art.4"
+        },
+        {
+          "archivo": "SAN_1386_2017.pdf",
+          "roj": "SAN 1386/2017",
+          "ejercicios": [
+            2009
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.4 del CDI"
+        },
+        {
+          "archivo": "SAN_699_2015.pdf",
+          "roj": "SAN 699/2015",
+          "ejercicios": [
+            2005,
+            2006
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art.4.2 del Convenio"
+        }
+      ],
+      "total_sentencias": 2
+    },
+    {
+      "slug": "cdi-boe-a-1976-23347-a4",
+      "titulo": "Artículo 4 — Domicilio fiscal",
+      "sentencias": [
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.1 CDI"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        }
+      ],
+      "total_sentencias": 1
+    },
+    {
+      "slug": "cdi-boe-a-1990-30940-a4",
+      "titulo": "Artículo 4 — Residencia",
+      "sentencias": [
+        {
+          "archivo": "STS_2735_2023.pdf",
+          "roj": "STS 2735/2023",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "artículo 4.2"
+        },
+        {
+          "archivo": "STS_2735_2023.pdf",
+          "roj": "STS 2735/2023",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2"
+        },
+        {
+          "archivo": "STS_2735_2023.pdf",
+          "roj": "STS 2735/2023",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        }
+      ],
+      "total_sentencias": 1
+    },
+    {
+      "slug": "cdi-boe-a-1994-20084-a4",
+      "titulo": "Artículo 4 — Residencia",
+      "sentencias": [
+        {
+          "archivo": "SAN_4248_2020.pdf",
+          "roj": "SAN 4248/2020",
+          "ejercicios": [
+            2006,
+            2007,
+            2008
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.4 del Convenio"
+        }
+      ],
+      "total_sentencias": 1
+    },
+    {
+      "slug": "cdi-boe-a-2014-5171-ar-4",
+      "titulo": "Artículo 4 — Residente",
+      "sentencias": [
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 4 CDI"
+        },
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        },
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": "2.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2.a CDI"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "artículo 4.2"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "2.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2.a) CDI"
+        }
+      ],
+      "total_sentencias": 4
+    },
+    {
+      "slug": "lgt-a105",
+      "titulo": "Artículo 105 LGT — Carga de la prueba",
+      "sentencias": [
+        {
+          "archivo": "SAN_1386_2017.pdf",
+          "roj": "SAN 1386/2017",
+          "ejercicios": [
+            2009
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "artículo 105.1 LGT"
+        },
+        {
+          "archivo": "SAN_5096_2021.pdf",
+          "roj": "SAN 5096/2021",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.105 LGT"
+        },
+        {
+          "archivo": "SAN_5217_2022.pdf",
+          "roj": "SAN 5217/2022",
+          "ejercicios": [
+            2011,
+            2015
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT"
+        },
+        {
+          "archivo": "STS_1682_2022.pdf",
+          "roj": "STS 1682/2022",
+          "ejercicios": [
+            2012,
+            2017
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 105.1 LGT"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art 105 LGT"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT"
+        }
+      ],
+      "total_sentencias": 8
+    },
+    {
+      "slug": "lgt-a108",
+      "titulo": "Artículo 108 LGT — Presunciones en materia tributaria",
+      "sentencias": [
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 108.2 de la LGT"
+        },
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 108.2 LGT"
+        }
+      ],
+      "total_sentencias": 1
+    },
+    {
+      "slug": "lirpf-a8",
+      "titulo": "Artículo 8 LIRPF — Contribuyentes",
+      "sentencias": [
+        {
+          "archivo": "SAN_3306_2025.pdf",
+          "roj": "SAN 3306/2025",
+          "ejercicios": [
+            2015
+          ],
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "arts. 8.1.a)"
+        },
+        {
+          "archivo": "SAN_4438_2025.pdf",
+          "roj": "SAN 4438/2025",
+          "ejercicios": [
+            2015
+          ],
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "arts. 8.1.a)"
+        }
+      ],
+      "total_sentencias": 2
+    },
+    {
+      "slug": "lirpf-a9",
+      "titulo": "Artículo 9 LIRPF — Contribuyentes que tienen su residencia habitual en territorio español",
+      "sentencias": [
+        {
+          "archivo": "SAN_1071_2025.pdf",
+          "roj": "SAN 1071/2025",
+          "ejercicios": [
+            2010,
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_1136_2016.pdf",
+          "roj": "SAN 1136/2016",
+          "ejercicios": [
+            2007
+          ],
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "artículo 9"
+        },
+        {
+          "archivo": "SAN_1136_2016.pdf",
+          "roj": "SAN 1136/2016",
+          "ejercicios": [
+            2007
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_1226_2021.pdf",
+          "roj": "SAN 1226/2021",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_1226_2021.pdf",
+          "roj": "SAN 1226/2021",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF"
+        },
+        {
+          "archivo": "SAN_1386_2017.pdf",
+          "roj": "SAN 1386/2017",
+          "ejercicios": [
+            2009
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_2132_2025.pdf",
+          "roj": "SAN 2132/2025",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_2335_2022.pdf",
+          "roj": "SAN 2335/2022",
+          "ejercicios": [
+            2008,
+            2010
+          ],
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "art. 9"
+        },
+        {
+          "archivo": "SAN_2347_2022.pdf",
+          "roj": "SAN 2347/2022",
+          "ejercicios": [
+            2007
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_2602_2020.pdf",
+          "roj": "SAN 2602/2020",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_2602_2020.pdf",
+          "roj": "SAN 2602/2020",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_2602_2020.pdf",
+          "roj": "SAN 2602/2020",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "artículo 9"
+        },
+        {
+          "archivo": "SAN_2602_2022.pdf",
+          "roj": "SAN 2602/2022",
+          "ejercicios": [
+            2008,
+            2010
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_3169_2024.pdf",
+          "roj": "SAN 3169/2024",
+          "ejercicios": [
+            2009,
+            2010,
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_3169_2024.pdf",
+          "roj": "SAN 3169/2024",
+          "ejercicios": [
+            2009,
+            2010,
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "Art. 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_3477_2022.pdf",
+          "roj": "SAN 3477/2022",
+          "ejercicios": [
+            2010,
+            2011
+          ],
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.b) LIRPF"
+        },
+        {
+          "archivo": "SAN_4187_2023.pdf",
+          "roj": "SAN 4187/2023",
+          "ejercicios": [
+            2006
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF"
+        },
+        {
+          "archivo": "SAN_4187_2023.pdf",
+          "roj": "SAN 4187/2023",
+          "ejercicios": [
+            2006
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "Art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_4248_2020.pdf",
+          "roj": "SAN 4248/2020",
+          "ejercicios": [
+            2006,
+            2007,
+            2008
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_4438_2025.pdf",
+          "roj": "SAN 4438/2025",
+          "ejercicios": [
+            2015
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_4670_2019.pdf",
+          "roj": "SAN 4670/2019",
+          "ejercicios": [
+            2006
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_4992_2021.pdf",
+          "roj": "SAN 4992/2021",
+          "ejercicios": [
+            2007,
+            2008
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_5096_2021.pdf",
+          "roj": "SAN 5096/2021",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_5096_2021.pdf",
+          "roj": "SAN 5096/2021",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "1.b",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1.b"
+        },
+        {
+          "archivo": "SAN_5151_2019.pdf",
+          "roj": "SAN 5151/2019",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_5217_2022.pdf",
+          "roj": "SAN 5217/2022",
+          "ejercicios": [
+            2011,
+            2015
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF"
+        },
+        {
+          "archivo": "SAN_5630_2023.pdf",
+          "roj": "SAN 5630/2023",
+          "ejercicios": [
+            2005,
+            2006,
+            2007,
+            2008
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "SAN_5630_2023.pdf",
+          "roj": "SAN 5630/2023",
+          "ejercicios": [
+            2005,
+            2006,
+            2007,
+            2008
+          ],
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1"
+        },
+        {
+          "archivo": "SAN_5640_2023.pdf",
+          "roj": "SAN 5640/2023",
+          "ejercicios": [
+            2008,
+            2011
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF"
+        },
+        {
+          "archivo": "SAN_5983_2024.pdf",
+          "roj": "SAN 5983/2024",
+          "ejercicios": [
+            2007,
+            2009
+          ],
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1"
+        },
+        {
+          "archivo": "SAN_5983_2024.pdf",
+          "roj": "SAN 5983/2024",
+          "ejercicios": [
+            2007,
+            2009
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF"
+        },
+        {
+          "archivo": "SAN_6981_2024.pdf",
+          "roj": "SAN 6981/2024",
+          "ejercicios": [
+            2017
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "STS_107_2018.pdf",
+          "roj": "STS 107/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_108_2018.pdf",
+          "roj": "STS 108/2018",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_109_2018.pdf",
+          "roj": "STS 109/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_1102_2020.pdf",
+          "roj": "STS 1102/2020",
+          "ejercicios": [],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "STS_110_2018.pdf",
+          "roj": "STS 110/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF"
+        },
+        {
+          "archivo": "STS_110_2018.pdf",
+          "roj": "STS 110/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_110_2018.pdf",
+          "roj": "STS 110/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_112_2018.pdf",
+          "roj": "STS 112/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_114_2018.pdf",
+          "roj": "STS 114/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_114_2018.pdf",
+          "roj": "STS 114/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "artículo 9.1.a)"
+        },
+        {
+          "archivo": "STS_115_2018.pdf",
+          "roj": "STS 115/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_1682_2022.pdf",
+          "roj": "STS 1682/2022",
+          "ejercicios": [
+            2012,
+            2017
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "STS_183_2018.pdf",
+          "roj": "STS 183/2018",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_184_2018.pdf",
+          "roj": "STS 184/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_188_2018.pdf",
+          "roj": "STS 188/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "artículo 9.1.a)"
+        },
+        {
+          "archivo": "STS_188_2018.pdf",
+          "roj": "STS 188/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_188_2018.pdf",
+          "roj": "STS 188/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_2735_2023.pdf",
+          "roj": "STS 2735/2023",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF"
+        },
+        {
+          "archivo": "STS_2735_2023.pdf",
+          "roj": "STS 2735/2023",
+          "ejercicios": [
+            2008,
+            2009,
+            2010
+          ],
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b) LIRPF"
+        },
+        {
+          "archivo": "STS_305_2018.pdf",
+          "roj": "STS 305/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_3498_2025.pdf",
+          "roj": "STS 3498/2025",
+          "ejercicios": [
+            2014,
+            2015,
+            2016
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_3574_2023.pdf",
+          "roj": "STS 3574/2023",
+          "ejercicios": [
+            2005,
+            2006
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF"
+        },
+        {
+          "archivo": "STS_3881_2024.pdf",
+          "roj": "STS 3881/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b"
+        },
+        {
+          "archivo": "STS_3882_2024.pdf",
+          "roj": "STS 3882/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF"
+        },
+        {
+          "archivo": "STS_420_2021.pdf",
+          "roj": "STS 420/2021",
+          "ejercicios": [],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)"
+        },
+        {
+          "archivo": "STS_4219_2024.pdf",
+          "roj": "STS 4219/2024",
+          "ejercicios": [
+            2010,
+            2011,
+            2012,
+            2013
+          ],
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b) LIRPF"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1 LIRPF"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1 LIRPF"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF"
+        },
+        {
+          "archivo": "STS_4220_2024.pdf",
+          "roj": "STS 4220/2024",
+          "ejercicios": [
+            2014
+          ],
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)"
+        },
+        {
+          "archivo": "STS_4305_2017.pdf",
+          "roj": "STS 4305/2017",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.a"
+        },
+        {
+          "archivo": "STS_4305_2017.pdf",
+          "roj": "STS 4305/2017",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_4307_2017.pdf",
+          "roj": "STS 4307/2017",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_4433_2017.pdf",
+          "roj": "STS 4433/2017",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_4433_2017.pdf",
+          "roj": "STS 4433/2017",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_4434_2017.pdf",
+          "roj": "STS 4434/2017",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_4434_2017.pdf",
+          "roj": "STS 4434/2017",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF"
+        },
+        {
+          "archivo": "STS_4849_2025.pdf",
+          "roj": "STS 4849/2025",
+          "ejercicios": [],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "STS_691_2018.pdf",
+          "roj": "STS 691/2018",
+          "ejercicios": [
+            2011,
+            2012
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_695_2018.pdf",
+          "roj": "STS 695/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_697_2018.pdf",
+          "roj": "STS 697/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "STS_697_2018.pdf",
+          "roj": "STS 697/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_698_2018.pdf",
+          "roj": "STS 698/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF"
+        },
+        {
+          "archivo": "STS_701_2018.pdf",
+          "roj": "STS 701/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "STS_701_2018.pdf",
+          "roj": "STS 701/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF"
+        },
+        {
+          "archivo": "STS_839_2018.pdf",
+          "roj": "STS 839/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        },
+        {
+          "archivo": "STS_840_2018.pdf",
+          "roj": "STS 840/2018",
+          "ejercicios": [
+            2011
+          ],
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF"
+        }
+      ],
+      "total_sentencias": 56
+    }
+  ]
+}

@@ -1,0 +1,3032 @@
+{
+  "schema_version": "residenciafiscal-normativa-enlaces/1",
+  "generated_by": "residenciafiscal-normativa/0.1.0",
+  "jurisdiccion": "es",
+  "jsonl": "analisis_02012026_155032.jsonl",
+  "sentencias": 106,
+  "sentencias_con_precepto": 58,
+  "enlaces": 121,
+  "enlaces_explicitos": 100,
+  "enlaces_inferidos": 21,
+  "citas_no_resueltas": 41,
+  "avisos": [
+    {
+      "archivo": "SAN_4187_2023.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "SAN_4670_2019.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "STS_3574_2023.pdf",
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    }
+  ],
+  "sentencias_detalle": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "roj": "SAN 1071/2025",
+      "ejercicios": [
+        2010,
+        2011
+      ],
+      "pais_cdi": "Francia",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2010": "2007-01-01",
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_1136_2016.pdf",
+      "roj": "SAN 1136/2016",
+      "ejercicios": [
+        2007
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "artículo 9",
+          "campo": "frases_clave[1].texto",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_1210_2023.pdf",
+      "roj": "SAN 1210/2023",
+      "ejercicios": [
+        2011,
+        2013
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_1226_2021.pdf",
+      "roj": "SAN 1226/2021",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.32",
+          "sigla": null,
+          "campo": "Pruebas_contribuyente[6].detalle",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_1386_2017.pdf",
+      "roj": "SAN 1386/2017",
+      "ejercicios": [
+        2009
+      ],
+      "pais_cdi": "Suiza",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-1967-3470-a4",
+          "boe_id": "BOE-A-1967-3470",
+          "bloque_id": "a4",
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "art.4",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2009": "1967-02-02"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-1967-3470-a4",
+          "boe_id": "BOE-A-1967-3470",
+          "bloque_id": "a4",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.4 del CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2009": "1967-02-02"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "artículo 105.1 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2009": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2009": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.7 LIRPF",
+          "sigla": "lirpf",
+          "campo": "Pruebas_rechazadas_clave[2].subcategoria",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 105.1",
+          "sigla": null,
+          "campo": "carga_prueba.cita.texto",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2132_2025.pdf",
+      "roj": "SAN 2132/2025",
+      "ejercicios": [
+        2014
+      ],
+      "pais_cdi": "España - Emiratos Árabes Unidos",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.13 TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "observaciones",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art.14.1.b TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "Pruebas_contribuyente[0].objetivo_probatorio",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art.19 CDI",
+          "sigla": "cdi",
+          "campo": "resumen_criterios",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        },
+        {
+          "texto_citado": "artículo 19 del CDI",
+          "sigla": "cdi",
+          "campo": "razonamiento_residencia",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2229_2022.pdf",
+      "roj": "SAN 2229/2022",
+      "ejercicios": [
+        2014
+      ],
+      "pais_cdi": "España-Colombia",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.13 TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "resumen_criterios",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art.14.1.b TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "Pruebas_contribuyente[0].objetivo_probatorio",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art.19 CDI",
+          "sigla": "cdi",
+          "campo": "resumen_criterios",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        },
+        {
+          "texto_citado": "art.19 del CDI",
+          "sigla": "cdi",
+          "campo": "razonamiento_residencia",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        },
+        {
+          "texto_citado": "artículo 13.1.c)",
+          "sigla": null,
+          "campo": "Pruebas_AEAT[2].cita.texto",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 19 del CDI",
+          "sigla": "cdi",
+          "campo": "Pruebas_AEAT[2].cita.texto",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2335_2022.pdf",
+      "roj": "SAN 2335/2022",
+      "ejercicios": [
+        2008,
+        2010
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "art. 9",
+          "campo": "frases_clave[0].texto",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2347_2022.pdf",
+      "roj": "SAN 2347/2022",
+      "ejercicios": [
+        2007
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2602_2020.pdf",
+      "roj": "SAN 2602/2020",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "Pruebas_AEAT[2].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "inferida",
+          "texto_citado": "artículo 9",
+          "campo": "frases_clave[0].texto",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_2602_2022.pdf",
+      "roj": "SAN 2602/2022",
+      "ejercicios": [
+        2008,
+        2010
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_3169_2024.pdf",
+      "roj": "SAN 3169/2024",
+      "ejercicios": [
+        2009,
+        2010,
+        2011
+      ],
+      "pais_cdi": "Países Bajos (Holanda)",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2009": "2007-01-01",
+            "2010": "2007-01-01",
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "Art. 9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2009": "2007-01-01",
+            "2010": "2007-01-01",
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_3306_2025.pdf",
+      "roj": "SAN 3306/2025",
+      "ejercicios": [
+        2015
+      ],
+      "pais_cdi": "Rusia",
+      "preceptos": [
+        {
+          "slug": "lirpf-a8",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a8",
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "arts. 8.1.a)",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2015": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.14.1.b TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "Pruebas_contribuyente[0].objetivo_probatorio",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art.20",
+          "sigla": null,
+          "campo": "Pruebas_AEAT[1].subcategoria",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 13.1.c)",
+          "sigla": null,
+          "campo": "razonamiento_residencia",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 20 del CDI",
+          "sigla": "cdi",
+          "campo": "razonamiento_residencia",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        },
+        {
+          "texto_citado": "artículo 20 del Convenio",
+          "sigla": "convenio",
+          "campo": "Pruebas_AEAT[1].detalle",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_3421_2021.pdf",
+      "roj": "SAN 3421/2021",
+      "ejercicios": [
+        2005
+      ],
+      "pais_cdi": "Suiza",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_3477_2022.pdf",
+      "roj": "SAN 3477/2022",
+      "ejercicios": [
+        2010,
+        2011
+      ],
+      "pais_cdi": "Francia",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.b) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2010": "2007-01-01",
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.27 CDI",
+          "sigla": "cdi",
+          "campo": "Pruebas_AEAT[0].detalle",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        },
+        {
+          "texto_citado": "art.93",
+          "sigla": null,
+          "campo": "Pruebas_contribuyente[1].subcategoria",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 93",
+          "sigla": null,
+          "campo": "Pruebas_contribuyente[1].detalle",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 93 LIRPF",
+          "sigla": "lirpf",
+          "campo": "Pruebas_contribuyente[1].cita.texto",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_3960_2020.pdf",
+      "roj": "SAN 3960/2020",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_4187_2023.pdf",
+      "roj": "SAN 4187/2023",
+      "ejercicios": [
+        2006
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2006": null
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "Art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2006": null
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "SAN_4248_2020.pdf",
+      "roj": "SAN 4248/2020",
+      "ejercicios": [
+        2006,
+        2007,
+        2008
+      ],
+      "pais_cdi": "Convenio entre Reino de España y República Argentina (1991)",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-1994-20084-a4",
+          "boe_id": "BOE-A-1994-20084",
+          "bloque_id": "a4",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.4 del Convenio",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2006": "1994-07-28",
+            "2007": "1994-07-28",
+            "2008": "1994-07-28"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2006": null,
+            "2007": "2007-01-01",
+            "2008": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "artículo 108.4",
+          "sigla": null,
+          "campo": "carga_prueba.cita.texto",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_4438_2025.pdf",
+      "roj": "SAN 4438/2025",
+      "ejercicios": [
+        2015
+      ],
+      "pais_cdi": "Colombia",
+      "preceptos": [
+        {
+          "slug": "lirpf-a8",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a8",
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "arts. 8.1.a)",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2015": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2015": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.14.1.b TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "Pruebas_contribuyente[0].objetivo_probatorio",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "artículo 19 del CDI",
+          "sigla": "cdi",
+          "campo": "resumen_criterios",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_4670_2019.pdf",
+      "roj": "SAN 4670/2019",
+      "ejercicios": [
+        2006
+      ],
+      "pais_cdi": "JAPÓN",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2006": null
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "SAN_4992_2021.pdf",
+      "roj": "SAN 4992/2021",
+      "ejercicios": [
+        2007,
+        2008
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01",
+            "2008": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5096_2021.pdf",
+      "roj": "SAN 5096/2021",
+      "ejercicios": [
+        2008,
+        2009,
+        2010
+      ],
+      "pais_cdi": "Marruecos; Estados Unidos",
+      "preceptos": [
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2008": "2004-07-01",
+            "2009": "2004-07-01",
+            "2010": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2009": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1.b",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2009": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5151_2019.pdf",
+      "roj": "SAN 5151/2019",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5217_2022.pdf",
+      "roj": "SAN 5217/2022",
+      "ejercicios": [
+        2011,
+        2015
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2004-07-01",
+            "2015": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2015": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5408_2017.pdf",
+      "roj": "SAN 5408/2017",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5630_2023.pdf",
+      "roj": "SAN 5630/2023",
+      "ejercicios": [
+        2005,
+        2006,
+        2007,
+        2008
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2005": null,
+            "2006": null,
+            "2007": "2007-01-01",
+            "2008": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2005": null,
+            "2006": null,
+            "2007": "2007-01-01",
+            "2008": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5640_2023.pdf",
+      "roj": "SAN 5640/2023",
+      "ejercicios": [
+        2008,
+        2011
+      ],
+      "pais_cdi": "Federación Rusa",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_5983_2024.pdf",
+      "roj": "SAN 5983/2024",
+      "ejercicios": [
+        2007,
+        2009
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01",
+            "2009": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2007": "2007-01-01",
+            "2009": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_6289_2022.pdf",
+      "roj": "SAN 6289/2022",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_6981_2024.pdf",
+      "roj": "SAN 6981/2024",
+      "ejercicios": [
+        2017
+      ],
+      "pais_cdi": "Méjico",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2017": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_699_2015.pdf",
+      "roj": "SAN 699/2015",
+      "ejercicios": [
+        2005,
+        2006
+      ],
+      "pais_cdi": "Suiza",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-1967-3470-a4",
+          "boe_id": "BOE-A-1967-3470",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art.4.2 del Convenio",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2005": "1967-02-02",
+            "2006": "1967-02-02"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "SAN_7135_2024.pdf",
+      "roj": "SAN 7135/2024",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_107_2018.pdf",
+      "roj": "STS 107/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_108_2018.pdf",
+      "roj": "STS 108/2018",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_109_2018.pdf",
+      "roj": "STS 109/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "arts. 105.1",
+          "sigla": null,
+          "campo": "carga_prueba.motivo",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1102_2020.pdf",
+      "roj": "STS 1102/2020",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "observaciones",
+          "redaccion_aplicable": {}
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.119.3 LGT",
+          "sigla": "lgt",
+          "campo": "observaciones",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_110_2018.pdf",
+      "roj": "STS 110/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 9 LIRPF",
+          "campo": "Pruebas_rechazadas_clave[0].cita.texto",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF",
+          "campo": "Prueba_o_bala_de_plata.por_que_decisiva",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_111_2021.pdf",
+      "roj": "STS 111/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_112_2018.pdf",
+      "roj": "STS 112/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_114_2018.pdf",
+      "roj": "STS 114/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "artículo 9.1.a)",
+          "campo": "frases_clave[1].texto",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "Art. 3.1",
+          "sigla": null,
+          "campo": "doctrina_citada[1]",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "Art. 40",
+          "sigla": null,
+          "campo": "doctrina_citada[2]",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_115_2018.pdf",
+      "roj": "STS 115/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_116_2021.pdf",
+      "roj": "STS 116/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1432_2023.pdf",
+      "roj": "STS 1432/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1594_2023.pdf",
+      "roj": "STS 1594/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1608_2023.pdf",
+      "roj": "STS 1608/2023",
+      "ejercicios": [],
+      "pais_cdi": "Francia",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1612_2023.pdf",
+      "roj": "STS 1612/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1682_2022.pdf",
+      "roj": "STS 1682/2022",
+      "ejercicios": [
+        2012,
+        2017
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 105.1 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2012": "2004-07-01",
+            "2017": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "observaciones",
+          "redaccion_aplicable": {
+            "2012": "2007-01-01",
+            "2017": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art. 105",
+          "sigla": null,
+          "campo": "carga_prueba.cita.texto",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "art. 28",
+          "sigla": null,
+          "campo": "razonamiento_residencia",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        },
+        {
+          "texto_citado": "arts. 28",
+          "sigla": null,
+          "campo": "resumen_criterios",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1814_2021.pdf",
+      "roj": "STS 1814/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.19.6",
+          "sigla": null,
+          "campo": "motivo_fuera_de_alcance",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_183_2018.pdf",
+      "roj": "STS 183/2018",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_1845_2023.pdf",
+      "roj": "STS 1845/2023",
+      "ejercicios": [],
+      "pais_cdi": "Alemania",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_184_2018.pdf",
+      "roj": "STS 184/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_188_2018.pdf",
+      "roj": "STS 188/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "inferida",
+          "texto_citado": "artículo 9.1.a)",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2013_2024.pdf",
+      "roj": "STS 2013/2024",
+      "ejercicios": [
+        2015,
+        2016
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2396_2018.pdf",
+      "roj": "STS 2396/2018",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2485_2022.pdf",
+      "roj": "STS 2485/2022",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "artículo 7.p) LIRPF",
+          "sigla": "lirpf",
+          "campo": "motivo_fuera_de_alcance",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2637_2022.pdf",
+      "roj": "STS 2637/2022",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2652_2023.pdf",
+      "roj": "STS 2652/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2735_2023.pdf",
+      "roj": "STS 2735/2023",
+      "ejercicios": [
+        2008,
+        2009,
+        2010
+      ],
+      "pais_cdi": "EEUU",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-1990-30940-a4",
+          "boe_id": "BOE-A-1990-30940",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "artículo 4.2",
+          "campo": "frases_clave[3].texto",
+          "redaccion_aplicable": {
+            "2008": "1990-11-21",
+            "2009": "1990-11-21",
+            "2010": "1990-11-21"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-1990-30940-a4",
+          "boe_id": "BOE-A-1990-30940",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2008": "1990-11-21",
+            "2009": "1990-11-21",
+            "2010": "1990-11-21"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-1990-30940-a4",
+          "boe_id": "BOE-A-1990-30940",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2008": "1990-11-21",
+            "2009": "1990-11-21",
+            "2010": "1990-11-21"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2009": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2008": "2007-01-01",
+            "2009": "2007-01-01",
+            "2010": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2806_2023.pdf",
+      "roj": "STS 2806/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.14.1.h TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "razonamiento_residencia",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_2881_2023.pdf",
+      "roj": "STS 2881/2023",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_305_2018.pdf",
+      "roj": "STS 305/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3270_2019.pdf",
+      "roj": "STS 3270/2019",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_343_2021.pdf",
+      "roj": "STS 343/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3445_2025.pdf",
+      "roj": "STS 3445/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3498_2025.pdf",
+      "roj": "STS 3498/2025",
+      "ejercicios": [
+        2014,
+        2015,
+        2016
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 4 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12",
+            "2015": "2014-06-12",
+            "2016": "2014-06-12"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12",
+            "2015": "2014-06-12",
+            "2016": "2014-06-12"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2.a CDI",
+          "campo": "Pruebas_AEAT[0].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12",
+            "2015": "2014-06-12",
+            "2016": "2014-06-12"
+          }
+        },
+        {
+          "slug": "lgt-a108",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a108",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 108.2 de la LGT",
+          "campo": "Pruebas_AEAT[5].cita.texto",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01",
+            "2015": "2015-10-12",
+            "2016": "2015-10-12"
+          }
+        },
+        {
+          "slug": "lgt-a108",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a108",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 108.2 LGT",
+          "campo": "Pruebas_AEAT[5].subcategoria",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01",
+            "2015": "2015-10-12",
+            "2016": "2015-10-12"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "Pruebas_AEAT[6].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01",
+            "2015": "2007-01-01",
+            "2016": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art. 17 CDI",
+          "sigla": "cdi",
+          "campo": "Pruebas_contribuyente[2].objetivo_probatorio",
+          "motivo": "De los convenios solo se publica su artículo de residencia, y la cita apunta a otro"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3574_2023.pdf",
+      "roj": "STS 3574/2023",
+      "ejercicios": [
+        2005,
+        2006
+      ],
+      "pais_cdi": "Suiza",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2005": null,
+            "2006": null
+          }
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art. 5",
+          "sigla": null,
+          "campo": "resumen_criterios",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": [
+        "Cita la Ley 35/2006 en un caso cuyo último ejercicio es anterior a 2007, cuando regía el texto refundido de 2004. Puede ser abreviatura del análisis o un error: no se corrige aquí."
+      ]
+    },
+    {
+      "archivo": "STS_3585_2024.pdf",
+      "roj": "STS 3585/2024",
+      "ejercicios": [
+        2011,
+        2012,
+        2014,
+        2016
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.11",
+          "sigla": null,
+          "campo": "Pruebas_AEAT[1].motivo_valoracion",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_371_2020.pdf",
+      "roj": "STS 371/2020",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3881_2024.pdf",
+      "roj": "STS 3881/2024",
+      "ejercicios": [
+        2014
+      ],
+      "pais_cdi": "Reino Unido (CDI 1975; referido también CDI 2013)",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT",
+          "campo": "carga_prueba.cita.texto",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF",
+          "campo": "Pruebas_AEAT[1].motivo_valoracion",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)",
+          "campo": "Pruebas_AEAT[7].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3882_2024.pdf",
+      "roj": "STS 3882/2024",
+      "ejercicios": [
+        2014
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT",
+          "campo": "carga_prueba.cita.texto",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_3942_2021.pdf",
+      "roj": "STS 3942/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_420_2021.pdf",
+      "roj": "STS 420/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "motivo_fuera_de_alcance",
+          "redaccion_aplicable": {}
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4219_2024.pdf",
+      "roj": "STS 4219/2024",
+      "ejercicios": [
+        2010,
+        2011,
+        2012,
+        2013
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-1976-23347-a4",
+          "boe_id": "BOE-A-1976-23347",
+          "bloque_id": "a4",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.1 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2010": "1976-11-25",
+            "2011": "1976-11-25",
+            "2012": "1976-11-25",
+            "2013": "1976-11-25"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-1976-23347-a4",
+          "boe_id": "BOE-A-1976-23347",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "art. 4.2",
+          "campo": "Pruebas_AEAT[2].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2010": "1976-11-25",
+            "2011": "1976-11-25",
+            "2012": "1976-11-25",
+            "2013": "1976-11-25"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-1976-23347-a4",
+          "boe_id": "BOE-A-1976-23347",
+          "bloque_id": "a4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2010": "1976-11-25",
+            "2011": "1976-11-25",
+            "2012": "1976-11-25",
+            "2013": "1976-11-25"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art 105 LGT",
+          "campo": "carga_prueba.cita.texto",
+          "redaccion_aplicable": {
+            "2010": "2004-07-01",
+            "2011": "2004-07-01",
+            "2012": "2004-07-01",
+            "2013": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2010": "2004-07-01",
+            "2011": "2004-07-01",
+            "2012": "2004-07-01",
+            "2013": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF",
+          "campo": "Pruebas_AEAT[1].subcategoria",
+          "redaccion_aplicable": {
+            "2010": "2007-01-01",
+            "2011": "2007-01-01",
+            "2012": "2007-01-01",
+            "2013": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)",
+          "campo": "Pruebas_AEAT[1].cita.texto",
+          "redaccion_aplicable": {
+            "2010": "2007-01-01",
+            "2011": "2007-01-01",
+            "2012": "2007-01-01",
+            "2013": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2010": "2007-01-01",
+            "2011": "2007-01-01",
+            "2012": "2007-01-01",
+            "2013": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4220_2024.pdf",
+      "roj": "STS 4220/2024",
+      "ejercicios": [
+        2014
+      ],
+      "pais_cdi": "Reino Unido",
+      "preceptos": [
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "inferida",
+          "texto_citado": "artículo 4.2",
+          "campo": "Pruebas_AEAT[2].cita.texto",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2 CDI",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "cdi-boe-a-2014-5171-ar-4",
+          "boe_id": "BOE-A-2014-5171",
+          "bloque_id": "ar-4",
+          "apartado": "2.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 4.2.a) CDI",
+          "campo": "Pruebas_contribuyente[1].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2014-06-12"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "artículo 105 LGT",
+          "campo": "carga_prueba.cita.texto",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lgt-a105",
+          "boe_id": "BOE-A-2003-23186",
+          "bloque_id": "a105",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 105 LGT",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2014": "2004-07-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1 LIRPF",
+          "campo": "frases_clave[0].texto",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "Pruebas_contribuyente[2].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.b LIRPF",
+          "campo": "Pruebas_AEAT[3].objetivo_probatorio",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.b)",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.b)",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2014": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4277_2018.pdf",
+      "roj": "STS 4277/2018",
+      "ejercicios": [
+        2005,
+        2007
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4305_2017.pdf",
+      "roj": "STS 4305/2017",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "inferida",
+          "texto_citado": "art. 9.1.a",
+          "campo": "Pruebas_contribuyente[2].motivo_valoracion",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4306_2017.pdf",
+      "roj": "STS 4306/2017",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4307_2017.pdf",
+      "roj": "STS 4307/2017",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4337_2020.pdf",
+      "roj": "STS 4337/2020",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4361_2020.pdf",
+      "roj": "STS 4361/2020",
+      "ejercicios": [
+        2008
+      ],
+      "pais_cdi": "Canadá",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4362_2020.pdf",
+      "roj": "STS 4362/2020",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4433_2017.pdf",
+      "roj": "STS 4433/2017",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a) LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4434_2017.pdf",
+      "roj": "STS 4434/2017",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "artículo 9.1.a) LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a)",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a) LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4560_2022.pdf",
+      "roj": "STS 4560/2022",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art.7.p) LIRPF",
+          "sigla": "lirpf",
+          "campo": "motivo_fuera_de_alcance",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4619_2025.pdf",
+      "roj": "STS 4619/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4670_2017.pdf",
+      "roj": "STS 4670/2017",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4849_2025.pdf",
+      "roj": "STS 4849/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "motivo_fuera_de_alcance",
+          "redaccion_aplicable": {}
+        }
+      ],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art. 31",
+          "sigla": null,
+          "campo": "motivo_fuera_de_alcance",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_4869_2024.pdf",
+      "roj": "STS 4869/2024",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5361_2024.pdf",
+      "roj": "STS 5361/2024",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5385_2025.pdf",
+      "roj": "STS 5385/2025",
+      "ejercicios": [
+        2011,
+        2013
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5555_2025.pdf",
+      "roj": "STS 5555/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5559_2025.pdf",
+      "roj": "STS 5559/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5812_2025.pdf",
+      "roj": "STS 5812/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [
+        {
+          "texto_citado": "art. 24.6 TRLIRNR",
+          "sigla": "trlirnr",
+          "campo": "motivo_fuera_de_alcance",
+          "motivo": "El artículo citado no está entre los preceptos publicados"
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_5816_2025.pdf",
+      "roj": "STS 5816/2025",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_691_2018.pdf",
+      "roj": "STS 691/2018",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01",
+            "2012": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_695_2018.pdf",
+      "roj": "STS 695/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art. 9.1.a LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_697_2018.pdf",
+      "roj": "STS 697/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "resumen_criterios",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_698_2018.pdf",
+      "roj": "STS 698/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art. 9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_700_2018.pdf",
+      "roj": "STS 700/2018",
+      "ejercicios": [
+        2011,
+        2012
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_701_2018.pdf",
+      "roj": "STS 701/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        },
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": "1.a",
+          "certeza": "explicita",
+          "texto_citado": "art.9.1.a LIRPF",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_710_2021.pdf",
+      "roj": "STS 710/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_712_2021.pdf",
+      "roj": "STS 712/2021",
+      "ejercicios": [],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_839_2018.pdf",
+      "roj": "STS 839/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_840_2018.pdf",
+      "roj": "STS 840/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [
+        {
+          "slug": "lirpf-a9",
+          "boe_id": "BOE-A-2006-20764",
+          "bloque_id": "a9",
+          "apartado": null,
+          "certeza": "explicita",
+          "texto_citado": "art.9 LIRPF",
+          "campo": "razonamiento_residencia",
+          "redaccion_aplicable": {
+            "2011": "2007-01-01"
+          }
+        }
+      ],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_841_2018.pdf",
+      "roj": "STS 841/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    },
+    {
+      "archivo": "STS_842_2018.pdf",
+      "roj": "STS 842/2018",
+      "ejercicios": [
+        2011
+      ],
+      "pais_cdi": "NO CONSTA",
+      "preceptos": [],
+      "citas_no_resueltas": [],
+      "avisos": []
+    }
+  ]
+}
