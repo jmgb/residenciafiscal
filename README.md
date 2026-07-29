@@ -1,5 +1,7 @@
 # Residencia Fiscal
 
+**[residenciafiscal.org](https://residenciafiscal.org)**
+
 Pipeline Python que analiza sentencias judiciales españolas sobre **residencia fiscal
 (Art. 9 LIRPF)** con LLMs, y extrae criterios aplicados, pruebas aportadas por cada
 parte, razonamiento judicial y resultado del fallo.
@@ -67,8 +69,31 @@ Cada ejecución de `make run` genera en `./output/` (con timestamp):
 `analisis_*.jsonl`, `analisis_*.csv`, `sentencias_*.csv`, `pruebas_*.csv` y
 `analisis_*.xlsx`.
 
+## Frontend (residenciafiscal.org)
+
+SPA React en `frontend/`, desplegada en Netlify: chatbot que consulta el corpus de
+sentencias en lenguaje natural.
+
+```bash
+cd frontend
+npm install
+npm run dev         # http://127.0.0.1:5174
+npm run test        # Vitest
+npm run fast-check  # lint + typecheck + tests
+npm run build       # genera el corpus y compila a dist/
+```
+
+El motor de conversación es hoy un **stub**: la interfaz está completa y las
+sentencias citadas son reales, pero las respuestas son simuladas. El backend RAG
+está pendiente de decidir. Detalles de despliegue en
+[`docs/operations/NETLIFY.md`](docs/operations/NETLIFY.md) y
+[`docs/operations/CLOUDFLARE.md`](docs/operations/CLOUDFLARE.md); analítica en
+[`docs/ANALYTICS.md`](docs/ANALYTICS.md). Más detalle de la arquitectura del
+frontend en `CLAUDE.md`.
+
 ## Documentación
 
 - `CLAUDE.md` — guía completa: arquitectura, schema de campos, costes, troubleshooting
 - `docs/` — notas sobre reasoning effort y tests
 - `docs/tasks.md` — backlog de tareas pendientes del proyecto
+- `docs/superpowers/` — especificaciones de diseño y planes de implementación

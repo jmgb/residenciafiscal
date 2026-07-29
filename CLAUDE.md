@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Guía para Claude Code en el proyecto **Residencia Fiscal**.
+Guía para Claude Code en el proyecto **Residencia Fiscal** — [residenciafiscal.org](https://residenciafiscal.org).
 
 ## Quick Start
 
@@ -400,10 +400,83 @@ residenciafiscal/
 │   ├── sentencias_CLAVE.txt # 23 sentencias premium
 │   └── readme.txt           # Inventario
 ├── output/                  # Resultados generados
+├── frontend/                # SPA React (residenciafiscal.org)
+│   ├── src/                 # Código de la aplicación
+│   ├── scripts/             # build-corpus.mjs
+│   └── tests/               # Suites Vitest
+├── netlify.toml             # Despliegue en Netlify (ver docs/operations/)
 ├── .venv/                   # Entorno gestionado por uv (gitignored)
 ├── .env                     # API keys (gitignored)
 └── CLAUDE.md                # Este archivo
 ```
+
+## Frontend (residenciafiscal.org)
+
+SPA React en `frontend/`, desplegada en Netlify. Chatbot que consulta el corpus
+de sentencias en lenguaje natural.
+
+### Stack
+
+Vite 7 + React 19 + TypeScript + Tailwind CSS v4 + Radix UI + zustand +
+react-router-dom. Gestión de dependencias con `npm` (no hay Makefile de
+frontend; el Makefile de la raíz solo cubre la parte Python).
+
+### Comandos
+
+```bash
+cd frontend
+npm install
+npm run dev         # servidor de desarrollo en 127.0.0.1:5174
+npm run test        # Vitest
+npm run test:watch  # Vitest en modo watch
+npm run typecheck   # tsc --noEmit
+npm run lint        # Biome
+npm run format      # Biome --write
+npm run build       # prebuild (genera el corpus) + tsc --noEmit + vite build
+npm run fast-check  # lint + typecheck + tests (gate pre-commit, análogo a `make fast-check`)
+```
+
+### Estructura
+
+| Ruta | Función |
+|---|---|
+| `src/lib/chat-engine.ts` | Punto único de selección del motor. Cambiar aquí al conectar el backend |
+| `src/lib/chat-engine.stub.ts` | Motor simulado con streaming y citas reales |
+| `src/lib/corpus.ts` | Carga `public/data/corpus.json`; degrada a corpus vacío si falla |
+| `src/stores/useConversations.ts` | Historial de conversaciones en localStorage |
+| `src/components/layout/` | `SiteFooter` y `GoogleAnalyticsFooter` (integración GA4) |
+| `src/components/chat/` | Componentes de la vista de chat (`ChatMessageContent`, ...) |
+| `src/shared/components/ui/` | Primitivas de UI sobre Radix (button, sheet, tooltip...) |
+| `src/types/chat.ts` | Tipos compartidos del motor de chat y del corpus |
+| `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
+| `tests/` | Suites Vitest (`*.test.ts` / `*.test.tsx`) |
+
+Pendientes de aterrizar: `src/main.tsx` y `src/App.tsx` (punto de entrada y
+enrutado de la SPA). Sin ellos el build de producción falla; ver
+[`docs/operations/NETLIFY.md`](docs/operations/NETLIFY.md).
+
+### Estado del motor
+
+El chat funciona hoy con un **stub**. `chatEngineMode` en
+`src/lib/chat-engine.ts` vale `'stub'`, lo que activa el aviso de contenido
+simulado en la UI. Al conectar el backend real hay que cambiarlo a `'live'`,
+que apaga el aviso automáticamente.
+
+Opciones de backend evaluadas y aún abiertas: ampliar la **API FastAPI ya
+existente** (`api/main.py`) con un endpoint `/chat` — hoy el camino de menor
+fricción —, Netlify Functions + OpenAI file_search, o Netlify Functions +
+Supabase pgvector.
+
+### Despliegue y analítica
+
+`netlify.toml` en la raíz del repo (`base = "frontend"`, `publish = "dist"`),
+con Cloudflare por delante del dominio. Configuración de DNS, TLS, WAF y
+verificación en [`docs/operations/NETLIFY.md`](docs/operations/NETLIFY.md) y
+[`docs/operations/CLOUDFLARE.md`](docs/operations/CLOUDFLARE.md). Integración
+de Google Analytics 4 documentada en [`docs/ANALYTICS.md`](docs/ANALYTICS.md).
+
+Al conectar el backend real hay que ampliar `connect-src` en la CSP de
+`netlify.toml` con el origen de la API.
 
 ## Referencias
 
