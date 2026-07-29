@@ -1,8 +1,13 @@
 # Backend del chat de residenciafiscal.org — Diseño
 
 **Fecha**: 2026-07-29
-**Estado**: aprobado
+**Estado**: aprobado con gates de implementación
 **Continúa**: [`2026-07-29-frontend-chatbot-design.md`](2026-07-29-frontend-chatbot-design.md), que dejó el backend explícitamente fuera de alcance
+
+Las restricciones de plataforma se volvieron a contrastar el 2026-07-29 con la
+documentación oficial. La arquitectura queda aprobada, pero no se activa en
+producción hasta superar el *spike* de plataforma y los criterios de aceptación
+de la sección 10.
 
 ## 1. Objetivo
 
@@ -58,33 +63,55 @@ categorias_admitidas_contribuyente [CATEGORIA]
 categorias_rechazadas_contribuyente[CATEGORIA]
 Pruebas_rechazadas_clave           [ { parte, categoria, … } ]
 Prueba_o_bala_de_plata             { parte, categoria, … }
-resultado_final                    GANA_AEAT | GANA_CONTRIBUYENTE | PARCIAL | RETROACCION | INADMISION
+resultado_final                    GANA_AEAT | GANA_CONTRIBUYENTE | PARCIAL |
+                                   RETROACCION | INADMISION | OTROS | FUERA_DE_ALCANCE
 frases_clave                       [ { tema, pagina, texto } ]
 confianza_extraccion               ALTA | MEDIA | BAJA
 ```
 
-Los enums canónicos (7 criterios `CRIT_*`, 12 categorías de prueba, 5 resultados)
-viven en `config.py` y se replican en `frontend/src/types/chat.ts`.
+Los enums canónicos (7 criterios `CRIT_*`, 12 categorías de prueba y 7
+resultados) viven en `config.py`. El frontend solo tipa sus 5 resultados
+mostrables más `DESCONOCIDO`; hoy `OTROS` y `FUERA_DE_ALCANCE` se mapean a este
+último y los criterios siguen siendo `string[]`. El backend valida el catálogo
+completo y mantiene esa adaptación explícita.
+
+### Deuda documental detectada al escribir esto
+
+`CLAUDE.md` está desactualizado en dos puntos que este diseño toca de lleno, y
+conviene arreglarlo aparte para que no siga induciendo a error:
+
+- Enumera **5 resultados finales**; `config.py:156-164` define **7**.
+- Su tabla de costes da **$0.006 por PDF** con `gpt-5.6-luna`, pero
+  `model_pricing.py:23` tarifa ese modelo a **$1/M de entrada y $6/M de salida**, y
+  los registros reales del JSONL rondan **$0.017 por sentencia**. Esa cifra
+  optimista es la misma que me llevó a estimar el coste del chat tres veces por
+  debajo del real.
+
+Ninguna de las dos correcciones pertenece a esta feature, pero cualquiera que
+diseñe apoyándose en `CLAUDE.md` repetirá el mismo error.
 
 ### Restricciones de plataforma verificadas
 
-Comprobadas en la documentación de Netlify el 2026-07-29. **Condicionan el diseño
-entero**, así que quien revise esto debería cuestionarlas si tiene datos mejores.
+Comprobadas en la documentación oficial de Netlify el 2026-07-29. **Condicionan
+el diseño entero**, así que se vuelven a verificar al implementar si han pasado
+más de 30 días.
 
 | Runtime | Límite | Consecuencia |
 |---|---|---|
-| Functions con streaming | **10 s de ejecución** (no solo hasta el primer byte) + 20 MB de respuesta | Insuficiente: router + ~700 tokens de redacción se van a 15–25 s. Cortaría a media frase. |
-| Functions estándar | 10 s, ampliable a 26 s bajo demanda en planes Pro/Enterprise | Mismo problema, y depende del plan. |
+| Functions con streaming | **10 s de ejecución** + 20 MB de respuesta | Insuficiente: router + redacción pueden superar 10 s y cortar la respuesta. |
+| Functions estándar sin streaming | 60 s + 6 MB de respuesta | El tiempo bastaría, pero se perdería la experiencia de streaming. |
 | Background Functions | 15 min | No sirven: devuelven `202` y no pueden streamear al cliente. |
-| **Edge Functions** | **50 ms de CPU propio**, 40 s para cabeceras, 20 MB de bundle, streaming soportado | La espera a OpenAI **no** cuenta como CPU. Es el único runtime de Netlify donde esto cabe. |
+| **Edge Functions** | **50 ms de CPU propio**, 40 s para cabeceras, 20 MB de bundle comprimido, streaming soportado | La espera de red no cuenta como CPU. Es el único runtime de Netlify que conserva streaming más allá de 10 s. |
 
 Además:
 
-- Netlify **no** ofrece rate limiting declarativo para Edge Functions (el `config`
-  admite `path`, `excludedPath`, `pattern`, `method`, `header`, `cache`, `onError`
-  y poco más). Hay que implementarlo a mano.
-- **Netlify Blobs sí es accesible desde Edge Functions**, lo que da estado
-  persistente sin añadir ningún proveedor externo al stack.
+- Netlify ofrece **rate limiting nativo en el `config` de la Edge Function** en
+  todos los planes. El máximo de ventana documentado es 180 s: sirve de
+  cortafuegos de ráfagas, pero no sustituye la cuota horaria ni el techo diario.
+- **Netlify Blobs es accesible desde Edge Functions** y admite consistencia fuerte
+  y escrituras condicionales por ETag. Los contadores compartidos deben usar
+  ambas; un `get` seguido de `set` sin compare-and-swap pierde incrementos bajo
+  concurrencia.
 - Las Edge Functions se evalúan **antes** que los redirects, así que el catch-all
   `/* → /index.html` de `netlify.toml` no intercepta la ruta del endpoint.
 - La CSP de `netlify.toml` ya incluye `connect-src 'self'`: al ser el mismo
@@ -92,23 +119,29 @@ Además:
 - El `ignore` de `netlify.toml` solo reconstruye si cambia `frontend/**` o el
   propio `netlify.toml`; las Edge Functions viven bajo `frontend/`, así que encaja.
 
+Fuentes: [límites de Edge Functions](https://docs.netlify.com/build/edge-functions/limits/),
+[streaming y límites de Functions](https://docs.netlify.com/build/functions/api/#streaming-responses),
+[rate limiting](https://docs.netlify.com/manage/security/secure-access-to-sites/rate-limiting/)
+y [consistencia/escrituras condicionales de Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/).
+
 ## 3. Decisiones tomadas
 
 | Decisión | Elección | Motivo | Alternativas descartadas |
 |---|---|---|---|
-| Dónde corre | Edge Function en el mismo repo | Único runtime de Netlify donde cabe una respuesta larga en streaming. Mismo deploy, mismo origen, CSP intacta. | Function normal (10 s), ampliar la FastAPI (exige hosting + CORS + dominio), Cloudflare Workers (otro origen), Supabase Edge (proveedor extra) |
+| Dónde corre | Edge Function en el mismo repo | Único runtime de Netlify donde cabe una respuesta larga en streaming. Mismo deploy, mismo origen, CSP intacta. | Function con streaming (10 s), ampliar la FastAPI (exige hosting + CORS + dominio), Cloudflare Workers (otro origen), Supabase Edge (proveedor extra) |
 | Recuperación | Router LLM barato → filtro determinista | El corpus ya viene estructurado por el pipeline: las facetas hacen el trabajo pesado y el router solo traduce lenguaje natural a facetas | Solo léxico (falla si la pregunta no usa el vocabulario del corpus), tool use (latencia variable), embeddings (sobreingeniería para 106 documentos) |
-| Corpus del servidor | Embebido en el bundle, no público | Cero latencia de red, y el análisis completo no queda descargable de un tirón | Publicarlo como estático, publicar una versión recortada |
-| Gasto y abuso | Rate limit por IP + techo de gasto diario | El endpoint es la única pieza que cuesta dinero y está abierta | Solo límites blandos (sin contador propio), Upstash/Supabase (proveedor extra) |
-| Estado de los contadores | Netlify Blobs | Persistente y sobrevive a cold starts sin añadir proveedor | En memoria del isolate (inservible: hay muchos isolates en muchas regiones) |
-| Fiabilidad | Cerrada al corpus + validación de ROJ | Alucinar una sentencia es el peor fallo posible en una web jurídica | Solo instrucciones en el prompt, permitir conocimiento general |
+| Corpus del servidor | Embebido en el bundle y no servido como asset | Cero latencia de lectura y despliegue atómico con el código | Publicarlo como asset, cargarlo de Blobs en cada petición |
+| Gasto y abuso | Límite nativo de ráfaga + cuota horaria + reserva de gasto diaria | El endpoint es la única pieza que cuesta dinero y está abierta | Solo límites del proveedor, contador no atómico |
+| Estado de cuotas y presupuesto | Netlify Blobs, consistencia fuerte y compare-and-swap | Persistente y correcto entre isolates/regiones sin añadir proveedor | Memoria del isolate, `get` + `set` no atómico |
+| Recuperación robusta | Unión de búsqueda léxica global y candidatos por facetas | Un error del router no puede excluir por sí solo la sentencia relevante | Filtro duro dependiente solo del router |
+| Citas | Marcadores internos `[S1]` resueltos por servidor | El modelo nunca decide el ROJ/ECLI mostrado al usuario | Extraer ROJ libres del texto una vez ya emitido |
 
 ### Modelos
 
 | Paso | Modelo | Por qué |
 |---|---|---|
-| Router | `gpt-5.6-luna` | Clasificación con salida JSON estricta sobre ~500 tokens de entrada: ~$0.0003 por pregunta |
-| Redacción | `gpt-5.6-luna` (`GPT_5_MINI`) | Mismo modelo que usa el pipeline por defecto; buena relación calidad/precio con ~25k de contexto |
+| Router | `gpt-5.6-luna` | Clasificación con salida JSON estricta; recibe el historial acotado para resolver preguntas de seguimiento |
+| Redacción | `gpt-5.6-luna` (`GPT_5_MINI`) | Mismo modelo que usa el pipeline por defecto; contexto total limitado a 48 KB y salida a 1.200 tokens, incluido razonamiento |
 
 Ambos pasos usan el mismo modelo **porque hoy no hay uno más barato disponible**:
 en `config.py:43`, `GPT_5_NANO` es un alias de `gpt-5.6-luna`, igual que
@@ -116,13 +149,33 @@ en `config.py:43`, `GPT_5_NANO` es un alias de `gpt-5.6-luna`, igual que
 un paso barato por su tamaño de entrada, no por el modelo, y es el sitio donde
 cambiar el ID el día que exista un modelo de clasificación más económico.
 
-Las Edge Functions **no importan `config.py`**: los IDs de modelo y los enums
-(`CRIT_*`, categorías de prueba, resultados) se duplican en TypeScript, igual que
-ya ocurre en `frontend/src/types/chat.ts`. Es duplicación consciente entre dos
-runtimes; el gate que la vigila es que el corpus generado se valide contra los
-enums del TS en el `prebuild`.
+Las dos llamadas usan la **Responses API**, con `store: false`. El router usa
+Structured Outputs con JSON Schema estricto; la redacción consume únicamente
+eventos `response.output_text.delta`, y toma tokens/uso del
+`response.completed`. `stream_options.include_usage` pertenece a Chat
+Completions y no forma parte de este contrato.
 
-**Coste esperado**: ~$0.008 por pregunta. El techo de $2/día son unas 250 preguntas.
+Las Edge Functions **no importan `config.py`**. Los IDs, precios y enums
+(`CRIT_*`, categorías de prueba, resultados) se duplican en un JSON pequeño que
+Zod valida y TypeScript tipa al cargar. La misma librería valida el request y la
+salida del router; no se mantiene un validador JSON casero. Es duplicación
+consciente entre runtimes y lleva un test de contrato contra `config.py` y
+`model_pricing.py`; no se confía solo en que el corpus casualmente contenga todos
+los valores.
+
+**Coste orientativo corregido**: ~$0.02–0.026 por pregunta si los 48 KB se
+traducen en ~12–16k tokens de entrada, el router recibe hasta ~3k y la salida
+visible ronda 700 tokens. A
+`$1/M` de entrada y `$6/M` de salida, una petición con 25k tokens de contexto ya
+costaría cerca de `$0.03`, no `$0.008`. Con el contexto acotado, el techo de
+`$2/día` equivale aproximadamente a 75–100 preguntas medias, no a 250.
+
+El presupuesto no convierte esa media en una cuota: antes de llamar al modelo se
+reserva el coste máximo acotado de la petición y al terminar se reconcilia con el
+uso real de ambas respuestas.
+
+Referencia de la API: [Responses API — creación, streaming, Structured Outputs y
+uso](https://developers.openai.com/api/reference/resources/responses/methods/create).
 
 ## 4. Arquitectura
 
@@ -130,14 +183,18 @@ enums del TS en el `prebuild`.
 
 ```
 frontend/
+├── tsconfig.edge.json          # tipos del runtime Edge, separado del DOM de React
 ├── netlify/
 │   └── edge-functions/
-│       ├── chat.ts             # endpoint: orquesta y streamea
-│       ├── _corpus.ts          # GENERADO: índice + fichas (gitignored, con fallback versionado)
-│       ├── _retrieval.ts       # filtro determinista — puro, sin globals de Deno
-│       ├── _router.ts          # llamada al router + validación del JSON
-│       ├── _limits.ts          # rate limit por IP y techo de gasto (Netlify Blobs)
-│       └── _sse.ts             # construcción de eventos SSE
+│       ├── chat.ts             # endpoint delgado: valida, orquesta y streamea
+│       ├── _chat-config.json   # modelos, precios, enums y límites
+│       ├── _chat-config.ts     # valida/tipa la configuración JSON
+│       ├── _corpus.ts          # GENERADO Y VERSIONADO: índice + fichas
+│       ├── _retrieval.ts       # recuperación y ranking — módulo puro
+│       ├── _router.ts          # Responses API + validación del JSON
+│       ├── _budget.ts          # cuota horaria y reserva diaria con CAS
+│       ├── _citations.ts       # valida [S<n>] y resuelve identificadores
+│       └── _sse.ts             # serialización del protocolo SSE
 ├── scripts/
 │   └── build-corpus.mjs        # AMPLIADO: emite corpus público + corpus del servidor
 └── src/lib/
@@ -146,90 +203,173 @@ frontend/
     └── chat-engine.stub.ts     # se conserva para tests y dev sin claves
 ```
 
-Netlify no publica como endpoint los ficheros con prefijo `_`: son módulos
-internos del bundle.
+Solo `chat.ts` exporta una declaración de ruta. Los módulos con prefijo `_` se
+importan en su bundle y no declaran endpoints; el prefijo es una convención de
+proyecto, no una barrera de seguridad.
 
-Declaración en `netlify.toml` (raíz del repo):
+La ruta y el límite nativo se declaran en el propio `chat.ts`; `rateLimit` no se
+puede declarar en `netlify.toml`:
 
-```toml
-[[edge_functions]]
-  path = "/api/chat"
-  function = "chat"
+```ts
+export const config: Config = {
+  path: '/api/chat',
+  rateLimit: {
+    windowLimit: 8,
+    windowSize: 180,
+    aggregateBy: ['ip', 'domain'],
+  },
+};
 ```
+
+El límite de 8/180 s frena ráfagas antes de ejecutar código sin romper una
+conversación normal: un usuario que encadena cuatro o cinco preguntas de
+seguimiento en pocos minutos es el comportamiento esperado, no un ataque. Quien
+pone el techo real es la cuota horaria; la ventana nativa solo evita que un bucle
+llegue a ejecutar código. Con un límite de 3 por ventana, el propio caso de uso
+que describe el manifiesto —repreguntar hasta acotar un criterio— se bloquearía a
+sí mismo.
+
+La cuota de 10/hora se mantiene aparte porque la ventana nativa no llega a una
+hora. Ojo al presupuesto de reglas por plan: Free/Starter admite **2 reglas por
+proyecto**, así que esta consume la mitad del cupo disponible. Se omite
+`method` para que el propio handler pueda devolver `405` a cualquier método
+distinto de `POST`; si se limitara la invocación a `POST`, el catch-all de la SPA
+podría convertir un `GET /api/chat` en un `200` con `index.html`.
+
+### Contrato de entrada
+
+El body es JSON con forma `{ "messages": [...] }`. El servidor no acepta campos
+desconocidos y valida:
+
+- `Content-Type: application/json`; máximo 32 KB de body.
+- Entre 1 y 6 mensajes, alternando `user`/`assistant`, y el último debe ser
+  `user`. Nunca se aceptan roles `system`, `developer` ni `tool`.
+- La última pregunta tiene entre 1 y 500 caracteres; cada respuesta histórica,
+  como máximo 4.000; el total de contenido, como máximo 12.000.
+- Solo se envían al modelo `role` y `content`: IDs, timestamps, fuentes guardadas
+  y cualquier otro metadato del navegador se descartan.
+
+Estos límites protegen coste y contexto y evitan que un cliente convierta
+metadatos persistidos en instrucciones.
+
+El límite de body se aplica primero a `Content-Length` cuando existe y siempre
+con un lector incremental que corta a 32 KB; no se llama a `request.json()` sobre
+un body `chunked` sin cota.
 
 ### Flujo de una pregunta
 
 ```
 POST /api/chat  { messages: [...] }
   │
-  ├─ 1. Guardarraíles (sin coste)
-  │     pregunta ≤ 500 caracteres · historial recortado a los 6 últimos mensajes
-  │     rate limit por IP · techo de gasto diario
+  ├─ 0. Rate limit nativo de Netlify (antes de invocar la función)
   │
-  ├─ 2. Router — gpt-5-nano, JSON estricto, sin streaming (~1 s, ~$0.0002)
+  ├─ 1. Validación + cuotas (sin coste LLM)
+  │     body/roles/tamaños · 10 preguntas/hora por IP
+  │     reserva atómica del coste máximo dentro del techo diario
+  │
+  ├─ 2. Router — gpt-5.6-luna, JSON Schema estricto, sin streaming
   │     { criterios[], organo, resultado, anios[], categorias_prueba[],
   │       foco, terminos[] }
+  │     Si falla o su salida no valida → ruta léxica, no error al usuario
   │
   ├─ 3. Recuperación — determinista, sin red
-  │     filtro duro por facetas → puntuación léxica → top 12
+  │     léxico global ∪ candidatos por facetas relajables → reranking
+  │     top 8–12 dentro de un presupuesto de contexto explícito
   │
-  ├─ 4a. ¿0 resultados? → respuesta honesta, sin segunda llamada, sin gasto
+  ├─ 4a. ¿0 resultados? → respuesta honesta, sin segunda llamada;
+  │                       se contabiliza solo el router
   │
-  ├─ 4b. Redacción — gpt-5.6-luna en streaming (~25k in / ~700 out, ~$0.008)
-  │      Los tokens salen hacia el cliente conforme llegan.
+  ├─ 4b. Redacción — gpt-5.6-luna, max_output_tokens acotado
+  │      El modelo cita solo marcadores [S1]…[S12].
+  │      Cada párrafo se valida y el servidor sustituye el marcador por el ROJ
+  │      real antes de emitirlo al cliente.
   │
-  └─ 5. Al cerrar el stream: se extraen los ROJ citados en el texto, se
-        intersectan con el corpus y se emite el evento `sources`.
-        Los ROJ inventados se descartan y se registran en el log.
+  └─ 5. Cierre
+        done · reconciliación de la reserva con usage · log estructurado
 ```
+
+El router recibe el historial validado, no solo la última frase, para entender
+seguimientos como «¿y si fuera Francia?». Su schema usa enums cerrados del
+catálogo, rangos numéricos acotados y arrays con máximo; `terminos` no puede
+contener más de 8 elementos. La salida se valida de nuevo aunque el proveedor
+prometa Structured Outputs.
 
 ### Presupuesto de CPU (50 ms)
 
-Es el único límite de la plataforma que puede mordernos, así que el corpus
-generado va en **dos niveles**:
+Es el límite más incierto de la plataforma. El corpus generado va en **dos
+niveles**:
 
 - **Índice compacto** (~120 KB): identificadores, órgano, año, criterios
   detectados y decisivos, resultado, categorías admitidas/rechazadas, países, y
   los términos ya normalizados para la puntuación léxica. Se parsea **una vez**
   al arrancar el isolate y se reutiliza en las peticiones calientes.
 - **Fichas completas**: un `Record<archivo, string>` donde cada valor es la ficha
-  serializada. Solo se hace `JSON.parse` de las ~12 seleccionadas.
+  serializada. Solo se hace `JSON.parse` de las candidatas seleccionadas. De cada
+  ficha se construye después una tarjeta de prompt con metadatos y fragmentos
+  relevantes; no se envían los 8,4 KB medios completos por sentencia.
 
-Ambos se emiten como `JSON.parse("…")` sobre literales de cadena, no como
-literales de objeto: para ~1 MB, V8 lo parsea bastante más rápido.
-
-Filtrar y puntuar 106 fichas es aritmética trivial; el coste real sería parsear
-888 KB en cada petición, y con este reparto no ocurre.
+El generador puede emitir `JSON.parse("…")` o literales de objeto, pero la
+elección se decide con benchmark, no por intuición. El gate del *spike* mide
+arranque frío y petición caliente con el bundle real. Objetivo: p95 de CPU propio
+< 40 ms en Deploy Preview, dejando 10 ms de margen.
 
 ### Recuperación (`_retrieval.ts`)
 
-Dos fases sobre el índice:
+El router ayuda, pero no tiene poder de exclusión total:
 
-1. **Filtro duro** por las facetas que devuelva el router (criterios, órgano,
-   resultado, rango de años, categorías de prueba, país del CDI). Facetas
-   ausentes no filtran. Si el resultado queda vacío, se relajan las facetas menos
-   específicas antes de rendirse.
-2. **Puntuación léxica** de los términos del router sobre `resumen_criterios`,
+1. **Baseline léxico global** sobre todos los registros con
+   `es_caso_residencia_irpf = SI`, siempre ejecutado, con términos de la pregunta
+   y sin depender del router. Los casos fuera de alcance nunca llegan al prompt.
+2. **Candidatos por facetas**: criterios, órgano, resultado, rango de años,
+   categorías de prueba y país del CDI. Si hay pocos resultados, se relajan
+   primero órgano/resultado, después año/país y por último criterios/categorías.
+3. **Unión y reranking** de ambos conjuntos. La puntuación usa
+   `resumen_criterios`,
    `razonamiento_residencia`, `pruebas[].detalle` y `frases_clave[].texto`, con
    refuerzo si el criterio buscado aparece en `Criterio_decisivo` y no solo en
    `Criterios_residencia_detectados`.
 
-Se devuelven las 12 mejores. El módulo es **puro y sin globals de Deno**, para
-que se pueda probar con Vitest como cualquier otro módulo del frontend.
+El ranking devuelve 12 candidatas. El *context packer* incluye primero las 8
+mejores con un máximo de 4 KB por tarjeta y añade `S9`…`S12` solo mientras quepan.
+El prompt completo —instrucciones, historial y corpus— no puede superar 48 KB
+UTF-8. Se recortan fragmentos por puntuación, no con un `slice` ciego que pueda
+separar texto y fuente. No se confía en truncación automática del proveedor. El
+módulo es **puro y sin globals de Deno**, para que se pueda probar con Vitest.
 
 ### Estado en Netlify Blobs
 
 | Clave | Contenido | Uso |
 |---|---|---|
-| `rl:<hash(ip)>` | contador + inicio de ventana | 10 preguntas/hora por IP |
-| `spend:<YYYY-MM-DD>` | coste acumulado del día | techo de $2 |
+| `rl:<YYYY-MM-DD-HH>:<hash(ip)>` | `{ count }` | 10 preguntas por hora natural UTC e IP |
+| `spend:<YYYY-MM-DD>` | `{ spentMicros, reservations }` | techo global por día UTC |
 
 La IP se guarda **hasheada con un salt**; nunca en claro. El registro caduca al
-rotar la ventana: es un contador, no un log de visitantes.
+rotar la hora: es un contador, no un log de visitantes.
 
-El coste se obtiene de `stream_options: { include_usage: true }`, que hace que
-OpenAI incluya el bloque `usage` en el último chunk del stream. Así se contabiliza
-el gasto real y no una estimación.
+Cada mutación sigue este algoritmo:
+
+1. Lectura con consistencia fuerte y obtención de ETag.
+2. Cálculo del nuevo estado.
+3. `setJSON(..., { onlyIfMatch: etag })`; para la primera escritura,
+   `onlyIfNew: true`.
+4. Si otro isolate ganó la carrera, releer y reintentar hasta 3 veces. Si sigue
+   habiendo contención o Blobs falla, devolver `503` **sin llamar a OpenAI**.
+
+Antes del router se añade a `reservations[requestId]` un importe conservador
+calculado con los máximos de entrada/salida de las dos llamadas. Para no depender
+de un tokenizer pesado en el edge, el límite superior de tokens de entrada usa
+el tamaño UTF-8 en bytes —conservador para un tokenizer byte-level— y añade el
+máximo de salida. Importes y precios se convierten a **microdólares enteros** y
+se redondean hacia arriba; no se acumulan floats monetarios. Solo se acepta si
+`spentMicros + sum(reservations)` no supera `CHAT_DAILY_BUDGET_USD`. Al recibir
+`response.completed`, se elimina la reserva y se suma el coste real. Si la
+petición termina sin datos de uso, la reserva se convierte en gasto: el límite
+prefiere infrautilizar presupuesto a excederlo.
+
+La reserva de gasto se obtiene antes de incrementar la cuota horaria. Si la
+cuota ya está agotada, se libera mediante otra escritura condicional. No hay una
+transacción entre ambas claves; un fallo entre pasos puede dejar una reserva
+conservadora hasta el final del día, pero nunca abrir gasto no reservado.
 
 ## 5. Contrato del endpoint
 
@@ -237,14 +377,25 @@ el gasto real y no una estimación.
 tipos de `ChatChunk` que ya define `frontend/src/types/chat.ts`, más uno de error:
 
 ```
-event: token    data: {"text":"El cómputo de los "}
+event: token    data: {"text":"El cómputo de los días… (ROJ: STS 107/2018)"}
 event: sources  data: {"sources":[{…ChatSource}]}
 event: done     data: {}
-event: error    data: {"code":"upstream","message":"…"}
+event: error    data: {"code":"upstream_interrupted","message":"…","retryable":true}
 ```
 
-Sustituir el stub no obliga a tocar nada fuera de `src/lib/`, que es la promesa
-que hace el comentario de cabecera de `chat-engine.ts`.
+Cada evento ocupa una sola línea `data:` con JSON y termina en una línea en
+blanco. La respuesta incluye `Content-Type: text/event-stream; charset=utf-8`,
+`Cache-Control: no-store` y `X-Chat-Protocol: 1`.
+
+`error` es un detalle del protocolo HTTP, **no** un cuarto `ChatChunk`. El cliente
+`chat-engine.live.ts` lo convierte en una excepción tipada; `ChatView` ya captura
+errores y conserva el texto parcial. Así se respeta el contrato actual sin tocar
+`src/types/chat.ts` ni componentes.
+
+El parser no usa `EventSource` porque la petición es `POST`. Lee `fetch().body`,
+tolera UTF-8 y eventos partidos entre chunks de red, rechaza versiones de
+protocolo desconocidas y exige que el terminal sea exactamente uno de `done` o
+`error`. Un EOF sin ninguno es error, no éxito silencioso.
 
 El `extracto` de cada `ChatSource` **no lo escribe el modelo**: se toma del
 corpus — la `frases_clave` más afín al foco de la pregunta, o `resumen_criterios`
@@ -253,29 +404,95 @@ reescritura del modelo.
 
 ### Disciplina de la respuesta
 
-El *system prompt* de redacción impone tres reglas: responder solo con las
-sentencias entregadas, citar el ROJ tras cada afirmación, y decir explícitamente
-que no consta cuando el material no lo cubra.
+El prompt de redacción impone cuatro reglas: responder solo con las fichas
+entregadas, citar al menos un marcador `[S<n>]` en cada párrafo sustantivo, no
+escribir ROJ/ECLI libres y decir explícitamente que no consta cuando el material
+no cubra la pregunta.
 
-Sobre eso hay una **validación determinista**: se extraen los ROJ del texto
-generado, se intersectan con el corpus, y los que no existan se eliminan del
-panel de fuentes y se registran. Es la única garantía que no depende de que el
-modelo obedezca.
+Las fichas se etiquetan en servidor (`S1`…`S12`). Corpus e historial se
+serializan dentro de secciones delimitadas y se describen como **datos no
+confiables**, no como instrucciones; la llamada no dispone de tools.
+
+La salida se amortigua por párrafos:
+
+1. Solo se aceptan marcadores que existan en el conjunto recuperado.
+2. El servidor reemplaza cada marcador por el ROJ/ECLI de esa ficha antes de
+   emitir el párrafo.
+3. Tras cada párrafo que añade una cita, emite un evento `sources` con la lista
+   acumulada. Así una interrupción conserva también las fichas de los párrafos
+   que el usuario ya vio.
+4. Un párrafo sustantivo sin marcador válido se retiene y registra. Si no queda
+   contenido válido, se devuelve una respuesta honesta sin fuentes.
+5. `sources` contiene únicamente las fichas realmente citadas en texto emitido.
+
+Esto garantiza que **los identificadores mostrados existen y proceden del
+corpus**. No demuestra por sí solo que cada inferencia del modelo esté
+jurídicamente respaldada; esa calidad se mide con el banco de evaluación de la
+sección 10 y se explica en la metodología pública.
+
+#### Consecuencia sobre el streaming, y regla de vaciado
+
+Amortiguar por párrafos **cambia la granularidad de lo que ve el usuario**: ya no
+es token a token como en el stub, sino párrafo a párrafo. Es el precio de que el
+servidor sustituya `[S<n>]` por el ROJ antes de emitir, y es un intercambio
+correcto —un identificador inventado es peor que un streaming menos fluido—, pero
+hay que nombrarlo para que no se diagnostique después como un fallo del cliente.
+El indicador de escritura de `ChatView` cubre las pausas entre párrafos.
+
+Sin una regla de vaciado, un modelo que emita un único párrafo largo dejaría al
+usuario sin nada en pantalla hasta el final, **y el timeout de 15 s sin eventos no
+saltaría**: los eventos del proveedor sí están llegando; lo que no ocurre es la
+emisión hacia el cliente. Por eso el búfer se vacía en cuanto se cumple lo
+primero de:
+
+- fin de párrafo (doble salto de línea);
+- 1.200 caracteres acumulados;
+- 3 s sin haber emitido nada al cliente.
+
+En los vaciados que no son fin de párrafo se emite todo el texto **hasta el
+último marcador ya resuelto**, y el resto queda en el búfer: así nunca se manda a
+pantalla un `[S<n>]` sin sustituir ni se parte una cita por la mitad. Existe
+además un tope duro de búfer (8 KB) que, de alcanzarse, se trata como respuesta
+malformada del modelo y produce `event: error`.
 
 ## 6. Errores
 
 | Situación | Respuesta |
 |---|---|
+| Método distinto de `POST` | `405` |
+| Content-Type/body/schema inválido | `400` o `415`, según el caso |
 | Pregunta vacía o >500 caracteres | `400` |
-| Cuota por IP agotada | `429` + `Retry-After` |
+| Límite nativo de Netlify agotado | `429` **generado por la plataforma, sin ejecutar la función**: no es SSE ni JSON de este contrato |
+| Cuota horaria por IP agotada | `429` emitido por el handler, con `Retry-After` y cuerpo JSON |
 | Techo diario alcanzado | `503` con mensaje de cupo, sin llamar a OpenAI |
+| Blobs no disponible o CAS agotado | `503`, fail-closed, sin llamar a OpenAI |
 | Falta `OPENAI_API_KEY` | `503` |
+| Corpus ausente, inválido o con 0 casos | El build falla; defensa runtime `503` |
+| Router falla o no valida | Fallback a recuperación léxica; no se aborta la consulta |
 | OpenAI falla **antes** del primer token | `502` |
 | OpenAI falla **a mitad** del stream | Las cabeceras ya salieron y no hay status que cambiar: se emite `event: error` y el cliente conserva lo escrito con un aviso al pie |
-| El usuario pulsa «detener» | El `AbortSignal` corta el `fetch` a OpenAI, así que se deja de pagar de inmediato |
+| OpenAI termina `incomplete` o hay EOF sin `done` | `event: error`; nunca se presenta como respuesta completa |
+| El usuario pulsa «detener» | El `AbortSignal` cancela el fetch y reduce trabajo posterior; puede existir uso ya generado y facturable |
 
 El fallo a media respuesta es el caso que suele quedar sin cubrir y produce
 respuestas truncadas sin explicación; entra en el contrato desde el principio.
+
+Los dos `429` **no son intercambiables** y el cliente tiene que distinguirlos. El
+de la plataforma llega antes de que exista función: no lleva el `Content-Type` de
+este protocolo, el cuerpo no es JSON propio y la documentación de Netlify no
+garantiza `Retry-After`. Por eso `chat-engine.live.ts` comprueba el status y el
+`Content-Type` **antes** de intentar parsear SSE, y trata cualquier respuesta que
+no sea `text/event-stream` como error tipado a partir del status, sin leer el
+cuerpo como si fuera del contrato. Un parser que asuma SSE en cuanto la petición
+resuelve fallaría justo en el caso de abuso, que es cuando más importa responder
+con algo comprensible.
+
+Las esperas externas tienen límites propios y un deadline previo a cabeceras:
+operaciones de Blobs, router y apertura del stream de redacción no pueden sumar
+más de 30 s. El router dispone de 8 s y cada operación de Blobs de 2 s; el tiempo
+restante queda para reintentos y apertura de redacción. Una vez iniciado el
+stream, 15 s sin ningún evento del proveedor se consideran interrupción. Todos
+los timeouts usan `AbortSignal` y producen los errores anteriores.
 
 ## 7. Build y despliegue
 
@@ -284,45 +501,214 @@ respuestas truncadas sin explicación; entra en el contrato desde el principio.
 | Artefacto | Destino | Visibilidad |
 |---|---|---|
 | `corpus.json` (30 KB) | `frontend/public/data/` | Público — índice de la UI, ya existe |
-| `_corpus.ts` (~1 MB) | `frontend/netlify/edge-functions/` | Solo servidor |
+| `_corpus.ts` (~1 MB) | `frontend/netlify/edge-functions/` | No se sirve como asset; sí es visible en el repositorio público |
 
-El fallback versionado que ya existe para el corpus público **se replica para el
-del servidor**: sin él, un clon limpio sin `output/` construiría un endpoint con
-corpus vacío. Es la misma razón por la que hoy `corpus.json` está en git.
+`_corpus.ts` se genera y se versiona, igual que el fallback público. Esta es una
+decisión de disponibilidad, no de confidencialidad: cualquiera puede descargar
+el análisis desde el repositorio público. Si ese contenido no debe ser público,
+esta arquitectura deja de ser válida y hay que cargar el corpus en un
+Deploy Store privado durante un proceso autenticado.
 
-Variables nuevas en el panel de Netlify, ambas obligatorias:
+En un clon limpio sin `output/`, el prebuild conserva los dos artefactos
+versionados, pero los **valida**. El artefacto privado incluye
+`schemaVersion`, `recordCount`, `sourceSha256` y fecha de generación. El build
+falla si falta, no parsea, no contiene exactamente el número esperado de
+registros o incumple enums/schema; nunca despliega silenciosamente un chat vacío
+o un corpus público y otro privado de distinta versión.
+
+Variables nuevas en el panel de Netlify:
 
 | Variable | Uso |
 |---|---|
-| `OPENAI_API_KEY` | Llamadas al router y a la redacción |
-| `CHAT_IP_SALT` | Salt del hash de IP de los contadores |
+| `OPENAI_API_KEY` (obligatoria) | Llamadas al router y a la redacción |
+| `CHAT_IP_SALT` (obligatoria) | Salt del hash de IP de los contadores |
+| `CHAT_DAILY_BUDGET_USD` (default `2.00`) | Techo diario reservado antes de cada consulta |
 
-`netlify dev` sirve la Edge Function en local contra el mismo código.
+Se añaden `@netlify/edge-functions`, `@netlify/blobs`, el SDK oficial `openai` y
+`zod`; `netlify-cli` queda como devDependency y el script `dev:netlify` ejecuta
+`netlify dev` con una versión fijada en el lock. Las dependencias npm en Edge
+siguen marcadas como beta por Netlify, de modo que el *spike* verifica que el
+bundle Deno carga los cuatro paquetes de runtime. Netlify Dev sirve la Edge
+Function y un Blob store local; no demuestra los límites ni la latencia del edge
+real.
 
 Para poder desarrollar el frontend sin claves, `chatEngineMode` deja de ser una
-constante escrita a mano y pasa a resolverse desde `import.meta.env`, con
-`'live'` por defecto: solo un `.env.local` con la variable de escape puesta a
-`stub` devuelve el motor simulado. El comportamiento en producción es idéntico al
-de fijar `'live'` a mano, y el aviso de contenido simulado sigue apagándose solo.
+constante escrita a mano y pasa a resolverse desde
+`VITE_CHAT_ENGINE_MODE=stub|live`. El default es **`stub`** en cualquier entorno:
+producción solo se activa al configurar explícitamente `live` después de superar
+los gates. Esto hace que un deploy incompleto falle hacia contenido marcado como
+simulado, no hacia un endpoint roto. La variable no es secreta.
 
 ## 8. Tests
 
-Todo entra en `npm run fast-check`; el gate de Python no se toca.
+La lógica del pipeline Python no se toca. Los módulos TS entran en
+`npm run fast-check`; además se añade un test Python de contrato porque el CI
+Python ya corre tanto cuando cambia `config.py` como cuando cambia `frontend/**`.
+El gate completo de la feature es `make fast-check` **y**
+`cd frontend && npm run fast-check && npm run build`.
 
 | Qué | Cómo |
 |---|---|
-| `_retrieval.ts` | Vitest directo (módulo puro): facetas que filtran, orden de la puntuación, corpus vacío, filtro sin resultados, relajación de facetas |
-| Validación de ROJ | Texto con un ROJ inventado → se cae del panel de fuentes |
-| Parser SSE del cliente | Eventos partidos entre dos chunks de red, que es donde fallan estos parsers |
-| Guardarraíles | Pregunta larga → 400; contador agotado → 429; techo → 503 sin llamada a OpenAI |
-| `build-corpus.mjs` | Genera ambos artefactos; sin `output/` conserva los dos fallbacks |
+| `_retrieval.ts` | Léxico global, facetas, relajación, unión sin duplicados, orden estable, límites de contexto y fallback si el router falla |
+| `_citations.ts` | `[S1]` válido se resuelve al ROJ real; marcador inventado o párrafo sin fuente no se emite; `sources` coincide con el texto |
+| Parser SSE del cliente | UTF-8 y eventos partidos entre chunks; error tipado; EOF sin `done`; versión incompatible |
+| Validación de entrada | Roles prohibidos, alternancia, tamaños, campos extra y metadatos descartados |
+| Cuota horaria | Dos incrementos concurrentes no pierden cuenta; conflictos ETag reintentan; al agotarse, no hay llamada a OpenAI |
+| Presupuesto | Reservas concurrentes no superan techo; éxito reconcilia uso; aborto sin uso carga la reserva; Blobs caído falla cerrado |
+| API OpenAI | Router con JSON Schema; `store: false`; `response.completed` aporta usage; `incomplete` produce error |
+| `build-corpus.mjs` | Genera ambos artefactos y manifiesto; sin `output/` valida fallbacks; corpus ausente, divergente o inválido rompe el build |
+| Contratos cruzados | Pytest lee `_chat-config.json` y comprueba modelos/precios/enums contra `config.py`, `model_pricing.py` y `frontend/src/types/chat.ts` |
+| Integración local | `netlify dev` + OpenAI mock: POST completo, streaming, abort, 429/503 y cabeceras |
 
 `chat.ts` usa `Netlify.env` y necesita los tipos de `@netlify/edge-functions` como
 devDependency, con su propio `tsconfig` (el runtime es Deno, no el DOM). Queda
 deliberadamente delgado —solo orquestación— para que la lógica testeable viva en
-los módulos puros.
+los módulos puros. El script `typecheck` pasa a ejecutar tanto el proyecto React
+como `tsc --noEmit -p tsconfig.edge.json`; añadir el fichero sin integrarlo al
+script dejaría el código de producción fuera del gate.
 
-## 9. Fuera de alcance
+No se añaden llamadas reales a OpenAI al CI. El smoke real es manual, con un
+presupuesto pequeño y una clave de desarrollo, igual que los tests LLM de
+Python.
+
+## 9. Observabilidad y privacidad
+
+Cada petición genera un `requestId` aleatorio y un único log estructurado al
+cerrar. Campos permitidos:
+
+- resultado (`ok`, `no_results`, `rate_limited`, `budget_exhausted`,
+  `upstream_error`, `aborted`);
+- tiempos de router, recuperación, primer párrafo y total;
+- número de candidatos y fuentes emitidas;
+- tokens y coste de router/redacción cuando haya `usage`;
+- número de párrafos retenidos por citas inválidas;
+- intento de CAS y región de ejecución.
+
+No se registran pregunta, historial, texto de respuesta, contenido del corpus,
+IP, hash estable de IP ni API key. Los errores externos se reducen a código,
+status y `requestId`; no se vuelcan bodies del proveedor. La cuota usa el hash
+solo como clave efímera del Blob horario.
+
+Umbrales operativos iniciales:
+
+- cualquier ROJ/ECLI inválido emitido: objetivo **0**, prioridad alta;
+- >5 % de `upstream_error` en 15 minutos;
+- >10 % de respuestas sin resultados;
+- p95 de tiempo al primer párrafo >8 s;
+- gasto diario >80 % del techo.
+
+Durante las primeras 24 horas se revisan en los logs/observabilidad de Netlify.
+Automatizar alertas o añadir un panel queda fuera de esta iteración.
+
+### Lo que el usuario escribe sale del dominio
+
+No registrar la pregunta en los logs es correcto, pero **no es lo mismo que no
+tratarla**: la pregunta viaja a OpenAI en las dos llamadas. Con el motor en stub
+no salía nada de Netlify; con el motor real sí, y eso cambia lo que la web tiene
+que declarar. Antes de activar `live` hay que cubrir tres cosas, que no son
+opcionales ni aplazables a «cuando haya tráfico»:
+
+1. **Aviso de que no es asesoramiento jurídico**, visible junto al chat y no solo
+   en una página enlazada. La respuesta sale de un análisis automático de 106
+   sentencias y no valora el caso de nadie. Hoy ese papel lo cumple el aviso de
+   contenido simulado, que desaparece precisamente al activar `live`: si no se
+   sustituye por el aviso legal, la activación **quita** una advertencia en vez de
+   cambiarla.
+2. **Política de privacidad** que diga que el texto de la consulta se envía a
+   OpenAI como encargado del tratamiento, que se manda con `store: false` y que no
+   se conserva en el servidor. Los criterios de residencia fiscal invitan a
+   escribir datos personales —dónde vive uno, dónde está su familia—, así que
+   asumir que las consultas serán anónimas es una apuesta perdida de antemano.
+3. **Aviso en la caja de entrada** de no incluir datos identificativos. Es la
+   mitigación más barata y la única que actúa antes de que el dato salga.
+
+Los dos primeros puntos son texto de producto y encajan con
+`sentencias/AVISO_LEGAL.md` y con la página de metodología; el tercero es una
+línea de UI. Ninguno es trabajo de backend, y por eso mismo se cuelan: quedan
+anotados aquí como **condición de la fase 3**, no como sugerencia.
+
+## 10. Plan de entrega y criterios de aceptación
+
+### Fase 0 — *spike* de plataforma
+
+Antes de implementar la feature completa, una Edge Function mínima en Deploy
+Preview debe demostrar con el bundle y un corpus del tamaño real:
+
+1. Carga de `openai`, `zod`, `@netlify/blobs` y
+   `@netlify/edge-functions` en Deno.
+2. Streaming simulado de más de 10 s sin corte.
+3. p95 de CPU propio <40 ms en frío y caliente.
+4. Cabeceras emitidas antes de 10 s y dentro del límite absoluto de 40 s.
+5. CAS correcto con al menos 20 peticiones concurrentes.
+
+Si falla CPU, se reduce índice/contexto y se repite. Si falla compatibilidad de
+paquetes, se sustituye el SDK de OpenAI por `fetch` tipado manteniendo el mismo
+adaptador. Si Edge no cumple, se reabre la decisión de runtime; no se construye
+la feature sobre una premisa fallida.
+
+### Fase 1 — implementación detrás de `stub`
+
+Se desarrolla con TDD, se ejecutan `npm run fast-check` y `npm run build`, y se
+prueba el flujo completo con OpenAI mock en `netlify dev`. Producción sigue en
+`VITE_CHAT_ENGINE_MODE=stub`.
+
+### Fase 2 — evaluación
+
+Se crea un banco versionado de al menos 40 preguntas representativas: 183 días,
+ausencias, centro de intereses, familia, CDI, carga de prueba, pruebas concretas,
+preguntas comparativas, fuera de corpus y entradas adversariales. Cada caso
+anota sentencias esperadas y, cuando aplique, hechos que la respuesta debe o no
+debe afirmar.
+
+Los gates se separan en dos grupos, porque tienen coste y naturaleza muy
+distintos y mezclarlos bloquea la entrega sin ganar seguridad.
+
+**Bloqueantes (seguridad y corrección).** Binarios, automatizables y baratos: o
+pasan o no se activa.
+
+- 100 % de identificadores emitidos pertenecen al corpus recuperado;
+- 0 párrafos sustantivos emitidos sin una fuente válida;
+- techo diario no superado bajo el test concurrente;
+- 0 llamadas a OpenAI cuando validación, cuota, presupuesto o Blobs fallan;
+- comportamiento correcto en los casos **fuera de corpus** y **adversariales**:
+  responde que no consta y no obedece instrucciones inyectadas en la pregunta o
+  en el propio corpus;
+- p95 al primer párrafo <8 s y p95 total <30 s en Deploy Preview;
+- los tres requisitos legales y de privacidad de la sección 9.
+
+Para este grupo basta un núcleo de **12–15 preguntas**, en su mayoría negativas o
+adversariales: es donde el fallo es grave y la respuesta correcta es inequívoca.
+
+**Medidos, no bloqueantes (calidad de recuperación).** `recall@12` ≥90 % sobre 40
+preguntas exige etiquetar a mano qué sentencias «deberían» salir en cada una, y
+para una pregunta abierta como «¿qué pruebas convencen sobre el centro de
+intereses?» esa verdad de referencia es en buena parte opinable. El riesgo no es
+que el umbral sea exigente: es que **un gate caro y difuso acabe rebajándose para
+poder lanzar**, que es la peor forma posible de tener un gate.
+
+El banco de 40 preguntas se construye igual, se ejecuta igual y su resultado se
+guarda como artefacto versionado —incluida la comparación contra el baseline
+léxico puro, que sí puede ganar al conjunto reranqueado dentro del top 12—, pero
+se publica como **línea base medida**, no como condición de activación. A partir
+de ahí funciona como test de regresión: un cambio que empeore el recall respecto
+a la línea base anterior sí bloquea.
+
+La revisión humana de 20 respuestas se mantiene, y también fuera del camino
+crítico: es un muestreo de calidad jurídica cuyo resultado alimenta el prompt y
+el banco, no un semáforo de despliegue. Lo que sí bloquea es lo que esa revisión
+pueda destapar como fallo de seguridad, que ya está en el primer grupo.
+
+Los umbrales se calculan siempre sobre el banco completo y se guardan como
+artefacto; no se aprueba con ejemplos escogidos a mano.
+
+### Fase 3 — activación y rollback
+
+Tras los gates, se configura `VITE_CHAT_ENGINE_MODE=live` y se despliega. Durante
+las primeras 24 horas se usa un presupuesto bajo y se revisan errores, latencia,
+respuestas sin resultados y gasto. El rollback es cambiar la variable a `stub`
+y redesplegar; el stub y su aviso se conservan precisamente para este camino.
+
+## 11. Fuera de alcance
 
 Sin embeddings ni base de datos vectorial, sin cuentas de usuario, sin historial
 en servidor, sin caché de respuestas y sin panel de métricas. Con 106 sentencias
@@ -332,27 +718,36 @@ rehacer lo anterior.
 La API FastAPI (`api/main.py`) sigue siendo la vía para analizar PDFs nuevos y no
 se modifica. El pipeline Python tampoco.
 
-## 10. Riesgos abiertos
+## 12. Riesgos abiertos
 
 Lo que un revisor debería atacar primero:
 
-1. **El presupuesto de 50 ms de CPU no está medido**, solo razonado. Si el
-   arranque del isolate se pasa, el plan B es adelgazar el índice (menos términos
-   normalizados) o mover la selección final a un segundo nivel de fichas más
-   pequeñas. Conviene instrumentarlo en la primera versión desplegada.
-2. **El router es un punto único de fallo de calidad**: si clasifica mal las
-   facetas, el filtro duro puede dejar fuera la sentencia buena y el modelo
-   responderá «no consta» con seguridad injustificada. La relajación de facetas
-   lo mitiga, pero no lo resuelve; hace falta un banco de preguntas reales para
-   medirlo.
-3. **Netlify Blobs desde el edge añade latencia de red** antes del primer token
-   (dos operaciones por petición). Si pesa, los contadores pueden pasar a
-   escribirse de forma diferida tras responder.
+1. **El presupuesto de 50 ms de CPU puede invalidar Edge.** Ya no se acepta por
+   razonamiento: la fase 0 lo convierte en gate. El plan B dentro de Edge es
+   adelgazar índice y fichas; el plan C es reabrir runtime.
+2. **La recuperación puede tener recall insuficiente sin embeddings.** La unión
+   léxico/facetas elimina el router como punto único de exclusión, pero no
+   garantiza semántica. El banco de evaluación decide con datos si 106
+   documentos siguen justificando el diseño simple.
+3. **Blobs añade latencia y contención antes de la primera llamada.** Cuota y
+   reserva no pueden diferirse sin abrir una carrera de gasto. Si el p95 no
+   cumple, se cambia de almacén o runtime; no se rebaja la atomicidad.
 4. **El techo de gasto es global, no por usuario**: un solo abusador que respete
    el límite por IP puede agotar el cupo diario de todos. Aceptado
    conscientemente para una web de nicho; si ocurre, el siguiente paso es un
    *challenge* de Cloudflare en `/api/chat`, que ya está delante del dominio.
-5. **Los 10 s de las Functions con streaming son documentación, no medición.**
-   Si resultara que el límite se aplica solo al primer byte, la opción de la
-   Function normal volvería a estar sobre la mesa y sería más convencional que
-   Deno.
+5. **El corpus embebido es público en GitHub.** «No servido como asset» evita la
+   descarga casual desde la web, no aporta confidencialidad. Si cambia el
+   criterio legal o de producto, hay que moverlo a almacenamiento privado.
+6. **Una cita válida no prueba entailment.** Los marcadores impiden inventar
+   identificadores, pero el modelo aún puede atribuir a una sentencia algo que
+   la ficha no respalda. Evaluación humana, prompt cerrado y transparencia en
+   metodología reducen el riesgo; no lo eliminan.
+7. **Sacar el recall del camino crítico traslada riesgo al post-lanzamiento.** Es
+   una decisión consciente: los gates bloqueantes cubren que no se inventen
+   identificadores ni se responda fuera del corpus, pero no que se responda
+   *bien*. Se puede lanzar con un recall mediocre y no enterarse hasta leer las
+   conversaciones. La contrapartida es que el umbral bloqueante que sí queda es
+   barato de cumplir honestamente, en vez de caro y susceptible de rebajarse. Si
+   el muestreo de las primeras semanas revela recuperación pobre, la respuesta
+   correcta es reabrir la decisión de embeddings del riesgo 2, no relajar nada.
