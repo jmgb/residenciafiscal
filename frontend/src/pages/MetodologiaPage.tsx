@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { usePageTitle } from '@/lib/usePageTitle';
 
 function prefersReducedMotion(): boolean {
   if (typeof window.matchMedia !== 'function') return false;
@@ -7,6 +8,7 @@ function prefersReducedMotion(): boolean {
 }
 
 export function MetodologiaPage() {
+  usePageTitle('Metodología', '/metodologia');
   const { hash } = useLocation();
 
   // React Router navega con la History API y NO provoca el salto nativo al ancla; además

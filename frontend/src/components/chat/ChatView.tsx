@@ -1,6 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
 import type { ChatEngine, ChatMessage, ChatSource } from '@/types/chat';
 import { ChatBubble } from './ChatBubble';
@@ -64,6 +65,7 @@ export interface ChatViewProps {
  * llenar el historial de conversaciones vacías cada vez que alguien abre `/`.
  */
 export function ChatView({ engine, isStub }: ChatViewProps) {
+  usePageTitle();
   const { conversationId } = useParams();
   const navigate = useNavigate();
 

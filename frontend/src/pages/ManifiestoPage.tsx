@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { usePageTitle } from '@/lib/usePageTitle';
 import { Button } from '@/shared/components/ui/button';
 
 // Versión íntegra canónica: docs/brand/manifiesto.md. Cualquier cambio de texto
@@ -49,6 +50,7 @@ const CREDOS: { title: string; paragraphs: string[] }[] = [
 ];
 
 export function ManifiestoPage() {
+  usePageTitle('Manifiesto', '/manifiesto');
   return (
     <div className='mx-auto w-full max-w-2xl overflow-y-auto px-4 py-10'>
       <div className='mb-10 border-t-4 border-primary pt-6'>
