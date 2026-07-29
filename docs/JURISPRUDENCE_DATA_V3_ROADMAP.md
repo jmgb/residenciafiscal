@@ -263,17 +263,23 @@ La representación canónica será JSON por páginas:
 ```json
 {
   "schema_version": "residenciafiscal-verbatim/1",
+  "document_id": "san-1210-2023",
+  "source_file": "sentencias/SAN_1210_2023.pdf",
   "source_sha256": "...",
   "extractor": {
     "name": "pypdf",
     "version": "..."
   },
+  "page_count": 10,
+  "pages_sha256": "...",
+  "status": "COMPLETE",
   "pages": [
     {
       "page_index": 1,
       "printed_page": null,
       "raw_page_text": "...",
-      "text_sha256": "..."
+      "text_sha256": "...",
+      "extraction_status": "TEXT_EXTRACTED"
     }
   ]
 }
@@ -326,13 +332,19 @@ real pertenece a las fases B y C.
 
 ### Fase B — una sentencia
 
+**Estado (2026-07-29): en curso.** B1 —contrato, extractor crudo, JSON Schema,
+fixtures y tests de `residenciafiscal-verbatim/1`— está completado. B2 debe
+materializar y validar el JSON de `SAN 1210/2023` antes de iniciar el análisis
+jurídico híbrido.
+
 Se utilizará `SAN 1210/2023` porque combina permanencia, centro económico,
 familia, vivienda, documentación extranjera, carga de la prueba, regularización
 y sanción.
 
 Entregables:
 
-- verbatim JSON;
+- [x] contrato y extractor verbatim;
+- [ ] verbatim JSON de `SAN 1210/2023`;
 - caso v3;
 - perfil OKF derivado;
 - informe de validación;

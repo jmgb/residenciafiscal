@@ -1,0 +1,145 @@
+{
+  "$defs": {
+    "PageExtractionStatus": {
+      "enum": [
+        "TEXT_EXTRACTED",
+        "EMPTY_TEXT",
+        "NO_TEXT_RETURNED"
+      ],
+      "title": "PageExtractionStatus",
+      "type": "string"
+    },
+    "VerbatimCorpusStatus": {
+      "enum": [
+        "COMPLETE",
+        "NEEDS_REVIEW"
+      ],
+      "title": "VerbatimCorpusStatus",
+      "type": "string"
+    },
+    "VerbatimExtractorIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "VerbatimExtractorIdentity",
+      "type": "object"
+    },
+    "VerbatimPage": {
+      "additionalProperties": false,
+      "properties": {
+        "extraction_status": {
+          "$ref": "#/$defs/PageExtractionStatus"
+        },
+        "page_index": {
+          "exclusiveMinimum": 0,
+          "title": "Page Index",
+          "type": "integer"
+        },
+        "printed_page": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Printed Page"
+        },
+        "raw_page_text": {
+          "title": "Raw Page Text",
+          "type": "string"
+        },
+        "text_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Text Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "page_index",
+        "printed_page",
+        "raw_page_text",
+        "text_sha256",
+        "extraction_status"
+      ],
+      "title": "VerbatimPage",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "document_id": {
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Document Id",
+      "type": "string"
+    },
+    "extractor": {
+      "$ref": "#/$defs/VerbatimExtractorIdentity"
+    },
+    "page_count": {
+      "exclusiveMinimum": 0,
+      "title": "Page Count",
+      "type": "integer"
+    },
+    "pages": {
+      "items": {
+        "$ref": "#/$defs/VerbatimPage"
+      },
+      "minItems": 1,
+      "title": "Pages",
+      "type": "array"
+    },
+    "pages_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Pages Sha256",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-verbatim/1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_file": {
+      "minLength": 1,
+      "title": "Source File",
+      "type": "string"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/VerbatimCorpusStatus"
+    }
+  },
+  "required": [
+    "schema_version",
+    "document_id",
+    "source_file",
+    "source_sha256",
+    "extractor",
+    "page_count",
+    "pages_sha256",
+    "status",
+    "pages"
+  ],
+  "title": "VerbatimCorpus",
+  "type": "object"
+}

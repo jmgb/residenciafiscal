@@ -32,7 +32,8 @@ chat todavía está en:
 
 | Etapa v3 | Alcance | Estado |
 |---|---:|---|
-| Contrato `residenciafiscal-case/3` | Schema y tests | Pendiente |
+| Contrato `residenciafiscal-case/3` | Schema y tests | Implementado |
+| Contrato `residenciafiscal-verbatim/1` | Schema, extractor y tests | Implementado |
 | Piloto v3 | `SAN 1210/2023` | Pendiente |
 | Muestra v3 | 5 sentencias | Bloqueada por el piloto |
 | Corpus v3 | 106 sentencias | No autorizado |
@@ -61,9 +62,9 @@ La muestra está en
   JSON de dominio canónico y no usará el JSONL histórico como fuente directa
   del chat.
 - El Markdown es un derivado regenerable y no se edita a mano.
-- El pipeline actual no persiste ni versiona el texto completo extraído del PDF.
-  La representación separada `verbatim/` está recomendada para RAG, pero todavía
-  no está implementada.
+- El pipeline v2 no persiste ni versiona el texto completo extraído del PDF.
+  El contrato y extractor separado `verbatim/` ya están implementados; todavía
+  falta materializar y validar el artefacto de `SAN 1210/2023`.
 - Se versiona únicamente un snapshot JSON del registro seleccionado, suficiente
   para reconstruir el concepto sin llamar de nuevo al LLM.
 - Las decisiones editoriales viven en sidecars YAML. Solo una corrección

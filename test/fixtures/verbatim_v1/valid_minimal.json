@@ -1,0 +1,22 @@
+{
+  "schema_version": "residenciafiscal-verbatim/1",
+  "document_id": "documento-prueba",
+  "source_file": "sentencias/documento-prueba.pdf",
+  "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "extractor": {
+    "name": "pypdf",
+    "version": "6.14.2"
+  },
+  "page_count": 1,
+  "pages_sha256": "dc6460134a117aa203af4e42dd073dab3bed957d7d5c253d6f9793dd3427aba9",
+  "status": "COMPLETE",
+  "pages": [
+    {
+      "page_index": 1,
+      "printed_page": "1",
+      "raw_page_text": "Texto íntegro de prueba.\n",
+      "text_sha256": "063a2701df06e9cf784f2a8db88b37d34594996912a536b0de273d2767abd1f2",
+      "extraction_status": "TEXT_EXTRACTED"
+    }
+  ]
+}

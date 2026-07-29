@@ -1,5 +1,9 @@
 # Representación íntegra por páginas para recuperación
 
+**Estado (2026-07-29):** contrato, extractor crudo, JSON Schema, fixtures y
+tests implementados. El artefacto de `SAN 1210/2023` todavía no se ha generado;
+ese es el paso B2.
+
 ## Decisión para el schema v3
 
 Se generará una segunda representación por sentencia cuya fuente canónica será:
@@ -17,11 +21,24 @@ knowledge/jurisprudencia/verbatim/<slug>.md
 Su finalidad es búsqueda, RAG y comprobación de respuestas. No sustituye al PDF
 ni al perfil jurídico de `sentencias/<slug>.md`.
 
-Se implementará primero para `SAN 1210/2023`, se validará con la muestra de cinco
-y solo entonces se autorizará su materialización para las 106. La decisión está
-adoptada y documentada, pero el artefacto todavía no está implementado. El
-contexto, orden y gates están en
+Se materializará primero para `SAN 1210/2023`, se validará con la muestra de
+cinco y solo entonces se autorizará para las 106. El contexto, orden y gates
+están en
 [`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
+
+La fuente ejecutable del contrato es:
+
+- `verbatim_models.py`: modelos e invariantes;
+- `verbatim_hashing.py`: hashes UTF-8 y serialización canónica;
+- `verbatim_extraction.py`: adaptador crudo de `pypdf`;
+- `verbatim_schema.py`: exportación determinista;
+- `schemas/residenciafiscal-verbatim-v1.schema.json`: JSON Schema versionado.
+
+Para regenerar el schema:
+
+```bash
+uv run python -c 'from pathlib import Path; from verbatim_schema import write_verbatim_json_schema; write_verbatim_json_schema(Path("schemas/residenciafiscal-verbatim-v1.schema.json"))'
+```
 
 ## Por qué conviene
 
@@ -70,29 +87,57 @@ Por tanto:
 La limpieza jurídica y la selección de relevancia pertenecen al perfil OKF, no
 a la representación íntegra.
 
-## Requisito previo del extractor
+## Separación de extractores
 
-El extractor actual de `pdf_page_extraction.py` ejecuta:
+El extractor histórico de `pdf_page_extraction.py` ejecuta:
 
 ```python
 (page.extract_text() or "").replace("\\x00", " ").strip()
 ```
 
-Es adecuado para el verificador actual porque conserva los pasajes interiores,
-pero no debe reutilizarse sin cambios para afirmar que una página completa es
-verbatim.
+Sigue siendo adecuado para el verificador actual porque conserva los pasajes
+interiores, pero no es una fuente verbatim.
 
-Antes de implementar este artefacto se debe separar:
+`verbatim_extraction.py` ya implementa la separación:
 
-1. `raw_page_text`: resultado sin modificar de `pypdf`;
-2. texto de trabajo normalizado o saneado para búsqueda;
-3. detección de etiqueta impresa, que puede usar una vista derivada.
+1. llama una sola vez a `page.extract_text()`;
+2. conserva la cadena devuelta sin `strip`, sustituciones ni normalización;
+3. distingue `None` de `""` mediante `extraction_status`;
+4. calcula el hash sobre los bytes UTF-8 exactos;
+5. permite que la detección de etiqueta impresa lea una vista sin alterar
+   `raw_page_text`.
 
 El Markdown verbatim debe renderizar `raw_page_text`. Si por una limitación
 técnica fuera imprescindible transformar un carácter de control, la regla, el
 conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
 
-## Contrato propuesto
+## Contrato v1
+
+### JSON canónico
+
+| Campo raíz | Semántica |
+|---|---|
+| `schema_version` | Siempre `residenciafiscal-verbatim/1` |
+| `document_id` | ID estable compartido con el caso jurídico |
+| `source_file` | Ruta PDF relativa y portable |
+| `source_sha256` | SHA-256 binario del PDF |
+| `extractor` | Nombre y versión exacta |
+| `page_count` | Número de páginas físicas |
+| `pages_sha256` | Hash del array canónico y ordenado de páginas |
+| `status` | `COMPLETE` o `NEEDS_REVIEW` |
+| `pages` | Registros físicos 1-based, contiguos y ordenados |
+
+Cada página contiene `page_index`, `printed_page`, `raw_page_text`,
+`text_sha256` y `extraction_status`. Los estados de página son:
+
+- `TEXT_EXTRACTED`;
+- `EMPTY_TEXT`, cuando `pypdf` devuelve `""`;
+- `NO_TEXT_RETURNED`, cuando devuelve `None` y el JSON conserva `""` sin
+  inventar contenido.
+
+Una página que no sea `TEXT_EXTRACTED` obliga al corpus a
+`status: NEEDS_REVIEW`. Si `pypdf` lanza una excepción, la extracción falla
+cerrada: no se produce un corpus parcial silencioso.
 
 ### Frontmatter
 
@@ -106,7 +151,7 @@ conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
 | `extractor` | Nombre y versión exacta, por ejemplo `pypdf/6.14.2` |
 | `page_count` | Número de páginas físicas |
 | `pages_sha256` | Hash de la lista canónica y ordenada de registros de página |
-| `status` | `draft` si alguna página no produce texto |
+| `status` | Derivado del estado del JSON canónico |
 
 `pages_sha256` se calcula sobre el JSON canónico de los registros de página, no
 sobre el `.md` que contiene el propio frontmatter. El manifiesto debe conservar
@@ -141,9 +186,11 @@ el Markdown:
 
 ```json
 {
-  "pdf_page_index": 2,
-  "printed_page_label": "1",
-  "raw_page_text": "..."
+  "page_index": 2,
+  "printed_page": "1",
+  "raw_page_text": "...",
+  "text_sha256": "...",
+  "extraction_status": "TEXT_EXTRACTED"
 }
 ```
 
@@ -192,6 +239,8 @@ anclajes.
 
 ### Una sentencia
 
+- El contrato y el JSON Schema están sincronizados.
+- Los tests demuestran que no se eliminan `\x00`, espacios ni saltos.
 - El PDF conserva su SHA-256 antes y después.
 - Existe una entrada por cada página física.
 - Cada `raw_page_text` coincide exactamente con la salida cruda del extractor.

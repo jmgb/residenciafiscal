@@ -1,0 +1,6 @@
+{
+  "page_index": 0,
+  "field": "text_sha256",
+  "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "expected_error": "text_sha256"
+}
