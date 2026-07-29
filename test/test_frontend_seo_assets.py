@@ -20,12 +20,20 @@ def test_robots_allows_public_content_and_declares_seo_assets() -> None:
         assert "Allow: /" in robots
 
 
-def test_sitemap_contains_only_the_canonical_public_home() -> None:
+def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     root = ET.parse(FRONTEND_PUBLIC / "sitemap.xml").getroot()
-    locations = [node.text for node in root.findall("sm:url/sm:loc", SITEMAP_NAMESPACE)]
+    raw_locations = [node.text for node in root.findall("sm:url/sm:loc", SITEMAP_NAMESPACE)]
+    assert all(location is not None for location in raw_locations)
+    locations = [location for location in raw_locations if location is not None]
 
-    assert locations == ["https://residenciafiscal.org/"]
+    assert locations == [
+        "https://residenciafiscal.org/",
+        "https://residenciafiscal.org/manifiesto",
+        "https://residenciafiscal.org/metodologia",
+    ]
     assert all("?" not in location and "#" not in location for location in locations)
+    # Las conversaciones (/c/) son privadas: nunca entran en el sitemap.
+    assert all("/c/" not in location for location in locations)
 
 
 def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:

@@ -9,6 +9,15 @@ judiciales españolas sobre residencia fiscal. El corpus cubre 74 sentencias del
 Tribunal Supremo (STS) y 32 de la Audiencia Nacional (SAN), con resoluciones de
 2015 a 2025.
 
+## Por qué existe
+
+El proyecto democratiza el acceso a la jurisprudencia que decide los litigios de
+residencia fiscal: la misma información con la que trabajan los mejores despachos,
+al alcance de cualquiera, siempre dentro de la ley. Elegir dónde se reside — y por
+tanto dónde se tributa — es un derecho; ejercerlo bien exige conocer cómo lo juzgan
+los tribunales. El manifiesto completo está en
+[Manifiesto](https://residenciafiscal.org/manifiesto).
+
 ## Temas del corpus
 
 - Permanencia superior a 183 días y ausencias esporádicas.
@@ -21,6 +30,8 @@ Tribunal Supremo (STS) y 32 de la Audiencia Nacional (SAN), con resoluciones de
 ## Fuente pública
 
 - [Residencia Fiscal](https://residenciafiscal.org/): interfaz de consulta.
+- [Manifiesto](https://residenciafiscal.org/manifiesto): por qué existe el proyecto.
+- [Metodología](https://residenciafiscal.org/metodologia): cómo se construyó el análisis.
 - [Sitemap](https://residenciafiscal.org/sitemap.xml): URLs públicas indexables.
 
 ## Cómo interpretar las respuestas
