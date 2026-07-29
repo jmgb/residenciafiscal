@@ -115,8 +115,20 @@ oculta exactamente esta clase de fallo, por eso
 Las notas al pie del BOE («Redactado conforme a…», «Se modifica por…») son
 anotación editorial, no articulado, y se publican en su propia sección.
 
-`test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen` recorre
-los 106 ficheros generados y verifica párrafo a párrafo contra el XML.
+Tres tests sostienen el invariante, y los tres están verificados por mutación
+—se rompió a propósito el corpus para comprobar que fallan—:
+
+| Test | Qué afirma |
+|---|---|
+| `test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen` | Cada párrafo publicado es idéntico a uno **de ese bloque** |
+| `test_las_notas_editoriales_del_boe_no_se_publican_como_articulado` | Ninguna nota del BOE se presenta como texto de la norma |
+| `test_el_corpus_generado_esta_al_dia` | Los 107 ficheros coinciden byte a byte con lo que produce el renderizador |
+
+Las dos precisiones importan más de lo que parece. Contrastar contra **el
+bloque** y no contra el XML entero: si se compara con todos los párrafos del
+fichero, cualquier texto del BOE pasa la prueba aunque pertenezca a otro
+artículo. Y comparar **todos** los ficheros y no una muestra: validar solo
+`lirpf-a9.md` dejaba sin gate el renderizado de los 93 convenios.
 
 ## Estructura
 

@@ -8,11 +8,10 @@ LLM, y una regresión en el parser se detecta sobre el texto legal de verdad.
 from __future__ import annotations
 
 import json
-import re
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import pytest
+import yaml
 
 from export_normativa import (
     SELECCION_ESTATAL,
@@ -20,7 +19,9 @@ from export_normativa import (
     localizar_precepto_residencia,
     recortar,
     renderizar,
+    renderizar_indice,
     seleccionar,
+    slug_precepto,
 )
 from normativa_boe import cargar_norma, cargar_norma_diario, formatear_fecha, normalizar_espacios
 
@@ -156,41 +157,107 @@ def test_todos_los_convenios_generales_tienen_su_articulo_de_residencia(manifies
 # --- Corpus generado ---------------------------------------------------------
 
 
+def _frontmatter_publicado(contenido: str) -> dict:
+    return dict(yaml.safe_load(contenido.split("---", 2)[1]))
+
+
+def _articulado_publicado(contenido: str) -> list[str]:
+    """Párrafos que el fichero presenta como texto de la norma.
+
+    Abarca «Texto vigente» y «Redacciones anteriores», que es todo lo que va
+    hasta las notas del BOE. Descarta encabezados, avisos y los textos de
+    ausencia en cursiva, que no son articulado.
+    """
+    cuerpo = contenido.split("# Texto vigente", 1)[1].split("# Notas del BOE", 1)[0]
+    return [
+        linea.strip()
+        for linea in cuerpo.splitlines()
+        if linea.strip() and not linea.startswith(("#", ">", "_"))
+    ]
+
+
 def test_el_corpus_generado_esta_al_dia(manifiesto: dict) -> None:
-    """`make export-normativa` no debe dejar el repositorio con cambios."""
+    """`make export-normativa` no debe dejar el repositorio con cambios.
+
+    Se comparan **todos** los ficheros, no una muestra: comprobar solo
+    `lirpf-a9.md` dejaba sin gate el renderizado de los 93 convenios.
+    """
     seleccionados, incidencias = seleccionar(FUENTES, manifiesto)
     assert [i for i in incidencias if not i["esperado"]] == []
 
-    generados = {fichero.name for fichero in PRECEPTOS.glob("*.md")} - {"index.md"}
-    assert len(generados) == len(seleccionados)
+    esperados = {
+        f"{slug_precepto(s.norma.boe_id, s.grupo, s.bloque.bloque_id)}.md": renderizar(s)
+        for s in seleccionados
+    }
+    assert len(esperados) == len(seleccionados), "hay slugs de precepto duplicados"
 
-    for seleccion in seleccionados:
-        if seleccion.norma.boe_id != LIRPF or seleccion.bloque.bloque_id != "a9":
-            continue
-        assert (PRECEPTOS / "lirpf-a9.md").read_text(encoding="utf-8") == renderizar(seleccion)
+    publicados = {f.name for f in PRECEPTOS.glob("*.md")} - {"index.md"}
+    assert publicados == set(esperados)
+
+    for nombre, contenido in sorted(esperados.items()):
+        assert (PRECEPTOS / nombre).read_text(encoding="utf-8") == contenido, nombre
+
+    assert (PRECEPTOS / "index.md").read_text(encoding="utf-8") == renderizar_indice(seleccionados)
 
 
 def test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen() -> None:
-    """El invariante jurídico: el articulado no se reescribe en ningún punto."""
+    """El invariante jurídico: el articulado no se reescribe en ningún punto.
+
+    Se contrasta contra los párrafos **de ese bloque**, no contra todos los del
+    fichero XML: comparar contra la norma entera daba por bueno cualquier texto
+    del BOE, aunque perteneciera a otro artículo.
+    """
     for fichero in sorted(PRECEPTOS.glob("*.md")):
         if fichero.name == "index.md":
             continue
         contenido = fichero.read_text(encoding="utf-8")
-        origen = re.search(r"^resource: \.\./\.\./\.\./normativa/(.+)$", contenido, re.M)
-        assert origen is not None, fichero.name
+        frontmatter = _frontmatter_publicado(contenido)
+        boe_id = frontmatter["boe_id"]
 
-        xml = ET.parse(FUENTES / origen.group(1)).getroot()
-        parrafos_fuente = {normalizar_espacios("".join(p.itertext())) for p in xml.iter("p")}
+        norma = (
+            cargar_norma_diario(FUENTES, boe_id)
+            if str(frontmatter["resource"]).endswith(".diario.xml")
+            else cargar_norma(FUENTES, boe_id)
+        )
+        bloque = norma.bloque(str(frontmatter["bloque_id"]))
+        assert bloque is not None, fichero.name
 
-        cuerpo = contenido.split("# Texto vigente", 1)[1].split("# Notas del BOE", 1)[0]
-        publicados = [
-            linea.strip()
-            for linea in cuerpo.splitlines()
-            if linea.strip() and not linea.startswith(("#", ">", "_"))
-        ]
+        del_bloque = {parrafo for version in bloque.versiones for parrafo in version.parrafos}
+
+        publicados = _articulado_publicado(contenido)
         assert publicados, fichero.name
         for parrafo in publicados:
-            assert parrafo in parrafos_fuente, f"{fichero.name}: {parrafo[:80]}"
+            assert parrafo in del_bloque, f"{fichero.name}: {parrafo[:80]}"
+
+
+def test_las_notas_editoriales_del_boe_no_se_publican_como_articulado() -> None:
+    """Una nota del BOE no puede presentarse como texto de la norma.
+
+    El test anterior lo cubre por construcción, pero esta es la afirmación que
+    de verdad importa y merece fallar por su propio nombre.
+    """
+    comprobados = 0
+    for fichero in sorted(PRECEPTOS.glob("*.md")):
+        if fichero.name == "index.md":
+            continue
+        contenido = fichero.read_text(encoding="utf-8")
+        frontmatter = _frontmatter_publicado(contenido)
+        norma = (
+            cargar_norma_diario(FUENTES, str(frontmatter["boe_id"]))
+            if str(frontmatter["resource"]).endswith(".diario.xml")
+            else cargar_norma(FUENTES, str(frontmatter["boe_id"]))
+        )
+        bloque = norma.bloque(str(frontmatter["bloque_id"]))
+        assert bloque is not None, fichero.name
+
+        notas = {nota for version in bloque.versiones for nota in version.notas_boe}
+        if not notas:
+            continue
+        comprobados += 1
+        for parrafo in _articulado_publicado(contenido):
+            assert parrafo not in notas, f"{fichero.name}: nota publicada como articulado"
+
+    assert comprobados, "ningún precepto publicado tiene notas del BOE: el test no prueba nada"
 
 
 def test_el_nucleo_estatal_cubre_los_preceptos_que_deciden_la_residencia() -> None:
