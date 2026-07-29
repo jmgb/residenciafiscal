@@ -1,0 +1,28 @@
+{
+  "schema_version": "residenciafiscal-normativa/1",
+  "generated_by": "residenciafiscal-normativa/0.1.0",
+  "normas_en_manifiesto": 102,
+  "preceptos_generados": 106,
+  "por_grupo": {
+    "cdi": 93,
+    "nucleo": 11,
+    "nucleo_derogado": 2
+  },
+  "incidencias": [
+    {
+      "id": "BOE-A-1996-28330",
+      "motivo": "Ley interna sobre doble imposición intersocietaria, no es un CDI",
+      "esperado": true
+    },
+    {
+      "id": "BOE-A-1989-2339",
+      "motivo": "Convenio sectorial de navegación marítima y aérea (Venezuela)",
+      "esperado": true
+    },
+    {
+      "id": "BOE-A-1983-5313",
+      "motivo": "Convenio sectorial de navegación marítima y aérea (Argentina)",
+      "esperado": true
+    }
+  ]
+}

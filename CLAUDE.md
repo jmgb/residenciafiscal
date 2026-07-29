@@ -112,6 +112,27 @@ make export-okf  # hoy: genera y valida exactamente 1 sentencia
 make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
 ```
 
+### Corpus normativo
+
+`normativa/` guarda el XML del BOE de las 102 normas que deciden la residencia
+fiscal (LIRPF, LGT, reglamentos y los 96 CDI de España), versionado igual que
+los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`.
+`knowledge/normativa/preceptos/` contiene un Markdown **por artículo**, no por
+ley: se publica el precepto que decide o prueba la residencia, no las 270
+secciones de la LIRPF.
+
+No hay LLM en este pipeline y por eso tampoco hay verificación de citas: el
+texto se copia de un XML ya estructurado por el BOE, y un test comprueba que
+cada párrafo publicado es idéntico al de origen. Rige el mismo invariante que
+en las sentencias: el articulado no se reescribe. Selección de preceptos,
+detección del artículo de residencia de cada CDI y vigencia por ejercicio están
+en [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+
+```bash
+make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
+make export-normativa     # regenera los 106 preceptos (sin red, sin LLM)
+```
+
 ## Sentencias Clave
 
 Las sentencias listadas en `sentencias/sentencias_CLAVE.txt` usan automáticamente

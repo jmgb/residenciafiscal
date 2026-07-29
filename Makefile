@@ -14,6 +14,7 @@ SHELL := /bin/bash
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample \
+	descargar-normativa export-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -38,6 +39,8 @@ OKF_JSONL ?= $(CITATION_JSONL)
 OKF_THRESHOLD ?= 85
 OKF_SOURCE_FILE ?= SAN_1071_2025.pdf
 OKF_OUTPUT ?= ./knowledge/jurisprudencia
+NORMATIVA_SOURCES ?= ./normativa
+NORMATIVA_OUTPUT ?= ./knowledge/normativa
 OKF_SAMPLE_MANIFEST ?= ./sentencias/okf_muestra_5.json
 OKF_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-muestra-5
 
@@ -72,6 +75,8 @@ help:
 	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
+	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
+	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
@@ -162,6 +167,16 @@ export-okf-sample:
 		--annotations-dir knowledge/annotations \
 		--manifest $(OKF_SAMPLE_MANIFEST) \
 		--threshold $(OKF_THRESHOLD)
+
+# Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
+# está versionado, así que `make export-normativa` funciona sin red.
+descargar-normativa:
+	uv run python descargar_normativa.py --output-dir $(NORMATIVA_SOURCES)
+
+export-normativa:
+	uv run python export_normativa.py \
+		--sources-dir $(NORMATIVA_SOURCES) \
+		--output-dir $(NORMATIVA_OUTPUT)
 
 # =============================================================================
 # 3. CALIDAD
