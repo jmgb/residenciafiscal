@@ -1,6 +1,12 @@
 import { Link } from 'react-router';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
-import { countryContributionUrl, REPO_URL } from '@/lib/contribution';
+import {
+  COLLABORATE_PATH,
+  CONTACT_EMAIL,
+  contributionMailto,
+  countryContributionUrl,
+  EXPERT_PROFILES,
+} from '@/lib/contribution';
 import { usePageTitle } from '@/lib/usePageTitle';
 
 interface CountryPageProps {
@@ -27,7 +33,8 @@ export function CountryPage({ country }: CountryPageProps) {
           </h1>
           <p className='max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg'>
             Todavía no hay jurisprudencia de {country.name} en el corpus. España es el único país
-            publicado, y no porque el proyecto sea español: porque alguien reunió sus sentencias.
+            publicado, y no porque el proyecto sea español: porque su jurisprudencia se delimitó y
+            analizó con criterio fiscal y tributario.
           </p>
         </header>
 
@@ -39,12 +46,19 @@ export function CountryPage({ country }: CountryPageProps) {
             id='country-contribute'
             className='mb-3 font-heading text-2xl font-semibold tracking-tight'
           >
-            {country.name} lo puede abrir cualquiera
+            {country.name} necesita a sus especialistas
           </h2>
-          <p className='mb-5 max-w-2xl text-sm leading-relaxed text-secondary-foreground'>
-            El pipeline es agnóstico del país: analiza resoluciones, contrasta cada cita con el
-            documento de origen y publica el criterio del tribunal con su página. Lo que falta para{' '}
-            {country.name} no es código, son tres cosas.
+          <p className='mb-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground'>
+            Este proyecto{' '}
+            <strong className='font-semibold'>
+              se nutre de la contribución de expertos en fiscalidad y tributación internacional
+            </strong>
+            . Qué resoluciones importan, qué preceptos deciden la residencia y qué prueba pesa ante
+            un tribunal no lo decide un algoritmo: así se construyó el corpus español y así se abre
+            el de {country.name}. El pipeline es agnóstico del país; el criterio jurídico, no.
+          </p>
+          <p className='mb-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground'>
+            Por eso lo que falta no es código, son tres cosas.
           </p>
           <ol
             aria-label='Qué necesita un país nuevo'
@@ -61,11 +75,30 @@ export function CountryPage({ country }: CountryPageProps) {
               artículo de desempate de sus convenios de doble imposición.
             </li>
             <li className='border-l-2 border-primary pl-4'>
-              <strong className='font-semibold'>Alguien que lo revise</strong> — el análisis lo
-              redacta un modelo de lenguaje, así que hace falta un jurista del país que revise que
-              el análisis dice lo que dice la resolución.
+              <strong className='font-semibold'>Un especialista que lo valide</strong> — el análisis
+              lo redacta un modelo de lenguaje, así que ningún país se publica sin que un
+              profesional del derecho tributario de esa jurisdicción compruebe que el análisis dice
+              lo que dice la resolución.
             </li>
           </ol>
+
+          <h3 className='mb-2 font-heading text-sm font-semibold'>
+            Perfiles profesionales que las aportan
+          </h3>
+          <ul
+            aria-label='Perfiles que pueden colaborar'
+            className='mb-6 flex flex-wrap gap-2 text-xs'
+          >
+            {EXPERT_PROFILES.map((profile) => (
+              <li
+                key={profile.title}
+                className='rounded-md border border-border px-2.5 py-1.5 text-muted-foreground'
+              >
+                {profile.title}
+              </li>
+            ))}
+          </ul>
+
           <div className='flex flex-col gap-3 sm:flex-row sm:items-center'>
             <a
               href={countryContributionUrl(country.name)}
@@ -75,15 +108,23 @@ export function CountryPage({ country }: CountryPageProps) {
             >
               Proponer {country.name} en GitHub
             </a>
-            <a
-              href={`${REPO_URL}/blob/main/CONTRIBUTING.md`}
-              target='_blank'
-              rel='noopener noreferrer'
+            <Link
+              to={COLLABORATE_PATH}
               className='control-focus inline-flex items-center justify-center rounded-md border border-border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-secondary'
             >
-              Cómo se construye un corpus
-            </a>
+              Cómo colaborar
+            </Link>
           </div>
+          <p className='mt-4 text-xs leading-relaxed text-muted-foreground'>
+            Sin cuenta de GitHub, escribe a{' '}
+            <a
+              href={contributionMailto(country.name)}
+              className='text-foreground underline underline-offset-4'
+            >
+              {CONTACT_EMAIL}
+            </a>
+            .
+          </p>
         </section>
 
         <section className='mt-14 border-t border-border pt-8' aria-labelledby='country-routes'>
@@ -91,8 +132,9 @@ export function CountryPage({ country }: CountryPageProps) {
             Países disponibles
           </h2>
           <p className='mb-5 max-w-2xl text-sm leading-relaxed text-muted-foreground'>
-            España es el único país con corpus. El resto están abiertos a quien pueda aportar su
-            jurisprudencia: cada país se incorpora de forma independiente.
+            España es el único país con corpus. El resto están abiertos a los profesionales de la
+            fiscalidad que puedan aportar la jurisprudencia de su jurisdicción: cada país se
+            incorpora de forma independiente.
           </p>
           <nav aria-label='Rutas por país' className='grid gap-2 sm:grid-cols-2 lg:grid-cols-3'>
             {COUNTRY_ROUTES.map((route) => {

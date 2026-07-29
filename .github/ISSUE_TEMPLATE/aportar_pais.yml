@@ -8,13 +8,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Gracias. El pipeline es agnóstico del país: analiza resoluciones, contrasta
+        Gracias. El pipeline es agnóstico del país —analiza resoluciones, contrasta
         cada cita con el documento de origen y publica el criterio del tribunal con
-        su página. España es el único país con corpus porque alguien reunió sus
-        sentencias, no por una limitación del código.
+        su página—, pero el criterio jurídico no lo es: la jurisprudencia española se
+        delimitó con criterio tributario, y abrir otra jurisdicción exige lo mismo.
 
-        No hace falta que sepas programar ni que aportes las tres cosas a la vez.
-        Si solo puedes señalar la fuente oficial de tu país, ábrela igualmente.
+        No hace falta que sepas programar ni que aportes las tres cosas a la vez —si
+        solo puedes señalar la fuente oficial de tu país, ábrela igualmente—, pero sí
+        conocer la materia: el proyecto se dirige a **profesionales de la fiscalidad y
+        la tributación internacional**.
 
         Antes de seguir: **no adjuntes documentos aquí**. Primero acordamos la
         fuente y sus condiciones de reutilización; sin licencia clara el corpus no
@@ -85,7 +87,7 @@ body:
       options:
         - Localizar y descargar las resoluciones
         - Aportar la normativa nacional de residencia
-        - Revisar jurídicamente el análisis del modelo
+        - Validar jurídicamente el análisis del modelo (fiscalidad / tributación)
         - Traducir o adaptar el schema de extracción a la terminología nacional
         - Solo señalo la fuente; no puedo participar en el resto
     validations:
@@ -94,12 +96,13 @@ body:
   - type: textarea
     id: revision
     attributes:
-      label: Quién revisaría el análisis
+      label: Quién validaría el análisis
       description: |
-        El análisis lo redacta un modelo de lenguaje y puede equivocarse, así que un país no
-        se publica sin revisión humana. Cuéntanos tu relación con el derecho fiscal de esa
-        jurisdicción, o si conoces a alguien que pudiera revisarlo. No hace falta ejercer
-        como abogado.
+        El análisis lo redacta un modelo de lenguaje y puede equivocarse, así que un país no se
+        publica sin la validación de un profesional del derecho tributario de esa jurisdicción.
+        Cuéntanos tu especialización en fiscalidad internacional o tributación, o quién podría
+        asumir esa validación. No hace falta ejercer como abogado, pero sí acreditar
+        conocimiento de la materia.
 
   - type: textarea
     id: contexto

@@ -100,9 +100,36 @@ con el nombre del país y deja explícito que su corpus todavía no existe.
 
 ## La invitación a contribuir
 
-El proyecto es colaborativo y las páginas sin corpus son su punto de entrada: en lugar de un
-«próximamente» pasivo, piden lo que realmente falta. Un test lo fija para que el copy no se
-degrade con el tiempo.
+El proyecto es colaborativo y se nutre de la contribución de **expertos en fiscalidad y
+tributación internacional** —abogados y asesores fiscales, académicos, documentalistas jurídicos,
+traductores jurídicos, economistas, además de desarrolladores—, no solo de código. Las páginas sin
+corpus son su punto de entrada: en lugar de un «próximamente» pasivo, piden lo que realmente falta.
+
+**El registro es profesional a propósito.** El copy no dice que el corpus «lo pueda abrir
+cualquiera»: dice que exige criterio jurídico-tributario, que es lo que de verdad limita el
+proyecto a un solo país. `frontend/tests/CountryPage.test.tsx` fija el titular y **afirma en
+negativo** que no reaparece la fórmula «lo puede abrir cualquiera», para que el copy no se degrade
+con el tiempo.
+
+Lo que sí se afirma del corpus español es que **su jurisprudencia se delimitó con criterio
+jurídico-tributario** (selección de resoluciones, criterios del art. 9 LIRPF, doce categorías de
+prueba). Lo que **no** se afirma es que su análisis esté ya revisado por especialistas: las
+anotaciones de `knowledge/annotations/` están en `status: proposed`, pendientes de aprobación
+humana, y el sitio advierte de que el análisis lo genera un modelo y puede contener errores.
+Escribir «revisado por expertos» sería falso y contradiría ese aviso. La validación se enuncia como
+**requisito para publicar**, no como hecho consumado.
+
+`/colaborar` (`frontend/src/pages/ColaborarPage.tsx`) centraliza la invitación y es la **única
+ruta indexable** de todo el circuito. Esto es deliberado: las 21 páginas de país son
+`noindex, follow` para no publicar 20 placeholders casi idénticos, pero eso también las hace
+invisibles en búsquedas, así que sin una URL indexable nadie llegaría a la invitación desde
+Google. `/colaborar` tiene contenido propio (perfiles, invariantes, criterio de arranque), está
+en el sitemap y `test/test_frontend_seo_assets.py` fija ambas cosas.
+
+Los dos canales son equivalentes: la issue de GitHub y `info@residenciafiscal.org`. Buena parte
+del público objetivo —juristas— no tiene cuenta de GitHub, y crearla para escribir es fricción
+suficiente para perderlos. `frontend/src/lib/contribution.ts` es la fuente única de ambos, de
+`COLLABORATE_PATH` y de `EXPERT_PROFILES`, que comparten `/colaborar` y las páginas de país.
 
 - El enlace lleva al formulario `aportar_pais.yml` con el título y el campo `pais` ya rellenados
   vía query params, así que quien llega desde `/chile` no tiene que explicar de qué país habla.

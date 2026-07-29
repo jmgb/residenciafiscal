@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
+import { CONTACT_EMAIL, EXPERT_PROFILES } from '@/lib/contribution';
 import { CountryPage } from '@/pages/CountryPage';
 
 function countryByPath(path: string): CountryRoute {
@@ -24,8 +25,11 @@ describe('CountryPage', () => {
     renderCountry('/argentina');
 
     expect(
-      screen.getByRole('heading', { name: /Argentina lo puede abrir cualquiera/ })
+      screen.getByRole('heading', { name: /Argentina necesita a sus especialistas/ })
     ).toBeInTheDocument();
+    // El registro es profesional a propósito: la aportación que falta es
+    // jurídica y cualificada, no «cualquiera puede».
+    expect(screen.queryByText(/lo puede abrir cualquiera/i)).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Proponer Argentina/ })).toHaveAttribute(
       'href',
       'https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml&title=Aportar+jurisprudencia%3A+Argentina&pais=Argentina'
@@ -40,6 +44,32 @@ describe('CountryPage', () => {
     expect(cta).toHaveAttribute('href', expect.stringContaining('template=aportar_pais.yml'));
   });
 
+  it('explica que el proyecto se nutre de expertos y enumera sus perfiles', () => {
+    renderCountry('/colombia');
+
+    expect(
+      screen.getByText(/expertos en fiscalidad y tributación internacional/i)
+    ).toBeInTheDocument();
+    const perfiles = screen.getByRole('list', { name: 'Perfiles que pueden colaborar' });
+    expect(perfiles).toBeInTheDocument();
+    for (const profile of EXPERT_PROFILES) {
+      expect(screen.getByText(profile.title)).toBeInTheDocument();
+    }
+  });
+
+  it('ofrece el correo como canal equivalente y enlaza a /colaborar', () => {
+    renderCountry('/peru');
+
+    expect(screen.getByRole('link', { name: CONTACT_EMAIL })).toHaveAttribute(
+      'href',
+      `mailto:${CONTACT_EMAIL}?subject=Aportar%20jurisprudencia%3A%20Per%C3%BA`
+    );
+    expect(screen.getByRole('link', { name: 'Cómo colaborar' })).toHaveAttribute(
+      'href',
+      '/colaborar'
+    );
+  });
+
   it('enumera las tres aportaciones que necesita un país nuevo', () => {
     renderCountry('/chile');
 
@@ -47,7 +77,7 @@ describe('CountryPage', () => {
     expect(requisitos).toBeInTheDocument();
     expect(screen.getByText(/fuente pública oficial/i)).toBeInTheDocument();
     expect(screen.getByText(/equivalente al art\. 9 LIRPF/i)).toBeInTheDocument();
-    expect(screen.getByText(/revise que el análisis/i)).toBeInTheDocument();
+    expect(screen.getByText(/profesional del derecho tributario/i)).toBeInTheDocument();
   });
 
   it('no afirma que ya exista corpus del país ni ofrece consulta', () => {

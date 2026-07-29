@@ -88,16 +88,21 @@ La residencia fiscal se decide en los tribunales de cada país, y la pregunta es
 la misma en todos: **qué prueba acepta un juez**. Lo que cambia es el articulado
 y quién lo interpreta.
 
-España está publicada porque alguien reunió sus 106 sentencias, no porque el
-proyecto sea español. El pipeline es agnóstico de la jurisdicción: analiza
-resoluciones, contrasta cada cita con el documento de origen y publica el
-criterio del tribunal con su página. **Si conoces la jurisprudencia de tu país,
-puedes abrirlo.**
+España está publicada porque su jurisprudencia se delimitó con criterio
+jurídico-tributario, no porque el proyecto sea español: qué resoluciones importan,
+qué criterios del art. 9 LIRPF se aplican y en qué doce categorías se clasifica la
+prueba son decisiones de derecho tributario, no de un modelo. El pipeline es
+agnóstico de la jurisdicción; el criterio, no. Por eso **el proyecto se nutre de
+la contribución de expertos en fiscalidad y tributación internacional**: abogados
+y asesores fiscales, académicos, documentalistas jurídicos, traductores
+jurídicos, economistas y peritos, además de desarrolladores.
 
 > [!TIP]
 > **[Propón tu país](https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml)**
-> — cualquier jurisdicción, no solo las que ya tienen ruta en la web. No hace
-> falta saber programar.
+> o escribe a **info@residenciafiscal.org** — cualquier jurisdicción, no solo las
+> que ya tienen ruta en la web. No hace falta saber programar: lo que falta es
+> criterio jurídico, no código. Página pública:
+> [residenciafiscal.org/colaborar](https://residenciafiscal.org/colaborar).
 
 Un país entra cuando existen tres cosas. Rara vez las aporta una sola persona:
 
@@ -105,7 +110,7 @@ Un país entra cuando existen tres cosas. Rara vez las aporta una sola persona:
 |---|---|
 | **Una fuente pública oficial** de resoluciones, con sus condiciones de reutilización | El corpus se publica desde la fuente original y sin licencia clara no se publica. Los PDF deben llevar capa de texto: no hay OCR |
 | **El precepto nacional que decide la residencia** — el equivalente al [art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) — y el artículo de desempate de sus convenios | El análisis de una sentencia no se sostiene sin la norma que aplica |
-| **Alguien que revise el resultado** | El análisis lo redacta un modelo de lenguaje y puede equivocarse. Ningún país se publica sin revisión humana |
+| **Un especialista que valide el resultado** | El análisis lo redacta un modelo de lenguaje y puede equivocarse. Ningún país se publica sin que un profesional del derecho tributario de esa jurisdicción lo valide |
 
 Lo que **no** hace falta aportar: el pipeline, la verificación de citas contra el
 documento fuente, el schema de extracción ni el frontend. Eso ya existe y es
@@ -119,7 +124,12 @@ Dos invariantes rigen cualquier corpus nuevo, igual que el español:
 - **Cada corpus se aísla del resto.** Una consulta sobre un país no puede
   devolver una cita de otro, y hay tests que lo comprueban.
 
-El detalle operativo está en
+El criterio para arrancar el siguiente país no es el orden de llegada: es el
+primero que reúna una **fuente reutilizable y un revisor comprometido**. El
+proyecto lo mantiene una persona en su tiempo libre, así que no hay plazos
+prometidos.
+
+El detalle operativo y la tabla de perfiles están en
 [CONTRIBUTING.md](CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país); el
 estado de las páginas por país, en
 [`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).

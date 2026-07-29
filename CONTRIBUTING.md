@@ -6,13 +6,36 @@ comprueba el CI y qué se espera de una contribución.
 ## Aportar la jurisprudencia de otro país
 
 Hoy solo España tiene corpus, y no por una limitación del código: el pipeline es
-agnóstico de la jurisdicción. Cualquier país puede entrar —no solo los que ya
-tienen ruta en la web— y **no hace falta saber programar**: la aportación que
-falta es jurídica, no técnica.
+agnóstico de la jurisdicción, pero el criterio jurídico no lo es. La jurisprudencia
+española se delimitó con criterio tributario —qué resoluciones importan, qué
+criterios del art. 9 LIRPF se aplican, en qué doce categorías se clasifica la
+prueba—, y abrir otro país exige lo mismo.
+
+Cualquier jurisdicción puede entrar, no solo las que ya tienen ruta en la web.
+**No hace falta saber programar**: la aportación que falta es jurídica, no
+técnica, y por eso el proyecto se dirige a **profesionales de la fiscalidad y la
+tributación internacional**.
 
 Empieza abriendo una issue con la plantilla
 [**Aportar la jurisprudencia de un país**](https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml).
-Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento.
+Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento. Si no
+usas GitHub, escribe a **info@residenciafiscal.org**: es el mismo canal, no un
+plan B. La versión pública de esta guía está en
+[residenciafiscal.org/colaborar](https://residenciafiscal.org/colaborar).
+
+### Quién puede colaborar
+
+El cuello de botella no es técnico, es saber qué resolución importa y por qué. El
+proyecto se nutre de la contribución de expertos:
+
+| Perfil | Qué aporta |
+|---|---|
+| **Abogados y asesores fiscales** | Revisar que el análisis dice lo que dice la resolución, y señalar qué criterio pesa de verdad ante sus tribunales frente al que solo figura en la ley |
+| **Académicos e investigadores** de fiscalidad internacional | Delimitar qué preceptos y convenios deciden la residencia en su jurisdicción, y en qué punto está la doctrina |
+| **Documentalistas y bibliotecarios jurídicos** | Localizar y catalogar las resoluciones en el buscador oficial: la parte que más tiempo consume |
+| **Traductores jurídicos** | Adaptar la terminología del análisis a la del país sin falsear el concepto. Hoy el schema está en español, y eso limita a las jurisdicciones no hispanohablantes |
+| **Economistas y peritos** | Valorar la prueba económica —centro de intereses económicos, vínculos patrimoniales—, donde se decide buena parte de los litigios |
+| **Desarrolladores y científicos de datos** | Pipeline, recuperación y frontend. Es lo único que ya existe, así que aquí se mejora, no se arranca |
 
 ### Qué se necesita
 
@@ -23,10 +46,11 @@ Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento.
 2. **El precepto nacional que decide la residencia fiscal** de una persona
    física —el equivalente al art. 9 LIRPF— más el artículo de desempate de los
    convenios de doble imposición del país, con enlace a su texto oficial.
-3. **Revisión humana del análisis.** Lo redacta un modelo de lenguaje y puede
-   equivocarse; ningún país se publica sin que alguien con conocimiento del
-   derecho fiscal de esa jurisdicción compruebe que el análisis dice lo que dice
-   la resolución.
+3. **Validación por un especialista.** El análisis lo redacta un modelo de
+   lenguaje y puede equivocarse; ningún país se publica sin que un profesional
+   del derecho tributario de esa jurisdicción compruebe que el análisis dice lo
+   que dice la resolución. Es el requisito que hoy limita el proyecto a un solo
+   país, y no se relaja.
 
 ### Reglas que no se negocian
 
@@ -44,6 +68,17 @@ Valen para cualquier corpus, no solo el español:
 - **Los corpus están aislados entre sí.** Una consulta de un país no puede
   devolver una cita de otro, y un corpus nuevo tiene que traer sus tests de
   aislamiento.
+
+### Qué pasa después de proponer un país
+
+Se responde en la propia issue, y lo primero que se acuerda es la fuente y sus
+condiciones de reutilización. El criterio para arrancar el siguiente país **no es
+el orden de llegada**: es el primero que reúna una fuente reutilizable y un
+revisor comprometido.
+
+El proyecto lo mantiene una persona en su tiempo libre, así que no hay plazos
+prometidos y una propuesta sin revisor puede quedarse abierta mucho tiempo.
+Decirlo es más honesto que dar una fecha que no se va a cumplir.
 
 ### Cómo se publica una página de país
 

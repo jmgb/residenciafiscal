@@ -152,6 +152,36 @@ contra el dominio público después de cada deploy.
 - [ ] Mostrar en cada landing las fuentes legales, fecha de revisión, alcance y limitaciones
   del contenido, con un proceso editorial para mantenerlo actualizado.
 
+## Colaboración internacional
+
+El proyecto invita a expertos de cualquier jurisdicción a aportar la jurisprudencia
+de su país. Contrato y perfiles en
+[`CONTRIBUTING.md`](../CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país);
+página pública en `/colaborar`, la **única ruta indexable** de la invitación
+(las landings de país son `noindex`).
+
+- [ ] **Traducir la plantilla `aportar_pais.yml` al inglés.** La invitación es
+  mundial pero el formulario está solo en español, así que Brasil, Haití y toda
+  jurisdicción no hispanohablante se topan con un formulario que no entienden.
+  Mismo problema, un nivel más abajo: el schema de extracción también está en
+  español, y un corpus no hispano necesita traductor jurídico antes que
+  desarrollador.
+- [ ] **Verificar en GitHub el prerrellenado de la issue.** `contribution.ts`
+  construye `?template=aportar_pais.yml&title=…&pais=<País>`; el formato de query
+  y el YAML están validados, pero **no se ha comprobado contra GitHub en vivo**
+  que rellene el campo `pais`. Abrir la URL una vez tras el deploy.
+- [ ] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
+  `labels:` de la plantilla. Hoy usa `help wanted` porque GitHub solo aplica
+  etiquetas que ya existen. Con varias propuestas de país a la vez, una etiqueta
+  por país ordena el backlog.
+- [ ] **Difundir `/colaborar` fuera de GitHub.** Con las landings en `noindex`, el
+  descubrimiento depende de `/colaborar`, de `llms.txt` y de canales externos
+  (colegios de abogados, asociaciones de fiscalistas, LinkedIn). Sin difusión, la
+  invitación solo la ve quien ya está dentro.
+- [ ] **Decidir si activar GitHub Discussions.** Una propuesta de país es una
+  conversación antes que una tarea; hoy todo entra como issue. Requiere activarlo
+  en la web del repositorio.
+
 ## Seguridad y datos
 
 - [ ] Exigir `RESIDENCIAFISCAL_API_TOKEN` en producción, proteger `/analizar` con rate

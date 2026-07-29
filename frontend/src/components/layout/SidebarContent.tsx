@@ -1,4 +1,4 @@
-import { BookOpen, Compass, Globe2, MessageSquarePlus, Trash2 } from 'lucide-react';
+import { BookOpen, Compass, Globe2, MessageSquarePlus, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { COUNTRY_ROUTES, getCountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
@@ -196,6 +196,15 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         >
           <BookOpen className='h-4 w-4' aria-hidden='true' />
         </Link>
+        <Link
+          to='/colaborar'
+          onClick={onNavigate}
+          aria-label='Colaborar'
+          title='Colaborar'
+          className='flex justify-center rounded-lg p-2 text-muted-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+        >
+          <Users className='h-4 w-4' aria-hidden='true' />
+        </Link>
       </div>
     );
   }
@@ -222,6 +231,13 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
       >
         Corpus analizado
+      </Link>
+      <Link
+        to='/colaborar'
+        onClick={onNavigate}
+        className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+      >
+        Colaborar
       </Link>
     </div>
   );

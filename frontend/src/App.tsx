@@ -3,6 +3,7 @@ import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
+import { ColaborarPage } from '@/pages/ColaborarPage';
 import { CountryPage } from '@/pages/CountryPage';
 import { ManifiestoPage } from '@/pages/ManifiestoPage';
 import { MetodologiaPage } from '@/pages/MetodologiaPage';
@@ -50,6 +51,7 @@ export function App() {
         ))}
         <Route path='/manifiesto' element={<ManifiestoPage />} />
         <Route path='/metodologia' element={<MetodologiaPage />} />
+        <Route path='/colaborar' element={<ColaborarPage />} />
         <Route path='*' element={<Navigate to='/' replace />} />
       </Route>
     </Routes>

@@ -89,6 +89,12 @@
   force = true
 
 [[redirects]]
+  from = "/colaborar"
+  to = "/colaborar/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/argentina"
   to = "/argentina/index.html"
   status = 200

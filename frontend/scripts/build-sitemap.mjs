@@ -15,6 +15,10 @@ const publicRoutes = [
     .map((route) => ({ path: route.path, changefreq: 'weekly', priority: '1.0' })),
   { path: '/manifiesto', changefreq: 'monthly', priority: '0.8' },
   { path: '/metodologia', changefreq: 'monthly', priority: '0.6' },
+  // `/colaborar` es la única puerta indexable de la invitación a contribuir: las
+  // páginas de país sin corpus son `noindex`, así que sin esta URL nadie llega
+  // desde una búsqueda.
+  { path: '/colaborar', changefreq: 'monthly', priority: '0.7' },
 ];
 
 const escapeXml = (value) =>

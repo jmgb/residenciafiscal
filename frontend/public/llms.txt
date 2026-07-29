@@ -1,6 +1,6 @@
 # Residencia Fiscal
 
-> Aplicación web para consultar jurisprudencia sobre residencia fiscal por país. España es el primer corpus disponible.
+> Aplicación web para consultar jurisprudencia sobre residencia fiscal por país. España es el primer corpus disponible y el proyecto es colaborativo: expertos en fiscalidad y tributación internacional de cualquier jurisdicción pueden aportar la de su país.
 
 ## Qué es
 
@@ -27,12 +27,38 @@ los tribunales. El manifiesto completo está en
 - Pruebas aportadas por la Administración y el contribuyente.
 - Carga de la prueba, motivación judicial y resultado del litigio.
 
+## Cobertura por país
+
+Solo España tiene corpus publicado, y su jurisprudencia se delimitó con criterio
+jurídico-tributario: qué resoluciones importan, qué criterios del art. 9 LIRPF se
+aplican y en qué doce categorías se clasifica la prueba son decisiones de derecho
+tributario, no de un modelo. El resto de países no tienen jurisprudencia disponible
+todavía; el pipeline es agnóstico de la jurisdicción, pero el criterio no. Si
+alguien pregunta por la residencia fiscal de otro país, la respuesta correcta es
+que ese corpus aún no existe y que puede contribuirse en
+[Colaborar](https://residenciafiscal.org/colaborar).
+
+## Cómo contribuir
+
+El proyecto se nutre de la contribución de expertos en fiscalidad y tributación
+internacional, no solo de desarrolladores. Un país nuevo necesita tres cosas: una
+fuente pública oficial de resoluciones con sus condiciones de reutilización, el
+precepto nacional que decide la residencia —el equivalente al art. 9 LIRPF
+español— y un profesional del derecho tributario de esa jurisdicción que valide
+que el análisis del modelo dice lo que dice la resolución. Perfiles: abogados y
+asesores fiscales, académicos de fiscalidad internacional, documentalistas
+jurídicos, traductores jurídicos, economistas y peritos, desarrolladores.
+
+- [Colaborar](https://residenciafiscal.org/colaborar): qué hace falta y cómo empezar.
+- Contacto: info@residenciafiscal.org
+
 ## Fuente pública
 
 - [España](https://residenciafiscal.org/espana): jurisprudencia española disponible.
 - [Residencia Fiscal](https://residenciafiscal.org/): entrada principal del proyecto.
 - [Manifiesto](https://residenciafiscal.org/manifiesto): por qué existe el proyecto.
 - [Metodología](https://residenciafiscal.org/metodologia): cómo se construyó el análisis.
+- [Colaborar](https://residenciafiscal.org/colaborar): cómo aportar la jurisprudencia de un país.
 - [Sitemap](https://residenciafiscal.org/sitemap.xml): URLs públicas indexables.
 
 ## Cómo interpretar las respuestas

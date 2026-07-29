@@ -28,10 +28,14 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     assert all(location is not None for location in raw_locations)
     locations = [location for location in raw_locations if location is not None]
 
+    # `/colaborar` es la única puerta indexable de la invitación a contribuir: las
+    # páginas de país sin corpus son `noindex`, así que sin esta URL la invitación
+    # no se puede encontrar desde una búsqueda.
     assert locations == [
         "https://residenciafiscal.org/espana",
         "https://residenciafiscal.org/manifiesto",
         "https://residenciafiscal.org/metodologia",
+        "https://residenciafiscal.org/colaborar",
     ]
     assert all("?" not in location and "#" not in location for location in locations)
     # Las conversaciones (/c/) son privadas: nunca entran en el sitemap.
@@ -45,6 +49,11 @@ def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:
     assert "106 sentencias" in llms
     assert "https://residenciafiscal.org/" in llms
     assert "/c/" not in llms
+    # Con las páginas de país en `noindex`, llms.txt es la vía por la que un
+    # asistente puede decir que el corpus de otro país todavía no existe y que se
+    # puede contribuir, en vez de inventarse jurisprudencia que no tenemos.
+    assert "https://residenciafiscal.org/colaborar" in llms
+    assert "contribución de expertos" in llms
 
 
 def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
@@ -96,6 +105,13 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
         },
     ]
     assert redirects[-1] == {"from": "/*", "to": "/index.html", "status": 200}
+
+
+def test_collaborate_route_serves_its_prerender() -> None:
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in config["redirects"]}
+
+    assert ("/colaborar", "/colaborar/index.html") in redirect_pairs
 
 
 def test_country_routes_have_prerender_redirects() -> None:

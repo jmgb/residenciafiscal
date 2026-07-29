@@ -52,6 +52,15 @@ const ROUTES = [
     image: `${SITE_URL}/og-image-manifiesto.png`,
   },
   {
+    dir: 'colaborar',
+    title: 'Colaborar — Residencia Fiscal',
+    description:
+      'El corpus de jurisprudencia sobre residencia fiscal crece con la contribución de expertos en fiscalidad y tributación internacional: abogados, asesores fiscales, académicos y documentalistas jurídicos que aportan la jurisprudencia de su jurisdicción.',
+    url: `${SITE_URL}/colaborar`,
+    image: null,
+    robots: 'index, follow',
+  },
+  {
     dir: 'metodologia',
     title: 'Metodología — Residencia Fiscal',
     description:
