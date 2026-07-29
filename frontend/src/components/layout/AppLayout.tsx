@@ -21,7 +21,8 @@ const SIDEBAR_ID = 'app-sidebar';
 export function AppLayout() {
   const { collapsed, toggle } = useSidebarCollapsed();
   const location = useLocation();
-  const selectedCountry = COUNTRY_ROUTES.find((country) => country.path === location.pathname);
+  const pathname = decodeURI(location.pathname);
+  const selectedCountry = COUNTRY_ROUTES.find((country) => country.path === pathname);
   const mainRef = useRef<HTMLElement>(null);
   const hasMountedRef = useRef(false);
 

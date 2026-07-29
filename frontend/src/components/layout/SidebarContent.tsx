@@ -58,6 +58,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
   };
 
   const location = useLocation();
+  const pathname = decodeURI(location.pathname);
 
   return (
     <>
@@ -127,7 +128,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
           </h2>
         )}
         {COUNTRY_ROUTES.map((country) => {
-          const isActive = location.pathname === country.path;
+          const isActive = pathname === country.path;
           return (
             <Link
               key={country.path}
