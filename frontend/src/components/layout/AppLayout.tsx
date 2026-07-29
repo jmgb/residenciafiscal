@@ -1,6 +1,7 @@
 import { PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { MobileNavigation } from './MobileNavigation';
@@ -20,6 +21,7 @@ const SIDEBAR_ID = 'app-sidebar';
 export function AppLayout() {
   const { collapsed, toggle } = useSidebarCollapsed();
   const location = useLocation();
+  const selectedCountry = COUNTRY_ROUTES.find((country) => country.path === location.pathname);
   const mainRef = useRef<HTMLElement>(null);
   const hasMountedRef = useRef(false);
 
@@ -71,7 +73,7 @@ export function AppLayout() {
               )}
             </Button>
             <span className='truncate font-heading text-sm font-semibold text-foreground'>
-              Residencia Fiscal
+              Residencia Fiscal{selectedCountry ? ` en ${selectedCountry.name}` : ''}
             </span>
           </div>
 

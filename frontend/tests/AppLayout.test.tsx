@@ -32,6 +32,20 @@ describe('AppLayout', () => {
     expect(screen.getByText('contenido')).toBeInTheDocument();
   });
 
+  it('muestra el país seleccionado en el título superior', () => {
+    render(
+      <MemoryRouter initialEntries={['/españa']}>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path='/españa' element={<div>España</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Residencia Fiscal en España')).toBeInTheDocument();
+  });
+
   it('arranca con el sidebar expandido', () => {
     renderLayout();
     expect(screen.getByRole('button', { name: 'Colapsar menú lateral' })).toBeInTheDocument();
