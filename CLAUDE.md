@@ -105,10 +105,10 @@ El contrato campo por campo y el orden de secciones están en
 [`docs/OKF_MARKDOWN_CONTRACT.md`](docs/OKF_MARKDOWN_CONTRACT.md). La
 representación íntegra por páginas recomendada para un futuro RAG se especifica
 en [`docs/VERBATIM_CORPUS.md`](docs/VERBATIM_CORPUS.md). Su contrato, extractor
-crudo y JSON Schema ya están implementados; todavía falta generar y validar el
-artefacto de `SAN 1210/2023`. `pdf_page_extraction.py` produce texto saneado
-para matching y no debe usarse como fuente verbatim; esa responsabilidad
-pertenece exclusivamente a `verbatim_extraction.py`.
+crudo, JSON Schema y artefacto piloto de `SAN 1210/2023` ya están implementados
+y validados. `pdf_page_extraction.py` produce texto saneado para matching y no
+debe usarse como fuente verbatim; esa responsabilidad pertenece exclusivamente
+a `verbatim_extraction.py`.
 
 El caso de uso rector del corpus es la investigación jurisprudencial
 conversacional: ante los hechos y preguntas de un abogado, recuperar por
@@ -123,8 +123,8 @@ relaciones prueba→hecho→cuestión y anclajes por proposición.
 El orden operativo, el contrato preliminar, las responsabilidades
 Python/agente/persona y los gates 1 → 5 → 106 están en
 [`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](docs/JURISPRUDENCE_DATA_V3_ROADMAP.md).
-El siguiente trabajo es generar el verbatim y construir el caso v3 híbrido de
-`SAN 1210/2023`; no continuar directamente con el chat ni con las 106.
+El siguiente trabajo es construir el caso v3 híbrido de `SAN 1210/2023` desde
+el verbatim; no continuar directamente con el chat ni con las 106.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia

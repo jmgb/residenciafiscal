@@ -332,10 +332,9 @@ real pertenece a las fases B y C.
 
 ### Fase B — una sentencia
 
-**Estado (2026-07-29): en curso.** B1 —contrato, extractor crudo, JSON Schema,
-fixtures y tests de `residenciafiscal-verbatim/1`— está completado. B2 debe
-materializar y validar el JSON de `SAN 1210/2023` antes de iniciar el análisis
-jurídico híbrido.
+**Estado (2026-07-29): en curso.** B1 —contrato y extractor— y B2
+—materialización reproducible del verbatim de `SAN 1210/2023`— están
+completados. B3 debe construir el caso jurídico v3 mediante el flujo híbrido.
 
 Se utilizará `SAN 1210/2023` porque combina permanencia, centro económico,
 familia, vivienda, documentación extranjera, carga de la prueba, regularización
@@ -344,7 +343,7 @@ y sanción.
 Entregables:
 
 - [x] contrato y extractor verbatim;
-- [ ] verbatim JSON de `SAN 1210/2023`;
+- [x] verbatim JSON de `SAN 1210/2023`;
 - caso v3;
 - perfil OKF derivado;
 - informe de validación;

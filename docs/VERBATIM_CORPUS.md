@@ -1,8 +1,8 @@
 # Representación íntegra por páginas para recuperación
 
-**Estado (2026-07-29):** contrato, extractor crudo, JSON Schema, fixtures y
-tests implementados. El artefacto de `SAN 1210/2023` todavía no se ha generado;
-ese es el paso B2.
+**Estado (2026-07-29):** contrato, extractor, schema y piloto de
+`SAN 1210/2023` implementados y validados. La siguiente unidad es construir el
+caso jurídico v3 desde esta fuente.
 
 ## Decisión para el schema v3
 
@@ -39,6 +39,32 @@ Para regenerar el schema:
 ```bash
 uv run python -c 'from pathlib import Path; from verbatim_schema import write_verbatim_json_schema; write_verbatim_json_schema(Path("schemas/residenciafiscal-verbatim-v1.schema.json"))'
 ```
+
+Para regenerar y revalidar el piloto:
+
+```bash
+make export-verbatim
+```
+
+El target construye en un directorio de staging, valida el JSON contra el PDF
+mediante una segunda extracción y solo entonces reemplaza el destino.
+
+## Resultado del piloto
+
+| Dato | Valor |
+|---|---|
+| Artefacto | `knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json` |
+| Extractor | `pypdf/6.14.2` |
+| Páginas | 10, todas `TEXT_EXTRACTED` |
+| Estado | `COMPLETE` |
+| Tamaño | 46.569 bytes |
+| SHA-256 del PDF | `4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d` |
+| SHA-256 de páginas | `76a3bd4547c840d2e0f23eb2e6986c7c4c14f4eca528fe98ebd7e93d9ba658ae` |
+| SHA-256 del artefacto | `de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1` |
+
+Dos builds consecutivos produjeron los mismos tres hashes y los mismos bytes.
+El test del piloto reextrae el PDF y exige que el resultado serializado coincida
+exactamente con el artefacto versionado.
 
 ## Por qué conviene
 

@@ -13,7 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
-	verify-citations export-okf export-okf-sample \
+	verify-citations export-okf export-okf-sample export-verbatim \
 	descargar-normativa export-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -43,6 +43,10 @@ NORMATIVA_SOURCES ?= ./normativa
 NORMATIVA_OUTPUT ?= ./knowledge/normativa
 OKF_SAMPLE_MANIFEST ?= ./sentencias/okf_muestra_5.json
 OKF_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-muestra-5
+VERBATIM_PDF ?= ./sentencias/SAN_1210_2023.pdf
+VERBATIM_DOCUMENT_ID ?= san-1210-2023
+VERBATIM_SOURCE_FILE ?= sentencias/SAN_1210_2023.pdf
+VERBATIM_OUTPUT ?= ./knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -75,12 +79,14 @@ help:
 	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
+	@echo "  make export-verbatim      Genera y revalida el verbatim piloto (sin LLM)"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
 	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="
+	@echo "  Verbatim: VERBATIM_PDF= VERBATIM_DOCUMENT_ID= VERBATIM_SOURCE_FILE= VERBATIM_OUTPUT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -167,6 +173,14 @@ export-okf-sample:
 		--annotations-dir knowledge/annotations \
 		--manifest $(OKF_SAMPLE_MANIFEST) \
 		--threshold $(OKF_THRESHOLD)
+
+export-verbatim:
+	uv run python export_verbatim.py \
+		--pdf $(VERBATIM_PDF) \
+		--document-id $(VERBATIM_DOCUMENT_ID) \
+		--source-file $(VERBATIM_SOURCE_FILE) \
+		--output $(VERBATIM_OUTPUT) \
+		--project-root .
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

@@ -115,7 +115,7 @@ contra el dominio público después de cada deploy.
     - [x] Implementar modelos Pydantic, JSON Schema, fixtures y tests.
     - [x] Implementar contrato, extractor crudo, JSON Schema, fixtures y tests
       de `residenciafiscal-verbatim/1`.
-    - [ ] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
+    - [x] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
     - [ ] Construir el caso v3 híbrido de `SAN 1210/2023` y renderizar su
       Markdown desde el modelo canónico.
     - [ ] Validar las preguntas aplicables del piloto contra esa sentencia.
