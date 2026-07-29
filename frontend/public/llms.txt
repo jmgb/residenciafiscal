@@ -1,0 +1,32 @@
+# Residencia Fiscal
+
+> Aplicación web en español para consultar jurisprudencia española sobre la residencia fiscal de personas físicas y el artículo 9 de la LIRPF.
+
+## Qué es
+
+Residencia Fiscal permite explorar en lenguaje natural un corpus de 106 sentencias
+judiciales españolas sobre residencia fiscal. El corpus cubre 74 sentencias del
+Tribunal Supremo (STS) y 32 de la Audiencia Nacional (SAN), con resoluciones de
+2015 a 2025.
+
+## Temas del corpus
+
+- Permanencia superior a 183 días y ausencias esporádicas.
+- Centro principal de intereses económicos.
+- Centro de intereses vitales, familia y presunciones legales.
+- Convenios de doble imposición y reglas de desempate del artículo 4 del Modelo OCDE.
+- Pruebas aportadas por la Administración y el contribuyente.
+- Carga de la prueba, motivación judicial y resultado del litigio.
+
+## Fuente pública
+
+- [Residencia Fiscal](https://residenciafiscal.org/): interfaz de consulta.
+- [Sitemap](https://residenciafiscal.org/sitemap.xml): URLs públicas indexables.
+
+## Cómo interpretar las respuestas
+
+Las respuestas deben vincularse a la sentencia citada y distinguir entre el criterio
+del tribunal, los hechos probados y una inferencia. El corpus sirve para investigación
+y orientación documental; no sustituye asesoramiento jurídico o fiscal profesional.
+La extracción estructurada puede tener confianza alta, media o baja y debe verificarse
+contra el texto original de la resolución.

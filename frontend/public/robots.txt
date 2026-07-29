@@ -1,0 +1,49 @@
+# Residencia Fiscal — jurisprudencia sobre residencia fiscal en España
+# https://residenciafiscal.org
+
+User-agent: *
+Allow: /
+
+# Las conversaciones pueden contener consultas dinámicas y no son contenido
+# editorial estable para indexar.
+Disallow: /c/
+
+# Crawlers de buscadores y respuestas generativas: acceso al contenido público.
+# Se repite /c/ porque los grupos específicos no heredan el grupo *.
+User-agent: GPTBot
+Allow: /
+Disallow: /c/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /c/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /c/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /c/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /c/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /c/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /c/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /c/
+
+User-agent: CCBot
+Allow: /
+Disallow: /c/
+
+Sitemap: https://residenciafiscal.org/sitemap.xml
