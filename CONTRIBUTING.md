@@ -3,6 +3,57 @@
 Gracias por el interés. Este documento explica cómo levantar el entorno, qué
 comprueba el CI y qué se espera de una contribución.
 
+## Aportar la jurisprudencia de otro país
+
+Hoy solo España tiene corpus, y no por una limitación del código: el pipeline es
+agnóstico de la jurisdicción. Cualquier país puede entrar —no solo los que ya
+tienen ruta en la web— y **no hace falta saber programar**: la aportación que
+falta es jurídica, no técnica.
+
+Empieza abriendo una issue con la plantilla
+[**Aportar la jurisprudencia de un país**](https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml).
+Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento.
+
+### Qué se necesita
+
+1. **Una fuente pública oficial de resoluciones**, con URL y con sus condiciones
+   de reutilización. Sin licencia clara el corpus no se publica. Los documentos
+   deben tener capa de texto: el pipeline extrae con `pypdf` y **no hace OCR**,
+   así que un PDF escaneado hoy no se procesa.
+2. **El precepto nacional que decide la residencia fiscal** de una persona
+   física —el equivalente al art. 9 LIRPF— más el artículo de desempate de los
+   convenios de doble imposición del país, con enlace a su texto oficial.
+3. **Revisión humana del análisis.** Lo redacta un modelo de lenguaje y puede
+   equivocarse; ningún país se publica sin que alguien con conocimiento del
+   derecho fiscal de esa jurisdicción compruebe que el análisis dice lo que dice
+   la resolución.
+
+### Reglas que no se negocian
+
+Valen para cualquier corpus, no solo el español:
+
+- **El texto de una resolución no se reescribe**: ni se corrige, ni se completa,
+  ni se parafrasea. Puede formatearse, pero una cita solo se publica desde una
+  subcadena exacta del texto extraído del documento oficial. Toda corrección o
+  interpretación vive en metadatos o sidecars separados.
+- **No se suben documentos al repositorio antes de resolver su reutilización.**
+  Cada corpus de fuente lleva su propio `AVISO_LEGAL.md` y su inventario
+  `readme.txt`, y hay que actualizarlos al añadir ficheros. Referencia: el
+  criterio aplicado a [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md) y
+  a [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
+- **Los corpus están aislados entre sí.** Una consulta de un país no puede
+  devolver una cita de otro, y un corpus nuevo tiene que traer sus tests de
+  aislamiento.
+
+### Cómo se publica una página de país
+
+El circuito completo, con sus gates, está en
+[`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md). En resumen: la ruta y la página
+de invitación ya existen para 20 países; se sustituyen por la experiencia real
+cuando el corpus está verificado, se pone `indexable: true` en
+`frontend/src/data/countryRoutes.json` y el prerender y el sitemap se actualizan
+solos en el build.
+
 ## Entorno
 
 El proyecto usa [uv](https://docs.astral.sh/uv/) para Python y `npm` para el

@@ -6,6 +6,9 @@ contact_links:
   - name: Error en un análisis concreto
     url: https://github.com/jmgb/residenciafiscal/issues/new?template=bug_report.yml
     about: El análisis de una sentencia es incorrecto. Indica el fichero y qué campo falla.
+  - name: Cómo se construye el corpus de un país
+    url: https://github.com/jmgb/residenciafiscal/blob/main/CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-pa%C3%ADs
+    about: Qué hace falta para publicar la jurisprudencia de una jurisdicción nueva.
   - name: Documentación del proyecto
     url: https://github.com/jmgb/residenciafiscal/blob/main/CLAUDE.md
     about: Arquitectura, schema de campos, costes y troubleshooting antes de preguntar.

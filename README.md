@@ -32,6 +32,10 @@ la Audiencia Nacional** (2015-2025) sobre residencia fiscal de personas físicas
 La pregunta de fondo no es qué dice la ley, sino qué acepta un juez como prueba.
 Eso solo se ve agregando sentencias.
 
+El corpus de hoy es español. El pipeline no lo es: cualquier jurisdicción puede
+entrar si alguien aporta su jurisprudencia — ver
+[Un país, un corpus](#un-país-un-corpus).
+
 > [!WARNING]
 > El análisis lo genera un modelo de lenguaje y **puede contener errores**. No es
 > asesoramiento jurídico ni fiscal. Para citar una resolución, usa siempre el
@@ -75,6 +79,48 @@ Del corpus normativo se publica **un Markdown por artículo**, no por ley: los
 preceptos que deciden o prueban la residencia fiscal, más el artículo de
 residencia de cada uno de los 96 convenios de doble imposición firmados por
 España. Ver [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+
+## Un país, un corpus
+
+La residencia fiscal se decide en los tribunales de cada país, y la pregunta es
+la misma en todos: **qué prueba acepta un juez**. Lo que cambia es el articulado
+y quién lo interpreta.
+
+España está publicada porque alguien reunió sus 106 sentencias, no porque el
+proyecto sea español. El pipeline es agnóstico de la jurisdicción: analiza
+resoluciones, contrasta cada cita con el documento de origen y publica el
+criterio del tribunal con su página. **Si conoces la jurisprudencia de tu país,
+puedes abrirlo.**
+
+> [!TIP]
+> **[Propón tu país](https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml)**
+> — cualquier jurisdicción, no solo las que ya tienen ruta en la web. No hace
+> falta saber programar.
+
+Un país entra cuando existen tres cosas. Rara vez las aporta una sola persona:
+
+| Lo que hace falta | Por qué |
+|---|---|
+| **Una fuente pública oficial** de resoluciones, con sus condiciones de reutilización | El corpus se publica desde la fuente original y sin licencia clara no se publica. Los PDF deben llevar capa de texto: no hay OCR |
+| **El precepto nacional que decide la residencia** — el equivalente al [art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) — y el artículo de desempate de sus convenios | El análisis de una sentencia no se sostiene sin la norma que aplica |
+| **Alguien que revise el resultado** | El análisis lo redacta un modelo de lenguaje y puede equivocarse. Ningún país se publica sin revisión humana |
+
+Lo que **no** hace falta aportar: el pipeline, la verificación de citas contra el
+documento fuente, el schema de extracción ni el frontend. Eso ya existe y es
+común a todos los países.
+
+Dos invariantes rigen cualquier corpus nuevo, igual que el español:
+
+- **El texto de una resolución no se reescribe.** Ni se corrige, ni se completa,
+  ni se parafrasea. Una cita solo se publica desde una subcadena exacta del texto
+  extraído del documento oficial. Las correcciones viven en metadatos aparte.
+- **Cada corpus se aísla del resto.** Una consulta sobre un país no puede
+  devolver una cita de otro, y hay tests que lo comprueban.
+
+El detalle operativo está en
+[CONTRIBUTING.md](CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país); el
+estado de las páginas por país, en
+[`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).
 
 ## Puesta en marcha
 

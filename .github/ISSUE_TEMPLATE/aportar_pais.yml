@@ -1,0 +1,122 @@
+name: Aportar la jurisprudencia de un país
+description: Proponer el corpus de residencia fiscal de tu jurisdicción para que su página se publique
+title: 'Aportar jurisprudencia: '
+# GitHub solo aplica etiquetas que ya existen en el repositorio: `help wanted`
+# existe, `corpus` todavía no. Si se crea, añadirla aquí.
+labels: ["help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias. El pipeline es agnóstico del país: analiza resoluciones, contrasta
+        cada cita con el documento de origen y publica el criterio del tribunal con
+        su página. España es el único país con corpus porque alguien reunió sus
+        sentencias, no por una limitación del código.
+
+        No hace falta que sepas programar ni que aportes las tres cosas a la vez.
+        Si solo puedes señalar la fuente oficial de tu país, ábrela igualmente.
+
+        Antes de seguir: **no adjuntes documentos aquí**. Primero acordamos la
+        fuente y sus condiciones de reutilización; sin licencia clara el corpus no
+        se publica. Ver
+        [`sentencias/AVISO_LEGAL.md`](https://github.com/jmgb/residenciafiscal/blob/main/sentencias/AVISO_LEGAL.md)
+        para el criterio que se aplicó al corpus español.
+
+  - type: input
+    id: pais
+    attributes:
+      label: País
+      description: Jurisdicción cuya jurisprudencia propones. Cualquier país, no solo los que ya tienen ruta en la web.
+      placeholder: Portugal
+    validations:
+      required: true
+
+  - type: textarea
+    id: fuente
+    attributes:
+      label: Fuente pública oficial de resoluciones
+      description: |
+        Buscador o repositorio oficial del que se descargarían las resoluciones, con URL.
+        Indica si los documentos llevan capa de texto o son escaneados: el pipeline no
+        hace OCR, así que un PDF escaneado hoy no se procesa.
+      placeholder: |
+        Buscador: https://...
+        Órganos cubiertos: Supremo Tribunal Administrativo, ...
+        Formato: PDF con texto embebido / escaneado / HTML
+    validations:
+      required: true
+
+  - type: textarea
+    id: reutilizacion
+    attributes:
+      label: Condiciones de reutilización
+      description: |
+        Qué permite la fuente: licencia, términos de uso o norma que regule la reutilización
+        de las resoluciones. Indica también si van pseudonimizadas en origen o si habría que
+        anonimizarlas antes de publicarlas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: precepto
+    attributes:
+      label: Precepto nacional que decide la residencia
+      description: |
+        El equivalente al art. 9 LIRPF español: la norma que define cuándo una persona física
+        es residente fiscal. Añade el enlace a su texto oficial y, si existe, el boletín oficial
+        del que se puede descargar de forma estructurada.
+      placeholder: |
+        Norma: art. 16 CIRS
+        Texto oficial: https://...
+        Boletín con datos abiertos: sí / no
+
+  - type: input
+    id: volumen
+    attributes:
+      label: Volumen aproximado
+      description: Cuántas resoluciones sobre residencia fiscal calculas que existen y en qué rango de años. Una cifra orientativa vale.
+      placeholder: ~80 resoluciones, 2015-2025
+
+  - type: dropdown
+    id: aportacion
+    attributes:
+      label: Qué puedes aportar
+      multiple: true
+      options:
+        - Localizar y descargar las resoluciones
+        - Aportar la normativa nacional de residencia
+        - Revisar jurídicamente el análisis del modelo
+        - Traducir o adaptar el schema de extracción a la terminología nacional
+        - Solo señalo la fuente; no puedo participar en el resto
+    validations:
+      required: true
+
+  - type: textarea
+    id: revision
+    attributes:
+      label: Quién revisaría el análisis
+      description: |
+        El análisis lo redacta un modelo de lenguaje y puede equivocarse, así que un país no
+        se publica sin revisión humana. Cuéntanos tu relación con el derecho fiscal de esa
+        jurisdicción, o si conoces a alguien que pudiera revisarlo. No hace falta ejercer
+        como abogado.
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: |
+        Particularidades del país que afecten al análisis: criterio de días distinto, reglas
+        de desempate propias, instancias administrativas previas al tribunal, etc.
+
+  - type: checkboxes
+    id: comprobaciones
+    attributes:
+      label: Comprobaciones previas
+      options:
+        - label: He comprobado que no hay ya una issue abierta para este país.
+          required: true
+        - label: La fuente que propongo es pública y oficial, no una recopilación de terceros.
+          required: true
+        - label: Entiendo que no debo adjuntar documentos a esta issue antes de acordar sus condiciones de reutilización.
+          required: true
