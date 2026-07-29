@@ -10,11 +10,13 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from citation_report import finding_to_dict, render_markdown_report, summarize_findings
+from citation_sample_manifest import load_sample_manifest
 from citation_spike import (
     PageLoader,
     extract_citation_candidates,
     extract_pdf_pages,
     load_citation_sources,
+    select_candidates_by_source_order,
     verify_loaded_citations,
 )
 
@@ -65,9 +67,15 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--jsonl", type=Path, required=True, help="JSONL de análisis")
     parser.add_argument("--pdf-dir", type=Path, default=Path("sentencias"))
     parser.add_argument("--output-dir", type=Path, default=Path("output/citation-verification"))
-    parser.add_argument(
+    scope_group = parser.add_mutually_exclusive_group()
+    scope_group.add_argument(
         "--source-file",
         help="Limita el spike al nombre exacto de un PDF presente en el JSONL",
+    )
+    scope_group.add_argument(
+        "--manifest",
+        type=Path,
+        help="Manifiesto JSON con una muestra ordenada de sentencias",
     )
     parser.add_argument("--threshold", type=float, default=85.0)
     parser.add_argument(
@@ -95,12 +103,15 @@ def main(
 
     records = _load_jsonl(args.jsonl)
     candidates = extract_citation_candidates(records)
+    source_files: tuple[str, ...] = ()
+    manifest = None
     if args.source_file:
-        candidates = tuple(
-            candidate for candidate in candidates if candidate.source_file == args.source_file
-        )
-        if not candidates:
-            raise ValueError(f"La sentencia no tiene frases_clave: {args.source_file}")
+        source_files = (args.source_file,)
+    elif args.manifest:
+        manifest = load_sample_manifest(args.manifest)
+        source_files = manifest.source_files
+    if source_files:
+        candidates = select_candidates_by_source_order(candidates, source_files)
     loaded = load_citation_sources(candidates, args.pdf_dir, page_loader=page_loader)
 
     findings_by_threshold = {
@@ -120,6 +131,9 @@ def main(
             "source_jsonl_sha256": _sha256(args.jsonl),
             "pdf_dir": str(args.pdf_dir),
             "source_file": args.source_file,
+            "manifest": str(args.manifest) if args.manifest else None,
+            "manifest_name": manifest.name if manifest else None,
+            "source_files": list(source_files),
             "threshold": args.threshold,
             "thresholds": sorted(thresholds),
             "records": len(records),
@@ -136,7 +150,7 @@ def main(
         threshold=args.threshold,
         source_jsonl=str(args.jsonl),
         threshold_summaries=threshold_summaries,
-        source_file=args.source_file,
+        source_files=source_files,
         findings=selected_findings,
     )
 
@@ -150,9 +164,10 @@ def main(
     markdown_path.write_text(markdown, encoding="utf-8")
 
     print(
-        f"Verificadas {selected_summary['verified_citations']}/"
+        f"Localizadas {selected_summary['located_citations']}/"
         f"{selected_summary['total_citations']} citas "
-        f"(umbral {args.threshold:g})."
+        f"({selected_summary['literal_citations']} literales; "
+        f"umbral {args.threshold:g})."
     )
     print(f"JSON: {json_path}")
     print(f"Markdown: {markdown_path}")

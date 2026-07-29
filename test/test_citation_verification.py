@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from citation_verification import (
-    CitationStatus,
+    EvidenceStatus,
+    ExtractedPage,
+    LiteralFidelity,
     normalize_legal_text,
     parse_page_number,
     split_citation_fragments,
@@ -49,9 +51,11 @@ def test_verifica_una_cita_exacta_en_la_pagina_declarada() -> None:
         threshold=90,
     )
 
-    assert result.status is CitationStatus.VERIFIED_DECLARED_PAGE
+    assert result.evidence_status is EvidenceStatus.FOUND_DECLARED_PAGE
+    assert result.evidence_found is True
+    assert result.literal_fidelity is LiteralFidelity.EXACT
     assert result.score == 100
-    assert result.matched_pages == (2,)
+    assert result.matched_pdf_page_indexes == (2,)
     assert result.fragment_matches[0].exact is True
 
 
@@ -71,7 +75,8 @@ def test_verifica_una_parafrasis_leve_mediante_matching_difuso() -> None:
         threshold=80,
     )
 
-    assert result.status is CitationStatus.VERIFIED_DECLARED_PAGE
+    assert result.evidence_status is EvidenceStatus.FOUND_DECLARED_PAGE
+    assert result.literal_fidelity is LiteralFidelity.FUZZY_CANDIDATE
     assert 80 <= result.score < 100
     assert result.fragment_matches[0].exact is False
 
@@ -91,8 +96,9 @@ def test_busca_en_paginas_adyacentes_antes_que_en_el_resto_del_documento() -> No
         threshold=90,
     )
 
-    assert result.status is CitationStatus.VERIFIED_ADJACENT_PAGE
-    assert result.matched_pages == (3,)
+    assert result.evidence_status is EvidenceStatus.FOUND_ADJACENT_PAGE
+    assert result.literal_fidelity is LiteralFidelity.EXACT
+    assert result.matched_pdf_page_indexes == (3,)
 
 
 def test_busca_en_el_documento_completo_despues_de_las_adyacentes() -> None:
@@ -110,8 +116,8 @@ def test_busca_en_el_documento_completo_despues_de_las_adyacentes() -> None:
         threshold=90,
     )
 
-    assert result.status is CitationStatus.VERIFIED_OTHER_PAGE
-    assert result.matched_pages == (4,)
+    assert result.evidence_status is EvidenceStatus.FOUND_OTHER_PAGE
+    assert result.matched_pdf_page_indexes == (4,)
 
 
 def test_clasifica_como_parcial_si_solo_aparece_un_fragmento() -> None:
@@ -130,7 +136,9 @@ def test_clasifica_como_parcial_si_solo_aparece_un_fragmento() -> None:
         threshold=90,
     )
 
-    assert result.status is CitationStatus.PARTIAL_FRAGMENTS
+    assert result.evidence_status is EvidenceStatus.PARTIAL_FRAGMENTS
+    assert result.evidence_found is False
+    assert result.literal_fidelity is LiteralFidelity.PARTIAL
     assert result.matched_fragment_count == 1
     assert result.total_fragment_count == 2
     assert result.score == min(match.score for match in result.fragment_matches)
@@ -150,8 +158,9 @@ def test_distingue_documento_sin_texto_de_cita_no_encontrada() -> None:
         threshold=90,
     )
 
-    assert extraction_error.status is CitationStatus.EXTRACTION_DEFECT
-    assert not_found.status is CitationStatus.NOT_FOUND
+    assert extraction_error.evidence_status is EvidenceStatus.EXTRACTION_DEFECT
+    assert extraction_error.literal_fidelity is LiteralFidelity.UNVERIFIED
+    assert not_found.evidence_status is EvidenceStatus.NOT_FOUND
 
 
 def test_marca_pagina_declarada_invalida_pero_busca_en_el_documento() -> None:
@@ -164,8 +173,8 @@ def test_marca_pagina_declarada_invalida_pero_busca_en_el_documento() -> None:
         threshold=90,
     )
 
-    assert result.status is CitationStatus.VERIFIED_OTHER_PAGE
-    assert result.declared_page is None
+    assert result.evidence_status is EvidenceStatus.FOUND_OTHER_PAGE
+    assert result.declared_pdf_page_index is None
     assert result.declared_page_valid is False
 
 
@@ -177,5 +186,43 @@ def test_una_cita_vacia_nunca_se_considera_verificada() -> None:
         threshold=90,
     )
 
-    assert result.status is CitationStatus.NOT_FOUND
+    assert result.evidence_status is EvidenceStatus.NOT_FOUND
     assert result.score == 0
+
+
+def test_distingue_indice_pdf_de_etiqueta_de_pagina_impresa() -> None:
+    pages = (
+        ExtractedPage(pdf_page_index=1, printed_page_label="i", text="Portada."),
+        ExtractedPage(pdf_page_index=2, printed_page_label="1", text="Página declarada."),
+        ExtractedPage(
+            pdf_page_index=3,
+            printed_page_label="2",
+            text="La vivienda permanente estaba situada en Francia.",
+        ),
+    )
+
+    result = verify_citation_pages(
+        quote="La vivienda permanente estaba situada en Francia.",
+        declared_page=2,
+        pages=pages,
+        threshold=90,
+    )
+
+    assert result.evidence_status is EvidenceStatus.FOUND_ADJACENT_PAGE
+    assert result.declared_pdf_page_index == 2
+    assert result.matched_pdf_page_indexes == (3,)
+    assert result.matched_printed_page_labels == ("2",)
+    assert result.fragment_matches[0].pdf_page_index == 3
+    assert result.fragment_matches[0].printed_page_label == "2"
+
+
+def test_elipsis_con_fragmentos_exactos_es_literal() -> None:
+    result = verify_citation_pages(
+        quote="núcleo principal... intereses económicos",
+        declared_page=1,
+        pages=("En España radica el núcleo principal de sus actividades e intereses económicos.",),
+        threshold=90,
+    )
+
+    assert result.evidence_status is EvidenceStatus.FOUND_DECLARED_PAGE
+    assert result.literal_fidelity is LiteralFidelity.EXACT_WITH_ELLIPSIS

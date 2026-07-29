@@ -24,11 +24,17 @@ def append_finding_details(lines: list[str], findings: Sequence[CitationFinding]
     for finding in findings:
         candidate = finding.candidate
         verification = finding.verification
-        status = verification.status.value if verification else "processing_error"
+        evidence_status = verification.evidence_status.value if verification else "processing_error"
+        literal_fidelity = verification.literal_fidelity.value if verification else "unverified"
         score = f"{verification.score:g}" if verification else "—"
-        matched_pages = (
-            ", ".join(str(page) for page in verification.matched_pages)
-            if verification and verification.matched_pages
+        matched_pdf_pages = (
+            ", ".join(str(page) for page in verification.matched_pdf_page_indexes)
+            if verification and verification.matched_pdf_page_indexes
+            else "—"
+        )
+        printed_labels = (
+            ", ".join(verification.matched_printed_page_labels)
+            if verification and verification.matched_printed_page_labels
             else "—"
         )
         lines.extend(
@@ -36,10 +42,12 @@ def append_finding_details(lines: list[str], findings: Sequence[CitationFinding]
                 "",
                 f"### Cita {candidate.citation_index + 1} — {candidate.topic or 'sin tema'}",
                 "",
-                f"- Estado: `{status}`",
+                f"- Evidencia: `{evidence_status}`",
+                f"- Fidelidad literal: `{literal_fidelity}`",
                 f"- Puntuación: {score}",
-                f"- Página declarada: {candidate.declared_page}",
-                f"- Páginas encontradas: {matched_pages}",
+                f"- Índice PDF declarado: {candidate.declared_page}",
+                f"- Índices PDF encontrados: {matched_pdf_pages}",
+                f"- Etiquetas impresas encontradas: {printed_labels}",
                 f"- Texto: {candidate.quote}",
             ]
         )
@@ -48,12 +56,13 @@ def append_finding_details(lines: list[str], findings: Sequence[CitationFinding]
         lines.extend(
             [
                 "",
-                "| Fragmento normalizado | Puntuación | Página | Exacto |",
-                "|---|---:|---:|:---:|",
+                "| Fragmento normalizado | Puntuación | Índice PDF | Etiqueta impresa | Exacto |",
+                "|---|---:|---:|---:|:---:|",
             ]
         )
         for match in verification.fragment_matches:
             fragment = match.fragment.replace("|", r"\|")
-            page = match.page_number if match.page_number is not None else "—"
+            page = match.pdf_page_index if match.pdf_page_index is not None else "—"
+            printed = match.printed_page_label or "—"
             exact = "sí" if match.exact else "no"
-            lines.append(f"| {fragment} | {match.score:g} | {page} | {exact} |")
+            lines.append(f"| {fragment} | {match.score:g} | {page} | {printed} | {exact} |")

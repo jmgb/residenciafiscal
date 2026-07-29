@@ -7,15 +7,19 @@ from collections.abc import Mapping, Sequence
 from dataclasses import asdict
 from typing import SupportsFloat, cast
 
+from citation_models import EvidenceStatus, LiteralFidelity
 from citation_report_details import append_finding_details
-from citation_spike import VERIFIED_STATUSES, CitationFinding
-from citation_verification import CitationStatus, split_citation_fragments
+from citation_spike import FOUND_EVIDENCE_STATUSES, CitationFinding
+from citation_verification import split_citation_fragments
+
+LITERAL_FIDELITIES = frozenset({LiteralFidelity.EXACT, LiteralFidelity.EXACT_WITH_ELLIPSIS})
 
 
 def summarize_findings(findings: Sequence[CitationFinding]) -> dict[str, object]:
     """Resume estados y causas directamente observables, sin inferencias jurídicas."""
 
-    status_counts: Counter[str] = Counter()
+    evidence_status_counts: Counter[str] = Counter()
+    literal_fidelity_counts: Counter[str] = Counter()
     cause_counts: Counter[str] = Counter(
         {
             "ellipsis": 0,
@@ -28,44 +32,51 @@ def summarize_findings(findings: Sequence[CitationFinding]) -> dict[str, object]
             "processing_error": 0,
         }
     )
-    verified_citations = 0
+    located_citations = 0
+    literal_citations = 0
 
     for finding in findings:
         verification = finding.verification
         if verification is None:
-            status_counts["processing_error"] += 1
+            evidence_status_counts["processing_error"] += 1
+            literal_fidelity_counts[LiteralFidelity.UNVERIFIED.value] += 1
             cause_counts["processing_error"] += 1
             continue
 
-        status_counts[verification.status.value] += 1
-        is_verified = verification.status in VERIFIED_STATUSES
-        verified_citations += int(is_verified)
+        evidence_status_counts[verification.evidence_status.value] += 1
+        literal_fidelity_counts[verification.literal_fidelity.value] += 1
+        is_located = verification.evidence_status in FOUND_EVIDENCE_STATUSES
+        is_literal = verification.literal_fidelity in LITERAL_FIDELITIES
+        located_citations += int(is_located)
+        literal_citations += int(is_literal)
         cause_counts["ellipsis"] += int(
-            is_verified and len(split_citation_fragments(finding.candidate.quote)) > 1
+            is_located and len(split_citation_fragments(finding.candidate.quote)) > 1
         )
         cause_counts["fuzzy"] += int(
-            is_verified
-            and any(match.matched and not match.exact for match in verification.fragment_matches)
+            verification.literal_fidelity is LiteralFidelity.FUZZY_CANDIDATE
         )
         cause_counts["wrong_page"] += int(
-            verification.status
-            in {CitationStatus.VERIFIED_ADJACENT_PAGE, CitationStatus.VERIFIED_OTHER_PAGE}
+            verification.evidence_status
+            in {EvidenceStatus.FOUND_ADJACENT_PAGE, EvidenceStatus.FOUND_OTHER_PAGE}
         )
         cause_counts["partial_fragments"] += int(
-            verification.status is CitationStatus.PARTIAL_FRAGMENTS
+            verification.evidence_status is EvidenceStatus.PARTIAL_FRAGMENTS
         )
         cause_counts["extraction_defect"] += int(
-            verification.status is CitationStatus.EXTRACTION_DEFECT
+            verification.evidence_status is EvidenceStatus.EXTRACTION_DEFECT
         )
-        cause_counts["unresolved"] += int(verification.status is CitationStatus.NOT_FOUND)
+        cause_counts["unresolved"] += int(verification.evidence_status is EvidenceStatus.NOT_FOUND)
         cause_counts["invalid_declared_page"] += int(not verification.declared_page_valid)
 
     total = len(findings)
     return {
         "total_citations": total,
-        "verified_citations": verified_citations,
-        "verification_rate": round(verified_citations / total, 4) if total else 0.0,
-        "status_counts": dict(sorted(status_counts.items())),
+        "located_citations": located_citations,
+        "literal_citations": literal_citations,
+        "location_rate": round(located_citations / total, 4) if total else 0.0,
+        "literal_rate": round(literal_citations / total, 4) if total else 0.0,
+        "evidence_status_counts": dict(sorted(evidence_status_counts.items())),
+        "literal_fidelity_counts": dict(sorted(literal_fidelity_counts.items())),
         "cause_counts": dict(sorted(cause_counts.items())),
     }
 
@@ -86,22 +97,28 @@ def finding_to_dict(finding: CitationFinding) -> dict[str, object]:
     if verification is None:
         return {
             **base,
-            "status": "processing_error",
+            "evidence_found": False,
+            "evidence_status": "processing_error",
+            "literal_fidelity": LiteralFidelity.UNVERIFIED.value,
             "score": None,
-            "declared_page": None,
+            "declared_pdf_page_index": None,
             "declared_page_valid": False,
-            "matched_pages": [],
+            "matched_pdf_page_indexes": [],
+            "matched_printed_page_labels": [],
             "matched_fragment_count": 0,
             "total_fragment_count": 0,
             "fragment_matches": [],
         }
     return {
         **base,
-        "status": verification.status.value,
+        "evidence_found": verification.evidence_found,
+        "evidence_status": verification.evidence_status.value,
+        "literal_fidelity": verification.literal_fidelity.value,
         "score": verification.score,
-        "declared_page": verification.declared_page,
+        "declared_pdf_page_index": verification.declared_pdf_page_index,
         "declared_page_valid": verification.declared_page_valid,
-        "matched_pages": list(verification.matched_pages),
+        "matched_pdf_page_indexes": list(verification.matched_pdf_page_indexes),
+        "matched_printed_page_labels": list(verification.matched_printed_page_labels),
         "matched_fragment_count": verification.matched_fragment_count,
         "total_fragment_count": verification.total_fragment_count,
         "fragment_matches": [asdict(match) for match in verification.fragment_matches],
@@ -119,7 +136,7 @@ def render_markdown_report(
     threshold: float,
     source_jsonl: str,
     threshold_summaries: Mapping[float, Mapping[str, object]],
-    source_file: str | None = None,
+    source_files: Sequence[str] = (),
     findings: Sequence[CitationFinding] = (),
 ) -> str:
     """Renderiza un informe compacto y apto para revisión humana."""
@@ -132,27 +149,36 @@ def render_markdown_report(
         "| Parámetro | Valor |",
         "|---|---:|",
         f"| JSONL fuente | `{source_jsonl}` |",
-        f"| Sentencia | `{source_file}` |" if source_file else "| Sentencia | Todas |",
+        _format_source_scope(source_files),
         f"| Umbral seleccionado | {threshold:g} |",
         f"| Citas analizadas | {summary['total_citations']} |",
-        f"| Citas verificadas | {summary['verified_citations']} |",
-        f"| Tasa de verificación | {_format_percentage(summary['verification_rate'])} |",
+        f"| Evidencias localizadas | {summary['located_citations']} |",
+        f"| Tasa de localización | {_format_percentage(summary['location_rate'])} |",
+        f"| Citas literales | {summary['literal_citations']} |",
+        f"| Tasa literal | {_format_percentage(summary['literal_rate'])} |",
         "",
         "## Sensibilidad al umbral",
         "",
-        "| Umbral | Verificadas | Tasa |",
-        "|---:|---:|---:|",
+        "| Umbral | Localizadas | Tasa localización | Literales | Tasa literal |",
+        "|---:|---:|---:|---:|---:|",
     ]
     for candidate_threshold, candidate_summary in sorted(threshold_summaries.items()):
         lines.append(
-            f"| {candidate_threshold:g} | {candidate_summary['verified_citations']} | "
-            f"{_format_percentage(candidate_summary['verification_rate'])} |"
+            f"| {candidate_threshold:g} | {candidate_summary['located_citations']} | "
+            f"{_format_percentage(candidate_summary['location_rate'])} | "
+            f"{candidate_summary['literal_citations']} | "
+            f"{_format_percentage(candidate_summary['literal_rate'])} |"
         )
 
-    lines.extend(["", "## Distribución por estado", "", "| Estado | Citas |", "|---|---:|"])
-    status_counts = cast(Mapping[str, object], summary["status_counts"])
+    lines.extend(["", "## Localización de evidencia", "", "| Estado | Citas |", "|---|---:|"])
+    status_counts = cast(Mapping[str, object], summary["evidence_status_counts"])
     for status, count in status_counts.items():
         lines.append(f"| `{status}` | {count} |")
+
+    lines.extend(["", "## Fidelidad literal", "", "| Fidelidad | Citas |", "|---|---:|"])
+    fidelity_counts = cast(Mapping[str, object], summary["literal_fidelity_counts"])
+    for fidelity, count in fidelity_counts.items():
+        lines.append(f"| `{fidelity}` | {count} |")
 
     lines.extend(["", "## Causas observables", "", "| Causa | Citas |", "|---|---:|"])
     cause_counts = cast(Mapping[str, object], summary["cause_counts"])
@@ -162,3 +188,11 @@ def render_markdown_report(
     append_finding_details(lines, findings)
     lines.append("")
     return "\n".join(lines)
+
+
+def _format_source_scope(source_files: Sequence[str]) -> str:
+    if not source_files:
+        return "| Sentencias | Todas |"
+    joined_sources = ", ".join(f"`{source_file}`" for source_file in source_files)
+    label = "Sentencia" if len(source_files) == 1 else "Sentencias"
+    return f"| {label} | {joined_sources} |"

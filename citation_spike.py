@@ -6,20 +6,16 @@ from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from pypdf import PdfReader
+from citation_models import CitationVerification, EvidenceStatus, ExtractedPage
+from citation_verification import verify_citation_pages
+from pdf_page_extraction import extract_pdf_pages
 
-from citation_verification import (
-    CitationStatus,
-    CitationVerification,
-    verify_citation_pages,
-)
-
-PageLoader = Callable[[Path], tuple[str, ...]]
-VERIFIED_STATUSES = frozenset(
+PageLoader = Callable[[Path], tuple[str | ExtractedPage, ...]]
+FOUND_EVIDENCE_STATUSES = frozenset(
     {
-        CitationStatus.VERIFIED_DECLARED_PAGE,
-        CitationStatus.VERIFIED_ADJACENT_PAGE,
-        CitationStatus.VERIFIED_OTHER_PAGE,
+        EvidenceStatus.FOUND_DECLARED_PAGE,
+        EvidenceStatus.FOUND_ADJACENT_PAGE,
+        EvidenceStatus.FOUND_OTHER_PAGE,
     }
 )
 
@@ -40,7 +36,7 @@ class LoadedCitation:
     """Cita junto con las páginas extraídas o el error de carga."""
 
     candidate: CitationCandidate
-    pages: tuple[str, ...] | None
+    pages: tuple[str | ExtractedPage, ...] | None
     error: str | None = None
 
 
@@ -84,11 +80,23 @@ def extract_citation_candidates(
     return tuple(candidates)
 
 
-def extract_pdf_pages(pdf_path: Path) -> tuple[str, ...]:
-    """Extrae el texto de un PDF conservando una entrada por página."""
+def select_candidates_by_source_order(
+    candidates: Sequence[CitationCandidate],
+    source_files: Sequence[str],
+) -> tuple[CitationCandidate, ...]:
+    """Filtra por un conjunto explícito y conserva el orden del manifiesto."""
 
-    reader = PdfReader(str(pdf_path))
-    return tuple((page.extract_text() or "").replace("\x00", " ").strip() for page in reader.pages)
+    candidates_by_source: dict[str, list[CitationCandidate]] = {}
+    for candidate in candidates:
+        candidates_by_source.setdefault(candidate.source_file, []).append(candidate)
+
+    missing = tuple(source for source in source_files if source not in candidates_by_source)
+    if missing:
+        raise ValueError(f"Sentencias sin frases_clave en el JSONL: {', '.join(missing)}")
+
+    return tuple(
+        candidate for source_file in source_files for candidate in candidates_by_source[source_file]
+    )
 
 
 def load_citation_sources(
@@ -100,7 +108,7 @@ def load_citation_sources(
 ) -> tuple[LoadedCitation, ...]:
     """Carga cada PDF una sola vez y propaga su resultado a todas sus citas."""
 
-    cache: dict[str, tuple[tuple[str, ...] | None, str | None]] = {}
+    cache: dict[str, tuple[tuple[str | ExtractedPage, ...] | None, str | None]] = {}
     loaded: list[LoadedCitation] = []
     for candidate in candidates:
         if candidate.source_file not in cache:

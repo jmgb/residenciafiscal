@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from pathlib import Path
 
+from citation_models import EvidenceStatus, LiteralFidelity
 from citation_report import render_markdown_report, summarize_findings
 from citation_spike import (
     CitationCandidate,
@@ -12,7 +13,7 @@ from citation_spike import (
     load_citation_sources,
     verify_loaded_citations,
 )
-from citation_verification import CitationStatus
+from pdf_page_extraction import detect_printed_page_label
 
 
 def test_extrae_solo_frases_clave_con_texto() -> None:
@@ -37,6 +38,11 @@ def test_extrae_solo_frases_clave_con_texto() -> None:
             quote="Una cita válida.",
         ),
     )
+
+
+def test_detecta_la_etiqueta_impresa_al_final_de_la_pagina() -> None:
+    assert detect_printed_page_label("JURISPRUDENCIA\nTexto de la resolución.\n4") == "4"
+    assert detect_printed_page_label("JURISPRUDENCIA\nTexto sin etiqueta final.") is None
 
 
 def test_extrae_cada_pdf_una_sola_vez_y_conserva_errores(tmp_path: Path) -> None:
@@ -92,15 +98,22 @@ def test_resume_estados_y_causas_observables() -> None:
     summary = summarize_findings(findings)
 
     assert findings[0].verification is not None
-    assert findings[0].verification.status is CitationStatus.VERIFIED_DECLARED_PAGE
+    assert findings[0].verification.evidence_status is EvidenceStatus.FOUND_DECLARED_PAGE
+    assert findings[0].verification.literal_fidelity is LiteralFidelity.EXACT
     assert findings[1].verification is not None
-    assert findings[1].verification.status is CitationStatus.PARTIAL_FRAGMENTS
+    assert findings[1].verification.evidence_status is EvidenceStatus.PARTIAL_FRAGMENTS
     assert summary["total_citations"] == 2
-    assert summary["verified_citations"] == 1
-    assert summary["verification_rate"] == 0.5
-    assert summary["status_counts"] == {
+    assert summary["located_citations"] == 1
+    assert summary["literal_citations"] == 1
+    assert summary["location_rate"] == 0.5
+    assert summary["literal_rate"] == 0.5
+    assert summary["evidence_status_counts"] == {
+        "found_declared_page": 1,
         "partial_fragments": 1,
-        "verified_declared_page": 1,
+    }
+    assert summary["literal_fidelity_counts"] == {
+        "exact": 1,
+        "partial": 1,
     }
     cause_counts = summary["cause_counts"]
     assert isinstance(cause_counts, dict)
@@ -110,13 +123,16 @@ def test_resume_estados_y_causas_observables() -> None:
 def test_informe_markdown_incluye_umbral_y_distribucion() -> None:
     summary = {
         "total_citations": 4,
-        "verified_citations": 3,
-        "verification_rate": 0.75,
-        "status_counts": {
-            "verified_declared_page": 2,
-            "verified_adjacent_page": 1,
+        "located_citations": 3,
+        "literal_citations": 2,
+        "location_rate": 0.75,
+        "literal_rate": 0.5,
+        "evidence_status_counts": {
+            "found_declared_page": 2,
+            "found_adjacent_page": 1,
             "not_found": 1,
         },
+        "literal_fidelity_counts": {"exact": 2, "fuzzy_candidate": 1, "unverified": 1},
         "cause_counts": {
             "ellipsis": 1,
             "fuzzy": 2,
@@ -139,5 +155,5 @@ def test_informe_markdown_incluye_umbral_y_distribucion() -> None:
     assert "# Spike de verificación de citas" in markdown
     assert "Umbral seleccionado | 85" in markdown
     assert "75,0 %" in markdown
-    assert "| 80 | 3 | 75,0 % |" in markdown
+    assert "| 80 | 3 | 75,0 % | 2 | 50,0 % |" in markdown
     assert "not_found" in markdown

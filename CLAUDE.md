@@ -58,8 +58,10 @@ razonamiento y resultado) es fuente única en `prompt.py` y `config.py`, y
 
 Las `frases_clave` del JSONL se contrastan con los PDF mediante un pipeline
 determinista, sin llamadas LLM. El rollout está limitado primero a una sentencia,
-después a cinco y solo entonces al corpus completo. La arquitectura, los estados,
-el modelo de datos, el resultado del piloto y los gates están en
+después a una muestra fija de cinco y solo entonces al corpus completo. El
+resultado separa localización de evidencia y fidelidad literal, y registra tanto
+el índice físico del PDF como la etiqueta impresa. La arquitectura, las
+puntuaciones, el manifiesto, el resultado del piloto y los gates están en
 [`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md).
 
 ```bash

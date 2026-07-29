@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "name": "verificacion-citas-muestra-5-v1",
+  "expected_documents": 5,
+  "documents": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "cubre": [
+        "exacta",
+        "elipsis",
+        "pagina-desplazada",
+        "omision-no-marcada"
+      ],
+      "motivo": "Piloto conocido: combina tres citas exactas y una condensación que queda cerca del umbral."
+    },
+    {
+      "archivo": "SAN_1136_2016.pdf",
+      "cubre": [
+        "elipsis",
+        "ligadura-tipografica",
+        "parafrasis"
+      ],
+      "motivo": "Incluye la presunción familiar, una elipsis extensa y la ligadura tipográfica fi."
+    },
+    {
+      "archivo": "SAN_1210_2023.pdf",
+      "cubre": [
+        "caracter-corrupto",
+        "elipsis",
+        "parafrasis",
+        "pagina-desplazada"
+      ],
+      "motivo": "Contiene un carácter de sustitución en correspondía y varias citas condensadas."
+    },
+    {
+      "archivo": "SAN_1226_2021.pdf",
+      "cubre": [
+        "exacta",
+        "elipsis",
+        "doctrina-citada"
+      ],
+      "motivo": "Aporta citas normativas y jurisprudenciales breves para controlar falsos positivos."
+    },
+    {
+      "archivo": "SAN_1386_2017.pdf",
+      "cubre": [
+        "pagina-tardia",
+        "ligadura-tipografica",
+        "elipsis",
+        "resultado"
+      ],
+      "motivo": "Incluye evidencia en la página 11 y permite comprobar búsqueda fuera de las primeras páginas."
+    }
+  ]
+}
