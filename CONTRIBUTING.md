@@ -88,6 +88,11 @@ job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
 - No subas `.env`, claves de API ni ficheros de `output/`.
 - No añadas PDFs a `sentencias/` sin comprobar antes
   [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
+- No edites a mano ni `normativa/` ni `knowledge/normativa/`: la primera se baja
+  del BOE (`make descargar-normativa`) y la segunda se regenera de la primera
+  (`make export-normativa`). El texto legal publicado tiene que ser idéntico al
+  de su fuente y hay un test que lo comprueba. Ver
+  [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
 - No edites `frontend/public/favicon.ico`, `apple-touch-icon.png` ni
   `og-image.png` a mano: son artefactos generados (`npm run favicon` / `npm run og`).
 

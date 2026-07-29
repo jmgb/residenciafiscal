@@ -298,10 +298,12 @@ y procesa todo.
 
 El repo está preparado para ser público. Al tocar estas piezas, ten en cuenta:
 
-- **`LICENSE` (MIT) cubre código y documentación, no los PDFs.** Las sentencias
-  de `sentencias/` son documentos del CENDOJ con sus propias condiciones de
-  reutilización, recogidas en `sentencias/AVISO_LEGAL.md`. Si añades PDFs,
-  actualiza el inventario (`readme.txt`) y comprueba ese aviso.
+- **`LICENSE` (MIT) cubre código y documentación, no los documentos jurídicos.**
+  Hay dos corpus de fuente con condiciones propias, cada uno con su aviso legal
+  y su inventario `readme.txt`: las sentencias del CENDOJ en `sentencias/` y los
+  textos del BOE en `normativa/`. Si añades ficheros a cualquiera de los dos,
+  actualiza su inventario y comprueba su `AVISO_LEGAL.md`. El del BOE recuerda
+  además que la única versión con valor jurídico es la edición oficial.
 - **Nada de rutas absolutas** (`/home/ubuntu/...`) en código ni en documentación
   pública: usa rutas relativas a la raíz del repositorio.
 - **Ningún workflow de CI usa secrets**, y debe seguir así. Ver la sección de

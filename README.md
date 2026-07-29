@@ -60,6 +60,22 @@ flowchart LR
 | `config.py` | Modelos, rutas, enums y campos requeridos |
 | `frontend/` | SPA React desplegada en Netlify |
 
+### Los dos corpus
+
+El repositorio versiona **fuentes originales** y, a partir de ellas, corpus
+derivados y regenerables. Las fuentes nunca se editan a mano y su texto no se
+reescribe en ningún punto del pipeline.
+
+| Fuente | Derivado | Cómo se genera |
+|--------|----------|----------------|
+| `sentencias/` — 106 PDF del CENDOJ | `knowledge/jurisprudencia/` | LLM + verificación de citas contra el PDF |
+| `normativa/` — 102 normas en XML del BOE | `knowledge/normativa/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
+
+Del corpus normativo se publica **un Markdown por artículo**, no por ley: los
+preceptos que deciden o prueban la residencia fiscal, más el artículo de
+residencia de cada uno de los 96 convenios de doble imposición firmados por
+España. Ver [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+
 ## Puesta en marcha
 
 Requiere [uv](https://docs.astral.sh/uv/) — gestiona Python y las dependencias.
@@ -142,6 +158,7 @@ npm run build       # genera el corpus y compila a dist/
 | [`SECURITY.md`](SECURITY.md) | Cómo reportar una vulnerabilidad y qué está en el alcance |
 | [`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md) | Pipeline, datos y rollout 1 → 5 → 106 para verificar citas contra los PDF |
 | [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md) | Ciclo híbrido JSONL/PDF → Markdown OKF y rollout validado de 1 → 5 |
+| [`docs/NORMATIVA.md`](docs/NORMATIVA.md) | Corpus normativo: XML del BOE → un Markdown por precepto, sin LLM |
 | [`docs/REASONING_EFFORT.md`](docs/REASONING_EFFORT.md) | El compromiso precisión / coste de los modelos GPT-5 |
 | [`docs/brand/`](docs/brand/) | Brandbook y manifiesto |
 | [`docs/operations/`](docs/operations/) | Despliegue en Netlify y configuración de Cloudflare |
@@ -151,13 +168,20 @@ npm run build       # genera el corpus y compila a dist/
 
 Código y documentación bajo licencia [MIT](LICENSE).
 
-Las resoluciones judiciales de `sentencias/` **no** están cubiertas por esa
-licencia: son documentos públicos del CENDOJ, publicados ya pseudonimizados, y
-se rigen por sus propias condiciones de reutilización. Ver
-[`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
+Los documentos jurídicos que el repositorio incluye **no** están cubiertos por
+esa licencia. Cada corpus se rige por las condiciones de reutilización de su
+fuente:
+
+- Las resoluciones judiciales de `sentencias/` son documentos públicos del
+  CENDOJ, publicados ya pseudonimizados —
+  [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
+- Los textos legales de `normativa/` proceden del BOE, cuya edición oficial es
+  la única versión con valor jurídico —
+  [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
 
 ## Fuentes
 
 - [Art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) — residencia habitual en territorio español
 - [Modelo de Convenio OCDE, Art. 4](https://www.oecd.org/tax/treaties/) — reglas de desempate de los CDI
 - [CENDOJ](https://www.poderjudicial.es/search/) — buscador de jurisprudencia del CGPJ
+- [Datos abiertos del BOE](https://www.boe.es/datosabiertos/) — origen del corpus normativo de `normativa/`
