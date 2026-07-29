@@ -1,6 +1,7 @@
 # Marca y brandbook — Residencia Fiscal
 
-> **Estado:** aprobado 2026-07-29 · spec de diseño previo a implementación.
+> **Estado:** aprobado 2026-07-29 · revisado el mismo día para incorporar la
+> narrativa de movimiento (§1 y §6) · spec de diseño previo a implementación.
 > Referencias tomadas de `comunicador/docs/brand/brand-guidelines.md` (estructura,
 > tabla de contraste verificada, comprobación determinista) y de
 > `presupuestor/docs/marketing/BRAND.md` (mapa de assets y especificaciones por
@@ -25,7 +26,45 @@ sustituyen), rediseñar componentes de la SPA, y auto-hospedar las fuentes.
 
 ---
 
-## 1. Concepto de marca — «El expediente, legible»
+## 1. Narrativa de marca — «Vive donde elijas»
+
+### Por qué existe la marca
+
+Un mundo más justo es uno en el que cada ciudadano puede residir fiscalmente donde
+mejor le traten, en función de sus intereses, su estilo de vida y su momento vital.
+Nadie es súbdito del país en el que nació: cambiar de residencia es un derecho
+reconocido por la ley y ejercido cada año por miles de personas — por trabajo, por
+familia, por clima, por proyecto de vida.
+
+Ese derecho existe sobre el papel para todos, pero en la práctica solo unos pocos
+podían ejercerlo bien. Los millonarios y los políticos siempre han contado con los
+mejores despachos: alguien que se sabe la jurisprudencia al detalle, que conoce qué
+prueba pesa ante un tribunal, cuál se rechaza y qué criterio decide el caso. La gente
+normal llega al mismo expediente con lo que le hayan contado — y enfrente, una
+Administración que sí conoce cada sentencia. La asimetría no está en la ley; está en
+la información, y siempre ha caído del mismo lado.
+
+**Residencia Fiscal es un movimiento contra esa asimetría.** Democratiza el
+conocimiento con el que trabajan los mejores asesores fiscales — la jurisprudencia
+real, la que decide los casos — y lo pone al alcance de cualquiera. Que quien no puede
+pagar un gran despacho tenga la misma información que quien sí puede, y use la ley a
+su favor en lugar de sufrirla en su contra. El usuario de la marca tiene nombre
+interno: **Pepe** — cualquier persona normal que hasta hoy ejercía este derecho a
+ciegas o no lo ejercía en absoluto.
+
+De aquí sale el tono de todo lo demás. La marca habla a un ciudadano adulto que
+ejerce un derecho — no a un sospechoso, no a un fugitivo. Y todo, siempre, dentro de
+la ley: la marca no busca agujeros ni atajos; usa las reglas publicadas, que son las
+mismas para todos — la diferencia es que ahora todos las conocen. Defiende la
+elección informada y transparente, jamás la ocultación: quien elige bien su
+residencia no tiene nada que esconder, y precisamente por eso necesita saber qué se
+le va a exigir. La libertad sin rigor es una trampa; el rigor es lo que la hace
+posible.
+
+### El concepto visual — «El expediente, legible»
+
+La narrativa es de libertad; la ejecución visual, de rigor. No es contradicción, es la
+tesis de la marca: *la libertad se ejerce mejor documentado*.
 
 Azul pizarra institucional sobre lienzo casi blanco. El ámbar aparece **solo donde hay
 algo que verificar**: la cita, la fuente, el aviso. Consecuencia de diseño: *el color se
@@ -175,14 +214,62 @@ como pendiente declarado, no se resuelve en este trabajo.
 
 ### Claim canónico
 
+> **Reside donde mejor te traten. Decide con las sentencias en la mano.**
+
+La primera frase es el movimiento; la segunda, el producto. Nunca se usa la primera
+sin la segunda: la promesa de libertad sola es un eslogan de vendehúmos; anclada a la
+jurisprudencia es una posición.
+
+### Claim funcional
+
 > **106 sentencias sobre residencia fiscal, con la cita siempre a la vista.**
 
-### Tres promesas
+Para contextos donde el tono de movimiento no procede: README, documentación técnica,
+metadescripciones, y como segunda línea bajo el claim canónico cuando hay espacio.
 
-1. **Corpus acotado y declarado.** 106 sentencias, Tribunal Supremo y Audiencia
+### Manifiesto
+
+El texto canónico completo vive en **`docs/brand/manifiesto.md`** (versión íntegra,
+versión corta y reglas de uso). La versión corta — landing, página «acerca de»,
+presentaciones — es esta, y se usa íntegra o no se usa; no se despieza en frases
+sueltas fuera de contexto:
+
+> Naciste en un país. No le perteneces.
+>
+> Elegir dónde vives — y por tanto dónde tributas — es un derecho, no una sospecha.
+> Hay quien lo ejerce por trabajo, quien por familia, quien por clima o por proyecto
+> de vida. Todos con el mismo requisito: hacerlo bien.
+>
+> Hasta ahora, hacerlo bien era cosa de ricos. Saber qué prueba convence a un
+> tribunal, cuál se desmonta y qué criterio decide el caso se pagaba a precio de gran
+> despacho. Los millonarios y los políticos siempre han tenido ese conocimiento a su
+> servicio. Tú, no.
+>
+> Eso se acabó. Residencia Fiscal pone esa jurisprudencia — las sentencias del
+> Tribunal Supremo y la Audiencia Nacional que deciden estos casos, leídas una a una,
+> con la cita siempre a la vista — al alcance de cualquiera.
+>
+> Todo legal. Todo a la luz. La ley, por fin, también a tu favor.
+
+### Mensajes de apoyo
+
+Frases sueltas aprobadas para titulares de sección, redes y piezas cortas. Fuera de
+esta lista, cualquier frase nueva pasa por los vetos de abajo antes de publicarse:
+
+- «La ley a tu favor, no en tu contra.»
+- «Lo que sabe un gran despacho, ahora lo sabes tú.»
+- «La libertad se ejerce mejor informado.»
+- «Antes, al alcance de unos pocos. Ahora, de cualquiera.»
+
+### Cuatro promesas
+
+1. **Tu residencia es tu elección.** La marca trata el cambio de residencia fiscal
+   como lo que es: un derecho legítimo que se ejerce a la luz, con papeles y ante la
+   Administración. Nunca como una escapada.
+2. **Corpus acotado y declarado.** 106 sentencias, Tribunal Supremo y Audiencia
    Nacional, 2015–2025. El tamaño y los límites del corpus se dicen, no se insinúan.
-2. **Toda respuesta cita la resolución en que se apoya.** Sin cita no hay respuesta.
-3. **Orientación documental verificable, no asesoramiento.** El destino de una consulta
+3. **Toda respuesta cita la resolución en que se apoya.** Sin cita no hay respuesta.
+4. **Orientación documental verificable, no asesoramiento.** El destino de una consulta
    es el texto original de la sentencia.
 
 ### Distinción obligatoria
@@ -193,9 +280,24 @@ cosas distintas que suenan igual si se escriben mal.
 
 ### Vetos de lenguaje
 
-«asesoramiento», «te asesoramos», «abogado virtual», «garantizamos», «revoluciona»,
-«IA jurídica», cualquier promesa de resultado en un litigio, y —el más grave— citar
-una sentencia que no esté en el corpus.
+Dos familias, cada una protege un flanco distinto de la marca.
+
+**Contra el humo** (protegen la credibilidad documental): «asesoramiento», «te
+asesoramos», «abogado virtual», «garantizamos», «revoluciona», «IA jurídica»,
+cualquier promesa de resultado en un litigio, y —el más grave— citar una sentencia
+que no esté en el corpus.
+
+Matiz que sostiene la narrativa: la marca puede decir que democratiza «la
+información con la que trabajan los mejores asesores fiscales»; lo vetado es
+prometer el *servicio* («te asesoramos»). Se da acceso al material, no se presta
+asesoramiento — esa frontera es la que permite contar la historia de democratización
+sin asumir un servicio regulado que el producto no presta.
+
+**Contra la sombra de evasión** (protegen la narrativa de libertad): «paga cero»,
+«sin pagar impuestos», «Hacienda no se enterará», «truco», «sin dejar rastro»,
+«escapa» / «huye» de Hacienda o de España, «paraíso fiscal» como reclamo. La marca
+habla de *elegir*, no de *huir*: el día que un copy suene a ocultación, la promesa de
+rigor deja de ser creíble y las dos narrativas caen a la vez.
 
 ### Estado del motor
 
@@ -212,7 +314,7 @@ un parche**: la marca no promete lo que el motor todavía no hace. Cuando el mod
 | --- | --- |
 | Chat (`/`) | Lienzo claro, tarjetas con borde, una acción principal (enviar), citas visibles en cada respuesta, aviso de simulación mientras el motor sea stub |
 | Favicon e icono de app | Isotipo tal cual, sin wordmark. Fuente: `frontend/public/favicon.svg` → `npm run favicon` |
-| Open Graph | 1200×630. Fondo blanco, wordmark en `foreground`, claim en `muted-foreground`, filete `primary` arriba y la cifra del corpus como firma. Fuente: `frontend/og/og-image.html` → `npm run og` |
+| Open Graph | 1200×630. Fondo blanco, wordmark en `foreground`, **claim canónico** en `muted-foreground`, filete `primary` arriba y la cifra del corpus como firma (la firma cumple la función del claim funcional: la promesa de libertad nunca viaja sola). Fuente: `frontend/og/og-image.html` → `npm run og` |
 | Documentación y README | Mismo vocabulario canónico que la interfaz; los nombres técnicos van en código |
 | Correo (futuro) | Texto primero, wordmark tipográfico en cabecera, sin plantillas decorativas |
 
@@ -274,6 +376,7 @@ engrosar pierde el contraforma.
 | Archivo | Acción |
 | --- | --- |
 | `docs/brand/brand-guidelines.md` | Nuevo — el brandbook canónico |
+| `docs/brand/manifiesto.md` | **Ya entregado** — manifiesto canónico (íntegro, corto, una línea, reglas de uso) |
 | `frontend/public/favicon.svg` | Reemplaza el provisional de la «R» |
 | `frontend/src/assets/logo.svg` | Nuevo — lockup |
 | `frontend/og/og-image.html` | Nuevo — fuente de la OG |
@@ -287,6 +390,11 @@ engrosar pierde el contraforma.
 
 ## 11. Riesgos y decisiones abiertas
 
+- **Doble audiencia.** La narrativa de movimiento habla al ciudadano; el corpus y el
+  rigor documental atraen también a abogados tributaristas e investigadores. El claim
+  de dos frases resuelve la convivencia en las superficies grandes, pero cada pieza
+  nueva debe decidir a cuál de los dos habla primero — y en las superficies
+  estrictamente profesionales (README, docs técnicas) manda el claim funcional.
 - **Contorno de las letras.** Si no hay acceso a la TTF de Space Grotesk para extraer
   los glifos, se dibujan las formas a mano. En ese caso el isotipo no es tipográficamente
   idéntico al wordmark; se acepta y se documenta.
