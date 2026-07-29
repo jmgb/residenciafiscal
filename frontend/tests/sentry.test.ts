@@ -1,0 +1,85 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { initializeSentry } from '@/lib/sentry';
+
+const sentryMock = vi.hoisted(() => ({
+  browserTracingIntegration: vi.fn(() => ({ name: 'browser-tracing' })),
+  init: vi.fn(),
+}));
+
+vi.mock('@sentry/react', () => sentryMock);
+
+describe('Sentry frontend', () => {
+  beforeEach(() => {
+    sentryMock.browserTracingIntegration.mockClear();
+    sentryMock.init.mockClear();
+  });
+
+  it('does not initialize outside an enabled production build', () => {
+    expect(
+      initializeSentry({
+        dsn: 'https://public@example.ingest.sentry.io/1',
+        enabled: false,
+        environment: 'development',
+        release: 'residencia-fiscal-frontend@test',
+        tracesSampleRate: 0.1,
+      })
+    ).toBe(false);
+
+    expect(sentryMock.init).not.toHaveBeenCalled();
+  });
+
+  it('initializes tracing with the configured release and no default PII', () => {
+    expect(
+      initializeSentry({
+        dsn: 'https://public@example.ingest.sentry.io/1',
+        enabled: true,
+        environment: 'production',
+        release: 'residencia-fiscal-frontend@test',
+        tracesSampleRate: 0.2,
+      })
+    ).toBe(true);
+
+    expect(sentryMock.browserTracingIntegration).toHaveBeenCalledOnce();
+    expect(sentryMock.init).toHaveBeenCalledWith(
+      expect.objectContaining({
+        dsn: 'https://public@example.ingest.sentry.io/1',
+        environment: 'production',
+        release: 'residencia-fiscal-frontend@test',
+        sendDefaultPii: false,
+        tracesSampleRate: 0.2,
+      })
+    );
+  });
+
+  it('removes request headers, cookies and bodies before sending an event', () => {
+    initializeSentry({
+      dsn: 'https://public@example.ingest.sentry.io/1',
+      enabled: true,
+      environment: 'production',
+      release: 'residencia-fiscal-frontend@test',
+      tracesSampleRate: 0.1,
+    });
+
+    const options = sentryMock.init.mock.calls[0]?.[0];
+    const event = {
+      request: {
+        url: 'https://residenciafiscal.org/chat',
+        method: 'POST',
+        headers: { Authorization: 'Bearer secret' },
+        cookies: 'session=secret',
+        data: { question: 'private legal question' },
+      },
+    };
+
+    expect(options?.beforeSend(event)).toEqual({
+      request: {
+        url: 'https://residenciafiscal.org/chat',
+        method: 'POST',
+      },
+      tags: {
+        service: 'residencia-fiscal',
+        component: 'react',
+      },
+    });
+  });
+});

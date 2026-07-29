@@ -29,6 +29,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, Request, UploadFile
 from fastapi.responses import JSONResponse, RedirectResponse
 
+from api.sentry_config import init_sentry
 from config import (
     DEFAULT_MODEL,
     GEMINI_FLASH,
@@ -48,6 +49,7 @@ from config import (
 from residenciafiscal import initialize_client, load_key_sentencias, process_pdf_async
 
 load_dotenv()
+init_sentry()
 
 logger = logging.getLogger(__name__)
 

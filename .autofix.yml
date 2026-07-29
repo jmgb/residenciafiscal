@@ -10,15 +10,10 @@ git:
   author_email: claude-code-autofix@users.noreply.github.com
   commit_title_prefix: "fix: [Sentry]"
 
-# ⚠️ PENDIENTE: este repo todavía no emite incidencias a Sentry.
-# No hay `sentry-sdk` en pyproject.toml ni `@sentry/react` en frontend/package.json,
-# así que ningún error llega a Sentry y el autofix nunca se dispara. Rellenar los
-# slugs de abajo solo tiene efecto DESPUÉS de instrumentar la aplicación.
-# Los SENTRY_PROJECT_IDS del .env apuntan hoy a los proyectos de otro repo.
 incident_sources:
-  sentry_projects: []
-  # - residenciafiscal-api
-  # - residenciafiscal-frontend
+  sentry_projects:
+    - residencia-fiscal-backend
+    - residencia-fiscal-frontend
 
 validation:
   required_before_publish:
