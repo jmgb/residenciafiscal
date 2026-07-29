@@ -5,6 +5,7 @@ export const GOOGLE_ANALYTICS_ID = 'G-XKX3N9KVJH';
 
 const GOOGLE_ANALYTICS_SCRIPT_ID = 'google-analytics-script';
 const GOOGLE_ANALYTICS_SCRIPT_SRC = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`;
+const GOOGLE_ANALYTICS_HOSTNAMES = new Set(['residenciafiscal.org', 'www.residenciafiscal.org']);
 
 type GoogleAnalyticsCommand =
   | ['js', Date]
@@ -13,19 +14,29 @@ type GoogleAnalyticsCommand =
 
 declare global {
   interface Window {
-    dataLayer?: GoogleAnalyticsCommand[];
+    dataLayer?: IArguments[];
     gtag?: (...args: GoogleAnalyticsCommand) => void;
     __residenciaFiscalGoogleAnalyticsInitialized?: boolean;
   }
 }
 
+export const isGoogleAnalyticsEnabled = ({
+  hostname,
+  search,
+}: Pick<Location, 'hostname' | 'search'>): boolean =>
+  GOOGLE_ANALYTICS_HOSTNAMES.has(hostname.toLowerCase()) &&
+  !new URLSearchParams(search).has('synthetic_monitor');
+
 const installGoogleAnalytics = () => {
+  if (!isGoogleAnalyticsEnabled(window.location)) return;
+
   window.dataLayer = window.dataLayer ?? [];
-  window.gtag =
-    window.gtag ??
-    ((...args: GoogleAnalyticsCommand) => {
-      window.dataLayer?.push(args);
-    });
+  if (!window.gtag) {
+    window.gtag = function gtag() {
+      // biome-ignore lint/complexity/noArguments: gtag.js requires the Arguments object.
+      window.dataLayer?.push(arguments);
+    };
+  }
 
   if (!window.__residenciaFiscalGoogleAnalyticsInitialized) {
     window.gtag('js', new Date());
@@ -52,6 +63,8 @@ export const GoogleAnalyticsFooter = () => {
   }, []);
 
   useEffect(() => {
+    if (!isGoogleAnalyticsEnabled(window.location)) return;
+
     if (isInitialPage.current) {
       isInitialPage.current = false;
       return;

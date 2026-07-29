@@ -3,7 +3,6 @@ dist/
 coverage/
 .vite/
 .netlify/
-public/data/corpus.json
 *.local
 .env
 .env.*

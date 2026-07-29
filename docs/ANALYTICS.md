@@ -24,6 +24,9 @@ import { SiteFooter } from './SiteFooter';
 
 El helper necesita estar dentro de un `react-router-dom` Router porque usa la
 ruta actual para enviar `page_view` cuando cambia la navegación interna.
+Solo activa GA4 en `residenciafiscal.org` y `www.residenciafiscal.org`; ignora
+localhost, deploy previews y visitas con `?synthetic_monitor=1`. La cola inicial
+usa objetos `Arguments`, como requiere el snippet oficial de `gtag.js`.
 
 ## Verificación
 

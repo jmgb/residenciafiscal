@@ -6,9 +6,10 @@
  * Solo se publican metadatos ligeros: el JSONL completo (~900 KB con
  * razonamientos y pruebas) no se sirve al navegador.
  *
- * Se ejecuta en `prebuild`. Si no encuentra ningún JSONL, escribe un corpus
- * vacío y avisa, en lugar de romper el build: Netlify construye desde un clon
- * limpio donde `output/` puede no estar versionado.
+ * Se ejecuta en `prebuild`. El corpus generado se versiona como fallback para
+ * que Netlify no lo pierda en un clon limpio donde `output/` está ignorado.
+ * Si tampoco existe ese fallback, escribe un corpus vacío y avisa en lugar de
+ * romper el build.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -63,7 +64,16 @@ function main() {
 
   const source = findLatestJsonl();
   if (!source) {
-    console.warn('[build-corpus] No se encontró ningún analisis_*.jsonl en output/. Corpus vacío.');
+    if (existsSync(targetFile)) {
+      console.warn(
+        '[build-corpus] No se encontró ningún analisis_*.jsonl en output/. Se conserva el corpus versionado.'
+      );
+      return;
+    }
+
+    console.warn(
+      '[build-corpus] No se encontró ningún analisis_*.jsonl ni corpus versionado. Corpus vacío.'
+    );
     writeFileSync(targetFile, '[]\n', 'utf8');
     return;
   }
