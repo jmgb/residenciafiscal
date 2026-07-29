@@ -83,6 +83,18 @@ puntuaciones, el manifiesto, el resultado del piloto y los gates están en
 make verify-citations  # hoy: SAN_1071_2025.pdf, 4 citas, umbral provisional 85
 ```
 
+### Exportación jurisprudencial OKF
+
+El ciclo JSONL → perfil jurídico → verificación de citas → Markdown OKF está
+implementado únicamente para `SAN_1071_2025.pdf`. Genera un concepto, índices y
+un manifiesto de hashes sin llamadas LLM. No editar `knowledge/jurisprudencia/`
+a mano: se regenera con el pipeline. Arquitectura, contrato, resultado y gates:
+[`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md).
+
+```bash
+make export-okf  # hoy: genera y valida exactamente 1 sentencia
+```
+
 ## Sentencias Clave
 
 Las sentencias listadas en `sentencias/sentencias_CLAVE.txt` usan automáticamente

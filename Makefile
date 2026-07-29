@@ -13,7 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
-	verify-citations \
+	verify-citations export-okf \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -34,6 +34,10 @@ MAX_FILES ?=
 CITATION_JSONL ?= $(shell ls -t output/analisis_*.jsonl 2>/dev/null | head -1)
 CITATION_THRESHOLD ?= 85
 CITATION_SOURCE_FILE ?= SAN_1071_2025.pdf
+OKF_JSONL ?= $(CITATION_JSONL)
+OKF_THRESHOLD ?= 85
+OKF_SOURCE_FILE ?= SAN_1071_2025.pdf
+OKF_OUTPUT ?= ./knowledge/jurisprudencia
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -64,8 +68,10 @@ help:
 	@echo "  make run-resume-from JSONL=x.jsonl  Continúa sobre un JSONL concreto"
 	@echo "  make run-list LIST=x.txt  Procesa solo los PDFs listados en un .txt"
 	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
+	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
+	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -132,6 +138,15 @@ verify-citations:
 		--output-dir $(OUTPUT)/citation-verification \
 		--source-file $(CITATION_SOURCE_FILE) \
 		--threshold $(CITATION_THRESHOLD)
+
+export-okf:
+	@if [ -z "$(OKF_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
+	uv run python export_okf.py \
+		--jsonl $(OKF_JSONL) \
+		--pdf-dir $(INPUT) \
+		--output-dir $(OKF_OUTPUT) \
+		--source-file $(OKF_SOURCE_FILE) \
+		--threshold $(OKF_THRESHOLD)
 
 # =============================================================================
 # 3. CALIDAD

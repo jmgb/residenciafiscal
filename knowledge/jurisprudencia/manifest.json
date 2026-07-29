@@ -1,0 +1,36 @@
+{
+  "schema_version": "residenciafiscal-okf-manifest/1",
+  "okf_version": "0.2",
+  "scope": {
+    "documents": 1,
+    "source_files": [
+      "SAN_1071_2025.pdf"
+    ]
+  },
+  "analysis_source": {
+    "path": "output/analisis_02012026_155032.jsonl",
+    "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4"
+  },
+  "pdf_sources": [
+    {
+      "archivo": "SAN_1071_2025.pdf",
+      "sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf",
+      "size_bytes": 143201,
+      "pages": 6,
+      "extractor": "pypdf"
+    }
+  ],
+  "documents": [
+    {
+      "concept_id": "sentencias/san-1071-2025",
+      "path": "sentencias/san-1071-2025.md",
+      "sha256": "431016de765872683c976ae4be4fe1bd2f84799ac7a595232e6620a076ab5263",
+      "status": "draft",
+      "literal_citations": 3,
+      "pending_citations": 1,
+      "normalization_warnings": [
+        "Pruebas_AEAT[2].criterio_atacado: CRIT_VIVIENDA_Y_USO_EFECTIVO normalizado a CRIT_OTRO"
+      ]
+    }
+  ]
+}

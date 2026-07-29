@@ -72,3 +72,12 @@ class CitationVerification:
             EvidenceStatus.FOUND_ADJACENT_PAGE,
             EvidenceStatus.FOUND_OTHER_PAGE,
         }
+
+    @property
+    def literal(self) -> bool:
+        """Indica si la cita es literal, con o sin elipsis explícitas."""
+
+        return self.literal_fidelity in {
+            LiteralFidelity.EXACT,
+            LiteralFidelity.EXACT_WITH_ELLIPSIS,
+        }
