@@ -1,0 +1,6 @@
+node_modules
+dist
+coverage
+.netlify
+public/data/corpus.json
+*.local
