@@ -120,3 +120,6 @@ SUPABASE_ACCOUNTS.md
 # Specs y planes de implementación internos: citan rutas y decisiones de otros
 # proyectos privados, así que no se publican. Se conservan en local.
 docs/superpowers/
+
+# Local Netlify folder
+.netlify

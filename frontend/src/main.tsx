@@ -1,12 +1,11 @@
-import * as Sentry from '@sentry/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import { App } from './App';
-import { initializeSentry } from './lib/sentry';
+import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
 import './index.css';
 
-initializeSentry({
+void initializeSentry({
   dsn: import.meta.env.VITE_SENTRY_DSN,
   enabled: import.meta.env.PROD && import.meta.env.VITE_SENTRY_ENABLED !== 'false',
   environment: import.meta.env.VITE_SENTRY_ENVIRONMENT || import.meta.env.MODE,
@@ -19,7 +18,7 @@ if (!container) throw new Error('No se encontró el elemento #root');
 
 createRoot(container).render(
   <StrictMode>
-    <Sentry.ErrorBoundary
+    <SentryErrorBoundary
       fallback={
         <main className='mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-4 px-6'>
           <h1 className='text-2xl font-semibold'>No hemos podido cargar la aplicación</h1>
@@ -37,6 +36,6 @@ createRoot(container).render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Sentry.ErrorBoundary>
+    </SentryErrorBoundary>
   </StrictMode>
 );

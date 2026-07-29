@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/react';
+import type { ErrorInfo } from 'react';
 
 export interface FrontendSentryConfig {
   dsn?: string;
@@ -23,7 +24,7 @@ const beforeSend = (event: Sentry.ErrorEvent): Sentry.ErrorEvent => {
   return event;
 };
 
-export const initializeSentry = (config: FrontendSentryConfig): boolean => {
+export const initializeSentryRuntime = (config: FrontendSentryConfig): boolean => {
   if (!config.enabled || !config.dsn) {
     return false;
   }
@@ -38,4 +39,13 @@ export const initializeSentry = (config: FrontendSentryConfig): boolean => {
     beforeSend,
   });
   return true;
+};
+
+export const captureReactException = (error: unknown, errorInfo: ErrorInfo): void => {
+  Sentry.captureReactException(error, errorInfo, {
+    mechanism: {
+      handled: true,
+      type: 'auto.function.react.error_boundary',
+    },
+  });
 };

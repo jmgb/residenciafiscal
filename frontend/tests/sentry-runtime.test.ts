@@ -1,22 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { initializeSentry } from '@/lib/sentry';
+import { initializeSentryRuntime } from '@/lib/sentry-runtime';
 
 const sentryMock = vi.hoisted(() => ({
   browserTracingIntegration: vi.fn(() => ({ name: 'browser-tracing' })),
+  captureReactException: vi.fn(),
   init: vi.fn(),
 }));
 
 vi.mock('@sentry/react', () => sentryMock);
 
-describe('Sentry frontend', () => {
+describe('Sentry frontend runtime', () => {
   beforeEach(() => {
     sentryMock.browserTracingIntegration.mockClear();
+    sentryMock.captureReactException.mockClear();
     sentryMock.init.mockClear();
   });
 
   it('does not initialize outside an enabled production build', () => {
     expect(
-      initializeSentry({
+      initializeSentryRuntime({
         dsn: 'https://public@example.ingest.sentry.io/1',
         enabled: false,
         environment: 'development',
@@ -30,7 +32,7 @@ describe('Sentry frontend', () => {
 
   it('initializes tracing with the configured release and no default PII', () => {
     expect(
-      initializeSentry({
+      initializeSentryRuntime({
         dsn: 'https://public@example.ingest.sentry.io/1',
         enabled: true,
         environment: 'production',
@@ -52,7 +54,7 @@ describe('Sentry frontend', () => {
   });
 
   it('removes request headers, cookies and bodies before sending an event', () => {
-    initializeSentry({
+    initializeSentryRuntime({
       dsn: 'https://public@example.ingest.sentry.io/1',
       enabled: true,
       environment: 'production',
@@ -79,6 +81,21 @@ describe('Sentry frontend', () => {
       tags: {
         service: 'residencia-fiscal',
         component: 'react',
+      },
+    });
+  });
+
+  it('captures React errors with their component stack and boundary metadata', async () => {
+    const { captureReactException } = await import('@/lib/sentry-runtime');
+    const error = new Error('render failed');
+    const errorInfo = { componentStack: '\n    at BrokenComponent' };
+
+    captureReactException(error, errorInfo);
+
+    expect(sentryMock.captureReactException).toHaveBeenCalledWith(error, errorInfo, {
+      mechanism: {
+        handled: true,
+        type: 'auto.function.react.error_boundary',
       },
     });
   });
