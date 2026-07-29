@@ -1,0 +1,98 @@
+import { Send, Square } from 'lucide-react';
+import { type KeyboardEvent, useRef, useState } from 'react';
+import { Button } from '@/shared/components/ui/button';
+
+const MAX_LENGTH = 2000;
+const TEXTAREA_MAX_HEIGHT_PX = 160;
+
+interface ChatComposerProps {
+  onSend: (content: string) => void;
+  onStop: () => void;
+  isStreaming: boolean;
+  placeholder?: string;
+}
+
+export function ChatComposer({
+  onSend,
+  onStop,
+  isStreaming,
+  placeholder = 'Escribe tu consulta sobre residencia fiscal…',
+}: ChatComposerProps) {
+  const [text, setText] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const trimmedLength = text.trim().length;
+  const isOverMaxLength = trimmedLength > MAX_LENGTH;
+  const showCharCount = trimmedLength > MAX_LENGTH * 0.8;
+  const canSend = trimmedLength > 0 && !isStreaming && !isOverMaxLength;
+
+  const resetHeight = () => {
+    if (textareaRef.current) textareaRef.current.style.height = 'auto';
+  };
+
+  const handleSubmit = () => {
+    if (!canSend) return;
+    const message = text.trim();
+    setText('');
+    resetHeight();
+    onSend(message);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    }
+  };
+
+  return (
+    <div className='shrink-0 border-t border-border bg-background px-4 py-3'>
+      <div className='mx-auto flex w-full max-w-3xl items-end gap-2'>
+        <textarea
+          ref={textareaRef}
+          value={text}
+          onChange={(event) => {
+            setText(event.target.value);
+            const el = event.target;
+            el.style.height = 'auto';
+            el.style.height = `${Math.min(el.scrollHeight, TEXTAREA_MAX_HEIGHT_PX)}px`;
+          }}
+          onKeyDown={handleKeyDown}
+          rows={1}
+          placeholder={placeholder}
+          aria-label='Consulta'
+          className='max-h-40 min-h-10 flex-1 resize-none rounded-xl border border-input bg-background px-3 py-2 text-sm leading-relaxed outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring'
+        />
+        {isStreaming ? (
+          <Button
+            type='button'
+            variant='outline'
+            size='icon'
+            onClick={onStop}
+            aria-label='Detener respuesta'
+          >
+            <Square className='h-4 w-4' aria-hidden='true' />
+          </Button>
+        ) : (
+          <Button
+            type='button'
+            size='icon'
+            onClick={handleSubmit}
+            disabled={!canSend}
+            aria-label='Enviar consulta'
+          >
+            <Send className='h-4 w-4' aria-hidden='true' />
+          </Button>
+        )}
+      </div>
+      {showCharCount && (
+        <p
+          className={`mx-auto mt-1 w-full max-w-3xl text-right text-xs ${
+            isOverMaxLength ? 'text-destructive' : 'text-muted-foreground'
+          }`}
+        >
+          {trimmedLength} / {MAX_LENGTH}
+        </p>
+      )}
+    </div>
+  );
+}
