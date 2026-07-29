@@ -1,19 +1,27 @@
 # Representación íntegra por páginas para recuperación
 
-## Decisión recomendada
+## Decisión para el schema v3
 
-Se recomienda generar una segunda representación por sentencia:
+Se generará una segunda representación por sentencia cuya fuente canónica será:
+
+```text
+knowledge/jurisprudencia/verbatim/<slug>.pages.json
+```
+
+Opcionalmente se renderizará una vista legible:
 
 ```text
 knowledge/jurisprudencia/verbatim/<slug>.md
 ```
 
-Su finalidad sería búsqueda, RAG y comprobación de respuestas. No sustituiría al
-PDF ni al perfil jurídico de `sentencias/<slug>.md`.
+Su finalidad es búsqueda, RAG y comprobación de respuestas. No sustituye al PDF
+ni al perfil jurídico de `sentencias/<slug>.md`.
 
-La recomendación es implementarla primero para una sentencia, validarla con la
-muestra de cinco y solo después decidir su materialización para las 106. Esta
-decisión está documentada, pero el artefacto todavía no está implementado.
+Se implementará primero para `SAN 1210/2023`, se validará con la muestra de cinco
+y solo entonces se autorizará su materialización para las 106. La decisión está
+adoptada y documentada, pero el artefacto todavía no está implementado. El
+contexto, orden y gates están en
+[`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
 
 ## Por qué conviene
 
@@ -128,8 +136,8 @@ Los comentarios y encabezados son metadatos editoriales. El contenido comprendid
 entre el encabezado de página y el marcador final debe poder recuperarse sin
 confundir esos marcadores con texto judicial.
 
-Para una implementación más robusta, el pipeline puede mantener como fuente
-canónica un JSON por páginas y derivar de él el Markdown:
+El pipeline mantendrá como fuente canónica un JSON por páginas y derivará de él
+el Markdown:
 
 ```json
 {
@@ -140,8 +148,8 @@ canónica un JSON por páginas y derivar de él el Markdown:
 ```
 
 Esto evita que un parser de Markdown tenga que deducir dónde termina el formato
-editorial y empieza el contenido. En ese caso, el JSON por páginas sería el
-artefacto canónico para RAG y el `.md` una vista legible.
+editorial y empieza el contenido. El JSON por páginas es el artefacto canónico
+para RAG y el `.md` una vista legible opcional.
 
 ## Almacenamiento y Git
 
@@ -215,7 +223,8 @@ una capa separada:
 | Artefacto | Función |
 |---|---|
 | PDF | Fuente oficial |
-| `verbatim/<slug>.md` o JSON por páginas | Texto íntegro extraído para búsqueda |
+| `verbatim/<slug>.pages.json` | Texto íntegro extraído y canónico para búsqueda |
+| `verbatim/<slug>.md` | Vista humana opcional del JSON por páginas |
 | `sentencias/<slug>.md` | Perfil jurídico estructurado |
 | Sidecar YAML | Revisión y decisiones editoriales |
 | Chunks/índice | Derivado de recuperación |

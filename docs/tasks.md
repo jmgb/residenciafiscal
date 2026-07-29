@@ -35,6 +35,10 @@ contra el dominio público después de cada deploy.
 - [ ] **Sustituir el motor `stub` del chat por un backend real.** Diseñado y planificado:
   Netlify Edge Function en `/api/chat`, router LLM a facetas del corpus + filtro
   determinista, y citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
+  El caso de uso principal y el contrato de respuesta/recuperación están en
+  [`docs/CHAT_JURISPRUDENCE_USE_CASE.md`](CHAT_JURISPRUDENCE_USE_CASE.md): el
+  chat ayuda al abogado a investigar casos comparables por cuestión, hechos y
+  pruebas con referencias a sentencia y página; no predice su caso.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](superpowers/plans/2026-07-29-chat-backend.md)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
@@ -69,45 +73,68 @@ contra el dominio público después de cada deploy.
     con Vitest y un `chat.ts` delgado. Producción sigue simulada. La tarea del
     presupuesto queda bloqueada por la fase 0b; el resto no depende de ella.
 
-    > **Antes de arrancar, resuelve de qué corpus lee el chat.** El plan genera
-    > `lib/corpus.ts` desde `output/analisis_*.jsonl`, pero el pipeline OKF está
-    > produciendo perfiles con **citas verificadas contra la página del PDF**, y
-    > `docs/VERBATIM_CORPUS.md` documenta una representación por páginas pensada
-    > explícitamente para RAG. Construir sobre el JSONL significa reescribir después
-    > las tareas 3, 4 y 6 del plan, y parte de la 5.
+    > **La fuente del chat ya está decidida, pero aún no implementada.** Debe ser
+    > `residenciafiscal-case/3` con anclajes verbatim; no el JSONL ni el perfil v2
+    > directamente. El plan antiguo genera `lib/corpus.ts` desde el JSONL y por
+    > eso sus tareas 3–6 y las partes del protocolo están marcadas como
+    > parcialmente superadas.
     >
-    > Las otras doce tareas son agnósticas al corpus. No es un rediseño, es un cambio
-    > de fuente de datos: las facetas (criterios, resultado, categorías) son las
-    > mismas, porque el manifiesto OKF declara ese mismo JSONL como origen. Lo que
-    > cambiaría es que las tarjetas `S1…S12` llevarían fragmentos verbatim
-    > verificados en vez de `frases_clave` seleccionadas por el LLM, y el marcador
-    > podría resolverse a **sentencia + página** en lugar de solo al ROJ.
+    > Las piezas de plataforma y varios módulos siguen siendo reutilizables. La
+    > recuperación cambia de sentencias completas a cuestiones jurídicas, y las
+    > tarjetas llevan hechos, valoración, resultado por cuestión y fragmentos
+    > verbatim. Cada marcador debe resolverse a **sentencia + cuestión + página**.
     >
-    > Depende de que el corpus OKF pase de 1 a 106 sentencias, que a su vez está
-    > bloqueado por revisión humana (ver la entrada del pipeline OKF más abajo).
+    > Depende de diseñar y validar v3 primero con 1 sentencia, después con 5, y
+    > solo entonces ampliar a 106, además de la revisión humana.
   - [ ] **Fase 2 — evaluación.** Banco de 40 preguntas versionado. Bloquean los gates
     binarios (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
+    El catálogo inicial de comportamiento y preguntas está en
+    [`docs/CHAT_USER_QUESTION_CATALOG.md`](CHAT_USER_QUESTION_CATALOG.md).
+    - [x] Seleccionar y contestar manualmente 40 preguntas contra la muestra de
+      cinco, con casos, contracasos, límites y gaps de datos:
+      [`docs/experiments/CHAT_QUESTION_PILOT_5.md`](experiments/CHAT_QUESTION_PILOT_5.md).
+    - [ ] Convertir la verdad de referencia manual en un artefacto
+      machine-readable cuando exista el schema v3.
+    - [ ] Evolucionar `ChatSource` y el protocolo a v2 con `issueId`,
+      `anchorId`, página, fidelidad y hash de fuente; adaptar persistencia y UI
+      sin perder varios anclajes de una misma sentencia.
   - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
     rollback es quitar la variable y redesplegar.
 - [ ] **Llevar el corpus OKF de 1 a 106 sentencias.** Está parado esperando **revisión
-  humana**, no código, y bloquea la fase 1 del chat. Estado en
+  humana y migración del schema orientada al chat**, y bloquea la fase 1 del chat. Estado en
   [`docs/OKF_PIPELINE.md`](OKF_PIPELINE.md).
+  - [ ] Diseñar `residenciafiscal-case/3` a partir del caso de uso principal y
+    de los doce gaps del piloto de 40 preguntas; probarlo con 1 sentencia y
+    después regenerar las 5 antes de autorizar las 106. Roadmap canónico:
+    [`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
+    - [x] Documentar arquitectura, responsabilidades, rollout, gates y estrategia
+      RAG.
+    - [ ] Escribir el contrato campo por campo
+      `docs/JURISPRUDENCE_CASE_SCHEMA_V3.md`.
+    - [ ] Implementar modelos Pydantic, JSON Schema, fixtures y tests.
+    - [ ] Generar `residenciafiscal-verbatim/1` en JSON para `SAN 1210/2023`.
+    - [ ] Construir el caso v3 híbrido de `SAN 1210/2023` y renderizar su
+      Markdown desde el modelo canónico.
+    - [ ] Validar las preguntas aplicables del piloto contra esa sentencia.
+    - [ ] Regenerar las cinco con el mismo pipeline y ejecutar las 40 preguntas.
+    - [ ] Comparar recuperación estructurada/léxica con embeddings antes de
+      elegir la estrategia definitiva.
   - [ ] Revisar el piloto `san-1071-2025`: 3 cuestiones jurídicas propuestas y **0
     aprobadas**, más 5 textos del análisis pendientes. Las decisiones se registran en
     `knowledge/annotations/san-1071-2025.yaml` con `status: approved`,
     `reviewed_by: human:<identidad>` y `reviewed_at`. Solo puede hacerlo una persona.
   - [ ] Definir la lista de responsables autorizados a aprobar, que el pipeline exige
     antes de publicar el corpus como revisado y que hoy no existe.
-  - [ ] Añadir la orquestación batch que `export_okf.py` no tiene (acepta un solo
-    `source_file` a propósito), con el contrato de la sección «Siguiente fase» del
-    pipeline: manifiesto explícito, orden determinista, sin descubrir PDFs por
-    defecto y reanudable por hash.
-  - [ ] Ejecutar la muestra de 5 de `sentencias/verificacion_citas_muestra_5.json`,
-    revisarla y solo entonces autorizar las 106.
-  - [ ] Decidir si se materializa el corpus verbatim por páginas de
-    [`docs/VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md), documentado pero sin implementar.
-    Es lo que decide de qué lee el chat.
+  - [x] Añadir la orquestación batch separada que `export_okf.py` no tiene:
+    `export_okf_batch.py` usa manifiesto explícito, orden determinista,
+    publicación atómica y no descubre PDFs por defecto.
+  - [x] Ejecutar y revisar de forma asistida la muestra de 5 fijada en
+    `sentencias/okf_muestra_5.json`. Siguen pendientes la aprobación jurídica
+    humana y la clasificación de 17 citas; por eso no se autorizan las 106.
+  - [ ] Materializar el corpus verbatim por páginas definido en
+    [`docs/VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md): JSON canónico y Markdown
+    opcional. Medir 1 y 5 antes de decidir almacenamiento para 106.
 - [ ] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
   ASCII (`/espana`, `/portugal`, etc.) y redirecciones para variantes con caracteres especiales.
 - [x] Definir el contrato del endpoint de chat, manejo de errores, cancelación de peticiones,

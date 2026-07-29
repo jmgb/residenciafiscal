@@ -10,7 +10,11 @@ Documentos complementarios:
 
 - [`OKF_MARKDOWN_CONTRACT.md`](OKF_MARKDOWN_CONTRACT.md): contrato completo del
   perfil Markdown v2;
-- [`VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md): decisión propuesta para el texto
+- [`CHAT_JURISPRUDENCE_USE_CASE.md`](CHAT_JURISPRUDENCE_USE_CASE.md): caso de
+  uso rector que debe satisfacer la estructura antes de ampliarse a 106;
+- [`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md):
+  arquitectura objetivo, responsabilidades, fases y gates del siguiente ciclo;
+- [`VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md): contrato decidido para el texto
   íntegro por páginas y su uso en RAG;
 - [`CITATION_VERIFICATION.md`](CITATION_VERIFICATION.md): matching, puntuaciones
   y fidelidad literal.
@@ -22,6 +26,20 @@ Documentos complementarios:
 | Piloto | 1 sentencia | Implementado, generado y validado |
 | Muestra | 5 sentencias | Implementada, generada y validada |
 | Corpus | 106 sentencias | No ejecutado |
+
+Esta tabla describe el pipeline **v2** existente. La transición orientada al
+chat todavía está en:
+
+| Etapa v3 | Alcance | Estado |
+|---|---:|---|
+| Contrato `residenciafiscal-case/3` | Schema y tests | Pendiente |
+| Piloto v3 | `SAN 1210/2023` | Pendiente |
+| Muestra v3 | 5 sentencias | Bloqueada por el piloto |
+| Corpus v3 | 106 sentencias | No autorizado |
+
+El piloto v2 se hizo con `SAN 1071/2025`. El piloto v3 usa deliberadamente
+`SAN 1210/2023` porque reúne más tipos de cuestiones y pruebas y permite
+tensionar el nuevo contrato antes de regenerar la muestra.
 
 El documento preparado está en
 [`knowledge/jurisprudencia/sentencias/san-1071-2025.md`](../knowledge/jurisprudencia/sentencias/san-1071-2025.md).
@@ -39,7 +57,9 @@ La muestra está en
 - Una coincidencia fuzzy nunca produce un extracto de fuente ni un bloque de
   cita. Se muestra como texto del análisis pendiente de revisión.
 - El JSONL existente es la fuente del análisis jurídico; el exportador no llama
-  a ningún LLM.
+  a ningún LLM. Esto describe el perfil v2 actual: el futuro v3 tendrá su propio
+  JSON de dominio canónico y no usará el JSONL histórico como fuente directa
+  del chat.
 - El Markdown es un derivado regenerable y no se edita a mano.
 - El pipeline actual no persiste ni versiona el texto completo extraído del PDF.
   La representación separada `verbatim/` está recomendada para RAG, pero todavía
@@ -364,12 +384,16 @@ La ejecución completa reutilizará la misma orquestación; no tendrá un segund
 camino de normalización. Antes de autorizarla:
 
 1. Se revisan las cinco salidas y sus PDF.
-2. Se decide si el perfil v2 necesita migración.
+2. Se migra el perfil v2: el
+   [`piloto de 40 preguntas`](experiments/CHAT_QUESTION_PILOT_5.md) confirma que
+   hacen falta cuestiones, hechos, relaciones prueba→hecho→cuestión,
+   cronología, resultados por cuestión y anclajes por proposición.
 3. Se congela el manifiesto de entrada con nombre y SHA-256 de cada PDF.
 4. Se fijan los gates con los datos observados en la muestra.
 5. Se documenta qué artefactos `draft` pueden generarse y cuáles pueden
    publicarse.
-6. Se decide dónde se materializa el futuro corpus `verbatim/`.
+6. Se implementa el corpus `verbatim/` canónico en JSON por páginas y se mide
+   su tamaño antes de decidir su almacenamiento para las 106.
 
 Generar un perfil `draft` y publicarlo como jurídicamente revisado son acciones
 distintas. La ejecución batch puede producir borradores; la interfaz de consumo
@@ -432,7 +456,7 @@ producir y conservar:
 - distribución de `evidence_status`, fidelidad y puntuaciones;
 - tasa de valores no canónicos y reglas de normalización aplicadas;
 - tamaño y coste de almacenamiento de perfiles, snapshots y, si se prueba,
-  representación verbatim;
+  representación verbatim JSON;
 - decisión documentada sobre el umbral basada en esos datos;
 - aprobación de cualquier cambio de schema antes de regenerar el corpus.
 
@@ -443,5 +467,9 @@ literal. Las tasas sirven para decidir revisión, calidad del análisis y
 prioridad, no para maquillar el corpus bajando el umbral.
 
 La evaluación de recuperación del futuro chat tendrá su banco de preguntas y
-sus métricas de recall por separado. No bloquea la generación de datos, pero sí
-debe completarse antes de elegir una estrategia RAG para producción.
+sus métricas de recall por separado. El inventario y la primera verdad de
+referencia manual ya existen en
+[`CHAT_USER_QUESTION_CATALOG.md`](CHAT_USER_QUESTION_CATALOG.md) y
+[`experiments/CHAT_QUESTION_PILOT_5.md`](experiments/CHAT_QUESTION_PILOT_5.md).
+No bloquea la generación de borradores, pero el contrato de datos que revela sí
+debe fijarse antes de regenerar las cinco y ampliar a 106.

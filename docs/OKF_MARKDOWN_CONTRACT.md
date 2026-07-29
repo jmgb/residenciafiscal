@@ -7,6 +7,21 @@ este contrato fija qué significa cada parte del resultado.
 
 La versión vigente es `residenciafiscal-okf/2`.
 
+## Alcance respecto del chat
+
+Este contrato define una **representación editorial legible de una sentencia**.
+No define todavía la unidad canónica de recuperación del chat. El caso de uso
+principal exige recuperar pasajes por cuestión jurídica y comparar hechos,
+pruebas, valoración y resultado con anclajes literales; está especificado en
+[`CHAT_JURISPRUDENCE_USE_CASE.md`](CHAT_JURISPRUDENCE_USE_CASE.md).
+
+El piloto de 40 preguntas sobre cinco resoluciones detectó campos que el perfil
+v2 no expresa con suficiente estructura. Antes de ampliar a las 106 debe
+diseñarse y probarse una versión siguiente que incorpore, como datos canónicos,
+`legal_issues[]`, `facts[]`, `evidence_findings[]`, cronología, análisis por paso
+del CDI, resultados por cuestión y anclajes por proposición. El Markdown puede
+seguir siendo una vista renderizada de ese modelo.
+
 ## Autoridad y naturaleza del contenido
 
 El perfil Markdown no sustituye a la sentencia ni es una transcripción completa.

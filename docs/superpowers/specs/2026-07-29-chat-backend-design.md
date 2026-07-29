@@ -14,8 +14,18 @@ que bloquea la implementación. Mediciones completas en
 ## 1. Objetivo
 
 Sustituir el motor de chat simulado de residenciafiscal.org por uno real: un
-endpoint que responda preguntas en lenguaje natural sobre las 106 sentencias ya
-analizadas por el pipeline Python, citando únicamente sentencias del corpus.
+endpoint de investigación jurisprudencial que, ante las preguntas y hechos de
+un abogado, recupere rápidamente casos comparables por cuestión jurídica,
+explique qué hechos, pruebas y razonamiento se aplicaron en cada caso y respalde
+cada afirmación con sentencia, página y extracto verificado. No decide la
+residencia del usuario ni predice su resultado.
+
+Este es el caso de uso principal, no una extensión opcional. Su contrato
+funcional está en
+[`docs/CHAT_JURISPRUDENCE_USE_CASE.md`](../../CHAT_JURISPRUDENCE_USE_CASE.md) y
+gobierna el corpus, la recuperación, el prompt, las fuentes y la evaluación.
+El orden de implementación y los gates previos al backend están en
+[`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../../JURISPRUDENCE_DATA_V3_ROADMAP.md).
 
 Al terminar, `chatEngineMode` pasa de `'stub'` a `'live'` y el aviso de
 «respuesta simulada» desaparece de la interfaz automáticamente.
@@ -33,7 +43,7 @@ Contexto necesario para revisar este diseño sin releer el repositorio entero.
 | SPA React (`frontend/`) | Desplegada en Netlify. Estática, sin servidor. |
 | `frontend/src/lib/chat-engine.ts` | Punto único de selección del motor. Hoy `chatEngineMode = 'stub'`. |
 | `frontend/src/lib/chat-engine.stub.ts` | Motor simulado: texto pregrabado por tema, streaming falso, citas reales del corpus. |
-| `frontend/src/types/chat.ts` | Contrato `ChatEngine` / `ChatChunk` / `ChatSource`, escrito pensando en este backend. |
+| `frontend/src/types/chat.ts` | Contrato `ChatEngine` / `ChatChunk` / `ChatSource`. La unión de chunks es reutilizable, pero `ChatSource` debe evolucionar para incluir cuestión, página y anclaje. |
 | `frontend/scripts/build-corpus.mjs` | En el `prebuild`, genera `public/data/corpus.json` (30 KB, metadatos ligeros de las 106 sentencias). |
 | `output/analisis_*.jsonl` | 106 líneas, 888 KB, ~8,4 KB por sentencia. **No se versiona** (`output/` está en `.gitignore`). |
 
@@ -132,7 +142,9 @@ y [consistencia/escrituras condicionales de Blobs](https://docs.netlify.com/buil
 | Decisión | Elección | Motivo | Alternativas descartadas |
 |---|---|---|---|
 | Dónde corre | Edge Function en el mismo repo | Único runtime de Netlify donde cabe una respuesta larga en streaming. Mismo deploy, mismo origen, CSP intacta. | Function con streaming (10 s), ampliar la FastAPI (exige hosting + CORS + dominio), Cloudflare Workers (otro origen), Supabase Edge (proveedor extra) |
-| Recuperación | Router LLM barato → filtro determinista | El corpus ya viene estructurado por el pipeline: las facetas hacen el trabajo pesado y el router solo traduce lenguaje natural a facetas | Solo léxico (falla si la pregunta no usa el vocabulario del corpus), tool use (latencia variable), embeddings (sobreingeniería para 106 documentos) |
+| Unidad de recuperación | Cuestión jurídica dentro de una sentencia | Una resolución puede decidir de forma distinta residencia, liquidación y sanción. Permite recuperar juntos hechos, prueba, valoración, holding y citas | Sentencia completa como única unidad; chunks sin estructura jurídica |
+| Recuperación | Router LLM barato → filtro determinista sobre cuestiones | El corpus estructurado aporta facetas; el router traduce lenguaje natural y hechos del usuario a cuestión, criterios y patrones de prueba | Solo léxico (falla si la pregunta no usa el vocabulario del corpus), tool use (latencia variable), embeddings antes de medir el baseline |
+| Fuente del chat | Futuro `residenciafiscal-case/3` + anclajes verbatim | El JSONL y el perfil v2 no relacionan suficientemente cuestión, hechos, pruebas y citas; el piloto manual demuestra la necesidad | Inyectar el JSONL actual; usar resúmenes o `frases_clave` como texto judicial |
 | Corpus del servidor | Embebido en el bundle y no servido como asset | Cero latencia de lectura y despliegue atómico con el código | Publicarlo como asset, cargarlo de Blobs en cada petición |
 | Gasto y abuso | Límite nativo de ráfaga + cuota horaria + reserva de gasto diaria | El endpoint es la única pieza que cuesta dinero y está abierta | Solo límites del proveedor, contador no atómico |
 | Estado de cuotas y presupuesto | Netlify Blobs, consistencia fuerte y compare-and-swap | Persistente y correcto entre isolates/regiones sin añadir proveedor | Memoria del isolate, `get` + `set` no atómico |
@@ -309,13 +321,18 @@ Es el límite más incierto de la plataforma. El corpus generado va en **dos
 niveles**:
 
 - **Índice compacto** (~120 KB): identificadores, órgano, año, criterios
-  detectados y decisivos, resultado, categorías admitidas/rechazadas, países, y
-  los términos ya normalizados para la puntuación léxica. Se parsea **una vez**
-  al arrancar el isolate y se reutiliza en las peticiones calientes.
-- **Fichas completas**: un `Record<archivo, string>` donde cada valor es la ficha
-  serializada. Solo se hace `JSON.parse` de las candidatas seleccionadas. De cada
-  ficha se construye después una tarjeta de prompt con metadatos y fragmentos
-  relevantes; no se envían los 8,4 KB medios completos por sentencia.
+  detectados y decisivos, países, tipos de cuestión y prueba, más los términos
+  normalizados de cada unidad por cuestión. Se parsea una vez al arrancar el
+  isolate y se reutiliza en las peticiones calientes.
+- **Fichas completas**: un `Record<issue_id, string>` donde cada valor serializa
+  la cuestión, hechos, hallazgos probatorios, holding y anclajes. Solo se
+  deserializan las candidatas. Las unidades seleccionadas se reagrupan por
+  sentencia antes de construir las tarjetas, evitando repetir metadatos.
+
+Los tamaños anteriores son objetivos heredados del JSONL, no medidas del schema
+v3. El benchmark de CPU y bundle debe repetirse con las cinco sentencias
+regeneradas y después con el artefacto real de 106; no se extrapola desde el
+perfil v2 ni desde el corpus sintético del spike.
 
 El generador puede emitir `JSON.parse("…")` o literales de objeto, pero la
 elección se decide con benchmark, no por intuición. El gate del *spike* mide
@@ -326,20 +343,21 @@ arranque frío y petición caliente con el bundle real. Objetivo: p95 de CPU pro
 
 El router ayuda, pero no tiene poder de exclusión total:
 
-1. **Baseline léxico global** sobre todos los registros con
-   `es_caso_residencia_irpf = SI`, siempre ejecutado, con términos de la pregunta
-   y sin depender del router. Los casos fuera de alcance nunca llegan al prompt.
+1. **Baseline léxico global** sobre todas las cuestiones publicables de casos de
+   residencia, siempre ejecutado, con términos de la pregunta y sin depender
+   del router. Los casos fuera de alcance nunca llegan al prompt.
 2. **Candidatos por facetas**: criterios, órgano, resultado, rango de años,
-   categorías de prueba y país del CDI. Si hay pocos resultados, se relajan
-   primero órgano/resultado, después año/país y por último criterios/categorías.
-3. **Unión y reranking** de ambos conjuntos. La puntuación usa
-   `resumen_criterios`,
-   `razonamiento_residencia`, `pruebas[].detalle` y `frases_clave[].texto`, con
-   refuerzo si el criterio buscado aparece en `Criterio_decisivo` y no solo en
-   `Criterios_residencia_detectados`.
+   categorías de prueba, patrones de hechos, país y paso de CDI. El resultado
+   global no actúa como filtro de similitud; solo ayuda a seleccionar contraste.
+3. **Unión y reranking** sobre `issue`, `facts`, `evidence_findings`, `holding`
+   y `decisive_reasoning`.
+4. **Diversificación y reagrupación**: caso principal, apoyos y al menos un caso
+   de contraste cuando exista, reunidos por sentencia.
 
-El ranking devuelve 12 candidatas. El *context packer* incluye primero las 8
-mejores con un máximo de 4 KB por tarjeta y añade `S9`…`S12` solo mientras quepan.
+El ranking devuelve hasta 12 unidades por cuestión. El *context packer* incluye
+primero las mejores con un máximo de 4 KB por sentencia y añade otras mientras
+quepan. Cada afirmación utilizable conserva IDs de `source_anchors`; el recorte
+no puede separar una proposición de su sentencia y página.
 El prompt completo —instrucciones, historial y corpus— no puede superar 48 KB
 UTF-8. Se recortan fragmentos por puntuación, no con un `slice` ciego que pueda
 separar texto y fuente. No se confía en truncación automática del proveedor. El
@@ -425,34 +443,55 @@ conservadora hasta el final del día, pero nunca abrir gasto no reservado.
 
 ## 5. Contrato del endpoint
 
-`POST /api/chat` → `text/event-stream`. Los eventos son exactamente los tres
-tipos de `ChatChunk` que ya define `frontend/src/types/chat.ts`, más uno de error:
+`POST /api/chat` → `text/event-stream`. Los eventos reutilizan los tres tipos de
+`ChatChunk` y añaden uno de error. El payload de `sources` usa `ChatSourceV2`:
 
 ```
 event: token    data: {"text":"El cómputo de los días… (ROJ: STS 107/2018)"}
-event: sources  data: {"sources":[{…ChatSource}]}
+event: sources  data: {"sources":[{…ChatSourceV2}]}
 event: done     data: {}
 event: error    data: {"code":"upstream_interrupted","message":"…","retryable":true}
 ```
 
 Cada evento ocupa una sola línea `data:` con JSON y termina en una línea en
 blanco. La respuesta incluye `Content-Type: text/event-stream; charset=utf-8`,
-`Cache-Control: no-store` y `X-Chat-Protocol: 1`.
+`Cache-Control: no-store` y `X-Chat-Protocol: 2`.
 
 `error` es un detalle del protocolo HTTP, **no** un cuarto `ChatChunk`. El cliente
 `chat-engine.live.ts` lo convierte en una excepción tipada; `ChatView` ya captura
-errores y conserva el texto parcial. Así se respeta el contrato actual sin tocar
-`src/types/chat.ts` ni componentes.
+errores y conserva el texto parcial. La unión de eventos no cambia, pero sí deben
+actualizarse el tipo, la persistencia y la presentación de fuentes.
+
+`ChatSourceV2` extiende los metadatos de sentencia con:
+
+| Campo | Función |
+|---|---|
+| `sourceId` | ID único del anclaje mostrado |
+| `issueId` | Cuestión jurídica recuperada |
+| `issueLabel` | Cuestión legible para el abogado |
+| `anchorId` | Referencia estable a `source_anchors[]` |
+| `pageIndex` | Página física 1-indexada del PDF |
+| `printedPage` | Etiqueta impresa, cuando exista |
+| `extracto` | Solo `source_excerpt_verbatim` validado |
+| `fidelity` | `exact` o `exact_with_ellipsis` |
+| `sourceSha256` | Identidad del PDF contra el que se verificó |
+| `reviewStatus` | Estado técnico y jurídico del dato asociado |
+
+Una sentencia puede producir varias fuentes si respalda proposiciones distintas.
+La UI puede agruparlas visualmente por ROJ, pero no debe deduplicarlas perdiendo
+páginas o extractos.
 
 El parser no usa `EventSource` porque la petición es `POST`. Lee `fetch().body`,
 tolera UTF-8 y eventos partidos entre chunks de red, rechaza versiones de
 protocolo desconocidas y exige que el terminal sea exactamente uno de `done` o
 `error`. Un EOF sin ninguno es error, no éxito silencioso.
 
-El `extracto` de cada `ChatSource` **no lo escribe el modelo**: se toma del
-corpus — la `frases_clave` más afín al foco de la pregunta, o `resumen_criterios`
-recortado. El panel de fuentes muestra así texto literal del pipeline, no una
-reescritura del modelo.
+El `extracto` de cada `ChatSource` **no lo escribe el modelo**. Debe proceder de
+un `source_excerpt_verbatim` verificado y resolverse a sentencia y página. Una
+`frases_clave` fuzzy o un `resumen_criterios` pueden ayudar a recuperar, pero son
+análisis derivado y nunca se presentan como texto judicial. Si no existe un
+fragmento literal apto, la fuente muestra metadatos y el límite de verificación,
+no una paráfrasis rotulada como cita.
 
 ### Disciplina de la respuesta
 
@@ -468,8 +507,8 @@ confiables**, no como instrucciones; la llamada no dispone de tools.
 La salida se amortigua por párrafos:
 
 1. Solo se aceptan marcadores que existan en el conjunto recuperado.
-2. El servidor reemplaza cada marcador por el ROJ/ECLI de esa ficha antes de
-   emitir el párrafo.
+2. Cada marcador resuelve a una cuestión y un anclaje concretos. El servidor lo
+   reemplaza por ROJ/ECLI y página antes de emitir el párrafo.
 3. Tras cada párrafo que añade una cita, emite un evento `sources` con la lista
    acumulada. Así una interrupción conserva también las fichas de los párrafos
    que el usuario ya vio.
@@ -548,7 +587,9 @@ los timeouts usan `AbortSignal` y producen los errores anteriores.
 
 ## 7. Build y despliegue
 
-`build-corpus.mjs` pasa a emitir dos artefactos desde el mismo JSONL:
+`build-corpus.mjs` pasa a emitir dos artefactos desde el mismo bundle validado
+`residenciafiscal-case/3`. El JSONL histórico deja de ser una entrada directa
+del chat:
 
 | Artefacto | Destino | Visibilidad |
 |---|---|---|
@@ -561,12 +602,13 @@ el análisis desde el repositorio público. Si ese contenido no debe ser públic
 esta arquitectura deja de ser válida y hay que cargar el corpus en un
 Deploy Store privado durante un proceso autenticado.
 
-En un clon limpio sin `output/`, el prebuild conserva los dos artefactos
+En un clon limpio sin el bundle fuente, el prebuild conserva los dos artefactos
 versionados, pero los **valida**. El artefacto privado incluye
-`schemaVersion`, `recordCount`, `sourceSha256` y fecha de generación. El build
-falla si falta, no parsea, no contiene exactamente el número esperado de
-registros o incumple enums/schema; nunca despliega silenciosamente un chat vacío
-o un corpus público y otro privado de distinta versión.
+`schemaVersion`, `judgmentCount`, `issueCount`, `sourceManifestSha256` y fecha de
+generación. El build falla si falta, no parsea, no contiene la cardinalidad
+esperada, una proposición pierde sus anclajes o incumple enums/schema; nunca
+despliega silenciosamente un chat vacío o un corpus público y otro privado de
+distinta versión.
 
 Variables nuevas en el panel de Netlify:
 
@@ -602,7 +644,7 @@ El gate completo de la feature es `make fast-check` **y**
 | Qué | Cómo |
 |---|---|
 | `_retrieval.ts` | Léxico global, facetas, relajación, unión sin duplicados, orden estable, límites de contexto y fallback si el router falla |
-| `_citations.ts` | `[S1]` válido se resuelve al ROJ real; marcador inventado o párrafo sin fuente no se emite; `sources` coincide con el texto |
+| `_citations.ts` | `[S1]` válido se resuelve a ROJ, cuestión, página y anclaje reales; marcador inventado o párrafo sin fuente no se emite; `sources` coincide con el texto |
 | Parser SSE del cliente | UTF-8 y eventos partidos entre chunks; error tipado; EOF sin `done`; versión incompatible |
 | Validación de entrada | Roles prohibidos, alternancia, tamaños, campos extra y metadatos descartados |
 | Cuota horaria | Dos incrementos concurrentes no pierden cuenta; conflictos ETag reintentan; al agotarse, no hay llamada a OpenAI |
@@ -729,6 +771,13 @@ ausencias, centro de intereses, familia, CDI, carga de prueba, pruebas concretas
 preguntas comparativas, fuera de corpus y entradas adversariales. Cada caso
 anota sentencias esperadas y, cuando aplique, hechos que la respuesta debe o no
 debe afirmar.
+
+El inventario inicial de preguntas y conversaciones que alimentará ese banco
+está en
+[`docs/CHAT_USER_QUESTION_CATALOG.md`](../../CHAT_USER_QUESTION_CATALOG.md).
+La selección inicial de 40, con respuestas manuales, casos esperados,
+contracasos, límites y gaps del schema sobre la muestra de cinco, está en
+[`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../../experiments/CHAT_QUESTION_PILOT_5.md).
 
 Los gates se separan en dos grupos, porque tienen coste y naturaleza muy
 distintos y mezclarlos bloquea la entrega sin ganar seguridad.

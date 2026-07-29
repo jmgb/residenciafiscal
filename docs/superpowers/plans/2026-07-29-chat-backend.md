@@ -2,6 +2,19 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **PLAN BLOQUEADO Y PARCIALMENTE SUPERADO (2026-07-29).** No ejecutar las
+> tareas 3–6 ni las partes de cliente/protocolo literalmente. El caso de uso
+> principal se ha fijado después de escribir este plan y exige
+> `residenciafiscal-case/3`, recuperación por cuestión, anclajes verbatim y
+> `ChatSourceV2` con página (`X-Chat-Protocol: 2`). Este plan todavía genera
+> desde el JSONL, recupera sentencias completas y prueba el protocolo 1. Debe
+> reescribirse tras validar el schema v3 con 1 y 5 sentencias. La fase 0 medida
+> y los módulos agnósticos al corpus siguen siendo aprovechables. Véanse el
+> [caso de uso](../../CHAT_JURISPRUDENCE_USE_CASE.md), el
+> [roadmap v3](../../JURISPRUDENCE_DATA_V3_ROADMAP.md), el
+> [piloto manual](../../experiments/CHAT_QUESTION_PILOT_5.md) y el
+> [diseño actualizado](../specs/2026-07-29-chat-backend-design.md).
+
 **Goal:** Sustituir el motor de chat simulado por una Edge Function de Netlify que responde preguntas sobre las 106 sentencias del corpus citando únicamente identificadores reales.
 
 **Architecture:** Edge Function en Deno (`/api/chat`) que valida la entrada, reserva presupuesto en Netlify Blobs con compare-and-swap, traduce la pregunta a facetas con una llamada LLM barata, recupera candidatas con un filtro determinista sobre un corpus embebido en el bundle, y streamea la redacción por SSE sustituyendo marcadores `[S<n>]` por el ROJ real antes de emitir cada fragmento.
@@ -3570,7 +3583,7 @@ Variables necesarias para el motor real: `OPENAI_API_KEY`, `CHAT_IP_SALT` y
 opcionalmente `CHAT_DAILY_BUDGET_USD` (default `2.00`).
 
 Diseño completo en
-[`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](docs/superpowers/specs/2026-07-29-chat-backend-design.md).
+[`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../specs/2026-07-29-chat-backend-design.md).
 ```
 
 Actualiza también la sección «Estructura de Archivos» añadiendo `frontend/netlify/edge-functions/` bajo `frontend/`.

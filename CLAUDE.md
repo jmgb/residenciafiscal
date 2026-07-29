@@ -107,6 +107,22 @@ representación íntegra por páginas recomendada para un futuro RAG se especifi
 en [`docs/VERBATIM_CORPUS.md`](docs/VERBATIM_CORPUS.md), pero todavía no está
 implementada: el pipeline actual conserva el PDF como única fuente completa.
 
+El caso de uso rector del corpus es la investigación jurisprudencial
+conversacional: ante los hechos y preguntas de un abogado, recuperar por
+cuestión jurídica los casos comparables, explicar hechos, pruebas, valoración y
+resultado por cuestión, y respaldarlo con sentencia, página y extracto literal.
+No es un predictor del caso del usuario. El contrato funcional y la auditoría de
+adecuación del perfil v2 están en
+[`docs/CHAT_JURISPRUDENCE_USE_CASE.md`](docs/CHAT_JURISPRUDENCE_USE_CASE.md).
+El piloto manual de 40 preguntas sobre las cinco sentencias demuestra que no se
+debe ampliar el schema actual a 106 sin modelar primero cuestiones, hechos,
+relaciones prueba→hecho→cuestión y anclajes por proposición.
+El orden operativo, el contrato preliminar, las responsabilidades
+Python/agente/persona y los gates 1 → 5 → 106 están en
+[`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](docs/JURISPRUDENCE_DATA_V3_ROADMAP.md).
+El siguiente trabajo es diseñar e implementar v3 para `SAN 1210/2023`; no
+continuar directamente con el chat ni con las 106.
+
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
 make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
