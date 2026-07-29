@@ -108,3 +108,6 @@ SUPABASE_ACCOUNTS.md
 # MCP local config (puede contener secretos) - no versionar
 .mcp.json
 .mcp.json.template
+
+# Compañero visual de brainstorming (superpowers)
+.superpowers/
