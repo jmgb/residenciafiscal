@@ -122,7 +122,7 @@ Tres tests sostienen el invariante, y los tres están verificados por mutación
 |---|---|
 | `test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen` | Cada párrafo publicado es idéntico a uno **de ese bloque** |
 | `test_las_notas_editoriales_del_boe_no_se_publican_como_articulado` | Ninguna nota del BOE se presenta como texto de la norma |
-| `test_el_corpus_generado_esta_al_dia` | Los 107 ficheros coinciden byte a byte con lo que produce el renderizador |
+| `test_el_corpus_generado_esta_al_dia` | Los 109 ficheros coinciden byte a byte con lo que produce el renderizador |
 
 Las dos precisiones importan más de lo que parece. Contrastar contra **el
 bloque** y no contra el XML entero: si se compara con todos los párrafos del
@@ -130,10 +130,43 @@ fichero, cualquier texto del BOE pasa la prueba aunque pertenezca a otro
 artículo. Y comparar **todos** los ficheros y no una muestra: validar solo
 `lirpf-a9.md` dejaba sin gate el renderizado de los 93 convenios.
 
+## Normas derogadas
+
+Una sentencia aplica el derecho del ejercicio que enjuicia, no el de hoy, así que
+el corpus incluye cuatro preceptos de normas ya sustituidas:
+
+| Norma | Rige | Por qué está |
+|---|---|---|
+| RDLeg 3/2004, TR del IRPF (arts. 8 y 9) | ejercicios ≤ 2006 | Anterior a la Ley 35/2006 |
+| CDI España-Argentina de 1992 (art. 4) | ejercicios ≤ 2012 | Denunciado en 2012 |
+| CDI España-Reino Unido de 1975 (art. 4) | ejercicios ≤ 2013 | Sustituido en 2014 |
+
+El BOE saca de la base consolidada lo que deroga, así que estas se bajan del
+**diario**, que conserva la publicación original. Localizarlas tiene truco: la
+API de consolidada no expone búsqueda por texto, y la de sumarios sí, así que se
+piden por el día de publicación (`/api/boe/sumario/YYYYMMDD`) y se filtra el
+título.
+
+Dos trampas de esa vía:
+
+- **El XML del diario no siempre marca los artículos.** El CDI con Argentina, en
+  el BOE de 1994, está entero en `class="parrafo"` sin una sola marca
+  `class="articulo"`, y la segmentación devolvía cero bloques. Hay un fallback
+  por forma de la rúbrica y, si tampoco delimita nada, un error: una norma vacía
+  se publicaría como una omisión silenciosa, que es peor que un fallo.
+- **`estatus_derogacion` no sirve para saber si está derogada.** Viene a «N»
+  incluso en convenios ya sustituidos. Por eso `derogada` y `nota_derogacion`
+  salen del manifiesto —de una declaración explícita y revisable— y no de un
+  campo del BOE.
+
+Lo derogado no se rotula como vigente: el articulado va bajo «Texto derogado», el
+frontmatter lo declara, el índice les da su propia sección y el fichero abre con
+la advertencia. Es la diferencia entre un corpus utilizable y una trampa.
+
 ## Estructura
 
 ```
-normativa/                        # fuente, versionada como sentencias/
+normativa/es/                     # fuente, versionada como sentencias/
   AVISO_LEGAL.md                  # origen y condiciones de reutilización del BOE
   readme.txt                      # inventario
   manifest.json                   # hashes, fechas y URL de cada norma
@@ -141,11 +174,17 @@ normativa/                        # fuente, versionada como sentencias/
   BOE-A-2006-20764.texto.xml      # texto consolidado íntegro
   BOE-A-2004-4347.diario.xml      # publicación original (normas derogadas)
 
-knowledge/normativa/              # derivado, regenerable
+knowledge/normativa/es/           # derivado, regenerable
   preceptos/lirpf-a9.md           # un fichero por artículo
   preceptos/cdi-boe-a-1967-3470-a4.md
   preceptos/index.md
+  enlaces/jurisprudencia.json     # qué preceptos cita cada sentencia
+  enlaces/por_precepto.json       # índice inverso
   reports/extraccion.json         # recuento e incidencias
+
+frontend/public/data/             # lo que consume la web
+  normativa.json                  # índice ligero de los 108 preceptos
+  preceptos/lirpf-a9.json         # articulado literal, uno por precepto
 ```
 
 Los ficheros de los convenios se nombran por su identificador del BOE y no por
@@ -153,27 +192,101 @@ el país. Deducir el país del título es inseguro —los 96 lo escriben de trec
 formas distintas— y un país equivocado en un nombre de fichero es peor que un
 identificador neutro. El título oficial va en el frontmatter y en `index.md`.
 
+## Una jurisdicción por directorio
+
+El README invita a aportar la jurisprudencia de otros países y pide, entre los
+tres requisitos, «el precepto nacional que decide la residencia». Este pipeline
+habla solo con el BOE, así que la decisión se tomó antes de que entre el primer
+país:
+
+- **El dato lleva la jurisdicción.** `normativa/<código>/`,
+  `knowledge/normativa/<código>/` y `jurisdiccion` en el frontmatter de cada
+  precepto. El código es ISO 3166-1 alfa-2 en minúsculas.
+- **El código no se abstrae.** `descargar_normativa.py` es el lector de España y
+  lo dice en su docstring; `export_normativa.py` mantiene juntas la parte
+  genérica —renderizado, invariante, hashes— y la del BOE —`SELECCION_ESTATAL`,
+  `OVERRIDES_CDI`, el detector—. Construir una capa de proveedores para una sola
+  jurisdicción sería adivinar la forma del segundo país; el seam real aparecerá
+  cuando exista.
+
+Lo que hace falta para añadir un país: un lector que deje en
+`normativa/<código>/` la fuente y un `manifest.json` con `id`, `grupo`, `titulo`
+y `texto_sha256` por norma, y una entrada en `JURISDICCIONES`. Lo que **no** hace
+falta tocar: el renderizado, los tests de literalidad ni el frontend.
+
+El código ISO no coincide con las rutas del frontend (`/espana`) a propósito:
+aquellas son de presentación y admiten acentos, esta es la clave de máquina del
+dato. Unificarlas añadiendo un campo `code` a `countryRoutes.json` es un cambio
+de una línea para quien mantenga ese fichero.
+
+## Enlace con la jurisprudencia
+
+`normativa_citas.py` resuelve las citas en texto libre de los análisis
+—«art.9 LIRPF», «artículo 105.1 LGT», «art. 4.2 CDI»— al precepto publicado, sin
+LLM. El resultado va a `enlaces/`, nunca dentro de los dos corpus: meterlo en el
+texto legal lo contaminaría y meterlo en los perfiles de sentencia obligaría a
+regenerarlos por un motivo ajeno.
+
+Tres reglas, todas para no inventar derecho:
+
+1. **Solo se enlaza a preceptos publicados.** El art. 13 TRLIRNR se cita y no
+   está en la selección: queda como cita no resuelta, con el motivo concreto.
+2. **La certeza se declara.** «art.9 LIRPF» trae la norma; «art. 9.1.a» no, y se
+   resuelve por la norma de residencia del ejercicio marcándose como `inferida`.
+3. **La redacción es la del ejercicio enjuiciado**, no la de hoy. Es el pago de
+   haber conservado todas las versiones.
+
+El país del convenio decide a qué texto se enlaza, y con Reino Unido y Argentina
+también el ejercicio, porque tienen convenio antiguo y moderno. El mapa
+país → convenio (`CONVENIOS_POR_PAIS`) es una tabla curada y corta a propósito:
+un país equivocado ahí enlazaría una sentencia con el derecho de otro Estado.
+
+**Los identificadores de bloque del BOE no son uniformes.** El artículo 4 es `a4`
+en el convenio con Francia y `ar-4` en el del Reino Unido de 2013; también hay
+`ai-4` y `a1-5`. Construir el identificador desde el número de artículo perdía
+enlaces en silencio, así que el emparejamiento va por número leído de la
+designación.
+
+Resultado sobre las 106 sentencias: **121 enlaces** (100 explícitos, 21
+inferidos) en 58 sentencias y 9 preceptos citados. De las 48 restantes, 41 no
+citan ningún artículo en su análisis y 7 solo mencionan preceptos fuera de la
+selección. Es un techo del dato de entrada, no del resolvedor.
+
+El resolvedor además avisa de **tres anacronismos**: sentencias cuyo último
+ejercicio es anterior a 2007 y que citan la Ley 35/2006, cuando regía el texto
+refundido de 2004. Se reportan, no se corrigen: el dato es del análisis.
+
 ## Comandos
 
 ```bash
-make descargar-normativa   # vuelve a bajar las 102 normas del BOE (~3 min)
-make export-normativa      # genera los 106 preceptos (sin red, sin LLM)
+make descargar-normativa   # vuelve a bajar las 104 normas del BOE (~3 min)
+make export-normativa      # genera los 108 preceptos (sin red, sin LLM)
+make enlazar-normativa     # resuelve las citas de las sentencias a los preceptos
 ```
 
 `descargar-normativa` solo hace falta cuando el BOE actualiza una norma o se
 firma un convenio nuevo: el XML está versionado, así que el export funciona sin
-red. Los convenios no se listan a mano, se localizan filtrando por título el
-índice de legislación consolidada, que es la lista viva del BOE.
+red. Los convenios vigentes no se listan a mano, se localizan filtrando por
+título el índice de legislación consolidada, que es la lista viva del BOE; los
+sustituidos sí van declarados, porque ya no aparecen en ese índice.
+
+El frontend regenera sus datos en el `prebuild`
+(`frontend/scripts/build-normativa.mjs`), leyendo `knowledge/normativa/es/`.
 
 ## Lo que falta
 
-- **Dos convenios citados por el corpus no están**: el CDI España-Argentina de
-  1992 y el CDI España-Reino Unido de 1975. Ambos fueron sustituidos y ya no
-  figuran en la base consolidada. Se pueden recuperar del diario del BOE, como
-  el TR del IRPF de 2004, en cuanto se localicen sus identificadores.
-- **Nada enlaza todavía la sentencia con el precepto que aplica.** Los análisis
-  citan «art. 9 LIRPF» en texto libre; resolver esa cita al fichero
-  `lirpf-a9.md` es el siguiente paso natural y lo que haría útil el corpus para
-  el chat.
-- **El frontend no consume este corpus.** `frontend/scripts/build-corpus.mjs`
-  solo lee el JSONL de sentencias.
+- **El chat no usa todavía el enlace.** El dato y el loader están listos
+  (`frontend/src/lib/normativa.ts`), pero `chat-engine.ts` está en pleno
+  rediseño en otra línea de trabajo y no se ha tocado. Quien escriba el motor
+  puede citar el artículo junto a la sentencia y con la redacción del ejercicio.
+- **El techo del enlazado es el análisis, no el resolvedor.** 41 sentencias no
+  citan ningún artículo en su registro estructurado. Si el schema v3 recogiera
+  las normas citadas como campo propio en vez de dejarlas dentro de la prosa, la
+  cobertura subiría sin tocar nada de aquí.
+- **`sentencias/` sigue siendo plano y solo español**, mientras `normativa/` ya
+  está separado por jurisdicción. La asimetría es deliberada —ese directorio lo
+  está tocando otra línea de trabajo— pero hay que resolverla antes de que entre
+  el primer país.
+- **Los 93 convenios publican solo su artículo de residencia.** Las citas al
+  art. 19 (pensiones), 13 (ganancias) o 20 aparecen en el corpus y quedan sin
+  resolver. Ampliar la selección es una decisión jurídica, no técnica.

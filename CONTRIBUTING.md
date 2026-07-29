@@ -40,7 +40,7 @@ Valen para cualquier corpus, no solo el español:
   Cada corpus de fuente lleva su propio `AVISO_LEGAL.md` y su inventario
   `readme.txt`, y hay que actualizarlos al añadir ficheros. Referencia: el
   criterio aplicado a [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md) y
-  a [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
+  a [`normativa/es/AVISO_LEGAL.md`](normativa/es/AVISO_LEGAL.md).
 - **Los corpus están aislados entre sí.** Una consulta de un país no puede
   devolver una cita de otro, y un corpus nuevo tiene que traer sus tests de
   aislamiento.
@@ -141,9 +141,11 @@ job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
   [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
 - No edites a mano ni `normativa/` ni `knowledge/normativa/`: la primera se baja
   del BOE (`make descargar-normativa`) y la segunda se regenera de la primera
-  (`make export-normativa`). El texto legal publicado tiene que ser idéntico al
-  de su fuente y hay un test que lo comprueba. Ver
-  [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
+  (`make export-normativa` y `make enlazar-normativa`). El texto legal publicado
+  tiene que ser idéntico al de su fuente y hay tests que lo comprueban. Cada
+  jurisdicción vive en su propio subdirectorio (`normativa/es/`). Ver
+  [`normativa/es/AVISO_LEGAL.md`](normativa/es/AVISO_LEGAL.md) y
+  [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
 - No edites `frontend/public/favicon.ico`, `apple-touch-icon.png` ni
   `og-image.png` a mano: son artefactos generados (`npm run favicon` / `npm run og`).
 

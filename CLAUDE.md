@@ -142,23 +142,38 @@ make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
 
 ### Corpus normativo
 
-`normativa/` guarda el XML del BOE de las 102 normas que deciden la residencia
-fiscal (LIRPF, LGT, reglamentos y los 96 CDI de España), versionado igual que
-los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`.
-`knowledge/normativa/preceptos/` contiene un Markdown **por artículo**, no por
+`normativa/es/` guarda el XML del BOE de las 104 normas que deciden la
+residencia fiscal (LIRPF, LGT, reglamentos y los 96 CDI de España), versionado
+igual que los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`.
+`knowledge/normativa/es/preceptos/` contiene un Markdown **por artículo**, no por
 ley: se publica el precepto que decide o prueba la residencia, no las 270
 secciones de la LIRPF.
 
 No hay LLM en este pipeline y por eso tampoco hay verificación de citas: el
-texto se copia de un XML ya estructurado por el BOE, y un test comprueba que
-cada párrafo publicado es idéntico al de origen. Rige el mismo invariante que
-en las sentencias: el articulado no se reescribe. Selección de preceptos,
-detección del artículo de residencia de cada CDI y vigencia por ejercicio están
-en [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+texto se copia de un XML ya estructurado por el BOE, y hay tests —verificados
+por mutación— de que cada párrafo publicado es idéntico al de origen. Rige el
+mismo invariante que en las sentencias: el articulado no se reescribe. **No
+normalizar a NFKC**: convierte los ordinales `1.º` en `1.o` y eso es reescribir
+la norma.
+
+Cuatro preceptos son de normas **derogadas** (TR del IRPF de 2004 y los CDI con
+Argentina de 1992 y Reino Unido de 1975). Están porque rigen ejercicios que el
+corpus enjuicia, y se rotulan como tales para que nadie los lea como derecho
+vigente.
+
+`knowledge/normativa/es/enlaces/` resuelve las citas de las sentencias al
+precepto, declarando la certeza y la redacción aplicable al ejercicio. El
+directorio lleva el **código de jurisdicción** (ISO 3166-1 alfa-2) para que un
+segundo país no exija migrar nada.
+
+Selección de preceptos, detección del artículo de residencia de cada CDI,
+vigencia por ejercicio, normas derogadas, enlace con la jurisprudencia y el
+contrato para añadir un país están en [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
 
 ```bash
 make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
-make export-normativa     # regenera los 106 preceptos (sin red, sin LLM)
+make export-normativa     # regenera los 108 preceptos (sin red, sin LLM)
+make enlazar-normativa    # resuelve las citas de las sentencias a los preceptos
 ```
 
 ## Sentencias Clave

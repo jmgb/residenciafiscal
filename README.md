@@ -73,12 +73,14 @@ reescribe en ningún punto del pipeline.
 | Fuente | Derivado | Cómo se genera |
 |--------|----------|----------------|
 | `sentencias/` — 106 PDF del CENDOJ | `knowledge/jurisprudencia/` | LLM + verificación de citas contra el PDF |
-| `normativa/` — 102 normas en XML del BOE | `knowledge/normativa/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
+| `normativa/es/` — 104 normas en XML del BOE | `knowledge/normativa/es/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
 
 Del corpus normativo se publica **un Markdown por artículo**, no por ley: los
 preceptos que deciden o prueban la residencia fiscal, más el artículo de
 residencia de cada uno de los 96 convenios de doble imposición firmados por
-España. Ver [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+España. Un tercer artefacto, `knowledge/normativa/es/enlaces/`, resuelve qué
+preceptos cita cada sentencia y con qué redacción del ejercicio enjuiciado.
+Ver [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
 
 ## Un país, un corpus
 
@@ -223,7 +225,7 @@ fuente:
   [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
 - Los textos legales de `normativa/` proceden del BOE, cuya edición oficial es
   la única versión con valor jurídico —
-  [`normativa/AVISO_LEGAL.md`](normativa/AVISO_LEGAL.md).
+  [`normativa/es/AVISO_LEGAL.md`](normativa/es/AVISO_LEGAL.md).
 
 ## Fuentes
 
