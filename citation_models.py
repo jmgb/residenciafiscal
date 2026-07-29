@@ -46,6 +46,7 @@ class FragmentMatch:
     printed_page_label: str | None
     exact: bool
     matched: bool
+    source_excerpt_verbatim: str | None
 
 
 @dataclass(frozen=True)
@@ -81,3 +82,20 @@ class CitationVerification:
             LiteralFidelity.EXACT,
             LiteralFidelity.EXACT_WITH_ELLIPSIS,
         }
+
+    @property
+    def source_fragments_verbatim(self) -> tuple[str, ...]:
+        """Fragmentos recuperados del PDF; vacío si alguno no es exacto."""
+
+        if not self.literal:
+            return ()
+        excerpts = tuple(match.source_excerpt_verbatim for match in self.fragment_matches)
+        if not excerpts or any(excerpt is None for excerpt in excerpts):
+            return ()
+        return tuple(excerpt for excerpt in excerpts if excerpt is not None)
+
+    @property
+    def publishable_literal(self) -> bool:
+        """Solo permite publicar como cita lo recuperado literalmente del PDF."""
+
+        return bool(self.source_fragments_verbatim)

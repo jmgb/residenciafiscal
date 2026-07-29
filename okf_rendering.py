@@ -8,6 +8,8 @@ import yaml
 
 from citation_models import CitationVerification
 from citation_verification import DEFAULT_THRESHOLD
+from okf_annotation_rendering import annotation_quality, render_annotation_sections
+from okf_annotations import JudgmentAnnotations
 from okf_models import OkfJudgment, OkfProvenance
 from okf_render_sections import (
     render_citation_sections,
@@ -26,8 +28,9 @@ def _frontmatter(
     provenance: OkfProvenance,
     verifications: Sequence[CitationVerification],
     threshold: float,
+    annotations: JudgmentAnnotations,
 ) -> dict[str, object]:
-    literal = sum(verification.literal for verification in verifications)
+    literal = sum(verification.publishable_literal for verification in verifications)
     evidence_found = sum(verification.evidence_found for verification in verifications)
     pending = len(verifications) - literal
     status = "draft" if judgment.warnings or pending else "stable"
@@ -55,7 +58,7 @@ def _frontmatter(
         "confianza_extraccion": judgment.confianza_extraccion,
         "source_sha256": provenance.pdf_sha256,
         "analysis_sha256": provenance.analysis_sha256,
-        "schema_version": "residenciafiscal-okf/1",
+        "schema_version": "residenciafiscal-okf/2",
         "sources": [
             {
                 "id": "sentencia-original",
@@ -78,6 +81,7 @@ def _frontmatter(
             "literal": literal,
             "pending_review": pending,
         },
+        **annotation_quality(annotations),
     }
 
 
@@ -87,13 +91,18 @@ def render_judgment_markdown(
     verifications: Sequence[CitationVerification],
     *,
     threshold: float = DEFAULT_THRESHOLD,
+    annotations: JudgmentAnnotations | None = None,
 ) -> str:
     """Renderiza un concepto estable; exige un resultado por cita y en el mismo orden."""
 
     if len(judgment.citas) != len(verifications):
         raise ValueError("Cada cita debe tener exactamente un resultado de verificación")
+    annotations = annotations or JudgmentAnnotations(
+        schema_version=1,
+        source_file=judgment.archivo,
+    )
     frontmatter = yaml.safe_dump(
-        _frontmatter(judgment, provenance, verifications, threshold),
+        _frontmatter(judgment, provenance, verifications, threshold, annotations),
         allow_unicode=True,
         sort_keys=False,
     ).strip()
@@ -102,6 +111,10 @@ def render_judgment_markdown(
         "---",
         frontmatter,
         "---",
+        "",
+        "**Regla de lectura:** el contenido narrativo procede del análisis "
+        "estructurado. Solo los bloques identificados como «extracto literal del PDF» "
+        "o incluidos en «Citas literales verificadas» reproducen texto de la sentencia.",
         "",
         "# Cuestión jurídica",
         "",
@@ -146,6 +159,8 @@ def render_judgment_markdown(
         "# Fallo",
         "",
         f"Resultado estructurado: `{judgment.resultado_final}`.",
+        "",
+        *render_annotation_sections(annotations),
         "",
         *render_citation_sections(judgment, verifications),
         "",

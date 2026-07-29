@@ -1,0 +1,274 @@
+{
+  "Criterio_decisivo": [
+    "CRIT_CENTRO_INTERESES_ECONOMICOS"
+  ],
+  "Criterios_residencia_detectados": [
+    "CRIT_183_DIAS",
+    "CRIT_CENTRO_INTERESES_ECONOMICOS",
+    "CRIT_CENTRO_INTERESES_VITALES",
+    "CRIT_PRESUNCION_FAMILIA"
+  ],
+  "Prueba_o_bala_de_plata": {
+    "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "cita": {
+      "pagina": "3",
+      "texto": "ostentaba la titularidad del 79,99% ... y del 70% ... de las participaciones en el capital de la sociedad domiciliada en España, IBERDIGEST SL"
+    },
+    "detalle": "Prueba documental de la titularidad mayoritaria y del cargo de administrador único en IBERDIGEST SL",
+    "parte": "AEAT",
+    "por_que_decisiva": "Acredita de forma directa y concluyente el control y gestión económica desde España, fundamento principal para declarar la residencia fiscal",
+    "subcategoria": "participaciones y cargo administrador Iberdigest"
+  },
+  "Pruebas_AEAT": [
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "3",
+        "texto": "ostentaba la titularidad del 79,99% ... y del 70% ... de las participaciones en el capital de la sociedad domiciliada en España, IBERDIGEST SL"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Titularidad del 79,99% (2010) y 70% (2011) de participaciones en IBERDIGEST SL y cargo de administrador único desde 2005",
+      "motivo_valoracion": "Acredita de forma fehaciente la gestión y control económico desde España",
+      "objetivo_probatorio": "Acreditar que el centro de intereses económicos/gestión está en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 5,
+      "subcategoria": "participaciones y cargo administrador Iberdigest",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "CONSUMOS_FINANCIEROS",
+      "cita": {
+        "pagina": "3",
+        "texto": "movimientos de la tarjeta de crédito... restaurantes y los de repostaje de gasolina ... próxima a su vivienda ... Bescanó (Gerona)"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Movimientos de tarjeta en Gerona (restaurantes) y repostajes de gasolina en ruta próxima a su vivienda en Bescanó",
+      "motivo_valoracion": "Corrobora la presencia y actividad en el entorno de su vivienda española",
+      "objetivo_probatorio": "Indiciar presencia habitual y uso de la vivienda en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "movimientos tarjeta de crédito",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "cita": {
+        "pagina": "3",
+        "texto": "en dicha vivienda se han constatado suministros de agua y electricidad que evidencian una continua ocupación de la misma"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_VIVIENDA_Y_USO_EFECTIVO",
+      "detalle": "Constatación de suministros de agua y electricidad en la vivienda de Bescanó que evidencian ocupación continua",
+      "motivo_valoracion": "Prueba directa de ocupación continua de la vivienda en España",
+      "objetivo_probatorio": "Probar uso efectivo y permanencia en vivienda en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 4,
+      "subcategoria": "suministros agua y electricidad vivienda Bescanó",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "PARCIAL",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "3",
+        "texto": "El Sr. declaró en Francia los rendimientos de trabajo ... y presentó autoliquidaciones en España por el IRNR, declarando exclusivamente la imputación de rentas inmobiliarias"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_ECONOMICOS",
+      "detalle": "Declaraciones en Francia de los rendimientos del trabajo (324.000€ en 2010 y 338.541€ en 2011) percibidos de Iberdigest SL; autoliquidaciones en España por IRNR limitado a rentas inmobiliarias",
+      "motivo_valoracion": "Admitida como dato pero insuficiente para desvirtuar la evidencia de gestión económica en España",
+      "objetivo_probatorio": "Mostrar dónde se tributaron rendimientos y constatar actuaciones fiscales en ambos países",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 3,
+      "subcategoria": "declaraciones en Francia",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "cita": {
+        "pagina": "4",
+        "texto": "resolución de divorcio de fecha 18-12-2007 ... no resulta pensión compensatoria alguna a favor de la ex-cónyuge"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_PRESUNCION_FAMILIA",
+      "detalle": "Resolución de divorcio de 18-12-2007 del Tribunal de Grande Instance de Perpignan sin pensión compensatoria a favor de la ex-cónyuge",
+      "motivo_valoracion": "Prueba documental que confirma la ruptura de vínculos familiares que podrían llevar a presunción de residencia en España",
+      "objetivo_probatorio": "Acreditar situación familiar y desvirtuar presunción por residencia del cónyuge en España",
+      "origen": "OBTENIDA_TERCEROS",
+      "peso": 2,
+      "subcategoria": "resolución divorcio Perpignan 18-12-2007",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "SI",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "4",
+        "texto": "en fecha 30/06/2011, transmitió 1.932 participaciones ... fijando un precio ... 383.695,20 euros"
+      },
+      "contradiccion_con": "NO CONSTA",
+      "criterio_atacado": "CRIT_OTRO",
+      "detalle": "Transmisión de 1.932 participaciones (9,99%) el 30/06/2011 por precio de 383.695,20 euros",
+      "motivo_valoracion": "Hecho material considerado probado para la determinación de la ganancia patrimonial",
+      "objetivo_probatorio": "Determinar la ganancia patrimonial sujeta a IRPF",
+      "origen": "ACTUACION_ADMINISTRATIVA",
+      "peso": 4,
+      "subcategoria": "transmisión participaciones 30-06-2011",
+      "tipo_prueba": "DIRECTA"
+    }
+  ],
+  "Pruebas_contribuyente": [
+    {
+      "aceptada": "NO",
+      "categoria": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "cita": {
+        "pagina": "5",
+        "texto": "se acogió a una interpretación razonable ... en base al contenido de este documento oficial emitido por las Autoridades fiscales francesas"
+      },
+      "contradiccion_con": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS (suministros en Bescanó)",
+      "criterio_atacado": "CRIT_183_DIAS",
+      "detalle": "Certificado de residencia fiscal emitido por las autoridades fiscales francesas aportado por el recurrente",
+      "motivo_valoracion": "No desvirtúa los indicios de gestión y ocupación en España aceptados por la Sala; sí relevante para excluir culpabilidad en la sanción",
+      "objetivo_probatorio": "Acreditar residencia fiscal en Francia y desvirtuar cómputo de permanencia en España",
+      "origen": "APORTADA_PARTE",
+      "peso": 2,
+      "subcategoria": "certificado de residencia fiscal francés",
+      "tipo_prueba": "DIRECTA"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "4",
+        "texto": "vivienda que el recurrente tenía en alquiler a título gratuito en la localidad de La Boulou, vivienda donde se alega residir"
+      },
+      "contradiccion_con": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS (suministros en Bescanó)",
+      "criterio_atacado": "CRIT_CENTRO_INTERESES_VITALES",
+      "detalle": "Alegación de residencia en una vivienda en La Boulou (Francia), vivienda que el recurrente tenía en alquiler a título gratuito",
+      "motivo_valoracion": "No suficientemente acreditada y contradicha por suministros y actividad en la vivienda de Bescanó",
+      "objetivo_probatorio": "Probar residencia habitual fuera de España",
+      "origen": "APORTADA_PARTE",
+      "peso": 2,
+      "subcategoria": "vivienda en La Boulou (Francia)",
+      "tipo_prueba": "INDICIARIA"
+    },
+    {
+      "aceptada": "NO",
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "4",
+        "texto": "El informe de auditoría ... 3.795.662,59 euros, no puede aceptarse como prueba del valor de las participaciones"
+      },
+      "contradiccion_con": "ACTIVIDAD_ECONOMICA_Y_GESTION (valoración administrativa)",
+      "criterio_atacado": "CRIT_OTRO",
+      "detalle": "Informe de auditoría que atribuye un valor contable a la sociedad de 3.795.662,59 euros (valoración aportada por la parte)",
+      "motivo_valoracion": "No puede aceptarse frente al criterio objetivo legal aplicado por la Administración para fijar el valor de transmisión",
+      "objetivo_probatorio": "Desvirtuar la valoración administrativa de la transmisión y el cálculo de la ganancia patrimonial",
+      "origen": "APORTADA_PARTE",
+      "peso": 3,
+      "subcategoria": "informe de auditoría valoración Iberdigest",
+      "tipo_prueba": "DIRECTA"
+    }
+  ],
+  "Pruebas_rechazadas_clave": [
+    {
+      "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "cita": {
+        "pagina": "4",
+        "texto": "El informe de auditoría ... 3.795.662,59 euros, no puede aceptarse como prueba del valor de las participaciones"
+      },
+      "detalle": "Informe de auditoría valorando la sociedad en 3.795.662,59 euros",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "No coincide con el criterio objetivo legalmente establecido para valorar la transmisión; no se acepta",
+      "subcategoria": "informe de auditoría valoración Iberdigest"
+    },
+    {
+      "categoria": "VIVIENDA_Y_USO_EFECTIVO",
+      "cita": {
+        "pagina": "4",
+        "texto": "vivienda donde se alega residir"
+      },
+      "detalle": "Alegación de residencia en vivienda de La Boulou (Francia)",
+      "parte": "CONTRIBUYENTE",
+      "razon_rechazo": "Insuficiente acreditación y contradicha por suministros y actividad en vivienda de Bescanó",
+      "subcategoria": "vivienda en La Boulou"
+    }
+  ],
+  "archivo": "SAN_1071_2025.pdf",
+  "carga_prueba": {
+    "cita": {
+      "pagina": "5",
+      "texto": "Ciertamente la Administración ha acreditado la residencia del recurrente en territorio español"
+    },
+    "cumplida": "SI",
+    "motivo": "La Administración, tras actuaciones inspectoras, debía acreditar los hechos que justifican la calificación como residente fiscal en España",
+    "quien_tenia_carga": "AEAT"
+  },
+  "categorias_admitidas_aeat": [
+    "ACTIVIDAD_ECONOMICA_Y_GESTION",
+    "CONSUMOS_FINANCIEROS",
+    "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+    "DOCUMENTACION_FISCAL_EXTRANJERA",
+    "FAMILIA_Y_ENTORNO_PERSONAL"
+  ],
+  "categorias_admitidas_contribuyente": [
+    "DOCUMENTACION_FISCAL_EXTRANJERA"
+  ],
+  "categorias_rechazadas_aeat": [],
+  "categorias_rechazadas_contribuyente": [
+    "VIVIENDA_Y_USO_EFECTIVO",
+    "ACTIVIDAD_ECONOMICA_Y_GESTION"
+  ],
+  "confianza_extraccion": "ALTA",
+  "costo_usd": 0.01709275,
+  "doctrina_citada": [
+    "Convenio para evitar la doble imposición España-Francia (10-10-1995)",
+    "Reglamento (CEE) nº 1408/71 del Consejo"
+  ],
+  "ejercicios_afectados": "2010 y 2011",
+  "es_caso_residencia_irpf": "SI",
+  "fecha_resolucion": "2025-02-18",
+  "frases_clave": [
+    {
+      "pagina": "3",
+      "tema": "criterio",
+      "texto": "Que radique en España el núcleo principal o la base de sus actividades o intereses económicos"
+    },
+    {
+      "pagina": "3",
+      "tema": "prueba",
+      "texto": "suministros de agua y electricidad que evidencian una continua ocupación de la misma"
+    },
+    {
+      "pagina": "3",
+      "tema": "prueba",
+      "texto": "movimientos de la tarjeta de crédito... restaurantes y repostaje de gasolina ... Bescanó (Gerona)"
+    },
+    {
+      "pagina": "3",
+      "tema": "doctrina",
+      "texto": "Reglamento (CEE) nº 1408/71 ... trabajador fronterizo"
+    }
+  ],
+  "identificadores": {
+    "ECLI": "ECLI:ES:AN:2025:1071",
+    "ROJ": "SAN 1071/2025"
+  },
+  "motivo_fuera_de_alcance": "NO APLICA",
+  "observaciones": "NO CONSTA",
+  "organo": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección Cuarta",
+  "pais_CDI_aplicado": "Francia",
+  "pais_alegado_residencia_pf": "Francia",
+  "razonamiento_residencia": "La Sala considera acreditado que el núcleo principal de actividades e intereses económicos del recurrente radica en España: era mayoritario socio y administrador de IBERDIGEST SL, existían movimientos financieros y suministros ligados a su vivienda en Bescanó, y no constan vínculos económicos o afectivos relevantes en Francia. Rechaza la condición de trabajador fronterizo y, por tanto, aplica el criterio del artículo 9 LIRPF. Aunque el recurrente aportó certificado francés, no desvirtúa los indicios de gestión y permanencia en España.",
+  "resultado_final": "PARCIAL",
+  "resumen_criterios": "La Sala aplica principalmente el artículo 9 LIRPF (especialmente el criterio del núcleo principal de actividades o intereses económicos) para declarar la residencia en España. Aunque se cita el criterio de permanencia (183 días) y la presunción familiar, el tribunal considera decisivo el control y gestión económica desde España (participaciones y administración de IBERDIGEST) junto con indicios de ocupación de vivienda.",
+  "se_invoca_CDI": "SI",
+  "tiebreaker_paso_decisivo": "NO_APLICA",
+  "tiempo_ejecucion": "gpt-5-mini-2025-08-07 - 101.5s"
+}

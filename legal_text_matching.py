@@ -15,17 +15,63 @@ _END_OF_LINE_HYPHEN_RE = re.compile(r"(?<=\w)-[ \t]*\n[ \t]*(?=\w)")
 _NON_ALPHANUMERIC_RE = re.compile(r"[\W_]+", flags=re.UNICODE)
 
 
+def _dehyphenation_skip_indexes(text: str) -> set[int]:
+    return {
+        index
+        for match in _END_OF_LINE_HYPHEN_RE.finditer(text)
+        for index in range(match.start(), match.end())
+    }
+
+
+def normalize_legal_text_with_spans(
+    text: str,
+) -> tuple[str, tuple[tuple[int, int], ...]]:
+    """Normaliza para matching conservando el origen de cada carácter resultante."""
+
+    skip_indexes = _dehyphenation_skip_indexes(text)
+    characters: list[str] = []
+    spans: list[tuple[int, int]] = []
+    for source_index, source_character in enumerate(text):
+        if source_index in skip_indexes:
+            continue
+        compatible = unicodedata.normalize("NFKC", source_character).casefold()
+        for character in unicodedata.normalize("NFKD", compatible):
+            if unicodedata.combining(character):
+                continue
+            normalized = " " if _NON_ALPHANUMERIC_RE.fullmatch(character) else character
+            if normalized == " " and characters and characters[-1] == " ":
+                spans[-1] = (spans[-1][0], source_index + 1)
+                continue
+            characters.append(normalized)
+            spans.append((source_index, source_index + 1))
+
+    while characters and characters[0] == " ":
+        characters.pop(0)
+        spans.pop(0)
+    while characters and characters[-1] == " ":
+        characters.pop()
+        spans.pop()
+    return "".join(characters), tuple(spans)
+
+
 def normalize_legal_text(text: str) -> str:
     """Normaliza diferencias editoriales y de extracción sin reescribir palabras."""
 
-    dehyphenated = _END_OF_LINE_HYPHEN_RE.sub("", text)
-    compatibility_normalized = unicodedata.normalize("NFKC", dehyphenated).casefold()
-    without_accents = "".join(
-        character
-        for character in unicodedata.normalize("NFKD", compatibility_normalized)
-        if not unicodedata.combining(character)
-    )
-    return _NON_ALPHANUMERIC_RE.sub(" ", without_accents).strip()
+    normalized, _spans = normalize_legal_text_with_spans(text)
+    return normalized
+
+
+def extract_verbatim_fragment(normalized_fragment: str, source_text: str) -> str | None:
+    """Recupera del texto fuente un match exacto normalizado sin reconstruirlo."""
+
+    normalized_source, spans = normalize_legal_text_with_spans(source_text)
+    start = normalized_source.find(normalized_fragment)
+    if start < 0:
+        return None
+    end = start + len(normalized_fragment)
+    source_start = spans[start][0]
+    source_end = spans[end - 1][1]
+    return source_text[source_start:source_end]
 
 
 def split_citation_fragments(quote: str) -> tuple[str, ...]:

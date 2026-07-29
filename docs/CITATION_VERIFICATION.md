@@ -76,6 +76,13 @@ puro.
 
 La normalización elimina diferencias tipográficas —mayúsculas, acentos,
 ligaduras, espacios o guiones de fin de línea—, no diferencias sustantivas.
+Se usa únicamente para buscar. Cuando el match es exacto, un mapa de posiciones
+recupera el fragmento de la cadena **bruta** extraída del PDF. Ese fragmento
+conserva ligaduras, mayúsculas, signos y saltos de línea originales.
+
+Un match fuzzy no tiene `source_excerpt_verbatim` y nunca puede publicarse como
+cita literal. No se reconstruye una supuesta cita combinando el texto del
+análisis con el PDF.
 
 ## Qué son las puntuaciones y para qué se usan
 
@@ -139,7 +146,8 @@ flowchart LR
 
 El algoritmo:
 
-1. Lee únicamente entradas válidas de `frases_clave`.
+1. El CLI del spike lee las entradas válidas de `frases_clave`; el exportador
+   OKF amplía el mismo verificador a todos los campos anidados con `cita`.
 2. Extrae cada PDF una vez y conserva ambas referencias de página.
 3. Normaliza Unicode, ligaduras, acentos, espacios y guiones de fin de línea.
 4. Divide la cita por elipsis (`...`, `…`, `[…]` o `(...)`).
@@ -149,7 +157,9 @@ El algoritmo:
 7. Busca de forma escalonada en la página declarada, las adyacentes y el
    documento completo.
 8. Clasifica por separado localización y fidelidad.
-9. Registra el resultado; nunca reescribe la cita del JSONL.
+9. Para matches exactos, proyecta los offsets normalizados sobre el texto bruto
+   y conserva `source_excerpt_verbatim`.
+10. Registra el resultado; nunca reescribe la cita del JSONL ni el PDF.
 
 ## Contrato de salida
 
@@ -179,7 +189,8 @@ Ejemplo abreviado de `citation-verification.json`:
       "pdf_page_index": 4,
       "printed_page_label": "4",
       "exact": true,
-      "matched": true
+      "matched": true,
+      "source_excerpt_verbatim": "suministros de agua y electricidad"
     }
   ]
 }
@@ -212,6 +223,11 @@ pasa a `fuzzy_candidate`, no a literal.
 
 Se mantiene 85 como umbral conservador provisional. Cuatro citas no bastan para
 fijar el gate global.
+
+El bundle OKF tiene una cobertura distinta al spike: recorre todas las citas
+anidadas del mismo registro (17), de las que 12 tienen fragmentos brutos
+publicables y 5 quedan como texto del análisis pendiente. No deben compararse
+los denominadores 4 y 17 como si fueran dos ejecuciones del mismo inventario.
 
 Los artefactos regenerables están en:
 
@@ -293,6 +309,7 @@ Los tests asociados están en `test/test_citation_*.py` y
 - Informe JSON y Markdown del piloto generados.
 - Las cuatro citas revisadas manualmente.
 - Ningún resultado fuzzy presentado como cita literal.
+- Cada fragmento publicado debe ser una subcadena exacta de la página bruta.
 - Distinción de índice PDF y etiqueta impresa persistida.
 - Manifiesto de cinco revisado y aprobado.
 
@@ -312,6 +329,8 @@ Todavía no está autorizado. La muestra debe permitir:
 
 - No hay llamadas LLM.
 - Los PDF nunca se modifican.
+- El texto jurídico publicado nunca se corrige ni se reconstruye. Las elipsis
+  editoriales añadidas por el renderizador se marcan explícitamente como `[…]`.
 - El texto completo extraído no se versiona.
 - Los artefactos de `output/` son regenerables y quedan fuera de Git.
 - Las decisiones humanas futuras deben vivir en sidecars; no se edita un

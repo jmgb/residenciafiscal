@@ -103,6 +103,22 @@ def _validate_manifest(bundle_dir: Path, issues: list[str]) -> None:
         return
     if manifest.get("scope", {}).get("documents") != len(documents):
         issues.append(f"{manifest_path}: cardinalidad incoherente")
+    analysis_record = manifest.get("analysis_record")
+    if not isinstance(analysis_record, dict):
+        issues.append(f"{manifest_path}: analysis_record inválido")
+    else:
+        record_path = bundle_dir / str(analysis_record.get("path", ""))
+        if not record_path.is_file():
+            issues.append(f"{manifest_path}: registro de análisis inexistente")
+        elif _sha256(record_path) != analysis_record.get("sha256"):
+            issues.append(f"{manifest_path}: hash del registro de análisis no coincide")
+    annotations_source = manifest.get("annotations_source")
+    if isinstance(annotations_source, dict):
+        annotations_path = bundle_dir / str(annotations_source.get("path", ""))
+        if not annotations_path.is_file():
+            issues.append(f"{manifest_path}: sidecar de anotaciones inexistente")
+        elif _sha256(annotations_path) != annotations_source.get("sha256"):
+            issues.append(f"{manifest_path}: hash de anotaciones no coincide")
     for document in documents:
         if not isinstance(document, dict):
             issues.append(f"{manifest_path}: documento inválido")

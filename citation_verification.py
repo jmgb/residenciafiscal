@@ -13,6 +13,7 @@ from citation_models import (
 )
 from citation_result_builder import build_verification_result
 from legal_text_matching import (
+    extract_verbatim_fragment,
     normalize_legal_text,
     parse_page_number,
     score_fragment,
@@ -60,6 +61,11 @@ def _best_fragment_matches(
                 printed_page_label=best_page.printed_page_label if best_page else None,
                 exact=best_exact,
                 matched=best_score >= threshold,
+                source_excerpt_verbatim=(
+                    extract_verbatim_fragment(fragment, best_page.text)
+                    if best_exact and best_page
+                    else None
+                ),
             )
         )
     return tuple(matches)

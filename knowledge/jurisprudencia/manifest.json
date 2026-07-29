@@ -1,5 +1,5 @@
 {
-  "schema_version": "residenciafiscal-okf-manifest/1",
+  "schema_version": "residenciafiscal-okf-manifest/2",
   "okf_version": "0.2",
   "scope": {
     "documents": 1,
@@ -11,23 +11,40 @@
     "path": "output/analisis_02012026_155032.jsonl",
     "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4"
   },
+  "analysis_record": {
+    "path": "sources/san-1071-2025.analysis.json",
+    "sha256": "f0ed2235a2a2d09fe7113ed02820fca11bcbef58fdc11578eb90d442482e0e06"
+  },
+  "analysis_provenance": {
+    "model_id": "gpt-5-mini-2025-08-07",
+    "prompt_sha256": null,
+    "prompt_provenance": "not_recorded_in_source_analysis"
+  },
+  "annotations_source": {
+    "path": "../annotations/san-1071-2025.yaml",
+    "sha256": "8bab5b00d2f3c73fda820662362ea652788174447920ce4b801f3c921b8d3898"
+  },
   "pdf_sources": [
     {
       "archivo": "SAN_1071_2025.pdf",
       "sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf",
       "size_bytes": 143201,
       "pages": 6,
-      "extractor": "pypdf"
+      "extractor": "pypdf/6.14.2"
     }
   ],
   "documents": [
     {
       "concept_id": "sentencias/san-1071-2025",
       "path": "sentencias/san-1071-2025.md",
-      "sha256": "431016de765872683c976ae4be4fe1bd2f84799ac7a595232e6620a076ab5263",
+      "sha256": "7f3fc59619d197bc863ed97a782047604d192a838b35f947657ea44326e2a13b",
       "status": "draft",
-      "literal_citations": 3,
-      "pending_citations": 1,
+      "literal_citations": 12,
+      "pending_citations": 5,
+      "legal_issues": {
+        "approved": 0,
+        "proposed": 3
+      },
       "normalization_warnings": [
         "Pruebas_AEAT[2].criterio_atacado: CRIT_VIVIENDA_Y_USO_EFECTIVO normalizado a CRIT_OTRO"
       ]

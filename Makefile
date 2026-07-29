@@ -145,6 +145,7 @@ export-okf:
 		--jsonl $(OKF_JSONL) \
 		--pdf-dir $(INPUT) \
 		--output-dir $(OKF_OUTPUT) \
+		--annotations-dir knowledge/annotations \
 		--source-file $(OKF_SOURCE_FILE) \
 		--threshold $(OKF_THRESHOLD)
 

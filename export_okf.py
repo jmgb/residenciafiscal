@@ -27,6 +27,12 @@ def _build_parser() -> argparse.ArgumentParser:
         required=True,
         help="Nombre exacto del único PDF que se exportará",
     )
+    parser.add_argument(
+        "--annotations-dir",
+        type=Path,
+        default=None,
+        help="Sidecars de revisión; son opcionales y nunca alteran texto legal",
+    )
     parser.add_argument("--threshold", type=float, default=85.0)
     return parser
 
@@ -47,6 +53,7 @@ def main(
         output_dir=args.output_dir,
         source_file=args.source_file,
         threshold=args.threshold,
+        annotations_dir=args.annotations_dir,
         page_loader=page_loader,
     )
     print(

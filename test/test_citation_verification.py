@@ -2,6 +2,11 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
+
+import pytest
+
+from citation_source_validation import validate_publishable_fragments
 from citation_verification import (
     EvidenceStatus,
     ExtractedPage,
@@ -79,6 +84,60 @@ def test_verifica_una_parafrasis_leve_mediante_matching_difuso() -> None:
     assert result.literal_fidelity is LiteralFidelity.FUZZY_CANDIDATE
     assert 80 <= result.score < 100
     assert result.fragment_matches[0].exact is False
+    assert result.fragment_matches[0].source_excerpt_verbatim is None
+
+
+def test_conserva_el_extracto_verbatim_del_pdf_sin_reconstruirlo() -> None:
+    raw_page = (
+        "La residencia ﬁs-\ncal del recurrente en España fue acreditada por la Administración."
+    )
+
+    result = verify_citation_pages(
+        quote="residencia fiscal del recurrente en España",
+        declared_page=1,
+        pages=(ExtractedPage(1, "1", raw_page),),
+        threshold=90,
+    )
+
+    assert result.literal is True
+    assert (
+        result.fragment_matches[0].source_excerpt_verbatim
+        == "residencia ﬁs-\ncal del recurrente en España"
+    )
+
+
+def test_todo_extracto_publicable_es_subcadena_del_pdf_sin_reescritura() -> None:
+    pages = (
+        ExtractedPage(1, "1", "Portada"),
+        ExtractedPage(
+            2,
+            "2",
+            "La residencia ﬁs-\ncal del recurrente en España resulta acreditada.",
+        ),
+    )
+
+    result = verify_citation_pages(
+        quote="residencia fiscal del recurrente en España",
+        declared_page="2",
+        pages=pages,
+        threshold=85,
+    )
+
+    assert result.publishable_literal is True
+    for fragment, page_index in zip(
+        result.source_fragments_verbatim,
+        result.matched_pdf_page_indexes,
+        strict=True,
+    ):
+        assert fragment in pages[page_index - 1].text
+
+    corrupted_match = replace(
+        result.fragment_matches[0],
+        source_excerpt_verbatim="Residencia fiscal reescrita",
+    )
+    corrupted_result = replace(result, fragment_matches=(corrupted_match,))
+    with pytest.raises(ValueError, match="no pertenece literalmente"):
+        validate_publishable_fragments((corrupted_result,), pages)
 
 
 def test_busca_en_paginas_adyacentes_antes_que_en_el_resto_del_documento() -> None:

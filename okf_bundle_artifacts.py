@@ -28,8 +28,12 @@ def build_manifest(
     *,
     jsonl_path: Path,
     analysis_sha256: str,
+    analysis_provenance: dict[str, object],
+    source_record_path: Path,
+    source_record_sha256: str,
     pdf_path: Path,
     pdf_sha256: str,
+    extractor: str,
     page_count: int,
     document_path: Path,
     document_sha256: str,
@@ -37,24 +41,41 @@ def build_manifest(
     literal_count: int,
     pending_count: int,
     warnings: tuple[str, ...],
+    annotation_path: Path | None,
+    annotation_sha256: str | None,
+    approved_issues: int,
+    proposed_issues: int,
 ) -> dict[str, object]:
     """Construye el manifiesto de fuentes y derivados sin leer el reloj."""
 
     return {
-        "schema_version": "residenciafiscal-okf-manifest/1",
+        "schema_version": "residenciafiscal-okf-manifest/2",
         "okf_version": "0.2",
         "scope": {"documents": 1, "source_files": [pdf_path.name]},
         "analysis_source": {
             "path": jsonl_path.as_posix(),
             "sha256": analysis_sha256,
         },
+        "analysis_record": {
+            "path": source_record_path.as_posix(),
+            "sha256": source_record_sha256,
+        },
+        "analysis_provenance": analysis_provenance,
+        "annotations_source": (
+            {
+                "path": annotation_path.as_posix(),
+                "sha256": annotation_sha256,
+            }
+            if annotation_path is not None
+            else None
+        ),
         "pdf_sources": [
             {
                 "archivo": pdf_path.name,
                 "sha256": pdf_sha256,
                 "size_bytes": pdf_path.stat().st_size,
                 "pages": page_count,
-                "extractor": "pypdf",
+                "extractor": extractor,
             }
         ],
         "documents": [
@@ -65,6 +86,10 @@ def build_manifest(
                 "status": status,
                 "literal_citations": literal_count,
                 "pending_citations": pending_count,
+                "legal_issues": {
+                    "approved": approved_issues,
+                    "proposed": proposed_issues,
+                },
                 "normalization_warnings": list(warnings),
             }
         ],

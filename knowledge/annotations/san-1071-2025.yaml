@@ -1,0 +1,55 @@
+schema_version: 1
+source_file: SAN_1071_2025.pdf
+corrections:
+  - target_id: prueba-aeat-suministros-agua-y-electricidad-vivienda-bescano-1ede578fd8
+    field: criterio_atacado
+    source_value: CRIT_OTRO
+    replacement: CRIT_183_DIAS
+    rationale: >-
+      Candidato de reclasificación del dato derivado: los consumos se usan como
+      indicio de ocupación. Requiere validación jurídica antes de aplicarse.
+    status: proposed
+issues:
+  - id: residencia-fiscal
+    question: ¿Tenía el recurrente su residencia fiscal en España?
+    decision: GANA_AEAT
+    status: proposed
+    support_citation_ids:
+      - cita-frase-clave-criterio-6ffd0928f6
+      - cita-carga-prueba
+    source_anchors:
+      - pdf_page_index: 4
+        source_excerpt_verbatim: |-
+          Por lo tanto, conforme al artículo 9 de la Ley 35/2006, la residencia del recurrente radica en España, pues es
+          donde se encuentra el núcleo principal o la base de sus actividades o intereses económicos, de forma directa
+          o indirecta.
+    rationale: >-
+      Desglose derivado del razonamiento sobre residencia. Pendiente de
+      aprobación por una persona revisora.
+  - id: ganancia-patrimonial
+    question: ¿Se mantiene la regularización de la ganancia patrimonial?
+    decision: GANA_AEAT
+    status: proposed
+    support_citation_ids:
+      - cita-prueba-rechazada-informe-de-auditoria-valoracion-iberdigest-232a337dd5
+    source_anchors:
+      - pdf_page_index: 5
+        source_excerpt_verbatim: |-
+          La tasación pericial contradictoria no procede en cuanto la valoración realizada por la Administración no
+          responde a una valoración de mercado, sino a la aplicación de un criterio objetivo legalmente establecido.
+    rationale: >-
+      El motivo sobre valoración se desestima y el fallo confirma los restantes
+      pronunciamientos. Pendiente de aprobación por una persona revisora.
+  - id: sancion-tributaria
+    question: ¿Debe anularse la sanción tributaria?
+    decision: GANA_CONTRIBUYENTE
+    status: proposed
+    support_citation_ids:
+      - cita-prueba-contribuyente-certificado-de-residencia-fiscal-frances-838bd85a35
+    source_anchors:
+      - pdf_page_index: 5
+        source_excerpt_verbatim: |-
+          Por ello entendemos que no concurre culpabilidad infractora, debiendo anular la sanción impuesta.
+    rationale: >-
+      Desglose derivado del fundamento cuarto y del fallo. Pendiente de
+      aprobación por una persona revisora.

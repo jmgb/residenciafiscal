@@ -14,11 +14,14 @@ class OkfEvidence(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    id: str
     categoria: str
     subcategoria: str
     detalle: str
     objetivo_probatorio: str
     criterio_atacado: str
+    source_criterion_atacado: str
+    normalization_rule: str | None = None
     tipo_prueba: str
     origen: str
     aceptada: str
@@ -40,9 +43,19 @@ class OkfCitation(BaseModel):
 
     model_config = ConfigDict(extra="forbid", frozen=True)
 
+    id: str
+    owner_id: str
+    kind: str
+    source_field: str
     tema: str
     pagina: str
-    texto: str
+    analysis_quote: str
+
+    @property
+    def texto(self) -> str:
+        """Alias de compatibilidad; no implica que el texto sea literal."""
+
+        return self.analysis_quote
 
 
 class OkfBurdenOfProof(BaseModel):
@@ -110,4 +123,7 @@ class OkfJudgment(BaseModel):
             raise ValueError(f"criterios no canónicos: {sorted(invalid_criteria)}")
         if self.resultado_final not in VALID_RESULTADO_FINAL:
             raise ValueError(f"resultado no canónico: {self.resultado_final}")
+        citation_ids = tuple(citation.id for citation in self.citas)
+        if len(citation_ids) != len(set(citation_ids)):
+            raise ValueError("las citas contienen IDs duplicados")
         return self

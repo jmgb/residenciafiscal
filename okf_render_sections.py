@@ -18,15 +18,16 @@ def render_evidence_table(title: str, items: Sequence[OkfEvidence]) -> list[str]
     lines = [
         f"## {title}",
         "",
-        "| Prueba | Categoría | Objetivo | Valoración | Peso |",
-        "|---|---|---|---|---:|",
+        "| ID | Prueba | Categoría | Criterio | Valor de origen | Valoración | Peso |",
+        "|---|---|---|---|---|---|---:|",
     ]
     if not items:
-        lines.append("| No constan pruebas estructuradas. | — | — | — | — |")
+        lines.append("| — | No constan pruebas estructuradas. | — | — | — | — | — |")
         return lines
     lines.extend(
-        f"| {_cell(item.subcategoria)} | `{item.categoria}` | "
-        f"{_cell(item.objetivo_probatorio)} | `{item.aceptada}`: "
+        f"| `{item.id}` | {_cell(item.subcategoria)} | `{item.categoria}` | "
+        f"`{item.criterio_atacado}` | `{item.source_criterion_atacado}` | "
+        f"`{item.aceptada}`: "
         f"{_cell(item.motivo_valoracion)} | {item.peso} |"
         for item in items
     )
@@ -49,18 +50,20 @@ def render_citation_sections(
 
     lines = ["# Citas literales verificadas", ""]
     literal_indexes = [
-        index for index, verification in enumerate(verifications) if verification.literal
+        index
+        for index, verification in enumerate(verifications)
+        if verification.publishable_literal
     ]
     if not literal_indexes:
         lines.append("No hay citas que superen el criterio de literalidad.")
     for index in literal_indexes:
-        citation = judgment.citas[index]
         verification = verifications[index]
         pages = ", ".join(map(str, verification.matched_pdf_page_indexes))
         labels = ", ".join(verification.matched_printed_page_labels) or "no detectada"
+        excerpt = " […] ".join(verification.source_fragments_verbatim)
+        lines.extend(f"> {line}" for line in excerpt.splitlines())
         lines.extend(
             [
-                f"> {citation.texto}",
                 ">",
                 f"> Índice PDF {pages}; etiqueta impresa {labels}; "
                 f"`{verification.literal_fidelity.value}`; puntuación "
@@ -77,8 +80,25 @@ def render_citation_sections(
         citation = judgment.citas[index]
         verification = verifications[index]
         lines.append(
-            f"- **No literal** (`{verification.evidence_status.value}`, "
+            f"- **Texto del análisis; no es una cita literal** "
+            f"(`{verification.evidence_status.value}`, "
             f"`{verification.literal_fidelity.value}`, {verification.score:g}/100): "
-            f"{citation.texto}"
+            f"{citation.analysis_quote}"
+        )
+    lines.extend(["", "# Trazabilidad de citas", ""])
+    lines.extend(
+        [
+            "| ID | Propietario | Campo de origen | Evidencia | Fidelidad | "
+            "Puntuación | Índices PDF |",
+            "|---|---|---|---|---|---:|---|",
+        ]
+    )
+    for citation, verification in zip(judgment.citas, verifications, strict=True):
+        pages = ", ".join(map(str, verification.matched_pdf_page_indexes)) or "—"
+        lines.append(
+            f"| `{citation.id}` | `{citation.owner_id}` | `{citation.source_field}` | "
+            f"`{verification.evidence_status.value}` | "
+            f"`{verification.literal_fidelity.value}` | {verification.score:g} | "
+            f"{pages} |"
         )
     return lines
