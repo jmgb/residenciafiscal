@@ -177,7 +177,8 @@ Todo pasa por el Makefile. `make help` los lista todos.
 # --- Pipeline ---
 make run                                  # procesamiento completo
 make run-sample                           # 1 PDF (prueba rápida)
-make run-resume                           # continuar ejecución interrumpida
+make run-resume                           # continuar sobre el JSONL más reciente de ./output
+make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl   # sobre uno concreto
 make run MAX_FILES=5                      # limitar archivos (testing)
 make run MODEL=gpt-4-turbo                # modelo específico (ignorado en sentencias clave)
 make run EFFORT=high                      # reasoning effort (low/medium/high)
@@ -314,6 +315,46 @@ Configurado todo en `pyproject.toml`:
 
 Gate antes de commitear: `make fast-check`.
 
+En CI hay dos workflows, uno por área, ambos en push y PR contra `main`:
+
+| Workflow | Cubre | Pasos |
+|----------|-------|-------|
+| `.github/workflows/ci.yml` | Python (todo salvo `frontend/`, `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
+| `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest |
+
+**Ninguno usa secrets, a propósito**: la suite Python por defecto no llama a ningún
+LLM. Si algún día hace falta un job con API real, va en un workflow aparte con
+`workflow_dispatch`, nunca en estos. `uv sync --locked` además falla si `uv.lock` se
+queda desincronizado de `pyproject.toml`.
+
+Dos cosas que el gate del frontend **no** hace todavía, y por qué:
+
+- **No corre `npm run build`**: su `prebuild` invoca `frontend/scripts/build-corpus.mjs`,
+  que aún no existe en el repo. Añadir el paso cuando ese script aterrice.
+- **Pasa `--passWithNoTests` a vitest**: aún no hay ficheros de test. Quitar el flag en
+  cuanto exista la primera suite, para que borrar los tests vuelva a poner el gate rojo.
+
+`frontend/biome.json` necesita `css.parser.tailwindDirectives: true` (el CSS usa
+`@theme`/`@apply` de Tailwind 4) y `css.formatter.quoteStyle: "single"` (coherente con
+el JS). Sin lo primero biome aborta el parseo del CSS y el lint no revisa 6 de los 15
+ficheros. Ojo: `biome.json` **no admite comentarios** `//`, aunque sea JSONC en otros
+contextos.
+
+## Reanudar una ejecución
+
+Cada ejecución escribe `analisis_DDMMYYYY_HHMMSS.jsonl`. Para continuar una tanda
+interrumpida hay que apuntar al JSONL **anterior**, no al del timestamp nuevo:
+
+```bash
+make run-resume                                    # el más reciente de ./output
+make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl
+```
+
+`--skip-existing` resuelve el JSONL previo con `find_latest_jsonl()`, lee de él los
+`archivo` ya procesados y le **añade** los nuevos resultados; el CSV y los exports se
+regeneran completos con el timestamp de esta ejecución. Si no hay JSONL previo, avisa
+y procesa todo.
+
 ## Troubleshooting
 
 | Problema | Solución |
@@ -325,7 +366,7 @@ Gate antes de commitear: `make fast-check`.
 | PDF sin texto | Solo PDFs con texto (no scans/OCR) |
 | Rate limits | Reducir `BATCH_SIZE` o aumentar `LLM_BACKOFF_BASE` |
 | JSON parse error | El pipeline auto-repara; revisar logs si persiste |
-| Ejecución interrumpida | `make run-resume` |
+| Ejecución interrumpida | `make run-resume` (reanuda sobre el JSONL más reciente de `output/`) |
 
 ## Estructura de Archivos
 
@@ -342,8 +383,11 @@ residenciafiscal/
 ├── model_pricing.py         # Cálculo de costes
 ├── api/
 │   └── main.py              # API HTTP (FastAPI)
+├── .github/workflows/
+│   └── ci.yml               # Gate de CI: ruff + mypy + pytest (sin secrets)
 ├── test/
 │   ├── test_api.py          # Tests de la capa HTTP (sin coste)
+│   ├── test_resume.py       # Reanudación (find_latest_jsonl)
 │   ├── test_gemini_model_policy.py
 │   └── test_single_pdf.py   # Smoke test end-to-end (con coste)
 ├── sentencias/              # 106 PDFs entrada

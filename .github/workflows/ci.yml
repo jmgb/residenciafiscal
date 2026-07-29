@@ -1,0 +1,82 @@
+name: CI
+
+# Gate mínimo: convierte `make fast-check` (lint + typecheck + tests) en un check
+# real de CI, en vez de depender de que alguien lo corra en local.
+#
+# NO necesita secrets: los tests de test/ no llaman a ningún LLM. Los que sí
+# gastan están tras el marker `manual_real_llm`, excluido por defecto vía
+# `addopts` en pyproject.toml. Si algún día se añade un job que gaste API real,
+# tiene que ser un workflow aparte con `workflow_dispatch`, nunca este.
+#
+# Seguridad: este workflow no interpola ninguna entrada controlable por terceros
+# (github.event.*) dentro de un `run:`. Si se añade alguna, pasarla por `env:`
+# y citarla, nunca inline en el shell.
+
+# paths-ignore en vez de paths: así un fichero .py nuevo en la raíz dispara el gate
+# sin tener que acordarse de añadirlo a una lista. El frontend tiene su propio
+# workflow (frontend.yml).
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'frontend/**'
+      - 'docs/**'
+      - 'sentencias/**'
+      - '**.md'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'frontend/**'
+      - 'docs/**'
+      - 'sentencias/**'
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fast-check:
+    name: lint + typecheck + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Cache uv dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-py313-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-py313-
+
+      # --locked falla si uv.lock no está sincronizado con pyproject.toml:
+      # así el lock no se queda atrás silenciosamente.
+      - name: Install dependencies
+        env:
+          UV_HTTP_TIMEOUT: 120
+        run: uv sync --locked
+
+      - name: Ruff
+        run: uv run ruff check .
+
+      - name: Mypy
+        run: uv run mypy .
+
+      - name: Pytest
+        run: uv run pytest -q

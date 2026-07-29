@@ -19,6 +19,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
+# Este módulo es un script ejecutable, no una suite pytest: hoy no define funciones
+# `test_*`, así que `make test` solo lo importa. El marker está puesto de antemano
+# para que, si alguien añade un `def test_...` aquí, quede excluido del pytest por
+# defecto (`addopts` en pyproject.toml) en vez de empezar a gastar API real sin aviso.
+# Para ejecutarlo a propósito: `make test-llm`.
+pytestmark = pytest.mark.manual_real_llm
+
 # Colors for terminal output
 GREEN = "\033[92m"
 BLUE = "\033[94m"

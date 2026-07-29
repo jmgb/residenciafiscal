@@ -250,6 +250,24 @@ def load_pdf_list(list_path: Path, input_dir: Path) -> list[Path]:
     return pdfs
 
 
+def find_latest_jsonl(out_dir: Path, jsonl_name: str) -> Path | None:
+    """Devuelve el JSONL con timestamp más reciente de una ejecución anterior.
+
+    Cada ejecución escribe `analisis_DDMMYYYY_HHMMSS.jsonl`, así que para reanudar
+    hay que localizar el último. Sin esto, `--skip-existing` comprobaba la
+    existencia del fichero recién nombrado (que nunca existe) y reprocesaba todo.
+    """
+    if not out_dir.is_dir():
+        return None
+
+    stem = Path(jsonl_name).stem
+    candidates = [p for p in out_dir.glob(f"{stem}_*.jsonl") if p.is_file()]
+    if not candidates:
+        return None
+
+    return max(candidates, key=lambda p: p.stat().st_mtime)
+
+
 def load_key_sentencias() -> set:
     """Carga el conjunto de nombres de sentencias clave desde archivo.
 
@@ -956,6 +974,7 @@ def main() -> None:
     parser.add_argument("--jsonl-name", default=DEFAULT_JSONL_NAME, help=ARGUMENT_HELP["jsonl_name"])
     parser.add_argument("--csv-name", default=DEFAULT_CSV_NAME, help=ARGUMENT_HELP["csv_name"])
     parser.add_argument("--skip-existing", action="store_true", help=ARGUMENT_HELP["skip_existing"])
+    parser.add_argument("--resume-from", help=ARGUMENT_HELP["resume_from"])
     parser.add_argument(
         "--reasoning-effort",
         default=REASONING_EFFORT,
@@ -975,6 +994,28 @@ def main() -> None:
 
     jsonl_path = out_dir / jsonl_name
     csv_path = out_dir / csv_name
+
+    # Reanudación: hay que apuntar el JSONL a la ejecución anterior, no al fichero
+    # con timestamp nuevo. El CSV y los exports sí se regeneran completos desde el
+    # JSONL resultante, así que se quedan con el timestamp de esta ejecución.
+    skip_existing = args.skip_existing or bool(args.resume_from)
+    if args.resume_from:
+        resume_path: Path | None = Path(args.resume_from).expanduser().resolve()
+        if resume_path is not None and not resume_path.is_file():
+            raise RuntimeError(f"El JSONL indicado en --resume-from no existe: {resume_path}")
+    elif args.skip_existing:
+        resume_path = find_latest_jsonl(out_dir, args.jsonl_name)
+        if resume_path is None:
+            logger.warning(
+                "⚠️ --skip-existing sin JSONL previo en %s: se procesarán todos los PDFs",
+                out_dir,
+            )
+    else:
+        resume_path = None
+
+    if resume_path is not None:
+        jsonl_path = resume_path
+        logger.info(f"♻️ Reanudando sobre {jsonl_path.name} (se le añadirán los nuevos resultados)")
 
     max_pages = None
     max_files = args.max_files if args.max_files and args.max_files > 0 else None
@@ -1014,7 +1055,7 @@ def main() -> None:
             ai_model=args.model,
             max_pages=max_pages,
             max_files=max_files,
-            skip_existing=args.skip_existing,
+            skip_existing=skip_existing,
             pdf_list=pdf_list,
             reasoning_effort=args.reasoning_effort,
             timestamp=timestamp,

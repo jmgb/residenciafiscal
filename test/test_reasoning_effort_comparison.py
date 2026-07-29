@@ -38,6 +38,15 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import pytest
+
+# Este módulo es un script ejecutable, no una suite pytest: hoy no define funciones
+# `test_*`, así que `make test` solo lo importa. El marker está puesto de antemano
+# para que, si alguien añade un `def test_...` aquí, quede excluido del pytest por
+# defecto (`addopts` en pyproject.toml) en vez de empezar a gastar API real sin aviso.
+# Para ejecutarlo a propósito: `make test-llm`.
+pytestmark = pytest.mark.manual_real_llm
+
 
 # Setup logging
 logging.basicConfig(

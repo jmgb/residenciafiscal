@@ -30,7 +30,7 @@ make dev
 # Pipeline por lotes
 make run-sample             # 1 PDF, prueba rápida
 make run                    # los 106 PDFs de ./sentencias
-make run-resume             # continúa una ejecución interrumpida
+make run-resume             # continúa sobre el JSONL más reciente de ./output
 
 # Calidad
 make fast-check             # lint + typecheck + tests
@@ -71,3 +71,4 @@ Cada ejecución de `make run` genera en `./output/` (con timestamp):
 
 - `CLAUDE.md` — guía completa: arquitectura, schema de campos, costes, troubleshooting
 - `docs/` — notas sobre reasoning effort y tests
+- `docs/tasks.md` — backlog de tareas pendientes del proyecto

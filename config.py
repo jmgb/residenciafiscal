@@ -303,7 +303,8 @@ ARGUMENT_HELP = {
     "max_files": "Máximo de archivos PDF a procesar (0 = todos) - Útil para pruebas (default: 0)",
     "jsonl_name": f"Nombre del archivo JSONL de salida (default: {DEFAULT_JSONL_NAME})",
     "csv_name": f"Nombre del archivo CSV de salida (default: {DEFAULT_CSV_NAME})",
-    "skip_existing": "Si existe JSONL previo, salta PDFs ya procesados",
+    "skip_existing": "Reanuda sobre el JSONL más reciente de la carpeta de salida, saltando los PDFs ya procesados",
+    "resume_from": "Reanuda sobre un JSONL concreto (implica --skip-existing)",
 }
 
 # ============================================================================

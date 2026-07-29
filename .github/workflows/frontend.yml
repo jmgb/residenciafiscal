@@ -1,0 +1,68 @@
+name: Frontend
+
+# Gate del frontend (Vite + React + TS, biome, vitest): el equivalente de ci.yml
+# para `frontend/`. Corre `npm run fast-check` desglosado en pasos para que, cuando
+# falle, se vea en el nombre del step si fue lint, tipos o tests.
+#
+# NO corre `npm run build` a propósito: su `prebuild` invoca
+# `frontend/scripts/build-corpus.mjs`, que todavía no existe en el repo, así que
+# el build falla por diseño. Añadir el paso de build cuando ese script aterrice.
+#
+# Seguridad: no interpola ninguna entrada controlable por terceros (github.event.*)
+# dentro de un `run:`. Si se añade alguna, pasarla por `env:` y citarla.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fast-check:
+    name: lint + typecheck + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # engines.node del package.json exige >=24.
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Biome
+        run: npm run lint
+
+      - name: TypeScript
+        run: npm run typecheck
+
+      # --passWithNoTests: todavía no hay ficheros de test y vitest sale con 1 si no
+      # encuentra ninguno. Quitar el flag en cuanto exista la primera suite, para que
+      # un borrado accidental de los tests vuelva a poner el gate en rojo.
+      - name: Vitest
+        run: npm run test -- --passWithNoTests

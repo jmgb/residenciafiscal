@@ -12,7 +12,7 @@ SHELL := /bin/bash
 
 .SILENT:
 .PHONY: help setup dev dev-public serve \
-	run run-sample run-resume run-list \
+	run run-sample run-resume run-resume-from run-list \
 	test test-llm test-single \
 	lint format fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -56,7 +56,8 @@ help:
 	@echo "=== PIPELINE ==="
 	@echo "  make run                  Procesa todos los PDFs de $(INPUT)"
 	@echo "  make run-sample           Procesa 1 PDF (prueba rápida, ~\$$0.01)"
-	@echo "  make run-resume           Continúa una ejecución interrumpida"
+	@echo "  make run-resume           Continúa sobre el JSONL más reciente de $(OUTPUT)"
+	@echo "  make run-resume-from JSONL=x.jsonl  Continúa sobre un JSONL concreto"
 	@echo "  make run-list LIST=x.txt  Procesa solo los PDFs listados en un .txt"
 	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
 	@echo ""
@@ -107,6 +108,10 @@ run-sample:
 
 run-resume:
 	uv run python residenciafiscal.py $(RUN_FLAGS) --skip-existing
+
+run-resume-from:
+	@if [ -z "$(JSONL)" ]; then echo "❌ Falta JSONL=. Ej: make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl"; exit 1; fi
+	uv run python residenciafiscal.py $(RUN_FLAGS) --resume-from $(JSONL)
 
 run-list:
 	@if [ -z "$(LIST)" ]; then echo "❌ Falta LIST=. Ej: make run-list LIST=./mi_lista.txt"; exit 1; fi
