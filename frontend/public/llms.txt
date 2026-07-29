@@ -1,6 +1,6 @@
 # Residencia Fiscal
 
-> Aplicación web en español para consultar jurisprudencia española sobre la residencia fiscal de personas físicas y el artículo 9 de la LIRPF.
+> Aplicación web para consultar jurisprudencia sobre residencia fiscal por país. España es el primer corpus disponible.
 
 ## Qué es
 
@@ -29,7 +29,8 @@ los tribunales. El manifiesto completo está en
 
 ## Fuente pública
 
-- [Residencia Fiscal](https://residenciafiscal.org/): interfaz de consulta.
+- [España](https://residenciafiscal.org/españa): jurisprudencia española disponible.
+- [Residencia Fiscal](https://residenciafiscal.org/): entrada principal del proyecto.
 - [Manifiesto](https://residenciafiscal.org/manifiesto): por qué existe el proyecto.
 - [Metodología](https://residenciafiscal.org/metodologia): cómo se construyó el análisis.
 - [Sitemap](https://residenciafiscal.org/sitemap.xml): URLs públicas indexables.

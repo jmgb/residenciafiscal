@@ -29,6 +29,14 @@ const SITE_URL = 'https://residenciafiscal.org';
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
 const ROUTES = [
   {
+    dir: 'españa',
+    title: 'Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF',
+    description:
+      'Consulta en lenguaje natural 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia fiscal de personas físicas en España.',
+    url: `${SITE_URL}/españa`,
+    image: null,
+  },
+  {
     dir: 'manifiesto',
     title: 'Manifiesto — Residencia Fiscal',
     description:

@@ -77,7 +77,7 @@ export function ManifiestoPage() {
 
       <div className='flex flex-wrap items-center gap-4 border-t border-border pt-6'>
         <Button asChild>
-          <Link to='/'>Consulta las 106 sentencias</Link>
+          <Link to='/consulta'>Consulta las 106 sentencias</Link>
         </Button>
         <Link
           to='/metodologia'

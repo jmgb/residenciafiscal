@@ -29,7 +29,7 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     locations = [location for location in raw_locations if location is not None]
 
     assert locations == [
-        "https://residenciafiscal.org/",
+        "https://residenciafiscal.org/españa",
         "https://residenciafiscal.org/manifiesto",
         "https://residenciafiscal.org/metodologia",
     ]
@@ -51,7 +51,13 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
     config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
     redirects = config["redirects"]
 
-    assert redirects[:2] == [
+    assert redirects[:3] == [
+        {
+            "from": "/españa",
+            "to": "/españa/index.html",
+            "status": 200,
+            "force": True,
+        },
         {
             "from": "/manifiesto",
             "to": "/manifiesto/index.html",

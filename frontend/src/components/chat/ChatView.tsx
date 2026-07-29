@@ -56,6 +56,8 @@ export interface ChatViewProps {
   engine: ChatEngine;
   /** Muestra el aviso de contenido simulado. */
   isStub: boolean;
+  /** Ruta canónica de la vista que contiene el chat. */
+  canonicalPath?: string;
 }
 
 /**
@@ -64,8 +66,8 @@ export interface ChatViewProps {
  * La conversación se crea de forma perezosa con el primer mensaje, para no
  * llenar el historial de conversaciones vacías cada vez que alguien abre `/`.
  */
-export function ChatView({ engine, isStub }: ChatViewProps) {
-  usePageTitle();
+export function ChatView({ engine, isStub, canonicalPath = '/' }: ChatViewProps) {
+  usePageTitle(undefined, canonicalPath);
   const { conversationId } = useParams();
   const navigate = useNavigate();
 

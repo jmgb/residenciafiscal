@@ -1,5 +1,6 @@
 import { BookOpen, Compass, MessageSquarePlus, Trash2 } from 'lucide-react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { Link, useLocation, useNavigate, useParams } from 'react-router';
+import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { useConversations } from '@/stores/useConversations';
@@ -20,7 +21,7 @@ export function SidebarBrand({ collapsed = false, onNavigate }: SidebarContentPr
       )}
     >
       <Link
-        to='/'
+        to='/españa'
         onClick={onNavigate}
         aria-label='Ir al inicio'
         className='flex shrink-0 items-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring'
@@ -47,7 +48,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
   // mensaje, así que «Nueva consulta» solo navega a la raíz.
   const handleNew = () => {
     onNavigate?.();
-    navigate('/');
+    navigate('/consulta');
   };
 
   const handleDelete = (id: string) => {
@@ -56,62 +57,99 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
     if (id === conversationId) navigate('/');
   };
 
+  const location = useLocation();
+
   return (
-    <nav
-      aria-label='Conversaciones'
-      className={cn('flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}
-    >
-      <Button
-        type='button'
-        onClick={handleNew}
-        className={cn('mb-2 w-full', collapsed && 'px-0')}
-        aria-label='Nueva consulta'
-        title='Nueva consulta'
+    <>
+      <nav
+        aria-label='Conversaciones'
+        className={cn('flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}
       >
-        <MessageSquarePlus className='h-4 w-4 shrink-0' aria-hidden='true' />
-        {!collapsed && <span>Nueva consulta</span>}
-      </Button>
+        <Button
+          type='button'
+          onClick={handleNew}
+          className={cn('mb-2 w-full', collapsed && 'px-0')}
+          aria-label='Nueva consulta'
+          title='Nueva consulta'
+        >
+          <MessageSquarePlus className='h-4 w-4 shrink-0' aria-hidden='true' />
+          {!collapsed && <span>Nueva consulta</span>}
+        </Button>
 
-      {!collapsed && conversations.length === 0 && (
-        <p className='px-2 py-4 text-xs text-muted-foreground'>
-          Todavía no has hecho ninguna consulta.
-        </p>
-      )}
+        {!collapsed && conversations.length === 0 && (
+          <p className='px-2 py-4 text-xs text-muted-foreground'>
+            Todavía no has hecho ninguna consulta.
+          </p>
+        )}
 
-      {!collapsed &&
-        conversations.map((conversation) => {
-          const isActive = conversation.id === conversationId;
+        {!collapsed &&
+          conversations.map((conversation) => {
+            const isActive = conversation.id === conversationId;
+            return (
+              <div
+                key={conversation.id}
+                className={cn(
+                  'group flex items-center gap-1 rounded-lg pr-1 transition-colors',
+                  isActive
+                    ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                    : 'hover:bg-sidebar-accent/60'
+                )}
+              >
+                <Link
+                  to={`/c/${conversation.id}`}
+                  onClick={onNavigate}
+                  aria-current={isActive ? 'page' : undefined}
+                  className='min-w-0 flex-1 truncate rounded-lg px-2 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+                  title={conversation.title}
+                >
+                  {conversation.title}
+                </Link>
+                <button
+                  type='button'
+                  onClick={() => handleDelete(conversation.id)}
+                  aria-label={`Borrar conversación: ${conversation.title}`}
+                  className='shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100'
+                >
+                  <Trash2 className='h-3.5 w-3.5' aria-hidden='true' />
+                </button>
+              </div>
+            );
+          })}
+      </nav>
+
+      <nav
+        aria-label='Países'
+        className={cn('mt-6 flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}
+      >
+        {!collapsed && (
+          <h2 className='px-2 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground'>
+            Países
+          </h2>
+        )}
+        {COUNTRY_ROUTES.map((country) => {
+          const isActive = location.pathname === country.path;
           return (
-            <div
-              key={conversation.id}
+            <Link
+              key={country.path}
+              to={country.path}
+              onClick={onNavigate}
+              aria-current={isActive ? 'page' : undefined}
+              aria-label={collapsed ? country.name : undefined}
+              title={collapsed ? country.name : undefined}
               className={cn(
-                'group flex items-center gap-1 rounded-lg pr-1 transition-colors',
+                'rounded-lg px-2 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sidebar-ring',
+                collapsed ? 'text-center text-xs font-semibold uppercase' : 'truncate',
                 isActive
-                  ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                  : 'hover:bg-sidebar-accent/60'
+                  ? 'bg-sidebar-accent font-semibold text-sidebar-accent-foreground'
+                  : 'text-muted-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground'
               )}
             >
-              <Link
-                to={`/c/${conversation.id}`}
-                onClick={onNavigate}
-                aria-current={isActive ? 'page' : undefined}
-                className='min-w-0 flex-1 truncate rounded-lg px-2 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring'
-                title={conversation.title}
-              >
-                {conversation.title}
-              </Link>
-              <button
-                type='button'
-                onClick={() => handleDelete(conversation.id)}
-                aria-label={`Borrar conversación: ${conversation.title}`}
-                className='shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:text-destructive focus-visible:opacity-100 group-hover:opacity-100'
-              >
-                <Trash2 className='h-3.5 w-3.5' aria-hidden='true' />
-              </button>
-            </div>
+              {collapsed ? country.name.slice(0, 2) : country.name}
+            </Link>
           );
         })}
-    </nav>
+      </nav>
+    </>
   );
 }
 
