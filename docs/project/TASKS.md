@@ -317,6 +317,25 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 - [ ] Crear una landing específica por país (`/españa`, `/portugal`, etc.) con información detallada sobre la residencia fiscal, criterios, obligaciones y particularidades de cada país.
 - [x] Configurar Sentry para la API y el frontend y documentar sus variables de
   entorno (`c0fb582`). Queda pendiente reflejarlo en `README.md` y `CLAUDE.md`.
+- [ ] **Configurar Resend para correo transaccional.** Las credenciales necesarias
+  ya están disponibles en el `.env` de la raíz; reutilizar sus nombres sin leer,
+  imprimir, copiar ni versionar los valores.
+  - Definir primero el flujo que sustituirá o complementará los enlaces `mailto:`,
+    el remitente, el destinatario operativo y el contenido estrictamente
+    transaccional. Mantener marketing y newsletters fuera de este flujo.
+  - Verificar un dominio o subdominio de envío y sus registros SPF, DKIM y DMARC
+    antes del primer correo real.
+  - Configurar las variables equivalentes en el runtime servidor de Netlify.
+    `RESEND_API_KEY` y `RESEND_WEBHOOK_SECRET` nunca llevan prefijo `VITE_` ni
+    pueden llegar al bundle, logs o respuestas al navegador.
+  - Implementar el envío solo en servidor, con validación de entrada, clave de
+    idempotencia estable, timeout y reintentos únicamente para `429`, `5xx` y
+    fallos transitorios.
+  - Si se habilitan eventos de entrega, verificar la firma del webhook y procesar
+    de forma idempotente al menos `delivered`, `bounced` y `complained`.
+  - Añadir pruebas con mocks, documentar únicamente los nombres de variables en
+    `.env.example` y ejecutar un único smoke real explícito después de verificar
+    dominio y destinatario.
 - [ ] Configurar PostHog para el frontend y documentar sus variables de entorno.
 - [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
   devuelven `200` desde `https://residenciafiscal.org/`.
