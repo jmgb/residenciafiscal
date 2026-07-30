@@ -1,0 +1,711 @@
+{
+  "baseline": {
+    "contrast_recall_at_3": 0.7037037037037037,
+    "expected_recall_at_3": 0.7883720930232557,
+    "measured_question_count": 45,
+    "relevant_case_precision_at_3": 0.7131782945736433
+  },
+  "candidate": {
+    "contrast_recall_at_3": 0.8518518518518519,
+    "expected_recall_at_3": 0.8337209302325582,
+    "measured_question_count": 45,
+    "relevant_case_precision_at_3": 0.7364341085271318
+  },
+  "embedding_decision": "NOT_REQUIRED_FOR_PILOT",
+  "evaluation_policy": "GOLD_USED_ONLY_AFTER_RETRIEVAL",
+  "gate_failures": [],
+  "gate_status": "PASSED",
+  "inputs": {
+    "corpus_sha256": "c8546fb8851b4d9609ec896611495152439c0d1be76fa159920c30d65d158e4b",
+    "original_bank_sha256": "314401202af62aabc60d3ecd71ae0fe20e66e97a8dbded3c5e87f9797e4ec742",
+    "paraphrase_bank_sha256": "e69bde6590a51cb62a3dc24efb9a86767f92a86e50188fb72a626018ec0197ea"
+  },
+  "original": {
+    "behavior_accuracy": 1.0,
+    "predicted_behavior_counts": {
+      "abstenerse": 1,
+      "parcial": 12,
+      "preguntar": 7,
+      "responder": 20
+    },
+    "question_count": 40,
+    "zero_source_safety": 1.0
+  },
+  "original_results": [
+    {
+      "contrast_recall_at_3": 0.5,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "GEN-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "responder",
+      "question_id": "GEN-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "GEN-05",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "parcial",
+      "question_id": "GEN-09",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "DAY-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "parcial",
+      "question_id": "DAY-02",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "parcial",
+      "question_id": "DAY-03",
+      "retrieved_judgment_ids": [
+        "san-1226-2021",
+        "san-1136-2016",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "abstenerse",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "abstenerse",
+      "question_id": "DAY-05",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "DAY-08",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "parcial",
+      "question_id": "DAY-10",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "ECO-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "ECO-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "ECO-05",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "ECO-08",
+      "retrieved_judgment_ids": [
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "FAM-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FAM-02",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FAM-03",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FAM-05",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "HOM-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HOM-02",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1210-2023"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HOM-04",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "HOM-08",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.5,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FOR-01",
+      "retrieved_judgment_ids": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "FOR-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FOR-04",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "FOR-07",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "CDI-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "CDI-03",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "CDI-07",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "PRU-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "PRU-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PRU-05",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "responder",
+      "question_id": "PRU-06",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "SAN-01",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "SAN-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "SAN-05",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "preguntar",
+      "question_id": "CMP-02",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.75,
+      "predicted_behavior": "responder",
+      "question_id": "CMP-04",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.6,
+      "predicted_behavior": "responder",
+      "question_id": "PRE-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "responder",
+      "question_id": "SRC-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    }
+  ],
+  "paraphrase_results": [
+    {
+      "contrast_recall_at_3": 0.5,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-GEN-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-GEN-05",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "parcial",
+      "question_id": "PAR-GEN-09",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-DAY-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.6666666666666666,
+      "predicted_behavior": "parcial",
+      "question_id": "PAR-DAY-03",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "abstenerse",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "abstenerse",
+      "question_id": "PAR-DAY-05",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-DAY-08",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-ECO-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-ECO-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-FAM-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-FAM-03",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-HOM-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-HOM-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.5,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-FOR-01",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "PAR-FOR-02",
+      "retrieved_judgment_ids": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-CDI-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "parcial",
+      "question_id": "PAR-PRU-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-SAN-02",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "preguntar",
+      "question_id": "PAR-CMP-02",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "responder",
+      "question_id": "PAR-SRC-02",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016"
+      ]
+    }
+  ],
+  "paraphrases": {
+    "behavior_accuracy": 1.0,
+    "predicted_behavior_counts": {
+      "abstenerse": 1,
+      "parcial": 4,
+      "preguntar": 6,
+      "responder": 9
+    },
+    "question_count": 20,
+    "zero_source_safety": 1.0
+  },
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-phase-d-evaluation/1"
+}

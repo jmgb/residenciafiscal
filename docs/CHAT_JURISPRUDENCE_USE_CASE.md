@@ -199,6 +199,9 @@ El catálogo de consultas está en
 [`CHAT_USER_QUESTION_CATALOG.md`](CHAT_USER_QUESTION_CATALOG.md). El piloto
 manual de cuarenta preguntas sobre cinco sentencias se documenta en
 [`experiments/CHAT_QUESTION_PILOT_5.md`](experiments/CHAT_QUESTION_PILOT_5.md).
+La recuperación estructurada, sus veinte paráfrasis, las conductas seguras y la
+decisión provisional de no añadir embeddings se documentan en
+[`JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
 La estrategia de implementación, responsabilidades y gates 1 → 5 → 106 están
 en
 [`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).

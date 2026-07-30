@@ -152,8 +152,9 @@ migración, regeneración de la muestra y repetición de estos gates.
 
 ## Estado y siguiente paso
 
-La estructura de datos está lista para iniciar la fase D de recuperación. Aún
-no está listo el chat productivo ni se autoriza presentar los casos como
-revisados jurídicamente. El siguiente paso es mejorar y medir selección,
-diversificación apoyo/contraste, extracción de hechos de la consulta y
-abstención; después se decide con datos si los embeddings aportan valor.
+La fase D posterior ya mejoró y midió selección, diversificación
+apoyo/contraste, extracción de hechos y abstención. Su informe conserva esta
+fase C como baseline inmutable y aplaza los embeddings para el piloto:
+[`JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
+El chat productivo sigue sin estar listo y los casos no pueden presentarse como
+revisados jurídicamente.

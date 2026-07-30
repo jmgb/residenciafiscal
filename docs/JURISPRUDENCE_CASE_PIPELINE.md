@@ -134,3 +134,7 @@ consume exclusivamente el caso v3 validado. Contrato, campos y resultado:
 La muestra de cinco ya está regenerada y validada. Resultado, métricas y
 decisiones de freeze:
 [`JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).
+
+La capa posterior que consume sus índices para analizar consultas, diversificar
+casos y medir `preguntar`/`abstenerse` se documenta en
+[`JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).

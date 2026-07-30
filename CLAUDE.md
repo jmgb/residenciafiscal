@@ -22,7 +22,8 @@ make run
 # Test rápido con 1 PDF
 make run-sample
 
-# Levantar la API HTTP (Swagger en http://127.0.0.1:8010/docs)
+# Levantar API + frontend (API en http://127.0.0.1:8010/docs,
+# frontend en http://127.0.0.1:5174)
 make dev
 ```
 
@@ -133,16 +134,17 @@ responsabilidades y artefactos se documentan en
 [`docs/JURISPRUDENCE_CASE_PIPELINE.md`](docs/JURISPRUDENCE_CASE_PIPELINE.md).
 El mismo flujo ya regenera la muestra fija de cinco: 12 unidades, 62 anclajes
 exactos, evaluación ejecutable de 40 preguntas y las 17 citas heredadas
-clasificadas. La evaluación actual cubre solo recuperación y declara el gate
-conversacional `NOT_EVALUATED`; no acredita todavía que el chat pregunte o se
-abstenga correctamente. El contrato v3 está congelado; resultados, límites y
-siguiente fase:
+clasificadas. Ese baseline de fase C sigue siendo `RETRIEVAL_ONLY`:
 [`docs/JURISPRUDENCE_SAMPLE_PHASE_C.md`](docs/JURISPRUDENCE_SAMPLE_PHASE_C.md).
+La fase D añade recuperación estructurada, diversificación, 20 paráfrasis y las
+conductas `preguntar`/`abstenerse`; supera sus gates y aplaza embeddings para el
+piloto. Método, métricas y límites:
+[`docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
 El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
 cada caso canónico. Su contrato está en
 [`docs/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/JURISPRUDENCE_DERIVATIVES_B4.md).
-El siguiente trabajo es la fase D de recuperación; no continuar directamente
-con el chat ni con las 106.
+El siguiente trabajo es preparar el rollout controlado de fase E; no conectar
+directamente el chat ni transformar las 106 sin un lote intermedio y revisión.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
@@ -150,6 +152,7 @@ make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nuev
 make export-case-v3  # compila y valida el caso canónico de SAN 1210/2023
 make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
 make export-case-v3-sample  # regenera 5, evalúa 40 preguntas y ejecuta gates
+make evaluate-retrieval-phase-d  # mide router, paráfrasis y recuperación @3
 ```
 
 ### Corpus normativo
@@ -211,8 +214,9 @@ disponible con `uv run python residenciafiscal.py --help`. Los no evidentes:
 
 ## API HTTP
 
-`make dev` levanta FastAPI en `127.0.0.1:8010` (puerto 8010 y no 8000 para no chocar
-con el backend de presupuestor). Rutas y esquemas, en `/docs`.
+`make dev` levanta FastAPI en `127.0.0.1:8010` y el frontend Vite en
+`127.0.0.1:5174` (el puerto 8010 evita chocar con el backend de presupuestor).
+Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/docs`.
 
 `POST /analizar` acepta además los campos de formulario `modelo`, `reasoning_effort`
 (`low|medium|high`) y `max_pages` (entero positivo). Reutiliza `process_pdf_async()`, así

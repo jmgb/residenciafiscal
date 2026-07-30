@@ -1,0 +1,106 @@
+{
+  "schema_version": "residenciafiscal-retrieval-paraphrases/1",
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "questions": [
+    {
+      "question_id": "PAR-GEN-01",
+      "source_question_id": "GEN-01",
+      "question": "¿Con qué indicios intenta la AEAT acreditar que una persona vive fiscalmente en España?"
+    },
+    {
+      "question_id": "PAR-GEN-05",
+      "source_question_id": "GEN-05",
+      "question": "¿Qué documentos y hechos han servido para considerar a alguien no residente en España?"
+    },
+    {
+      "question_id": "PAR-GEN-09",
+      "source_question_id": "GEN-09",
+      "question": "¿Hay indicios usados por la Administración que la Audiencia Nacional no haya considerado suficientes?"
+    },
+    {
+      "question_id": "PAR-DAY-01",
+      "source_question_id": "DAY-01",
+      "question": "Según mis cuentas estuve 170 días en España, ¿cómo podría comprobarlo Hacienda?"
+    },
+    {
+      "question_id": "PAR-DAY-03",
+      "source_question_id": "DAY-03",
+      "question": "¿Sirven los sellos del pasaporte, las tarjetas de embarque y las reservas para justificar dónde estuve?"
+    },
+    {
+      "question_id": "PAR-DAY-05",
+      "source_question_id": "DAY-05",
+      "question": "Si salgo temporalmente al extranjero, ¿cuándo se cuentan esos viajes como ausencias esporádicas en España?"
+    },
+    {
+      "question_id": "PAR-DAY-08",
+      "source_question_id": "DAY-08",
+      "question": "Sin un recuento diario completo, ¿pueden bastar los pagos con tarjeta y otros consumos?"
+    },
+    {
+      "question_id": "PAR-ECO-01",
+      "source_question_id": "ECO-01",
+      "question": "Resido en Portugal pero casi todo lo que gano procede de España, ¿qué consecuencias puede tener?"
+    },
+    {
+      "question_id": "PAR-ECO-02",
+      "source_question_id": "ECO-02",
+      "question": "¿Ser socio o consejero de compañías españolas pesa al localizar el centro de intereses económicos?"
+    },
+    {
+      "question_id": "PAR-FAM-01",
+      "source_question_id": "FAM-01",
+      "question": "Trabajo habitualmente fuera, aunque mi pareja y mis hijos continúan en España. ¿Cómo se analiza?"
+    },
+    {
+      "question_id": "PAR-FAM-03",
+      "source_question_id": "FAM-03",
+      "question": "¿Qué clase de prueba permite rebatir que soy residente por permanecer mi familia en España?"
+    },
+    {
+      "question_id": "PAR-HOM-01",
+      "source_question_id": "HOM-01",
+      "question": "Conservo una casa en España que aseguro no usar, ¿qué datos hacen falta para valorarlo?"
+    },
+    {
+      "question_id": "PAR-HOM-02",
+      "source_question_id": "HOM-02",
+      "question": "¿Qué demuestra el consumo de luz, agua, gas o calefacción de una vivienda?"
+    },
+    {
+      "question_id": "PAR-FOR-01",
+      "source_question_id": "FOR-01",
+      "question": "¿Presentar un certificado de residencia emitido por otro país resuelve por sí solo la cuestión?"
+    },
+    {
+      "question_id": "PAR-FOR-02",
+      "source_question_id": "FOR-02",
+      "question": "¿Qué contenido debe tener un certificado extranjero para que resulte convincente?"
+    },
+    {
+      "question_id": "PAR-CDI-01",
+      "source_question_id": "CDI-01",
+      "question": "España y el otro Estado dicen que soy residente: ¿qué información se necesita para aplicar el convenio?"
+    },
+    {
+      "question_id": "PAR-PRU-02",
+      "source_question_id": "PRU-02",
+      "question": "¿En qué momento pasa al contribuyente la carga de desmentir los indicios de la AEAT?"
+    },
+    {
+      "question_id": "PAR-SAN-02",
+      "source_question_id": "SAN-02",
+      "question": "¿Puede mantenerse la liquidación por residencia y, aun así, anularse la multa?"
+    },
+    {
+      "question_id": "PAR-CMP-02",
+      "source_question_id": "CMP-02",
+      "question": "¿Cuál de estas sentencias se parece más a mi situación personal?"
+    },
+    {
+      "question_id": "PAR-SRC-02",
+      "source_question_id": "SRC-02",
+      "question": "Enséñame el fragmento literal y la página exacta que respaldan esa afirmación."
+    }
+  ]
+}

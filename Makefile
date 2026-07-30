@@ -11,10 +11,10 @@
 SHELL := /bin/bash
 
 .SILENT:
-.PHONY: help setup dev dev-public serve \
+.PHONY: help setup dev dev-api dev-frontend dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
-	export-case-v3-derivatives export-case-v3-sample \
+	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -61,6 +61,8 @@ CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.d
 CASE_SAMPLE_MANIFEST ?= ./sentencias/jurisprudence_v3_sample_5.json
 CASE_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-v3
 CASE_QUESTION_PILOT ?= ./docs/experiments/CHAT_QUESTION_PILOT_5.md
+CASE_PARAPHRASES ?= ./docs/experiments/CHAT_QUESTION_PARAPHRASES_5.json
+CASE_PHASE_D_REPORT ?= ./knowledge/jurisprudencia-v3/reports/phase-d-retrieval-evaluation.json
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -80,7 +82,9 @@ endif
 help:
 	@echo "=== ESENCIAL ==="
 	@echo "  make setup                Crea .venv con uv e instala dependencias"
-	@echo "  make dev                  Levanta la API con reload en $(HOST):$(PORT)"
+	@echo "  make dev                  Levanta API + frontend en desarrollo"
+	@echo "  make dev-api              Levanta solo la API con reload en $(HOST):$(PORT)"
+	@echo "  make dev-frontend         Levanta solo el frontend en http://127.0.0.1:5174"
 	@echo "  make dev-public           Igual pero accesible desde la red local (0.0.0.0)"
 	@echo "  make serve                API sin reload (modo producción local)"
 	@echo ""
@@ -97,6 +101,7 @@ help:
 	@echo "  make export-case-v3       Compila y valida el caso v3 piloto (sin LLM)"
 	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
 	@echo "  make export-case-v3-sample  Regenera y evalúa las 5 sentencias v3 (sin LLM)"
+	@echo "  make evaluate-retrieval-phase-d  Compara baseline y recuperación estructurada"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -108,6 +113,7 @@ help:
 	@echo "  Caso v3: CASE_PROPOSAL= CASE_VERBATIM= CASE_EVALUATION= CASE_OUTPUT= CASE_REPORT="
 	@echo "  Derivados v3: CASE_MARKDOWN_OUTPUT= CASE_RETRIEVAL_OUTPUT= CASE_DERIVATIVES_REPORT="
 	@echo "  Muestra v3: CASE_SAMPLE_MANIFEST= CASE_SAMPLE_OUTPUT= CASE_QUESTION_PILOT="
+	@echo "  Fase D: CASE_PARAPHRASES= CASE_PHASE_D_REPORT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -136,7 +142,17 @@ setup:
 	@echo "✅ Entorno listo. Recuerda tener OPENAI_API_KEY en .env"
 
 dev:
+	@set -m; \
+	uv run python -m fastapi dev api/main.py --host $(HOST) --port $(PORT) & api_pid=$$!; \
+	(cd frontend && npm run dev) & frontend_pid=$$!; \
+	trap 'kill "$$api_pid" "$$frontend_pid" 2>/dev/null || true' EXIT INT TERM; \
+	wait -n "$$api_pid" "$$frontend_pid"
+
+dev-api:
 	uv run python -m fastapi dev api/main.py --host $(HOST) --port $(PORT)
+
+dev-frontend:
+	cd frontend && npm run dev
 
 dev-public:
 	@echo "⚠️  Escuchando en 0.0.0.0: /analizar gasta dinero en cada llamada."
@@ -241,6 +257,13 @@ export-case-v3-sample:
 		--dispositions $(CASE_SAMPLE_OUTPUT)/evaluations/legacy-citation-dispositions.json \
 		--legacy-reports-root knowledge/jurisprudencia-muestra-5/reports \
 		--cases-root $(CASE_SAMPLE_OUTPUT)/cases
+
+evaluate-retrieval-phase-d:
+	uv run python export_jurisprudence_phase_d.py \
+		--corpus $(CASE_SAMPLE_OUTPUT)/retrieval/corpus.json \
+		--pilot $(CASE_QUESTION_PILOT) \
+		--paraphrases $(CASE_PARAPHRASES) \
+		--output $(CASE_PHASE_D_REPORT)
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

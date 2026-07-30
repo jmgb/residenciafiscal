@@ -1,7 +1,7 @@
 # Roadmap del corpus jurisprudencial v3
 
-**Estado:** fases A, B y C completadas; contrato v3 congelado.
-**Siguiente unidad de trabajo:** fase D, recuperación sobre la muestra.
+**Estado:** fases A, B, C y D completadas; contrato v3 congelado.
+**Siguiente unidad de trabajo:** preparar el rollout controlado de fase E.
 **Rollout obligatorio:** 1 → 5 → 106.
 
 ## 1. Contexto
@@ -393,17 +393,27 @@ Evidencias, límites y freeze:
 
 ### Fase D — recuperación
 
-Baseline inicial:
+**Estado (2026-07-30): completada sobre la muestra de cinco.**
 
-1. facetas por cuestión, criterio, país, CDI, periodo y tipo de prueba;
+Implementación:
+
+1. facetas por criterio, país, periodo y tipo de prueba;
 2. búsqueda léxica sobre hechos, valoraciones y holdings;
-3. reranking por cobertura de los hechos del usuario;
-4. diversificación para incluir apoyo y contraste;
+3. reranking auditable por coincidencias y cobertura temporal;
+4. diversificación por sentencia y conclusión residencial;
 5. reagrupación por sentencia.
 
-Se registra `recall@k`, precisión de fuentes, cobertura y comportamiento de
-abstención. Los embeddings solo se incorporan si superan de forma reproducible
-al baseline en el mismo banco.
+El candidato mejora el baseline léxico a tres resultados: recall esperado
+78,84 % → 83,37 %, precisión de casos relevantes 71,32 % → 73,64 % y recall de
+contrastes 70,37 % → 85,19 %. El router acierta la conducta en las 40 preguntas
+y en 20 paráfrasis, y devuelve cero fuentes en todos los casos anotados como
+`preguntar` o `abstenerse`.
+
+Los gates pasan y la decisión registrada es `NOT_REQUIRED_FOR_PILOT`: no se
+añaden embeddings mientras la alternativa determinista más barata cumpla. Es
+una decisión provisional limitada a cinco sentencias y a un banco no
+independiente. Contrato, método, artefactos y límites:
+[`JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
 
 ### Fase E — 106 sentencias
 
@@ -525,8 +535,9 @@ Métricas de calidad:
    `RETRIEVAL_ONLY`; el gate conversacional queda explícitamente
    `NOT_EVALUATED`.**
 10. Mejorar selección, contraste y paráfrasis, e implementar y medir las
-    conductas `preguntar` y `abstenerse` en fase D.
-11. Decidir con esa comparación si hacen falta embeddings.
+    conductas `preguntar` y `abstenerse` en fase D. **Completado.**
+11. Decidir con esa comparación si hacen falta embeddings. **Completado:
+    aplazados para el piloto.**
 12. Definir revisión por riesgo y ampliar de 5 a 106.
 13. Retomar el backend del chat sobre el corpus validado.
 
