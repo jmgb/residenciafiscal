@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { NormativaAplicada } from '@/components/normativa/NormativaAplicada';
+import { prefersReducedMotion } from '@/lib/motion';
 import { usePageTitle } from '@/lib/usePageTitle';
-
-function prefersReducedMotion(): boolean {
-  if (typeof window.matchMedia !== 'function') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+import { useScrollTopOnLoad } from '@/lib/useScrollTopOnLoad';
 
 export function MetodologiaPage() {
   usePageTitle('Metodología', '/metodologia');
+  const scrollRef = useScrollTopOnLoad<HTMLDivElement>();
   const { hash } = useLocation();
 
   // React Router navega con la History API y NO provoca el salto nativo al ancla; además
@@ -29,7 +27,7 @@ export function MetodologiaPage() {
   }, [hash]);
 
   return (
-    <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
+    <div ref={scrollRef} className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
       <h1 className='mb-6 font-heading text-2xl font-semibold'>Metodología</h1>
 
       <section className='mb-8'>

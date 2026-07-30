@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { usePageTitle } from '@/lib/usePageTitle';
+import { useScrollTopOnLoad } from '@/lib/useScrollTopOnLoad';
 import { Button } from '@/shared/components/ui/button';
 
 // Versión íntegra canónica: docs/brand/manifiesto.md. Cualquier cambio de texto
@@ -51,8 +52,9 @@ const CREDOS: { title: string; paragraphs: string[] }[] = [
 
 export function ManifiestoPage() {
   usePageTitle('Manifiesto', '/manifiesto');
+  const scrollRef = useScrollTopOnLoad<HTMLDivElement>();
   return (
-    <div className='mx-auto w-full max-w-2xl overflow-y-auto px-4 py-10'>
+    <div ref={scrollRef} className='mx-auto w-full max-w-2xl overflow-y-auto px-4 py-10'>
       <div className='mb-10 border-t-4 border-primary pt-6'>
         <h1 className='mb-3 font-heading text-3xl font-semibold'>Manifiesto</h1>
         <p className='text-base leading-relaxed text-muted-foreground'>
