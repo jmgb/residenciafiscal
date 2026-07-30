@@ -30,12 +30,12 @@ class GeminiUsage(JurisprudenceCaseModel):
     usage_complete: bool
 
 
-def calculate_gemini_file_search_cost(
+def calculate_gemini_request_cost(
     usage: GeminiUsage,
     *,
     model: str = DEFAULT_FILE_SEARCH_MODEL,
 ) -> MarginalCost:
-    """Calcula en microdólares enteros y serializa USD con seis decimales."""
+    """Calcula cualquier generación Gemini, con documentos si los hubiera."""
 
     try:
         input_rate, output_rate = MODEL_RATES_MICROUSD_PER_TOKEN[model]
@@ -54,6 +54,16 @@ def calculate_gemini_file_search_cost(
         output_tokens=usage.output_tokens,
         retrieved_document_tokens=usage.retrieved_document_tokens,
     )
+
+
+def calculate_gemini_file_search_cost(
+    usage: GeminiUsage,
+    *,
+    model: str = DEFAULT_FILE_SEARCH_MODEL,
+) -> MarginalCost:
+    """Compatibilidad semántica para el consumidor de Gemini File Search."""
+
+    return calculate_gemini_request_cost(usage, model=model)
 
 
 def zero_marginal_cost() -> MarginalCost:

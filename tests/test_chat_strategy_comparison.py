@@ -33,22 +33,22 @@ class FakeStrategy:
     def __init__(self, result: Any) -> None:
         self.result = result
 
-    def answer(self, question: str, *, request_id: str) -> Any:
+    async def answer(self, question: str, *, request_id: str) -> Any:
         return self.result
 
 
 class FailingStrategy:
-    def answer(self, question: str, *, request_id: str) -> Any:
+    async def answer(self, question: str, *, request_id: str) -> Any:
         raise RuntimeError("fallo aislado")
 
 
-def test_comparador_ejecuta_ambas_estrategias_independientes_y_en_orden(
+async def test_comparador_ejecuta_ambas_estrategias_independientes_y_en_orden(
     tmp_path: Path,
 ) -> None:
     from chat_strategy_comparison import compare_strategies
 
     destination = tmp_path / "comparison.json"
-    report = compare_strategies(
+    report = await compare_strategies(
         question="¿Qué prueba se valoró?",
         structured=FakeStrategy(_answer("current_structured", "Respuesta A")),
         file_search=FakeStrategy(_answer("gemini_file_search", "Respuesta B")),
@@ -73,12 +73,12 @@ def test_comparador_ejecuta_ambas_estrategias_independientes_y_en_orden(
     assert len((tmp_path / "comparison.jsonl").read_text().splitlines()) == 2
 
 
-def test_un_fallo_no_impide_ejecutar_y_conservar_la_otra_estrategia(
+async def test_un_fallo_no_impide_ejecutar_y_conservar_la_otra_estrategia(
     tmp_path: Path,
 ) -> None:
     from chat_strategy_comparison import compare_strategies
 
-    report = compare_strategies(
+    report = await compare_strategies(
         question="Pregunta",
         structured=FailingStrategy(),
         file_search=FakeStrategy(_answer("gemini_file_search", "Respuesta B")),
@@ -91,23 +91,3 @@ def test_un_fallo_no_impide_ejecutar_y_conservar_la_otra_estrategia(
     assert report.answers[0].status == "error"
     assert report.answers[0].cost.measurement == "ESTIMATED"
     assert report.answers[1].text == "Respuesta B"
-
-
-def test_estrategia_estructurada_renderiza_solo_hits_y_anclajes_actuales() -> None:
-    from current_structured_strategy import CurrentStructuredStrategy
-    from jurisprudence_retrieval_corpus import load_retrieval_corpus
-
-    corpus = load_retrieval_corpus(
-        Path("knowledge/jurisprudencia-v3/retrieval/corpus.json").read_bytes()
-    )
-    result = CurrentStructuredStrategy(corpus).answer(
-        "¿Qué valor tienen el certificado fiscal extranjero y los consumos?",
-        request_id="req-local",
-    )
-
-    assert result.strategy == "current_structured"
-    assert result.status in {"completa", "parcial"}
-    assert result.text
-    assert result.sources
-    assert all(source.verification == "EXACT" for source in result.sources)
-    assert result.cost.amount_usd == Decimal("0")

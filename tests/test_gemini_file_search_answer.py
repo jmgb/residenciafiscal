@@ -95,7 +95,9 @@ def _write_verbatim(path: Path, text: str, source_sha256: str = "a" * 64) -> Non
     )
 
 
-def test_respuesta_file_search_solo_publica_cita_literal_verificada(tmp_path: Path) -> None:
+async def test_respuesta_file_search_solo_publica_cita_literal_verificada(
+    tmp_path: Path,
+) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
     from google_genai_file_search import GoogleGenAIFileSearchGateway
 
@@ -117,7 +119,7 @@ def test_respuesta_file_search_solo_publica_cita_literal_verificada(tmp_path: Pa
         verbatim_artifacts={"san-1210-2023": artifact},
     )
 
-    result = responder.answer("¿Qué hechos valoró la Sala?", request_id="req-1")
+    result = await responder.answer("¿Qué hechos valoró la Sala?", request_id="req-1")
 
     assert result.strategy == "gemini_file_search"
     assert result.status == "completa"
@@ -139,9 +141,15 @@ def test_respuesta_file_search_solo_publica_cita_literal_verificada(tmp_path: Pa
         }
     ]
     assert request["response_format"]["mime_type"] == "application/json"
+    assert request["response_format"]["schema"]["title"] == "ChatAnswerDraft"
+    assert "No predigas el resultado" in request["input"]
+    assert "residencia fiscal" in request["input"]
+    assert "no sobre extranjería" in request["input"]
 
 
-def test_descarta_cita_no_literal_y_degrada_respuesta_a_parcial(tmp_path: Path) -> None:
+async def test_descarta_respuesta_sustantiva_si_no_queda_ninguna_cita_verificada(
+    tmp_path: Path,
+) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
     from google_genai_file_search import GoogleGenAIFileSearchGateway
 
@@ -161,14 +169,15 @@ def test_descarta_cita_no_literal_y_degrada_respuesta_a_parcial(tmp_path: Path) 
         verbatim_artifacts={"san-1210-2023": artifact},
     )
 
-    result = responder.answer("Pregunta", request_id="req-2")
+    result = await responder.answer("Pregunta", request_id="req-2")
 
-    assert result.status == "parcial"
+    assert result.status == "error"
+    assert result.text == ""
     assert result.sources == ()
     assert "citas no verificables" in result.limits[0]
 
 
-def test_coste_es_estimado_si_usage_omite_tokens_de_documentos_recuperados(
+async def test_coste_es_estimado_si_usage_omite_tokens_de_documentos_recuperados(
     tmp_path: Path,
 ) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
@@ -191,14 +200,16 @@ def test_coste_es_estimado_si_usage_omite_tokens_de_documentos_recuperados(
         verbatim_artifacts={"san-1210-2023": artifact},
     )
 
-    result = responder.answer("Pregunta", request_id="req-incomplete-usage")
+    result = await responder.answer("Pregunta", request_id="req-incomplete-usage")
 
     assert result.sources
     assert result.cost.retrieved_document_tokens == 0
     assert result.cost.measurement == "ESTIMATED"
 
 
-def test_permite_promocion_manual_explicita_a_gemini_36_flash(tmp_path: Path) -> None:
+async def test_permite_promocion_manual_explicita_a_gemini_36_flash(
+    tmp_path: Path,
+) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
     from google_genai_file_search import GoogleGenAIFileSearchGateway
 
@@ -214,7 +225,7 @@ def test_permite_promocion_manual_explicita_a_gemini_36_flash(tmp_path: Path) ->
         model="gemini-3.6-flash",
     )
 
-    result = responder.answer("Pregunta", request_id="req-promotion")
+    result = await responder.answer("Pregunta", request_id="req-promotion")
 
     assert result.model == "gemini-3.6-flash"
     assert client.interactions.requests[0]["model"] == "gemini-3.6-flash"

@@ -1,0 +1,54 @@
+{
+  "schema_version": "residenciafiscal-chat-f02-dev-set/1",
+  "source_resource": "knowledge/jurisprudencia-v3/evaluations/chat-question-pilot-5.bank.json",
+  "questions": [
+    {
+      "question_id": "GEN-01",
+      "dimension": "general",
+      "expected_behavior": "responder",
+      "question": "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?"
+    },
+    {
+      "question_id": "DAY-01",
+      "dimension": "caso_particular_incompleto",
+      "expected_behavior": "preguntar",
+      "question": "Digo que pasé menos de 183 días en España, ¿qué usaría Hacienda?"
+    },
+    {
+      "question_id": "FOR-02",
+      "dimension": "prueba_concreta",
+      "expected_behavior": "parcial",
+      "question": "¿Qué requisitos se exigieron a los certificados?"
+    },
+    {
+      "question_id": "CDI-01",
+      "dimension": "convenio",
+      "expected_behavior": "preguntar",
+      "question": "Dos países me consideran residente, ¿cómo se resuelve?"
+    },
+    {
+      "question_id": "FAM-02",
+      "dimension": "familia",
+      "expected_behavior": "responder",
+      "question": "¿La familia en España me convierte automáticamente en residente?"
+    },
+    {
+      "question_id": "DAY-05",
+      "dimension": "cobertura_insuficiente",
+      "expected_behavior": "abstenerse",
+      "question": "¿Qué son las ausencias esporádicas y cuándo computan?"
+    },
+    {
+      "question_id": "CMP-04",
+      "dimension": "contraste",
+      "expected_behavior": "responder",
+      "question": "¿Hay casos con hechos parecidos y resultados opuestos?"
+    },
+    {
+      "question_id": "SRC-02",
+      "dimension": "fuentes",
+      "expected_behavior": "responder",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?"
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from importlib.metadata import version
+from pathlib import Path
+from types import SimpleNamespace
+from typing import Any
 
 import pytest
 
@@ -44,3 +47,75 @@ def test_modelo_inicial_y_promocion_manual_estan_en_la_allowlist() -> None:
         "gemini-3.5-flash-lite",
         "gemini-3.6-flash",
     )
+
+
+def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    import gemini_file_search_cli
+
+    writer = object()
+    gateway = object()
+    corpus = SimpleNamespace(units=[])
+    captured: dict[str, Any] = {}
+    corpus_path = tmp_path / "corpus.json"
+    corpus_path.write_bytes(b"{}")
+
+    async def fake_compare_strategies(**kwargs: Any) -> Any:
+        captured.update(kwargs)
+        answer = SimpleNamespace(
+            strategy="current_structured",
+            status="completa",
+            cost=SimpleNamespace(amount_usd="0.000001", measurement="ACTUAL"),
+        )
+        return SimpleNamespace(answers=[answer, answer])
+
+    monkeypatch.setattr(gemini_file_search_cli, "_api_key", lambda: "fake-key")
+    monkeypatch.setattr(
+        gemini_file_search_cli,
+        "_load_store",
+        lambda _: SimpleNamespace(store_name="stores/f0", documents=[]),
+    )
+    monkeypatch.setattr(
+        gemini_file_search_cli,
+        "load_retrieval_corpus",
+        lambda _: corpus,
+    )
+    monkeypatch.setattr(
+        gemini_file_search_cli,
+        "create_google_genai_chat_writer",
+        lambda _: writer,
+    )
+    monkeypatch.setattr(
+        gemini_file_search_cli,
+        "create_google_genai_gateway",
+        lambda _: gateway,
+    )
+    monkeypatch.setattr(
+        gemini_file_search_cli,
+        "compare_strategies",
+        fake_compare_strategies,
+    )
+
+    result = gemini_file_search_cli.main(
+        [
+            "compare",
+            "Pregunta",
+            "--state",
+            str(tmp_path / "state.json"),
+            "--corpus",
+            str(corpus_path),
+            "--output",
+            str(tmp_path / "result.json"),
+            "--model",
+            "gemini-3.6-flash",
+            "--confirm-paid",
+        ]
+    )
+
+    assert result == 0
+    assert captured["structured"]._writer is writer
+    assert captured["structured"]._model == "gemini-3.6-flash"
+    assert captured["file_search"]._gateway is gateway
+    assert captured["file_search"]._model == "gemini-3.6-flash"

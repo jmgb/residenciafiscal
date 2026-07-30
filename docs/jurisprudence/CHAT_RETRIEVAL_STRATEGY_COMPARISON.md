@@ -1,7 +1,7 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
-**Estado:** F0 local implementada; store piloto preparado y primer smoke real
-ejecutado; evaluación sistemática pendiente.
+**Estado:** F0.2 implementada y evaluada con ocho consultas reales; banco
+completo de 40 y promoción a 3.6 aplazados hasta fijar una rúbrica neutral.
 **Alcance inicial:** las cinco sentencias piloto.
 **Fecha de decisión:** 2026-07-30.
 
@@ -117,6 +117,30 @@ el esquema retirado de Interactions. Se migró a `2.16.0` antes del smoke
 válido. Estos resultados son una observación de una pregunta, no una decisión
 entre estrategias.
 
+### F0.2 — redactor comparable y evaluación de desarrollo
+
+F0.2 sustituye la salida determinista inicial de A por un redactor LLM sobre su
+recuperación estructurada. A y B usan `gemini-3.5-flash-lite` y comparten la
+misma instrucción jurídica base. Sus contratos de grounding son distintos por
+diseño: A devuelve IDs `E<n>` que el servidor resuelve a anclajes exactos; B
+solo publica las anotaciones de File Search verificadas localmente.
+
+A entrega al redactor un máximo de dos fragmentos por unidad recuperada. En dos
+smokes sucesivos de la misma pregunta general, este límite redujo su entrada de
+31.038 a 8.954 tokens y el coste de USD 0,010731 a USD 0,003499, manteniendo
+representadas las cinco sentencias.
+
+Se ejecutaron ocho preguntas reales con el mismo modelo en ambas estrategias.
+Una respuesta sustantiva sin fuentes verificables pasa a `error` y se retira,
+pero conserva su coste. Preguntar o abstenerse en el router de A evita la
+llamada y cuesta USD 0.
+
+La evaluación reveló que las etiquetas del banco original están diseñadas para
+el router de A y no son una rúbrica neutral. También detectó falta de cobertura
+estructurada sobre ausencias esporádicas. Por ello no se ejecutan aún las 40
+preguntas ni se promociona el modelo. Método, métricas, costes y decisión:
+[`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
+
 ## Decisión
 
 Durante la fase experimental, cada mensaje del usuario producirá dos respuestas
@@ -145,7 +169,8 @@ Usa el flujo propio del repositorio:
    holdings y facetas;
 3. aplica ranking auditable, diversificación y selección de casos de apoyo y
    contraste;
-4. entrega al redactor únicamente las unidades seleccionadas;
+4. entrega al redactor las unidades seleccionadas y como máximo dos fragmentos
+   verificables por unidad;
 5. resuelve cada cita contra los anclajes verbatim y el PDF original.
 
 Su fuente de recuperación son los casos canónicos y sus índices derivados, no

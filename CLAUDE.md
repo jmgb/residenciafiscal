@@ -159,6 +159,13 @@ E0 deja preparado el rollout controlado de fase E. El siguiente trabajo
 —crear el manifiesto real y ejecutar sus lotes— requiere autorización expresa;
 no conectar directamente el chat ni transformar las 106 sin revisión humana.
 
+El comparador F0.2 ya redacta A sobre el corpus v3 y B con Gemini File Search
+sobre los PDF, usando el mismo modelo y fuentes independientes. Ocho consultas
+reales detectaron una rúbrica heredada no neutral y falta de cobertura
+estructurada sobre ausencias esporádicas; por eso no deben ejecutarse todavía
+las 40 ni promoverse a 3.6. Resultados, costes y siguiente gate:
+[`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](docs/experiments/CHAT_STRATEGY_F02_RESULTS.md).
+
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
 make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva

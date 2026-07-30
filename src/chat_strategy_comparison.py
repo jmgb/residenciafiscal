@@ -16,7 +16,7 @@ from chat_strategy_models import (
 
 
 class ChatStrategy(Protocol):
-    def answer(self, question: str, *, request_id: str) -> StrategyAnswer: ...
+    async def answer(self, question: str, *, request_id: str) -> StrategyAnswer: ...
 
 
 def _error_answer(strategy: StrategyId, error: Exception) -> StrategyAnswer:
@@ -32,14 +32,14 @@ def _error_answer(strategy: StrategyId, error: Exception) -> StrategyAnswer:
     )
 
 
-def _run_isolated(
+async def _run_isolated(
     strategy_id: StrategyId,
     strategy: ChatStrategy,
     question: str,
     request_id: str,
 ) -> StrategyAnswer:
     try:
-        answer = strategy.answer(question, request_id=request_id)
+        answer = await strategy.answer(question, request_id=request_id)
     except Exception as error:
         return _error_answer(strategy_id, error)
     if answer.strategy != strategy_id:
@@ -47,7 +47,7 @@ def _run_isolated(
     return answer
 
 
-def compare_strategies(
+async def compare_strategies(
     *,
     question: str,
     structured: ChatStrategy,
@@ -59,8 +59,8 @@ def compare_strategies(
     """Ejecuta y persiste A después B, sin compartir resultados entre ambas."""
 
     answers = (
-        _run_isolated("current_structured", structured, question, request_id),
-        _run_isolated("gemini_file_search", file_search, question, request_id),
+        await _run_isolated("current_structured", structured, question, request_id),
+        await _run_isolated("gemini_file_search", file_search, question, request_id),
     )
     report = ComparisonReport(request_id=request_id, answers=answers)
     output_path.parent.mkdir(parents=True, exist_ok=True)

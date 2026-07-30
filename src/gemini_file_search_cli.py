@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import os
 import uuid
@@ -20,6 +21,7 @@ from chat_strategy_costs import (
 from current_structured_strategy import CurrentStructuredStrategy
 from gemini_file_search_answer import GeminiFileSearchResponder
 from gemini_file_search_store import StoreReceipt, prepare_sample_store
+from google_genai_chat_writer import create_google_genai_chat_writer
 from google_genai_file_search import create_google_genai_gateway
 from jurisprudence_retrieval_corpus import load_retrieval_corpus
 
@@ -112,22 +114,30 @@ def _verbatim_artifacts(receipt: StoreReceipt) -> dict[str, Path]:
 def _compare(args: argparse.Namespace) -> int:
     _require_paid_confirmation(args.confirm_paid)
     receipt = _load_store(args.state)
-    gateway = create_google_genai_gateway(_api_key())
+    api_key = _api_key()
+    gateway = create_google_genai_gateway(api_key)
+    writer = create_google_genai_chat_writer(api_key)
     corpus = load_retrieval_corpus(args.corpus.read_bytes())
     request_id = f"f0-{uuid.uuid4()}"
     output = args.output or PROJECT_ROOT / f"output/file-search/{request_id}.json"
-    report = compare_strategies(
-        question=args.question,
-        structured=CurrentStructuredStrategy(corpus),
-        file_search=GeminiFileSearchResponder(
-            gateway=gateway,
-            store_name=receipt.store_name,
-            verbatim_artifacts=_verbatim_artifacts(receipt),
-            model=args.model,
-        ),
-        output_path=output,
-        log_path=args.log,
-        request_id=request_id,
+    report = asyncio.run(
+        compare_strategies(
+            question=args.question,
+            structured=CurrentStructuredStrategy(
+                corpus,
+                writer=writer,
+                model=args.model,
+            ),
+            file_search=GeminiFileSearchResponder(
+                gateway=gateway,
+                store_name=receipt.store_name,
+                verbatim_artifacts=_verbatim_artifacts(receipt),
+                model=args.model,
+            ),
+            output_path=output,
+            log_path=args.log,
+            request_id=request_id,
+        )
     )
     for answer in report.answers:
         print(

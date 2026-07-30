@@ -2,30 +2,22 @@
 
 from __future__ import annotations
 
+import asyncio
 import time
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
-from pydantic import Field
-
+from chat_answer_contract import ChatAnswerDraft
+from chat_answer_prompt import file_search_answer_prompt
 from chat_strategy_costs import (
     DEFAULT_FILE_SEARCH_MODEL,
     SUPPORTED_FILE_SEARCH_MODELS,
     GeminiUsage,
     calculate_gemini_file_search_cost,
 )
-from chat_strategy_models import StrategyAnswer, StrategySource
-from jurisprudence_case_catalogs import JurisprudenceCaseModel
+from chat_strategy_models import AnswerStatus, StrategyAnswer, StrategySource
 from legal_text_matching import extract_verbatim_fragment, normalize_legal_text
 from verbatim_models import VerbatimCorpus
-
-
-class ProviderAnswer(JurisprudenceCaseModel):
-    """Salida semántica; las fuentes se toman solo de anotaciones del proveedor."""
-
-    status: Literal["completa", "parcial", "pregunta", "abstención"]
-    answer: str
-    limits: tuple[str, ...] = Field(default_factory=tuple)
 
 
 def _metadata(annotation: Any) -> dict[str, object]:
@@ -146,18 +138,19 @@ class GeminiFileSearchResponder:
         self._verbatim_artifacts = verbatim_artifacts
         self._model = model
 
-    def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
+    async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
         started = time.perf_counter()
-        interaction = self._gateway.query(
+        interaction = await asyncio.to_thread(
+            self._gateway.query,
             model=self._model,
             store_name=self._store_name,
-            prompt=_prompt(question),
-            response_schema=ProviderAnswer.model_json_schema(),
+            prompt=file_search_answer_prompt(question),
+            response_schema=ChatAnswerDraft.model_json_schema(),
         )
         raw_output = getattr(interaction, "output_text", None)
         if not raw_output:
             raw_output = _model_output_text(interaction)
-        provider_answer = ProviderAnswer.model_validate_json(raw_output)
+        provider_answer = ChatAnswerDraft.model_validate_json(raw_output)
         verified = tuple(
             source
             for annotation in _file_citations(interaction)
@@ -165,18 +158,25 @@ class GeminiFileSearchResponder:
         )
         sources = tuple(dict.fromkeys(verified))
         citation_count = len(_file_citations(interaction))
-        status = provider_answer.status
+        status: AnswerStatus = provider_answer.status
         limits = provider_answer.limits
-        if citation_count and not sources and status == "completa":
-            status = "parcial"
+        answer_text = provider_answer.answer
+        if status in {"completa", "parcial"} and answer_text and not sources:
+            status = "error"
+            answer_text = ""
+            reason = (
+                "Se retiraron citas no verificables contra el PDF original."
+                if citation_count
+                else "El proveedor no devolvió citas verificables para la respuesta."
+            )
             limits = (
-                "Se retiraron citas no verificables contra el PDF original.",
+                reason,
                 *limits,
             )
         return StrategyAnswer(
             strategy="gemini_file_search",
             status=status,
-            text=provider_answer.answer,
+            text=answer_text,
             sources=sources,
             limits=limits,
             cost=calculate_gemini_file_search_cost(
@@ -197,14 +197,3 @@ def _model_output_text(interaction: Any) -> str:
         if getattr(content, "type", None) == "text"
     ]
     return "".join(chunks)
-
-
-def _prompt(question: str) -> str:
-    instructions = (
-        "Responde exclusivamente con los PDF recuperados mediante File Search. "
-        "No uses conocimiento externo ni resultados de otra estrategia. "
-        "Distingue hechos, valoración y fallo; no predigas el caso del usuario. "
-        "Si falta cobertura, responde parcial, pregunta o abstención. "
-        "Las citas del proveedor se validarán después contra el PDF original."
-    )
-    return f"{instructions}\n\nPregunta del usuario:\n{question}"

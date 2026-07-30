@@ -50,6 +50,12 @@ contra el dominio público después de cada deploy.
   independientes —corpus v3 estructurado y Gemini File Search sobre PDF— con
   fuentes, métricas y coste en USD separados. Contrato:
   [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+  - [x] **F0.2 — redacción comparable y banco corto.** A redacta sobre unidades
+    estructuradas con IDs de evidencia; B usa File Search sobre PDF. Se
+    ejecutaron ocho preguntas con el mismo modelo, se bloquearon respuestas sin
+    citas verificables y se midieron coste y latencia. El banco de 40 y 3.6
+    quedan aplazados hasta fijar una rúbrica neutral y revisar los gaps:
+    [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un

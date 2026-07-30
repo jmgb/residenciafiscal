@@ -447,8 +447,8 @@ alcance queda limitado a una pregunta y a la muestra congelada de cinco:
 - adaptador oficial `google-genai` para Gemini File Search mediante Interactions;
 - creación, carga verificable y eliminación explícita de un store con los cinco
   PDF originales y sus metadatos deterministas;
-- respuesta A determinista sobre la recuperación estructurada actual;
-- respuesta B inicialmente con `gemini-3.5-flash-lite`, dejando
+- respuesta A con recuperación estructurada y redactor LLM verificable;
+- respuesta B con File Search, inicialmente con `gemini-3.5-flash-lite`, dejando
   `gemini-3.6-flash` para una promoción manual posterior;
 - verificación local de cada extracto contra página, hash y verbatim;
 - coste marginal visible en USD, calculado en microdólares, y logs JSONL sin
@@ -456,10 +456,15 @@ alcance queda limitado a una pregunta y a la muestra congelada de cinco:
 - comparador CLI que conserva el resultado o error de cada estrategia;
 - pruebas sin red mediante dobles únicamente en la frontera del SDK.
 
-El código local y sus pruebas están implementados. Crear el store real, subir
-los cinco PDF y ejecutar una comparación requieren `GEMINI_API_KEY` y
-confirmación explícita de coste; no forman parte de los tests ni activan el
-frontend. El contrato detallado y los comandos están en
+El código local, sus pruebas, el store de cinco PDF y ocho comparaciones reales
+con `gemini-3.5-flash-lite` están completados. Las llamadas reales requieren
+`GEMINI_API_KEY` y confirmación explícita de coste; nunca forman parte de los
+tests ni activan el frontend. F0.2 detectó que el banco heredado favorece el
+router de A y que falta cobertura estructurada de ausencias esporádicas. El
+banco completo de 40 y la promoción a 3.6 quedan aplazados hasta disponer de
+rúbrica neutral y revisión humana ciega. Resultados:
+[`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
+El contrato detallado y los comandos están en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 La promoción a 3.6 solo se hace indicando el modelo de forma explícita después
 de revisar las mediciones iniciales; no cambia silenciosamente por alias.
