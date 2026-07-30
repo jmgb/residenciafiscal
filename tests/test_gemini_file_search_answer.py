@@ -168,6 +168,36 @@ def test_descarta_cita_no_literal_y_degrada_respuesta_a_parcial(tmp_path: Path) 
     assert "citas no verificables" in result.limits[0]
 
 
+def test_coste_es_estimado_si_usage_omite_tokens_de_documentos_recuperados(
+    tmp_path: Path,
+) -> None:
+    from gemini_file_search_answer import GeminiFileSearchResponder
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    quote = "La sentencia contiene este fragmento recuperado."
+    artifact = tmp_path / "san-1210-2023.pages.json"
+    _write_verbatim(artifact, quote)
+    response = _interaction(
+        {"status": "completa", "answer": "Respuesta fundamentada.", "limits": []},
+        [_annotation(quote=quote)],
+    )
+    response.usage.input_tokens_by_modality = [
+        SimpleNamespace(modality="text", tokens=86),
+    ]
+    response.usage.total_input_tokens = 86
+    responder = GeminiFileSearchResponder(
+        gateway=GoogleGenAIFileSearchGateway(FakeGoogleClient(response)),
+        store_name="fileSearchStores/f0",
+        verbatim_artifacts={"san-1210-2023": artifact},
+    )
+
+    result = responder.answer("Pregunta", request_id="req-incomplete-usage")
+
+    assert result.sources
+    assert result.cost.retrieved_document_tokens == 0
+    assert result.cost.measurement == "ESTIMATED"
+
+
 def test_permite_promocion_manual_explicita_a_gemini_36_flash(tmp_path: Path) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
     from google_genai_file_search import GoogleGenAIFileSearchGateway

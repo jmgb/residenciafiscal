@@ -1,6 +1,7 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
-**Estado:** F0 local implementada; aprovisionamiento y ejecución real pendientes.
+**Estado:** F0 local implementada; store piloto preparado y primer smoke real
+ejecutado; evaluación sistemática pendiente.
 **Alcance inicial:** las cinco sentencias piloto.
 **Fecha de decisión:** 2026-07-30.
 
@@ -10,6 +11,10 @@ La fase F0 implementa el comparador local previo al chat productivo. No cambia
 `chatEngineMode` ni conecta todavía el frontend. Usa el SDK oficial
 `google-genai`, la Interactions API y un store basado en
 `models/gemini-embedding-2`.
+
+Interactions exige `google-genai >= 2.0.0`: el esquema anterior dejó de
+aceptarse en junio de 2026. El proyecto fija la serie 2.x y tiene un test de
+regresión que impide volver a instalar una versión 1.x.
 
 El modelo inicial de pruebas es `gemini-3.5-flash-lite`, elegido para medir el
 flujo completo con menor coste. `gemini-3.6-flash` está en la allowlist, pero el
@@ -69,10 +74,48 @@ razonamiento a la salida facturable y calcula el resultado con microdólares
 enteros. El log conserva modelo, tokens y tarifa versionada para que cada
 llamada pueda reconciliarse o recalcularse.
 
+Si existen citas de File Search pero el proveedor omite la modalidad
+`document`, el coste se marca `ESTIMATED`: `retrieved_document_tokens: 0`
+significa «no informado», no «recuperación gratuita». El importe mostrado es
+entonces un límite inferior formado por los tokens que sí devolvió la API. No
+se permite rotularlo como `ACTUAL`, porque los documentos recuperados se cobran
+como contexto.
+
 La indexación del store —USD 0,15 / 1 M tokens según la tarifa vigente— es coste
 de preparación del corpus y no se mezcla con el coste marginal de una
 respuesta. Almacenamiento y embedding de consulta no añaden coste; los
 documentos recuperados se cobran como contexto de entrada.
+
+### Primer smoke real
+
+El 30 de julio de 2026 se creó el store con los cinco PDF y se verificaron sus
+IDs, rutas y SHA-256 contra
+`sentencias/jurisprudence_v3_sample_5.json`. La primera pregunta fue:
+
+> ¿Qué tiene en cuenta Hacienda para demostrar la residencia fiscal en España?
+
+| Estrategia | Estado | Latencia | Fuentes exactas | Coste marginal |
+|---|---|---:|---:|---:|
+| A — estructurada | Completa | 12 ms | 49 | USD 0,000000 real |
+| B — File Search | Completa | 7.883 ms | 3 | ≥ USD 0,001761 estimado |
+
+B produjo una respuesta directamente organizada por permanencia, intereses
+económicos, presunción familiar e indicios complementarios. Sus tres extractos
+se verificaron literalmente en `SAN 1136/2016`, `SAN 1386/2017` y
+`SAN 1071/2025`. A recuperó las cinco sentencias y sus contracasos, pero
+respondió como inventario de resultados por caso y aportó 49 fragmentos; para
+esta pregunta general fue menos directa y demasiado extensa.
+
+La API devolvió 86 tokens de entrada textual y 694 de salida para B, pero no
+declaró los tokens de los documentos recuperados. El artefacto del smoke se
+generó antes de añadir el guardarraíl y contiene una etiqueta `ACTUAL` que esta
+medición invalida; el importe debe interpretarse como el límite inferior
+estimado de la tabla. Las llamadas posteriores ya quedan protegidas por test.
+
+Un intento anterior no generó tokens: detectó que `google-genai 1.75.0` usaba
+el esquema retirado de Interactions. Se migró a `2.16.0` antes del smoke
+válido. Estos resultados son una observación de una pregunta, no una decisión
+entre estrategias.
 
 ## Decisión
 

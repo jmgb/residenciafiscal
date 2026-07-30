@@ -1,6 +1,14 @@
 from __future__ import annotations
 
+from importlib.metadata import version
+
 import pytest
+
+
+def test_interactions_api_usa_sdk_google_genai_2_o_superior() -> None:
+    sdk_major = int(version("google-genai").split(".", maxsplit=1)[0])
+
+    assert sdk_major >= 2
 
 
 def test_prepare_store_exige_confirmacion_explicita_antes_de_facturar(

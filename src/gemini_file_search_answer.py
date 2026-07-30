@@ -77,6 +77,7 @@ def _usage(interaction: Any) -> GeminiUsage:
         getattr(usage, "total_input_tokens", None) is not None
         and getattr(usage, "total_output_tokens", None) is not None
         and modalities is not None
+        and (not _file_citations(interaction) or document_tokens > 0)
     )
     return GeminiUsage(
         input_tokens=max(0, total_input - document_tokens),
