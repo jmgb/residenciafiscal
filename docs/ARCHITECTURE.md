@@ -49,7 +49,7 @@ flowchart LR
 |---|---|---|
 | Pipeline principal | `src/residenciafiscal.py` | Extraer texto de PDF, llamar al proveedor LLM y escribir exports |
 | Configuración de dominio | `src/config.py`, `src/prompt.py` | Modelos, catálogos, campos y prompt de extracción |
-| Proveedores LLM | `src/ai_service_adapter.py`, `src/model_pricing.py` | Adaptar proveedores y calcular costes |
+| Proveedores LLM | `src/ai_service_adapter.py`, `src/gateway_setup.py` | Traducir al paquete `llm_gateway` y conectar sus efectos por puertos |
 | API HTTP | `src/api/` | Exponer el pipeline para un PDF sin persistir resultados |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |
 | Jurisprudencia v3 | `src/jurisprudence_*.py` | Compilar casos, validar referencias, recuperar y evaluar |

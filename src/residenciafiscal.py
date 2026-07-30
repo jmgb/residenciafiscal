@@ -479,9 +479,12 @@ def flatten_for_csv(obj: dict[str, Any]) -> dict[str, Any]:
     row["confianza_extraccion"] = obj.get("confianza_extraccion", DEFAULT_MISSING_VALUE)
     row["observaciones"] = obj.get("observaciones", DEFAULT_MISSING_VALUE)
 
-    # Ejecución y costes
+    # Ejecución y costes. `costo_usd` puede venir vacío: un coste que no se
+    # pudo calcular no es un coste de cero, y escribir 0.0 lo haría pasar por
+    # una llamada gratuita. `costo_medicion` dice cuál de los dos casos es.
     row["tiempo_ejecucion"] = obj.get("tiempo_ejecucion", DEFAULT_MISSING_VALUE)
-    row["costo_usd"] = obj.get("costo_usd", 0.0)
+    row["costo_usd"] = obj.get("costo_usd")
+    row["costo_medicion"] = obj.get("costo_medicion", DEFAULT_MISSING_VALUE)
 
     # Incluir automáticamente cualquier campo top-level no mapeado
     for key, value in obj.items():
@@ -576,7 +579,8 @@ def flatten_sentencia_for_excel(obj: dict[str, Any]) -> dict[str, Any]:
 
     # Metadata
     row["tiempo_ejecucion"] = obj.get("tiempo_ejecucion", DEFAULT_MISSING_VALUE)
-    row["costo_usd"] = obj.get("costo_usd", 0.0)
+    row["costo_usd"] = obj.get("costo_usd")
+    row["costo_medicion"] = obj.get("costo_medicion", DEFAULT_MISSING_VALUE)
 
     return row
 
@@ -762,7 +766,8 @@ async def process_pdf_async(
 
             # Extraer información de tiempo y coste
             tiempo_ejecucion = result.pop("tiempo_ejecucion", "NO CONSTA")
-            cost_usd = result.pop("cost_usd", 0)
+            cost_usd = result.pop("cost_usd", None)
+            cost_measurement = result.pop("cost_measurement", "UNAVAILABLE")
 
             # Eliminar tokens (no se guardan)
             result.pop("tokens_in", None)
@@ -774,6 +779,7 @@ async def process_pdf_async(
             # Agregar metadata de ejecución y coste directamente en el objeto
             obj["tiempo_ejecucion"] = tiempo_ejecucion
             obj["costo_usd"] = cost_usd
+            obj["costo_medicion"] = cost_measurement
         else:
             logger.warning("⚠️ gpt_request no disponible, usando fallback")
             return ensure_required_keys(
@@ -868,6 +874,8 @@ async def main_async(
     jsonl_mode = "a" if jsonl_path.exists() else "w"
     total_cost = 0.0
     batch_costs = {}
+    incomplete_cost = False
+    """Alguna sentencia no aportó coste medible: el total es una cota inferior."""
 
     with jsonl_path.open(jsonl_mode, encoding="utf-8") as jf:
         total_pdfs = len(pdfs_to_process)
@@ -901,20 +909,27 @@ async def main_async(
                 ]
             )
 
-            # Guardar resultados en JSONL y acumular costes
+            # Guardar resultados en JSONL y acumular costes. Un coste ausente
+            # no suma cero: suma nada, y deja el total marcado como cota
+            # inferior para que nadie lo lea como el gasto exacto del lote.
             batch_cost = 0.0
             for obj in results:
                 # Extraer coste (ya está en el objeto como costo_usd)
-                cost_usd = obj.get("costo_usd", 0.0)
-                batch_cost += cost_usd
-                total_cost += cost_usd
+                cost_usd = obj.get("costo_usd")
+                pdf_name = obj.get("archivo", "unknown")
+
+                if cost_usd is None:
+                    incomplete_cost = True
+                    logger.debug(f"   💰 {pdf_name}: coste no disponible")
+                else:
+                    batch_cost += cost_usd
+                    total_cost += cost_usd
+                    if cost_usd > 0:
+                        logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f}")
+                if obj.get("costo_medicion") == "ESTIMATED":
+                    incomplete_cost = True
 
                 jf.write(json.dumps(obj, ensure_ascii=False) + "\n")
-
-                # Log por PDF
-                pdf_name = obj.get("archivo", "unknown")
-                if cost_usd > 0:
-                    logger.debug(f"   💰 {pdf_name}: ${cost_usd:.4f}")
 
             jf.flush()
 
@@ -962,7 +977,8 @@ async def main_async(
     logger.info(f"📊 CSV:   {csv_path}")
     logger.info(f"📈 Filas: {len(df)}")
     logger.info("\n💰 COSTES DE API:")
-    logger.info(f"   Total: ${total_cost:.2f} USD")
+    cota = " (cota inferior: alguna llamada no aportó coste medible)" if incomplete_cost else ""
+    logger.info(f"   Total: ${total_cost:.2f} USD{cota}")
     logger.info(f"   PDFs procesados: {len(pdfs_to_process)}")
     if len(pdfs_to_process) > 0:
         logger.info(f"   Coste promedio: ${total_cost / len(pdfs_to_process):.4f} USD por PDF")

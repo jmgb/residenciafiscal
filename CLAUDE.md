@@ -66,6 +66,30 @@ los aprendizajes F0.2 y el handoff para agentes tienen una entrada canónica
 separada:
 [`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
 
+### Llamadas a modelos: el paquete `llm_gateway`
+
+Las llamadas pasan por **`neutral-llm-gateway`**, un paquete público y neutral
+fijado a una etiqueta inmutable. `gpt_request_for_sentencia`
+(`src/ai_service_adapter.py`) es una **fachada delgada**: conserva nombre, firma
+y diccionario de retorno, así que ni el CLI ni la API distinguen qué hay detrás.
+`src/gateway_setup.py` construye el gateway una vez —nunca en el import— con las
+credenciales de la aplicación y conecta los efectos por puertos.
+
+**No hay tabla de precios local**: las tarifas salen del catálogo versionado del
+paquete, y `detect_provider()` delega en el mismo catálogo que usa el registro
+para elegir adaptador, para que no existan dos tablas capaces de discrepar.
+
+Dos consecuencias visibles en los exports: `costo_usd` puede ser `null` —un
+coste que no se pudo calcular no es un coste de cero— y `costo_medicion` dice si
+el importe es `ACTUAL`, `ESTIMATED` o `UNAVAILABLE`.
+
+El paquete no tiene tools, ficheros ni streaming, y es deliberado; por eso el
+chat B sigue usando Gemini File Search por su cuenta. Rige la **regla de los dos
+consumidores**: nada entra en su API pública hasta que dos proyectos distintos
+lo necesiten, y lo que solo necesita este repositorio se resuelve con un puerto.
+Corte, trampas del contrato con OpenAI, evidencia de paridad y cómo subir de
+versión: [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
+
 ### Extracción de texto de los PDF (no hay OCR)
 
 Los PDF del CENDOJ son digitales con capa de texto embebida, así que el texto se
@@ -302,6 +326,15 @@ estimaciones posteriores.
 | gpt-5.6-luna (83 normales) | $0.014 | $1.18 |
 | gpt-5.6-sol (23 clave) | $0.098 | $2.24 |
 | **Total mixto (106)** | $0.032 avg | **$3.42** |
+
+**Esta tabla está desfasada y no debe usarse para presupuestar el próximo lote.**
+Un lote de cinco sentencias normales en julio de 2026 midió **$0.046/PDF** con el
+mismo modelo y el mismo `reasoning_effort`, ~3× la cifra de enero. No lo causó la
+migración al paquete: la implementación anterior, ejecutada hoy sobre
+`SAN 1071/2025`, costó entre $0.041 y $0.049 en la misma comparación. La causa
+está en las respuestas, que hoy son bastante más largas. Cinco sentencias
+correlativas no son una muestra representativa de las 106, así que la tabla se
+rehace con el siguiente run completo, no antes.
 
 ## Gestión de dependencias (uv)
 

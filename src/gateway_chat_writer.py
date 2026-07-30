@@ -91,10 +91,15 @@ def _as_writer_usage(usage: Any) -> ChatWriterUsage:
     convierte a 0 **y** marca `usage_complete=False`. Esa bandera es la que
     impide que el coste se declare `ACTUAL`: el cero es de relleno, no una
     medición.
+
+    `output_tokens` se usa tal cual. Desde la v0.5.0 del paquete los
+    adaptadores normalizan el razonamiento en el borde, así que ya está dentro
+    de esa cifra y `reasoning_tokens` es un desglose suyo, nunca un sumando:
+    volver a añadirlo facturaría dos veces lo mismo.
     """
     return ChatWriterUsage(
         input_tokens=usage.input_tokens or 0,
-        output_tokens=(usage.output_tokens or 0) + (usage.reasoning_tokens or 0),
+        output_tokens=usage.output_tokens or 0,
         usage_complete=usage.complete,
     )
 

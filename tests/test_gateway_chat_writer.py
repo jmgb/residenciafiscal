@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -90,6 +89,22 @@ class TestContractParity:
 
         assert result.usage.usage_complete is False
 
+    async def test_reasoning_tokens_are_a_breakdown_of_the_output_not_an_extra(self) -> None:
+        """Sumarlos facturaría dos veces el mismo razonamiento.
+
+        Los adaptadores normalizan en el borde: lo que se factura a tarifa de
+        salida ya está dentro de `output_tokens` cuando llega hasta aquí.
+        """
+        from llm_gateway import TokenUsage
+
+        adapter = FakeProviderAdapter(
+            usage=TokenUsage(input_tokens=120, output_tokens=30, reasoning_tokens=18)
+        )
+
+        result = await _writer(adapter).write(_request())
+
+        assert result.usage.output_tokens == 30
+
 
 class TestEvidenceAndPrompt:
     async def test_the_user_prompt_is_sent_verbatim(self) -> None:
@@ -160,7 +175,6 @@ class TestFailures:
         source = Path(gateway_chat_writer.__file__).read_text(encoding="utf-8")
 
         assert "api_key" not in source or "os.environ" not in source
-        assert SimpleNamespace  # marca de uso; el doble se inyecta siempre
 
 
 class TestTimeBudget:

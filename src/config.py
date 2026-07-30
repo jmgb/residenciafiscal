@@ -7,6 +7,8 @@ Externaliza variables, rutas y parámetros de LLM en un solo lugar.
 from pathlib import Path
 from typing import Any
 
+from llm_gateway.models import resolve_provider
+
 # ============================================================================
 # RUTAS POR DEFECTO
 # ============================================================================
@@ -55,23 +57,48 @@ DEFAULT_MODEL = GPT_5_MINI
 SENTENCIA_CLAVE_MODEL = GPT_5
 
 
+# Credenciales por proveedor. Las claves son de la aplicación: `llm_gateway` no
+# lee el entorno, así que alguien de este lado tiene que decidir qué entregarle.
+PROVIDER_API_KEY_ENV = {
+    "openai": "OPENAI_API_KEY",
+    "gemini": "GEMINI_API_KEY",
+    "groq": "GROQ_API_KEY",
+    "openrouter": "OPENROUTER_API_KEY",
+}
+
+
+# Ids heredados que el catálogo del paquete no reconoce. Se declaran como
+# **prefijos**, no como subcadenas, porque el registro del gateway enruta por
+# prefijo: una regla que acertase aquí y no allí validaría la credencial de un
+# proveedor y dejaría la llamada sin adaptador que la sirva, con un error que
+# ni siquiera menciona la credencial. `gateway_setup` registra estos mismos
+# prefijos para que las dos caras no puedan discrepar.
+LEGACY_MODEL_PREFIXES: tuple[tuple[str, str], ...] = (("groq-", "groq"),)
+
+
 def detect_provider(ai_model: str) -> str:
-    """Resuelve el proveedor a partir del formato del ID del modelo."""
+    """Resuelve el proveedor a partir del ID del modelo.
+
+    La autoridad es el catálogo del paquete, que es también el que usa el
+    registro del gateway para elegir adaptador. Mantener aquí una segunda tabla
+    completa permitiría que ambas discrepasen, y una discrepancia significa
+    validar una clave y llamar a otro proveedor: `openai/gpt-oss-120b` lo sirve
+    Groq pese a su prefijo.
+
+    Lo único que se añade al catálogo es `LEGACY_MODEL_PREFIXES`, y el último
+    recurso histórico: OpenRouter, por donde llegaba lo que no se identificaba
+    de otro modo. Ese último recurso es una conjetura, no una promesa —si el
+    registro tampoco sabe enrutar el id, la llamada falla al resolverla, antes
+    de gastar nada.
+    """
+    declared = resolve_provider(ai_model)
+    if declared is not None:
+        return declared
+
     model = ai_model.lower()
-    if model.startswith("openai/gpt-oss"):
-        return "groq"
-    if model.startswith("models/gemini"):
-        return "gemini"
-    if model.startswith("meta-llama/"):
-        return "groq"
-    if "/" in model:
-        return "openrouter"
-    if "gemini" in model:
-        return "gemini"
-    if any(name in model for name in ("groq", "mixtral", "llama")):
-        return "groq"
-    if "gpt" in model or "o1" in model:
-        return "openai"
+    for prefix, provider in LEGACY_MODEL_PREFIXES:
+        if model.startswith(prefix):
+            return provider
     return "openrouter"
 
 
@@ -199,6 +226,7 @@ ALLOWED_KEYS = {
     # Metadata de ejecución
     "tiempo_ejecucion",
     "costo_usd",
+    "costo_medicion",
 }
 
 # ============================================================================
