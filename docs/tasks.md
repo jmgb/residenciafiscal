@@ -315,8 +315,8 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 
 - [ ] Evaluar si merece la pena mostrar automáticamente en la barra lateral el país activo
   cuando quede fuera de los tres países visibles inicialmente.
-- [ ] Evaluar si merece la pena generar los redirects de Netlify desde `countryRoutes.json` para
-  evitar mantener una segunda lista manual en `netlify.toml`.
+- [x] Generar los redirects de Netlify desde `countryRoutes.json` para evitar mantener una
+  segunda lista manual en `netlify.toml`.
 - [ ] Evaluar si merece la pena añadir tests de aislamiento que garanticen que cada país consulta
   únicamente su propio corpus cuando existan corpus nacionales adicionales.
 

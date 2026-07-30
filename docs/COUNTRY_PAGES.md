@@ -77,7 +77,9 @@ Las rutas reservadas actualmente son:
 - `frontend/scripts/build-sitemap.mjs` genera el sitemap usando solo las rutas con
   `indexable: true`. Por eso los placeholders tienen SEO preparado, pero no se publican como
   contenido indexable hasta que exista su corpus.
-- `netlify.toml` mantiene un redirect estático por ruta hacia su HTML prerenderizado.
+- `frontend/scripts/build-netlify-redirects.mjs` genera `frontend/public/_redirects` desde la
+  fuente JSON. Vite lo copia a `dist/`, que es el directorio publicado por Netlify, así que no
+  hay que duplicar las rutas de país en `netlify.toml`.
 
 ## Política de URLs y SEO
 

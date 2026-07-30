@@ -9,10 +9,11 @@ El fichero [`netlify.toml`](../../netlify.toml) configura:
 - reconstrucción cuando cambia `frontend/` o `netlify.toml`;
 - fallback SPA `/*` → `/index.html`;
 - rewrites a los HTML prerenderizados antes del fallback: las rutas estáticas
-  (`/manifiesto`, `/metodologia`, `/colaborar`) y **una por país**, más las
-  redirecciones 301 de los slugs acentuados históricos. Las rutas se mantienen en
-  `netlify.toml` junto con su fuente en `frontend/src/data/countryRoutes.json`, y
-  `test/test_frontend_seo_assets.py` comprueba que cada ruta tiene su rewrite;
+  (`/manifiesto`, `/metodologia`, `/colaborar`) viven en `netlify.toml`; las rutas de país y
+  las redirecciones 301 de los slugs acentuados históricos se generan desde
+  `frontend/src/data/countryRoutes.json` en `frontend/public/_redirects` y Vite las copia a
+  `dist/`. `test/test_frontend_seo_assets.py` comprueba que el fichero generado sigue alineado
+  con su fuente;
 - cabeceras de seguridad, CSP compatible con GA4 y caché de assets;
 - `frontend/public/data/corpus.json` como corpus versionado de respaldo.
 
