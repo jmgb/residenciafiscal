@@ -17,6 +17,7 @@ SHELL := /bin/bash
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
+	validate-chat-f03-review \
 	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
@@ -69,6 +70,7 @@ CHAT_F03_PACKAGE_JSON ?= ./docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.json
 CHAT_F03_PACKAGE_MD ?= ./docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md
 CHAT_F03_REVIEW_FORM ?= ./docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md
 CHAT_F03_REVEAL_KEY ?= ./docs/experiments/CHAT_STRATEGY_F03_REVEAL_KEY.json
+CHAT_F03_COMPLETED_REVIEW ?= ./docs/experiments/CHAT_STRATEGY_F03_REVIEW_COMPLETED.md
 CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia-v3/perfiles/san-1210-2023.md
 CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json
 CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.derivatives-validation.json
@@ -126,6 +128,7 @@ help:
 	@echo "  make file-search-prepare CONFIRM_PAID=1  Crea el store F0 y sube los 5 PDF"
 	@echo "  make compare-chat-strategies CONFIRM_PAID=1 CHAT_QUESTION='...'  Ejecuta F0 con $(FILE_SEARCH_MODEL)"
 	@echo "  make build-chat-f03-review  Regenera el paquete ciego F0.3 (sin LLM)"
+	@echo "  make validate-chat-f03-review  Valida el formulario jurídico F0.3 cerrado"
 	@echo "  make file-search-delete CONFIRM_DELETE=1  Elimina explícitamente el store F0"
 	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
 	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
@@ -329,6 +332,11 @@ build-chat-f03-review:
 		--package-markdown $(CHAT_F03_PACKAGE_MD) \
 		--review-form $(CHAT_F03_REVIEW_FORM) \
 		--reveal-key $(CHAT_F03_REVEAL_KEY)
+
+validate-chat-f03-review:
+	uv run python $(PYTHON_SOURCE)/chat_legal_review_validation.py \
+		--review $(CHAT_F03_COMPLETED_REVIEW) \
+		--package-json $(CHAT_F03_PACKAGE_JSON)
 
 file-search-delete:
 	@test "$(CONFIRM_DELETE)" = "1" || \

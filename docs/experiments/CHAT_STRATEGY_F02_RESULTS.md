@@ -142,7 +142,9 @@ promoción a 3.6 seguirá siendo manual y solo tendrá sentido cuando exista una
 rúbrica capaz de medir su mejora.
 
 F0.3 ya congeló esa rúbrica y convirtió estas salidas en un paquete X/Y
-saneado. La revisión humana permanece pendiente:
+saneado. La revisión jurídica ciega por un abogado especialista permanece
+pendiente:
+[`CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md),
 [`CHAT_STRATEGY_F03_RUBRIC.md`](CHAT_STRATEGY_F03_RUBRIC.md),
 [`CHAT_STRATEGY_F03_BLIND_REVIEW.md`](CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
 [`CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).

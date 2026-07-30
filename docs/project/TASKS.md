@@ -63,7 +63,13 @@ contra el dominio público después de cada deploy.
     - [x] Congelar una rúbrica que separe gates binarios, utilidad e intención.
     - [x] Generar un paquete ciego saneado y versionado con las ocho parejas
       F0.2, su plantilla y la clave separada.
-    - [ ] Obtener y cerrar la revisión humana baseline sin abrir la clave X/Y.
+    - [ ] Obtener y cerrar la revisión jurídica ciega de un abogado especialista
+      en residencia fiscal, sin abrir antes la clave X/Y. Debe completar, fechar
+      y conservar `CHAT_STRATEGY_F03_REVIEW_COMPLETED.md`; una revisión técnica
+      o de un agente no sustituye este gate jurídico. Protocolo y validador
+      mecánico preparados en
+      [`CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](../experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md)
+      y `make validate-chat-f03-review`.
     - [ ] Incorporar después la cobertura verificable de ausencias esporádicas
       mediante propuesta híbrida, compilación y tests.
     - [ ] Integrar el paquete común de peticiones LLM cuando esté disponible,

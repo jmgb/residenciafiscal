@@ -184,7 +184,9 @@ orden autorizado están en
 las cifras están en
 [`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](docs/experiments/CHAT_STRATEGY_F02_RESULTS.md).
 F0.3 ya congeló la rúbrica y generó el paquete X/Y; la siguiente intervención
-es una revisión humana sin abrir la clave. Rúbrica, paquete y plantilla:
+es una revisión jurídica ciega por un abogado especialista, sin abrir la clave.
+Protocolo, rúbrica, paquete y plantilla:
+[`docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md),
 [`docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md`](docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md),
 [`docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md`](docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
 [`docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
@@ -255,6 +257,8 @@ disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
   **gastan dinero** (smoke real de 1 PDF).
 - `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
   los ocho artefactos locales, sin LLM; valida todos sus hashes.
+- `make validate-chat-f03-review` — comprueba mecánicamente que el formulario
+  jurídico cerrado no deja casillas, puntuaciones ni declaraciones pendientes.
 - `make export-requirements` — solo para consumidores externos; el repo no versiona
   `requirements.txt`.
 

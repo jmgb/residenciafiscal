@@ -586,7 +586,8 @@ El orden vigente es:
 
 1. **Completado:** congelar una rúbrica neutral y generar el paquete saneado,
    versionado y ciego de las ocho comparaciones F0.2.
-2. Completar y cerrar la revisión humana baseline antes de revelar X/Y.
+2. Completar y cerrar la revisión jurídica ciega baseline por un abogado
+   especialista antes de revelar X/Y.
 3. Incorporar después la cobertura de ausencias esporádicas a la muestra v3,
    con propuesta jurídica, anclajes exactos y compilación reproducible.
 4. Sustituir el adaptador temporal de A por el paquete común de peticiones LLM

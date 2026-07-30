@@ -279,19 +279,35 @@ def render_blind_review_markdown(package: BlindReviewPackage) -> str:
 
 
 def render_review_form_markdown(package: BlindReviewPackage) -> str:
+    question_count = len(package.questions)
+    response_count = question_count * 2
     sections = [
-        "# Formulario de revisión humana F0.3",
+        "# Formulario de revisión jurídica ciega F0.3",
         "",
-        "Abrir la [rúbrica](CHAT_STRATEGY_F03_RUBRIC.md) y el "
+        "Seguir el "
+        "[protocolo jurídico](CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md), "
+        "abrir la [rúbrica](CHAT_STRATEGY_F03_RUBRIC.md) y el "
         "[paquete ciego](CHAT_STRATEGY_F03_BLIND_REVIEW.md).",
         "",
         "Copiar esta plantilla a `CHAT_STRATEGY_F03_REVIEW_COMPLETED.md` antes "
         "de rellenarla. Regenerar F0.3 sobrescribe solo la plantilla.",
         "",
-        "No abrir la clave de revelado ni los resultados F0.2 hasta entregar este formulario.",
+        "No abrir la clave de revelado, `CHAT_STRATEGY_F03_BUILD.json`, los "
+        "resultados F0.2, los artefactos originales ni el código hasta cerrar "
+        "este formulario.",
         "",
         "Puntuaciones (0, 1, 2 o N/A): fidelidad jurídica, relevancia, respaldo "
         "de fuentes, cobertura/contraste, calibración/límites y claridad.",
+        "",
+        "## Declaración inicial del revisor jurídico",
+        "",
+        "- Identificador estable y no personal:",
+        "- Función y cualificación:",
+        "- Experiencia pertinente en fiscalidad y residencia fiscal:",
+        "- Fecha de inicio:",
+        "- [ ] Confirmo que no participé en la generación de las respuestas.",
+        "- [ ] Confirmo que desconozco la correspondencia X/Y.",
+        "- [ ] Confirmo que no incluiré datos de clientes ni datos personales.",
         "",
     ]
     for question in package.questions:
@@ -341,6 +357,19 @@ def render_review_form_markdown(package: BlindReviewPackage) -> str:
                 "",
             ]
         )
+    sections.extend(
+        [
+            "## Declaración de cierre",
+            "",
+            "- Fecha de cierre:",
+            f"- [ ] He completado las {response_count} respuestas y las {question_count} parejas.",
+            "- [ ] Cada selección contiene una sola opción marcada.",
+            "- [ ] He motivado los `N/A`, fallos críticos y preferencias.",
+            "- [ ] No abrí material vedado antes de cerrar la revisión.",
+            "- [ ] Confirmo que este formulario queda cerrado y listo para versionar.",
+            "",
+        ]
+    )
     return _render_sections(sections)
 
 

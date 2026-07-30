@@ -1,8 +1,8 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
 **Estado:** F0.2 implementada y evaluada con ocho consultas reales; F0.3 tiene
-rúbrica y paquete ciego listos, con revisión humana pendiente; banco completo
-de 40 y promoción a 3.6 aplazados.
+rúbrica y paquete ciego listos, con revisión jurídica ciega por un abogado
+especialista pendiente; banco completo de 40 y promoción a 3.6 aplazados.
 **Alcance inicial:** las cinco sentencias piloto.
 **Fecha de decisión:** 2026-07-30.
 

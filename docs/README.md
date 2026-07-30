@@ -58,6 +58,7 @@ Documentos especializados:
 - [Derivados del caso v3](jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md).
 - [Baseline de la muestra de cinco](jurisprudence/JURISPRUDENCE_SAMPLE_PHASE_C.md).
 - Evaluación ciega F0.3:
+  [protocolo jurídico](experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md),
   [rúbrica](experiments/CHAT_STRATEGY_F03_RUBRIC.md),
   [paquete](experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
   [plantilla](experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).

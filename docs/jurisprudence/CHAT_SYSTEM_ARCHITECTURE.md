@@ -204,7 +204,15 @@ make build-chat-f03-review
 
 El comando valida los hashes de rúbrica, banco y ocho artefactos; produce JSON,
 Markdown, plantilla y clave separados. La plantilla debe copiarse antes de
-rellenarla para que una regeneración no sobrescriba una revisión humana.
+rellenarla para que una regeneración no sobrescriba una revisión jurídica. El
+gate debe ejecutarlo un abogado especialista conforme al
+[`protocolo de revisión jurídica ciega`](../experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md).
+Antes del revelado, la completitud mecánica del formulario se comprueba sin LLM
+mediante:
+
+```bash
+make validate-chat-f03-review
+```
 
 ## 7. Estado comprobado
 
@@ -219,7 +227,8 @@ rellenarla para que una regeneración no sobrescriba una revisión humana.
   `gemini-3.5-flash-lite`.
 - F0.3 congeló una rúbrica neutral y materializó las ocho parejas como X/Y con
   orden equilibrado, sin modelo, coste, estrategia ni metadatos del proveedor.
-- La revisión humana ciega de ese paquete todavía no se ha realizado.
+- La revisión jurídica ciega de ese paquete por un abogado especialista todavía
+  no se ha realizado.
 - El límite de dos fragmentos por unidad redujo de forma material el contexto y
   el coste de A.
 - Dos respuestas sustantivas de B sin fuentes verificables demostraron que el
@@ -297,8 +306,9 @@ Contrato congelado:
 
 1. **Completado:** congelar la rúbrica neutral y preparar el paquete ciego
    saneado y versionado de las ocho respuestas.
-2. Copiar la plantilla, completar la revisión humana baseline y cerrarla antes
-   de abrir la clave X/Y.
+2. Entregar únicamente los materiales permitidos a un abogado especialista,
+   completar la revisión jurídica ciega baseline y cerrarla antes de abrir la
+   clave X/Y.
 3. Después, incorporar a la muestra v3 la cobertura verificable de ausencias
    esporádicas mediante el mismo pipeline híbrido.
 4. Integrar el paquete común de peticiones LLM cuando esté disponible, mediante
