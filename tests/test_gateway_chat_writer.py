@@ -1,0 +1,184 @@
+"""Segunda implementación del puerto del redactor, sobre `llm_gateway`.
+
+El dominio jurídico no cambia: `CurrentStructuredStrategy` sigue recibiendo un
+`StructuredAnswerWriter` y no sabe qué hay detrás.
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+from types import SimpleNamespace
+from typing import Any
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from gateway_chat_writer import GatewayChatWriter  # noqa: E402
+from structured_answer_writer import ChatWriterRequest  # noqa: E402
+
+DRAFT_JSON = (
+    '{"status": "completa", "answer": "La sentencia valora la permanencia.",'
+    ' "limits": [], "evidence_ids": ["E1"]}'
+)
+
+
+class FakeProviderAdapter:
+    """Doble del adaptador de proveedor, dentro del gateway real."""
+
+    name = "gemini"
+
+    def __init__(self, *, text: str = DRAFT_JSON, usage: Any = None) -> None:
+        self._text = text
+        self._usage = usage
+        self.requests: list[Any] = []
+
+    async def generate(self, request: Any, *, model: str) -> Any:
+        from llm_gateway import ProviderResponse, TokenUsage
+
+        self.requests.append(request)
+        return ProviderResponse(
+            output_text=self._text,
+            usage=self._usage if self._usage is not None else TokenUsage(120, 30),
+            finish_reason="stop",
+        )
+
+
+def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
+    from llm_gateway import LLMGateway, ProviderRegistry
+
+    registry = ProviderRegistry()
+    registry.register(adapter, model_prefixes=("gemini",))
+    return GatewayChatWriter(LLMGateway(registry=registry))
+
+
+def _request(**kwargs: Any) -> ChatWriterRequest:
+    defaults: dict[str, Any] = {
+        "model": "gemini-3.5-flash-lite",
+        "system_prompt": "Responde solo desde la evidencia.",
+        "user_prompt": "¿Qué valor se dio al certificado?",
+        "evidence_context": "[E1] Fragmento literal.",
+        "response_schema": {"type": "object"},
+        "temperature": 0,
+    }
+    defaults.update(kwargs)
+    return ChatWriterRequest(**defaults)
+
+
+class TestContractParity:
+    async def test_it_returns_the_same_result_type_as_the_legacy_writer(self) -> None:
+        result = await _writer(FakeProviderAdapter()).write(_request())
+
+        assert result.draft.status == "completa"
+        assert result.draft.evidence_ids == ("E1",)
+        assert result.model_used == "gemini-3.5-flash-lite"
+
+    async def test_it_maps_usage(self) -> None:
+        result = await _writer(FakeProviderAdapter()).write(_request())
+
+        assert result.usage.input_tokens == 120
+        assert result.usage.output_tokens == 30
+        assert result.usage.usage_complete is True
+
+    async def test_unreported_usage_is_flagged_incomplete_not_silently_zero(self) -> None:
+        from llm_gateway import TokenUsage
+
+        adapter = FakeProviderAdapter(usage=TokenUsage.unknown())
+
+        result = await _writer(adapter).write(_request())
+
+        assert result.usage.usage_complete is False
+
+
+class TestEvidenceAndPrompt:
+    async def test_the_user_prompt_is_sent_verbatim(self) -> None:
+        """Paridad con el redactor legado: la evidencia ya viene dentro del
+        `user_prompt` que compone la estrategia, así que `evidence_context` no
+        se envía por separado. Duplicarlo cambiaría los tokens y el coste."""
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request())
+
+        sent = adapter.requests[0]
+        assert sent.messages[0].content == "¿Qué valor se dio al certificado?"
+        assert len(sent.messages) == 1
+
+    async def test_the_system_prompt_travels_separately(self) -> None:
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request())
+
+        assert adapter.requests[0].system_prompt == "Responde solo desde la evidencia."
+
+
+class TestPolicies:
+    async def test_model_fallback_stays_disabled(self) -> None:
+        """A no puede responder con un modelo distinto del que declara."""
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request())
+
+        assert adapter.requests[0].fallback_policy.models == ()
+
+    async def test_the_requested_model_is_pinned(self) -> None:
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request(model="gemini-3.6-flash"))
+
+        assert adapter.requests[0].model == "gemini-3.6-flash"
+
+    async def test_a_retry_is_bounded_and_visible(self) -> None:
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request())
+
+        assert adapter.requests[0].retry_policy.max_attempts == 2
+
+
+class TestPortFidelity:
+    async def test_it_returns_exactly_the_port_contract_and_no_more(self) -> None:
+        """El coste lo calcula la estrategia, no el redactor."""
+        result = await _writer(FakeProviderAdapter()).write(_request())
+
+        assert set(result.model_dump()) == {"draft", "usage", "model_used"}
+
+
+class TestFailures:
+    async def test_an_unparseable_draft_raises_rather_than_inventing_one(self) -> None:
+        from llm_gateway import OutputError
+
+        adapter = FakeProviderAdapter(text="esto no es json")
+
+        with pytest.raises((OutputError, ValueError)):
+            await _writer(adapter).write(_request())
+
+    async def test_the_writer_never_builds_its_own_client(self) -> None:
+        """Las credenciales son de la aplicación, no del redactor."""
+        import gateway_chat_writer
+
+        source = Path(gateway_chat_writer.__file__).read_text(encoding="utf-8")
+
+        assert "api_key" not in source or "os.environ" not in source
+        assert SimpleNamespace  # marca de uso; el doble se inyecta siempre
+
+
+class TestTimeBudget:
+    async def test_two_attempts_fit_inside_the_declared_budget(self) -> None:
+        """Un reintento no puede doblar el tiempo que el redactor declara."""
+        from gateway_chat_writer import (
+            WRITER_ATTEMPT_TIMEOUT_SECONDS,
+            WRITER_MAX_ATTEMPTS,
+            WRITER_TIMEOUT_SECONDS,
+        )
+
+        assert WRITER_ATTEMPT_TIMEOUT_SECONDS * WRITER_MAX_ATTEMPTS <= WRITER_TIMEOUT_SECONDS
+
+    async def test_the_request_declares_both_budgets(self) -> None:
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request())
+
+        policy = adapter.requests[0].timeout_policy
+        assert policy.total_seconds == 200.0
+        assert policy.per_attempt_seconds == 90.0

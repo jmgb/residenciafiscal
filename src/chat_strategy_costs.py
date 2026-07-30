@@ -1,9 +1,19 @@
-"""Cálculo decimal de costes para Gemini File Search en F0."""
+"""Cálculo decimal de costes para Gemini File Search en F0.
+
+Las tarifas **no se declaran aquí**: se derivan del catálogo compartido de
+`llm_gateway`, que es la fuente única de precios del parque. Una copia local
+sería una tabla más que actualizar a mano, y el día que divergiera el importe
+mostrado dejaría de reconciliarse contra la factura.
+
+La conversión es la identidad: USD por millón de tokens y microUSD por token
+son el mismo número.
+"""
 
 from __future__ import annotations
 
 from decimal import ROUND_HALF_UP, Decimal
 
+from llm_gateway.models import CATALOG_VERSION, lookup_model
 from pydantic import Field
 
 from chat_strategy_models import MarginalCost
@@ -14,11 +24,24 @@ SUPPORTED_FILE_SEARCH_MODELS = (
     "gemini-3.5-flash-lite",
     "gemini-3.6-flash",
 )
-PRICING_VERSION = "2026-07-30"
-MODEL_RATES_MICROUSD_PER_TOKEN = {
-    "gemini-3.5-flash-lite": (Decimal("0.3"), Decimal("2.5")),
-    "gemini-3.6-flash": (Decimal("1.5"), Decimal("7.5")),
-}
+PRICING_VERSION = CATALOG_VERSION
+
+
+def _rates_from_shared_catalog() -> dict[str, tuple[Decimal, Decimal]]:
+    """Tarifas de los modelos permitidos, tomadas del catálogo del paquete."""
+    rates: dict[str, tuple[Decimal, Decimal]] = {}
+    for model in SUPPORTED_FILE_SEARCH_MODELS:
+        info = lookup_model(model)
+        if info is None:
+            raise RuntimeError(
+                f"el modelo permitido {model!r} no está en el catálogo compartido; "
+                "añádelo en llm_gateway.models antes de permitirlo aquí"
+            )
+        rates[model] = (info.input_usd_per_mtok, info.output_usd_per_mtok)
+    return rates
+
+
+MODEL_RATES_MICROUSD_PER_TOKEN = _rates_from_shared_catalog()
 
 
 class GeminiUsage(JurisprudenceCaseModel):
