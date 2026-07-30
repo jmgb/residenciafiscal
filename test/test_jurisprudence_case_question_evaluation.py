@@ -9,8 +9,10 @@ from pathlib import Path
 import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CASE_PATH = PROJECT_ROOT / "knowledge/jurisprudencia/cases/san-1210-2023.case.json"
-EVALUATION_PATH = PROJECT_ROOT / "knowledge/jurisprudencia/evaluations/san-1210-2023.questions.json"
+CASE_PATH = PROJECT_ROOT / "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json"
+EVALUATION_PATH = (
+    PROJECT_ROOT / "knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json"
+)
 
 
 def test_preguntas_aplicables_quedan_ligadas_a_datos_y_citas() -> None:

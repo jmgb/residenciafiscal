@@ -1,0 +1,42 @@
+{
+  "documents": [
+    {
+      "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1071-2025.questions.json",
+      "judgment_id": "san-1071-2025",
+      "proposal_path": "knowledge/jurisprudence-case-proposals/san-1071-2025.proposal.json",
+      "source_file": "sentencias/SAN_1071_2025.pdf",
+      "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+    },
+    {
+      "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1136-2016.questions.json",
+      "judgment_id": "san-1136-2016",
+      "proposal_path": "knowledge/jurisprudence-case-proposals/san-1136-2016.proposal.json",
+      "source_file": "sentencias/SAN_1136_2016.pdf",
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json",
+      "judgment_id": "san-1210-2023",
+      "proposal_path": "knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json",
+      "source_file": "sentencias/SAN_1210_2023.pdf",
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1226-2021.questions.json",
+      "judgment_id": "san-1226-2021",
+      "proposal_path": "knowledge/jurisprudence-case-proposals/san-1226-2021.proposal.json",
+      "source_file": "sentencias/SAN_1226_2021.pdf",
+      "source_sha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1386-2017.questions.json",
+      "judgment_id": "san-1386-2017",
+      "proposal_path": "knowledge/jurisprudence-case-proposals/san-1386-2017.proposal.json",
+      "source_file": "sentencias/SAN_1386_2017.pdf",
+      "source_sha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76"
+    }
+  ],
+  "expected_documents": 5,
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-jurisprudence-sample/1"
+}

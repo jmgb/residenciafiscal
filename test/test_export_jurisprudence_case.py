@@ -17,9 +17,11 @@ def test_exporta_compila_y_valida_el_caso_piloto(tmp_path: Path) -> None:
     result = export_jurisprudence_case(
         proposal_path=PROJECT_ROOT
         / "knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json",
-        verbatim_path=PROJECT_ROOT / "knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json",
+        verbatim_path=(
+            PROJECT_ROOT / "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json"
+        ),
         evaluation_path=PROJECT_ROOT
-        / "knowledge/jurisprudencia/evaluations/san-1210-2023.questions.json",
+        / "knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json",
         output_path=output_path,
         report_path=report_path,
         project_root=PROJECT_ROOT,
@@ -29,7 +31,7 @@ def test_exporta_compila_y_valida_el_caso_piloto(tmp_path: Path) -> None:
     assert result.judgment_id == "san-1210-2023"
     assert (
         output_path.read_bytes()
-        == (PROJECT_ROOT / "knowledge/jurisprudencia/cases/san-1210-2023.case.json").read_bytes()
+        == (PROJECT_ROOT / "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json").read_bytes()
     )
     assert report["validation"] == "passed"
     assert report["anchor_count"] == 17

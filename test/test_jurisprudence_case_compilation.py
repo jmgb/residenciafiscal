@@ -39,6 +39,7 @@ def test_compilador_resuelve_fuentes_hashes_y_offsets(tmp_path: Path) -> None:
     case = compile_case_proposal(
         _proposal(source_path),
         verbatim=_verbatim(),
+        verbatim_path=artifact_path,
         project_root=tmp_path,
     )
 
@@ -71,4 +72,9 @@ def test_compilador_exige_una_unica_coincidencia_literal(
     proposal["source_anchors"][0]["fragments"][0]["verbatim_text"] = "cita"
 
     with pytest.raises(ValueError, match="exactamente una"):
-        compile_case_proposal(proposal, verbatim=verbatim, project_root=tmp_path)
+        compile_case_proposal(
+            proposal,
+            verbatim=verbatim,
+            verbatim_path=tmp_path / source_path,
+            project_root=tmp_path,
+        )

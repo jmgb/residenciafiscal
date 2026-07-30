@@ -1,0 +1,77 @@
+{
+  "agent_reviewed_items": 193,
+  "by_case": [
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-1071-2025.case.json",
+      "case_sha256": "d172312aeb0af3111460c83de7079dc878675776db3693a97acf2b77109a3ee9",
+      "entity_count": 36,
+      "items_requiring_human_review": 38,
+      "judgment_id": "san-1071-2025",
+      "review_item_count": 38,
+      "source_anchor_count": 12
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-1136-2016.case.json",
+      "case_sha256": "240e39a7bab2b3a2213397fe19b95289720e7cad4f29f7423936f7867279743a",
+      "entity_count": 29,
+      "items_requiring_human_review": 31,
+      "judgment_id": "san-1136-2016",
+      "review_item_count": 31,
+      "source_anchor_count": 11
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json",
+      "case_sha256": "e97a4578b1a2cc3fc0ee0fff7d249b657a81c31d6cdd0506440ff97fe4f68f3c",
+      "entity_count": 47,
+      "items_requiring_human_review": 49,
+      "judgment_id": "san-1210-2023",
+      "review_item_count": 49,
+      "source_anchor_count": 17
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-1226-2021.case.json",
+      "case_sha256": "d45cf6a38dd1a06c75bc9b8dde67260f9d6918005a78d334db15f016cdcd6f87",
+      "entity_count": 27,
+      "items_requiring_human_review": 29,
+      "judgment_id": "san-1226-2021",
+      "review_item_count": 29,
+      "source_anchor_count": 9
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-1386-2017.case.json",
+      "case_sha256": "dbfb9af63b313b6a2534154f11d51bf177ba8c7f04092ed2745bf06f6b2221cd",
+      "entity_count": 42,
+      "items_requiring_human_review": 46,
+      "judgment_id": "san-1386-2017",
+      "review_item_count": 46,
+      "source_anchor_count": 13
+    }
+  ],
+  "case_count": 5,
+  "exact_anchor_count": 62,
+  "exact_with_ellipsis_anchor_count": 0,
+  "human_approved_items": 0,
+  "items_requiring_human_review": 193,
+  "noncanonical_catalog_values": 0,
+  "null_field_occurrences": {
+    "country": 1,
+    "day_count": 1,
+    "decisive_step_id": 2,
+    "dual_residence_established": 1,
+    "end_date": 29,
+    "foreign_document": 24,
+    "issuing_authority": 2,
+    "period_end": 6,
+    "period_start": 5,
+    "place": 21,
+    "prompt_sha256": 5,
+    "response_required": 5,
+    "shifts_to": 5,
+    "start_date": 21
+  },
+  "required_field_failures": 0,
+  "review_item_count": 193,
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-sample-quality/1",
+  "source_fragment_count": 62
+}

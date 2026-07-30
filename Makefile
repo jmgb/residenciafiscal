@@ -14,7 +14,7 @@ SHELL := /bin/bash
 .PHONY: help setup dev dev-public serve \
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
-	export-case-v3-derivatives \
+	export-case-v3-derivatives export-case-v3-sample \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -49,15 +49,18 @@ OKF_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-muestra-5
 VERBATIM_PDF ?= ./sentencias/SAN_1210_2023.pdf
 VERBATIM_DOCUMENT_ID ?= san-1210-2023
 VERBATIM_SOURCE_FILE ?= sentencias/SAN_1210_2023.pdf
-VERBATIM_OUTPUT ?= ./knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json
+VERBATIM_OUTPUT ?= ./knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json
 CASE_PROPOSAL ?= ./knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json
 CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
-CASE_EVALUATION ?= ./knowledge/jurisprudencia/evaluations/san-1210-2023.questions.json
-CASE_OUTPUT ?= ./knowledge/jurisprudencia/cases/san-1210-2023.case.json
-CASE_REPORT ?= ./knowledge/jurisprudencia/reports/san-1210-2023.case-validation.json
-CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia/sentencias/san-1210-2023.md
-CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia/retrieval/san-1210-2023.issues.json
-CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia/reports/san-1210-2023.derivatives-validation.json
+CASE_EVALUATION ?= ./knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json
+CASE_OUTPUT ?= ./knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json
+CASE_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.case-validation.json
+CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia-v3/perfiles/san-1210-2023.md
+CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json
+CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.derivatives-validation.json
+CASE_SAMPLE_MANIFEST ?= ./sentencias/jurisprudence_v3_sample_5.json
+CASE_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-v3
+CASE_QUESTION_PILOT ?= ./docs/experiments/CHAT_QUESTION_PILOT_5.md
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -93,6 +96,7 @@ help:
 	@echo "  make export-verbatim      Genera y revalida el verbatim piloto (sin LLM)"
 	@echo "  make export-case-v3       Compila y valida el caso v3 piloto (sin LLM)"
 	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
+	@echo "  make export-case-v3-sample  Regenera y evalúa las 5 sentencias v3 (sin LLM)"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -103,6 +107,7 @@ help:
 	@echo "  Verbatim: VERBATIM_PDF= VERBATIM_DOCUMENT_ID= VERBATIM_SOURCE_FILE= VERBATIM_OUTPUT="
 	@echo "  Caso v3: CASE_PROPOSAL= CASE_VERBATIM= CASE_EVALUATION= CASE_OUTPUT= CASE_REPORT="
 	@echo "  Derivados v3: CASE_MARKDOWN_OUTPUT= CASE_RETRIEVAL_OUTPUT= CASE_DERIVATIVES_REPORT="
+	@echo "  Muestra v3: CASE_SAMPLE_MANIFEST= CASE_SAMPLE_OUTPUT= CASE_QUESTION_PILOT="
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -215,6 +220,27 @@ export-case-v3-derivatives:
 		--retrieval $(CASE_RETRIEVAL_OUTPUT) \
 		--report $(CASE_DERIVATIVES_REPORT) \
 		--project-root .
+
+export-case-v3-sample:
+	uv run python export_jurisprudence_sample.py \
+		--manifest $(CASE_SAMPLE_MANIFEST) \
+		--output-root $(CASE_SAMPLE_OUTPUT) \
+		--project-root .
+	uv run python export_jurisprudence_sample_evaluation.py \
+		--manifest $(CASE_SAMPLE_MANIFEST) \
+		--pilot $(CASE_QUESTION_PILOT) \
+		--retrieval-root $(CASE_SAMPLE_OUTPUT)/retrieval \
+		--output-root $(CASE_SAMPLE_OUTPUT) \
+		--project-root .
+	uv run python jurisprudence_sample_quality.py \
+		--cases-root $(CASE_SAMPLE_OUTPUT)/cases \
+		--manifest $(CASE_SAMPLE_MANIFEST) \
+		--output $(CASE_SAMPLE_OUTPUT)/reports/sample-5.quality.json \
+		--project-root .
+	uv run python jurisprudence_legacy_citations.py \
+		--dispositions $(CASE_SAMPLE_OUTPUT)/evaluations/legacy-citation-dispositions.json \
+		--legacy-reports-root knowledge/jurisprudencia-muestra-5/reports \
+		--cases-root $(CASE_SAMPLE_OUTPUT)/cases
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

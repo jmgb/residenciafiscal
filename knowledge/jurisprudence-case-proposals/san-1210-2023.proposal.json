@@ -27,7 +27,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "source_path": "knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json"
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json"
         },
         {
           "kind": "LEGACY_ANALYSIS",

@@ -1,0 +1,203 @@
+{
+  "schema_version": "residenciafiscal-case-question-evaluation/1",
+  "judgment_id": "san-1136-2016",
+  "questions": [
+    {
+      "question_id": "GEN-01",
+      "question": "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-declaraciones-domicilio-espana",
+        "fact-actora-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-certificacion-aeat-actora"
+      ],
+      "required_anchor_ids": [
+        "anchor-declaraciones-domicilio",
+        "anchor-conclusion-actora"
+      ],
+      "expected_behavior": "Explicar que la Sala valoró conjuntamente declaraciones, certificación, pasaportes y situación familiar.",
+      "limitations": "Este caso trata una residencia defendida por la contribuyente en el contexto del Impuesto sobre Sucesiones."
+    },
+    {
+      "question_id": "GEN-02",
+      "question": "¿Qué pruebas consideró importantes el tribunal?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-entradas-reiteradas-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-pasaportes",
+        "evidence-presuncion-conyugal"
+      ],
+      "required_anchor_ids": [
+        "anchor-declaraciones-domicilio",
+        "anchor-pasaportes-entradas",
+        "anchor-presuncion-causante"
+      ],
+      "expected_behavior": "Distinguir la prueba documental aceptada de la manifestación aislada rechazada.",
+      "limitations": "No presentar una jerarquía universal de pruebas."
+    },
+    {
+      "question_id": "GEN-09",
+      "question": "¿Qué pruebas de Hacienda han rechazado los tribunales?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-causante-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaracion-representante"
+      ],
+      "required_anchor_ids": [
+        "anchor-declaracion-insuficiente"
+      ],
+      "expected_behavior": "Identificar la insuficiencia de la manifestación aislada frente a documentos concordantes.",
+      "limitations": "No equiparar toda declaración de representante con una prueba carente de valor."
+    },
+    {
+      "question_id": "DAY-03",
+      "question": "¿Qué valor tienen pasaportes, billetes y reservas?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-entradas-reiteradas-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-pasaportes"
+      ],
+      "required_anchor_ids": [
+        "anchor-pasaportes-entradas"
+      ],
+      "expected_behavior": "Presentar los pasaportes como corroboración de entradas reiteradas, no como un cómputo completo de días.",
+      "limitations": "La sentencia no estructura un calendario diario."
+    },
+    {
+      "question_id": "DAY-10",
+      "question": "¿Quién debe probar el número de días?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-actora-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-declaracion-representante"
+      ],
+      "required_anchor_ids": [
+        "anchor-carga-administracion",
+        "anchor-declaracion-insuficiente"
+      ],
+      "expected_behavior": "Explicar la secuencia concreta: la actora aportó hechos concordantes y la Administración debía desvirtuarlos.",
+      "limitations": "No convertir esta distribución procesal en una regla automática para cualquier procedimiento."
+    },
+    {
+      "question_id": "FAM-02",
+      "question": "¿La familia en España me convierte automáticamente en residente?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-convivencia-conyugal",
+        "fact-causante-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-presuncion-conyugal"
+      ],
+      "required_anchor_ids": [
+        "anchor-regla-articulo-9",
+        "anchor-presuncion-causante"
+      ],
+      "expected_behavior": "Describir la presunción iuris tantum y la prueba conjunta que permitió aplicarla.",
+      "limitations": "La presunción admite prueba en contrario y no equivale a una conclusión automática."
+    },
+    {
+      "question_id": "PRU-01",
+      "question": "¿Quién tiene la carga de probar la residencia?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-actora-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaraciones-fiscales"
+      ],
+      "required_anchor_ids": [
+        "anchor-carga-administracion"
+      ],
+      "expected_behavior": "Explicar quién había aportado ya los hechos y qué debía probar después la Administración.",
+      "limitations": "La respuesta depende del estado de la prueba y de la pretensión ejercitada."
+    },
+    {
+      "question_id": "PRU-02",
+      "question": "¿Cuándo se desplaza la carga al contribuyente?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-causante-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaracion-representante"
+      ],
+      "required_anchor_ids": [
+        "anchor-carga-administracion",
+        "anchor-declaracion-insuficiente"
+      ],
+      "expected_behavior": "Usar el caso como contraste: aquí la prueba de la actora obligaba a la Administración a desvirtuarla.",
+      "limitations": "No afirmar que la Administración tenga siempre la carga inicial."
+    },
+    {
+      "question_id": "PRU-05",
+      "question": "¿Cómo se valora un conjunto de indicios?",
+      "required_issue_ids": [
+        "residencia-habitual"
+      ],
+      "required_fact_ids": [
+        "fact-declaraciones-domicilio-espana",
+        "fact-entradas-reiteradas-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-pasaportes",
+        "evidence-certificacion-aeat-actora"
+      ],
+      "required_anchor_ids": [
+        "anchor-declaraciones-domicilio",
+        "anchor-certificacion-aeat",
+        "anchor-pasaportes-entradas",
+        "anchor-conclusion-actora"
+      ],
+      "expected_behavior": "Mostrar la concordancia entre documentos fiscales, certificación, pasaportes y presunción familiar.",
+      "limitations": "No asignar puntuaciones ni pesos que la sentencia no haya expresado."
+    },
+    {
+      "question_id": "SRC-02",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "required_issue_ids": [
+        "residencia-habitual",
+        "reducciones-sucesiones"
+      ],
+      "required_fact_ids": [],
+      "required_evidence_ids": [],
+      "required_anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-reducciones-aplicables",
+        "anchor-fallo-estimatorio"
+      ],
+      "expected_behavior": "Devolver únicamente extractos verbatim con página física, ROJ y ECLI.",
+      "limitations": "El análisis jurídico permanece AGENT_REVIEWED."
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "expected_citations": 17,
+  "items": [
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1071-2025",
+      "legacy_citation_id": "cita-prueba-aeat-participaciones-y-cargo-administrador-iberdigest-967cd417ec",
+      "rationale": "El anclaje v3 conserva literalmente participaciones, cargo y movimientos en la página física 4.",
+      "replacement_anchor_ids": [
+        "anchor-actividad-tarjetas"
+      ],
+      "source_field": "Pruebas_AEAT[0].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1071-2025",
+      "legacy_citation_id": "cita-prueba-aeat-declaraciones-en-francia-77168b2f1a",
+      "rationale": "El anclaje v3 conserva literalmente las declaraciones francesas y la tributación española.",
+      "replacement_anchor_ids": [
+        "anchor-declaraciones-suministros"
+      ],
+      "source_field": "Pruebas_AEAT[3].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1071-2025",
+      "legacy_citation_id": "cita-prueba-contribuyente-certificado-de-residencia-fiscal-frances-838bd85a35",
+      "rationale": "El certificado francés queda citado literalmente en el razonamiento sancionador.",
+      "replacement_anchor_ids": [
+        "anchor-certificado-frances"
+      ],
+      "source_field": "Pruebas_contribuyente[0].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1071-2025",
+      "legacy_citation_id": "cita-prueba-decisiva-participaciones-y-cargo-administrador-iberdigest-bff0bf5713",
+      "rationale": "La misma proposición heredada está cubierta por el anclaje exacto de actividad y gestión.",
+      "replacement_anchor_ids": [
+        "anchor-actividad-tarjetas"
+      ],
+      "source_field": "Prueba_o_bala_de_plata.cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1071-2025",
+      "legacy_citation_id": "cita-frase-clave-prueba-a16b9abda2",
+      "rationale": "Los movimientos de tarjeta, restaurantes y repostajes se conservan literalmente.",
+      "replacement_anchor_ids": [
+        "anchor-actividad-tarjetas"
+      ],
+      "source_field": "frases_clave[2]"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-carga-prueba",
+      "rationale": "La distribución de carga en residencia se conserva literalmente en página física 7.",
+      "replacement_anchor_ids": [
+        "anchor-carga-prueba"
+      ],
+      "source_field": "carga_prueba.cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-prueba-contribuyente-carte-de-resident-principado-de-monaco-0f617c1697",
+      "rationale": "La aportación y la insuficiencia de la carte de resident quedan cubiertas por anclajes exactos.",
+      "replacement_anchor_ids": [
+        "anchor-documentacion-monaco",
+        "anchor-documentacion-insuficiente"
+      ],
+      "source_field": "Pruebas_contribuyente[0].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-prueba-contribuyente-contratos-de-alquiler-en-monaco-f911a5fb13",
+      "rationale": "El anclaje v3 contiene literalmente que alquilar no acredita ocupación efectiva.",
+      "replacement_anchor_ids": [
+        "anchor-documentacion-insuficiente"
+      ],
+      "source_field": "Pruebas_contribuyente[2].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-prueba-rechazada-carte-de-resident-e44fee67d5",
+      "rationale": "La valoración judicial de insuficiencia se conserva literalmente y sustituye la paráfrasis.",
+      "replacement_anchor_ids": [
+        "anchor-documentacion-insuficiente"
+      ],
+      "source_field": "Pruebas_rechazadas_clave[0].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-frase-clave-doctrina-0a5e642c2a",
+      "rationale": "La doctrina sobre desvirtuar las conclusiones inspectoras queda citada literalmente.",
+      "replacement_anchor_ids": [
+        "anchor-doctrina-carga"
+      ],
+      "source_field": "frases_clave[2]"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1210-2023",
+      "legacy_citation_id": "cita-frase-clave-prueba-d986c39c2c",
+      "rationale": "La insuficiencia de la carta de residencia se conserva como fragmento exacto.",
+      "replacement_anchor_ids": [
+        "anchor-documentacion-insuficiente"
+      ],
+      "source_field": "frases_clave[3]"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1226-2021",
+      "legacy_citation_id": "cita-prueba-contribuyente-billetes-de-avion-esposa-e-hijos-29-8-2011-2e21a695fd",
+      "rationale": "El traslado familiar y los billetes están en un anclaje exacto de página física 3.",
+      "replacement_anchor_ids": [
+        "anchor-traslado-familia"
+      ],
+      "source_field": "Pruebas_contribuyente[2].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1226-2021",
+      "legacy_citation_id": "cita-prueba-contribuyente-admision-escolar-y-pago-de-deposito-cc8e53fff3",
+      "rationale": "Las admisiones y el depósito escolar se conservan dentro del anclaje exacto del traslado familiar.",
+      "replacement_anchor_ids": [
+        "anchor-traslado-familia"
+      ],
+      "source_field": "Pruebas_contribuyente[3].cita"
+    },
+    {
+      "disposition": "RETIRED_AS_PARAPHRASE",
+      "judgment_id": "san-1226-2021",
+      "legacy_citation_id": "cita-prueba-contribuyente-comunicacion-a-la-agencia-tributaria-y-acuerdo-2-eddc921759",
+      "rationale": "El detalle administrativo no es necesario para sostener el holding y no se publica como cita literal sin anclaje v3.",
+      "replacement_anchor_ids": [],
+      "source_field": "Pruebas_contribuyente[6].cita"
+    },
+    {
+      "disposition": "RETIRED_AS_PARAPHRASE",
+      "judgment_id": "san-1386-2017",
+      "legacy_citation_id": "cita-prueba-aeat-nominas-y-finiquito-hugo-boss-8a95012dfc",
+      "rationale": "La cita heredada resumía una nómina española ambigua y no es necesaria para la conclusión de residencia ni para la cuestión de indemnización.",
+      "replacement_anchor_ids": [],
+      "source_field": "Pruebas_AEAT[1].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1386-2017",
+      "legacy_citation_id": "cita-prueba-contribuyente-entrada-en-suiza-01-04-2009-doc-organo-de-inmigr-f0f2be3f44",
+      "rationale": "La entrada del 1 de abril consta literalmente en el anclaje exacto de inmigración suizo.",
+      "replacement_anchor_ids": [
+        "anchor-entrada-suiza"
+      ],
+      "source_field": "Pruebas_contribuyente[1].cita"
+    },
+    {
+      "disposition": "REPLACED_BY_EXACT_ANCHOR",
+      "judgment_id": "san-1386-2017",
+      "legacy_citation_id": "cita-prueba-rechazada-alegacion-exencion-indemnizacion-art-7-lirpf-e044a93588",
+      "rationale": "La falta de prueba y los elementos de alta dirección se conservan en un fragmento exacto.",
+      "replacement_anchor_ids": [
+        "anchor-alta-direccion-prueba"
+      ],
+      "source_field": "Pruebas_rechazadas_clave[2].cita"
+    }
+  ],
+  "schema_version": "residenciafiscal-legacy-citation-dispositions/1"
+}

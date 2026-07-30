@@ -1,0 +1,1936 @@
+{
+  "chat_behavior_gate": "NOT_EVALUATED",
+  "contrast_recall_at_12": 1.0,
+  "contrast_recall_at_5": 0.8913043478260869,
+  "evaluation_scope": "RETRIEVAL_ONLY",
+  "expected_behavior_counts": {
+    "abstenerse": 1,
+    "parcial": 12,
+    "preguntar": 7,
+    "responder": 20
+  },
+  "expected_recall_at_12": 1.0,
+  "expected_recall_at_5": 0.9171052631578948,
+  "question_count": 40,
+  "results": [
+    {
+      "contrast_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 0.5,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "GEN-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1071-2025-ganancia-patrimonial"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.6666666666666666,
+      "question_id": "GEN-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.5,
+      "question_id": "GEN-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.5,
+      "question_id": "GEN-09",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "DAY-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "DAY-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.6666666666666666,
+      "question_id": "DAY-03",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "abstenerse",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "DAY-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-exencion-indemnizacion"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 0.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "DAY-08",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1226-2021",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1386-2017"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "DAY-10",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "ECO-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1210-2023"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 0.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "ECO-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "ECO-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "ECO-08",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FAM-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FAM-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-reducciones-sucesiones"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FAM-03",
+      "retrieved_judgment_ids_at_12": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FAM-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1136-2016-reducciones-sucesiones"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "HOM-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "HOM-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "HOM-04",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "HOM-08",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FOR-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-reducciones-sucesiones"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FOR-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "FOR-04",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.5,
+      "question_id": "FOR-07",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-sancion-tributaria"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "CDI-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "CDI-03",
+      "retrieved_judgment_ids_at_12": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "CDI-07",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016",
+        "san-1210-2023"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "PRU-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "PRU-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1071-2025"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-residencia-fiscal",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "PRU-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1071-2025-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.6666666666666666,
+      "question_id": "PRU-06",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1226-2021-residencia-fiscal-2011"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "SAN-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes",
+        "san-1386-2017-exencion-indemnizacion"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "SAN-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-sancion-tributaria",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_recall_at_12": 1.0,
+      "contrast_recall_at_5": 1.0,
+      "expected_behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 1.0,
+      "question_id": "SAN-05",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-residencia-fiscal",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-sancion-tributaria",
+        "san-1210-2023-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1071-2025-ganancia-patrimonial"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "preguntar",
+      "expected_judgment_ids": [],
+      "expected_recall_at_12": null,
+      "expected_recall_at_5": null,
+      "question_id": "CMP-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1071-2025"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-residencia-habitual",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1210-2023-residencia-fiscal",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.75,
+      "question_id": "CMP-04",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_recall_at_12": 1.0,
+      "expected_recall_at_5": 0.6,
+      "question_id": "PRE-01",
+      "retrieved_judgment_ids_at_12": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1210-2023",
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1210-2023-residencia-fiscal",
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones"
+      ]
+    },
+    {
+      "contrast_judgment_ids": [],
+      "contrast_recall_at_12": null,
+      "contrast_recall_at_5": null,
+      "expected_behavior": "responder",
+      "expected_judgment_ids": [],
+      "expected_recall_at_12": null,
+      "expected_recall_at_5": null,
+      "question_id": "SRC-02",
+      "retrieved_judgment_ids_at_12": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "retrieved_judgment_ids_at_5": [
+        "san-1071-2025",
+        "san-1136-2016"
+      ],
+      "retrieved_unit_ids_at_12": [
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual",
+        "san-1210-2023-ganancias-patrimoniales-no-justificadas",
+        "san-1210-2023-residencia-fiscal",
+        "san-1210-2023-sancion-tributaria",
+        "san-1226-2021-residencia-fiscal-2011",
+        "san-1386-2017-exencion-indemnizacion",
+        "san-1386-2017-residencia-fiscal-suiza",
+        "san-1386-2017-tipo-no-residentes"
+      ],
+      "retrieved_unit_ids_at_5": [
+        "san-1071-2025-ganancia-patrimonial",
+        "san-1071-2025-residencia-fiscal",
+        "san-1071-2025-sancion-tributaria",
+        "san-1136-2016-reducciones-sucesiones",
+        "san-1136-2016-residencia-habitual"
+      ]
+    }
+  ],
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-retrieval-evaluation-report/2"
+}

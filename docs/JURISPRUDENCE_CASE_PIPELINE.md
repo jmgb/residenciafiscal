@@ -7,20 +7,23 @@ Este pipeline transforma el corpus verbatim de una sentencia en un caso
 hechos, pruebas, valoración y resultado. El caso v3 es análisis derivado: el PDF
 y el corpus verbatim siguen siendo la autoridad para el texto judicial.
 
-El primer piloto es `SAN 1210/2023`. La misma ruta deberá usarse para 5 y 106
-sentencias; no se crea un segundo pipeline para el lote.
+El primer piloto fue `SAN 1210/2023`. La misma ruta ya se usa para la muestra
+fija de cinco y deberá mantenerse para 106 sentencias; no existe un segundo
+pipeline para el lote.
 
 ## Artefactos y autoridad
 
 | Artefacto | Función | Edición |
 |---|---|---|
 | `sentencias/<archivo>.pdf` | Fuente oficial conservada | Nunca |
-| `knowledge/jurisprudencia/verbatim/<slug>.pages.json` | Texto íntegro por páginas | Generado por Python |
+| `knowledge/jurisprudencia-v3/verbatim/<slug>.pages.json` | Texto íntegro por páginas | Generado por Python |
 | `knowledge/jurisprudence-case-proposals/<slug>.proposal.json` | Aporte jurídico del agente | Revisable |
 | `knowledge/annotations/<slug>.yaml` | Decisiones humanas separadas | Solo sidecar |
-| `knowledge/jurisprudencia/cases/<slug>.case.json` | Caso v3 canónico compilado | Nunca a mano |
-| `knowledge/jurisprudencia/evaluations/<slug>.questions.json` | Cobertura de preguntas del chat | Revisable |
-| `knowledge/jurisprudencia/reports/<slug>.case-validation.json` | Resultado de gates | Generado por Python |
+| `knowledge/jurisprudencia-v3/cases/<slug>.case.json` | Caso v3 canónico compilado | Nunca a mano |
+| `knowledge/jurisprudencia-v3/evaluations/<slug>.questions.json` | Cobertura de preguntas del chat | Revisable |
+| `knowledge/jurisprudencia-v3/reports/<slug>.case-validation.json` | Resultado de gates | Generado por Python |
+| `sentencias/jurisprudence_v3_sample_5.json` | PDFs, hashes y entradas del lote | Revisable y versionado |
+| `knowledge/jurisprudencia-v3/sample-build.json` | Hashes y métricas del lote | Generado por Python |
 
 La propuesta omite deliberadamente todos los datos mecánicos que podrían
 inventarse o quedar obsoletos: hash del PDF, hash de entradas, extractor,
@@ -57,11 +60,17 @@ Una persona:
 ```bash
 make export-verbatim
 make export-case-v3
+make export-case-v3-sample
 ```
 
 `make export-case-v3` no llama a un LLM. Compila una propuesta ya existente,
 reproduce el texto desde el PDF y falla antes de publicar si una fuente, hash,
 relación, cita o pregunta no valida.
+
+`make export-case-v3-sample` tampoco llama a un LLM. Repite el mismo compilador
+para los cinco documentos del manifiesto y, después, construye y evalúa el
+índice agregado. El agente solo vuelve a intervenir si se prepara o corrige una
+propuesta jurídica.
 
 Las variables permiten repetir el mismo comando para otra sentencia:
 
@@ -110,10 +119,10 @@ suficiente. Tampoco se crea análisis de CDI: la sentencia no aplica un convenio
 Estas colecciones vacías representan ausencia de datos, no un fallo de
 extracción.
 
-El hash del caso piloto es
-`c8a4fd3e7702833d22789fa7427479ff9416b919708dee12f2bcbe17c8f245b6`.
+El hash actual del caso piloto es
+`e97a4578b1a2cc3fc0ee0fff7d249b657a81c31d6cdd0506440ff97fe4f68f3c`.
 El resultado reproducible vive en
-`knowledge/jurisprudencia/reports/san-1210-2023.case-validation.json`.
+`knowledge/jurisprudencia-v3/reports/san-1210-2023.case-validation.json`.
 
 ## Derivados B4
 
@@ -122,4 +131,6 @@ Ningún renderizador vuelve a leer el análisis legado ni a reformular citas:
 consume exclusivamente el caso v3 validado. Contrato, campos y resultado:
 [`JURISPRUDENCE_DERIVATIVES_B4.md`](JURISPRUDENCE_DERIVATIVES_B4.md).
 
-La siguiente fase es regenerar las cinco sentencias mediante el mismo camino.
+La muestra de cinco ya está regenerada y validada. Resultado, métricas y
+decisiones de freeze:
+[`JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).

@@ -1,0 +1,53 @@
+{
+  "documents": [
+    {
+      "case_sha256": "d172312aeb0af3111460c83de7079dc878675776db3693a97acf2b77109a3ee9",
+      "derivatives_report_sha256": "729be939f650e27a0c9e2c41a9f37fc3b5fda116ff37705cb37bb85d28c78828",
+      "judgment_id": "san-1071-2025",
+      "legal_issue_count": 3,
+      "markdown_sha256": "163cd0aaa50eff8c49f406c25ba931b68aef1723cbd55d156f8906a53d998875",
+      "retrieval_sha256": "109153a803bfc3da835161cfa9bbdb2574270cb9a6171df44fd01339dfa34a64",
+      "verbatim_sha256": "8a905436476de84845cc84c65f72acb9e32eeb4bcd8de91de5dad4bc11cbb7a0"
+    },
+    {
+      "case_sha256": "240e39a7bab2b3a2213397fe19b95289720e7cad4f29f7423936f7867279743a",
+      "derivatives_report_sha256": "2bab7e95fdcbb6a02e49d2aa416d5bb324580a6456a06b59fbabbbcb4a2782c2",
+      "judgment_id": "san-1136-2016",
+      "legal_issue_count": 2,
+      "markdown_sha256": "61c1538f94c1b67b80d20e17134033ce6e75f6ade904b82833695bcd5e8ab630",
+      "retrieval_sha256": "09bcc765d92dd7d5898be8997c82302292815dbf93453ec90f45827532df9465",
+      "verbatim_sha256": "18a30238d2643e4d83759cc1e021a99eed6d26372cd438af04144b94805f7692"
+    },
+    {
+      "case_sha256": "e97a4578b1a2cc3fc0ee0fff7d249b657a81c31d6cdd0506440ff97fe4f68f3c",
+      "derivatives_report_sha256": "700b2b70b44eb407285e055b3ae913bbffed890043093f14d634bd181d26a433",
+      "judgment_id": "san-1210-2023",
+      "legal_issue_count": 3,
+      "markdown_sha256": "be5827c4985ba81f7b8983d909b88058ee2e99e64c9e28059c65ff0d36f7bb97",
+      "retrieval_sha256": "8e3d488647a7223fb185d59cdd62b9d376469b46591b5cf5700865ef7d65bff2",
+      "verbatim_sha256": "de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1"
+    },
+    {
+      "case_sha256": "d45cf6a38dd1a06c75bc9b8dde67260f9d6918005a78d334db15f016cdcd6f87",
+      "derivatives_report_sha256": "1104e72d9cff1a8a37f60d30adf3d09d868572e7092416e3bae33d3813b7b955",
+      "judgment_id": "san-1226-2021",
+      "legal_issue_count": 1,
+      "markdown_sha256": "e48622cb5e60bcbbd77679e9758b73b71c0277ce347521517b862fb707de983b",
+      "retrieval_sha256": "270663a67a92bfa68b39cc08b0c0eecad09a1e59a339ea07689161330fcb29f8",
+      "verbatim_sha256": "a4db1c543c333cddd87b9f4eb566b30c764d4dccf5567ea3ac0f7ce11b5acd44"
+    },
+    {
+      "case_sha256": "dbfb9af63b313b6a2534154f11d51bf177ba8c7f04092ed2745bf06f6b2221cd",
+      "derivatives_report_sha256": "b04130e19486bab086e2c005a440d0f533ab011da5d473552801067b78121b68",
+      "judgment_id": "san-1386-2017",
+      "legal_issue_count": 3,
+      "markdown_sha256": "323811aaac9ea322a4f78984eca282d2952bf0a0d4f78975901aa3afe447cd0e",
+      "retrieval_sha256": "09108b4e83e30c65fdde34d09385006740c75401d0edf065323de9851c04fa42",
+      "verbatim_sha256": "caed7d9b2fd290f857e79e4f0dc2c3ce16965bf71dda0582ff941f7227629ad4"
+    }
+  ],
+  "manifest_sha256": "5f2f6c86688feccb9c34a37c83bba7bbb8a909bbab109842f0fef7fc66d49905",
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-jurisprudence-sample-build/1",
+  "validation": "passed"
+}

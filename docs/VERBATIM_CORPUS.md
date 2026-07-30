@@ -9,13 +9,13 @@ caso jurídico v3 desde esta fuente.
 Se generará una segunda representación por sentencia cuya fuente canónica será:
 
 ```text
-knowledge/jurisprudencia/verbatim/<slug>.pages.json
+knowledge/jurisprudencia-v3/verbatim/<slug>.pages.json
 ```
 
 Opcionalmente se renderizará una vista legible:
 
 ```text
-knowledge/jurisprudencia/verbatim/<slug>.md
+knowledge/jurisprudencia-v3/verbatim/<slug>.md
 ```
 
 Su finalidad es búsqueda, RAG y comprobación de respuestas. No sustituye al PDF
@@ -53,7 +53,7 @@ mediante una segunda extracción y solo entonces reemplaza el destino.
 
 | Dato | Valor |
 |---|---|
-| Artefacto | `knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json` |
+| Artefacto | `knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json` |
 | Extractor | `pypdf/6.14.2` |
 | Páginas | 10, todas `TEXT_EXTRACTED` |
 | Estado | `COMPLETE` |

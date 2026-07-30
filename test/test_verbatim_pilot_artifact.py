@@ -5,7 +5,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PDF_PATH = PROJECT_ROOT / "sentencias" / "SAN_1210_2023.pdf"
 ARTIFACT_PATH = (
-    PROJECT_ROOT / "knowledge" / "jurisprudencia" / "verbatim" / "san-1210-2023.pages.json"
+    PROJECT_ROOT / "knowledge" / "jurisprudencia-v3" / "verbatim" / "san-1210-2023.pages.json"
 )
 SOURCE_SHA256 = "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
 PAGES_SHA256 = "76a3bd4547c840d2e0f23eb2e6986c7c4c14f4eca528fe98ebd7e93d9ba658ae"

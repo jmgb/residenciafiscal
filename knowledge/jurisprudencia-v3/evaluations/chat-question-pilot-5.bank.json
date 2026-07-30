@@ -1,0 +1,447 @@
+{
+  "questions": [
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "question": "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "question_id": "GEN-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023"
+      ],
+      "question": "¿Qué pruebas consideran más importantes los tribunales?",
+      "question_id": "GEN-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "question": "¿Qué permitió probar que el contribuyente no residía en España?",
+      "question_id": "GEN-05"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "question": "¿Qué pruebas de Hacienda han rechazado los tribunales?",
+      "question_id": "GEN-09"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "question": "Digo que pasé menos de 183 días en España, ¿qué usaría Hacienda?",
+      "question_id": "DAY-01"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1210-2023"
+      ],
+      "question": "¿Cómo calcularon los días las sentencias de la muestra?",
+      "question_id": "DAY-02"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1226-2021",
+        "san-1210-2023"
+      ],
+      "question": "¿Qué valor tienen pasaportes, billetes y reservas?",
+      "question_id": "DAY-03"
+    },
+    {
+      "behavior": "abstenerse",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "question": "¿Qué son las ausencias esporádicas y cuándo computan?",
+      "question_id": "DAY-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "question": "¿Bastan consumos y movimientos sin calendario completo?",
+      "question_id": "DAY-08"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1136-2016",
+        "san-1386-2017"
+      ],
+      "question": "¿Quién debe probar el número de días?",
+      "question_id": "DAY-10"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "Vivo fuera, pero mis ingresos proceden de España.",
+      "question_id": "ECO-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "question": "¿Influyen sociedades o consejos españoles?",
+      "question_id": "ECO-02"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "Empleo extranjero e inversiones en España: ¿qué fue decisivo?",
+      "question_id": "ECO-05"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "question": "¿Qué convenció de que el centro económico estaba fuera?",
+      "question_id": "ECO-08"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "question": "Mi familia vive en España, pero trabajo fuera.",
+      "question_id": "FAM-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "question": "¿La familia en España me convierte automáticamente en residente?",
+      "question_id": "FAM-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "question": "¿Cómo se desvirtúa la presunción familiar?",
+      "question_id": "FAM-03"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "¿Se aceptó que la familia quedara por salud o discapacidad?",
+      "question_id": "FAM-05"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "question": "Tengo vivienda en España, pero no la utilizo.",
+      "question_id": "HOM-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "question": "¿Qué valor tienen electricidad, agua, gas o gasóleo?",
+      "question_id": "HOM-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "¿Qué se deduce de paquetería, vino o combustible?",
+      "question_id": "HOM-04"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "question": "¿Cómo se valoran tarjetas y retiradas de efectivo?",
+      "question_id": "HOM-08"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "question": "¿Basta un certificado fiscal extranjero?",
+      "question_id": "FOR-01"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1226-2021"
+      ],
+      "question": "¿Qué requisitos se exigieron a los certificados?",
+      "question_id": "FOR-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "¿Un alquiler extranjero prueba residencia efectiva?",
+      "question_id": "FOR-04"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "question": "¿Qué reforzó la documentación extranjera?",
+      "question_id": "FOR-07"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "Dos países me consideran residente, ¿cómo se resuelve?",
+      "question_id": "CDI-01"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "Tengo vivienda permanente en ambos países, ¿qué sigue?",
+      "question_id": "CDI-03"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "¿Cómo interactúan CDI y artículo 9 LIRPF?",
+      "question_id": "CDI-07"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1386-2017"
+      ],
+      "question": "¿Quién tiene la carga de probar la residencia?",
+      "question_id": "PRU-01"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "¿Cuándo se desplaza la carga al contribuyente?",
+      "question_id": "PRU-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "¿Cómo se valora un conjunto de indicios?",
+      "question_id": "PRU-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017",
+        "san-1136-2016"
+      ],
+      "question": "¿Importa que los indicios sean coherentes entre sí?",
+      "question_id": "PRU-06"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "Si pierdo residencia, ¿la sanción se mantiene automáticamente?",
+      "question_id": "SAN-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "¿Hay casos con liquidación confirmada y sanción anulada?",
+      "question_id": "SAN-02"
+    },
+    {
+      "behavior": "parcial",
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "¿Qué diferencia los casos con sanción anulada y confirmada?",
+      "question_id": "SAN-05"
+    },
+    {
+      "behavior": "preguntar",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [],
+      "question": "¿Qué sentencia se parece más a mi situación?",
+      "question_id": "CMP-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025",
+        "san-1226-2021"
+      ],
+      "question": "¿Hay casos con hechos parecidos y resultados opuestos?",
+      "question_id": "CMP-04"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "question": "¿Qué datos necesitas para buscar casos comparables?",
+      "question_id": "PRE-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [],
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "SRC-02"
+    }
+  ],
+  "schema_version": "residenciafiscal-retrieval-evaluation-bank/1",
+  "source_resource": "docs/experiments/CHAT_QUESTION_PILOT_5.md"
+}

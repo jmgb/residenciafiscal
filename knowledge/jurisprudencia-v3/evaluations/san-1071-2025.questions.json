@@ -1,0 +1,165 @@
+{
+  "schema_version": "residenciafiscal-case-question-evaluation/1",
+  "judgment_id": "san-1071-2025",
+  "questions": [
+    {
+      "question_id": "GEN-01",
+      "question": "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ],
+      "required_fact_ids": [
+        "fact-control-iberdigest",
+        "fact-vivienda-ocupada-bescano"
+      ],
+      "required_evidence_ids": [
+        "evidence-control-societario",
+        "evidence-suministros-vivienda"
+      ],
+      "required_anchor_ids": [
+        "anchor-actividad-tarjetas",
+        "anchor-declaraciones-suministros",
+        "anchor-residencia-conclusion"
+      ],
+      "expected_behavior": "Explicar el centro económico español y los indicios cotidianos que lo corroboraron.",
+      "limitations": "No afirmar que sociedades o suministros determinen por sí solos la residencia."
+    },
+    {
+      "question_id": "DAY-01",
+      "question": "Digo que pasé menos de 183 días en España, ¿qué usaría Hacienda?",
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ],
+      "required_fact_ids": [
+        "fact-vida-cotidiana-girona",
+        "fact-vivienda-ocupada-bescano"
+      ],
+      "required_evidence_ids": [
+        "evidence-movimientos-tarjeta",
+        "evidence-suministros-vivienda"
+      ],
+      "required_anchor_ids": [
+        "anchor-actividad-tarjetas",
+        "anchor-declaraciones-suministros"
+      ],
+      "expected_behavior": "Mostrar tarjetas, repostajes y suministros como indicios junto al criterio económico.",
+      "limitations": "La sentencia no contiene un calendario completo de días."
+    },
+    {
+      "question_id": "ECO-02",
+      "question": "¿Influyen sociedades o consejos españoles?",
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ],
+      "required_fact_ids": [
+        "fact-control-iberdigest"
+      ],
+      "required_evidence_ids": [
+        "evidence-control-societario"
+      ],
+      "required_anchor_ids": [
+        "anchor-actividad-tarjetas",
+        "anchor-residencia-conclusion"
+      ],
+      "expected_behavior": "Explicar la participación mayoritaria y administración efectiva dentro del conjunto.",
+      "limitations": "No equiparar un cargo formal aislado con el centro económico."
+    },
+    {
+      "question_id": "HOM-02",
+      "question": "¿Qué valor tienen electricidad, agua, gas o gasóleo?",
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ],
+      "required_fact_ids": [
+        "fact-vivienda-ocupada-bescano"
+      ],
+      "required_evidence_ids": [
+        "evidence-suministros-vivienda"
+      ],
+      "required_anchor_ids": [
+        "anchor-declaraciones-suministros"
+      ],
+      "expected_behavior": "Describir agua y electricidad como evidencia de ocupación continua.",
+      "limitations": "No atribuir automáticamente los consumos al contribuyente en otros casos."
+    },
+    {
+      "question_id": "FOR-01",
+      "question": "¿Basta un certificado fiscal extranjero?",
+      "required_issue_ids": [
+        "residencia-fiscal",
+        "sancion-tributaria"
+      ],
+      "required_fact_ids": [
+        "fact-sin-intereses-francia"
+      ],
+      "required_evidence_ids": [
+        "evidence-certificado-frances-residencia",
+        "evidence-certificado-frances-sancion"
+      ],
+      "required_anchor_ids": [
+        "anchor-certificado-frances",
+        "anchor-residencia-conclusion",
+        "anchor-interpretacion-razonable"
+      ],
+      "expected_behavior": "Separar su insuficiencia para residencia de su relevancia para excluir culpabilidad.",
+      "limitations": "El mismo documento tiene efectos distintos según la cuestión."
+    },
+    {
+      "question_id": "SAN-01",
+      "question": "Si pierdo residencia, ¿la sanción se mantiene automáticamente?",
+      "required_issue_ids": [
+        "sancion-tributaria"
+      ],
+      "required_fact_ids": [],
+      "required_evidence_ids": [
+        "evidence-certificado-frances-sancion"
+      ],
+      "required_anchor_ids": [
+        "anchor-interpretacion-razonable",
+        "anchor-sancion-conclusion"
+      ],
+      "expected_behavior": "Separar liquidación y culpabilidad y mostrar la anulación de la sanción.",
+      "limitations": "No afirmar que todo certificado excluya culpabilidad."
+    },
+    {
+      "question_id": "SAN-02",
+      "question": "¿Hay casos con liquidación confirmada y sanción anulada?",
+      "required_issue_ids": [
+        "residencia-fiscal",
+        "sancion-tributaria"
+      ],
+      "required_fact_ids": [
+        "fact-control-iberdigest"
+      ],
+      "required_evidence_ids": [
+        "evidence-control-societario",
+        "evidence-certificado-frances-sancion"
+      ],
+      "required_anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-sancion-conclusion",
+        "anchor-fallo-parcial"
+      ],
+      "expected_behavior": "Presentar los dos resultados por cuestión sin resumirlos como un único fallo.",
+      "limitations": "El resultado parcial no predice otros expedientes sancionadores."
+    },
+    {
+      "question_id": "SRC-02",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "required_issue_ids": [
+        "residencia-fiscal",
+        "ganancia-patrimonial",
+        "sancion-tributaria"
+      ],
+      "required_fact_ids": [],
+      "required_evidence_ids": [],
+      "required_anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-tasacion-conclusion",
+        "anchor-sancion-conclusion"
+      ],
+      "expected_behavior": "Devolver texto verbatim y páginas físicas de cada cuestión.",
+      "limitations": "El estado jurídico es AGENT_REVIEWED."
+    }
+  ]
+}

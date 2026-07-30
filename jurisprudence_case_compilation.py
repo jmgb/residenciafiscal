@@ -24,6 +24,14 @@ def _resolve_input(project_root: Path, source_path: str) -> Path:
     return resolved_path
 
 
+def _portable_project_path(project_root: Path, path: Path) -> str:
+    resolved_root = project_root.resolve()
+    resolved_path = path.resolve()
+    if not resolved_path.is_relative_to(resolved_root):
+        raise ValueError("el artefacto VERBATIM debe estar dentro de project_root")
+    return resolved_path.relative_to(resolved_root).as_posix()
+
+
 def _resolve_fragment(fragment: dict[str, Any], verbatim: VerbatimCorpus) -> None:
     page_index = fragment.get("page_index")
     if not isinstance(page_index, int) or not 1 <= page_index <= verbatim.page_count:
@@ -48,6 +56,7 @@ def compile_case_proposal(
     proposal: dict[str, Any],
     *,
     verbatim: VerbatimCorpus,
+    verbatim_path: Path,
     project_root: Path,
 ) -> JurisprudenceCase:
     """Inyecta metadatos mecánicos sin modificar el contenido jurídico."""
@@ -65,6 +74,15 @@ def compile_case_proposal(
     judgment["extractor"] = verbatim.extractor.model_dump(mode="json")
 
     provenance = judgment["analysis_provenance"]
+    verbatim_artifacts = [
+        artifact for artifact in provenance["input_artifacts"] if artifact["kind"] == "VERBATIM"
+    ]
+    if len(verbatim_artifacts) != 1:
+        raise ValueError("analysis_provenance debe declarar exactamente un VERBATIM")
+    verbatim_artifacts[0]["source_path"] = _portable_project_path(
+        project_root,
+        verbatim_path,
+    )
     for artifact in provenance["input_artifacts"]:
         input_path = _resolve_input(project_root, artifact["source_path"])
         artifact["sha256"] = sha256_file(input_path)
@@ -90,6 +108,7 @@ def build_case_artifact(
     case = compile_case_proposal(
         proposal,
         verbatim=verbatim,
+        verbatim_path=verbatim_path,
         project_root=project_root,
     )
     return write_jurisprudence_case(case, destination)

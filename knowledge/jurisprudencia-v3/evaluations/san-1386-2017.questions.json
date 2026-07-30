@@ -1,0 +1,206 @@
+{
+  "schema_version": "residenciafiscal-case-question-evaluation/1",
+  "judgment_id": "san-1386-2017",
+  "questions": [
+    {
+      "question_id": "GEN-05",
+      "question": "¿Qué permitió probar que el contribuyente no residía en España?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-empleo-suiza",
+        "fact-entrada-suiza",
+        "fact-inmueble-cuentas-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-empleo-modefine",
+        "evidence-inmigracion-suiza",
+        "evidence-vivienda-cuentas-mendrisio"
+      ],
+      "required_anchor_ids": [
+        "anchor-relacion-laboral-gastos",
+        "anchor-entrada-suiza",
+        "anchor-centro-intereses-suiza",
+        "anchor-residencia-suiza-conclusion"
+      ],
+      "expected_behavior": "Explicar el conjunto concordante desde el 1 de abril y no depender solo del certificado.",
+      "limitations": "No extrapolar la fecha ni el peso de cada indicio a otros casos."
+    },
+    {
+      "question_id": "ECO-05",
+      "question": "Empleo extranjero e inversiones en España: ¿qué fue decisivo?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-empleo-suiza",
+        "fact-inmueble-cuentas-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-empleo-modefine",
+        "evidence-vivienda-cuentas-mendrisio"
+      ],
+      "required_anchor_ids": [
+        "anchor-relacion-laboral-gastos",
+        "anchor-centro-intereses-suiza"
+      ],
+      "expected_behavior": "Relacionar empleo efectivo, vivienda, vehículos y cuentas con el centro económico suizo.",
+      "limitations": "No afirmar que el empleo extranjero prevalezca siempre."
+    },
+    {
+      "question_id": "FAM-01",
+      "question": "Mi familia vive en España, pero trabajo fuera.",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-familia-espana-discapacidad",
+        "fact-empleo-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-discapacidad-hijo",
+        "evidence-empleo-modefine"
+      ],
+      "required_anchor_ids": [
+        "anchor-traslado-y-familia",
+        "anchor-centro-intereses-suiza"
+      ],
+      "expected_behavior": "Mostrar cómo el motivo familiar y las pruebas de vida exterior desvirtuaron la presunción.",
+      "limitations": "Es un caso individual y la discapacidad no basta aisladamente."
+    },
+    {
+      "question_id": "FAM-05",
+      "question": "¿Se aceptó que la familia quedara por salud o discapacidad?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-familia-espana-discapacidad"
+      ],
+      "required_evidence_ids": [
+        "evidence-discapacidad-hijo"
+      ],
+      "required_anchor_ids": [
+        "anchor-traslado-y-familia"
+      ],
+      "expected_behavior": "Citar el 33 por ciento de discapacidad y su función explicativa.",
+      "limitations": "No formular una regla general médica."
+    },
+    {
+      "question_id": "HOM-08",
+      "question": "¿Cómo se valoran tarjetas y retiradas de efectivo?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-vida-cotidiana-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-gastos-diarios"
+      ],
+      "required_anchor_ids": [
+        "anchor-relacion-laboral-gastos",
+        "anchor-centro-intereses-suiza"
+      ],
+      "expected_behavior": "Presentar los gastos diarios como corroboración de vida cotidiana en Suiza.",
+      "limitations": "El extracto no contiene un calendario detallado de operaciones."
+    },
+    {
+      "question_id": "FOR-02",
+      "question": "¿Qué requisitos se exigieron a los certificados?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-empleo-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-certificados-suizos"
+      ],
+      "required_anchor_ids": [
+        "anchor-requisitos-certificado",
+        "anchor-certificados-indicio"
+      ],
+      "expected_behavior": "Enumerar contenido, autoridad, renta mundial y referencia al CDI, distinguiendo regla y aplicación.",
+      "limitations": "La formulación procede de esta sentencia y no sustituye el examen del certificado concreto."
+    },
+    {
+      "question_id": "FOR-04",
+      "question": "¿Un alquiler extranjero prueba residencia efectiva?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-inmueble-cuentas-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-vivienda-cuentas-mendrisio"
+      ],
+      "required_anchor_ids": [
+        "anchor-centro-intereses-suiza"
+      ],
+      "expected_behavior": "Mostrar que la vivienda se valoró con empleo, gastos, vehículos y cuentas.",
+      "limitations": "La sentencia no dice que la vivienda fuera suficiente por sí sola."
+    },
+    {
+      "question_id": "CDI-03",
+      "question": "Tengo vivienda permanente en ambos países, ¿qué sigue?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-inmueble-cuentas-suiza",
+        "fact-empleo-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-vivienda-cuentas-mendrisio",
+        "evidence-empleo-modefine"
+      ],
+      "required_anchor_ids": [
+        "anchor-reglas-articulo-9-cdi",
+        "anchor-centro-intereses-suiza"
+      ],
+      "expected_behavior": "Explicar el paso al centro de intereses vitales con cautela y citar la regla.",
+      "limitations": "La secuencia está estructurada por el agente y pendiente de aprobación humana."
+    },
+    {
+      "question_id": "PRU-01",
+      "question": "¿Quién tiene la carga de probar la residencia?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza"
+      ],
+      "required_fact_ids": [
+        "fact-entrada-suiza"
+      ],
+      "required_evidence_ids": [
+        "evidence-inmigracion-suiza",
+        "evidence-certificados-suizos"
+      ],
+      "required_anchor_ids": [
+        "anchor-carga-articulo-105",
+        "anchor-entrada-suiza"
+      ],
+      "expected_behavior": "Exponer la carga del solicitante y cómo la cumplió mediante un conjunto de pruebas.",
+      "limitations": "No convertir el artículo 105 en una inversión automática."
+    },
+    {
+      "question_id": "SRC-02",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "required_issue_ids": [
+        "residencia-fiscal-suiza",
+        "exencion-indemnizacion",
+        "tipo-no-residentes"
+      ],
+      "required_fact_ids": [],
+      "required_evidence_ids": [],
+      "required_anchor_ids": [
+        "anchor-residencia-suiza-conclusion",
+        "anchor-indemnizacion-no-exenta",
+        "anchor-tipo-no-residente"
+      ],
+      "expected_behavior": "Devolver los tres resultados separados con texto exacto y página.",
+      "limitations": "El análisis jurídico permanece AGENT_REVIEWED."
+    }
+  ]
+}

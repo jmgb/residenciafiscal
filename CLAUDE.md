@@ -101,6 +101,10 @@ revisiones viven en `knowledge/annotations/` y nunca pueden alterar el texto
 legal. Arquitectura, contrato, resultado y gates:
 [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md).
 
+El bundle OKF/2 legado usa `knowledge/jurisprudencia/`. El caso, perfiles e
+índices v3 usan exclusivamente `knowledge/jurisprudencia-v3/`; no mezclar ambos
+árboles, porque tienen contratos y manifiestos distintos.
+
 El contrato campo por campo y el orden de secciones están en
 [`docs/OKF_MARKDOWN_CONTRACT.md`](docs/OKF_MARKDOWN_CONTRACT.md). La
 representación íntegra por páginas recomendada para un futuro RAG se especifica
@@ -127,17 +131,25 @@ El caso v3 híbrido de `SAN 1210/2023` ya está compilado: 17 anclajes literales
 3 cuestiones y 18 preguntas aplicables validadas. Su pipeline, reparto de
 responsabilidades y artefactos se documentan en
 [`docs/JURISPRUDENCE_CASE_PIPELINE.md`](docs/JURISPRUDENCE_CASE_PIPELINE.md).
-El Markdown OKF/3 y las tres unidades de recuperación por cuestión ya se
-derivan del caso canónico. Su contrato está en
+El mismo flujo ya regenera la muestra fija de cinco: 12 unidades, 62 anclajes
+exactos, evaluación ejecutable de 40 preguntas y las 17 citas heredadas
+clasificadas. La evaluación actual cubre solo recuperación y declara el gate
+conversacional `NOT_EVALUATED`; no acredita todavía que el chat pregunte o se
+abstenga correctamente. El contrato v3 está congelado; resultados, límites y
+siguiente fase:
+[`docs/JURISPRUDENCE_SAMPLE_PHASE_C.md`](docs/JURISPRUDENCE_SAMPLE_PHASE_C.md).
+El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
+cada caso canónico. Su contrato está en
 [`docs/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/JURISPRUDENCE_DERIVATIVES_B4.md).
-El siguiente trabajo es regenerar las cinco sentencias por este mismo camino;
-no continuar directamente con el chat ni con las 106.
+El siguiente trabajo es la fase D de recuperación; no continuar directamente
+con el chat ni con las 106.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
 make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
 make export-case-v3  # compila y valida el caso canónico de SAN 1210/2023
 make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
+make export-case-v3-sample  # regenera 5, evalúa 40 preguntas y ejecuta gates
 ```
 
 ### Corpus normativo

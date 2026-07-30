@@ -14,9 +14,9 @@ coincidir.
 ## Artefactos del piloto
 
 ```text
-knowledge/jurisprudencia/
+knowledge/jurisprudencia-v3/
 ├── cases/san-1210-2023.case.json
-├── sentencias/san-1210-2023.md
+├── perfiles/san-1210-2023.md
 ├── retrieval/san-1210-2023.issues.json
 └── reports/san-1210-2023.derivatives-validation.json
 ```
@@ -98,6 +98,23 @@ Facetas iniciales:
 No hay embeddings en B4. La fase D comparará el baseline estructurado/léxico
 contra embeddings usando el mismo banco de preguntas.
 
+## Corpus agregado de la muestra
+
+La fase C agrega los cinco índices sin cambiar sus unidades en
+`residenciafiscal-retrieval-corpus/1`. Cada fuente conserva ruta y SHA-256 y el
+contrato rechaza sentencias o `unit_id` duplicados. El JSON Schema versionado
+vive en `schemas/residenciafiscal-retrieval-corpus-v1.schema.json`.
+
+Los perfiles de la muestra se escriben en `perfiles/`. El árbol v3 completo es
+hermano de `knowledge/jurisprudencia/`, que pertenece al bundle OKF/2 legado;
+mezclarlos rompería sus contratos y manifiestos.
+
+El baseline normaliza acentos, elimina palabras vacías, aplica un vocabulario
+jurídico pequeño y ordena por TF-IDF. Es deliberadamente sencillo y auditable:
+sirve como línea base, no como decisión definitiva de RAG. El resultado de las
+40 preguntas y sus límites se documenta en
+[`JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).
+
 ## Gates
 
 `make export-case-v3-derivatives`:
@@ -124,5 +141,6 @@ Dos ejecuciones con las mismas entradas producen los mismos bytes.
 | Estado técnico | `VALIDATED` |
 | Estado jurídico | `AGENT_REVIEWED` |
 
-La fase siguiente es regenerar las cinco sentencias mediante este mismo camino.
-No se autoriza todavía el corpus de 106 ni la integración del chat.
+La muestra de cinco ya se regeneró por este camino. No se autoriza todavía la
+integración del chat; antes debe completarse la evaluación de recuperación de
+la fase D.

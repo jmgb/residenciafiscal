@@ -1,0 +1,1153 @@
+{
+  "judgment": {
+    "chamber": "Sala de lo Contencioso-Administrativo, Sección Cuarta",
+    "countries": [
+      "España",
+      "Francia"
+    ],
+    "court": "Audiencia Nacional",
+    "decision_date": "2025-02-18",
+    "ecli": "ECLI:ES:AN:2025:1071",
+    "judgment_id": "san-1071-2025",
+    "roj": "SAN 1071/2025",
+    "tax_years": [
+      2010,
+      2011
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-1071-2025.case.json",
+    "case_sha256": "d172312aeb0af3111460c83de7079dc878675776db3693a97acf2b77109a3ee9",
+    "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-sin-vinculos-francia",
+            "anchor-residencia-conclusion",
+            "anchor-interpretacion-razonable"
+          ],
+          "conclusion": "La Administración acreditó la residencia y la prueba francesa no desvirtuó los indicios.",
+          "fact_to_prove": "Radicación en España del núcleo principal de actividades o intereses económicos.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": "Desvirtuar los indicios y acreditar intereses o residencia efectiva en Francia.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": "TAXPAYER",
+          "step_id": "burden-aeat-residencia",
+          "triggering_evidence_ids": [
+            "evidence-control-societario",
+            "evidence-movimientos-tarjeta",
+            "evidence-suministros-vivienda"
+          ]
+        }
+      ],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-actividad-tarjetas",
+            "anchor-residencia-conclusion"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala lo integró como elemento central de los intereses económicos y laborales.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Participación mayoritaria y cargo de administrador único en una sociedad española.",
+          "evidence_id": "evidence-control-societario",
+          "fact_ids": [
+            "fact-control-iberdigest"
+          ],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar que el núcleo principal de actividades económicas radicaba en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "participaciones y administración de Iberdigest"
+        },
+        {
+          "anchor_ids": [
+            "anchor-actividad-tarjetas"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala los incluyó entre los elementos usados para determinar la residencia.",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Movimientos de tarjeta en Girona y en rutas próximas a la vivienda española.",
+          "evidence_id": "evidence-movimientos-tarjeta",
+          "fact_ids": [
+            "fact-vida-cotidiana-girona"
+          ],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Corroborar actividad cotidiana y presencia en el entorno de la vivienda.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "restaurantes y repostajes"
+        },
+        {
+          "anchor_ids": [
+            "anchor-declaraciones-suministros"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala los trató como indicio concordante de ocupación continua.",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Suministros que evidenciaban ocupación continua de la vivienda de Bescanó.",
+          "evidence_id": "evidence-suministros-vivienda",
+          "fact_ids": [
+            "fact-vivienda-ocupada-bescano"
+          ],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar uso efectivo de la vivienda española.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "agua y electricidad"
+        },
+        {
+          "anchor_ids": [
+            "anchor-certificado-frances",
+            "anchor-residencia-conclusion"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "No desvirtuó los vínculos económicos, cotidianos y residenciales acreditados en España.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado emitido por las autoridades fiscales francesas.",
+          "evidence_id": "evidence-certificado-frances-residencia",
+          "fact_ids": [
+            "fact-sin-intereses-francia"
+          ],
+          "foreign_document": {
+            "defects": [
+              "No desvirtuó la falta de actividad, bienes o intereses económicos acreditados en Francia."
+            ],
+            "document_type": "TAX_RESIDENCE_CERTIFICATE",
+            "issuing_authority": "Autoridades fiscales francesas",
+            "jurisdiction": "Francia",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Insuficiente para desvirtuar la residencia española.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar residencia fiscal en Francia.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CONTRADICTORY",
+          "subtype": "certificado de residencia fiscal francés"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Francia"
+        ],
+        "criterion_ids": [
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_183_DIAS",
+          "CRIT_CDI_TIEBREAKER"
+        ],
+        "evidence_categories": [
+          "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "CONSUMOS_FINANCIEROS",
+          "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "DOCUMENTACION_FISCAL_EXTRANJERA"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": true,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "tax_years": [
+          2010,
+          2011
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [
+        {
+          "anchor_ids": [
+            "anchor-actividad-tarjetas"
+          ],
+          "asserted_by": "COURT",
+          "category": "ECONOMIC_ACTIVITY",
+          "country": "España",
+          "description": "El recurrente era socio mayoritario y administrador único de una sociedad domiciliada en Girona.",
+          "end_date": null,
+          "fact_id": "fact-control-iberdigest",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "place": "Girona",
+          "procedural_status": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "start_date": null,
+          "subject_role": "TAXPAYER",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        },
+        {
+          "anchor_ids": [
+            "anchor-actividad-tarjetas"
+          ],
+          "asserted_by": "COURT",
+          "category": "CONSUMPTION",
+          "country": "España",
+          "description": "Había movimientos de tarjeta en restaurantes y gasolineras próximos a la vivienda de Bescanó.",
+          "end_date": null,
+          "fact_id": "fact-vida-cotidiana-girona",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "place": "Girona",
+          "procedural_status": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "start_date": null,
+          "subject_role": "TAXPAYER",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        },
+        {
+          "anchor_ids": [
+            "anchor-declaraciones-suministros"
+          ],
+          "asserted_by": "COURT",
+          "category": "HOUSING",
+          "country": "España",
+          "description": "Los suministros de agua y electricidad evidenciaban ocupación continua de la vivienda de Bescanó.",
+          "end_date": null,
+          "fact_id": "fact-vivienda-ocupada-bescano",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "place": "Bescanó",
+          "procedural_status": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "start_date": null,
+          "subject_role": "TAXPAYER",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        },
+        {
+          "anchor_ids": [
+            "anchor-sin-vinculos-francia"
+          ],
+          "asserted_by": "COURT",
+          "category": "ECONOMIC_ACTIVITY",
+          "country": "Francia",
+          "description": "No se acreditaron actividad, rentas, bienes, propiedad ni lazos afectivos relevantes en Francia.",
+          "end_date": null,
+          "fact_id": "fact-sin-intereses-francia",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "place": null,
+          "procedural_status": "NOT_PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "start_date": null,
+          "subject_role": "TAXPAYER",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        }
+      ],
+      "holding": {
+        "anchor_ids": [
+          "anchor-actividad-tarjetas",
+          "anchor-declaraciones-suministros",
+          "anchor-sin-vinculos-francia",
+          "anchor-residencia-conclusion"
+        ],
+        "conclusion": "El recurrente tenía residencia fiscal en España durante 2010 y 2011.",
+        "consequences": [
+          "Tributación por IRPF sobre la renta mundial."
+        ],
+        "decisive_reasoning": "El núcleo principal de actividades e intereses económicos radicaba en España y los indicios franceses no lo desvirtuaron.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-regla-articulo-9",
+          "anchor-cdi-residencia",
+          "anchor-actividad-tarjetas",
+          "anchor-declaraciones-suministros",
+          "anchor-sin-vinculos-francia",
+          "anchor-residencia-conclusion"
+        ],
+        "criterion_ids": [
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_183_DIAS",
+          "CRIT_CDI_TIEBREAKER"
+        ],
+        "evidence_ids": [
+          "evidence-control-societario",
+          "evidence-movimientos-tarjeta",
+          "evidence-suministros-vivienda",
+          "evidence-certificado-frances-residencia"
+        ],
+        "fact_ids": [
+          "fact-control-iberdigest",
+          "fact-vida-cotidiana-girona",
+          "fact-vivienda-ocupada-bescano",
+          "fact-sin-intereses-francia"
+        ],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [
+          "rule-articulo-9-lirpf",
+          "rule-articulo-4-cdi-francia"
+        ],
+        "question": "¿Tenía el recurrente residencia fiscal en España durante 2010 y 2011?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-1071-2025",
+      "legal_rules": [
+        {
+          "anchor_ids": [
+            "anchor-regla-articulo-9"
+          ],
+          "citation": "Artículo 9 de la Ley 35/2006",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "legal_rule_id": "rule-articulo-9-lirpf",
+          "proposition": "La radicación en España del núcleo principal o base de actividades o intereses económicos determina residencia.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "rule_type": "STATUTE"
+        },
+        {
+          "anchor_ids": [
+            "anchor-cdi-residencia"
+          ],
+          "citation": "Artículo 4 del CDI entre España y Francia",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "legal_rule_id": "rule-articulo-4-cdi-francia",
+          "proposition": "La residencia a efectos del convenio parte de la sujeción por domicilio, residencia o criterio análogo.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "rule_type": "TREATY"
+        }
+      ],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Tenía el recurrente residencia fiscal en España durante 2010 y 2011?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_183_DIAS\nCRIT_CDI_TIEBREAKER\nEl recurrente era socio mayoritario y administrador único de una sociedad domiciliada en Girona.\nHabía movimientos de tarjeta en restaurantes y gasolineras próximos a la vivienda de Bescanó.\nLos suministros de agua y electricidad evidenciaban ocupación continua de la vivienda de Bescanó.\nNo se acreditaron actividad, rentas, bienes, propiedad ni lazos afectivos relevantes en Francia.\nparticipaciones y administración de Iberdigest\nParticipación mayoritaria y cargo de administrador único en una sociedad española.\nAcreditar que el núcleo principal de actividades económicas radicaba en España.\nACCEPTED\nLa Sala lo integró como elemento central de los intereses económicos y laborales.\nrestaurantes y repostajes\nMovimientos de tarjeta en Girona y en rutas próximas a la vivienda española.\nCorroborar actividad cotidiana y presencia en el entorno de la vivienda.\nACCEPTED\nLa Sala los incluyó entre los elementos usados para determinar la residencia.\nagua y electricidad\nSuministros que evidenciaban ocupación continua de la vivienda de Bescanó.\nAcreditar uso efectivo de la vivienda española.\nACCEPTED\nLa Sala los trató como indicio concordante de ocupación continua.\ncertificado de residencia fiscal francés\nCertificado emitido por las autoridades fiscales francesas.\nAcreditar residencia fiscal en Francia.\nREJECTED\nNo desvirtuó los vínculos económicos, cotidianos y residenciales acreditados en España.\nArtículo 9 de la Ley 35/2006\nLa radicación en España del núcleo principal o base de actividades o intereses económicos determina residencia.\nArtículo 4 del CDI entre España y Francia\nLa residencia a efectos del convenio parte de la sujeción por domicilio, residencia o criterio análogo.\nEl recurrente tenía residencia fiscal en España durante 2010 y 2011.\nEl núcleo principal de actividades e intereses económicos radicaba en España y los indicios franceses no lo desvirtuaron.\nTributación por IRPF sobre la renta mundial.\nRadicación en España del núcleo principal de actividades o intereses económicos.\nLa Administración acreditó la residencia y la prueba francesa no desvirtuó los indicios.\nb) Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta.\"\nAhora bien, no podemos aceptar la tesis actora en orden a que estas normas deﬁnen la residencia. No es así.\nLa residencia viene determinada por normas internas y por el artículo 4 del Convenio entre el Reino de España\ny la República Francesa:\n\"1. A los efectos de este Convenio, la expresión «residente de un Estado contratante» signiﬁca toda persona que\nen virtud de la legislación de este Estado esté sujeta a imposición en él por razón de su domicilio, residencia,\nsede de dirección o cualquier otro criterio de naturaleza análoga. (...)\"\n- Respecto a sus intereses económicos/laborales: ostentaba la titularidad del 79,99% (en el ejercicio 2010)\ny del 70% (en el ejercicio 2011), de las participaciones en el capital de la sociedad domiciliada en España,\nconcretamente en Gerona, IBERDIGEST SL. Además, ostenta el cargo de administrador único de la entidad\nIBERDIGEST SL desde el año 2005. De los movimientos de la tarjeta de crédito resultan movimientos en el\námbito territorial de Gerona capital, destacando los correspondientes a restaurantes y los de repostaje de\ngasolina en una ruta próxima a su vivienda sita en la localidad de Bescanó (Gerona).\n- En relación a sus declaraciones tributarias, el Sr. declaró en Francia los rendimientos de trabajo (324.000\neuros en 2010 y 338.541 euros en 2011) obtenidos de Iberdigest SL y presentó autoliquidaciones en España\npor el Impuesto sobre la Renta de No Residentes (IRNR), declarando exclusivamente la imputación de rentas\ninmobiliarias por el uso propio de una vivienda situada en Bescanó (Girona). En dicha vivienda se han\nconstatado suministros de agua y electricidad que evidencian una continua ocupación de la misma.\n- Por el Sr. Recurrente no se ha acreditado tener en Francia ninguna actividad o interés económico o cualquier\notra fuente de obtención de rentas tener bienes, tampoco consta que tenga ninguna propiedad en Francia ni\nlazos afectivos.\nPor lo tanto, conforme al artículo 9 de la Ley 35/2006, la residencia del recurrente radica en España, pues es\ndonde se encuentra el núcleo principal o la base de sus actividades o intereses económicos, de forma directa\no indirecta.\nNo pude considerarse que concurre en el recurrente el carácter de trabajador fronterizo, ha tenido en los\nejercicios comprobados su residencia ﬁscal en España, al ser éste el lugar donde tiene su núcleo principal de\nactividad.\nRespecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes.\nCiertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación.",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-regla-articulo-9",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3867,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3739,
+              "verbatim_text": "b) Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta.\""
+            }
+          ],
+          "purpose": "LEGAL_RULE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-cdi-residencia",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1630,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1089,
+              "verbatim_text": "Ahora bien, no podemos aceptar la tesis actora en orden a que estas normas deﬁnen la residencia. No es así.\nLa residencia viene determinada por normas internas y por el artículo 4 del Convenio entre el Reino de España\ny la República Francesa:\n\"1. A los efectos de este Convenio, la expresión «residente de un Estado contratante» signiﬁca toda persona que\nen virtud de la legislación de este Estado esté sujeta a imposición en él por razón de su domicilio, residencia,\nsede de dirección o cualquier otro criterio de naturaleza análoga. (...)\""
+            }
+          ],
+          "purpose": "TREATY",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-actividad-tarjetas",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2668,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2054,
+              "verbatim_text": "- Respecto a sus intereses económicos/laborales: ostentaba la titularidad del 79,99% (en el ejercicio 2010)\ny del 70% (en el ejercicio 2011), de las participaciones en el capital de la sociedad domiciliada en España,\nconcretamente en Gerona, IBERDIGEST SL. Además, ostenta el cargo de administrador único de la entidad\nIBERDIGEST SL desde el año 2005. De los movimientos de la tarjeta de crédito resultan movimientos en el\námbito territorial de Gerona capital, destacando los correspondientes a restaurantes y los de repostaje de\ngasolina en una ruta próxima a su vivienda sita en la localidad de Bescanó (Gerona)."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-declaraciones-suministros",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3188,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2669,
+              "verbatim_text": "- En relación a sus declaraciones tributarias, el Sr. declaró en Francia los rendimientos de trabajo (324.000\neuros en 2010 y 338.541 euros en 2011) obtenidos de Iberdigest SL y presentó autoliquidaciones en España\npor el Impuesto sobre la Renta de No Residentes (IRNR), declarando exclusivamente la imputación de rentas\ninmobiliarias por el uso propio de una vivienda situada en Bescanó (Girona). En dicha vivienda se han\nconstatado suministros de agua y electricidad que evidencian una continua ocupación de la misma."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-sin-vinculos-francia",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3422,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3189,
+              "verbatim_text": "- Por el Sr. Recurrente no se ha acreditado tener en Francia ninguna actividad o interés económico o cualquier\notra fuente de obtención de rentas tener bienes, tampoco consta que tenga ninguna propiedad en Francia ni\nlazos afectivos."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-residencia-conclusion",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3882,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3423,
+              "verbatim_text": "Por lo tanto, conforme al artículo 9 de la Ley 35/2006, la residencia del recurrente radica en España, pues es\ndonde se encuentra el núcleo principal o la base de sus actividades o intereses económicos, de forma directa\no indirecta.\nNo pude considerarse que concurre en el recurrente el carácter de trabajador fronterizo, ha tenido en los\nejercicios comprobados su residencia ﬁscal en España, al ser éste el lugar donde tiene su núcleo principal de\nactividad."
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-certificado-frances",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3527,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3017,
+              "verbatim_text": "Respecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-interpretacion-razonable",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4660,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4314,
+              "verbatim_text": "Ciertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación."
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        }
+      ],
+      "treaty_analyses": [
+        {
+          "anchor_ids": [
+            "anchor-cdi-residencia",
+            "anchor-residencia-conclusion"
+          ],
+          "countries": [
+            "España",
+            "Francia"
+          ],
+          "decisive_step_id": null,
+          "domestic_law_issue_ids": [
+            "residencia-fiscal"
+          ],
+          "dual_residence_established": false,
+          "result_country": "España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "No se alcanzó una secuencia de desempate: la Sala resolvió con ley interna y la definición de residencia del convenio.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "steps": [],
+          "treaty_analysis_id": "treaty-spain-france",
+          "treaty_citation": "Artículo 4 del CDI entre España y Francia"
+        }
+      ],
+      "unit_id": "san-1071-2025-residencia-fiscal"
+    },
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-informe-auditoria",
+            "anchor-tasacion-conclusion"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "No coincidía con el criterio objetivo legalmente aplicable.",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Informe que proponía un valor contable para Iberdigest.",
+          "evidence_id": "evidence-informe-auditoria",
+          "fact_ids": [
+            "fact-informe-valoracion"
+          ],
+          "foreign_document": null,
+          "issue_ids": [
+            "ganancia-patrimonial"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Desvirtuar el valor de transmisión calculado por la Administración.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CONTRADICTORY",
+          "subtype": "informe de auditoría sobre valoración de participaciones"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Francia"
+        ],
+        "criterion_ids": [
+          "CRIT_OTRO"
+        ],
+        "evidence_categories": [
+          "TESTIFICAL_Y_PERICIAL"
+        ],
+        "evidence_parties": [
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_ASSESSMENT",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "tax_years": [
+          2010,
+          2011
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [
+        {
+          "anchor_ids": [
+            "anchor-informe-auditoria"
+          ],
+          "asserted_by": "COURT",
+          "category": "ASSETS",
+          "country": "España",
+          "description": "El informe de auditoría atribuía a Iberdigest un valor que no coincidía con el criterio objetivo legal aplicado.",
+          "end_date": null,
+          "fact_id": "fact-informe-valoracion",
+          "issue_ids": [
+            "ganancia-patrimonial"
+          ],
+          "place": null,
+          "procedural_status": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "start_date": null,
+          "subject_role": "TAXPAYER",
+          "tax_years": [
+            2011
+          ]
+        }
+      ],
+      "holding": {
+        "anchor_ids": [
+          "anchor-informe-auditoria",
+          "anchor-tasacion-conclusion",
+          "anchor-fallo-parcial"
+        ],
+        "conclusion": "Se mantuvo el criterio objetivo de valoración aplicado a la transmisión de participaciones.",
+        "consequences": [
+          "Confirmación de la regularización de la ganancia patrimonial."
+        ],
+        "decisive_reasoning": "El informe de auditoría no probó un valor alternativo admisible y no procedía tasación pericial contradictoria.",
+        "holding_id": "holding-ganancia-patrimonial",
+        "issue_id": "ganancia-patrimonial",
+        "outcome": "GANA_AEAT",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-informe-auditoria",
+          "anchor-tasacion-conclusion",
+          "anchor-fallo-parcial"
+        ],
+        "criterion_ids": [
+          "CRIT_OTRO"
+        ],
+        "evidence_ids": [
+          "evidence-informe-auditoria"
+        ],
+        "fact_ids": [
+          "fact-informe-valoracion"
+        ],
+        "holding_id": "holding-ganancia-patrimonial",
+        "issue_id": "ganancia-patrimonial",
+        "issue_type": "TAX_ASSESSMENT",
+        "legal_rule_ids": [
+          "rule-valor-transmision"
+        ],
+        "question": "¿Debía mantenerse la regularización de la ganancia patrimonial por la transmisión de participaciones?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-1071-2025",
+      "legal_rules": [
+        {
+          "anchor_ids": [
+            "anchor-informe-auditoria",
+            "anchor-tasacion-conclusion"
+          ],
+          "citation": "Artículo 37.1.b de la Ley 35/2006",
+          "issue_ids": [
+            "ganancia-patrimonial"
+          ],
+          "legal_rule_id": "rule-valor-transmision",
+          "proposition": "El valor de transmisión se determina mediante el criterio objetivo legal cuando no se acredita precio de mercado entre partes independientes.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "rule_type": "STATUTE"
+        }
+      ],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Debía mantenerse la regularización de la ganancia patrimonial por la transmisión de participaciones?\nTAX_ASSESSMENT\nCRIT_OTRO\nEl informe de auditoría atribuía a Iberdigest un valor que no coincidía con el criterio objetivo legal aplicado.\ninforme de auditoría sobre valoración de participaciones\nInforme que proponía un valor contable para Iberdigest.\nDesvirtuar el valor de transmisión calculado por la Administración.\nREJECTED\nNo coincidía con el criterio objetivo legalmente aplicable.\nArtículo 37.1.b de la Ley 35/2006\nEl valor de transmisión se determina mediante el criterio objetivo legal cuando no se acredita precio de mercado entre partes independientes.\nSe mantuvo el criterio objetivo de valoración aplicado a la transmisión de participaciones.\nEl informe de auditoría no probó un valor alternativo admisible y no procedía tasación pericial contradictoria.\nConfirmación de la regularización de la ganancia patrimonial.\nEl informe de auditoría evacuado para IBERDIGEST donde se atribuye un valor contable a la sociedad\nde 3.795.662, 59 euros, no puede aceptarse como prueba del valor de las participaciones, cuando no es\ncoincidente con un criterio objetivo como es el aplicado por la Administración, el que resulte de capitalizar al\ntipo del 20 por ciento el promedio de los resultados de los tres ejercicios sociales cerrados con anterioridad a\nla fecha del devengo del Impuesto.\nLa tasación pericial contradictoria no procede en cuanto la valoración realizada por la Administración no\nresponde a una valoración de mercado, sino a la aplicación de un criterio objetivo legalmente establecido.\nQue estimando parcialmenteel recurso contencioso administrativo interpuesto por Don  Bernabe , y en\nsu nombre y representación el Procurador Sr. Dº Eduardo Moya Gómez, frente a la Administración del\nEstado,dirigida y representada por el Sr. Abogado del Estado, sobre Resolución del Tribunal Económico\nAdministrativo Central de fecha 16 de diciembre de 2020,debemos declarar y declaramos no ser ajustada a\nDerecho la Resolución impugnada en cuanto a la sanción impuesta, y, en consecuencia, debemos anularlay la\nanulamosen tal extremo, conﬁrmándolaen sus restantes pronunciamientos, sin imposición especial de costas.",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-informe-auditoria",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2251,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 1790,
+              "verbatim_text": "El informe de auditoría evacuado para IBERDIGEST donde se atribuye un valor contable a la sociedad\nde 3.795.662, 59 euros, no puede aceptarse como prueba del valor de las participaciones, cuando no es\ncoincidente con un criterio objetivo como es el aplicado por la Administración, el que resulte de capitalizar al\ntipo del 20 por ciento el promedio de los resultados de los tres ejercicios sociales cerrados con anterioridad a\nla fecha del devengo del Impuesto."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-tasacion-conclusion",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2464,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2252,
+              "verbatim_text": "La tasación pericial contradictoria no procede en cuanto la valoración realizada por la Administración no\nresponde a una valoración de mercado, sino a la aplicación de un criterio objetivo legalmente establecido."
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-fallo-parcial",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1017,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 401,
+              "verbatim_text": "Que estimando parcialmenteel recurso contencioso administrativo interpuesto por Don  Bernabe , y en\nsu nombre y representación el Procurador Sr. Dº Eduardo Moya Gómez, frente a la Administración del\nEstado,dirigida y representada por el Sr. Abogado del Estado, sobre Resolución del Tribunal Económico\nAdministrativo Central de fecha 16 de diciembre de 2020,debemos declarar y declaramos no ser ajustada a\nDerecho la Resolución impugnada en cuanto a la sanción impuesta, y, en consecuencia, debemos anularlay la\nanulamosen tal extremo, conﬁrmándolaen sus restantes pronunciamientos, sin imposición especial de costas."
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-1071-2025-ganancia-patrimonial"
+    },
+    {
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-interpretacion-razonable",
+            "anchor-sancion-conclusion"
+          ],
+          "conclusion": "La interpretación razonable respaldada por documentación oficial impidió apreciar culpabilidad.",
+          "fact_to_prove": "Culpabilidad del contribuyente en la infracción tributaria.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "sancion-tributaria"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 2,
+          "shifts_to": null,
+          "step_id": "burden-aeat-culpabilidad",
+          "triggering_evidence_ids": [
+            "evidence-certificado-frances-sancion"
+          ]
+        }
+      ],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-certificado-frances",
+            "anchor-interpretacion-razonable",
+            "anchor-sancion-conclusion"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala apreció una interpretación razonable aunque equivocada y descartó la culpabilidad.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "El mismo certificado francés y las declaraciones realizadas en ambos países.",
+          "evidence_id": "evidence-certificado-frances-sancion",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "TAX_RESIDENCE_CERTIFICATE",
+            "issuing_authority": "Autoridades fiscales francesas",
+            "jurisdiction": "Francia",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Contribuyó a excluir la culpabilidad, sin alterar la conclusión sobre residencia.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "sancion-tributaria"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Excluir la culpabilidad sancionadora por interpretación razonable.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "certificado francés como soporte de interpretación razonable"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Francia"
+        ],
+        "criterion_ids": [
+          "CRIT_OTRO"
+        ],
+        "evidence_categories": [
+          "DOCUMENTACION_FISCAL_EXTRANJERA"
+        ],
+        "evidence_parties": [
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "PENALTY",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "tax_years": [
+          2010,
+          2011
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-certificado-frances",
+          "anchor-interpretacion-razonable",
+          "anchor-sancion-conclusion",
+          "anchor-fallo-parcial"
+        ],
+        "conclusion": "La sanción tributaria debía anularse por falta de culpabilidad.",
+        "consequences": [
+          "Anulación de la sanción.",
+          "Confirmación de los restantes pronunciamientos."
+        ],
+        "decisive_reasoning": "El contribuyente actuó conforme a una interpretación razonable aunque equivocada y declaró en España y Francia.",
+        "holding_id": "holding-sancion-tributaria",
+        "issue_id": "sancion-tributaria",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-certificado-frances",
+          "anchor-interpretacion-razonable",
+          "anchor-sancion-conclusion",
+          "anchor-fallo-parcial"
+        ],
+        "criterion_ids": [
+          "CRIT_OTRO"
+        ],
+        "evidence_ids": [
+          "evidence-certificado-frances-sancion"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-sancion-tributaria",
+        "issue_id": "sancion-tributaria",
+        "issue_type": "PENALTY",
+        "legal_rule_ids": [
+          "rule-culpabilidad-sancion"
+        ],
+        "question": "¿Debía anularse la sanción aunque se confirmara la residencia española?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Pendiente de aprobación jurídica humana.",
+          "reviewed_at": "2026-07-29",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-1071-2025",
+      "legal_rules": [
+        {
+          "anchor_ids": [
+            "anchor-interpretacion-razonable",
+            "anchor-sancion-conclusion"
+          ],
+          "citation": "Artículo 179.2.d de la Ley General Tributaria",
+          "issue_ids": [
+            "sancion-tributaria"
+          ],
+          "legal_rule_id": "rule-culpabilidad-sancion",
+          "proposition": "Una interpretación razonable puede excluir la responsabilidad sancionadora.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "rule_type": "STATUTE"
+        }
+      ],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Debía anularse la sanción aunque se confirmara la residencia española?\nPENALTY\nCRIT_OTRO\ncertificado francés como soporte de interpretación razonable\nEl mismo certificado francés y las declaraciones realizadas en ambos países.\nExcluir la culpabilidad sancionadora por interpretación razonable.\nACCEPTED\nLa Sala apreció una interpretación razonable aunque equivocada y descartó la culpabilidad.\nArtículo 179.2.d de la Ley General Tributaria\nUna interpretación razonable puede excluir la responsabilidad sancionadora.\nLa sanción tributaria debía anularse por falta de culpabilidad.\nEl contribuyente actuó conforme a una interpretación razonable aunque equivocada y declaró en España y Francia.\nAnulación de la sanción.\nConfirmación de los restantes pronunciamientos.\nCulpabilidad del contribuyente en la infracción tributaria.\nLa interpretación razonable respaldada por documentación oficial impidió apreciar culpabilidad.\nRespecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes.\nCiertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación.\nPor ello entendemos que no concurre culpabilidad infractora, debiendo anular la sanción impuesta.\nQue estimando parcialmenteel recurso contencioso administrativo interpuesto por Don  Bernabe , y en\nsu nombre y representación el Procurador Sr. Dº Eduardo Moya Gómez, frente a la Administración del\nEstado,dirigida y representada por el Sr. Abogado del Estado, sobre Resolución del Tribunal Económico\nAdministrativo Central de fecha 16 de diciembre de 2020,debemos declarar y declaramos no ser ajustada a\nDerecho la Resolución impugnada en cuanto a la sanción impuesta, y, en consecuencia, debemos anularlay la\nanulamosen tal extremo, conﬁrmándolaen sus restantes pronunciamientos, sin imposición especial de costas.",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-certificado-frances",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3527,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3017,
+              "verbatim_text": "Respecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes."
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-interpretacion-razonable",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4660,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4314,
+              "verbatim_text": "Ciertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación."
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-sancion-conclusion",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4758,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4661,
+              "verbatim_text": "Por ello entendemos que no concurre culpabilidad infractora, debiendo anular la sanción impuesta."
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        },
+        {
+          "anchor_id": "anchor-fallo-parcial",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1017,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 401,
+              "verbatim_text": "Que estimando parcialmenteel recurso contencioso administrativo interpuesto por Don  Bernabe , y en\nsu nombre y representación el Procurador Sr. Dº Eduardo Moya Gómez, frente a la Administración del\nEstado,dirigida y representada por el Sr. Abogado del Estado, sobre Resolución del Tribunal Económico\nAdministrativo Central de fecha 16 de diciembre de 2020,debemos declarar y declaramos no ser ajustada a\nDerecho la Resolución impugnada en cuanto a la sanción impuesta, y, en consecuencia, debemos anularlay la\nanulamosen tal extremo, conﬁrmándolaen sus restantes pronunciamientos, sin imposición especial de costas."
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Pendiente de aprobación jurídica humana.",
+            "reviewed_at": "2026-07-29",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-1071-2025-sancion-tributaria"
+    }
+  ]
+}

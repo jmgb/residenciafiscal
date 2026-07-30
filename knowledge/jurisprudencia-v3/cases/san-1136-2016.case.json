@@ -1,0 +1,816 @@
+{
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-carga-administracion",
+        "anchor-declaracion-insuficiente"
+      ],
+      "conclusion": "La manifestación aislada del representante no desvirtuó el conjunto probatorio.",
+      "fact_to_prove": "Residencia habitual de la recurrente y del causante en España.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "response_required": "Aportar elementos suficientes para desvirtuar los hechos y la presunción familiar.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": "AEAT",
+      "step_id": "burden-actora-aporta-prueba",
+      "triggering_evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-certificacion-aeat-actora",
+        "evidence-pasaportes"
+      ]
+    }
+  ],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-declaraciones-domicilio",
+        "anchor-conclusion-actora"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala las valoró conjuntamente con el resto de la documentación y las consideró concordantes.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Declaraciones fiscales de ambos cónyuges con domicilio en Marbella entre 2000 y 2011.",
+      "evidence_id": "evidence-declaraciones-fiscales",
+      "fact_ids": [
+        "fact-declaraciones-domicilio-espana",
+        "fact-actora-residente-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar domicilio y residencia habitual continuados en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "declaraciones de IRPF e Impuesto sobre el Patrimonio"
+    },
+    {
+      "anchor_ids": [
+        "anchor-certificacion-aeat"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala la integró en la valoración conjunta de la documentación aportada.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Certificación de la AEAT que afirmaba la residencia fiscal en España de la recurrente.",
+      "evidence_id": "evidence-certificacion-aeat-actora",
+      "fact_ids": [
+        "fact-actora-residente-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Corroborar formalmente la residencia fiscal de la recurrente.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "certificación de residencia fiscal de la AEAT"
+    },
+    {
+      "anchor_ids": [
+        "anchor-pasaportes-entradas"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala los citó entre los elementos que permitían deducir residencia habitual.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Pasaportes con entradas reiteradas de los cónyuges en España.",
+      "evidence_id": "evidence-pasaportes",
+      "fact_ids": [
+        "fact-entradas-reiteradas-espana",
+        "fact-causante-residente-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Corroborar presencia física reiterada en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "copias de pasaportes"
+    },
+    {
+      "anchor_ids": [
+        "anchor-presuncion-causante"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala aplicó expresamente la presunción iuris tantum al causante.",
+      "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "description": "Residencia acreditada de la recurrente y ausencia de separación legal.",
+      "evidence_id": "evidence-presuncion-conyugal",
+      "fact_ids": [
+        "fact-actora-residente-espana",
+        "fact-convivencia-conyugal",
+        "fact-causante-residente-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "offered_by": "COURT_OBTAINED",
+      "probative_purpose": "Aplicar al causante la presunción de residencia habitual en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "presunción por residencia del cónyuge"
+    },
+    {
+      "anchor_ids": [
+        "anchor-declaracion-insuficiente"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala consideró que la manifestación aislada no bastaba y estaba contradicha por otros elementos.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Manifestación de que el causante no tenía residencia en España.",
+      "evidence_id": "evidence-declaracion-representante",
+      "fact_ids": [
+        "fact-causante-residente-espana"
+      ],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Desvirtuar los indicios de residencia habitual del causante.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CONTRADICTORY",
+      "subtype": "manifestación del representante del sujeto pasivo"
+    }
+  ],
+  "facts": [
+    {
+      "anchor_ids": [
+        "anchor-declaraciones-domicilio"
+      ],
+      "asserted_by": "COURT",
+      "category": "ADMINISTRATIVE_LINK",
+      "country": "España",
+      "description": "Las declaraciones fiscales de la recurrente y del causante entre 2000 y 2011 consignaban domicilio en Marbella.",
+      "end_date": null,
+      "fact_id": "fact-declaraciones-domicilio-espana",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "place": "Marbella",
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2007
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-pasaportes-entradas"
+      ],
+      "asserted_by": "COURT",
+      "category": "TRAVEL",
+      "country": "España",
+      "description": "Los pasaportes mostraban entradas reiteradas de ambos cónyuges en España y una entrada en 2007.",
+      "end_date": null,
+      "fact_id": "fact-entradas-reiteradas-espana",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2007
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-conclusion-actora"
+      ],
+      "asserted_by": "COURT",
+      "category": "PRESENCE",
+      "country": "España",
+      "description": "La Sala consideró plenamente acreditada la residencia habitual de la recurrente en España.",
+      "end_date": null,
+      "fact_id": "fact-actora-residente-espana",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "place": "Marbella",
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "TAXPAYER",
+      "tax_years": [
+        2007
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-presuncion-causante"
+      ],
+      "asserted_by": "COURT",
+      "category": "FAMILY",
+      "country": "España",
+      "description": "No constaba separación legal entre la recurrente y el causante.",
+      "end_date": null,
+      "fact_id": "fact-convivencia-conyugal",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "SPOUSE",
+      "tax_years": [
+        2007
+      ]
+    },
+    {
+      "anchor_ids": [
+        "anchor-residencia-conclusion"
+      ],
+      "asserted_by": "COURT",
+      "category": "PRESENCE",
+      "country": "España",
+      "description": "La Sala concluyó que el causante tenía residencia habitual en España al fallecer.",
+      "end_date": null,
+      "fact_id": "fact-causante-residente-espana",
+      "issue_ids": [
+        "residencia-habitual",
+        "reducciones-sucesiones"
+      ],
+      "place": null,
+      "procedural_status": "PROVEN",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "start_date": null,
+      "subject_role": "SPOUSE",
+      "tax_years": [
+        2007
+      ]
+    }
+  ],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-conclusion-actora",
+        "anchor-presuncion-causante",
+        "anchor-carga-administracion",
+        "anchor-residencia-conclusion"
+      ],
+      "conclusion": "La recurrente y el causante tenían residencia habitual en España al tiempo del fallecimiento.",
+      "consequences": [
+        "La sucesión debía regirse como la de un contribuyente residente en España."
+      ],
+      "decisive_reasoning": "La documentación concordante acreditó la residencia de la recurrente y activó la presunción conyugal, que la Administración no desvirtuó.",
+      "holding_id": "holding-residencia-habitual",
+      "issue_id": "residencia-habitual",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-reducciones-aplicables",
+        "anchor-fallo-estimatorio"
+      ],
+      "conclusion": "Procedían las reducciones del Impuesto sobre Sucesiones reconocidas por la Sala.",
+      "consequences": [
+        "Anulación de la resolución impugnada.",
+        "Devolución de las cantidades que procedieran con intereses."
+      ],
+      "decisive_reasoning": "La residencia declarada hacía aplicables las reducciones y determinaba la anulación de la liquidación confirmada.",
+      "holding_id": "holding-reducciones-sucesiones",
+      "issue_id": "reducciones-sucesiones",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-07-29T20:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "18a30238d2643e4d83759cc1e021a99eed6d26372cd438af04144b94805f7692",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-1136-2016.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "c6596f55ad966aa35f86f6f29d617eb341cef2d7d4ff41212b501313b251680f",
+          "source_path": "knowledge/jurisprudencia-muestra-5/sources/san-1136-2016.analysis.json"
+        },
+        {
+          "kind": "ANNOTATIONS",
+          "sha256": "9849a31581dc478be887b89f084bd0b89f00a54e32a13773acadb0624dd3a079",
+          "source_path": "knowledge/annotations/san-1136-2016.yaml"
+        }
+      ],
+      "model_id": "codex-agent",
+      "notes": "Síntesis jurídica propuesta por agente desde el PDF verbatim, el análisis legado y el sidecar. No implica aprobación jurídica humana.",
+      "producer": "residenciafiscal-hybrid-agent-pipeline",
+      "prompt_sha256": null,
+      "run_id": "case-v3-sample-san-1136-2016"
+    },
+    "chamber": "Sala de lo Contencioso-Administrativo, Sección Segunda",
+    "countries": [
+      "España",
+      "Rusia"
+    ],
+    "court": "Audiencia Nacional",
+    "decision_date": "2016-03-22",
+    "ecli": "ECLI:ES:AN:2016:1136",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-1136-2016",
+    "page_count": 5,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Pendiente de aprobación jurídica humana.",
+      "reviewed_at": "2026-07-29",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 1136/2016",
+    "source_file": "sentencias/SAN_1136_2016.pdf",
+    "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480",
+    "tax_years": [
+      2007
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-regla-articulo-9",
+        "anchor-declaraciones-domicilio",
+        "anchor-certificacion-aeat",
+        "anchor-pasaportes-entradas",
+        "anchor-conclusion-actora",
+        "anchor-presuncion-causante",
+        "anchor-carga-administracion",
+        "anchor-declaracion-insuficiente",
+        "anchor-residencia-conclusion"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence_ids": [
+        "evidence-declaraciones-fiscales",
+        "evidence-certificacion-aeat-actora",
+        "evidence-pasaportes",
+        "evidence-presuncion-conyugal",
+        "evidence-declaracion-representante"
+      ],
+      "fact_ids": [
+        "fact-declaraciones-domicilio-espana",
+        "fact-entradas-reiteradas-espana",
+        "fact-actora-residente-espana",
+        "fact-convivencia-conyugal",
+        "fact-causante-residente-espana"
+      ],
+      "holding_id": "holding-residencia-habitual",
+      "issue_id": "residencia-habitual",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [
+        "rule-articulo-9-lirpf",
+        "rule-presuncion-familiar"
+      ],
+      "question": "¿Tenían la recurrente y el causante residencia habitual en España al fallecimiento?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_ids": [
+        "anchor-residencia-conclusion",
+        "anchor-reducciones-aplicables",
+        "anchor-fallo-estimatorio"
+      ],
+      "criterion_ids": [
+        "CRIT_OTRO"
+      ],
+      "evidence_ids": [],
+      "fact_ids": [
+        "fact-causante-residente-espana"
+      ],
+      "holding_id": "holding-reducciones-sucesiones",
+      "issue_id": "reducciones-sucesiones",
+      "issue_type": "TAX_ASSESSMENT",
+      "legal_rule_ids": [
+        "rule-reducciones-sucesiones"
+      ],
+      "question": "¿Procedían las reducciones reclamadas en el Impuesto sobre Sucesiones?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [
+    {
+      "anchor_ids": [
+        "anchor-regla-articulo-9"
+      ],
+      "citation": "Artículo 9 de la Ley 35/2006",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "legal_rule_id": "rule-articulo-9-lirpf",
+      "proposition": "La residencia habitual se determina por permanencia, núcleo de intereses o la presunción familiar legalmente prevista.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    },
+    {
+      "anchor_ids": [
+        "anchor-regla-articulo-9",
+        "anchor-presuncion-causante"
+      ],
+      "citation": "Artículo 9.1 de la Ley 35/2006",
+      "issue_ids": [
+        "residencia-habitual"
+      ],
+      "legal_rule_id": "rule-presuncion-familiar",
+      "proposition": "La residencia habitual en España del cónyuge no separado legalmente activa una presunción iuris tantum.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    },
+    {
+      "anchor_ids": [
+        "anchor-reducciones-aplicables"
+      ],
+      "citation": "Artículos 15 y 20.2 de la Ley 29/1987",
+      "issue_ids": [
+        "reducciones-sucesiones"
+      ],
+      "legal_rule_id": "rule-reducciones-sucesiones",
+      "proposition": "La condición de residente determina la aplicación de las reducciones reconocidas en la sentencia.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "rule_type": "STATUTE"
+    }
+  ],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Pendiente de aprobación jurídica humana.",
+    "reviewed_at": "2026-07-29",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-regla-articulo-9",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1799,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1521,
+          "verbatim_text": "Se presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual en territorio español\ncuando, de acuerdo con los criterios anteriores, resida habitualmente en España el cónyuge no separado\nlegalmente y los hijos menores de edad que dependan de aquél.\""
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-declaraciones-domicilio",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2461,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2082,
+          "verbatim_text": "La recurrente aporta en los documentos del 3 al 29, declaraciones del causante de la herencia y de la propia\nrecurrente del Impuesto sobre el Patrimonio e Impuesto sobre la Renta de las Personas Físicas desde el año\n2000 al 2011, constando en todas ellas el domicilio de  DIRECCION000  Parcela  NUM000  Manzana  NUM001\nen Marbella, Málaga o  URBANIZACIÓN000  en Marbella, Málaga."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-certificacion-aeat",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2771,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2462,
+          "verbatim_text": "Como documento 31 se aporta certiﬁcación de la AEAT en la que se aﬁrma la residencia ﬁscal en España de la\nhoy recurrente, si bien, en el documento 32, la AEAT deniega la certiﬁcación de residencia ﬁscal en España del\ncausante de la herencia, pues en el año 2013 en que se expide, el causante había fallecido."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-pasaportes-entradas",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3643,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3365,
+          "verbatim_text": "En el documento 33, se aporta copia de los pasaportes de la recurrente y de su fallecido esposo, del que resulta\nque ambos entraron en España reiteradamente en los años 2004, 2005, 2006 por el aeropuerto de Málaga, y,\nen una ocasión, en 2007 por el aeropuerto de Madrid Barajas."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-conclusion-actora",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3872,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3644,
+          "verbatim_text": "Pues bien, la valoración conjunta de la prueba, nos lleva a concluir que el tiempo que la contribuyente residió\nen España cumple los requisitos del artículo 9 de la Ley 35/2006 , para entender que constituye residencia\nhabitual."
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-presuncion-causante",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 418,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 15,
+          "verbatim_text": "con los criterios anteriores, resida habitualmente en España el cónyuge no separado legalmente, y lo cierto es\nque no consta que la actora se encontrase separada legalmente del causante (debe presumirse la convivencia\nconyugal conforme al artículo 69 del C civil ), por lo que la presunción iuris tantum que recoge el citado precepto\nle es de aplicación al causante de la herencia, cónyuge de la actora."
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-carga-administracion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 686,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 419,
+          "verbatim_text": "Dados los elementos probatorios aportados y las presunciones iuris tantum a las que hemos hechos referencia,\ndebemos concluir que la Administración debió presentar elementos de prueba suﬁcientes para desvirtuar los\nelementos fácticos a los que hemos hecho referencia."
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-declaracion-insuficiente",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1458,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 1082,
+          "verbatim_text": "Ahora bien, la manifestación del representante\ndel sujeto pasivo no es suﬁciente, por si sola, para determinar la residencia habitual del causante (bien podía\nignorar las circunstancias concretas o tener conocimiento de ellas posteriormente o tratarse de un error),\ny menos aún, cuando concurren elementos de prueba que indican lo contrario, como anteriormente hemos\nexpuesto."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-residencia-conclusion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1748,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 1459,
+          "verbatim_text": "De lo razonado resulta que tanto la contribuyente como el causante tenía residencia habitual en España al\ntiempo del fallecimiento de éste y el Impuesto de Sucesiones debe seguir las reglas establecidas para el caso\nde contribuyente residente en España que convive con el cónyuge causante."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-reducciones-aplicables",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2463,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 2345,
+          "verbatim_text": "Es igualmente aplicable la reducción del artículo 20.2 a) Grupo II y lo previsto en el artículo 15 de la Ley\n29/1987 ."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "anchor_id": "anchor-fallo-estimatorio",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 734,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 24,
+          "verbatim_text": "Que estimando el recurso contencioso administrativo interpuesto por Dª  Fidela   , y en su nombre y\nrepresentación la Procuradora Sra. Dª Izaskun Lacosta Guindano, frente a la Administración del Estado ,\ndirigida y representada por el Sr. Abogado del Estado, sobre Resolución del Tribunal Económico Administrativo\nCentral de fecha 9 de julio de 2012 , debemos declarar y declaramos no ser ajustada a Derecho la Resolución\nimpugnada, y en consecuencia debemos anularla y la anulamos , declarando el derecho de la recurrente a la\ndevolución de las cantidades que procedan por aplicación de las deducciones reconocidas en esta sentencia\ncon los intereses correspondientes, con imposición de costas a la demandada."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Pendiente de aprobación jurídica humana.",
+        "reviewed_at": "2026-07-29",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    }
+  ],
+  "treaty_analyses": []
+}

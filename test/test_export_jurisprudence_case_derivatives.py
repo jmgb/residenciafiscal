@@ -19,8 +19,10 @@ def test_exporta_markdown_indice_e_informe_sin_llm(tmp_path: Path) -> None:
     report_path = tmp_path / "reports" / "san-1210-2023.derivatives-validation.json"
 
     result = export_case_derivatives(
-        case_path=PROJECT_ROOT / "knowledge/jurisprudencia/cases/san-1210-2023.case.json",
-        verbatim_path=PROJECT_ROOT / "knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json",
+        case_path=(PROJECT_ROOT / "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json"),
+        verbatim_path=(
+            PROJECT_ROOT / "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json"
+        ),
         markdown_path=markdown_path,
         retrieval_path=retrieval_path,
         report_path=report_path,
@@ -44,9 +46,9 @@ def test_dos_exports_producen_los_mismos_bytes(tmp_path: Path) -> None:
     from export_jurisprudence_case_derivatives import export_case_derivatives
 
     arguments = {
-        "case_path": PROJECT_ROOT / "knowledge/jurisprudencia/cases/san-1210-2023.case.json",
+        "case_path": (PROJECT_ROOT / "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json"),
         "verbatim_path": PROJECT_ROOT
-        / "knowledge/jurisprudencia/verbatim/san-1210-2023.pages.json",
+        / "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json",
         "markdown_path": tmp_path / "sentencias/san-1210-2023.md",
         "retrieval_path": tmp_path / "retrieval/san-1210-2023.issues.json",
         "report_path": tmp_path / "reports/san-1210-2023.derivatives-validation.json",

@@ -1,0 +1,192 @@
+{
+  "schema_version": "residenciafiscal-case-question-evaluation/1",
+  "judgment_id": "san-1226-2021",
+  "questions": [
+    {
+      "question_id": "GEN-05",
+      "question": "¿Qué permitió probar que el contribuyente no residía en España?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-traslado-londres",
+        "fact-214-dias-fuera",
+        "fact-residencia-fiscal-britanica"
+      ],
+      "required_evidence_ids": [
+        "evidence-traslado-empleador",
+        "evidence-certificado-britanico",
+        "evidence-declaracion-renta-britanica"
+      ],
+      "required_anchor_ids": [
+        "anchor-traslado-laboral",
+        "anchor-computo-214-dias",
+        "anchor-declaracion-britanica",
+        "anchor-no-residencia-conclusion"
+      ],
+      "expected_behavior": "Explicar el conjunto de traslado, días, familia y documentación fiscal británica.",
+      "limitations": "No presentar ninguno de los documentos como suficiente por sí solo."
+    },
+    {
+      "question_id": "DAY-02",
+      "question": "¿Cómo calcularon los días las sentencias de la muestra?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-214-dias-fuera"
+      ],
+      "required_evidence_ids": [
+        "evidence-traslado-empleador"
+      ],
+      "required_anchor_ids": [
+        "anchor-computo-214-dias"
+      ],
+      "expected_behavior": "Citar el cómputo judicial de 214 días desde el 1 de junio al 31 de diciembre.",
+      "limitations": "No extrapolar el método a periodos con viajes intermedios distintos."
+    },
+    {
+      "question_id": "FAM-01",
+      "question": "Mi familia vive en España, pero trabajo fuera.",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-traslado-londres",
+        "fact-traslado-familia"
+      ],
+      "required_evidence_ids": [
+        "evidence-traslado-empleador",
+        "evidence-billetes-escolarizacion"
+      ],
+      "required_anchor_ids": [
+        "anchor-traslado-laboral",
+        "anchor-traslado-familia"
+      ],
+      "expected_behavior": "Mostrar que la familia permaneció hasta terminar el curso y luego se trasladó.",
+      "limitations": "El caso no resuelve una separación familiar permanente."
+    },
+    {
+      "question_id": "FAM-03",
+      "question": "¿Cómo se desvirtúa la presunción familiar?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-traslado-familia"
+      ],
+      "required_evidence_ids": [
+        "evidence-billetes-escolarizacion"
+      ],
+      "required_anchor_ids": [
+        "anchor-regla-articulo-9",
+        "anchor-traslado-familia"
+      ],
+      "expected_behavior": "Relacionar billetes, escolarización y nuevo domicilio con el traslado familiar.",
+      "limitations": "No reducir la prueba en contrario a un único billete."
+    },
+    {
+      "question_id": "FOR-01",
+      "question": "¿Basta un certificado fiscal extranjero?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-residencia-fiscal-britanica"
+      ],
+      "required_evidence_ids": [
+        "evidence-certificado-britanico",
+        "evidence-declaracion-renta-britanica"
+      ],
+      "required_anchor_ids": [
+        "anchor-certificado-britanico",
+        "anchor-declaracion-britanica"
+      ],
+      "expected_behavior": "Explicar que el certificado se corroboró con la declaración y los hechos del traslado.",
+      "limitations": "No afirmar que cualquier certificado condicional produzca el mismo efecto."
+    },
+    {
+      "question_id": "FOR-07",
+      "question": "¿Qué reforzó la documentación extranjera?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-traslado-londres",
+        "fact-traslado-familia"
+      ],
+      "required_evidence_ids": [
+        "evidence-traslado-empleador",
+        "evidence-billetes-escolarizacion",
+        "evidence-declaracion-renta-britanica"
+      ],
+      "required_anchor_ids": [
+        "anchor-traslado-laboral",
+        "anchor-traslado-familia",
+        "anchor-declaracion-britanica"
+      ],
+      "expected_behavior": "Relacionar documentos fiscales con empleo, presencia y familia.",
+      "limitations": "Distinguir prueba fiscal de prueba de presencia."
+    },
+    {
+      "question_id": "CDI-01",
+      "question": "Dos países me consideran residente, ¿cómo se resuelve?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-no-residente-espana"
+      ],
+      "required_evidence_ids": [
+        "evidence-certificado-britanico"
+      ],
+      "required_anchor_ids": [
+        "anchor-regla-solapamiento-cdi",
+        "anchor-no-residencia-conclusion"
+      ],
+      "expected_behavior": "Explicar que primero se aplicó la ley interna y que no hubo solapamiento que exigiera desempate.",
+      "limitations": "No presentar el caso como aplicación completa de las reglas de desempate."
+    },
+    {
+      "question_id": "PRU-05",
+      "question": "¿Cómo se valora un conjunto de indicios?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [
+        "fact-214-dias-fuera",
+        "fact-traslado-familia",
+        "fact-residencia-fiscal-britanica"
+      ],
+      "required_evidence_ids": [
+        "evidence-traslado-empleador",
+        "evidence-billetes-escolarizacion",
+        "evidence-certificado-britanico",
+        "evidence-declaracion-renta-britanica"
+      ],
+      "required_anchor_ids": [
+        "anchor-computo-214-dias",
+        "anchor-traslado-familia",
+        "anchor-declaracion-britanica"
+      ],
+      "expected_behavior": "Mostrar la concordancia temporal, familiar, laboral y fiscal.",
+      "limitations": "No formular una lista cerrada."
+    },
+    {
+      "question_id": "SRC-02",
+      "question": "¿Puedes mostrar el fragmento exacto y la página?",
+      "required_issue_ids": [
+        "residencia-fiscal-2011"
+      ],
+      "required_fact_ids": [],
+      "required_evidence_ids": [],
+      "required_anchor_ids": [
+        "anchor-computo-214-dias",
+        "anchor-declaracion-britanica",
+        "anchor-no-residencia-conclusion"
+      ],
+      "expected_behavior": "Devolver fragmentos exactos y página física.",
+      "limitations": "El análisis jurídico sigue AGENT_REVIEWED."
+    }
+  ]
+}

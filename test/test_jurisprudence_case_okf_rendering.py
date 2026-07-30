@@ -7,7 +7,7 @@ from pathlib import Path
 import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CASE_PATH = PROJECT_ROOT / "knowledge/jurisprudencia/cases/san-1210-2023.case.json"
+CASE_PATH = PROJECT_ROOT / "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json"
 
 
 def _case():

@@ -1,7 +1,7 @@
 # Roadmap del corpus jurisprudencial v3
 
-**Estado:** decisión de arquitectura documentada; implementación pendiente.
-**Siguiente unidad de trabajo:** una sentencia, `SAN 1210/2023`.
+**Estado:** fases A, B y C completadas; contrato v3 congelado.
+**Siguiente unidad de trabajo:** fase D, recuperación sobre la muestra.
 **Rollout obligatorio:** 1 → 5 → 106.
 
 ## 1. Contexto
@@ -30,7 +30,7 @@ Estado medido de la muestra:
 | Sentencias preparadas | 5 |
 | Citas candidatas | 98 |
 | Citas literales publicables | 81 |
-| Citas pendientes | 17 |
+| Citas pendientes | 0; 15 reemplazadas y 2 retiradas |
 | Cuestiones propuestas | 12 |
 | Cuestiones aprobadas por una persona | 0 |
 | Preguntas del piloto manual | 40 |
@@ -371,16 +371,25 @@ anclajes y genera el perfil sin consultar el JSONL legado. Contrato y gates:
 
 ### Fase C — cinco sentencias
 
+**Estado (2026-07-29): completada.**
+
 Se regeneran las cinco ya preparadas sin crear un segundo camino.
 
 Gates:
 
-- se cubren resultados y estructuras heterogéneas;
-- las 40 preguntas se ejecutan contra el índice;
-- casos y contracasos esperados son recuperables;
-- se clasifican las 17 citas pendientes;
-- se miden campos ausentes, valores no canónicos y coste de revisión;
-- se decide y congela v3 antes de ampliar.
+- [x] se cubren resultados y estructuras heterogéneas;
+- [x] las 40 preguntas se ejecutan contra el índice;
+- [x] casos y contracasos esperados son recuperables;
+- [x] se clasifican las 17 citas pendientes;
+- [x] se miden campos ausentes, valores no canónicos y coste de revisión;
+- [x] se decide y congela v3 antes de ampliar.
+
+El baseline alcanza recall medio a 5 de 91,71 % para casos esperados y 89,13 %
+para contrastes. A 12 alcanza 100 %, cifra esperable porque la muestra solo
+contiene 12 unidades. Hay 62 anclajes exactos, 0 valores no canónicos y una
+cola de 193 elementos `AGENT_REVIEWED`, todavía sin aprobación humana.
+Evidencias, límites y freeze:
+[`JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).
 
 ### Fase D — recuperación
 
@@ -510,12 +519,16 @@ Métricas de calidad:
 5. Renderizar su Markdown desde v3. **Completado.**
 6. Responder desde datos las preguntas del piloto que le corresponden.
    **Completado para 18 preguntas aplicables.**
-7. Corregir el schema una sola vez con lo aprendido.
-8. Regenerar las cinco.
-9. Medir recuperación con las 40 preguntas.
-10. Decidir si hacen falta embeddings.
-11. Congelar v3 y autorizar, o no, las 106.
-12. Retomar el backend del chat sobre el corpus validado.
+7. Corregir el schema una sola vez con lo aprendido. **Completado.**
+8. Regenerar las cinco. **Completado.**
+9. Medir recuperación con las 40 preguntas. **Completado como baseline
+   `RETRIEVAL_ONLY`; el gate conversacional queda explícitamente
+   `NOT_EVALUATED`.**
+10. Mejorar selección, contraste y paráfrasis, e implementar y medir las
+    conductas `preguntar` y `abstenerse` en fase D.
+11. Decidir con esa comparación si hacen falta embeddings.
+12. Definir revisión por riesgo y ampliar de 5 a 106.
+13. Retomar el backend del chat sobre el corpus validado.
 
 ## 13. Criterio de terminación
 
