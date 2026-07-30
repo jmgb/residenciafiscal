@@ -266,7 +266,7 @@ export function ChatView({
             {showTypingIndicator && <TypingIndicator />}
           </div>
         ) : (
-          <ChatWelcome onSelectPrompt={handleSend} />
+          <ChatWelcome onSelectPrompt={handleSend} legalReferences={country.legalReferences} />
         )}
       </div>
 

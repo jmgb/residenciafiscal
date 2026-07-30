@@ -25,6 +25,7 @@ describe('country routes', () => {
           kind: 'domestic-residence',
           shortCitation: 'Art. 9 LIRPF',
           officialUrl: expect.stringContaining('boe.es'),
+          reviewedAt: '2026-07-30',
         },
       ],
     });
@@ -49,6 +50,9 @@ describe('country routes', () => {
       expect(route).toHaveProperty('legalReferences');
       if (route.corpusStatus === 'published') {
         expect(route.legalReferences.length).toBeGreaterThan(0);
+      }
+      for (const reference of route.legalReferences) {
+        expect(reference.reviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
     }
   });

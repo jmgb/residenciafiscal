@@ -7,6 +7,7 @@ const legalReferenceSchema = z.object({
   shortCitation: z.string().min(1),
   title: z.string().min(1),
   officialUrl: z.url(),
+  reviewedAt: z.iso.date(),
 });
 
 const countryRouteSchema = z.object({

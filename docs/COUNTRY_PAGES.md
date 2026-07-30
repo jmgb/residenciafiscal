@@ -105,13 +105,21 @@ Cada entrada de `countryRoutes.json` mantiene dos estados independientes:
 - `kind`: `domestic-residence` o `tax-treaty`;
 - `shortCitation`: texto compacto y verificable para la interfaz;
 - `title`: título oficial de la norma;
-- `officialUrl`: enlace a la fuente pública oficial.
+- `officialUrl`: enlace a la fuente pública oficial;
+- `reviewedAt`: fecha ISO (`YYYY-MM-DD`) en la que se comprobaron editorialmente la cita, el
+  título y el enlace contra esa fuente.
 
 La primera referencia es la principal y alimenta el subtítulo compacto de una jurisdicción
 publicada. No se incorporan equivalencias obtenidas de blogs, memoria o búsquedas automáticas:
 las valida un especialista de la jurisdicción. Un país `pending` muestra siempre `Sin corpus`,
 aunque ya tenga referencias documentadas, para no confundir normativa localizada con
 jurisprudencia publicada.
+
+Las referencias de la jurisdicción del chat se muestran también en su bienvenida bajo
+`Marco jurídico`, enlazadas a la fuente oficial. `reviewedAt` no significa que la norma sea
+aplicable a cualquier ejercicio ni sustituye el control de versiones del corpus normativo:
+registra la última comprobación editorial de esos metadatos. No se actualiza automáticamente en
+cada build; cambia solo después de repetir esa comprobación.
 
 ## Cómo activar un país
 
@@ -122,7 +130,8 @@ Cuando exista la documentación nacional revisada y trazable:
    consultar por accidente documentos de otro país.
 3. Añadir tests de aislamiento: una consulta de México no puede devolver una cita de España.
 4. Registrar al menos una referencia jurídica oficial validada en `legalReferences`, dejando
-   primero la que deba identificar el marco nacional en superficies compactas.
+   primero la que deba identificar el marco nacional en superficies compactas y fechando su
+   comprobación en `reviewedAt`.
 5. Cambiar `corpusStatus` a `published`.
 6. Sustituir la plantilla de preparación por contenido y CTA propios del país, manteniendo la
    ruta de `CountryRoute`.

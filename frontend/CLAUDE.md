@@ -27,7 +27,7 @@ de sentencias en lenguaje natural.
 | `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
 | `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
 | `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `test/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
-| `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO y `legalReferences` conserva citas y fuentes oficiales validadas. No inferir un campo desde otro |
+| `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. La fecha refleja una comprobación editorial real, nunca la fecha del build |
 | `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas estáticas (`/manifiesto`, `/metodologia`, `/colaborar`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar |
 
 ## Corpus normativo

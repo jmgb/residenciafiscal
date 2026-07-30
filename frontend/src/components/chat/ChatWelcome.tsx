@@ -1,4 +1,6 @@
 import { Link } from 'react-router';
+import { JurisdictionLegalReferences } from '@/components/jurisdiction/JurisdictionLegalReferences';
+import type { LegalReference } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 
 export const SUGGESTED_PROMPTS = [
@@ -10,9 +12,10 @@ export const SUGGESTED_PROMPTS = [
 
 interface ChatWelcomeProps {
   onSelectPrompt: (prompt: string) => void;
+  legalReferences: LegalReference[];
 }
 
-export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
+export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProps) {
   return (
     <div
       data-testid='chat-welcome'
@@ -27,6 +30,7 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
         analizadas y consultables en lenguaje natural. Cada respuesta cita las resoluciones en las
         que se apoya.
       </p>
+      {legalReferences.length > 0 && <JurisdictionLegalReferences references={legalReferences} />}
       <p className='mb-8 text-sm'>
         <Link
           to='/manifiesto'
