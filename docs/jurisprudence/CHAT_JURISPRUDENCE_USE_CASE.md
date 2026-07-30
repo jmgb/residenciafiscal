@@ -25,6 +25,10 @@ presentación de fuentes y la evaluación. Un campo que no ayuda a recuperar,
 comparar, explicar o verificar no debe tener prioridad sobre los que sí lo
 hacen.
 
+La arquitectura vigente, el estado F0.2, los aprendizajes y el orden de handoff
+están consolidados en
+[`CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md).
+
 ## Ejemplo canónico
 
 ### Consulta
@@ -180,30 +184,35 @@ El PDF es la máxima autoridad. Python extrae, identifica, valida, calcula hashe
 y renderiza. El agente propone y revisa la estructura jurídica. Ninguna capa
 derivada puede alterar el texto de la sentencia.
 
-## Adecuación del esquema actual
+## Del perfil OKF/2 al caso v3
 
-El perfil `residenciafiscal-okf/2` es una buena ficha legible y conserva pruebas,
-criterios, resultados propuestos y citas verificadas. Sin embargo, todavía no es
-por sí solo un índice óptimo para este caso de uso:
+El diagnóstico que originó v3 fue que `residenciafiscal-okf/2` era una buena
+ficha legible, pero no un índice suficiente para este caso de uso:
 
-- `legal_issues` se materializa principalmente en Markdown y sidecars, no como
+- `legal_issues` se materializaba principalmente en Markdown y sidecars, no como
   una colección canónica lista para recuperar;
-- los hechos aparecen sobre todo en resúmenes narrativos, no como patrones
+- los hechos aparecían sobre todo en resúmenes narrativos, no como patrones
   normalizados enlazados a cada cuestión;
-- una prueba conserva parte, categoría, criterio, valoración y motivo, pero no
-  siempre su relación explícita con una cuestión ni con el hecho que pretende
+- una prueba conservaba parte, categoría, criterio, valoración y motivo, pero
+  no siempre su relación explícita con una cuestión ni con el hecho que pretendía
   acreditar;
-- el resultado global puede ocultar resultados diferentes por cuestión;
-- no existe todavía el texto íntegro por páginas recomendado para recuperar
+- el resultado global podía ocultar resultados diferentes por cuestión;
+- no existía el texto íntegro por páginas recomendado para recuperar
   pasajes fuera de las citas preseleccionadas;
-- los estados `draft` y `human_reviewed` no expresan con suficiente granularidad
-  qué cuestión, hecho o valoración ha sido revisado;
-- el corpus ligero del frontend no contiene la estructura necesaria para esta
+- los estados `draft` y `human_reviewed` no expresaban con suficiente
+  granularidad qué cuestión, hecho o valoración había sido revisado;
+- el corpus ligero del frontend no contenía la estructura necesaria para esta
   comparación.
 
-Por tanto, no se deben transformar aún las 106 sentencias con un schema
-congelado. Primero se valida el contrato con cinco resoluciones y el banco de
-preguntas; después se cambia el schema y se repite 1 → 5 → 106.
+El caso `residenciafiscal-case/3` ya resuelve esas carencias para la muestra de
+cinco: incorpora cuestiones canónicas, hechos y pruebas relacionados,
+resultados por cuestión, verbatim por páginas y unidades de recuperación.
+
+Eso no autoriza todavía la expansión a 106. F0.2 detectó un gap concreto de
+cobertura sobre ausencias esporádicas y demostró que las etiquetas heredadas
+del router no son una evaluación neutral de respuestas redactadas. Primero se
+congela la rúbrica, se corrige la muestra y se repite el gate; después se decide
+si el contrato está listo para ampliar.
 
 ## Criterios de aceptación del corpus
 
@@ -236,6 +245,13 @@ Las cinco sentencias piloto ya usan el caso canónico v3, texto verbatim por
 páginas, unidades recuperables por cuestión y determinación residencial
 tipada. La recuperación de fase D pasa sus gates sobre el banco de desarrollo
 sin necesidad de embeddings.
+
+F0.2 añade un redactor a A y la compara con File Search sobre los PDF originales
+mediante ocho consultas reales. Ambas rutas verifican las fuentes y conservan
+coste y errores por separado. La prueba no declara una ganadora: antes exige una
+rúbrica neutral, revisión humana ciega y corregir la cobertura de ausencias
+esporádicas. Resultados:
+[`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
 
 E0 añade una comprobación independiente: en el holdout congelado la conducta
 correcta baja al 75 % y la seguridad de no devolver fuentes cuando debe

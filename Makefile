@@ -16,7 +16,8 @@ SHELL := /bin/bash
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
-	file-search-prepare compare-chat-strategies file-search-delete \
+	file-search-prepare compare-chat-strategies build-chat-f03-review \
+	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -63,6 +64,11 @@ FILE_SEARCH_STATE ?= ./output/file-search/f0-store.json
 FILE_SEARCH_LOG ?= ./output/logs/chat-strategy-comparison.jsonl
 FILE_SEARCH_MODEL ?= gemini-3.5-flash-lite
 CHAT_QUESTION ?=
+CHAT_F03_MANIFEST ?= ./docs/experiments/CHAT_STRATEGY_F03_BUILD.json
+CHAT_F03_PACKAGE_JSON ?= ./docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.json
+CHAT_F03_PACKAGE_MD ?= ./docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md
+CHAT_F03_REVIEW_FORM ?= ./docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md
+CHAT_F03_REVEAL_KEY ?= ./docs/experiments/CHAT_STRATEGY_F03_REVEAL_KEY.json
 CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia-v3/perfiles/san-1210-2023.md
 CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json
 CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.derivatives-validation.json
@@ -119,6 +125,7 @@ help:
 	@echo "  make evaluate-holdout-e0  Mide el holdout congelado sin ajustar el router"
 	@echo "  make file-search-prepare CONFIRM_PAID=1  Crea el store F0 y sube los 5 PDF"
 	@echo "  make compare-chat-strategies CONFIRM_PAID=1 CHAT_QUESTION='...'  Ejecuta F0 con $(FILE_SEARCH_MODEL)"
+	@echo "  make build-chat-f03-review  Regenera el paquete ciego F0.3 (sin LLM)"
 	@echo "  make file-search-delete CONFIRM_DELETE=1  Elimina explícitamente el store F0"
 	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
 	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
@@ -313,6 +320,15 @@ compare-chat-strategies:
 		--log $(FILE_SEARCH_LOG) \
 		--model $(FILE_SEARCH_MODEL) \
 		--confirm-paid
+
+build-chat-f03-review:
+	uv run python $(PYTHON_SOURCE)/chat_blind_review.py \
+		--project-root . \
+		--manifest $(CHAT_F03_MANIFEST) \
+		--package-json $(CHAT_F03_PACKAGE_JSON) \
+		--package-markdown $(CHAT_F03_PACKAGE_MD) \
+		--review-form $(CHAT_F03_REVIEW_FORM) \
+		--reveal-key $(CHAT_F03_REVEAL_KEY)
 
 file-search-delete:
 	@test "$(CONFIRM_DELETE)" = "1" || \

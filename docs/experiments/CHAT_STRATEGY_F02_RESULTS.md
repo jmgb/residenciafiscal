@@ -6,6 +6,10 @@ modelo aplazados.
 **Modelo de ambas estrategias:** `gemini-3.5-flash-lite`.
 **Muestra:** cinco sentencias.
 
+La arquitectura y el estado canónicos están en
+[`CHAT_SYSTEM_ARCHITECTURE.md`](../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
+Este documento conserva la evidencia y decisión específicas del experimento.
+
 ## Objetivo
 
 F0.2 convierte la comparación inicial en una prueba más justa:
@@ -136,6 +140,12 @@ Antes deben completarse estos gates:
 Un modelo más caro no corrige esos gaps de datos, grounding o evaluación. La
 promoción a 3.6 seguirá siendo manual y solo tendrá sentido cuando exista una
 rúbrica capaz de medir su mejora.
+
+F0.3 ya congeló esa rúbrica y convirtió estas salidas en un paquete X/Y
+saneado. La revisión humana permanece pendiente:
+[`CHAT_STRATEGY_F03_RUBRIC.md`](CHAT_STRATEGY_F03_RUBRIC.md),
+[`CHAT_STRATEGY_F03_BLIND_REVIEW.md`](CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
+[`CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
 
 ## Integración pendiente con el paquete compartido
 

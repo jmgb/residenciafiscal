@@ -4,12 +4,17 @@ Residencia Fiscal transforma documentos jurídicos oficiales en datos
 estructurados y corpus consultables. El sistema separa las fuentes originales,
 la lógica Python, los artefactos derivados y las interfaces de usuario.
 
+Conviven un analizador legado capaz de recorrer 106 PDF y un corpus v3
+verificable para el chat, validado únicamente sobre cinco. Son pipelines
+relacionados, pero no equivalentes ni intercambiables.
+
 ## Vista general
 
 ```mermaid
 flowchart LR
     PDF["sentencias/<br/>PDF del CENDOJ"] --> PIPELINE
     BOE["normativa/<br/>XML del BOE"] --> NORM
+    PDF --> FILESEARCH["Gemini File Search<br/>store piloto de 5 PDF"]
 
     subgraph PYTHON["src/"]
         PIPELINE["Pipeline LLM<br/>residenciafiscal.py"]
@@ -19,6 +24,7 @@ flowchart LR
         OKF["Publicación OKF<br/>okf_*"]
         VERBATIM["Corpus por páginas<br/>verbatim_*"]
         NORM["Transformación normativa<br/>normativa_*"]
+        CHAT["Comparador F0.2<br/>chat_strategy_*"]
     end
 
     API --> PIPELINE
@@ -28,6 +34,9 @@ flowchart LR
     CITES --> OKF
     PDF --> VERBATIM
     VERBATIM --> CASES
+    CASES --> CHAT
+    FILESEARCH --> CHAT
+    CHAT --> CHATOUT["output/file-search/<br/>respuestas y logs locales"]
     CASES --> KNOWLEDGE["knowledge/<br/>corpus versionados"]
     OKF --> KNOWLEDGE
     NORM --> KNOWLEDGE
@@ -47,6 +56,8 @@ flowchart LR
 | OKF | `src/okf_*.py` | Normalizar, renderizar y validar perfiles publicables |
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
+| Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
+| Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
 | Pruebas | `tests/` | Gates deterministas; las llamadas LLM reales están excluidas por defecto |
 
@@ -75,6 +86,21 @@ dominio y con una migración de imports independiente.
 4. Los módulos `okf_*` producen perfiles Markdown e informes laterales.
 5. Los derivados versionados se publican en `knowledge/`.
 
+### Chat jurisprudencial F0.2
+
+1. La pregunta entra en un comparador local, todavía no conectado al frontend.
+2. A recupera unidades v3, limita el contexto y redacta mediante IDs de
+   evidencia que se resuelven localmente.
+3. B consulta de forma independiente un File Search Store con los cinco PDF
+   originales y devuelve anotaciones del proveedor.
+4. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
+   que quede sin respaldo.
+5. El comparador conserva respuesta, estado, fuentes, latencia y coste por
+   estrategia, sin usar la salida de una como entrada de la otra.
+
+Arquitectura, estado, aprendizajes y siguiente gate:
+[`jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
+
 ### Normativa
 
 1. Los XML oficiales se guardan en `normativa/<jurisdicción>/`.
@@ -99,8 +125,8 @@ dominio y con una migración de imports independiente.
 
 - Los PDF escaneados sin capa de texto no se procesan porque no hay OCR.
 - La API local no tiene rate limiting.
-- El frontend conversacional sigue usando un motor simulado mientras no se
-  conecte un backend RAG revisado.
+- El frontend conversacional sigue usando un motor simulado. F0.2 existe como
+  comparador local, pero no implementa el backend ni el streaming productivos.
 - El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus
   automáticamente.
 

@@ -1,9 +1,15 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
-**Estado:** F0.2 implementada y evaluada con ocho consultas reales; banco
-completo de 40 y promoción a 3.6 aplazados hasta fijar una rúbrica neutral.
+**Estado:** F0.2 implementada y evaluada con ocho consultas reales; F0.3 tiene
+rúbrica y paquete ciego listos, con revisión humana pendiente; banco completo
+de 40 y promoción a 3.6 aplazados.
 **Alcance inicial:** las cinco sentencias piloto.
 **Fecha de decisión:** 2026-07-30.
+
+La vista consolidada de capas, componentes, estado, aprendizajes y siguiente
+gate está en
+[`CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md). Este documento
+conserva el contrato especializado del experimento A/B.
 
 ## Implementación F0
 

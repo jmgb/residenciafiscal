@@ -1,0 +1,66 @@
+{
+  "schema_version": "residenciafiscal-chat-f03-build/1",
+  "rubric_version": "residenciafiscal-chat-f03-rubric/1",
+  "rubric_path": "docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md",
+  "rubric_sha256": "08bd2237e6c85f9c3661d653f3e6a84e5b5a397b5be65c93148b85a3147d12a9",
+  "dev_set_path": "docs/experiments/CHAT_STRATEGY_F02_DEV_SET.json",
+  "dev_set_sha256": "ba6f34068a9cef9e6cccc7f7d1c5f5f46c3969d3c003d01e8061ff717defdeec",
+  "items": [
+    {
+      "question_id": "GEN-01",
+      "intent": "GENERAL_LEGAL_RULE",
+      "artifact_path": "output/file-search/f02-gen-01.json",
+      "artifact_sha256": "45d3ef4c0f8050aecb158377b1bb37f7dda2f1926ec6ebdb6dbc4f2e0a67a6d7",
+      "x_strategy": "current_structured"
+    },
+    {
+      "question_id": "DAY-01",
+      "intent": "PERSONAL_CASE_INCOMPLETE",
+      "artifact_path": "output/file-search/f02-day-01.json",
+      "artifact_sha256": "92bb956b2f4522847d120d264b0e349f770d043627a5c5631d7fdee374777775",
+      "x_strategy": "gemini_file_search"
+    },
+    {
+      "question_id": "FOR-02",
+      "intent": "EVIDENCE_REQUIREMENTS",
+      "artifact_path": "output/file-search/f02-for-02-post-gate.json",
+      "artifact_sha256": "a366c1845db268ec3d144014115c02f60141c37f1f71580cb9a1a91c09bbcde2",
+      "x_strategy": "current_structured"
+    },
+    {
+      "question_id": "CDI-01",
+      "intent": "TREATY_CONFLICT",
+      "artifact_path": "output/file-search/f02-cdi-01.json",
+      "artifact_sha256": "121f6c0c20221d45353809d2ec7800cb78867c51339c61dfb42d1317092e9449",
+      "x_strategy": "gemini_file_search"
+    },
+    {
+      "question_id": "FAM-02",
+      "intent": "GENERAL_LEGAL_RULE",
+      "artifact_path": "output/file-search/f02-fam-02-post-prompt.json",
+      "artifact_sha256": "5e4f34256fe0b692923286617fa4dfbb6d2fe2daee2834790fdd24dec19eba91",
+      "x_strategy": "gemini_file_search"
+    },
+    {
+      "question_id": "DAY-05",
+      "intent": "GENERAL_LEGAL_RULE",
+      "artifact_path": "output/file-search/f02-day-05.json",
+      "artifact_sha256": "cca7a058c673d735803983e91cdfebab242875429490f8b74451293145ae272a",
+      "x_strategy": "current_structured"
+    },
+    {
+      "question_id": "CMP-04",
+      "intent": "COMPARATIVE_CASES",
+      "artifact_path": "output/file-search/f02-cmp-04.json",
+      "artifact_sha256": "706ded3f4075fabea5c59ad52fc1c26efd8104fbdab95f4715691ea0c6bb8f06",
+      "x_strategy": "gemini_file_search"
+    },
+    {
+      "question_id": "SRC-02",
+      "intent": "SOURCE_TRACEABILITY",
+      "artifact_path": "output/file-search/f02-src-02.json",
+      "artifact_sha256": "583e8e880199d3a3d8cf7714e8430e09eaec286ca97a68c52d0917e6cdfac516",
+      "x_strategy": "current_structured"
+    }
+  ]
+}

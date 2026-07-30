@@ -16,7 +16,7 @@ cp .env.example .env
 # Ver todos los comandos disponibles
 make help
 
-# Ejecutar pipeline completo (106 PDFs → ~$3.40 USD, ~2-3h)
+# Ejecutar el analizador legado (106 PDF → ~$3.40 USD, ~2-3h)
 make run
 
 # Test rápido con 1 PDF
@@ -29,6 +29,11 @@ make dev
 
 > Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python src/residenciafiscal.py --help`).
 > Nunca hace falta activar el entorno: `uv run` lo resuelve solo.
+>
+> **No confundir pipelines:** `make run` genera los exports analíticos legados.
+> No construye ni autoriza el corpus v3 del chat. El corpus v3 sigue limitado a
+> la muestra congelada de cinco; no listar ni procesar las 106 como casos v3
+> hasta superar sus gates y recibir autorización expresa.
 
 La documentación se navega desde [`docs/README.md`](docs/README.md). La
 arquitectura vigente y las reglas de ubicación de archivos están en
@@ -55,6 +60,12 @@ llaman a `process_pdf_async()`, así que producen exactamente el mismo objeto.
 Cada ejecución del CLI escribe los cinco exports (`.jsonl`, dos `.csv` planos,
 `pruebas_*.csv` y `.xlsx`) con el mismo timestamp; la API no persiste nada.
 
+Esta descripción corresponde al analizador legado. La arquitectura
+jurisprudencial conversacional v3, sus capas de autoridad, el comparador A/B,
+los aprendizajes F0.2 y el handoff para agentes tienen una entrada canónica
+separada:
+[`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
+
 ### Extracción de texto de los PDF (no hay OCR)
 
 Los PDF del CENDOJ son digitales con capa de texto embebida, así que el texto se
@@ -70,11 +81,15 @@ texto vacío y no se procesa. Si algún día llega uno, las opciones son OCR
 clásico (`ocrmypdf`/Tesseract) o un modelo de visión — no añadirlo antes de que
 exista el caso real.
 
-## Schema
+## Schema del analizador legado
 
 El schema completo (criterios `CRIT_*`, las 12 categorías de prueba, campos de
 razonamiento y resultado) es fuente única en `src/prompt.py` y `src/config.py`, y
 `GET /config` lo expone en vivo. No duplicarlo aquí: se desincroniza.
+
+El chat no consume ese schema directamente. Su fuente canónica es
+`residenciafiscal-case/3`, documentada en
+[`docs/jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md`](docs/jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
 
 ### Verificación de citas
 
@@ -163,8 +178,16 @@ El comparador F0.2 ya redacta A sobre el corpus v3 y B con Gemini File Search
 sobre los PDF, usando el mismo modelo y fuentes independientes. Ocho consultas
 reales detectaron una rúbrica heredada no neutral y falta de cobertura
 estructurada sobre ausencias esporádicas; por eso no deben ejecutarse todavía
-las 40 ni promoverse a 3.6. Resultados, costes y siguiente gate:
+las 40 ni promoverse a 3.6. La arquitectura vigente, los aprendizajes y el
+orden autorizado están en
+[`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md);
+las cifras están en
 [`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](docs/experiments/CHAT_STRATEGY_F02_RESULTS.md).
+F0.3 ya congeló la rúbrica y generó el paquete X/Y; la siguiente intervención
+es una revisión humana sin abrir la clave. Rúbrica, paquete y plantilla:
+[`docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md`](docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md),
+[`docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md`](docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
+[`docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
@@ -230,6 +253,8 @@ disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
 - `make fast-check` — el gate obligatorio antes de commitear (lint + tipos + tests).
 - `make test` **no** llama a ningún LLM; `make test-llm` y `make test-single` sí
   **gastan dinero** (smoke real de 1 PDF).
+- `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
+  los ocho artefactos locales, sin LLM; valida todos sus hashes.
 - `make export-requirements` — solo para consumidores externos; el repo no versiona
   `requirements.txt`.
 

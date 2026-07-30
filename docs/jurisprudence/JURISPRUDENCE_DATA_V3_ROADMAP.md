@@ -442,7 +442,8 @@ revisados los elementos aprobados según la política editorial.
 ### Fase F0 — Comparador local de estrategias sobre cinco sentencias
 
 F0 es el gate local previo al backend y frontend productivos de la fase F. Su
-alcance queda limitado a una pregunta y a la muestra congelada de cinco:
+alcance queda limitado a la muestra congelada de cinco; F0.2 usa ocho preguntas
+de desarrollo antes de considerar el banco completo:
 
 - adaptador oficial `google-genai` para Gemini File Search mediante Interactions;
 - creación, carga verificable y eliminación explícita de un store con los cinco
@@ -527,8 +528,11 @@ Se elige la alternativa más simple que cumpla la evaluación.
 
 ## 10. Evaluación
 
-El banco manual de 40 preguntas es la verdad de referencia inicial. Cada caso
-machine-readable deberá conservar:
+El banco manual de 40 preguntas es la referencia inicial para cobertura del
+schema, recuperación y conducta del router. No es todavía una rúbrica neutral
+para comparar la calidad de respuestas A/B: sus etiquetas de conducta son
+provisionales y se diseñaron alrededor de A. Cada caso machine-readable deberá
+conservar:
 
 - pregunta y contexto;
 - hechos presentes y ausentes;
@@ -571,26 +575,33 @@ Métricas de calidad:
 | Revisión humana inabarcable | Priorizar por estado, riesgo y citas pendientes |
 | Texto extraído defectuoso | PDF como autoridad, hashes y defectos declarados |
 
-## 12. Orden inmediato de ejecución
+## 12. Estado consolidado y orden inmediato
 
-1. Escribir el contrato campo por campo de v3.
-2. Implementar los modelos y tests antes del extractor jurídico.
-3. Materializar el verbatim JSON de `SAN 1210/2023`.
-4. Crear el caso v3 híbrido para esa sentencia. **Completado.**
-5. Renderizar su Markdown desde v3. **Completado.**
-6. Responder desde datos las preguntas del piloto que le corresponden.
-   **Completado para 18 preguntas aplicables.**
-7. Corregir el schema una sola vez con lo aprendido. **Completado.**
-8. Regenerar las cinco. **Completado.**
-9. Medir recuperación con las 40 preguntas. **Completado como baseline
-   `RETRIEVAL_ONLY`; el gate conversacional queda explícitamente
-   `NOT_EVALUATED`.**
-10. Mejorar selección, contraste y paráfrasis, e implementar y medir las
-    conductas `preguntar` y `abstenerse` en fase D. **Completado.**
-11. Decidir con esa comparación si hacen falta embeddings. **Completado:
-    aplazados para el piloto.**
-12. Definir revisión por riesgo y ampliar de 5 a 106.
-13. Retomar el backend del chat sobre el corpus validado.
+Las antiguas tareas 1–11 —contrato, piloto de una sentencia, regeneración de
+cinco, baseline de 40 preguntas, fase D y decisión sobre embeddings— están
+completadas. No deben reiniciarse al retomar el proyecto. El baseline de 40 es
+`RETRIEVAL_ONLY`: no mide todavía dos respuestas redactadas.
+
+El orden vigente es:
+
+1. **Completado:** congelar una rúbrica neutral y generar el paquete saneado,
+   versionado y ciego de las ocho comparaciones F0.2.
+2. Completar y cerrar la revisión humana baseline antes de revelar X/Y.
+3. Incorporar después la cobertura de ausencias esporádicas a la muestra v3,
+   con propuesta jurídica, anclajes exactos y compilación reproducible.
+4. Sustituir el adaptador temporal de A por el paquete común de peticiones LLM
+   cuando esté disponible, sin cambiar los contratos de dominio.
+5. Repetir las ocho preguntas con el mismo modelo y una segunda revisión ciega.
+6. Ejecutar las 40 como evaluación conversacional A/B solo si pasan los gates.
+7. Probar `gemini-3.6-flash` únicamente si persiste un problema atribuible al
+   redactor.
+8. Retomar el backend productivo después de resolver también cuotas,
+   presupuesto y protocolo de streaming.
+9. Ampliar v3 de 5 a 106 únicamente mediante autorización expresa y el rollout
+   reanudable de fase E.
+
+La arquitectura y el handoff canónicos están en
+[`CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md).
 
 ## 13. Criterio de terminación
 

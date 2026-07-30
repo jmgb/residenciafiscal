@@ -38,12 +38,14 @@ en vez de copiar sus cifras en varios sitios.
 
 El orden recomendado de lectura es:
 
-1. [Caso de uso conversacional](jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md).
-2. [Comparación de estrategias del chat](jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
-3. [Roadmap del modelo de datos v3](jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
-4. [Pipeline del caso canónico](jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).
-5. [Schema v3](jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
-6. [Recuperación de fase D](jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md) y
+1. [Arquitectura y estado vigente del chat](jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
+2. [Caso de uso conversacional](jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md).
+3. [Comparación de estrategias del chat](jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+4. [Resultados de F0.2](experiments/CHAT_STRATEGY_F02_RESULTS.md).
+5. [Roadmap del modelo de datos v3](jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
+6. [Pipeline del caso canónico](jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).
+7. [Schema v3](jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
+8. [Recuperación de fase D](jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md) y
    [estado de fase E0](jurisprudence/JURISPRUDENCE_PHASE_E0.md).
 
 Documentos especializados:
@@ -55,6 +57,10 @@ Documentos especializados:
 - [Catálogo de preguntas](jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
 - [Derivados del caso v3](jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md).
 - [Baseline de la muestra de cinco](jurisprudence/JURISPRUDENCE_SAMPLE_PHASE_C.md).
+- Evaluación ciega F0.3:
+  [rúbrica](experiments/CHAT_STRATEGY_F03_RUBRIC.md),
+  [paquete](experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
+  [plantilla](experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
 
 ## Normativa, producto y operación
 

@@ -42,6 +42,9 @@ contra el dominio público después de cada deploy.
 - [ ] **Sustituir el motor `stub` del chat por un backend real.** Diseñado y planificado:
   Netlify Edge Function en `/api/chat`, recuperación con fuentes trazables y
   citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
+  La arquitectura vigente, el estado implementado y el orden de handoff están
+  en
+  [`CHAT_SYSTEM_ARCHITECTURE.md`](../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
   El caso de uso principal y el contrato de respuesta/recuperación están en
   [`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md): el
   chat ayuda al abogado a investigar casos comparables por cuestión, hechos y
@@ -56,6 +59,16 @@ contra el dominio público después de cada deploy.
     citas verificables y se midieron coste y latencia. El banco de 40 y 3.6
     quedan aplazados hasta fijar una rúbrica neutral y revisar los gaps:
     [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
+  - [ ] **F0.3 — evaluación neutral y corrección de la muestra.**
+    - [x] Congelar una rúbrica que separe gates binarios, utilidad e intención.
+    - [x] Generar un paquete ciego saneado y versionado con las ocho parejas
+      F0.2, su plantilla y la clave separada.
+    - [ ] Obtener y cerrar la revisión humana baseline sin abrir la clave X/Y.
+    - [ ] Incorporar después la cobertura verificable de ausencias esporádicas
+      mediante propuesta híbrida, compilación y tests.
+    - [ ] Integrar el paquete común de peticiones LLM cuando esté disponible,
+      conservando el puerto y los contratos actuales.
+    - [ ] Repetir las ocho con el mismo modelo; solo si pasan, ejecutar las 40.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
@@ -90,10 +103,11 @@ contra el dominio público después de cada deploy.
     con Vitest y un `chat.ts` delgado. Producción sigue simulada. La tarea del
     presupuesto queda bloqueada por la fase 0b; el resto no depende de ella.
 
-    > **La fuente del chat ya está decidida, pero aún no implementada.** Debe ser
-    > `residenciafiscal-case/3` con anclajes verbatim; no el JSONL ni el perfil v2
-    > directamente. El plan antiguo genera `lib/corpus.ts` desde el JSONL y por
-    > eso sus tareas 3–6 y las partes del protocolo están marcadas como
+    > **La fuente del chat ya está decidida e implementada en el comparador
+    > local, pero no en el backend productivo.** Debe ser
+    > `residenciafiscal-case/3` con anclajes verbatim; no el JSONL ni el perfil
+    > v2 directamente. El plan antiguo genera `lib/corpus.ts` desde el JSONL y
+    > por eso sus tareas 3–6 y las partes del protocolo están marcadas como
     > parcialmente superadas.
     >
     > Las piezas de plataforma y varios módulos siguen siendo reutilizables. La
@@ -103,15 +117,18 @@ contra el dominio público después de cada deploy.
     >
     > El diseño y la validación con 1 y 5 sentencias ya están completados. La
     > ampliación a 106 y la aprobación jurídica humana siguen pendientes.
-  - [ ] **Fase 2 — evaluación.** Banco de 40 preguntas versionado. Bloquean los gates
-    binarios (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
+  - [ ] **Fase 2 — evaluación.** El banco de 40 preguntas está versionado, pero
+    sus etiquetas heredadas evalúan el router y no son todavía una rúbrica
+    neutral para comparar respuestas A/B. Bloquean los gates binarios
+    (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
     El catálogo inicial de comportamiento y preguntas está en
     [`docs/jurisprudence/CHAT_USER_QUESTION_CATALOG.md`](../jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
     - [x] Seleccionar y contestar manualmente 40 preguntas contra la muestra de
       cinco, con casos, contracasos, límites y gaps de datos:
       [`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../experiments/CHAT_QUESTION_PILOT_5.md).
-    - [x] Convertir la verdad de referencia manual en el banco machine-readable
+    - [x] Convertir la referencia manual provisional de recuperación en el
+      banco machine-readable
       `knowledge/jurisprudencia-v3/evaluations/chat-question-pilot-5.bank.json`.
     - [ ] Evolucionar `ChatSource` y el protocolo a v2 con `issueId`,
       `anchorId`, página, fidelidad y hash de fuente; adaptar persistencia y UI
