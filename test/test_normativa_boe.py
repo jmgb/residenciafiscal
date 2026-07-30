@@ -373,3 +373,49 @@ def test_cada_precepto_declara_su_jurisdiccion_y_apunta_a_su_fuente() -> None:
         origen = (fichero.parent / str(frontmatter["resource"])).resolve()
         assert origen.exists(), f"{fichero.name} -> {frontmatter['resource']}"
         assert origen.parent.name == JURISDICCION
+
+
+# --- Datos que consume el frontend -------------------------------------------
+
+DATOS_FRONTEND = RAIZ / "frontend" / "public" / "data"
+
+
+def test_los_datos_del_frontend_no_se_quedan_atras_del_corpus() -> None:
+    """Regenerar el corpus sin regenerar los datos del sitio es deriva silenciosa.
+
+    Este test vive en pytest, y no solo en vitest, porque `frontend.yml` no corre
+    con cada cambio del repositorio: si alguien regenera `knowledge/normativa/` y
+    olvida el `prebuild`, la web serviría un corpus viejo y el único gate que lo
+    vería sería este.
+    """
+    indice = json.loads((DATOS_FRONTEND / "normativa.json").read_text(encoding="utf-8"))
+    publicados = {f.stem for f in PRECEPTOS.glob("*.md")} - {"index"}
+
+    assert {entrada["slug"] for entrada in indice} == publicados
+    assert {f.stem for f in (DATOS_FRONTEND / "preceptos").glob("*.json")} == publicados
+
+    for entrada in indice:
+        frontmatter = _frontmatter_publicado(
+            (PRECEPTOS / f"{entrada['slug']}.md").read_text(encoding="utf-8")
+        )
+        assert entrada["derogada"] == frontmatter["derogada"], entrada["slug"]
+        assert entrada["boeId"] == frontmatter["boe_id"], entrada["slug"]
+        assert entrada["jurisdiccion"] == frontmatter["jurisdiccion"], entrada["slug"]
+
+
+def test_los_enlaces_del_frontend_coinciden_con_los_del_corpus() -> None:
+    enlaces = json.loads(
+        (
+            RAIZ / "knowledge" / "normativa" / JURISDICCION / "enlaces" / "por_precepto.json"
+        ).read_text(encoding="utf-8")
+    )
+    esperado = {entrada["slug"]: entrada["total_sentencias"] for entrada in enlaces["preceptos"]}
+
+    indice = json.loads((DATOS_FRONTEND / "normativa.json").read_text(encoding="utf-8"))
+    obtenido = {
+        entrada["slug"]: entrada["totalSentencias"]
+        for entrada in indice
+        if entrada["totalSentencias"] > 0
+    }
+
+    assert obtenido == esperado

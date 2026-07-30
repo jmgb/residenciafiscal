@@ -16,11 +16,23 @@ on:
     branches: [main]
     paths:
       - 'frontend/**'
+      # El prebuild genera public/data/normativa.json y public/data/preceptos/
+      # desde knowledge/normativa/, y tests/normativa.test.ts contrasta el
+      # articulado publicado contra esos mismos .md. Sin esta ruta, regenerar el
+      # corpus normativo dejaba los datos del sitio obsoletos sin que ningún gate
+      # lo viera: frontend.yml no se disparaba y ci.yml no corre vitest.
+      - 'knowledge/normativa/**'
       - '.github/workflows/frontend.yml'
   pull_request:
     branches: [main]
     paths:
       - 'frontend/**'
+      # El prebuild genera public/data/normativa.json y public/data/preceptos/
+      # desde knowledge/normativa/, y tests/normativa.test.ts contrasta el
+      # articulado publicado contra esos mismos .md. Sin esta ruta, regenerar el
+      # corpus normativo dejaba los datos del sitio obsoletos sin que ningún gate
+      # lo viera: frontend.yml no se disparaba y ci.yml no corre vitest.
+      - 'knowledge/normativa/**'
       - '.github/workflows/frontend.yml'
   workflow_dispatch:
 

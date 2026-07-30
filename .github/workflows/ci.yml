@@ -21,19 +21,26 @@ name: CI
 # robots.txt no dispararía este gate y frontend.yml no corre pytest, así que ese
 # test se podría romper sin que ningún workflow se enterase. Correr el gate de
 # Python de más en cambios solo-frontend cuesta ~1 min; el agujero costaba más.
+#
+# El ignore de Markdown es `*.md` y no `**.md` por el mismo motivo: los corpus de
+# `knowledge/` son ficheros .md **generados**, y hay tests que los validan contra
+# su fuente (la literalidad del articulado en test_normativa_boe.py, el perfil OKF
+# en test_okf_bundle.py). Con `**.md`, editar a mano un precepto o un perfil no
+# disparaba ningún gate y el invariante que esos tests protegen se podía romper en
+# silencio. `*.md` no cruza `/`, así que README.md y CLAUDE.md siguen exentos.
 on:
   push:
     branches: [main]
     paths-ignore:
       - 'docs/**'
       - 'sentencias/**'
-      - '**.md'
+      - '*.md'
   pull_request:
     branches: [main]
     paths-ignore:
       - 'docs/**'
       - 'sentencias/**'
-      - '**.md'
+      - '*.md'
   workflow_dispatch:
 
 permissions:
