@@ -2996,8 +2996,20 @@
     "notaDerogacion": "RDLeg 3/2004, TR del IRPF, derogado por la Ley 35/2006",
     "vigenteDesde": "2004-03-11",
     "redacciones": 1,
-    "sentencias": [],
+    "sentencias": [
+      {
+        "archivo": "SAN_5630_2023.pdf",
+        "roj": "SAN 5630/2023",
+        "ejercicios": [
+          2005,
+          2006,
+          2007,
+          2008
+        ],
+        "certeza": "inferida"
+      }
+    ],
     "parrafos": 23,
-    "totalSentencias": 0
+    "totalSentencias": 1
   }
 ]

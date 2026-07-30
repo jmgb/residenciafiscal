@@ -36,6 +36,11 @@ ENLACES = RAIZ / "knowledge" / "normativa" / "es" / "enlaces"
 CDI_FRANCIA = "BOE-A-1997-12729"
 CDI_REINO_UNIDO_1975 = "BOE-A-1976-23347"
 CDI_REINO_UNIDO_2013 = "BOE-A-2014-5171"
+# Suecia, Rumanía y Canadá designan su artículo de residencia «Artículo IV».
+# Canadá es el único de los tres que está en la tabla de países del corpus.
+CDI_CANADA = "BOE-A-1981-2731"
+TRLIRPF_2004 = "BOE-A-2004-4347"
+LIRPF_2006 = "BOE-A-2006-20764"
 
 
 @pytest.fixture(scope="module")
@@ -87,6 +92,35 @@ def test_el_numero_de_articulo_se_lee_de_la_designacion() -> None:
     assert numero_de_designacion("Disposición transitoria única") is None
 
 
+def test_el_numero_de_articulo_admite_numeracion_romana() -> None:
+    """Tres convenios titulan su artículo de residencia «Artículo IV».
+
+    Las sentencias lo citan en árabe («art. 4 CDI»), así que sin convertir la
+    designación el enlace se perdía en silencio: el precepto existe publicado,
+    pero ningún número lo alcanzaba.
+    """
+    assert numero_de_designacion("Artículo IV") == "4"
+    assert numero_de_designacion("Artículo XXIV") == "24"
+    assert numero_de_designacion("Artículo IV bis") == "4bis"
+
+
+def test_una_designacion_que_no_es_un_articulo_no_inventa_numero() -> None:
+    """Convertir de más es peor que no convertir: mandaría a otro artículo."""
+    assert numero_de_designacion("Artículo IIII") is None  # romano mal formado
+    assert numero_de_designacion("Disposición transitoria única") is None
+    assert numero_de_designacion("Artículo Duodécimo") is None  # empieza por «D»
+
+
+def test_la_cita_arabiga_alcanza_el_convenio_que_usa_romanos(catalogo: dict) -> None:
+    (cita,) = extraer_citas("el art. 4 CDI atribuye la residencia", "campo")
+    enlaces, motivo = resolver_cita(cita, catalogo, [2015], list(CONVENIOS_POR_PAIS["canada"]))
+
+    assert motivo is None
+    assert [e.boe_id for e in enlaces] == [CDI_CANADA]
+    precepto = buscar_precepto(catalogo, CDI_CANADA, "4")
+    assert precepto is not None and precepto.designacion == "Artículo IV"
+
+
 def test_los_identificadores_de_bloque_del_boe_no_son_uniformes(catalogo: dict) -> None:
     """Por esto el emparejamiento va por número de artículo y no por `a{N}`.
 
@@ -131,6 +165,47 @@ def test_una_cita_sin_sigla_de_un_ejercicio_anterior_a_2007_va_al_texto_refundid
     enlaces, _ = resolver_cita(cita, catalogo, [2005, 2006], [])
 
     assert [e.slug for e in enlaces] == ["trlirpf-2004-a9"]
+
+
+def test_una_sentencia_a_caballo_de_2007_enlaza_las_dos_normas(catalogo: dict) -> None:
+    """Un caso puede abarcar ejercicios a ambos lados de la Ley 35/2006.
+
+    Elegir una sola norma por el ejercicio más alto dejaba los anteriores sin la
+    norma que de verdad los regía: para 2005 y 2007, «art. 9.1» enlazaba solo a
+    la LIRPF y 2005 se quedaba sin precepto aplicable.
+    """
+    (cita,) = extraer_citas("el art. 9 determina la residencia", "campo")
+    enlaces, _ = resolver_cita(cita, catalogo, [2005, 2007], [])
+
+    assert {e.boe_id for e in enlaces} == {TRLIRPF_2004, LIRPF_2006}
+
+
+def test_cada_norma_declara_solo_los_ejercicios_que_rige(catalogo: dict) -> None:
+    """La redacción aplicable se acota al periodo de cada norma.
+
+    Sin acotarla, el texto refundido de 2004 aparecía con una redacción para
+    2007, cuando ya estaba derogado.
+    """
+    (cita,) = extraer_citas("el art. 9 determina la residencia", "campo")
+    enlaces, _ = resolver_cita(cita, catalogo, [2005, 2007], [])
+    por_norma = {e.boe_id: sorted(e.redaccion_aplicable) for e in enlaces}
+
+    assert por_norma[TRLIRPF_2004] == ["2005"]
+    assert por_norma[LIRPF_2006] == ["2007"]
+
+
+def test_una_sentencia_que_cruza_el_cambio_de_convenio_enlaza_ambos(catalogo: dict) -> None:
+    """Mismo problema que con la norma interna: el convenio también cambia.
+
+    El de Reino Unido rige hasta 2013 y el nuevo desde 2014, así que un caso de
+    2013 y 2014 aplica los dos.
+    """
+    (cita,) = extraer_citas("el art. 4.2 CDI resuelve la doble residencia", "campo")
+    convenios = list(CONVENIOS_POR_PAIS["reino unido"])
+
+    enlaces, _ = resolver_cita(cita, catalogo, [2013, 2014], convenios)
+
+    assert {e.boe_id for e in enlaces} == {CDI_REINO_UNIDO_1975, CDI_REINO_UNIDO_2013}
 
 
 def test_el_convenio_se_elige_por_el_ejercicio_enjuiciado(catalogo: dict) -> None:

@@ -5,9 +5,9 @@
   "jsonl": "analisis_02012026_155032.jsonl",
   "sentencias": 106,
   "sentencias_con_precepto": 58,
-  "enlaces": 121,
+  "enlaces": 122,
   "enlaces_explicitos": 100,
-  "enlaces_inferidos": 21,
+  "enlaces_inferidos": 22,
   "citas_no_resueltas": 41,
   "avisos": [
     {
@@ -29,7 +29,7 @@
       ]
     }
   ],
-  "preceptos_citados": 9,
+  "preceptos_citados": 10,
   "preceptos": [
     {
       "slug": "cdi-boe-a-1967-3470-a4",
@@ -1383,6 +1383,26 @@
         }
       ],
       "total_sentencias": 56
+    },
+    {
+      "slug": "trlirpf-2004-a9",
+      "titulo": "Artículo 9 TRLIRPF-2004 — Residencia habitual en territorio español",
+      "sentencias": [
+        {
+          "archivo": "SAN_5630_2023.pdf",
+          "roj": "SAN 5630/2023",
+          "ejercicios": [
+            2005,
+            2006,
+            2007,
+            2008
+          ],
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1"
+        }
+      ],
+      "total_sentencias": 1
     }
   ]
 }

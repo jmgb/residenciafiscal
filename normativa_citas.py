@@ -154,19 +154,57 @@ def sin_acentos(texto: str) -> str:
     return "".join(c for c in descompuesto if not unicodedata.combining(c))
 
 
-# «Artículo 9», «Artículo 95 bis»: el número con el que una cita puede referirse
-# al precepto. No se construye el identificador de bloque a partir del número
-# porque el BOE no lo hace uniforme: la LIRPF usa `a9`, pero entre los convenios
-# aparecen `a4`, `ar-4`, `ai-4` y `a1-5` para el mismo artículo 4.
-NUMERO_DESIGNACION = re.compile(r"^Art[íi]culo\s*(?P<numero>\d+)\s*(?P<sufijo>bis|ter)?", re.I)
+# «Artículo 9», «Artículo 95 bis», «Artículo IV»: el número con el que una cita
+# puede referirse al precepto. No se construye el identificador de bloque a
+# partir del número porque el BOE no lo hace uniforme: la LIRPF usa `a9`, pero
+# entre los convenios aparecen `a4`, `ar-4`, `ai-4` y `a1-5` para el artículo 4.
+#
+# La alternativa romana no es teórica: los convenios con Suecia, Rumanía y Canadá
+# titulan su artículo de residencia «Artículo IV», mientras las sentencias lo
+# citan en árabe. El `(?!\w)` final evita que un ordinal escrito con letra
+# —«Artículo Duodécimo» empieza por `D`— se lea como numeración romana.
+NUMERO_DESIGNACION = re.compile(
+    r"^Art[íi]culo\s*(?P<numero>\d+|[IVXLCDM]+)(?:\s*(?P<sufijo>bis|ter))?(?!\w)",
+    re.I,
+)
+
+# Romano bien formado y canónico: descarta `IIII` o `VX`, que convertidos darían
+# un número inventado y mandarían a un artículo distinto del citado.
+ROMANO_CANONICO = re.compile(r"M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})")
+
+VALOR_ROMANO = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+
+
+def _a_arabigo(numero: str) -> str | None:
+    """Normaliza a árabe el número de una designación. `None` si no es válido."""
+    if numero.isdigit():
+        return numero
+    romano = numero.upper()
+    if not ROMANO_CANONICO.fullmatch(romano):
+        return None
+    total = 0
+    mayor = 0
+    # De derecha a izquierda: un símbolo menor que el ya visto resta (IV = 4).
+    for simbolo in reversed(romano):
+        valor = VALOR_ROMANO[simbolo]
+        total += valor if valor >= mayor else -valor
+        mayor = max(mayor, valor)
+    return str(total)
 
 
 def numero_de_designacion(designacion: str) -> str | None:
-    """«Artículo 95 bis» -> `95bis`. `None` si no es un artículo numerado."""
+    """«Artículo 95 bis» -> `95bis`; «Artículo IV» -> `4`.
+
+    `None` si la designación no es un artículo numerado (una disposición
+    transitoria, un ordinal escrito con letra o un romano mal formado).
+    """
     coincidencia = NUMERO_DESIGNACION.match(designacion)
     if not coincidencia:
         return None
-    return coincidencia.group("numero") + (coincidencia.group("sufijo") or "").lower()
+    numero = _a_arabigo(coincidencia.group("numero"))
+    if numero is None:
+        return None
+    return numero + (coincidencia.group("sufijo") or "").lower()
 
 
 def numero_citado(cita: CitaBruta) -> str:
@@ -247,11 +285,36 @@ def paises_citados(valor: object) -> list[str]:
     return unicos
 
 
-def norma_residencia_aplicable(ejercicios: list[int]) -> str:
-    """Norma interna de residencia que rige los ejercicios de una sentencia."""
-    if ejercicios and max(ejercicios) < PRIMER_EJERCICIO_LIRPF:
-        return NORMA_RESIDENCIA_HASTA_2006
-    return NORMA_RESIDENCIA_DESDE_2007
+def normas_residencia_aplicables(ejercicios: list[int]) -> list[str]:
+    """Normas internas de residencia que rigen los ejercicios de una sentencia.
+
+    Devuelve una lista y no una norma porque un caso puede abarcar ejercicios a
+    ambos lados de la entrada en vigor de la Ley 35/2006, y entonces cada periodo
+    se rige por la suya. Elegir una sola por el ejercicio más alto dejaba los
+    anteriores sin la norma que de verdad los regía.
+    """
+    if not ejercicios:
+        return [NORMA_RESIDENCIA_DESDE_2007]
+    normas = []
+    if any(ejercicio < PRIMER_EJERCICIO_LIRPF for ejercicio in ejercicios):
+        normas.append(NORMA_RESIDENCIA_HASTA_2006)
+    if any(ejercicio >= PRIMER_EJERCICIO_LIRPF for ejercicio in ejercicios):
+        normas.append(NORMA_RESIDENCIA_DESDE_2007)
+    return normas
+
+
+def ejercicios_regidos_por(boe_id: str, ejercicios: list[int]) -> list[int]:
+    """Ejercicios del caso que rige esa norma interna de residencia.
+
+    Acota la redacción aplicable a su periodo: sin esto, el texto refundido de
+    2004 aparecía con una redacción para un ejercicio en el que ya estaba
+    derogado.
+    """
+    if boe_id == NORMA_RESIDENCIA_HASTA_2006:
+        return [e for e in ejercicios if e < PRIMER_EJERCICIO_LIRPF]
+    if boe_id == NORMA_RESIDENCIA_DESDE_2007:
+        return [e for e in ejercicios if e >= PRIMER_EJERCICIO_LIRPF]
+    return ejercicios
 
 
 # --- Preceptos publicados ----------------------------------------------------
@@ -333,6 +396,28 @@ def _redacciones_por_ejercicio(
     return {str(ejercicio): precepto.redaccion_para(ejercicio) for ejercicio in ejercicios}
 
 
+def _vigentes(convenios: list[ConvenioPais], ejercicios: list[int]) -> list[ConvenioPais]:
+    """Convenios del país que rigieron **alguno** de los ejercicios del caso.
+
+    Un país puede haber cambiado de convenio en medio del periodo enjuiciado —el
+    de Reino Unido rige hasta 2013 y el nuevo desde 2014—, así que filtrar por el
+    ejercicio más alto descartaba el convenio que regía los primeros años.
+    """
+    if not ejercicios:
+        return [c for c in convenios if c.rige(None)]
+    return [c for c in convenios if any(c.rige(ejercicio) for ejercicio in ejercicios)]
+
+
+def _ejercicios_del_enlace(
+    boe_id: str, convenios: list[ConvenioPais], ejercicios: list[int]
+) -> list[int]:
+    """Ejercicios del caso a los que se aplica realmente la norma enlazada."""
+    del_convenio = [c for c in convenios if c.boe_id == boe_id]
+    if del_convenio:
+        return [e for e in ejercicios if any(c.rige(e) for c in del_convenio)]
+    return ejercicios_regidos_por(boe_id, ejercicios)
+
+
 MOTIVO_SIN_PAIS_CDI = "La sentencia no declara de qué país es el convenio que cita"
 MOTIVO_SIGLA_DESCONOCIDA = "La sigla de la norma no está en el corpus normativo"
 MOTIVO_ARTICULO_NO_PUBLICADO = (
@@ -359,8 +444,7 @@ def resolver_cita(
 
     if es_convenio:
         # «art. 4.2 CDI» no dice de qué país: lo dice la propia sentencia.
-        vigentes = [c for c in convenios if c.rige(max(ejercicios) if ejercicios else None)]
-        objetivos = [(c.boe_id, CERTEZA_EXPLICITA) for c in vigentes]
+        objetivos = [(c.boe_id, CERTEZA_EXPLICITA) for c in _vigentes(convenios, ejercicios)]
         if not objetivos:
             return [], MOTIVO_SIN_PAIS_CDI
     elif cita.sigla:
@@ -373,12 +457,10 @@ def resolver_cita(
         # objeto de todo el corpus— o del convenio que la sentencia invoca.
         # Ambas quedan marcadas como inferidas; el filtro de «solo preceptos
         # publicados» es lo que evita enlazar cualquier cosa.
-        objetivos = [(norma_residencia_aplicable(ejercicios), CERTEZA_INFERIDA)]
-        objetivos += [
-            (c.boe_id, CERTEZA_INFERIDA)
-            for c in convenios
-            if c.rige(max(ejercicios) if ejercicios else None)
+        objetivos = [
+            (boe_id, CERTEZA_INFERIDA) for boe_id in normas_residencia_aplicables(ejercicios)
         ]
+        objetivos += [(c.boe_id, CERTEZA_INFERIDA) for c in _vigentes(convenios, ejercicios)]
 
     enlaces: list[EnlaceCita] = []
     for boe_id, certeza in objetivos:
@@ -394,7 +476,9 @@ def resolver_cita(
                 bloque_id=precepto.bloque_id,
                 apartado=cita.apartado.lstrip(".") or None,
                 certeza=certeza,
-                redaccion_aplicable=_redacciones_por_ejercicio(precepto, ejercicios),
+                redaccion_aplicable=_redacciones_por_ejercicio(
+                    precepto, _ejercicios_del_enlace(boe_id, convenios, ejercicios)
+                ),
             )
         )
     if enlaces:

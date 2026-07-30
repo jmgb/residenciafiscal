@@ -241,16 +241,40 @@ también el ejercicio, porque tienen convenio antiguo y moderno. El mapa
 país → convenio (`CONVENIOS_POR_PAIS`) es una tabla curada y corta a propósito:
 un país equivocado ahí enlazaría una sentencia con el derecho de otro Estado.
 
+**Un caso puede cruzar un cambio de norma, y entonces se enlazan las dos.** Los
+ejercicios enjuiciados no siempre caen todos del mismo lado: `SAN 5630/2023`
+abarca 2005-2008, a caballo de la entrada en vigor de la Ley 35/2006. Elegir una
+sola norma por el ejercicio más alto —lo que hacía el resolvedor— dejaba 2005 y
+2006 sin el precepto que de verdad los regía. Ahora `normas_residencia_aplicables()`
+devuelve una norma por periodo, `_vigentes()` hace lo mismo con los convenios
+—Reino Unido cambia entre 2013 y 2014— y cada enlace declara solo las
+`redaccion_aplicable` de los ejercicios que su norma rige: el texto refundido de
+2004 ya no aparece con una redacción para un año en que estaba derogado.
+
 **Los identificadores de bloque del BOE no son uniformes.** El artículo 4 es `a4`
 en el convenio con Francia y `ar-4` en el del Reino Unido de 2013; también hay
 `ai-4` y `a1-5`. Construir el identificador desde el número de artículo perdía
 enlaces en silencio, así que el emparejamiento va por número leído de la
 designación.
 
-Resultado sobre las 106 sentencias: **121 enlaces** (100 explícitos, 21
-inferidos) en 58 sentencias y 9 preceptos citados. De las 48 restantes, 41 no
+**Y la designación tampoco es uniforme: hay artículos en numeración romana.** Los
+convenios con Suecia, Rumanía y Canadá titulan su artículo de residencia
+«Artículo IV», mientras las sentencias lo citan en árabe («art. 4 CDI»), así que
+esos tres preceptos eran inalcanzables: existían publicados y ningún número los
+encontraba. `numero_de_designacion()` normaliza el romano a árabe exigiendo que
+sea canónico —`IIII` o `VX` se rechazan en vez de convertirse en un número
+inventado que apuntaría a otro artículo— y descarta los ordinales escritos con
+letra, que empiezan por símbolos romanos válidos («Artículo **D**uodécimo»).
+
+Resultado sobre las 106 sentencias: **122 enlaces** (100 explícitos, 22
+inferidos) en 58 sentencias y 10 preceptos citados. De las 48 restantes, 41 no
 citan ningún artículo en su análisis y 7 solo mencionan preceptos fuera de la
 selección. Es un techo del dato de entrada, no del resolvedor.
+
+El enlace número 122 y el décimo precepto son precisamente el `trlirpf-2004-a9`
+de `SAN 5630/2023`. El arreglo de la numeración romana, en cambio, no cambia hoy
+ningún enlace: la única sentencia con convenio de Canadá no cita ningún artículo
+del convenio en su análisis. Cierra un hueco latente, y hay test que lo cubre.
 
 El resolvedor además avisa de **tres anacronismos**: sentencias cuyo último
 ejercicio es anterior a 2007 y que citan la Ley 35/2006, cuando regía el texto

@@ -5,9 +5,9 @@
   "jsonl": "analisis_02012026_155032.jsonl",
   "sentencias": 106,
   "sentencias_con_precepto": 58,
-  "enlaces": 121,
+  "enlaces": 122,
   "enlaces_explicitos": 100,
-  "enlaces_inferidos": 21,
+  "enlaces_inferidos": 22,
   "citas_no_resueltas": 41,
   "avisos": [
     {
@@ -627,9 +627,7 @@
           "certeza": "explicita",
           "texto_citado": "artículo 9 LIRPF",
           "campo": "carga_prueba.motivo",
-          "redaccion_aplicable": {
-            "2006": null
-          }
+          "redaccion_aplicable": {}
         },
         {
           "slug": "lirpf-a9",
@@ -639,9 +637,7 @@
           "certeza": "explicita",
           "texto_citado": "Art.9 LIRPF",
           "campo": "resumen_criterios",
-          "redaccion_aplicable": {
-            "2006": null
-          }
+          "redaccion_aplicable": {}
         }
       ],
       "citas_no_resueltas": [],
@@ -682,7 +678,6 @@
           "texto_citado": "art.9 LIRPF",
           "campo": "resumen_criterios",
           "redaccion_aplicable": {
-            "2006": null,
             "2007": "2007-01-01",
             "2008": "2007-01-01"
           }
@@ -763,9 +758,7 @@
           "certeza": "explicita",
           "texto_citado": "art.9 LIRPF",
           "campo": "resumen_criterios",
-          "redaccion_aplicable": {
-            "2006": null
-          }
+          "redaccion_aplicable": {}
         }
       ],
       "citas_no_resueltas": [],
@@ -947,8 +940,6 @@
           "texto_citado": "art.9 LIRPF",
           "campo": "resumen_criterios",
           "redaccion_aplicable": {
-            "2005": null,
-            "2006": null,
             "2007": "2007-01-01",
             "2008": "2007-01-01"
           }
@@ -962,10 +953,21 @@
           "texto_citado": "art.9.1",
           "campo": "carga_prueba.motivo",
           "redaccion_aplicable": {
-            "2005": null,
-            "2006": null,
             "2007": "2007-01-01",
             "2008": "2007-01-01"
+          }
+        },
+        {
+          "slug": "trlirpf-2004-a9",
+          "boe_id": "BOE-A-2004-4347",
+          "bloque_id": "a9",
+          "apartado": "1",
+          "certeza": "inferida",
+          "texto_citado": "art.9.1",
+          "campo": "carga_prueba.motivo",
+          "redaccion_aplicable": {
+            "2005": "2004-03-11",
+            "2006": "2004-03-11"
           }
         }
       ],
@@ -1932,10 +1934,7 @@
           "certeza": "explicita",
           "texto_citado": "art. 9 LIRPF",
           "campo": "resumen_criterios",
-          "redaccion_aplicable": {
-            "2005": null,
-            "2006": null
-          }
+          "redaccion_aplicable": {}
         }
       ],
       "citas_no_resueltas": [
