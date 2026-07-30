@@ -79,13 +79,22 @@ El chat funciona hoy con un **stub**. `chatEngineMode` en
 simulado en la UI. Al conectar el backend real hay que cambiarlo a `'live'`,
 que apaga el aviso automáticamente.
 
-**El backend ya está decidido, diseñado y con la plataforma validada**: una
-Netlify Edge Function en `/api/chat` que recupera por facetas del corpus y
-streamea por SSE resolviendo marcadores `[S<n>]` a ROJ reales en el servidor.
-No sigue abierta la elección entre FastAPI, file_search o pgvector.
+**El runtime del backend ya está decidido, diseñado y con la plataforma
+validada**: una Netlify Edge Function en `/api/chat` que streamea por SSE y
+resuelve marcadores `[S<n>]` a ROJ reales en el servidor. Esto cierra la
+elección de plataforma frente a FastAPI, pero no predetermina qué recuperación
+ofrece mejores respuestas.
+
+La estrategia de recuperación se debe medir con dos respuestas independientes:
+la actual, basada en el corpus v3 estructurado, y Gemini File Search sobre los
+PDF de la muestra. Cada respuesta mantiene sus propias fuentes, errores,
+métricas y coste visible en USD. No se ha adoptado `pgvector`; una unión futura
+de candidatos con reranking local solo se evaluará después de esta comparación.
 
 - Diseño: `docs/superpowers/specs/2026-07-29-chat-backend-design.md`
 - Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
+- Contrato de la comparación:
+  [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md)
 - Límites de plataforma medidos: [`docs/operations/NETLIFY_EDGE.md`](../docs/operations/NETLIFY_EDGE.md)
 
 Si vas a escribir la edge function, lee primero el último: tiene tres trampas
@@ -93,9 +102,10 @@ que cuestan un deploy cada una. La más cara es que **todo `.ts` en la raíz de
 `netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime—, así que
 los módulos compartidos van en `lib/`.
 
-Está **bloqueado en la fase 0b**: el mecanismo de cuotas y presupuesto necesita
-una decisión, porque el compare-and-swap de Netlify Blobs no es atómico. Ver
-`docs/project/TASKS.md`.
+La **activación productiva** está bloqueada en la fase 0b: el mecanismo de
+cuotas y presupuesto necesita una decisión, porque el compare-and-swap de
+Netlify Blobs no es atómico. El experimento comparativo puede avanzar sin
+activar el chat. Ver `docs/project/TASKS.md`.
 
 Las dependencias del backend (`openai`, `zod`, `@netlify/blobs`,
 `@netlify/edge-functions`) ya están instaladas y verificadas en Deno.

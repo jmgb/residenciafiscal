@@ -15,6 +15,25 @@ operación.
 | Consultar comandos y reglas para agentes | [Guía de desarrollo](../CLAUDE.md) |
 | Revisar el trabajo pendiente | [Backlog](project/TASKS.md) |
 
+## Autoridad y vigencia
+
+No todos los documentos tienen la misma función. Ante una discrepancia, usa
+esta jerarquía:
+
+| Pregunta | Fuente que manda |
+|---|---|
+| ¿Qué dice la resolución o la norma? | PDF/XML oficial inmutable y su hash |
+| ¿Qué estructura deben cumplir los datos? | Schema versionado, modelos y tests de contrato |
+| ¿Qué debe hacer el producto? | Caso de uso y contrato funcional del área |
+| ¿Qué arquitectura y trabajo siguen vigentes? | `ARCHITECTURE.md` y `project/TASKS.md` |
+| ¿Qué se midió y con qué límites? | Documento e informe de la fase experimental |
+| ¿Cómo se pensó o ejecutó un cambio anterior? | Specs y planes de `superpowers/` |
+
+Los planes y experimentos conservan decisiones y evidencia, pero no sustituyen
+el estado actual ni un contrato posterior. Si cambia una decisión, actualiza en
+el mismo cambio el documento canónico y `project/TASKS.md`; enlaza la evidencia
+en vez de copiar sus cifras en varios sitios.
+
 ## Jurisprudencia
 
 El orden recomendado de lectura es:
@@ -58,5 +77,6 @@ Documentos especializados:
   versionados o sean locales.
 - Un cambio de contrato debe actualizar el código, su schema en `schemas/`, sus
   tests y el documento de referencia correspondiente.
-- Los planes históricos se conservan como contexto, pero el estado vigente se
-  describe en los documentos de arquitectura y en `project/TASKS.md`.
+- `project/TASKS.md` registra estado y bloqueos; no redefine contratos.
+- Los planes históricos se conservan como contexto y deben señalar qué partes
+  hayan quedado superadas.

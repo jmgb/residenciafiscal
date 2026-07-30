@@ -3,19 +3,21 @@
 Backlog operativo del proyecto. Las tareas SEO y de despliegue deben verificarse
 contra el dominio público después de cada deploy.
 
-> **Si retomas el backend del chat**, empieza por las dos entradas bloqueadas de
-> «Producto y arquitectura»: la **fase 0b** (decisión sobre cuotas y presupuesto)
-> y el **corpus OKF**, que decide de qué lee el chat. Ambas están anotadas con lo
-> que hay que leer y por qué. La fase 0 ya está ejecutada y medida.
+> **Si retomas el backend del chat**, separa dos líneas: el experimento de
+> comparación entre el corpus v3 y Gemini File Search, y la activación
+> productiva. Esta última sigue bloqueada por la **fase 0b** (cuotas y
+> presupuesto), la ampliación del corpus y la revisión humana. La fase 0 de
+> plataforma ya está ejecutada y medida.
 >
 > El diseño y el plan viven en `docs/superpowers/`, que está en `.gitignore`: esos
 > dos ficheros son excepciones añadidas con `git add -f`. Si creas más documentos
 > ahí, no se versionarán solos.
 
 > **Si retomas el corpus normativo**, las cuatro entradas de «Corpus normativo»
-> son independientes entre sí y se pueden coger por separado. La más urgente por
-> plazo es la del schema v3: hay que pedir el campo antes de que se fije el
-> contrato. La más silenciosa es el guardarraíl de la redescarga.
+> son independientes entre sí y se pueden coger por separado. El schema v3 ya
+> está congelado: añadir las normas citadas exige una extensión opcional
+> compatible o una versión nueva. La tarea más silenciosa sigue siendo el
+> guardarraíl de la redescarga.
 
 ## Prioridad alta
 
@@ -38,12 +40,16 @@ contra el dominio público después de cada deploy.
 ## Producto y arquitectura
 
 - [ ] **Sustituir el motor `stub` del chat por un backend real.** Diseñado y planificado:
-  Netlify Edge Function en `/api/chat`, router LLM a facetas del corpus + filtro
-  determinista, y citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
+  Netlify Edge Function en `/api/chat`, recuperación con fuentes trazables y
+  citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
   El caso de uso principal y el contrato de respuesta/recuperación están en
   [`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md): el
   chat ayuda al abogado a investigar casos comparables por cuestión, hechos y
   pruebas con referencias a sentencia y página; no predice su caso.
+  Antes de elegir la estrategia definitiva se comparan dos respuestas
+  independientes —corpus v3 estructurado y Gemini File Search sobre PDF— con
+  fuentes, métricas y coste en USD separados. Contrato:
+  [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
@@ -89,8 +95,8 @@ contra el dominio público después de cada deploy.
     > tarjetas llevan hechos, valoración, resultado por cuestión y fragmentos
     > verbatim. Cada marcador debe resolverse a **sentencia + cuestión + página**.
     >
-    > Depende de diseñar y validar v3 primero con 1 sentencia, después con 5, y
-    > solo entonces ampliar a 106, además de la revisión humana.
+    > El diseño y la validación con 1 y 5 sentencias ya están completados. La
+    > ampliación a 106 y la aprobación jurídica humana siguen pendientes.
   - [ ] **Fase 2 — evaluación.** Banco de 40 preguntas versionado. Bloquean los gates
     binarios (0 identificadores inventados, 0 párrafos sin fuente, fuera de corpus,
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
@@ -99,19 +105,21 @@ contra el dominio público después de cada deploy.
     - [x] Seleccionar y contestar manualmente 40 preguntas contra la muestra de
       cinco, con casos, contracasos, límites y gaps de datos:
       [`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../experiments/CHAT_QUESTION_PILOT_5.md).
-    - [ ] Convertir la verdad de referencia manual en un artefacto
-      machine-readable cuando exista el schema v3.
+    - [x] Convertir la verdad de referencia manual en el banco machine-readable
+      `knowledge/jurisprudencia-v3/evaluations/chat-question-pilot-5.bank.json`.
     - [ ] Evolucionar `ChatSource` y el protocolo a v2 con `issueId`,
       `anchorId`, página, fidelidad y hash de fuente; adaptar persistencia y UI
       sin perder varios anclajes de una misma sentencia.
   - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
     rollback es quitar la variable y redesplegar.
-- [ ] **Llevar el corpus OKF de 1 a 106 sentencias.** Está parado esperando **revisión
-  humana y migración del schema orientada al chat**, y bloquea la fase 1 del chat. Estado en
-  [`docs/jurisprudence/OKF_PIPELINE.md`](../jurisprudence/OKF_PIPELINE.md).
-  - [ ] Diseñar `residenciafiscal-case/3` a partir del caso de uso principal y
+- [ ] **Llevar el corpus v3 de 5 a 106 sentencias.** El contrato y la muestra ya
+  están congelados. La expansión está parada hasta autorizar el manifiesto real
+  de los 106 PDF y organizar la revisión humana; bloquea la activación
+  productiva del chat. Estado y siguiente gate:
+  [`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](../jurisprudence/JURISPRUDENCE_PHASE_E0.md).
+  - [x] Diseñar `residenciafiscal-case/3` a partir del caso de uso principal y
     de los doce gaps del piloto de 40 preguntas; probarlo con 1 sentencia y
-    después regenerar las 5 antes de autorizar las 106. Roadmap canónico:
+    después regenerar las 5. Roadmap canónico:
     [`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
     - [x] Documentar arquitectura, responsabilidades, rollout, gates y estrategia
       RAG.
@@ -124,9 +132,12 @@ contra el dominio público después de cada deploy.
     - [x] Construir y validar el caso v3 híbrido de `SAN 1210/2023`.
     - [x] Renderizar su Markdown e índice por cuestión desde el modelo canónico.
     - [x] Validar 18 preguntas aplicables del piloto contra esa sentencia.
-    - [ ] Regenerar las cinco con el mismo pipeline y ejecutar las 40 preguntas.
-    - [ ] Comparar recuperación estructurada/léxica con embeddings antes de
-      elegir la estrategia definitiva.
+    - [x] Regenerar las cinco con el mismo pipeline y ejecutar las 40 preguntas.
+    - [x] Comparar recuperación estructurada y léxica antes de añadir
+      embeddings. Fase D decidió `NOT_REQUIRED_FOR_PILOT`; se reabre al ampliar
+      el corpus o si fallan los gates.
+    - [x] Preparar la fase E0 con holdout independiente, contrato de manifiesto,
+      ejecución reanudable y gates, sin crear el listado de las 106.
   - [ ] Revisar el piloto `san-1071-2025`: 3 cuestiones jurídicas propuestas y **0
     aprobadas**, más 5 textos del análisis pendientes. Las decisiones se registran en
     `knowledge/annotations/san-1071-2025.yaml` con `status: approved`,
@@ -137,11 +148,14 @@ contra el dominio público después de cada deploy.
     `export_okf_batch.py` usa manifiesto explícito, orden determinista,
     publicación atómica y no descubre PDFs por defecto.
   - [x] Ejecutar y revisar de forma asistida la muestra de 5 fijada en
-    `sentencias/okf_muestra_5.json`. Siguen pendientes la aprobación jurídica
-    humana y la clasificación de 17 citas; por eso no se autorizan las 106.
-  - [ ] Materializar el corpus verbatim por páginas definido en
-    [`docs/jurisprudence/VERBATIM_CORPUS.md`](../jurisprudence/VERBATIM_CORPUS.md): JSON canónico y Markdown
-    opcional. Medir 1 y 5 antes de decidir almacenamiento para 106.
+    `sentencias/okf_muestra_5.json`. Las 17 citas heredadas ya están
+    clasificadas; sigue pendiente la aprobación jurídica humana y por eso no se
+    autorizan las 106.
+  - [x] Materializar para la muestra de cinco el corpus verbatim por páginas
+    definido en
+    [`docs/jurisprudence/VERBATIM_CORPUS.md`](../jurisprudence/VERBATIM_CORPUS.md)
+    como JSON canónico y decidir en E0 su almacenamiento para la futura
+    expansión. El Markdown verbatim sigue siendo una vista humana opcional.
 - [ ] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
   ASCII (`/espana`, `/portugal`, etc.) y redirecciones para variantes con caracteres especiales.
 - [x] Definir el contrato del endpoint de chat, manejo de errores, cancelación de peticiones,
@@ -199,9 +213,10 @@ comprueban párrafo a párrafo contra la fuente.
   no escribió.
   - Con un campo `normas_citadas[]` —igual que ya hay criterios y pruebas— la
     cobertura sube sin tocar una línea de `normativa_citas.py`.
-  - Encaja en el rediseño v3 en curso
+  - Debe entrar como extensión opcional compatible del contrato congelado o en
+    una versión posterior
     ([`JURISPRUDENCE_DATA_V3_ROADMAP.md`](../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md)): es
-    el momento de pedirlo, antes de fijar el contrato.
+    obligatorio regenerar la muestra y repetir sus gates si cambia el schema.
   - Formato mínimo útil: sigla o nombre de la norma, número de artículo y
     apartado. El resolvedor ya sabe casar «art. 9.1.b LIRPF» y el apartado no
     participa en la resolución (se publica el artículo completo).
