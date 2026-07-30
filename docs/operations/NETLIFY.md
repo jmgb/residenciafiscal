@@ -8,7 +8,11 @@ El fichero [`netlify.toml`](../../netlify.toml) configura:
 - Node.js 24;
 - reconstrucción cuando cambia `frontend/` o `netlify.toml`;
 - fallback SPA `/*` → `/index.html`;
-- rewrites de `/manifiesto` y `/metodologia` a sus HTML prerenderizados antes del fallback;
+- rewrites a los HTML prerenderizados antes del fallback: las rutas estáticas
+  (`/manifiesto`, `/metodologia`, `/colaborar`) y **una por país**, más las
+  redirecciones 301 de los slugs acentuados históricos. Las rutas se mantienen en
+  `netlify.toml` junto con su fuente en `frontend/src/data/countryRoutes.json`, y
+  `test/test_frontend_seo_assets.py` comprueba que cada ruta tiene su rewrite;
 - cabeceras de seguridad, CSP compatible con GA4 y caché de assets;
 - `frontend/public/data/corpus.json` como corpus versionado de respaldo.
 

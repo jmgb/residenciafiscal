@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
+import { staticRoute } from '@/data/staticRoutes';
 import { CONTACT_EMAIL, EXPERT_PROFILES } from '@/lib/contribution';
 import { ColaborarPage } from '@/pages/ColaborarPage';
 
@@ -71,7 +72,10 @@ describe('ColaborarPage', () => {
     const canonical = document.createElement('link');
     canonical.setAttribute('rel', 'canonical');
     canonical.setAttribute('href', 'https://residenciafiscal.org/');
-    document.head.append(robots, canonical);
+    const description = document.createElement('meta');
+    description.setAttribute('name', 'description');
+    description.setAttribute('content', 'la de la home');
+    document.head.append(robots, canonical, description);
 
     renderPage();
 
@@ -83,6 +87,12 @@ describe('ColaborarPage', () => {
       expect(document.querySelector('link[rel="canonical"]')).toHaveAttribute(
         'href',
         'https://residenciafiscal.org/colaborar'
+      );
+      // Misma fuente que usa `scripts/prerender.mjs`: si la página fijara su
+      // propia descripción, el visitante y el bot podrían leer distinto.
+      expect(document.querySelector('meta[name="description"]')).toHaveAttribute(
+        'content',
+        staticRoute('/colaborar').description
       );
     });
   });

@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/manifiesto",
+    "title": "Manifiesto — Residencia Fiscal",
+    "description": "Naciste en un país. No le perteneces. Elegir dónde vives — y dónde tributas — es un derecho. La jurisprudencia que decide estos casos, al alcance de cualquiera, siempre dentro de la ley.",
+    "indexable": true,
+    "image": "/og-image-manifiesto.png",
+    "sitemap": { "changefreq": "monthly", "priority": "0.8" }
+  },
+  {
+    "path": "/metodologia",
+    "title": "Metodología — Residencia Fiscal",
+    "description": "Cómo se construyó el análisis: 106 sentencias del Tribunal Supremo y la Audiencia Nacional (2015–2025), con criterios, pruebas y fallo extraídos de forma estructurada y cita literal verificable.",
+    "indexable": true,
+    "image": null,
+    "sitemap": { "changefreq": "monthly", "priority": "0.6" }
+  },
+  {
+    "path": "/colaborar",
+    "title": "Colaborar — Residencia Fiscal",
+    "description": "El corpus de jurisprudencia sobre residencia fiscal crece con la contribución de expertos en fiscalidad y tributación internacional: abogados, asesores fiscales, académicos y documentalistas jurídicos que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": true,
+    "image": null,
+    "sitemap": { "changefreq": "monthly", "priority": "0.7" }
+  }
+]

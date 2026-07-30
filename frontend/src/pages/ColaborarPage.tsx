@@ -1,6 +1,8 @@
 import { Link } from 'react-router';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
+import { staticRoute } from '@/data/staticRoutes';
 import {
+  COLLABORATE_PATH,
   CONTACT_EMAIL,
   contributionMailto,
   countryContributionUrl,
@@ -8,10 +10,10 @@ import {
 } from '@/lib/contribution';
 import { usePageTitle } from '@/lib/usePageTitle';
 
-const DESCRIPTION =
-  'El corpus de jurisprudencia sobre residencia fiscal crece con la contribución de expertos en ' +
-  'fiscalidad y tributación internacional: abogados, asesores fiscales, académicos y documentalistas ' +
-  'jurídicos que aportan la jurisprudencia de su jurisdicción.';
+// Título y descripción salen de `staticRoutes.json`, que es también lo que lee
+// `scripts/prerender.mjs`: si estuvieran escritos aquí, el visitante y el bot
+// podrían acabar leyendo descripciones distintas.
+const META = staticRoute(COLLABORATE_PATH);
 
 /** Lo que ya existe y por tanto nadie tiene que volver a construir. */
 const YA_EXISTE = [
@@ -22,7 +24,7 @@ const YA_EXISTE = [
 ];
 
 export function ColaborarPage() {
-  usePageTitle('Colaborar', '/colaborar', DESCRIPTION);
+  usePageTitle('Colaborar', COLLABORATE_PATH, META.description);
 
   const pendientes = COUNTRY_ROUTES.filter((route) => !route.indexable);
 

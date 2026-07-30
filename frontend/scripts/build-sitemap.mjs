@@ -7,18 +7,21 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
 const publicDir = join(frontendDir, 'public');
 const routes = JSON.parse(readFileSync(join(frontendDir, 'src/data/countryRoutes.json'), 'utf8'));
+const staticRoutes = JSON.parse(
+  readFileSync(join(frontendDir, 'src/data/staticRoutes.json'), 'utf8')
+);
 
 const SITE_URL = 'https://residenciafiscal.org';
+// Solo entra lo indexable. Las páginas de país sin corpus son `noindex`, y por eso
+// `/colaborar` —que sí está aquí— es la única puerta a la invitación a contribuir
+// que alguien puede encontrar desde una búsqueda.
 const publicRoutes = [
   ...routes
     .filter((route) => route.indexable)
     .map((route) => ({ path: route.path, changefreq: 'weekly', priority: '1.0' })),
-  { path: '/manifiesto', changefreq: 'monthly', priority: '0.8' },
-  { path: '/metodologia', changefreq: 'monthly', priority: '0.6' },
-  // `/colaborar` es la única puerta indexable de la invitación a contribuir: las
-  // páginas de país sin corpus son `noindex`, así que sin esta URL nadie llega
-  // desde una búsqueda.
-  { path: '/colaborar', changefreq: 'monthly', priority: '0.7' },
+  ...staticRoutes
+    .filter((route) => route.indexable)
+    .map((route) => ({ path: route.path, ...route.sitemap })),
 ];
 
 const escapeXml = (value) =>

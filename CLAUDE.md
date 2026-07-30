@@ -362,6 +362,34 @@ de sentencias en lenguaje natural. Trampas del stack, marca, estado del motor de
 chat y despliegue están en [`frontend/CLAUDE.md`](frontend/CLAUDE.md), que se
 carga solo al trabajar dentro de ese directorio.
 
+## Un país, un corpus
+
+El proyecto es colaborativo. Solo España tiene corpus, y no por una limitación
+del código —el pipeline es agnóstico de la jurisdicción—, sino porque abrir un
+país exige criterio jurídico-tributario. La invitación se dirige por eso a
+**expertos en fiscalidad y tributación internacional**, y pide tres cosas: una
+fuente pública oficial con condiciones de reutilización claras, el precepto
+nacional equivalente al art. 9 LIRPF y **un especialista que valide** el análisis
+del modelo. El criterio para arrancar el siguiente país no es el orden de llegada:
+es el primero que reúna fuente reutilizable y revisor comprometido.
+
+Al escribir copy sobre esto, dos límites:
+
+- **No se afirma que el corpus español esté revisado por expertos.** Las
+  anotaciones de `knowledge/annotations/` están en `status: proposed` y la web
+  advierte de que el análisis lo genera un modelo. Lo que sí se afirma es que su
+  jurisprudencia **se delimitó** con criterio tributario, y la validación se
+  enuncia como requisito para publicar, no como hecho consumado.
+- **El registro es profesional.** «Lo puede abrir cualquiera» abarata el trabajo y
+  describe mal el requisito; hay un test que impide que esa fórmula reaparezca.
+
+Canales, perfiles y ruta viven en `frontend/src/lib/contribution.ts`; la página
+pública es `/colaborar`, la única indexable del circuito porque las 20 páginas de
+país son `noindex`. El formulario es
+[`.github/ISSUE_TEMPLATE/aportar_pais.yml`](.github/ISSUE_TEMPLATE/aportar_pais.yml).
+Contrato operativo en [`CONTRIBUTING.md`](CONTRIBUTING.md) y estado de las páginas
+en [`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).
+
 ## Referencias
 
 - [Art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) - Residencia habitual

@@ -18,6 +18,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
+import staticRoutes from '../src/data/staticRoutes.json' with { type: 'json' };
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -40,36 +41,21 @@ const COUNTRY_ROUTES = countryRoutes.map((route) => ({
   image: null,
 }));
 
-const ROUTES = [
-  ...COUNTRY_ROUTES,
-  {
-    dir: 'manifiesto',
-    title: 'Manifiesto — Residencia Fiscal',
-    description:
-      'Naciste en un país. No le perteneces. Elegir dónde vives — y dónde tributas — es un derecho. La jurisprudencia que decide estos casos, al alcance de cualquiera, siempre dentro de la ley.',
-    robots: 'index, follow',
-    url: `${SITE_URL}/manifiesto`,
-    image: `${SITE_URL}/og-image-manifiesto.png`,
-  },
-  {
-    dir: 'colaborar',
-    title: 'Colaborar — Residencia Fiscal',
-    description:
-      'El corpus de jurisprudencia sobre residencia fiscal crece con la contribución de expertos en fiscalidad y tributación internacional: abogados, asesores fiscales, académicos y documentalistas jurídicos que aportan la jurisprudencia de su jurisdicción.',
-    url: `${SITE_URL}/colaborar`,
-    image: null,
-    robots: 'index, follow',
-  },
-  {
-    dir: 'metodologia',
-    title: 'Metodología — Residencia Fiscal',
-    description:
-      'Cómo se construyó el análisis: 106 sentencias del Tribunal Supremo y la Audiencia Nacional (2015–2025), con criterios, pruebas y fallo extraídos de forma estructurada y cita literal verificable.',
-    robots: 'index, follow',
-    url: `${SITE_URL}/metodologia`,
-    image: null,
-  },
-];
+/**
+ * Rutas que no son de país. Los metadatos salen de `staticRoutes.json` y no de
+ * aquí: la página los fija también en runtime, y con dos copias el visitante y
+ * el bot podían leer descripciones distintas sin que nada lo detectara.
+ */
+const STATIC_ROUTES = staticRoutes.map((route) => ({
+  dir: route.path.slice(1),
+  title: route.title,
+  description: route.description,
+  robots: route.indexable ? 'index, follow' : 'noindex, follow',
+  url: `${SITE_URL}${route.path}`,
+  image: route.image ? `${SITE_URL}${route.image}` : null,
+}));
+
+const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES];
 
 /**
  * Patrones de los metadatos de la shell. Tolerantes al salto de línea porque
