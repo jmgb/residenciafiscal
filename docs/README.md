@@ -63,7 +63,7 @@ Documentos especializados:
 | Corpus normativo | [XML del BOE → preceptos](normativa/NORMATIVA.md) |
 | Producto | [Páginas de país](product/COUNTRY_PAGES.md), [analítica](product/ANALYTICS.md) |
 | Modelos | [Reasoning effort](development/REASONING_EFFORT.md) |
-| Infraestructura | [Netlify](operations/NETLIFY.md), [Netlify Edge](operations/NETLIFY_EDGE.md), [Cloudflare](operations/CLOUDFLARE.md) |
+| Infraestructura | [Netlify](operations/NETLIFY.md), [Netlify Edge](operations/NETLIFY_EDGE.md), [Cloudflare](operations/CLOUDFLARE.md), [UptimeRobot](operations/UPTIMEROBOT.md) |
 | Identidad | [Guía de marca](brand/brand-guidelines.md), [manifiesto](brand/manifiesto.md) |
 | Evidencia experimental | [`experiments/`](experiments/) |
 

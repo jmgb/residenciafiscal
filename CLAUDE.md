@@ -376,6 +376,13 @@ de sentencias en lenguaje natural. Trampas del stack, marca, estado del motor de
 chat y despliegue están en [`frontend/CLAUDE.md`](frontend/CLAUDE.md), que se
 carga solo al trabajar dentro de ese directorio.
 
+La disponibilidad la vigila **UptimeRobot** desde fuera: dos monitores de palabra
+clave cada 5 minutos, uno sobre la home y otro sobre `data/corpus.json` —el
+fallback SPA de Netlify devuelve 200 para cualquier ruta, así que un monitor HTTP
+simple no detectaría un corpus perdido. Monitores, credenciales y la trampa de la
+API v2 (que rechaza toda escritura en este plan) están en
+[`docs/operations/UPTIMEROBOT.md`](docs/operations/UPTIMEROBOT.md).
+
 ## Un país, un corpus
 
 El proyecto es colaborativo. Solo España tiene corpus, y no por una limitación
