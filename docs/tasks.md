@@ -12,6 +12,11 @@ contra el dominio público después de cada deploy.
 > dos ficheros son excepciones añadidas con `git add -f`. Si creas más documentos
 > ahí, no se versionarán solos.
 
+> **Si retomas el corpus normativo**, las cuatro entradas de «Corpus normativo»
+> son independientes entre sí y se pueden coger por separado. La más urgente por
+> plazo es la del schema v3: hay que pedir el campo antes de que se fije el
+> contrato. La más silenciosa es el guardarraíl de la redescarga.
+
 ## Prioridad alta
 
 - [x] **Rotar el token de Sentry filtrado en la historia de git.** El token real
@@ -144,6 +149,79 @@ contra el dominio público después de cada deploy.
   del diseño: eventos SSE, los dos `429` (el del limitador nativo llega sin ejecutar la
   función y no es SSE), `502` antes del primer token frente a `event: error` a mitad de
   stream, cancelación por `AbortSignal` y degradación a búsqueda léxica si el router falla.
+
+## Corpus normativo
+
+`normativa/es/` guarda el XML del BOE y `knowledge/normativa/es/preceptos/` los
+108 preceptos publicados; `enlaces/` resuelve qué precepto cita cada sentencia.
+Arquitectura, invariantes y decisiones en [`NORMATIVA.md`](NORMATIVA.md). Léelo
+antes de tocar nada: el articulado no se reescribe nunca, y hay tests que lo
+comprueban párrafo a párrafo contra la fuente.
+
+- [ ] **Completar la tabla país → convenio: hoy alcanza 16 de los 98 convenios
+  publicados.** `CONVENIOS_POR_PAIS`, en `normativa_citas.py`, solo mapea los
+  países que litigan en el corpus actual. Los otros 82 convenios están
+  publicados con su artículo de residencia y **ninguna cita puede llegar a
+  ellos**: si entra una sentencia sobre Portugal o Italia, su «art. 4 CDI»
+  quedará sin resolver aunque el precepto exista. Hoy no falla porque el corpus
+  solo litiga con esos 16 países.
+  - Los identificadores y títulos oficiales están en
+    `normativa/es/manifest.json` (campo `titulo` de los registros con
+    `grupo: cdi`). **Verifica cada país contra el título**, no lo deduzcas con
+    una regex: los 96 convenios escriben el país de trece formas distintas y un
+    país equivocado enlazaría una sentencia con el derecho de otro Estado. Por
+    eso la tabla es curada y no generada.
+  - Cierra con un test que exija que **ningún convenio publicado quede sin
+    alias**, para que la tabla no vuelva a quedarse atrás en silencio. Modelo:
+    `test_todos_los_convenios_generales_tienen_su_articulo_de_residencia` en
+    `test/test_normativa_boe.py`.
+  - Ojo con los países que tienen convenio antiguo y moderno: el rango de
+    ejercicios de `ConvenioPais` es lo que decide cuál aplica. Reino Unido y
+    Argentina ya están así; comprueba si hay más al ampliar.
+
+- [ ] **Guardarraíl contra la pérdida silenciosa de una norma al redescargar.**
+  `descargar_normativa.py` reescribe `manifest.json` desde cero y descubre los
+  convenios vigentes filtrando por título el índice del BOE. Si España denuncia
+  un convenio, la siguiente descarga simplemente lo omite, `export_normativa`
+  publica un precepto menos y **el test de «corpus al día» pasa**, porque compara
+  la salida con la entrada nueva. La pérdida no la ve nadie.
+  - Comparar el manifiesto nuevo con el anterior y **fallar ante una desaparición
+    no declarada**, con una vía explícita para aceptarla (declararla en
+    `CDI_DEROGADO` si sigue citándose, o registrarla como baja).
+  - Misma lógica que el error que ya salta cuando el XML del diario no delimita
+    ningún precepto: una omisión silenciosa es peor que un fallo ruidoso.
+
+- [ ] **Recoger en el schema v3 las normas que cita la sentencia, como campo
+  propio.** Es el techo del enlazado: de las 106 sentencias, **41 no citan ningún
+  artículo en su registro estructurado** aunque el razonamiento las mencione en
+  prosa, así que hoy solo 58 tienen precepto enlazado. El resolvedor extrae las
+  citas de todos los campos de texto del JSONL; no puede sacar lo que el análisis
+  no escribió.
+  - Con un campo `normas_citadas[]` —igual que ya hay criterios y pruebas— la
+    cobertura sube sin tocar una línea de `normativa_citas.py`.
+  - Encaja en el rediseño v3 en curso
+    ([`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md)): es
+    el momento de pedirlo, antes de fijar el contrato.
+  - Formato mínimo útil: sigla o nombre de la norma, número de artículo y
+    apartado. El resolvedor ya sabe casar «art. 9.1.b LIRPF» y el apartado no
+    participa en la resolución (se publica el artículo completo).
+
+- [ ] **Separar `sentencias/` por jurisdicción, como ya está `normativa/`.** El
+  corpus normativo vive en `normativa/es/` con el código ISO 3166-1 en la ruta y
+  en el frontmatter; `sentencias/` sigue plano y solo español. La asimetría fue
+  deliberada —ese directorio lo estaba tocando otra línea de trabajo— pero hay
+  que resolverla **antes de que entre el primer país**, no cuando ya haya PDFs de
+  dos jurisdicciones mezclados en el mismo directorio.
+  - Afecta a `INPUT` del Makefile, a `sentencias/readme.txt`, a
+    `sentencias_CLAVE.txt`, a `okf_muestra_5.json` y a las rutas `resource` de los
+    perfiles de `knowledge/jurisprudencia/`.
+  - El contrato de qué necesita una jurisdicción nueva está en
+    [`NORMATIVA.md`](NORMATIVA.md#una-jurisdicción-por-directorio) y en
+    [`CONTRIBUTING.md`](../CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país).
+  - Decisión pendiente que conviene cerrar de paso: unificar la clave de
+    jurisdicción. El dato usa ISO (`es`) y las rutas del frontend usan slug
+    (`/espana`); añadir un campo `code` a `frontend/src/data/countryRoutes.json`
+    es un cambio de una línea.
 
 ## SEO y contenido
 
