@@ -2,174 +2,239 @@
   {
     "name": "España",
     "path": "/espana",
+    "corpusStatus": "published",
+    "legalReferences": [
+      {
+        "kind": "domestic-residence",
+        "shortCitation": "Art. 9 LIRPF",
+        "title": "Ley 35/2006 del Impuesto sobre la Renta de las Personas Físicas",
+        "officialUrl": "https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764#a9"
+      }
+    ],
     "description": "Consulta en lenguaje natural 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia fiscal de personas físicas en España.",
     "indexable": true
   },
   {
     "name": "Estados Unidos",
     "path": "/estados-unidos",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Estados Unidos en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Portugal",
     "path": "/portugal",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Portugal en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Francia",
     "path": "/francia",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Francia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Reino Unido",
     "path": "/reino-unido",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal del Reino Unido en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Alemania",
     "path": "/alemania",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Alemania en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Suiza",
     "path": "/suiza",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Suiza en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Andorra",
     "path": "/andorra",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Andorra en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Italia",
     "path": "/italia",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Italia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "México",
     "path": "/mexico",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de México en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Argentina",
     "path": "/argentina",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Argentina en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Bolivia",
     "path": "/bolivia",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Bolivia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Brasil",
     "path": "/brasil",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Brasil en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Chile",
     "path": "/chile",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Chile en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Colombia",
     "path": "/colombia",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Colombia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Costa Rica",
     "path": "/costa-rica",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Costa Rica en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Cuba",
     "path": "/cuba",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Cuba en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Ecuador",
     "path": "/ecuador",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Ecuador en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "El Salvador",
     "path": "/el-salvador",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de El Salvador en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Guatemala",
     "path": "/guatemala",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Guatemala en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Haití",
     "path": "/haiti",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Haití en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Honduras",
     "path": "/honduras",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Honduras en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Nicaragua",
     "path": "/nicaragua",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Nicaragua en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Panamá",
     "path": "/panama",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Panamá en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Paraguay",
     "path": "/paraguay",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Paraguay en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Perú",
     "path": "/peru",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Perú en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "República Dominicana",
     "path": "/republica-dominicana",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de República Dominicana en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Uruguay",
     "path": "/uruguay",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Uruguay en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {
     "name": "Venezuela",
     "path": "/venezuela",
+    "corpusStatus": "pending",
+    "legalReferences": [],
     "description": "Todavía no hay jurisprudencia fiscal de Venezuela en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   }

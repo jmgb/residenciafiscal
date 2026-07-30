@@ -1,7 +1,12 @@
 import { BookOpen, Compass, Globe2, Mail, MessageSquarePlus, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
-import { COUNTRY_ROUTES, getCountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
+import {
+  COUNTRY_ROUTES,
+  getJurisdictionLabel,
+  getJurisdictionRoute,
+  SPAIN_ROUTE,
+} from '@/data/countryRoutes';
 import { CONTACT_EMAIL } from '@/lib/contribution';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
@@ -15,6 +20,9 @@ export interface SidebarContentProps {
 }
 
 export function SidebarBrand({ collapsed = false, onNavigate }: SidebarContentProps) {
+  const location = useLocation();
+  const jurisdictionLabel = getJurisdictionLabel(getJurisdictionRoute(location.pathname));
+
   return (
     <div
       className={cn(
@@ -33,7 +41,7 @@ export function SidebarBrand({ collapsed = false, onNavigate }: SidebarContentPr
       {!collapsed && (
         <div className='min-w-0'>
           <div className='truncate font-heading text-sm font-semibold'>Residencia Fiscal</div>
-          <div className='truncate text-xs text-muted-foreground'>Art. 9 LIRPF</div>
+          <div className='truncate text-xs text-muted-foreground'>{jurisdictionLabel}</div>
         </div>
       )}
     </div>
@@ -141,7 +149,7 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
               Países
             </h2>
             {(showAllCountries ? COUNTRY_ROUTES : COUNTRY_ROUTES.slice(0, 3)).map((country) => {
-              const isActive = getCountryRoute(location.pathname)?.path === country.path;
+              const isActive = getJurisdictionRoute(location.pathname)?.path === country.path;
               return (
                 <Link
                   key={country.path}

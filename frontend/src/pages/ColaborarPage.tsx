@@ -26,7 +26,7 @@ const YA_EXISTE = [
 export function ColaborarPage() {
   usePageTitle('Colaborar', COLLABORATE_PATH, META.description);
 
-  const pendientes = COUNTRY_ROUTES.filter((route) => !route.indexable);
+  const pendientes = COUNTRY_ROUTES.filter((route) => route.corpusStatus === 'pending');
 
   return (
     <div className='w-full overflow-y-auto'>

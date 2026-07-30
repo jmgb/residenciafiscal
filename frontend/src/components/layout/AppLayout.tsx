@@ -1,7 +1,7 @@
 import { PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
-import { getCountryRoute } from '@/data/countryRoutes';
+import { getJurisdictionRoute } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { GoogleAnalytics } from './GoogleAnalytics';
@@ -21,7 +21,7 @@ const SIDEBAR_ID = 'app-sidebar';
 export function AppLayout() {
   const { collapsed, toggle } = useSidebarCollapsed();
   const location = useLocation();
-  const selectedCountry = getCountryRoute(location.pathname);
+  const selectedCountry = getJurisdictionRoute(location.pathname);
   const mainRef = useRef<HTMLElement>(null);
   const hasMountedRef = useRef(false);
 

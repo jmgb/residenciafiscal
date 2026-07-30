@@ -17,19 +17,40 @@ describe('country routes', () => {
     ]);
     expect(COUNTRY_ROUTES.find((route) => route.path === '/espana')).toMatchObject({
       name: 'España',
+      corpusStatus: 'published',
       indexable: true,
       description: expect.stringContaining('106 sentencias'),
+      legalReferences: [
+        {
+          kind: 'domestic-residence',
+          shortCitation: 'Art. 9 LIRPF',
+          officialUrl: expect.stringContaining('boe.es'),
+        },
+      ],
     });
     expect(COUNTRY_ROUTES.find((route) => route.path === '/mexico')).toMatchObject({
       name: 'México',
+      corpusStatus: 'pending',
       indexable: false,
       description: expect.stringContaining('México'),
+      legalReferences: [],
     });
     expect(COUNTRY_ROUTES.find((route) => route.path === '/estados-unidos')).toMatchObject({
       name: 'Estados Unidos',
       indexable: false,
       description: expect.stringContaining('Estados Unidos'),
     });
+  });
+
+  it('separa la publicación del corpus de la indexación SEO', () => {
+    for (const route of COUNTRY_ROUTES) {
+      expect(route).toHaveProperty('corpusStatus');
+      expect(route).toHaveProperty('indexable');
+      expect(route).toHaveProperty('legalReferences');
+      if (route.corpusStatus === 'published') {
+        expect(route.legalReferences.length).toBeGreaterThan(0);
+      }
+    }
   });
 
   it('declara redirecciones ASCII para los nombres de países con tildes', () => {

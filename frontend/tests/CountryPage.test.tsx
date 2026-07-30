@@ -91,9 +91,7 @@ describe('CountryPage', () => {
     renderCountry('/uruguay');
 
     expect(screen.getByRole('link', { name: 'Uruguay' })).toHaveAttribute('aria-current', 'page');
-    // Se cuenta desde `indexable` para no fijar aquí ni el slug ni qué país está
-    // publicado: la etiqueta la merece todo país cuyo corpus aún no existe.
-    const pendientes = COUNTRY_ROUTES.filter((route) => !route.indexable);
+    const pendientes = COUNTRY_ROUTES.filter((route) => route.corpusStatus === 'pending');
     expect(screen.getAllByText('Sin corpus')).toHaveLength(pendientes.length);
     expect(screen.queryByText('Próximamente')).not.toBeInTheDocument();
   });

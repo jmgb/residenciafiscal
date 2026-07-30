@@ -44,6 +44,51 @@ describe('AppLayout', () => {
     );
 
     expect(screen.getByText('Residencia Fiscal en España')).toBeInTheDocument();
+    expect(screen.getByText('España · Art. 9 LIRPF')).toBeInTheDocument();
+  });
+
+  it('muestra el estado del corpus en una jurisdicción pendiente', () => {
+    render(
+      <MemoryRouter initialEntries={['/portugal']}>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path='/portugal' element={<div>Portugal</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Portugal · Sin corpus')).toBeInTheDocument();
+    expect(screen.queryByText('Art. 9 LIRPF')).not.toBeInTheDocument();
+  });
+
+  it('usa un descriptor neutral en las páginas sin jurisdicción', () => {
+    render(
+      <MemoryRouter initialEntries={['/metodologia']}>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path='/metodologia' element={<div>Metodología</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Jurisprudencia por país')).toBeInTheDocument();
+  });
+
+  it('reconoce la nueva consulta como contexto español', () => {
+    render(
+      <MemoryRouter initialEntries={['/consulta']}>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path='/consulta' element={<div>Consulta</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Residencia Fiscal en España')).toBeInTheDocument();
+    expect(screen.getByText('España · Art. 9 LIRPF')).toBeInTheDocument();
   });
 
   it('reconoce España cuando la ruta contiene la ñ codificada', () => {
@@ -155,6 +200,8 @@ describe('AppLayout', () => {
       'aria-current',
       'page'
     );
+    expect(screen.getByText('Residencia Fiscal en España')).toBeInTheDocument();
+    expect(screen.getByText('España · Art. 9 LIRPF')).toBeInTheDocument();
   });
 
   it('cierra el drawer móvil al navegar', async () => {

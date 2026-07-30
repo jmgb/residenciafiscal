@@ -152,8 +152,7 @@ export function CountryPage({ country }: CountryPageProps) {
                   }`}
                 >
                   <span>{route.name}</span>
-                  {/* `indexable` es la señal de que un país ya tiene corpus publicado. */}
-                  {!route.indexable && (
+                  {route.corpusStatus === 'pending' && (
                     <span className='text-xs text-muted-foreground'>Sin corpus</span>
                   )}
                 </Link>
