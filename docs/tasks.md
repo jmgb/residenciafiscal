@@ -202,8 +202,14 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 ## Calidad y despliegue
 
 - [x] Configurar CI con lint, typecheck, tests y build del frontend y la API.
-- [ ] Añadir smoke tests de navegador para `/`, `/metodologia` y las landings públicas,
-  incluyendo comprobación de redirecciones, sitemap, robots y corpus publicado.
+- [ ] Añadir smoke tests de navegador para `/`, `/metodologia`, `/colaborar` y las landings
+  públicas, incluyendo comprobación de redirecciones, sitemap, robots y corpus publicado.
+  - `/colaborar` es la que más lo necesita: es la única landing cuyo valor depende de ser
+    indexable, así que hay que comprobar que su redirect sirve el prerender y que la meta
+    `robots` llega como `index, follow`. Si el redirect falla, la SPA responde igual y el
+    fallo no se nota hasta que Search Console no indexa nada.
+  - Las 20 páginas de país deben comprobarse al revés: que siguen respondiendo
+    `noindex, follow` y que **no** aparecen en el sitemap.
 - [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
 - [ ] **Corregir `CLAUDE.md`, desfasado respecto al código.** Detectado al diseñar el
   backend del chat, y ya indujo a error una estimación de coste:

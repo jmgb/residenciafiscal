@@ -37,6 +37,11 @@ proyecto se nutre de la contribución de expertos:
 | **Economistas y peritos** | Valorar la prueba económica —centro de intereses económicos, vínculos patrimoniales—, donde se decide buena parte de los litigios |
 | **Desarrolladores y científicos de datos** | Pipeline, recuperación y frontend. Es lo único que ya existe, así que aquí se mejora, no se arranca |
 
+La fuente de esta lista es `EXPERT_PROFILES` en
+`frontend/src/lib/contribution.ts`, de donde la leen `/colaborar` y las páginas
+de país. Si añades o quitas un perfil, cámbialo ahí y actualiza esta tabla:
+`test/test_contribucion_perfiles.py` compara las dos y falla si divergen.
+
 ### Qué se necesita
 
 1. **Una fuente pública oficial de resoluciones**, con URL y con sus condiciones

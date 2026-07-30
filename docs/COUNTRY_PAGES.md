@@ -119,11 +119,11 @@ humana, y el sitio advierte de que el análisis lo genera un modelo y puede cont
 Escribir «revisado por expertos» sería falso y contradiría ese aviso. La validación se enuncia como
 **requisito para publicar**, no como hecho consumado.
 
-`/colaborar` (`frontend/src/pages/ColaborarPage.tsx`) centraliza la invitación y es la **única
-ruta indexable** de todo el circuito. Esto es deliberado: las 21 páginas de país son
-`noindex, follow` para no publicar 20 placeholders casi idénticos, pero eso también las hace
-invisibles en búsquedas, así que sin una URL indexable nadie llegaría a la invitación desde
-Google. `/colaborar` tiene contenido propio (perfiles, invariantes, criterio de arranque), está
+`/colaborar` (`frontend/src/pages/ColaborarPage.tsx`) centraliza la invitación y es su **única
+ruta indexable**. Esto es deliberado: las **20** páginas de país sin corpus son `noindex, follow`
+para no publicar veinte placeholders casi idénticos —`/espana`, que sí tiene corpus, es indexable y
+está en el sitemap—, pero eso también las hace invisibles en búsquedas, así que sin una URL
+indexable nadie llegaría a la invitación desde Google. `/colaborar` tiene contenido propio (perfiles, invariantes, criterio de arranque), está
 en el sitemap y `test/test_frontend_seo_assets.py` fija ambas cosas.
 
 Los dos canales son equivalentes: la issue de GitHub y `info@residenciafiscal.org`. Buena parte
