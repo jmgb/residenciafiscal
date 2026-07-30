@@ -13,7 +13,7 @@ hay un SLA formal.
 
 ## Qué entra en el alcance
 
-- **`POST /analizar`** (`api/main.py`): es la única ruta que gasta dinero. Sus
+- **`POST /analizar`** (`src/api/main.py`): es la única ruta que gasta dinero. Sus
   guardarraíles son un token opcional (`RESIDENCIAFISCAL_API_TOKEN` +
   cabecera `X-API-Token`), un límite de subida de 25 MB cortado por
   `Content-Length` antes de parsear el multipart, una allowlist de modelos y

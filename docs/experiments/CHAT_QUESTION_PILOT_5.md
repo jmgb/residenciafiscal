@@ -4,7 +4,7 @@
 
 Este experimento comprueba si los datos actuales permiten el caso de uso
 principal descrito en
-[`CHAT_JURISPRUDENCE_USE_CASE.md`](../CHAT_JURISPRUDENCE_USE_CASE.md):
+[`CHAT_JURISPRUDENCE_USE_CASE.md`](../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md):
 responder preguntas de un abogado recuperando casos comparables, explicando qué
 se aplicó en cada uno y respaldándolo con referencias verificables.
 

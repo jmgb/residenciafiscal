@@ -6,7 +6,7 @@ body:
     attributes:
       value: |
         Antes de abrirla, echa un vistazo al
-        [backlog del proyecto](https://github.com/jmgb/residenciafiscal/blob/main/docs/tasks.md):
+        [backlog del proyecto](https://github.com/jmgb/residenciafiscal/blob/main/docs/project/TASKS.md):
         puede que ya esté recogida.
 
   - type: dropdown
@@ -14,10 +14,10 @@ body:
     attributes:
       label: Área
       options:
-        - Pipeline CLI (residenciafiscal.py)
-        - API HTTP (api/main.py)
+        - Pipeline CLI (src/residenciafiscal.py)
+        - API HTTP (src/api/main.py)
         - Frontend (frontend/)
-        - Schema de extracción (prompt.py)
+        - Schema de extracción (src/prompt.py)
         - Documentación
         - Otro
     validations:

@@ -26,7 +26,7 @@ de sentencias en lenguaje natural.
 | `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
 | `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
 | `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
-| `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `test/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
+| `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `tests/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
 | `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. La fecha refleja una comprobación editorial real, nunca la fecha del build |
 | `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas estáticas (`/manifiesto`, `/metodologia`, `/colaborar`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar |
 
@@ -46,7 +46,7 @@ La fuente se regenera desde la raíz con `make export-normativa` y
 `make enlazar-normativa`; `build-normativa.mjs` corre en el `prebuild` y, si no
 encuentra `knowledge/normativa/es/`, conserva lo versionado y avisa por stderr en
 lugar de romper el build. Contrato y decisiones:
-[`docs/NORMATIVA.md`](../docs/NORMATIVA.md).
+[`docs/normativa/NORMATIVA.md`](../docs/normativa/NORMATIVA.md).
 
 ## Marca
 
@@ -95,7 +95,7 @@ los módulos compartidos van en `lib/`.
 
 Está **bloqueado en la fase 0b**: el mecanismo de cuotas y presupuesto necesita
 una decisión, porque el compare-and-swap de Netlify Blobs no es atómico. Ver
-`docs/tasks.md`.
+`docs/project/TASKS.md`.
 
 Las dependencias del backend (`openai`, `zod`, `@netlify/blobs`,
 `@netlify/edge-functions`) ya están instaladas y verificadas en Deno.
@@ -108,7 +108,7 @@ del repositorio.
 con Cloudflare por delante del dominio. Configuración de DNS, TLS, WAF y
 verificación en [`docs/operations/NETLIFY.md`](../docs/operations/NETLIFY.md) y
 [`docs/operations/CLOUDFLARE.md`](../docs/operations/CLOUDFLARE.md). Integración
-de Google Analytics 4 documentada en [`docs/ANALYTICS.md`](../docs/ANALYTICS.md).
+de Google Analytics 4 documentada en [`docs/product/ANALYTICS.md`](../docs/product/ANALYTICS.md).
 
 Al conectar el backend real hay que ampliar `connect-src` en la CSP de
 `netlify.toml` con el origen de la API.

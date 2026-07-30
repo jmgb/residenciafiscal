@@ -8,10 +8,19 @@
 > `residenciafiscal-case/3`, recuperación por cuestión, anclajes verbatim y
 > `ChatSourceV2` con página (`X-Chat-Protocol: 2`). Este plan todavía genera
 > desde el JSONL, recupera sentencias completas y prueba el protocolo 1. Debe
-> reescribirse tras validar el schema v3 con 1 y 5 sentencias. La fase 0 medida
-> y los módulos agnósticos al corpus siguen siendo aprovechables. Véanse el
-> [caso de uso](../../CHAT_JURISPRUDENCE_USE_CASE.md), el
-> [roadmap v3](../../JURISPRUDENCE_DATA_V3_ROADMAP.md), el
+> reescribirse tras validar el schema v3 con 1 y 5 sentencias.
+>
+> La decisión de 2026-07-30 añade además dos respuestas independientes por
+> mensaje —sistema estructurado y Gemini File Search sobre PDF—, coste visible
+> en USD por respuesta, logs separados y un protocolo con `strategy`. Las
+> tareas de endpoint, SSE y cliente tampoco implementan este contrato y no
+> deben ejecutarse literalmente. La unión con reranking local queda aplazada.
+>
+> La fase 0 medida y los módulos agnósticos al corpus siguen siendo
+> aprovechables. Véanse el
+> [caso de uso](../../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md), el
+> [contrato comparativo](../../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md),
+> [roadmap v3](../../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md), el
 > [piloto manual](../../experiments/CHAT_QUESTION_PILOT_5.md) y el
 > [diseño actualizado](../specs/2026-07-29-chat-backend-design.md).
 
@@ -344,7 +353,7 @@ Expected: PASS, 3 tests.
 
 El CI de Python ya corre cuando cambia `frontend/**`, así que este test detecta la divergencia sin añadir un workflow.
 
-Crea `test/test_chat_config_contract.py`:
+Crea `tests/test_chat_config_contract.py`:
 
 ```python
 """El backend del chat duplica enums y precios en TypeScript.
@@ -396,7 +405,7 @@ def test_modelos_usados_estan_tarifados():
 
 - [ ] **Step 7: Ejecutar el test de contrato**
 
-Run: `uv run pytest test/test_chat_config_contract.py -v`
+Run: `uv run pytest tests/test_chat_config_contract.py -v`
 Expected: PASS, 5 tests. Si falla en criterios o resultados, la copia TS está mal — corrígela contra `config.py`, nunca al revés.
 
 - [ ] **Step 8: Commit**
@@ -405,7 +414,7 @@ Expected: PASS, 5 tests. Si falla en criterios o resultados, la copia TS está m
 git add frontend/netlify/edge-functions/lib/chat-config.json \
         frontend/netlify/edge-functions/lib/chat-config.ts \
         frontend/tests/chat-config.test.ts \
-        test/test_chat_config_contract.py
+        tests/test_chat_config_contract.py
 git commit -m "feat(chat): configuración compartida del backend con contrato contra config.py"
 ```
 
@@ -3620,7 +3629,7 @@ Antes de dar la fase 1 por cerrada, comprueba que se cumple todo esto:
 
 - [ ] `make fast-check` en verde
 - [ ] `cd frontend && npm run fast-check && npm run build` en verde
-- [ ] `uv run pytest test/test_chat_config_contract.py -v` en verde
+- [ ] `uv run pytest tests/test_chat_config_contract.py -v` en verde
 - [ ] El guion completo del paso 2 de la tarea 15 ejecutado contra un Deploy Preview
 - [ ] Ningún ROJ inventado en las respuestas de prueba
 - [ ] Producción sigue sirviendo el stub (la variable no está puesta)

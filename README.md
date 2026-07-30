@@ -10,7 +10,7 @@
 [![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-[residenciafiscal.org](https://residenciafiscal.org) · [Documentación](CLAUDE.md) · [Contribuir](CONTRIBUTING.md)
+[residenciafiscal.org](https://residenciafiscal.org) · [Documentación](docs/README.md) · [Contribuir](CONTRIBUTING.md)
 
 </div>
 
@@ -49,8 +49,8 @@ que producen exactamente el mismo objeto.
 ```mermaid
 flowchart LR
     PDFS["sentencias/<br/>106 PDFs"] -->|CLI| CORE
-    HTTP["POST /analizar<br/>api/main.py"] -->|API| CORE
-    CORE["process_pdf_async()<br/>residenciafiscal.py<br/>prompt.py · config.py"] <--> LLM["OpenAI · Gemini<br/>Groq · OpenRouter"]
+    HTTP["POST /analizar<br/>src/api/main.py"] -->|API| CORE
+    CORE["process_pdf_async()<br/>src/residenciafiscal.py<br/>src/prompt.py · src/config.py"] <--> LLM["OpenAI · Gemini<br/>Groq · OpenRouter"]
     CORE --> OUT["output/<br/>jsonl · csv · xlsx"]
     CORE --> RESP["JSON en la respuesta"]
     OUT --> WEB["frontend/<br/>residenciafiscal.org"]
@@ -58,11 +58,16 @@ flowchart LR
 
 | Archivo | Función |
 |---------|---------|
-| `residenciafiscal.py` | Pipeline principal (async, lotes de 10 PDFs) |
-| `api/main.py` | API HTTP (FastAPI), 1 PDF por petición |
-| `prompt.py` | System prompt con el contexto legal y el schema JSON |
-| `config.py` | Modelos, rutas, enums y campos requeridos |
+| `src/residenciafiscal.py` | Pipeline principal (async, lotes de 10 PDFs) |
+| `src/api/main.py` | API HTTP (FastAPI), 1 PDF por petición |
+| `src/prompt.py` | System prompt con el contexto legal y el schema JSON |
+| `src/config.py` | Modelos, rutas, enums y campos requeridos |
 | `frontend/` | SPA React desplegada en Netlify |
+
+La vista completa de componentes, flujos e invariantes está en
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). La guía sobre dónde debe vivir
+cada tipo de archivo está en
+[`docs/REPOSITORY_STRUCTURE.md`](docs/REPOSITORY_STRUCTURE.md).
 
 ### Los dos corpus
 
@@ -80,7 +85,7 @@ preceptos que deciden o prueban la residencia fiscal, más el artículo de
 residencia de cada uno de los 96 convenios de doble imposición firmados por
 España. Un tercer artefacto, `knowledge/normativa/es/enlaces/`, resuelve qué
 preceptos cita cada sentencia y con qué redacción del ejercicio enjuiciado.
-Ver [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+Ver [`docs/normativa/NORMATIVA.md`](docs/normativa/NORMATIVA.md).
 
 ## Un país, un corpus
 
@@ -132,7 +137,7 @@ prometidos.
 El detalle operativo y la tabla de perfiles están en
 [CONTRIBUTING.md](CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país); el
 estado de las páginas por país, en
-[`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).
+[`docs/product/COUNTRY_PAGES.md`](docs/product/COUNTRY_PAGES.md).
 
 ## Puesta en marcha
 
@@ -165,9 +170,10 @@ Variables de los targets de pipeline: `INPUT=`, `OUTPUT=`, `MODEL=`,
 Cada ejecución genera en `./output/`, con timestamp: `analisis_*.jsonl`,
 `analisis_*.csv`, `sentencias_*.csv`, `pruebas_*.csv` y `analisis_*.xlsx`.
 
-**Coste**: ~$0.006 por sentencia con el modelo por defecto. Las 23 sentencias
-marcadas en `sentencias/sentencias_CLAVE.txt` usan automáticamente el modelo
-premium (~$0.10 cada una) al margen del `--model` indicado.
+**Coste medido del último lote completo**: $3.42 para 106 sentencias ($0.032 de
+media). Las 23 sentencias marcadas en `sentencias/sentencias_CLAVE.txt` usan
+automáticamente el modelo premium (~$0.098 cada una) al margen del `--model`
+indicado. El desglose vigente está en [`CLAUDE.md`](CLAUDE.md#costes-medidos).
 
 ## API
 
@@ -212,16 +218,12 @@ npm run build       # genera el corpus y compila a dist/
 
 | Documento | Contenido |
 |-----------|-----------|
-| [`CLAUDE.md`](CLAUDE.md) | Guía completa: arquitectura, schema de campos, costes, troubleshooting |
+| [`docs/README.md`](docs/README.md) | Índice temático de toda la documentación |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Componentes, flujos, límites e invariantes |
+| [`docs/REPOSITORY_STRUCTURE.md`](docs/REPOSITORY_STRUCTURE.md) | Convenciones de carpetas y rutas |
+| [`CLAUDE.md`](CLAUDE.md) | Guía operativa, comandos, costes y troubleshooting |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Entorno, gates de CI y qué se espera de un PR |
 | [`SECURITY.md`](SECURITY.md) | Cómo reportar una vulnerabilidad y qué está en el alcance |
-| [`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md) | Pipeline, datos y rollout 1 → 5 → 106 para verificar citas contra los PDF |
-| [`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md) | Ciclo híbrido JSONL/PDF → Markdown OKF y rollout validado de 1 → 5 |
-| [`docs/NORMATIVA.md`](docs/NORMATIVA.md) | Corpus normativo: XML del BOE → un Markdown por precepto, sin LLM |
-| [`docs/REASONING_EFFORT.md`](docs/REASONING_EFFORT.md) | El compromiso precisión / coste de los modelos GPT-5 |
-| [`docs/brand/`](docs/brand/) | Brandbook y manifiesto |
-| [`docs/operations/`](docs/operations/) | Despliegue en Netlify y configuración de Cloudflare |
-| [`docs/tasks.md`](docs/tasks.md) | Backlog del proyecto |
 
 ## Licencia
 

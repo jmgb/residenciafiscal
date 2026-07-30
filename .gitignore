@@ -77,7 +77,7 @@ output/*
 !output/.gitkeep
 results/
 test_output/
-test/test_outputs/
+tests/test_outputs/
 test_results/
 
 # PDFs (keep sentencias/ but ignore generated output)

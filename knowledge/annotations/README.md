@@ -18,4 +18,4 @@ Reglas:
   vez de editar un artefacto de `knowledge/jurisprudencia/`.
 
 El contrato, los campos y el flujo completo están en
-[`docs/OKF_PIPELINE.md`](../../docs/OKF_PIPELINE.md).
+[`docs/jurisprudence/OKF_PIPELINE.md`](../../docs/jurisprudence/OKF_PIPELINE.md).

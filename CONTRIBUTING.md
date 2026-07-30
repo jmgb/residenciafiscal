@@ -40,7 +40,7 @@ proyecto se nutre de la contribución de expertos:
 La fuente de esta lista es `EXPERT_PROFILES` en
 `frontend/src/lib/contribution.ts`, de donde la leen `/colaborar` y las páginas
 de país. Si añades o quitas un perfil, cámbialo ahí y actualiza esta tabla:
-`test/test_contribucion_perfiles.py` compara las dos y falla si divergen.
+`tests/test_contribucion_perfiles.py` compara las dos y falla si divergen.
 
 ### Qué se necesita
 
@@ -88,7 +88,7 @@ Decirlo es más honesto que dar una fecha que no se va a cumplir.
 ### Cómo se publica una página de país
 
 El circuito completo, con sus gates, está en
-[`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md). En resumen: la ruta y la página
+[`docs/product/COUNTRY_PAGES.md`](docs/product/COUNTRY_PAGES.md). En resumen: la ruta y la página
 de invitación ya existen para 20 países; se sustituyen por la experiencia real
 cuando el corpus está verificado, se pone `indexable: true` en
 `frontend/src/data/countryRoutes.json` y el prerender y el sitemap se actualizan
@@ -98,6 +98,8 @@ solos en el build.
 
 El proyecto usa [uv](https://docs.astral.sh/uv/) para Python y `npm` para el
 frontend. El `Makefile` de la raíz es la interfaz única de la parte Python.
+Consulta [`docs/REPOSITORY_STRUCTURE.md`](docs/REPOSITORY_STRUCTURE.md) antes de
+añadir archivos nuevos.
 
 ```bash
 make setup                 # instala Python 3.13 + dependencias en .venv
@@ -137,8 +139,8 @@ gastan llevan el marker `manual_real_llm` y están excluidos vía `addopts` en
 |---------|-------|
 | `make test` | 0 |
 | `make test-single` / `make test-llm` | ~$0.01–0.04 (1 PDF) |
-| `uv run python test/test_reasoning_effort_comparison.py` | 3 llamadas de pago sobre el mismo PDF (ver `TEST_CONFIGURATIONS`) |
-| `make run` | ~$2.80 (106 PDFs) |
+| `uv run python tests/test_reasoning_effort_comparison.py` | 3 llamadas de pago sobre el mismo PDF (ver `TEST_CONFIGURATIONS`) |
+| `make run` | ~$3.42 medidos para 106 PDF; varía con modelos y precios |
 
 Nunca añadas a la suite por defecto un test que llame a un proveedor real, ni un
 job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
@@ -166,7 +168,7 @@ job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
 
 ## Qué documentar
 
-- Un cambio en el schema de extracción se refleja en `prompt.py`, en la tabla de
+- Un cambio en el schema de extracción se refleja en `src/prompt.py`, en la tabla de
   campos de `CLAUDE.md` y, si afecta al frontend, en `frontend/scripts/build-corpus.mjs`.
 - Un cambio de comportamiento del CLI o de la API se refleja en `README.md` y en
   `CLAUDE.md`.
@@ -185,7 +187,7 @@ job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
   tiene que ser idéntico al de su fuente y hay tests que lo comprueban. Cada
   jurisdicción vive en su propio subdirectorio (`normativa/es/`). Ver
   [`normativa/es/AVISO_LEGAL.md`](normativa/es/AVISO_LEGAL.md) y
-  [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+  [`docs/normativa/NORMATIVA.md`](docs/normativa/NORMATIVA.md).
 - No edites `frontend/public/favicon.ico`, `apple-touch-icon.png` ni
   `og-image.png` a mano: son artefactos generados (`npm run favicon` / `npm run og`).
 

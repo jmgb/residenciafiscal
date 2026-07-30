@@ -36,7 +36,7 @@ validation:
       - uv run mypy .
     test_examples:
       - uv run pytest -q
-      - uv run pytest -q test/test_api.py
+      - uv run pytest -q tests/test_api.py
     # Los tests con marker `manual_real_llm` gastan dinero real y están excluidos
     # por `addopts`. El autofix NO debe lanzarlos ni retirar la exclusión.
     forbidden_commands:

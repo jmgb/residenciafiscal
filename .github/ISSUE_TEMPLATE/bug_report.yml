@@ -15,8 +15,8 @@ body:
     attributes:
       label: Área afectada
       options:
-        - Pipeline CLI (residenciafiscal.py)
-        - API HTTP (api/main.py)
+        - Pipeline CLI (src/residenciafiscal.py)
+        - API HTTP (src/api/main.py)
         - Frontend (frontend/)
         - Extracción / calidad del análisis
         - Documentación

@@ -12,7 +12,7 @@ El fichero [`netlify.toml`](../../netlify.toml) configura:
   (`/manifiesto`, `/metodologia`, `/colaborar`) viven en `netlify.toml`; las rutas de país y
   las redirecciones 301 de los slugs acentuados históricos se generan desde
   `frontend/src/data/countryRoutes.json` en `frontend/public/_redirects` y Vite las copia a
-  `dist/`. `test/test_frontend_seo_assets.py` comprueba que el fichero generado sigue alineado
+  `dist/`. `tests/test_frontend_seo_assets.py` comprueba que el fichero generado sigue alineado
   con su fuente;
 - cabeceras de seguridad, CSP compatible con GA4 y caché de assets;
 - `frontend/public/data/corpus.json` como corpus versionado de respaldo.

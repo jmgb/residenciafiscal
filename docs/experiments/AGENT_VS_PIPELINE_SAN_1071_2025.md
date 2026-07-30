@@ -52,7 +52,7 @@ copiar exactamente. Es una selección sesgada hacia casos fáciles.
 
 Los siete `SOURCE_EXCERPT` del experimento se comprobaron mecánicamente como
 subcadenas exactas de las páginas 3, 4, 5 y 6. La comprobación queda protegida
-por `agent_profile_validation.py` y `test/test_agent_profile_validation.py`.
+por `agent_profile_validation.py` y `tests/test_agent_profile_validation.py`.
 
 ## Diferencias jurídicas observadas
 

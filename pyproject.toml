@@ -48,8 +48,8 @@ Repository = "https://github.com/jmgb/residenciafiscal"
 Issues = "https://github.com/jmgb/residenciafiscal/issues"
 
 [tool.uv]
-# NO instalar el proyecto como paquete: los módulos viven en la raíz
-# (residenciafiscal.py, config.py, prompt.py...) y se importan por sys.path.
+# NO instalar el proyecto como paquete: los módulos conservan imports planos
+# dentro de src/ para mantener estable la API interna durante esta reorganización.
 package = false
 
 [dependency-groups]
@@ -65,12 +65,12 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-pythonpath = ["."]
+pythonpath = ["src", "tests"]
 timeout = 300
 # Los tests que llaman a LLMs reales (con coste) se excluyen por defecto.
 # Los scripts reales se lanzan con `make test-llm`; futuros tests pytest marcados,
@@ -83,7 +83,7 @@ markers = [
 [tool.ruff]
 line-length = 100
 target-version = "py313"
-exclude = ["venv", ".venv", "output", "test/test_outputs", "**/*.md"]
+exclude = ["venv", ".venv", "output", "tests/test_outputs", "**/*.md"]
 
 [tool.ruff.lint]
 select = [
@@ -112,6 +112,7 @@ line-ending = "auto"
 
 [tool.mypy]
 python_version = "3.13"
+mypy_path = ["src", "tests"]
 plugins = ["pydantic.mypy"]
 warn_redundant_casts = true
 check_untyped_defs = true

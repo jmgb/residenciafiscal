@@ -25,6 +25,8 @@ SHELL := /bin/bash
 # Mantener sincronizado con .python-version
 PY ?= 3.13
 export UV_PROJECT_ENVIRONMENT := .venv
+PYTHON_SOURCE := src
+export PYTHONPATH := $(CURDIR)/$(PYTHON_SOURCE)
 
 HOST ?= 127.0.0.1
 PORT ?= 8010
@@ -156,13 +158,13 @@ setup:
 
 dev:
 	@set -m; \
-	uv run python -m fastapi dev api/main.py --host $(HOST) --port $(PORT) & api_pid=$$!; \
+	uv run python -m fastapi dev $(PYTHON_SOURCE)/api/main.py --host $(HOST) --port $(PORT) & api_pid=$$!; \
 	(cd frontend && npm run dev) & frontend_pid=$$!; \
 	trap 'kill "$$api_pid" "$$frontend_pid" 2>/dev/null || true' EXIT INT TERM; \
 	wait -n "$$api_pid" "$$frontend_pid"
 
 dev-api:
-	uv run python -m fastapi dev api/main.py --host $(HOST) --port $(PORT)
+	uv run python -m fastapi dev $(PYTHON_SOURCE)/api/main.py --host $(HOST) --port $(PORT)
 
 dev-frontend:
 	cd frontend && npm run dev
@@ -173,31 +175,31 @@ dev-public:
 	$(MAKE) HOST=0.0.0.0 dev
 
 serve:
-	uv run uvicorn api.main:app --host $(HOST) --port $(PORT)
+	uv run uvicorn --app-dir $(PYTHON_SOURCE) api.main:app --host $(HOST) --port $(PORT)
 
 # =============================================================================
 # 2. PIPELINE
 # =============================================================================
 run:
-	uv run python residenciafiscal.py $(RUN_FLAGS)
+	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS)
 
 run-sample:
-	uv run python residenciafiscal.py --input $(INPUT) --output $(OUTPUT) --max-files 1
+	uv run python $(PYTHON_SOURCE)/residenciafiscal.py --input $(INPUT) --output $(OUTPUT) --max-files 1
 
 run-resume:
-	uv run python residenciafiscal.py $(RUN_FLAGS) --skip-existing
+	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --skip-existing
 
 run-resume-from:
 	@if [ -z "$(JSONL)" ]; then echo "❌ Falta JSONL=. Ej: make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl"; exit 1; fi
-	uv run python residenciafiscal.py $(RUN_FLAGS) --resume-from $(JSONL)
+	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --resume-from $(JSONL)
 
 run-list:
 	@if [ -z "$(LIST)" ]; then echo "❌ Falta LIST=. Ej: make run-list LIST=./mi_lista.txt"; exit 1; fi
-	uv run python residenciafiscal.py $(RUN_FLAGS) --pdf-list $(LIST)
+	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --pdf-list $(LIST)
 
 verify-citations:
 	@if [ -z "$(CITATION_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
-	uv run python verify_citations.py \
+	uv run python $(PYTHON_SOURCE)/verify_citations.py \
 		--jsonl $(CITATION_JSONL) \
 		--pdf-dir $(INPUT) \
 		--output-dir $(OUTPUT)/citation-verification \
@@ -206,7 +208,7 @@ verify-citations:
 
 export-okf:
 	@if [ -z "$(OKF_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
-	uv run python export_okf.py \
+	uv run python $(PYTHON_SOURCE)/export_okf.py \
 		--jsonl $(OKF_JSONL) \
 		--pdf-dir $(INPUT) \
 		--output-dir $(OKF_OUTPUT) \
@@ -216,7 +218,7 @@ export-okf:
 
 export-okf-sample:
 	@if [ -z "$(OKF_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
-	uv run python export_okf_batch.py \
+	uv run python $(PYTHON_SOURCE)/export_okf_batch.py \
 		--jsonl $(OKF_JSONL) \
 		--pdf-dir $(INPUT) \
 		--output-dir $(OKF_SAMPLE_OUTPUT) \
@@ -225,7 +227,7 @@ export-okf-sample:
 		--threshold $(OKF_THRESHOLD)
 
 export-verbatim:
-	uv run python export_verbatim.py \
+	uv run python $(PYTHON_SOURCE)/export_verbatim.py \
 		--pdf $(VERBATIM_PDF) \
 		--document-id $(VERBATIM_DOCUMENT_ID) \
 		--source-file $(VERBATIM_SOURCE_FILE) \
@@ -233,7 +235,7 @@ export-verbatim:
 		--project-root .
 
 export-case-v3:
-	uv run python export_jurisprudence_case.py \
+	uv run python $(PYTHON_SOURCE)/export_jurisprudence_case.py \
 		--proposal $(CASE_PROPOSAL) \
 		--verbatim $(CASE_VERBATIM) \
 		--evaluation $(CASE_EVALUATION) \
@@ -242,7 +244,7 @@ export-case-v3:
 		--project-root .
 
 export-case-v3-derivatives:
-	uv run python export_jurisprudence_case_derivatives.py \
+	uv run python $(PYTHON_SOURCE)/export_jurisprudence_case_derivatives.py \
 		--case $(CASE_OUTPUT) \
 		--verbatim $(CASE_VERBATIM) \
 		--markdown $(CASE_MARKDOWN_OUTPUT) \
@@ -251,35 +253,35 @@ export-case-v3-derivatives:
 		--project-root .
 
 export-case-v3-sample:
-	uv run python export_jurisprudence_sample.py \
+	uv run python $(PYTHON_SOURCE)/export_jurisprudence_sample.py \
 		--manifest $(CASE_SAMPLE_MANIFEST) \
 		--output-root $(CASE_SAMPLE_OUTPUT) \
 		--project-root .
-	uv run python export_jurisprudence_sample_evaluation.py \
+	uv run python $(PYTHON_SOURCE)/export_jurisprudence_sample_evaluation.py \
 		--manifest $(CASE_SAMPLE_MANIFEST) \
 		--pilot $(CASE_QUESTION_PILOT) \
 		--retrieval-root $(CASE_SAMPLE_OUTPUT)/retrieval \
 		--output-root $(CASE_SAMPLE_OUTPUT) \
 		--project-root .
-	uv run python jurisprudence_sample_quality.py \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_sample_quality.py \
 		--cases-root $(CASE_SAMPLE_OUTPUT)/cases \
 		--manifest $(CASE_SAMPLE_MANIFEST) \
 		--output $(CASE_SAMPLE_OUTPUT)/reports/sample-5.quality.json \
 		--project-root .
-	uv run python jurisprudence_legacy_citations.py \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_legacy_citations.py \
 		--dispositions $(CASE_SAMPLE_OUTPUT)/evaluations/legacy-citation-dispositions.json \
 		--legacy-reports-root knowledge/jurisprudencia-muestra-5/reports \
 		--cases-root $(CASE_SAMPLE_OUTPUT)/cases
 
 evaluate-retrieval-phase-d:
-	uv run python export_jurisprudence_phase_d.py \
+	uv run python $(PYTHON_SOURCE)/export_jurisprudence_phase_d.py \
 		--corpus $(CASE_SAMPLE_OUTPUT)/retrieval/corpus.json \
 		--pilot $(CASE_QUESTION_PILOT) \
 		--paraphrases $(CASE_PARAPHRASES) \
 		--output $(CASE_PHASE_D_REPORT)
 
 evaluate-holdout-e0:
-	uv run python jurisprudence_holdout_evaluation.py \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \
 		--corpus $(CASE_SAMPLE_OUTPUT)/retrieval/corpus.json \
 		--lock $(CASE_HOLDOUT_LOCK) \
 		--output $(CASE_HOLDOUT_REPORT) \
@@ -288,18 +290,18 @@ evaluate-holdout-e0:
 rollout-init:
 	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \
 		(echo "CASE_ROLLOUT_MANIFEST es obligatorio" >&2; exit 2)
-	uv run python jurisprudence_rollout_cli.py init \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_cli.py init \
 		--manifest $(CASE_ROLLOUT_MANIFEST) \
 		--state $(CASE_ROLLOUT_STATE)
 
 rollout-status:
-	uv run python jurisprudence_rollout_cli.py status \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_cli.py status \
 		--state $(CASE_ROLLOUT_STATE)
 
 rollout-next:
 	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \
 		(echo "CASE_ROLLOUT_MANIFEST es obligatorio" >&2; exit 2)
-	uv run python jurisprudence_rollout_cli.py run-next \
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_cli.py run-next \
 		--manifest $(CASE_ROLLOUT_MANIFEST) \
 		--state $(CASE_ROLLOUT_STATE) \
 		--output-root $(CASE_ROLLOUT_OUTPUT) \
@@ -308,18 +310,18 @@ rollout-next:
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.
 descargar-normativa:
-	uv run python descargar_normativa.py \
+	uv run python $(PYTHON_SOURCE)/descargar_normativa.py \
 		--output-dir $(NORMATIVA_SOURCES)/$(NORMATIVA_JURISDICCION)
 
 export-normativa:
-	uv run python export_normativa.py \
+	uv run python $(PYTHON_SOURCE)/export_normativa.py \
 		--jurisdiccion $(NORMATIVA_JURISDICCION) \
 		--sources-root $(NORMATIVA_SOURCES) \
 		--output-root $(NORMATIVA_OUTPUT)
 
 enlazar-normativa:
 	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
-	uv run python enlazar_normativa.py \
+	uv run python $(PYTHON_SOURCE)/enlazar_normativa.py \
 		--jsonl $(NORMATIVA_JSONL) \
 		--jurisdiccion $(NORMATIVA_JURISDICCION) \
 		--corpus-root $(NORMATIVA_OUTPUT)
@@ -350,7 +352,7 @@ test:
 test-llm: test-single
 
 test-single:
-	uv run python test/test_single_pdf.py
+	uv run python tests/test_single_pdf.py
 
 # =============================================================================
 # 4. DEPS

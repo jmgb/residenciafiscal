@@ -27,8 +27,13 @@ make run-sample
 make dev
 ```
 
-> Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python residenciafiscal.py --help`).
+> Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python src/residenciafiscal.py --help`).
 > Nunca hace falta activar el entorno: `uv run` lo resuelve solo.
+
+La documentación se navega desde [`docs/README.md`](docs/README.md). La
+arquitectura vigente y las reglas de ubicación de archivos están en
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) y
+[`docs/REPOSITORY_STRUCTURE.md`](docs/REPOSITORY_STRUCTURE.md).
 
 ## Resumen del Proyecto
 
@@ -38,7 +43,7 @@ Pipeline Python que analiza **106 sentencias judiciales españolas** sobre resid
 - **Pruebas aportadas** por AEAT y contribuyente (aceptadas/rechazadas)
 - **Razonamiento judicial** (doctrina, carga de prueba, motivación)
 - **Resultado** (GANA_AEAT / GANA_CONTRIBUYENTE / PARCIAL y 4 más; catálogo
-  canónico de 7 valores en `VALID_RESULTADO_FINAL`, `config.py`)
+  canónico de 7 valores en `VALID_RESULTADO_FINAL`, `src/config.py`)
 
 **Usuarios objetivo**: Investigadores fiscales, abogados tributaristas, compliance.
 
@@ -53,10 +58,11 @@ Cada ejecución del CLI escribe los cinco exports (`.jsonl`, dos `.csv` planos,
 ### Extracción de texto de los PDF (no hay OCR)
 
 Los PDF del CENDOJ son digitales con capa de texto embebida, así que el texto se
-extrae con **pypdf** (`extract_pdf_text_with_pages()` en `residenciafiscal.py`):
+extrae con **pypdf** (`extract_pdf_text_with_pages()` en
+`src/residenciafiscal.py`):
 Python puro, determinista y sin LLM. La función inserta marcadores de página
 1-indexados y solo limpia `\x00`; el LLM recibe ese texto y **analiza, no
-extrae**. El spike de verificación de citas (`citation_spike.py`) usa el mismo
+extrae**. El spike de verificación de citas (`src/citation_spike.py`) usa el mismo
 extractor.
 
 No hay OCR en el proyecto: un PDF escaneado (imagen, sin capa de texto) devuelve
@@ -67,7 +73,7 @@ exista el caso real.
 ## Schema
 
 El schema completo (criterios `CRIT_*`, las 12 categorías de prueba, campos de
-razonamiento y resultado) es fuente única en `prompt.py` y `config.py`, y
+razonamiento y resultado) es fuente única en `src/prompt.py` y `src/config.py`, y
 `GET /config` lo expone en vivo. No duplicarlo aquí: se desincroniza.
 
 ### Verificación de citas
@@ -84,7 +90,7 @@ después a una muestra fija de cinco y solo entonces al corpus completo. El
 resultado separa localización de evidencia y fidelidad literal, y registra tanto
 el índice físico del PDF como la etiqueta impresa. La arquitectura, las
 puntuaciones, el manifiesto, el resultado del piloto y los gates están en
-[`docs/CITATION_VERIFICATION.md`](docs/CITATION_VERIFICATION.md).
+[`docs/jurisprudence/CITATION_VERIFICATION.md`](docs/jurisprudence/CITATION_VERIFICATION.md).
 
 ```bash
 make verify-citations  # hoy: SAN_1071_2025.pdf, 4 citas, umbral provisional 85
@@ -100,20 +106,20 @@ hashes, modelos, citas y renderizado. No editar `knowledge/jurisprudencia/` ni
 `knowledge/jurisprudencia-muestra-5/` a mano: se regeneran con el pipeline. Las
 revisiones viven en `knowledge/annotations/` y nunca pueden alterar el texto
 legal. Arquitectura, contrato, resultado y gates:
-[`docs/OKF_PIPELINE.md`](docs/OKF_PIPELINE.md).
+[`docs/jurisprudence/OKF_PIPELINE.md`](docs/jurisprudence/OKF_PIPELINE.md).
 
 El bundle OKF/2 legado usa `knowledge/jurisprudencia/`. El caso, perfiles e
 índices v3 usan exclusivamente `knowledge/jurisprudencia-v3/`; no mezclar ambos
 árboles, porque tienen contratos y manifiestos distintos.
 
 El contrato campo por campo y el orden de secciones están en
-[`docs/OKF_MARKDOWN_CONTRACT.md`](docs/OKF_MARKDOWN_CONTRACT.md). La
+[`docs/jurisprudence/OKF_MARKDOWN_CONTRACT.md`](docs/jurisprudence/OKF_MARKDOWN_CONTRACT.md). La
 representación íntegra por páginas recomendada para un futuro RAG se especifica
-en [`docs/VERBATIM_CORPUS.md`](docs/VERBATIM_CORPUS.md). Su contrato, extractor
+en [`docs/jurisprudence/VERBATIM_CORPUS.md`](docs/jurisprudence/VERBATIM_CORPUS.md). Su contrato, extractor
 crudo, JSON Schema y artefacto piloto de `SAN 1210/2023` ya están implementados
-y validados. `pdf_page_extraction.py` produce texto saneado para matching y no
+y validados. `src/pdf_page_extraction.py` produce texto saneado para matching y no
 debe usarse como fuente verbatim; esa responsabilidad pertenece exclusivamente
-a `verbatim_extraction.py`.
+a `src/verbatim_extraction.py`.
 
 El caso de uso rector del corpus es la investigación jurisprudencial
 conversacional: ante los hechos y preguntas de un abogado, recuperar por
@@ -121,34 +127,34 @@ cuestión jurídica los casos comparables, explicar hechos, pruebas, valoración
 resultado por cuestión, y respaldarlo con sentencia, página y extracto literal.
 No es un predictor del caso del usuario. El contrato funcional y la auditoría de
 adecuación del perfil v2 están en
-[`docs/CHAT_JURISPRUDENCE_USE_CASE.md`](docs/CHAT_JURISPRUDENCE_USE_CASE.md).
+[`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md).
 El piloto manual de 40 preguntas sobre las cinco sentencias demuestra que no se
 debe ampliar el schema actual a 106 sin modelar primero cuestiones, hechos,
 relaciones prueba→hecho→cuestión y anclajes por proposición.
 El orden operativo, el contrato preliminar, las responsabilidades
 Python/agente/persona y los gates 1 → 5 → 106 están en
-[`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](docs/JURISPRUDENCE_DATA_V3_ROADMAP.md).
+[`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
 El caso v3 híbrido de `SAN 1210/2023` ya está compilado: 17 anclajes literales,
 3 cuestiones y 18 preguntas aplicables validadas. Su pipeline, reparto de
 responsabilidades y artefactos se documentan en
-[`docs/JURISPRUDENCE_CASE_PIPELINE.md`](docs/JURISPRUDENCE_CASE_PIPELINE.md).
+[`docs/jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md`](docs/jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).
 El mismo flujo ya regenera la muestra fija de cinco: 12 unidades, 62 anclajes
 exactos, evaluación ejecutable de 40 preguntas y las 17 citas heredadas
 clasificadas. Ese baseline de fase C sigue siendo `RETRIEVAL_ONLY`:
-[`docs/JURISPRUDENCE_SAMPLE_PHASE_C.md`](docs/JURISPRUDENCE_SAMPLE_PHASE_C.md).
+[`docs/jurisprudence/JURISPRUDENCE_SAMPLE_PHASE_C.md`](docs/jurisprudence/JURISPRUDENCE_SAMPLE_PHASE_C.md).
 La fase D añade recuperación estructurada, diversificación, 20 paráfrasis y las
 conductas `preguntar`/`abstenerse`; supera sus gates y aplaza embeddings para el
 piloto. Método, métricas y límites:
-[`docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
+[`docs/jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](docs/jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
 E0 añade determinación residencial tipada, regenera las cinco sin regresión,
 congela un holdout independiente y prepara estado reanudable y gates por lote.
 El holdout obtiene 75 % de conducta y no puede usarse para ajustar fase D.
 Contrato operativo, política de revisión y límite expreso de no listar/procesar
 todavía las 106:
-[`docs/JURISPRUDENCE_PHASE_E0.md`](docs/JURISPRUDENCE_PHASE_E0.md).
+[`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md).
 El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
 cada caso canónico. Su contrato está en
-[`docs/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/JURISPRUDENCE_DERIVATIVES_B4.md).
+[`docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md).
 E0 deja preparado el rollout controlado de fase E. El siguiente trabajo
 —crear el manifiesto real y ejecutar sus lotes— requiere autorización expresa;
 no conectar directamente el chat ni transformar las 106 sin revisión humana.
@@ -191,7 +197,7 @@ segundo país no exija migrar nada.
 
 Selección de preceptos, detección del artículo de residencia de cada CDI,
 vigencia por ejercicio, normas derogadas, enlace con la jurisprudencia y el
-contrato para añadir un país están en [`docs/NORMATIVA.md`](docs/NORMATIVA.md).
+contrato para añadir un país están en [`docs/normativa/NORMATIVA.md`](docs/normativa/NORMATIVA.md).
 
 ```bash
 make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
@@ -211,7 +217,7 @@ CLI como por la API.
 ## Comandos Útiles
 
 Todo pasa por el Makefile (`make help` los lista todos); el CLI subyacente sigue
-disponible con `uv run python residenciafiscal.py --help`. Los no evidentes:
+disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
 
 - `make run-resume` / `make run-resume-from JSONL=...` — ver "Reanudar una ejecución".
 - `make fast-check` — el gate obligatorio antes de commitear (lint + tipos + tests).
@@ -243,7 +249,7 @@ Para lotes, sigue usando `make run`.
 |-------------|---------|
 | Token opcional | Si `RESIDENCIAFISCAL_API_TOKEN` está en `.env`, exige la cabecera `X-API-Token`. Sin definir, la ruta queda abierta (cómodo en localhost, imprudente con `make dev-public`, que además avisa al arrancar). |
 | Límite de subida | 25 MB, cortado por `Content-Length` en un middleware **antes** de parsear el multipart, con un contador en el handler como respaldo para peticiones `chunked`. |
-| Allowlist de modelos | `modelo` solo acepta IDs declarados en `config.py` (ver `/config` → `modelos_permitidos`) para que el endpoint de pago no actúe como proxy abierto. El CLI sí admite IDs de OpenAI, Gemini, Groq y OpenRouter; ambos caminos comparten `detect_provider()`. |
+| Allowlist de modelos | `modelo` solo acepta IDs declarados en `src/config.py` (ver `/config` → `modelos_permitidos`) para que el endpoint de pago no actúe como proxy abierto. El CLI sí admite IDs de OpenAI, Gemini, Groq y OpenRouter; ambos caminos comparten `detect_provider()`. |
 | Validación de entrada | Solo `.pdf`; `reasoning_effort` ∈ {low, medium, high}; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
 
 No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
@@ -283,7 +289,7 @@ ruff, mypy y pytest están configurados en `pyproject.toml`. Lo que no se deduce
 ahí: los tests que llaman a LLMs reales van marcados `@pytest.mark.manual_real_llm`
 y **quedan excluidos por defecto** (evita gasto accidental); `make test-llm` lanza
 el smoke de un PDF, y el comparador se ejecuta explícitamente con
-`uv run python test/test_reasoning_effort_comparison.py`.
+`uv run python tests/test_reasoning_effort_comparison.py`.
 
 Gate antes de commitear: `make fast-check`.
 
@@ -397,7 +403,7 @@ país sin corpus son `noindex` (el recuento no se escribe en prosa: sale de
 `countryRoutes.json` y cambia cada vez que se reserva una ruta). El formulario es
 [`.github/ISSUE_TEMPLATE/aportar_pais.yml`](.github/ISSUE_TEMPLATE/aportar_pais.yml).
 Contrato operativo en [`CONTRIBUTING.md`](CONTRIBUTING.md) y estado de las páginas
-en [`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).
+en [`docs/product/COUNTRY_PAGES.md`](docs/product/COUNTRY_PAGES.md).
 
 ## Referencias
 

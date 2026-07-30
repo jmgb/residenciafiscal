@@ -22,10 +22,18 @@ residencia del usuario ni predice su resultado.
 
 Este es el caso de uso principal, no una extensión opcional. Su contrato
 funcional está en
-[`docs/CHAT_JURISPRUDENCE_USE_CASE.md`](../../CHAT_JURISPRUDENCE_USE_CASE.md) y
+[`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](../../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md) y
 gobierna el corpus, la recuperación, el prompt, las fuentes y la evaluación.
 El orden de implementación y los gates previos al backend están en
-[`docs/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../../JURISPRUDENCE_DATA_V3_ROADMAP.md).
+[`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
+
+Una decisión posterior añade un modo experimental con dos respuestas
+independientes por mensaje: primero el sistema estructurado descrito en este
+documento y después Gemini File Search sobre los PDF originales. El contrato
+que amplía la presentación, el protocolo y la evaluación está en
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+La unión de ambas recuperaciones con reranking local queda expresamente
+aplazada.
 
 Al terminar, `chatEngineMode` pasa de `'stub'` a `'live'` y el aviso de
 «respuesta simulada» desaparece de la interfaz automáticamente.
@@ -39,7 +47,7 @@ Contexto necesario para revisar este diseño sin releer el repositorio entero.
 | Pieza | Estado |
 |---|---|
 | Pipeline Python (`residenciafiscal.py`) | Procesa PDFs por lotes. **No se toca.** |
-| API FastAPI (`api/main.py`, 260 líneas) | Envuelve el pipeline: 1 PDF → análisis. Solo corre en local, no está desplegada. **No se toca.** |
+| API FastAPI (`src/api/main.py`, 260 líneas) | Envuelve el pipeline: 1 PDF → análisis. Solo corre en local, no está desplegada. **No se toca.** |
 | SPA React (`frontend/`) | Desplegada en Netlify. Estática, sin servidor. |
 | `frontend/src/lib/chat-engine.ts` | Punto único de selección del motor. Hoy `chatEngineMode = 'stub'`. |
 | `frontend/src/lib/chat-engine.stub.ts` | Motor simulado: texto pregrabado por tema, streaming falso, citas reales del corpus. |
@@ -279,6 +287,11 @@ un body `chunked` sin cota.
 
 ### Flujo de una pregunta
 
+El flujo siguiente describe la **respuesta A**. En modo comparativo, al alcanzar
+su estado terminal se ejecuta y presenta la **respuesta B** mediante Gemini File
+Search. Ambas reciben la misma entrada, pero B no consume candidatos, scores,
+fuentes ni texto generado por A.
+
 ```
 POST /api/chat  { messages: [...] }
   │
@@ -426,7 +439,7 @@ Opciones sobre la mesa, pendientes de decisión:
 | Cuotas best-effort y protección dura solo en el límite nativo | Cero coste añadido | El techo de gasto deja de ser una garantía |
 
 Antes del router se añade a `reservations[requestId]` un importe conservador
-calculado con los máximos de entrada/salida de las dos llamadas. Para no depender
+calculado con los máximos de entrada/salida de todas las llamadas de A y B. Para no depender
 de un tokenizer pesado en el edge, el límite superior de tokens de entrada usa
 el tamaño UTF-8 en bytes —conservador para un tokenizer byte-level— y añade el
 máximo de salida. Importes y precios se convierten a **microdólares enteros** y
@@ -445,6 +458,16 @@ conservadora hasta el final del día, pero nunca abrir gasto no reservado.
 
 `POST /api/chat` → `text/event-stream`. Los eventos reutilizan los tres tipos de
 `ChatChunk` y añaden uno de error. El payload de `sources` usa `ChatSourceV2`:
+
+Este contrato V2 describe una respuesta individual. El modo comparativo requiere
+una revisión de protocolo antes de implementarse: cada `token` y `sources` debe
+incluir `strategy`, y cada bloque debe quedar delimitado por `answer_start` y
+`answer_done`. El terminal global `done` solo se emite después de terminar o
+fallar de forma explícita las dos estrategias. Cada `answer_done` incluye el
+coste marginal de su estrategia en USD, tokens y el estado `ACTUAL` o
+`ESTIMATED`; el frontend lo muestra debajo de la respuesta. La forma completa
+se especifica en
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 
 ```
 event: token    data: {"text":"El cómputo de los días… (ROJ: STS 107/2018)"}
@@ -667,14 +690,20 @@ Python.
 
 ## 9. Observabilidad y privacidad
 
-Cada petición genera un `requestId` aleatorio y un único log estructurado al
-cerrar. Campos permitidos:
+Cada petición genera un `requestId` aleatorio y un log estructurado por
+estrategia al cerrar. Ambos registros comparten `requestId` y deben contener el
+mismo coste que ve el usuario. Campos permitidos:
 
 - resultado (`ok`, `no_results`, `rate_limited`, `budget_exhausted`,
   `upstream_error`, `aborted`);
 - tiempos de router, recuperación, primer párrafo y total;
 - número de candidatos y fuentes emitidas;
-- tokens y coste de router/redacción cuando haya `usage`;
+- estrategia y estado terminal de su respuesta;
+- tokens de entrada, salida y documento recuperado;
+- coste en microdólares, equivalente visible en USD y marca
+  `ACTUAL`/`ESTIMATED`;
+- modelo y versión del catálogo de precios usados en el cálculo;
+- desglose router/redacción para A y File Search/generación para B;
 - número de párrafos retenidos por citas inválidas;
 - intento de CAS y región de ejecución.
 
@@ -774,7 +803,7 @@ debe afirmar.
 
 El inventario inicial de preguntas y conversaciones que alimentará ese banco
 está en
-[`docs/CHAT_USER_QUESTION_CATALOG.md`](../../CHAT_USER_QUESTION_CATALOG.md).
+[`docs/jurisprudence/CHAT_USER_QUESTION_CATALOG.md`](../../jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
 La selección inicial de 40, con respuestas manuales, casos esperados,
 contracasos, límites y gaps del schema sobre la muestra de cinco, está en
 [`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../../experiments/CHAT_QUESTION_PILOT_5.md).
@@ -834,7 +863,7 @@ en servidor, sin caché de respuestas y sin panel de métricas. Con 106 sentenci
 ninguna de esas piezas aporta nada hoy, y todas se pueden añadir después sin
 rehacer lo anterior.
 
-La API FastAPI (`api/main.py`) sigue siendo la vía para analizar PDFs nuevos y no
+La API FastAPI (`src/api/main.py`) sigue siendo la vía para analizar PDFs nuevos y no
 se modifica. El pipeline Python tampoco.
 
 ## 12. Riesgos abiertos

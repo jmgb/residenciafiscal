@@ -65,7 +65,7 @@ diario, que conserva la publicacion original.
 JURISDICCION
 ------------
 Este directorio es el corpus de Espana (codigo ISO 3166-1 alfa-2: es). Un pais
-nuevo anade su propio directorio hermano; ver docs/NORMATIVA.md.
+nuevo anade su propio directorio hermano; ver docs/normativa/NORMATIVA.md.
 
 Ver AVISO_LEGAL.md para el origen, las condiciones de reutilizacion y el
 alcance de estos ficheros.

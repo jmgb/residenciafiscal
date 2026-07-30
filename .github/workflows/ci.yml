@@ -3,7 +3,7 @@ name: CI
 # Gate mínimo: convierte `make fast-check` (lint + format + typecheck + tests) en un check
 # real de CI, en vez de depender de que alguien lo corra en local.
 #
-# NO necesita secrets: los tests de test/ no llaman a ningún LLM. Los que sí
+# NO necesita secrets: los tests de tests/ no llaman a ningún LLM. Los que sí
 # gastan están tras el marker `manual_real_llm`, excluido por defecto vía
 # `addopts` en pyproject.toml. Si algún día se añade un job que gaste API real,
 # tiene que ser un workflow aparte con `workflow_dispatch`, nunca este.
