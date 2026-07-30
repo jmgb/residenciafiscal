@@ -16,6 +16,7 @@ SHELL := /bin/bash
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
+	file-search-prepare compare-chat-strategies file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -58,6 +59,10 @@ CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
 CASE_EVALUATION ?= ./knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json
 CASE_OUTPUT ?= ./knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json
 CASE_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.case-validation.json
+FILE_SEARCH_STATE ?= ./output/file-search/f0-store.json
+FILE_SEARCH_LOG ?= ./output/logs/chat-strategy-comparison.jsonl
+FILE_SEARCH_MODEL ?= gemini-3.5-flash-lite
+CHAT_QUESTION ?=
 CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia-v3/perfiles/san-1210-2023.md
 CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json
 CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.derivatives-validation.json
@@ -112,6 +117,9 @@ help:
 	@echo "  make export-case-v3-sample  Regenera y evalúa las 5 sentencias v3 (sin LLM)"
 	@echo "  make evaluate-retrieval-phase-d  Compara baseline y recuperación estructurada"
 	@echo "  make evaluate-holdout-e0  Mide el holdout congelado sin ajustar el router"
+	@echo "  make file-search-prepare CONFIRM_PAID=1  Crea el store F0 y sube los 5 PDF"
+	@echo "  make compare-chat-strategies CONFIRM_PAID=1 CHAT_QUESTION='...'  Ejecuta F0 con $(FILE_SEARCH_MODEL)"
+	@echo "  make file-search-delete CONFIRM_DELETE=1  Elimina explícitamente el store F0"
 	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
 	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
 	@echo "  make rollout-next         Ejecuta/reanuda un lote explícito"
@@ -286,6 +294,32 @@ evaluate-holdout-e0:
 		--lock $(CASE_HOLDOUT_LOCK) \
 		--output $(CASE_HOLDOUT_REPORT) \
 		--project-root .
+
+file-search-prepare:
+	@test "$(CONFIRM_PAID)" = "1" || \
+		(echo "CONFIRM_PAID=1 es obligatorio: indexar genera coste" >&2; exit 2)
+	uv run python $(PYTHON_SOURCE)/gemini_file_search_cli.py prepare-store \
+		--state $(FILE_SEARCH_STATE) \
+		--confirm-paid
+
+compare-chat-strategies:
+	@test "$(CONFIRM_PAID)" = "1" || \
+		(echo "CONFIRM_PAID=1 es obligatorio: consultar genera coste" >&2; exit 2)
+	@test -n "$(CHAT_QUESTION)" || \
+		(echo "CHAT_QUESTION es obligatorio" >&2; exit 2)
+	uv run python $(PYTHON_SOURCE)/gemini_file_search_cli.py compare \
+		"$(CHAT_QUESTION)" \
+		--state $(FILE_SEARCH_STATE) \
+		--log $(FILE_SEARCH_LOG) \
+		--model $(FILE_SEARCH_MODEL) \
+		--confirm-paid
+
+file-search-delete:
+	@test "$(CONFIRM_DELETE)" = "1" || \
+		(echo "CONFIRM_DELETE=1 es obligatorio" >&2; exit 2)
+	uv run python $(PYTHON_SOURCE)/gemini_file_search_cli.py delete-store \
+		--state $(FILE_SEARCH_STATE) \
+		--confirm-delete
 
 rollout-init:
 	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \

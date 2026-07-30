@@ -1,8 +1,78 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
-**Estado:** decisión de producto documentada; implementación pendiente.
+**Estado:** F0 local implementada; aprovisionamiento y ejecución real pendientes.
 **Alcance inicial:** las cinco sentencias piloto.
 **Fecha de decisión:** 2026-07-30.
+
+## Implementación F0
+
+La fase F0 implementa el comparador local previo al chat productivo. No cambia
+`chatEngineMode` ni conecta todavía el frontend. Usa el SDK oficial
+`google-genai`, la Interactions API y un store basado en
+`models/gemini-embedding-2`.
+
+El modelo inicial de pruebas es `gemini-3.5-flash-lite`, elegido para medir el
+flujo completo con menor coste. `gemini-3.6-flash` está en la allowlist, pero el
+cambio será manual y visible: no se usa un alias `latest` ni existe promoción
+automática. Después de revisar calidad, citas, latencia y coste de las primeras
+comparaciones se ejecutará explícitamente:
+
+```bash
+make compare-chat-strategies \
+  CONFIRM_PAID=1 \
+  FILE_SEARCH_MODEL=gemini-3.6-flash \
+  CHAT_QUESTION='...'
+```
+
+Cambiar el modelo de generación no exige recrear el store: los cinco PDF siguen
+indexados con `models/gemini-embedding-2`. Cada resultado y log conserva el ID
+del modelo realmente usado.
+
+Los comandos que pueden generar coste exigen confirmación redundante:
+
+```bash
+# Crea un store nuevo y sube exactamente los cinco PDF del manifiesto.
+make file-search-prepare CONFIRM_PAID=1
+
+# Ejecuta una pregunta contra A y B y muestra el coste individual.
+make compare-chat-strategies \
+  CONFIRM_PAID=1 \
+  FILE_SEARCH_MODEL=gemini-3.5-flash-lite \
+  CHAT_QUESTION='¿Qué valor se dio al certificado fiscal extranjero?'
+
+# Elimina el store remoto y su estado local.
+make file-search-delete CONFIRM_DELETE=1
+```
+
+El estado del store se guarda fuera del corpus, en
+`output/file-search/f0-store.json`. Cada comparación produce un JSON con ambas
+respuestas y añade dos registros, sin pregunta ni respuesta, a
+`output/logs/chat-strategy-comparison.jsonl`.
+
+Los tests no crean stores, no suben PDFs y no llaman a Gemini. La preparación
+valida los cinco hashes antes de crear ningún recurso remoto y elimina el store
+incompleto si una subida falla.
+
+### Coste por modelo
+
+El catálogo F0 aplica las tarifas estándar vigentes y las identifica con
+`pricing_version: 2026-07-30`:
+
+| Modelo | Entrada y documentos recuperados | Salida, incluido razonamiento |
+|---|---:|---:|
+| `gemini-3.5-flash-lite` | USD 0,30 / 1 M tokens | USD 2,50 / 1 M tokens |
+| `gemini-3.6-flash` | USD 1,50 / 1 M tokens | USD 7,50 / 1 M tokens |
+
+Interactions devuelve el total y el desglose por modalidad. F0 separa los
+tokens `document` recuperados de la entrada textual, suma los tokens de
+razonamiento a la salida facturable y calcula el resultado con microdólares
+enteros. El log conserva modelo, tokens y tarifa versionada para que cada
+llamada pueda reconciliarse o recalcularse.
+
+La indexación del store —USD 0,15 / 1 M tokens según la tarifa vigente— es coste
+de preparación del corpus y no se mezcla con el coste marginal de una
+respuesta. Almacenamiento y embedding de consulta no añaden coste; los
+documentos recuperados se cobran como contexto de entrada.
 
 ## Decisión
 
