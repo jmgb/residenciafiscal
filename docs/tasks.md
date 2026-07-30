@@ -286,7 +286,7 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     indexable, así que hay que comprobar que su redirect sirve el prerender y que la meta
     `robots` llega como `index, follow`. Si el redirect falla, la SPA responde igual y el
     fallo no se nota hasta que Search Console no indexa nada.
-  - Las 20 páginas de país deben comprobarse al revés: que siguen respondiendo
+  - Las páginas de país sin corpus deben comprobarse al revés: que siguen respondiendo
     `noindex, follow` y que **no** aparecen en el sitemap.
 - [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
 - [ ] **Corregir `CLAUDE.md`, desfasado respecto al código.** Detectado al diseñar el

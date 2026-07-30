@@ -384,8 +384,9 @@ Al escribir copy sobre esto, dos límites:
   describe mal el requisito; hay un test que impide que esa fórmula reaparezca.
 
 Canales, perfiles y ruta viven en `frontend/src/lib/contribution.ts`; la página
-pública es `/colaborar`, la única indexable del circuito porque las 20 páginas de
-país son `noindex`. El formulario es
+pública es `/colaborar`, la única indexable del circuito porque las páginas de
+país sin corpus son `noindex` (el recuento no se escribe en prosa: sale de
+`countryRoutes.json` y cambia cada vez que se reserva una ruta). El formulario es
 [`.github/ISSUE_TEMPLATE/aportar_pais.yml`](.github/ISSUE_TEMPLATE/aportar_pais.yml).
 Contrato operativo en [`CONTRIBUTING.md`](CONTRIBUTING.md) y estado de las páginas
 en [`docs/COUNTRY_PAGES.md`](docs/COUNTRY_PAGES.md).
