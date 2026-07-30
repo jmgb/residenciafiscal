@@ -116,6 +116,7 @@ SUPABASE_ACCOUNTS.md
 
 # Compañero visual de brainstorming (superpowers)
 .superpowers/
+.superdesign/tmp/
 
 # Specs y planes de implementación internos: citan rutas y decisiones de otros
 # proyectos privados, así que no se publican. Se conservan en local.
