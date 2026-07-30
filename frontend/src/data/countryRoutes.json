@@ -6,6 +6,60 @@
     "indexable": true
   },
   {
+    "name": "Estados Unidos",
+    "path": "/estados-unidos",
+    "description": "Todavía no hay jurisprudencia fiscal de Estados Unidos en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Portugal",
+    "path": "/portugal",
+    "description": "Todavía no hay jurisprudencia fiscal de Portugal en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Francia",
+    "path": "/francia",
+    "description": "Todavía no hay jurisprudencia fiscal de Francia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Reino Unido",
+    "path": "/reino-unido",
+    "description": "Todavía no hay jurisprudencia fiscal del Reino Unido en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Alemania",
+    "path": "/alemania",
+    "description": "Todavía no hay jurisprudencia fiscal de Alemania en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Suiza",
+    "path": "/suiza",
+    "description": "Todavía no hay jurisprudencia fiscal de Suiza en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Andorra",
+    "path": "/andorra",
+    "description": "Todavía no hay jurisprudencia fiscal de Andorra en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "Italia",
+    "path": "/italia",
+    "description": "Todavía no hay jurisprudencia fiscal de Italia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
+    "name": "México",
+    "path": "/mexico",
+    "description": "Todavía no hay jurisprudencia fiscal de México en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
+    "indexable": false
+  },
+  {
     "name": "Argentina",
     "path": "/argentina",
     "description": "Todavía no hay jurisprudencia fiscal de Argentina en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
@@ -75,12 +129,6 @@
     "name": "Honduras",
     "path": "/honduras",
     "description": "Todavía no hay jurisprudencia fiscal de Honduras en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
-  },
-  {
-    "name": "México",
-    "path": "/mexico",
-    "description": "Todavía no hay jurisprudencia fiscal de México en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
     "indexable": false
   },
   {

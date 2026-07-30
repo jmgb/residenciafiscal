@@ -77,6 +77,54 @@
   force = true
 
 [[redirects]]
+  from = "/estados-unidos"
+  to = "/estados-unidos/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/portugal"
+  to = "/portugal/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/francia"
+  to = "/francia/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/reino-unido"
+  to = "/reino-unido/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/alemania"
+  to = "/alemania/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/suiza"
+  to = "/suiza/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/andorra"
+  to = "/andorra/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/italia"
+  to = "/italia/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/manifiesto"
   to = "/manifiesto/index.html"
   status = 200

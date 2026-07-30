@@ -121,6 +121,14 @@ def test_country_routes_have_prerender_redirects() -> None:
 
     for path in (
         "/espana",
+        "/estados-unidos",
+        "/portugal",
+        "/francia",
+        "/reino-unido",
+        "/alemania",
+        "/suiza",
+        "/andorra",
+        "/italia",
         "/argentina",
         "/bolivia",
         "/brasil",

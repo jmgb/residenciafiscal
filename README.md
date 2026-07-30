@@ -154,7 +154,8 @@ No hace falta activar ningún entorno: `uv run` lo resuelve solo.
 make run-sample             # 1 PDF, prueba rápida (~$0.01)
 make run                    # los 106 PDFs de ./sentencias (~$2.80, 2-3 h)
 make run-resume             # continúa sobre el JSONL más reciente de ./output
-make dev                    # API HTTP, Swagger en http://127.0.0.1:8010/docs
+make dev                    # API + frontend en desarrollo
+make dev-api                # solo API HTTP, Swagger en http://127.0.0.1:8010/docs
 make fast-check             # lint + typecheck + tests
 ```
 

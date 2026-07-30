@@ -3,7 +3,18 @@ import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES } from '@/data/countryRoutes';
 
 describe('country routes', () => {
   it('declara metadata SEO personalizada para cada ruta', () => {
-    expect(COUNTRY_ROUTES).toHaveLength(21);
+    expect(COUNTRY_ROUTES).toHaveLength(29);
+    expect(COUNTRY_ROUTES.slice(0, 9).map((route) => route.name)).toEqual([
+      'España',
+      'Estados Unidos',
+      'Portugal',
+      'Francia',
+      'Reino Unido',
+      'Alemania',
+      'Suiza',
+      'Andorra',
+      'Italia',
+    ]);
     expect(COUNTRY_ROUTES.find((route) => route.path === '/espana')).toMatchObject({
       name: 'España',
       indexable: true,
@@ -13,6 +24,11 @@ describe('country routes', () => {
       name: 'México',
       indexable: false,
       description: expect.stringContaining('México'),
+    });
+    expect(COUNTRY_ROUTES.find((route) => route.path === '/estados-unidos')).toMatchObject({
+      name: 'Estados Unidos',
+      indexable: false,
+      description: expect.stringContaining('Estados Unidos'),
     });
   });
 

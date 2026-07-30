@@ -18,7 +18,8 @@
 #   make run MODEL=gpt-4 INPUT=/ruta/a/pdfs OUTPUT=/ruta/salida
 #   uv run python residenciafiscal.py --help
 #
-# Este mismo pipeline se expone por HTTP en api/main.py (`make dev`).
+# Este mismo pipeline se expone por HTTP en api/main.py (`make dev-api`,
+# también incluido en `make dev`).
 
 from __future__ import annotations
 

@@ -14,13 +14,21 @@ describe('CountryNavigation', () => {
     );
 
     expect(screen.getByRole('link', { name: 'España' })).toHaveAttribute('href', '/espana');
-    expect(screen.getByRole('link', { name: 'Argentina' })).toHaveAttribute('href', '/argentina');
-    expect(screen.getByRole('link', { name: 'Bolivia' })).toHaveAttribute('href', '/bolivia');
-    expect(screen.queryByRole('link', { name: 'Brasil' })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Estados Unidos' })).toHaveAttribute(
+      'href',
+      '/estados-unidos'
+    );
+    expect(screen.getByRole('link', { name: 'Portugal' })).toHaveAttribute('href', '/portugal');
+    expect(screen.queryByRole('link', { name: 'Francia' })).not.toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Mostrar más' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Mostrar más' }));
 
+    expect(screen.getByRole('link', { name: 'Francia' })).toHaveAttribute('href', '/francia');
+    expect(screen.getByRole('link', { name: 'Reino Unido' })).toHaveAttribute(
+      'href',
+      '/reino-unido'
+    );
     expect(screen.getByRole('link', { name: 'México' })).toHaveAttribute('href', '/mexico');
     expect(screen.getByRole('link', { name: 'Brasil' })).toHaveAttribute('href', '/brasil');
     expect(screen.getByRole('link', { name: 'Perú' })).toHaveAttribute('href', '/peru');

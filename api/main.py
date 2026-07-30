@@ -5,7 +5,8 @@ que es la unidad de trabajo por PDF (extracción de texto + llamada LLM +
 normalización de schema).
 
 Arranque en local:
-    make dev            # uvicorn con reload en 127.0.0.1:8010
+    make dev            # API + frontend en desarrollo
+    make dev-api        # uvicorn con reload en 127.0.0.1:8010
     make dev-public     # accesible desde la red local (0.0.0.0)
 
 Endpoints:

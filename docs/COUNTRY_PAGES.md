@@ -8,9 +8,9 @@ crecer sin rehacer el menú:
 - `/` redirige a `/espana`.
 - `/espana` conserva literalmente la experiencia que antes vivía en la home: el chat, las
   sugerencias de preguntas y el aviso del motor simulado.
-- La barra lateral incluye España y las rutas reservadas para los principales países de
-  Latinoamérica.
-- Las rutas latinoamericanas muestran la misma plantilla: una **invitación a contribuir**
+- La barra lateral incluye España y las rutas reservadas para las jurisdicciones prioritarias
+  de Europa, Estados Unidos y Latinoamérica.
+- Las rutas pendientes muestran la misma plantilla: una **invitación a contribuir**
   personalizada con el nombre del país, no un simple aviso de «próximamente». La plantilla
   explica que el pipeline es agnóstico de la jurisdicción y enumera las tres aportaciones que
   necesita un país nuevo (fuente oficial, precepto de residencia y revisión humana).
@@ -25,6 +25,15 @@ Las rutas reservadas actualmente son:
 | País | Ruta |
 | --- | --- |
 | España | `/espana` |
+| Estados Unidos | `/estados-unidos` |
+| Portugal | `/portugal` |
+| Francia | `/francia` |
+| Reino Unido | `/reino-unido` |
+| Alemania | `/alemania` |
+| Suiza | `/suiza` |
+| Andorra | `/andorra` |
+| Italia | `/italia` |
+| México | `/mexico` |
 | Argentina | `/argentina` |
 | Bolivia | `/bolivia` |
 | Brasil | `/brasil` |
@@ -37,7 +46,6 @@ Las rutas reservadas actualmente son:
 | Guatemala | `/guatemala` |
 | Haití | `/haiti` |
 | Honduras | `/honduras` |
-| México | `/mexico` |
 | Nicaragua | `/nicaragua` |
 | Panamá | `/panama` |
 | Paraguay | `/paraguay` |
@@ -138,7 +146,7 @@ suficiente para perderlos. `frontend/src/lib/contribution.ts` es la fuente únic
 
 - El enlace lleva al formulario `aportar_pais.yml` con el título y el campo `pais` ya rellenados
   vía query params, así que quien llega desde `/chile` no tiene que explicar de qué país habla.
-- La invitación es **abierta a cualquier jurisdicción**, no solo a los 28 países con ruta. El
+- La invitación es **abierta a cualquier jurisdicción**, no solo a los países con ruta. El
   texto no promete fecha ni da por hecho que el país vaya a publicarse.
 - El segundo CTA apunta a `CONTRIBUTING.md`, donde está el detalle operativo y los invariantes
   (no reescribir el texto de una resolución, no subir documentos antes de resolver su
