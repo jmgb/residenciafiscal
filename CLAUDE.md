@@ -140,11 +140,18 @@ La fase D añade recuperación estructurada, diversificación, 20 paráfrasis y 
 conductas `preguntar`/`abstenerse`; supera sus gates y aplaza embeddings para el
 piloto. Método, métricas y límites:
 [`docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](docs/JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
+E0 añade determinación residencial tipada, regenera las cinco sin regresión,
+congela un holdout independiente y prepara estado reanudable y gates por lote.
+El holdout obtiene 75 % de conducta y no puede usarse para ajustar fase D.
+Contrato operativo, política de revisión y límite expreso de no listar/procesar
+todavía las 106:
+[`docs/JURISPRUDENCE_PHASE_E0.md`](docs/JURISPRUDENCE_PHASE_E0.md).
 El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
 cada caso canónico. Su contrato está en
 [`docs/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/JURISPRUDENCE_DERIVATIVES_B4.md).
-El siguiente trabajo es preparar el rollout controlado de fase E; no conectar
-directamente el chat ni transformar las 106 sin un lote intermedio y revisión.
+E0 deja preparado el rollout controlado de fase E. El siguiente trabajo
+—crear el manifiesto real y ejecutar sus lotes— requiere autorización expresa;
+no conectar directamente el chat ni transformar las 106 sin revisión humana.
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia
@@ -153,6 +160,7 @@ make export-case-v3  # compila y valida el caso canónico de SAN 1210/2023
 make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
 make export-case-v3-sample  # regenera 5, evalúa 40 preguntas y ejecuta gates
 make evaluate-retrieval-phase-d  # mide router, paráfrasis y recuperación @3
+make evaluate-holdout-e0  # observación congelada; nunca ajusta el router
 ```
 
 ### Corpus normativo

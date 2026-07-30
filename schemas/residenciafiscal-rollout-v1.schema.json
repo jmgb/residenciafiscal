@@ -1,0 +1,98 @@
+{
+  "$defs": {
+    "RolloutDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "batch_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Batch Id",
+          "type": "string"
+        },
+        "evaluation_path": {
+          "minLength": 1,
+          "title": "Evaluation Path",
+          "type": "string"
+        },
+        "judgment_id": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Judgment Id",
+          "type": "string"
+        },
+        "proposal_path": {
+          "minLength": 1,
+          "title": "Proposal Path",
+          "type": "string"
+        },
+        "risk": {
+          "$ref": "#/$defs/RolloutRisk"
+        },
+        "source_file": {
+          "minLength": 1,
+          "title": "Source File",
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Source Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "judgment_id",
+        "source_file",
+        "source_sha256",
+        "proposal_path",
+        "evaluation_path",
+        "batch_id",
+        "risk"
+      ],
+      "title": "RolloutDocument",
+      "type": "object"
+    },
+    "RolloutRisk": {
+      "enum": [
+        "HIGH",
+        "STANDARD"
+      ],
+      "title": "RolloutRisk",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "documents": {
+      "items": {
+        "$ref": "#/$defs/RolloutDocument"
+      },
+      "minItems": 1,
+      "title": "Documents",
+      "type": "array"
+    },
+    "expected_documents": {
+      "exclusiveMinimum": 0,
+      "title": "Expected Documents",
+      "type": "integer"
+    },
+    "rollout_id": {
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+      "title": "Rollout Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-rollout/1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "rollout_id",
+    "expected_documents",
+    "documents"
+  ],
+  "title": "RolloutManifest",
+  "type": "object"
+}

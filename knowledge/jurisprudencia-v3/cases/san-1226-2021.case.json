@@ -333,6 +333,14 @@
       "holding_id": "holding-residencia-fiscal-2011",
       "issue_id": "residencia-fiscal-2011",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": "Reino Unido",
+        "spanish_residence": "NON_RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2011
+        ]
+      },
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",

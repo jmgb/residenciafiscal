@@ -130,6 +130,12 @@ def valid_case() -> dict[str, Any]:
                 "conclusion": "El recurrente tenía residencia fiscal en España.",
                 "decisive_reasoning": "La prueba indiciaria acredita residencia efectiva.",
                 "consequences": ["Sujeción al IRPF por obligación personal."],
+                "residence_determination": {
+                    "spanish_residence": "RESIDENT_IN_SPAIN",
+                    "tax_years": [2011, 2013],
+                    "other_country": None,
+                    "non_resident_from": None,
+                },
                 "anchor_ids": [anchor_id],
                 "review": review(),
             }

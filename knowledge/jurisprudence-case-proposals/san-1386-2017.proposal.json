@@ -788,6 +788,14 @@
       "consequences": [
         "Consideración como no residente en España desde el 1 de abril."
       ],
+      "residence_determination": {
+        "spanish_residence": "PARTIAL_YEAR_IN_SPAIN",
+        "tax_years": [
+          2009
+        ],
+        "other_country": "Suiza",
+        "non_resident_from": "2009-04-01"
+      },
       "anchor_ids": [
         "anchor-relacion-laboral-gastos",
         "anchor-entrada-suiza",

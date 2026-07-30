@@ -81,9 +81,9 @@ def _diversify(
     if not candidates:
         return ()
     selected = [candidates.pop(0)]
-    first_side = _case_side(selected[0][0])
+    first_side = retrieval_case_side(selected[0][0])
     contrasting = next(
-        (item for item in candidates if _case_side(item[0]) != first_side),
+        (item for item in candidates if retrieval_case_side(item[0]) != first_side),
         None,
     )
     if contrasting is not None and limit > 1:
@@ -101,17 +101,21 @@ def _outcome_side(outcome: IssueOutcome) -> str:
     return "mixed"
 
 
-def _case_side(unit: RetrievalUnit) -> str:
+def retrieval_case_side(unit: RetrievalUnit) -> str:
     """Distingue la conclusión residencial del mero vencedor procesal."""
 
-    if unit.facets.issue_type.value == "TAX_RESIDENCE":
-        conclusion = unit.holding.conclusion.lower()
-        if "no tenía residencia" in conclusion and "españa" in conclusion:
-            return "resident_abroad"
-        if "residencia fiscal en suiza" in conclusion:
-            return "resident_abroad"
-        if "residencia" in conclusion and "españa" in conclusion:
+    determination = unit.facets.residence_determination
+    if determination is not None:
+        if determination.spanish_residence.value == "RESIDENT_IN_SPAIN":
             return "resident_spain"
+        if determination.spanish_residence.value in {
+            "NON_RESIDENT_IN_SPAIN",
+            "PARTIAL_YEAR_IN_SPAIN",
+        }:
+            return "resident_abroad"
+        return "mixed"
+    if unit.facets.issue_type.value == "TAX_RESIDENCE":
+        return "mixed"
     return _outcome_side(unit.facets.outcome)
 
 
@@ -150,12 +154,14 @@ def retrieve_for_chat(
         )
     )
     selected = _diversify(scored, limit)
-    first_side = _case_side(selected[0][0]) if selected else "mixed"
+    first_side = retrieval_case_side(selected[0][0]) if selected else "mixed"
     hits = tuple(
         StructuredHit(
             unit_id=unit.unit_id,
             judgment_id=unit.judgment_id,
-            role=("contrast" if index > 0 and _case_side(unit) != first_side else "support"),
+            role=(
+                "contrast" if index > 0 and retrieval_case_side(unit) != first_side else "support"
+            ),
             score=score,
             source_anchors=unit.source_anchors,
         )

@@ -205,3 +205,21 @@ decisión provisional de no añadir embeddings se documentan en
 La estrategia de implementación, responsabilidades y gates 1 → 5 → 106 están
 en
 [`JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
+
+## Estado de preparación
+
+Las cinco sentencias piloto ya usan el caso canónico v3, texto verbatim por
+páginas, unidades recuperables por cuestión y determinación residencial
+tipada. La recuperación de fase D pasa sus gates sobre el banco de desarrollo
+sin necesidad de embeddings.
+
+E0 añade una comprobación independiente: en el holdout congelado la conducta
+correcta baja al 75 % y la seguridad de no devolver fuentes cuando debe
+preguntar o abstenerse queda en 83,33 %. Ese banco es exclusivamente de
+observación y no puede utilizarse para ajustar el router. Por ello los datos
+sirven para investigación y evaluación interna sobre las cinco resoluciones,
+pero el chat productivo aún no está autorizado.
+
+El contrato, la primera medición independiente, el rollout reanudable y el
+límite expreso de no listar ni procesar todavía las 106 sentencias están en
+[`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).

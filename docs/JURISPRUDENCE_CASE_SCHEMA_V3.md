@@ -346,6 +346,7 @@ No sustituye el texto oficial de la norma ni de otra resolución.
 | `conclusion` | string | Conclusión derivada |
 | `decisive_reasoning` | string | Ratio o paso decisivo |
 | `consequences` | array[string] | Efectos |
+| `residence_determination` | objeto o `null` | Resultado residencial tipado, solo para `TAX_RESIDENCE` |
 | `anchor_ids` | array[ID] | Pasajes literales de apoyo |
 | `review` | `ReviewStatus` | Estado |
 
@@ -361,6 +362,20 @@ Resultados:
 
 Cada cuestión referencia exactamente un holding y cada holding pertenece
 exactamente a una cuestión. Un holding siempre tiene al menos un anclaje.
+
+`outcome` expresa el vencedor procesal de la cuestión y no debe reutilizarse
+para inferir el país de residencia. Cuando exista conclusión residencial,
+`residence_determination` conserva:
+
+- estado respecto de España: `RESIDENT_IN_SPAIN`,
+  `NON_RESIDENT_IN_SPAIN`, `PARTIAL_YEAR_IN_SPAIN` o `NOT_DECIDED`;
+- ejercicios afectados;
+- país extranjero, cuando proceda;
+- fecha `non_resident_from` obligatoria para un año parcial.
+
+El campo es opcional para cargar artefactos v3 anteriores, pero el pipeline de
+expansión exige completarlo en toda nueva cuestión `TAX_RESIDENCE`. No contiene
+texto judicial y no modifica `conclusion` ni sus anclajes.
 
 ## 13. Carga de la prueba
 

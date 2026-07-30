@@ -1,0 +1,211 @@
+{
+  "schema_version": "residenciafiscal-retrieval-evaluation-bank/1",
+  "source_resource": "docs/experiments/CHAT_QUESTION_HOLDOUT_E.json",
+  "questions": [
+    {
+      "question_id": "HE-GEN-01",
+      "question": "¿Qué combinación de señales cotidianas, patrimoniales y familiares ha utilizado la AEAT para sostener que alguien residía en España?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1071-2025"
+      ],
+      "contrast_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-OUT-01",
+      "question": "¿Qué hechos acreditaron una vida efectiva en Suiza a partir de una fecha concreta?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ]
+    },
+    {
+      "question_id": "HE-OUT-02",
+      "question": "¿Existe un caso en el que el traslado del empleador y más de 183 días fuera justificaran la no residencia?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ]
+    },
+    {
+      "question_id": "HE-FAM-01",
+      "question": "¿Qué sentencia aceptó que el cónyuge y un hijo siguieran en España por una discapacidad?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "contrast_judgment_ids": [
+        "san-1136-2016"
+      ]
+    },
+    {
+      "question_id": "HE-ECO-01",
+      "question": "¿Cómo se valoraron el control de una sociedad española y las funciones de administrador al localizar el centro económico?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-HOM-01",
+      "question": "¿Tener arrendado un apartamento en Mónaco demostró por sí mismo que se ocupaba como residencia habitual?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-FOR-01",
+      "question": "Compara casos donde un certificado tributario extranjero fue corroborado por hechos y donde no venció a los indicios españoles.",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "contrast_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ]
+    },
+    {
+      "question_id": "HE-PRU-01",
+      "question": "¿En qué asunto se consideró insuficiente una manifestación aislada frente a documentación concordante?",
+      "behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ]
+    },
+    {
+      "question_id": "HE-SAN-01",
+      "question": "¿Puede confirmarse que una persona era residente en España y anularse al mismo tiempo la sanción?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "contrast_judgment_ids": [
+        "san-1210-2023"
+      ]
+    },
+    {
+      "question_id": "HE-SRC-01",
+      "question": "Quiero comprobar la conclusión en la sentencia: dame página y pasaje literal, no solo una síntesis.",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1136-2016",
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1386-2017"
+      ],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-ASK-01",
+      "question": "Mi familia, una vivienda y mi principal sociedad están en España, pero no he indicado mis días ni el país extranjero. ¿Qué caso es comparable?",
+      "behavior": "preguntar",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-ASK-02",
+      "question": "Estuve unos 150 días en España y el resto viajando, ¿soy residente fiscal?",
+      "behavior": "preguntar",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-ASK-03",
+      "question": "Las administraciones de España y Francia me tratan como residente; ¿cuál debe prevalecer en mi caso?",
+      "behavior": "preguntar",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-ABS-01",
+      "question": "Define de forma completa cuándo cada salida al extranjero es una ausencia esporádica computable.",
+      "behavior": "abstenerse",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-ABS-02",
+      "question": "¿Qué plazo tengo para impugnar judicialmente un despido disciplinario?",
+      "behavior": "abstenerse",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-PRU-02",
+      "question": "¿Cómo cambia la carga probatoria después de que la Administración aporta varios indicios coherentes?",
+      "behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1210-2023",
+        "san-1136-2016"
+      ],
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-HOM-02",
+      "question": "¿Qué resoluciones relacionaron consumos de agua, electricidad o combustible con el uso real de una casa?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-BAN-01",
+      "question": "¿Qué cautelas aplicaron al inferir presencia a partir de pagos, tarjetas o retiradas hechas también por terceros?",
+      "behavior": "parcial",
+      "expected_judgment_ids": [
+        "san-1071-2025",
+        "san-1210-2023"
+      ],
+      "contrast_judgment_ids": [
+        "san-1386-2017"
+      ]
+    },
+    {
+      "question_id": "HE-CMP-01",
+      "question": "Busca la sentencia más parecida a lo que me ha ocurrido.",
+      "behavior": "preguntar",
+      "expected_judgment_ids": [],
+      "contrast_judgment_ids": []
+    },
+    {
+      "question_id": "HE-DAY-01",
+      "question": "¿Qué caso contiene un recuento explícito de días fuera y cuál reconstruye la permanencia mediante indicios?",
+      "behavior": "responder",
+      "expected_judgment_ids": [
+        "san-1226-2021",
+        "san-1210-2023"
+      ],
+      "contrast_judgment_ids": []
+    }
+  ]
+}

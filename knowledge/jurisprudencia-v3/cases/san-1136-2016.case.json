@@ -335,6 +335,14 @@
       "holding_id": "holding-residencia-habitual",
       "issue_id": "residencia-habitual",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2007
+        ]
+      },
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",
@@ -358,6 +366,7 @@
       "holding_id": "holding-reducciones-sucesiones",
       "issue_id": "reducciones-sucesiones",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": null,
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",

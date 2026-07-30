@@ -18,6 +18,7 @@ from jurisprudence_case_catalogs import (
     LegalRuleType,
     NonEmptyText,
     ProceduralFactStatus,
+    SpanishResidenceStatus,
     SubjectRole,
 )
 from jurisprudence_case_source import ReviewStatus
@@ -66,6 +67,35 @@ class LegalRule(JurisprudenceCaseModel):
     review: ReviewStatus
 
 
+class ResidenceDetermination(JurisprudenceCaseModel):
+    spanish_residence: SpanishResidenceStatus
+    tax_years: Annotated[tuple[int, ...], Field(min_length=1)]
+    other_country: NonEmptyText | None = None
+    non_resident_from: date | None = None
+
+    @model_validator(mode="after")
+    def validate_status_fields(self) -> Self:
+        if self.spanish_residence == SpanishResidenceStatus.RESIDENT_IN_SPAIN:
+            if self.other_country is not None:
+                raise ValueError("other_country debe ser null para RESIDENT_IN_SPAIN")
+            if self.non_resident_from is not None:
+                raise ValueError("non_resident_from debe ser null para RESIDENT_IN_SPAIN")
+            return self
+        if self.spanish_residence == SpanishResidenceStatus.NOT_DECIDED:
+            if self.other_country is not None or self.non_resident_from is not None:
+                raise ValueError("NOT_DECIDED no admite país ni fecha")
+            return self
+        if self.other_country is None or self.other_country.casefold() == "españa":
+            raise ValueError("other_country extranjero es obligatorio")
+        if self.spanish_residence == SpanishResidenceStatus.PARTIAL_YEAR_IN_SPAIN:
+            if self.non_resident_from is None:
+                raise ValueError("non_resident_from es obligatorio para PARTIAL_YEAR_IN_SPAIN")
+            return self
+        if self.non_resident_from is not None:
+            raise ValueError("non_resident_from debe ser null para NON_RESIDENT_IN_SPAIN")
+        return self
+
+
 class IssueHolding(JurisprudenceCaseModel):
     holding_id: Identifier
     issue_id: Identifier
@@ -73,6 +103,7 @@ class IssueHolding(JurisprudenceCaseModel):
     conclusion: NonEmptyText
     decisive_reasoning: NonEmptyText
     consequences: tuple[NonEmptyText, ...]
+    residence_determination: ResidenceDetermination | None = None
     anchor_ids: Annotated[tuple[Identifier, ...], Field(min_length=1)]
     review: ReviewStatus
 

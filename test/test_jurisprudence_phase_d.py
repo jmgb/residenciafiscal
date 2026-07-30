@@ -107,6 +107,25 @@ def test_recuperacion_responde_con_fuentes_diversas_y_roles_explicitos() -> None
     assert all(item.score.total >= item.score.lexical for item in result.hits)
 
 
+def test_direccion_residencial_usa_la_faceta_tipadada_y_no_el_texto_libre() -> None:
+    from jurisprudence_phase_d_retrieval import retrieval_case_side
+
+    unit = next(item for item in _corpus().units if item.judgment_id == "san-1226-2021")
+    contradictory = unit.model_copy(
+        update={
+            "holding": unit.holding.model_copy(
+                update={"conclusion": "El recurrente tenía residencia en España."}
+            )
+        }
+    )
+    untyped = contradictory.model_copy(
+        update={"facets": contradictory.facets.model_copy(update={"residence_determination": None})}
+    )
+
+    assert retrieval_case_side(contradictory) == "resident_abroad"
+    assert retrieval_case_side(untyped) == "mixed"
+
+
 def test_evaluacion_separa_original_y_parafrasis_y_aplica_gates() -> None:
     from jurisprudence_phase_d_evaluation import (
         evaluate_phase_d,

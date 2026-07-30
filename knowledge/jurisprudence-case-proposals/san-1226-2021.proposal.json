@@ -544,6 +544,14 @@
         "No estaba obligado a tributar en España por IRPF.",
         "Estimación del recurso relativo al IRNR."
       ],
+      "residence_determination": {
+        "spanish_residence": "NON_RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2011
+        ],
+        "other_country": "Reino Unido",
+        "non_resident_from": null
+      },
       "anchor_ids": [
         "anchor-computo-214-dias",
         "anchor-traslado-familia",

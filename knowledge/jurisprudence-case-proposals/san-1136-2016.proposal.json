@@ -606,6 +606,14 @@
       "consequences": [
         "La sucesión debía regirse como la de un contribuyente residente en España."
       ],
+      "residence_determination": {
+        "spanish_residence": "RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2007
+        ],
+        "other_country": null,
+        "non_resident_from": null
+      },
       "anchor_ids": [
         "anchor-conclusion-actora",
         "anchor-presuncion-causante",

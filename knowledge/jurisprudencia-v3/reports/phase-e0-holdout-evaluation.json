@@ -1,0 +1,230 @@
+{
+  "answerable_question_count": 14,
+  "bank_sha256": "9c1d744923b45714a1aac36d686603af0d7d6981a66cea7f1c673b32ccef2730",
+  "behavior_accuracy": 0.75,
+  "contrast_recall_at_3": 0.7083333333333334,
+  "corpus_sha256": "e39cb5d8b9528925a772293425e1c90a2f4eab6644a4dc7f942c1742a979967b",
+  "evaluation_policy": "OBSERVE_ONLY_NO_TUNING",
+  "expected_recall_at_3": 0.7214285714285714,
+  "lock_sha256": "817aa6c634bf1f6dd44c6d0d1dc7202382f81ba8697371b1f8e0609975f4a78e",
+  "question_count": 20,
+  "relevant_case_precision_at_3": 0.7777777777777778,
+  "results": [
+    {
+      "contrast_recall_at_3": 0.5,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "HE-GEN-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "abstenerse",
+      "question_id": "HE-OUT-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-OUT-02",
+      "retrieved_judgment_ids": [
+        "san-1226-2021",
+        "san-1210-2023",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-FAM-01",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "HE-ECO-01",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1226-2021",
+        "san-1386-2017"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-HOM-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.5,
+      "predicted_behavior": "responder",
+      "question_id": "HE-FOR-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 0.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 0.0,
+      "predicted_behavior": "abstenerse",
+      "question_id": "HE-PRU-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-SAN-01",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1210-2023"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 0.6,
+      "predicted_behavior": "responder",
+      "question_id": "HE-SRC-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1226-2021",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "responder",
+      "question_id": "HE-ASK-01",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "preguntar",
+      "question_id": "HE-ASK-02",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "preguntar",
+      "question_id": "HE-ASK-03",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "abstenerse",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "abstenerse",
+      "question_id": "HE-ABS-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "abstenerse",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "abstenerse",
+      "question_id": "HE-ABS-02",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-PRU-02",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1136-2016"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-HOM-02",
+      "retrieved_judgment_ids": [
+        "san-1071-2025",
+        "san-1386-2017",
+        "san-1210-2023"
+      ]
+    },
+    {
+      "contrast_recall_at_3": 1.0,
+      "expected_behavior": "parcial",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-BAN-01",
+      "retrieved_judgment_ids": [
+        "san-1210-2023",
+        "san-1386-2017",
+        "san-1071-2025"
+      ]
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "preguntar",
+      "expected_recall_at_3": null,
+      "predicted_behavior": "preguntar",
+      "question_id": "HE-CMP-01",
+      "retrieved_judgment_ids": []
+    },
+    {
+      "contrast_recall_at_3": null,
+      "expected_behavior": "responder",
+      "expected_recall_at_3": 1.0,
+      "predicted_behavior": "responder",
+      "question_id": "HE-DAY-01",
+      "retrieved_judgment_ids": [
+        "san-1386-2017",
+        "san-1210-2023",
+        "san-1226-2021"
+      ]
+    }
+  ],
+  "sample_id": "jurisprudencia-v3-piloto-5",
+  "schema_version": "residenciafiscal-holdout-evaluation/1",
+  "status": "RECORDED",
+  "zero_source_safety": 0.8333333333333334
+}

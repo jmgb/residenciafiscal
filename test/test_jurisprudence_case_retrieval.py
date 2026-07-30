@@ -40,6 +40,9 @@ def test_construye_una_unidad_autosuficiente_por_cuestion() -> None:
     ]
     assert penalty.holding.issue_id == "sancion-tributaria"
     assert all(unit.source_anchors for unit in index.units)
+    assert residence.facets.residence_determination is not None
+    assert residence.facets.residence_determination.spanish_residence == "RESIDENT_IN_SPAIN"
+    assert gains.facets.residence_determination is None
 
 
 def test_facetas_y_texto_de_busqueda_no_mezclan_otras_cuestiones() -> None:

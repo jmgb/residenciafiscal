@@ -1,7 +1,8 @@
 # Roadmap del corpus jurisprudencial v3
 
-**Estado:** fases A, B, C y D completadas; contrato v3 congelado.
-**Siguiente unidad de trabajo:** preparar el rollout controlado de fase E.
+**Estado:** fases A–D y preparación E0 completadas; contrato v3 congelado.
+**Siguiente unidad de trabajo:** manifiesto y ejecución de fase E, bloqueados
+hasta autorización expresa.
 **Rollout obligatorio:** 1 → 5 → 106.
 
 ## 1. Contexto
@@ -417,14 +418,23 @@ independiente. Contrato, método, artefactos y límites:
 
 ### Fase E — 106 sentencias
 
+**E0 completada (2026-07-30), sin crear el listado ni procesar las 106.**
+
+La preparación incorpora resultado residencial tipado, regeneración sin
+regresión de las cinco, holdout congelado, schema de manifiesto, estado
+reanudable, reintentos y gates técnico/humano. La primera medición independiente
+reduce la exactitud de conducta al 75 % y la seguridad de abstención/pregunta al
+83,33 %; queda registrada sin ajustar el router. Detalle:
+[`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).
+
 Requisitos previos:
 
-- schema v3 congelado;
-- manifiesto explícito de PDFs y hashes;
-- orquestación reanudable y publicación atómica;
-- política de revisión humana;
-- gates técnicos y jurídicos medidos con cinco;
-- decisión de almacenamiento de verbatim e índice.
+- [x] schema v3 congelado con extensión opcional compatible;
+- [ ] manifiesto explícito de los 106 PDFs y hashes;
+- [x] orquestación reanudable y publicación atómica;
+- [x] política de revisión humana;
+- [x] gates técnicos y jurídicos medidos con cinco;
+- [x] decisión de almacenamiento de verbatim e índice.
 
 Los borradores pueden generarse automáticamente. Solo se publican como
 revisados los elementos aprobados según la política editorial.

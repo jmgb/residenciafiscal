@@ -15,6 +15,7 @@ SHELL := /bin/bash
 	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
+	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
 	lint format format-check fix typecheck fast-check \
@@ -63,6 +64,12 @@ CASE_SAMPLE_OUTPUT ?= ./knowledge/jurisprudencia-v3
 CASE_QUESTION_PILOT ?= ./docs/experiments/CHAT_QUESTION_PILOT_5.md
 CASE_PARAPHRASES ?= ./docs/experiments/CHAT_QUESTION_PARAPHRASES_5.json
 CASE_PHASE_D_REPORT ?= ./knowledge/jurisprudencia-v3/reports/phase-d-retrieval-evaluation.json
+CASE_HOLDOUT_LOCK ?= ./docs/experiments/CHAT_QUESTION_HOLDOUT_E.lock.json
+CASE_HOLDOUT_REPORT ?= ./knowledge/jurisprudencia-v3/reports/phase-e0-holdout-evaluation.json
+CASE_ROLLOUT_MANIFEST ?=
+CASE_ROLLOUT_STATE ?= ./output/jurisprudence-v3-rollout-state.json
+CASE_ROLLOUT_OUTPUT ?= ./knowledge/jurisprudencia-v3
+ROLLOUT_RETRY ?=
 
 # Flags opcionales: solo se añaden si la variable tiene valor
 RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
@@ -102,6 +109,10 @@ help:
 	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
 	@echo "  make export-case-v3-sample  Regenera y evalúa las 5 sentencias v3 (sin LLM)"
 	@echo "  make evaluate-retrieval-phase-d  Compara baseline y recuperación estructurada"
+	@echo "  make evaluate-holdout-e0  Mide el holdout congelado sin ajustar el router"
+	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
+	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
+	@echo "  make rollout-next         Ejecuta/reanuda un lote explícito"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -114,6 +125,8 @@ help:
 	@echo "  Derivados v3: CASE_MARKDOWN_OUTPUT= CASE_RETRIEVAL_OUTPUT= CASE_DERIVATIVES_REPORT="
 	@echo "  Muestra v3: CASE_SAMPLE_MANIFEST= CASE_SAMPLE_OUTPUT= CASE_QUESTION_PILOT="
 	@echo "  Fase D: CASE_PARAPHRASES= CASE_PHASE_D_REPORT="
+	@echo "  Fase E0: CASE_HOLDOUT_LOCK= CASE_HOLDOUT_REPORT="
+	@echo "  Rollout: CASE_ROLLOUT_MANIFEST= CASE_ROLLOUT_STATE= CASE_ROLLOUT_OUTPUT= ROLLOUT_RETRY=1"
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -264,6 +277,33 @@ evaluate-retrieval-phase-d:
 		--pilot $(CASE_QUESTION_PILOT) \
 		--paraphrases $(CASE_PARAPHRASES) \
 		--output $(CASE_PHASE_D_REPORT)
+
+evaluate-holdout-e0:
+	uv run python jurisprudence_holdout_evaluation.py \
+		--corpus $(CASE_SAMPLE_OUTPUT)/retrieval/corpus.json \
+		--lock $(CASE_HOLDOUT_LOCK) \
+		--output $(CASE_HOLDOUT_REPORT) \
+		--project-root .
+
+rollout-init:
+	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \
+		(echo "CASE_ROLLOUT_MANIFEST es obligatorio" >&2; exit 2)
+	uv run python jurisprudence_rollout_cli.py init \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--state $(CASE_ROLLOUT_STATE)
+
+rollout-status:
+	uv run python jurisprudence_rollout_cli.py status \
+		--state $(CASE_ROLLOUT_STATE)
+
+rollout-next:
+	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \
+		(echo "CASE_ROLLOUT_MANIFEST es obligatorio" >&2; exit 2)
+	uv run python jurisprudence_rollout_cli.py run-next \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--state $(CASE_ROLLOUT_STATE) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--project-root . $(if $(ROLLOUT_RETRY),--retry-failed,)
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

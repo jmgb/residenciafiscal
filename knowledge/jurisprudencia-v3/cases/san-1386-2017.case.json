@@ -496,6 +496,14 @@
       "holding_id": "holding-residencia-fiscal-suiza",
       "issue_id": "residencia-fiscal-suiza",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": "2009-04-01",
+        "other_country": "Suiza",
+        "spanish_residence": "PARTIAL_YEAR_IN_SPAIN",
+        "tax_years": [
+          2009
+        ]
+      },
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",
@@ -517,6 +525,7 @@
       "holding_id": "holding-exencion-indemnizacion",
       "issue_id": "exencion-indemnizacion",
       "outcome": "GANA_AEAT",
+      "residence_determination": null,
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",
@@ -538,6 +547,7 @@
       "holding_id": "holding-tipo-no-residentes",
       "issue_id": "tipo-no-residentes",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": null,
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",

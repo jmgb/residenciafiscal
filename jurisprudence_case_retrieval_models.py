@@ -21,7 +21,13 @@ from jurisprudence_case_catalogs import (
     Sha256,
     TechnicalReviewState,
 )
-from jurisprudence_case_entities import CaseFact, IssueHolding, LegalIssue, LegalRule
+from jurisprudence_case_entities import (
+    CaseFact,
+    IssueHolding,
+    LegalIssue,
+    LegalRule,
+    ResidenceDetermination,
+)
 from jurisprudence_case_evidence import EvidenceFinding
 from jurisprudence_case_source import SourceAnchor
 from jurisprudence_case_timeline import PresenceEvent, PresencePeriod
@@ -52,6 +58,7 @@ class RetrievalFacets(JurisprudenceCaseModel):
     evidence_categories: tuple[EvidenceCategory, ...]
     evidence_parties: tuple[EvidenceParty, ...]
     outcome: IssueOutcome
+    residence_determination: ResidenceDetermination | None = None
     has_treaty: bool
     technical_review: TechnicalReviewState
     legal_review: LegalReviewState

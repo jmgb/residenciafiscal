@@ -413,6 +413,15 @@
       "holding_id": "holding-residencia-fiscal",
       "issue_id": "residencia-fiscal",
       "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2010,
+          2011
+        ]
+      },
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",
@@ -435,6 +444,7 @@
       "holding_id": "holding-ganancia-patrimonial",
       "issue_id": "ganancia-patrimonial",
       "outcome": "GANA_AEAT",
+      "residence_determination": null,
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",
@@ -459,6 +469,7 @@
       "holding_id": "holding-sancion-tributaria",
       "issue_id": "sancion-tributaria",
       "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": null,
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Pendiente de aprobación jurídica humana.",

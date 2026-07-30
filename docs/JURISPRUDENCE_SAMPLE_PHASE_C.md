@@ -140,15 +140,16 @@ confirmó estas reglas:
 
 Quedan congelados los JSON Schema versionados. El contrato de caso v3 tiene
 SHA-256
-`543c8f68e25ba6f5872ffafdebe31844e4d00831316476e50106f3d3172e6f4b`.
+`141a82e20b9d8afdd530f68d454b730e3fcb2a060a23553408460319a81382b3`.
 El JSON Schema del índice por caso v1 queda en
-`f4f2edb8dd7c70db8264714b7d60cbd1afdb769c24ce20516a500cd8d5e96c5d`
+`7ea7002e102b8f6f07795ecea078e013e277a939025873ffaa6104a87758797c`
 y el del corpus agregado v1 en
-`0fe64b8118878acc5de84c4fbb3dfe6b3ff8b4acbb74ef3ac1570086d1013bdb`.
+`08d6b88fcc034b077b630d5947dcbb50e29c497a320f843fa0ada5ccca54dc45`.
 
-Durante la expansión solo se aceptan cambios compatibles y opcionales. Un
-cambio de significado, obligatoriedad o catálogo requiere nueva versión,
-migración, regeneración de la muestra y repetición de estos gates.
+Estos hashes incorporan la extensión opcional `residence_determination`
+añadida en E0. Durante la expansión solo se aceptan cambios compatibles y
+opcionales. Un cambio de significado, obligatoriedad o catálogo requiere nueva
+versión, migración, regeneración de la muestra y repetición de estos gates.
 
 ## Estado y siguiente paso
 

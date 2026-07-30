@@ -79,6 +79,10 @@ y las paráfrasis se desarrollaron dentro de este mismo ciclo y solo hay cinco
 sentencias. Antes de producción hace falta un banco independiente, más casos y
 revisión jurídica humana.
 
+La fase E0 posterior congeló ese banco independiente y obtuvo resultados
+inferiores, sin reajustar este sistema. Véase
+[`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).
+
 ## Decisión sobre embeddings
 
 El informe registra `NOT_REQUIRED_FOR_PILOT`: el candidato determinista supera
@@ -119,10 +123,9 @@ clasificador definitivo. En particular:
 - los casos siguen en estado `AGENT_REVIEWED`, no `HUMAN_APPROVED`;
 - aún no se evalúan respuestas redactadas ni fidelidad afirmación→fuente;
 - no existe prueba con consultas independientes de usuarios reales;
-- la muestra no representa la diversidad de las 106 sentencias.
-- la dirección del resultado residencial se infiere hoy del holding para
-  diversificar; antes de escalar conviene convertirla en una faceta opcional y
-  tipada del índice.
+- la muestra no representa la diversidad de las 106 sentencias;
+- la dirección residencial ya es una faceta tipada desde E0; una unidad antigua
+  sin ella se clasifica como `mixed`, nunca interpretando texto libre.
 
 El siguiente trabajo es definir la revisión y el rollout de fase E: planificar
 la ejecución reanudable de las 106 en lotes operativos, manteniendo el gate

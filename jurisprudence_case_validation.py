@@ -61,6 +61,34 @@ def validate_holding_ownership(case: JurisprudenceCase) -> None:
         holding = holdings_by_id[issue.holding_id]
         if holding.issue_id != issue.issue_id:
             raise ValueError(f"{holding.holding_id} no pertenece a la cuestión {issue.issue_id}")
+        if holding.residence_determination is not None and issue.issue_type != "TAX_RESIDENCE":
+            raise ValueError(
+                f"{holding.holding_id}.residence_determination solo es válida para TAX_RESIDENCE"
+            )
+        determination = holding.residence_determination
+        if determination is None:
+            continue
+        if not set(determination.tax_years) <= set(case.judgment.tax_years):
+            raise ValueError(
+                f"{holding.holding_id}.residence_determination.tax_years "
+                "no pertenece a judgment.tax_years"
+            )
+        if (
+            determination.other_country is not None
+            and determination.other_country not in case.judgment.countries
+        ):
+            raise ValueError(
+                f"{holding.holding_id}.residence_determination.other_country "
+                "no pertenece a judgment.countries"
+            )
+        if (
+            determination.non_resident_from is not None
+            and determination.non_resident_from.year not in determination.tax_years
+        ):
+            raise ValueError(
+                f"{holding.holding_id}.residence_determination.non_resident_from "
+                "no pertenece a tax_years"
+            )
 
 
 def validate_reciprocal_issue_relations(case: JurisprudenceCase) -> None:

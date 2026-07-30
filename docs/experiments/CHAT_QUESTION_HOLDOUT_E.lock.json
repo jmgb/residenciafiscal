@@ -1,0 +1,8 @@
+{
+  "schema_version": "residenciafiscal-holdout-lock/1",
+  "bank_resource": "docs/experiments/CHAT_QUESTION_HOLDOUT_E.json",
+  "bank_sha256": "9c1d744923b45714a1aac36d686603af0d7d6981a66cea7f1c673b32ccef2730",
+  "question_count": 20,
+  "frozen_on": "2026-07-30",
+  "policy": "NEVER_TUNE_PHASE_D_WITH_THIS_BANK"
+}

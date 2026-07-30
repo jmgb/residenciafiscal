@@ -59,7 +59,7 @@ def sample_document_paths(
     )
 
 
-def _export_document(
+def export_jurisprudence_document(
     document: JurisprudenceSampleDocument,
     *,
     output_root: Path,
@@ -132,7 +132,7 @@ def export_jurisprudence_sample(
     validate_sample_inputs(manifest, project_root=project_root)
     documents = _selected_documents(manifest.documents, only_judgment_ids)
     results = tuple(
-        _export_document(
+        export_jurisprudence_document(
             document,
             output_root=output_root,
             project_root=project_root,

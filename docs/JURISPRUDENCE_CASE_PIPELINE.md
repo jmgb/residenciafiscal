@@ -120,7 +120,7 @@ Estas colecciones vacías representan ausencia de datos, no un fallo de
 extracción.
 
 El hash actual del caso piloto es
-`e97a4578b1a2cc3fc0ee0fff7d249b657a81c31d6cdd0506440ff97fe4f68f3c`.
+`48bf29a09772e5aba0010e5a9048ee593cc2321952341348a65dd6ffa373b24a`.
 El resultado reproducible vive en
 `knowledge/jurisprudencia-v3/reports/san-1210-2023.case-validation.json`.
 
@@ -138,3 +138,7 @@ decisiones de freeze:
 La capa posterior que consume sus índices para analizar consultas, diversificar
 casos y medir `preguntar`/`abstenerse` se documenta en
 [`JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
+
+La preparación reanudable para el futuro rollout, el resultado residencial
+tipado, el holdout congelado y la política de revisión están en
+[`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).

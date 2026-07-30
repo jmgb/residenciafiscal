@@ -696,6 +696,15 @@
       "consequences": [
         "Tributación por IRPF sobre la renta mundial."
       ],
+      "residence_determination": {
+        "spanish_residence": "RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2010,
+          2011
+        ],
+        "other_country": null,
+        "non_resident_from": null
+      },
       "anchor_ids": [
         "anchor-actividad-tarjetas",
         "anchor-declaraciones-suministros",

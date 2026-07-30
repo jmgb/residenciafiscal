@@ -3,7 +3,7 @@
   "by_case": [
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1071-2025.case.json",
-      "case_sha256": "d172312aeb0af3111460c83de7079dc878675776db3693a97acf2b77109a3ee9",
+      "case_sha256": "ae17b898747829a64040f9814934df77c4f3426291ee07322613d78632198e7f",
       "entity_count": 36,
       "items_requiring_human_review": 38,
       "judgment_id": "san-1071-2025",
@@ -12,7 +12,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1136-2016.case.json",
-      "case_sha256": "240e39a7bab2b3a2213397fe19b95289720e7cad4f29f7423936f7867279743a",
+      "case_sha256": "ec75d3b4f208b7735cb94b6018baab7e0b7293d2796894f213191072145811d4",
       "entity_count": 29,
       "items_requiring_human_review": 31,
       "judgment_id": "san-1136-2016",
@@ -21,7 +21,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json",
-      "case_sha256": "e97a4578b1a2cc3fc0ee0fff7d249b657a81c31d6cdd0506440ff97fe4f68f3c",
+      "case_sha256": "48bf29a09772e5aba0010e5a9048ee593cc2321952341348a65dd6ffa373b24a",
       "entity_count": 47,
       "items_requiring_human_review": 49,
       "judgment_id": "san-1210-2023",
@@ -30,7 +30,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1226-2021.case.json",
-      "case_sha256": "d45cf6a38dd1a06c75bc9b8dde67260f9d6918005a78d334db15f016cdcd6f87",
+      "case_sha256": "c39d17b58d3eaaeecb6859c6b6b58193a44b3a48638c1ee2716001b8fe4295c9",
       "entity_count": 27,
       "items_requiring_human_review": 29,
       "judgment_id": "san-1226-2021",
@@ -39,7 +39,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1386-2017.case.json",
-      "case_sha256": "dbfb9af63b313b6a2534154f11d51bf177ba8c7f04092ed2745bf06f6b2221cd",
+      "case_sha256": "dcef299182ed2cc77baaeb3289454c3a4b53329b7bbbef9a6d904c6869d901a6",
       "entity_count": 42,
       "items_requiring_human_review": 46,
       "judgment_id": "san-1386-2017",
@@ -61,10 +61,13 @@
     "end_date": 29,
     "foreign_document": 24,
     "issuing_authority": 2,
+    "non_resident_from": 4,
+    "other_country": 3,
     "period_end": 6,
     "period_start": 5,
     "place": 21,
     "prompt_sha256": 5,
+    "residence_determination": 7,
     "response_required": 5,
     "shifts_to": 5,
     "start_date": 21

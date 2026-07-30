@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-1071-2025.case.json",
-    "case_sha256": "d172312aeb0af3111460c83de7079dc878675776db3693a97acf2b77109a3ee9",
+    "case_sha256": "ae17b898747829a64040f9814934df77c4f3426291ee07322613d78632198e7f",
     "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
   },
   "units": [
@@ -206,6 +206,15 @@
         "issue_type": "TAX_RESIDENCE",
         "legal_review": "AGENT_REVIEWED",
         "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "RESIDENT_IN_SPAIN",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        },
         "tax_years": [
           2010,
           2011
@@ -345,6 +354,15 @@
         "holding_id": "holding-residencia-fiscal",
         "issue_id": "residencia-fiscal",
         "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "RESIDENT_IN_SPAIN",
+          "tax_years": [
+            2010,
+            2011
+          ]
+        },
         "review": {
           "legal": "AGENT_REVIEWED",
           "notes": "Pendiente de aprobación jurídica humana.",
@@ -438,7 +456,7 @@
       ],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Tenía el recurrente residencia fiscal en España durante 2010 y 2011?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_183_DIAS\nCRIT_CDI_TIEBREAKER\nEl recurrente era socio mayoritario y administrador único de una sociedad domiciliada en Girona.\nHabía movimientos de tarjeta en restaurantes y gasolineras próximos a la vivienda de Bescanó.\nLos suministros de agua y electricidad evidenciaban ocupación continua de la vivienda de Bescanó.\nNo se acreditaron actividad, rentas, bienes, propiedad ni lazos afectivos relevantes en Francia.\nparticipaciones y administración de Iberdigest\nParticipación mayoritaria y cargo de administrador único en una sociedad española.\nAcreditar que el núcleo principal de actividades económicas radicaba en España.\nACCEPTED\nLa Sala lo integró como elemento central de los intereses económicos y laborales.\nrestaurantes y repostajes\nMovimientos de tarjeta en Girona y en rutas próximas a la vivienda española.\nCorroborar actividad cotidiana y presencia en el entorno de la vivienda.\nACCEPTED\nLa Sala los incluyó entre los elementos usados para determinar la residencia.\nagua y electricidad\nSuministros que evidenciaban ocupación continua de la vivienda de Bescanó.\nAcreditar uso efectivo de la vivienda española.\nACCEPTED\nLa Sala los trató como indicio concordante de ocupación continua.\ncertificado de residencia fiscal francés\nCertificado emitido por las autoridades fiscales francesas.\nAcreditar residencia fiscal en Francia.\nREJECTED\nNo desvirtuó los vínculos económicos, cotidianos y residenciales acreditados en España.\nArtículo 9 de la Ley 35/2006\nLa radicación en España del núcleo principal o base de actividades o intereses económicos determina residencia.\nArtículo 4 del CDI entre España y Francia\nLa residencia a efectos del convenio parte de la sujeción por domicilio, residencia o criterio análogo.\nEl recurrente tenía residencia fiscal en España durante 2010 y 2011.\nEl núcleo principal de actividades e intereses económicos radicaba en España y los indicios franceses no lo desvirtuaron.\nTributación por IRPF sobre la renta mundial.\nRadicación en España del núcleo principal de actividades o intereses económicos.\nLa Administración acreditó la residencia y la prueba francesa no desvirtuó los indicios.\nb) Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta.\"\nAhora bien, no podemos aceptar la tesis actora en orden a que estas normas deﬁnen la residencia. No es así.\nLa residencia viene determinada por normas internas y por el artículo 4 del Convenio entre el Reino de España\ny la República Francesa:\n\"1. A los efectos de este Convenio, la expresión «residente de un Estado contratante» signiﬁca toda persona que\nen virtud de la legislación de este Estado esté sujeta a imposición en él por razón de su domicilio, residencia,\nsede de dirección o cualquier otro criterio de naturaleza análoga. (...)\"\n- Respecto a sus intereses económicos/laborales: ostentaba la titularidad del 79,99% (en el ejercicio 2010)\ny del 70% (en el ejercicio 2011), de las participaciones en el capital de la sociedad domiciliada en España,\nconcretamente en Gerona, IBERDIGEST SL. Además, ostenta el cargo de administrador único de la entidad\nIBERDIGEST SL desde el año 2005. De los movimientos de la tarjeta de crédito resultan movimientos en el\námbito territorial de Gerona capital, destacando los correspondientes a restaurantes y los de repostaje de\ngasolina en una ruta próxima a su vivienda sita en la localidad de Bescanó (Gerona).\n- En relación a sus declaraciones tributarias, el Sr. declaró en Francia los rendimientos de trabajo (324.000\neuros en 2010 y 338.541 euros en 2011) obtenidos de Iberdigest SL y presentó autoliquidaciones en España\npor el Impuesto sobre la Renta de No Residentes (IRNR), declarando exclusivamente la imputación de rentas\ninmobiliarias por el uso propio de una vivienda situada en Bescanó (Girona). En dicha vivienda se han\nconstatado suministros de agua y electricidad que evidencian una continua ocupación de la misma.\n- Por el Sr. Recurrente no se ha acreditado tener en Francia ninguna actividad o interés económico o cualquier\notra fuente de obtención de rentas tener bienes, tampoco consta que tenga ninguna propiedad en Francia ni\nlazos afectivos.\nPor lo tanto, conforme al artículo 9 de la Ley 35/2006, la residencia del recurrente radica en España, pues es\ndonde se encuentra el núcleo principal o la base de sus actividades o intereses económicos, de forma directa\no indirecta.\nNo pude considerarse que concurre en el recurrente el carácter de trabajador fronterizo, ha tenido en los\nejercicios comprobados su residencia ﬁscal en España, al ser éste el lugar donde tiene su núcleo principal de\nactividad.\nRespecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes.\nCiertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación.",
+      "search_text": "¿Tenía el recurrente residencia fiscal en España durante 2010 y 2011?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_183_DIAS\nCRIT_CDI_TIEBREAKER\nEl recurrente era socio mayoritario y administrador único de una sociedad domiciliada en Girona.\nHabía movimientos de tarjeta en restaurantes y gasolineras próximos a la vivienda de Bescanó.\nLos suministros de agua y electricidad evidenciaban ocupación continua de la vivienda de Bescanó.\nNo se acreditaron actividad, rentas, bienes, propiedad ni lazos afectivos relevantes en Francia.\nparticipaciones y administración de Iberdigest\nParticipación mayoritaria y cargo de administrador único en una sociedad española.\nAcreditar que el núcleo principal de actividades económicas radicaba en España.\nACCEPTED\nLa Sala lo integró como elemento central de los intereses económicos y laborales.\nrestaurantes y repostajes\nMovimientos de tarjeta en Girona y en rutas próximas a la vivienda española.\nCorroborar actividad cotidiana y presencia en el entorno de la vivienda.\nACCEPTED\nLa Sala los incluyó entre los elementos usados para determinar la residencia.\nagua y electricidad\nSuministros que evidenciaban ocupación continua de la vivienda de Bescanó.\nAcreditar uso efectivo de la vivienda española.\nACCEPTED\nLa Sala los trató como indicio concordante de ocupación continua.\ncertificado de residencia fiscal francés\nCertificado emitido por las autoridades fiscales francesas.\nAcreditar residencia fiscal en Francia.\nREJECTED\nNo desvirtuó los vínculos económicos, cotidianos y residenciales acreditados en España.\nArtículo 9 de la Ley 35/2006\nLa radicación en España del núcleo principal o base de actividades o intereses económicos determina residencia.\nArtículo 4 del CDI entre España y Francia\nLa residencia a efectos del convenio parte de la sujeción por domicilio, residencia o criterio análogo.\nEl recurrente tenía residencia fiscal en España durante 2010 y 2011.\nEl núcleo principal de actividades e intereses económicos radicaba en España y los indicios franceses no lo desvirtuaron.\nTributación por IRPF sobre la renta mundial.\nRESIDENT_IN_SPAIN\n2010\n2011\nRadicación en España del núcleo principal de actividades o intereses económicos.\nLa Administración acreditó la residencia y la prueba francesa no desvirtuó los indicios.\nb) Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta.\"\nAhora bien, no podemos aceptar la tesis actora en orden a que estas normas deﬁnen la residencia. No es así.\nLa residencia viene determinada por normas internas y por el artículo 4 del Convenio entre el Reino de España\ny la República Francesa:\n\"1. A los efectos de este Convenio, la expresión «residente de un Estado contratante» signiﬁca toda persona que\nen virtud de la legislación de este Estado esté sujeta a imposición en él por razón de su domicilio, residencia,\nsede de dirección o cualquier otro criterio de naturaleza análoga. (...)\"\n- Respecto a sus intereses económicos/laborales: ostentaba la titularidad del 79,99% (en el ejercicio 2010)\ny del 70% (en el ejercicio 2011), de las participaciones en el capital de la sociedad domiciliada en España,\nconcretamente en Gerona, IBERDIGEST SL. Además, ostenta el cargo de administrador único de la entidad\nIBERDIGEST SL desde el año 2005. De los movimientos de la tarjeta de crédito resultan movimientos en el\námbito territorial de Gerona capital, destacando los correspondientes a restaurantes y los de repostaje de\ngasolina en una ruta próxima a su vivienda sita en la localidad de Bescanó (Gerona).\n- En relación a sus declaraciones tributarias, el Sr. declaró en Francia los rendimientos de trabajo (324.000\neuros en 2010 y 338.541 euros en 2011) obtenidos de Iberdigest SL y presentó autoliquidaciones en España\npor el Impuesto sobre la Renta de No Residentes (IRNR), declarando exclusivamente la imputación de rentas\ninmobiliarias por el uso propio de una vivienda situada en Bescanó (Girona). En dicha vivienda se han\nconstatado suministros de agua y electricidad que evidencian una continua ocupación de la misma.\n- Por el Sr. Recurrente no se ha acreditado tener en Francia ninguna actividad o interés económico o cualquier\notra fuente de obtención de rentas tener bienes, tampoco consta que tenga ninguna propiedad en Francia ni\nlazos afectivos.\nPor lo tanto, conforme al artículo 9 de la Ley 35/2006, la residencia del recurrente radica en España, pues es\ndonde se encuentra el núcleo principal o la base de sus actividades o intereses económicos, de forma directa\no indirecta.\nNo pude considerarse que concurre en el recurrente el carácter de trabajador fronterizo, ha tenido en los\nejercicios comprobados su residencia ﬁscal en España, al ser éste el lugar donde tiene su núcleo principal de\nactividad.\nRespecto a este último, el obligado\naﬁrma que ha seguido los criterios recogidos en las consultas emanadas de la DGT de forma que, en base a\nla obtención de un certiﬁcado de residencia ﬁscal emitido por las Autoridades ﬁscales francesas, es decir, en\nbase al contenido de este documento oﬁcial emitido por una Autoridad estatal parte en el Convenio, ha actuado\nde forma coherente en relación con la ﬁscalidad española sobre la renta tributando como no residente por el\nImpuesto sobre la Renta de no Residentes.\nCiertamente la Administración ha acreditado la residencia del recurrente en territorio español, pero éste se\nacogió a una interpretación razonable, aunque equivocada, de las normas que determinan la condición de\ntrabajador transfronterizo e hizo sus correspondientes declaraciones ﬁscales en España y Francia conforme\na la respectiva legislación.",
       "source_anchors": [
         {
           "anchor_id": "anchor-regla-articulo-9",
@@ -698,6 +716,7 @@
         "issue_type": "TAX_ASSESSMENT",
         "legal_review": "AGENT_REVIEWED",
         "outcome": "GANA_AEAT",
+        "residence_determination": null,
         "tax_years": [
           2010,
           2011
@@ -748,6 +767,7 @@
         "holding_id": "holding-ganancia-patrimonial",
         "issue_id": "ganancia-patrimonial",
         "outcome": "GANA_AEAT",
+        "residence_determination": null,
         "review": {
           "legal": "AGENT_REVIEWED",
           "notes": "Pendiente de aprobación jurídica humana.",
@@ -970,6 +990,7 @@
         "issue_type": "PENALTY",
         "legal_review": "AGENT_REVIEWED",
         "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": null,
         "tax_years": [
           2010,
           2011
@@ -993,6 +1014,7 @@
         "holding_id": "holding-sancion-tributaria",
         "issue_id": "sancion-tributaria",
         "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": null,
         "review": {
           "legal": "AGENT_REVIEWED",
           "notes": "Pendiente de aprobación jurídica humana.",

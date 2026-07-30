@@ -163,6 +163,13 @@ class IssueOutcome(StrEnum):
     OTROS = "OTROS"
 
 
+class SpanishResidenceStatus(StrEnum):
+    RESIDENT_IN_SPAIN = "RESIDENT_IN_SPAIN"
+    NON_RESIDENT_IN_SPAIN = "NON_RESIDENT_IN_SPAIN"
+    PARTIAL_YEAR_IN_SPAIN = "PARTIAL_YEAR_IN_SPAIN"
+    NOT_DECIDED = "NOT_DECIDED"
+
+
 class ProofParty(StrEnum):
     AEAT = "AEAT"
     TAXPAYER = "TAXPAYER"

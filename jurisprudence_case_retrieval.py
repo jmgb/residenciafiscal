@@ -49,6 +49,15 @@ def _search_text(unit: RetrievalUnit) -> str:
             *unit.holding.consequences,
         )
     )
+    if unit.holding.residence_determination is not None:
+        determination = unit.holding.residence_determination
+        lines.extend(
+            (
+                determination.spanish_residence,
+                determination.other_country or "",
+                *(str(year) for year in determination.tax_years),
+            )
+        )
     for step in unit.burden_of_proof_steps:
         lines.extend((step.fact_to_prove, step.conclusion))
     for anchor in unit.source_anchors:
@@ -83,6 +92,7 @@ def _build_unit(case: JurisprudenceCase, issue_index: int) -> RetrievalUnit:
         evidence_categories=tuple(dict.fromkeys(item.category for item in evidence)),
         evidence_parties=tuple(dict.fromkeys(item.offered_by for item in evidence)),
         outcome=holding.outcome,
+        residence_determination=holding.residence_determination,
         has_treaty=bool(treaties),
         technical_review=issue.review.technical,
         legal_review=issue.review.legal,

@@ -1013,6 +1013,16 @@
         "El recurrente quedó sujeto al IRPF por obligación personal.",
         "La residencia en Mónaco alegada no quedó acreditada."
       ],
+      "residence_determination": {
+        "spanish_residence": "RESIDENT_IN_SPAIN",
+        "tax_years": [
+          2011,
+          2012,
+          2013
+        ],
+        "other_country": null,
+        "non_resident_from": null
+      },
       "anchor_ids": [
         "anchor-residencia-conclusion",
         "anchor-documentacion-insuficiente"

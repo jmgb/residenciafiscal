@@ -599,6 +599,17 @@
         "outcome": {
           "$ref": "#/$defs/IssueOutcome"
         },
+        "residence_determination": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResidenceDetermination"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "review": {
           "$ref": "#/$defs/ReviewStatus"
         }
@@ -1096,6 +1107,54 @@
       "title": "ProofParty",
       "type": "string"
     },
+    "ResidenceDetermination": {
+      "additionalProperties": false,
+      "properties": {
+        "non_resident_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Non Resident From"
+        },
+        "other_country": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Other Country"
+        },
+        "spanish_residence": {
+          "$ref": "#/$defs/SpanishResidenceStatus"
+        },
+        "tax_years": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Tax Years",
+          "type": "array"
+        }
+      },
+      "required": [
+        "spanish_residence",
+        "tax_years"
+      ],
+      "title": "ResidenceDetermination",
+      "type": "object"
+    },
     "RetrievalCorpusSource": {
       "additionalProperties": false,
       "properties": {
@@ -1168,6 +1227,17 @@
         },
         "outcome": {
           "$ref": "#/$defs/IssueOutcome"
+        },
+        "residence_determination": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResidenceDetermination"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "tax_years": {
           "items": {
@@ -1442,6 +1512,16 @@
       ],
       "title": "SourceFragment",
       "type": "object"
+    },
+    "SpanishResidenceStatus": {
+      "enum": [
+        "RESIDENT_IN_SPAIN",
+        "NON_RESIDENT_IN_SPAIN",
+        "PARTIAL_YEAR_IN_SPAIN",
+        "NOT_DECIDED"
+      ],
+      "title": "SpanishResidenceStatus",
+      "type": "string"
     },
     "SubjectRole": {
       "enum": [
