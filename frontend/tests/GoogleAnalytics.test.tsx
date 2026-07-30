@@ -3,9 +3,9 @@ import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import {
   GOOGLE_ANALYTICS_ID,
+  GoogleAnalytics,
   isGoogleAnalyticsEnabled,
-} from '@/components/layout/GoogleAnalyticsFooter';
-import { SiteFooter } from '@/components/layout/SiteFooter';
+} from '@/components/layout/GoogleAnalytics';
 
 describe('isGoogleAnalyticsEnabled', () => {
   it('only enables analytics on the canonical production hosts', () => {
@@ -32,11 +32,11 @@ describe('isGoogleAnalyticsEnabled', () => {
   });
 });
 
-describe('SiteFooter', () => {
-  it('installs Google Analytics once for every page using the shared footer', async () => {
+describe('GoogleAnalytics', () => {
+  it('installs Google Analytics once for every page', async () => {
     render(
       <MemoryRouter initialEntries={['/metodologia']}>
-        <SiteFooter />
+        <GoogleAnalytics />
       </MemoryRouter>
     );
 
@@ -49,7 +49,7 @@ describe('SiteFooter', () => {
     );
 
     expect(scripts).toHaveLength(1);
-    expect(document.querySelector('footer')).toBeInTheDocument();
+    expect(document.querySelector('footer')).not.toBeInTheDocument();
     expect(Array.from(window.dataLayer?.[1] ?? [])).toEqual(['config', GOOGLE_ANALYTICS_ID]);
   });
 });

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { GOOGLE_ANALYTICS_ID } from '@/components/layout/GoogleAnalyticsFooter';
+import { GOOGLE_ANALYTICS_ID } from '@/components/layout/GoogleAnalytics';
 import { SIDEBAR_COLLAPSED_STORAGE_KEY } from '@/components/layout/useSidebarCollapsed';
 import { useConversations } from '@/stores/useConversations';
 
@@ -171,16 +171,10 @@ describe('AppLayout', () => {
     });
   });
 
-  it('monta el pie común (y su analítica) exactamente una vez', async () => {
+  it('no monta un pie visual y conserva la analítica exactamente una vez', async () => {
     renderLayout();
 
-    expect(document.querySelectorAll('footer')).toHaveLength(1);
-
-    // Debe quedar FUERA del `<main>`: dentro lo recortaría su `overflow-hidden` y
-    // perdería el landmark `contentinfo` en navegadores reales.
-    // (Testing Library mapea `footer`→`contentinfo` sin mirar el ancestro, así que
-    // el landmark no sirve de aserción: hay que comprobar la estructura.)
-    expect(screen.getByRole('main').querySelector('footer')).toBeNull();
+    expect(document.querySelector('footer')).not.toBeInTheDocument();
 
     await waitFor(() => {
       expect(

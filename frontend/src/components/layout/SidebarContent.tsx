@@ -1,7 +1,8 @@
-import { BookOpen, Compass, Globe2, MessageSquarePlus, Trash2, Users } from 'lucide-react';
+import { BookOpen, Compass, Globe2, Mail, MessageSquarePlus, Trash2, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { COUNTRY_ROUTES, getCountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
+import { CONTACT_EMAIL } from '@/lib/contribution';
 import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import { useConversations } from '@/stores/useConversations';
@@ -205,6 +206,15 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         >
           <Users className='h-4 w-4' aria-hidden='true' />
         </Link>
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          onClick={onNavigate}
+          aria-label={CONTACT_EMAIL}
+          title={CONTACT_EMAIL}
+          className='flex justify-center rounded-lg p-2 text-muted-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+        >
+          <Mail className='h-4 w-4' aria-hidden='true' />
+        </a>
       </div>
     );
   }
@@ -239,6 +249,13 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
       >
         Colaborar
       </Link>
+      <a
+        href={`mailto:${CONTACT_EMAIL}`}
+        onClick={onNavigate}
+        className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+      >
+        {CONTACT_EMAIL}
+      </a>
     </div>
   );
 }

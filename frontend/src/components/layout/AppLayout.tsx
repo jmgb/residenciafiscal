@@ -4,8 +4,8 @@ import { Outlet, useLocation } from 'react-router';
 import { getCountryRoute } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
+import { GoogleAnalytics } from './GoogleAnalytics';
 import { MobileNavigation } from './MobileNavigation';
-import { SiteFooter } from './SiteFooter';
 import { useSidebarCollapsed } from './useSidebarCollapsed';
 
 const SIDEBAR_ID = 'app-sidebar';
@@ -82,22 +82,7 @@ export function AppLayout() {
           </div>
         </main>
 
-        {/*
-         * El pie común va FUERA de `<main>` y como último hijo de la columna de
-         * contenido, no dentro del área desplazable:
-         *  - `<main>` es `overflow-hidden` y la vista de chat se lleva todo el
-         *    alto disponible; un pie dentro quedaría empujado fuera y recortado.
-         *  - así el pie conserva su landmark `contentinfo` (un `<footer>` dentro
-         *    de `<main>` deja de serlo) y no lo alcanzan ni el reset de scroll
-         *    ni el `focus()` de navegación del `<main>`.
-         *  - `shrink-0` garantiza que la banda no se comprima y que el composer
-         *    del chat, anclado abajo dentro del `<main>`, quede justo encima.
-         * Se monta una sola vez por página, dentro del router, porque
-         * `SiteFooter` monta `GoogleAnalyticsFooter` (usa `useLocation`).
-         */}
-        <div className='shrink-0'>
-          <SiteFooter />
-        </div>
+        <GoogleAnalytics />
       </div>
     </div>
   );

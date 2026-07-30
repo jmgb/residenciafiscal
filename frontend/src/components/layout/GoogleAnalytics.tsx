@@ -54,7 +54,7 @@ const installGoogleAnalytics = () => {
 };
 
 /** Installs GA4 once and records subsequent SPA route changes as page views. */
-export const GoogleAnalyticsFooter = () => {
+export const GoogleAnalytics = () => {
   const location = useLocation();
   const isInitialPage = useRef(true);
 
