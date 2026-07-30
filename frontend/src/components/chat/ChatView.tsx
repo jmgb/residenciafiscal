@@ -1,6 +1,7 @@
 import { AlertTriangle } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import { type CountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
@@ -202,6 +203,14 @@ export function ChatView({
 
       let buffer = '';
       let sources: ChatSource[] | undefined;
+      let fallo: string | undefined;
+
+      // Nunca registramos el texto de la consulta: es información fiscal
+      // personal. Solo medimos volumen, jurisdicción y si hubo respuesta.
+      trackEvent('consulta_enviada', {
+        pais: country.path,
+        es_primera_de_la_conversacion: history.length <= 1,
+      });
 
       try {
         for await (const chunk of engine.askQuestion(history, controller.signal, {
@@ -219,6 +228,7 @@ export function ChatView({
         if (!controller.signal.aborted) {
           const errorMessage = 'No se ha podido completar la consulta. Inténtalo de nuevo.';
           buffer = buffer ? `${buffer}\n\n_${errorMessage}_` : errorMessage;
+          fallo = 'error_motor';
         }
       } finally {
         if (controller.signal.aborted && !buffer) buffer = 'Respuesta detenida.';
@@ -226,6 +236,14 @@ export function ChatView({
           content: buffer,
           sources,
           isStreaming: false,
+        });
+        // El nº de fuentes distingue una respuesta apoyada en el corpus de una
+        // respuesta genérica: es la señal de calidad que interesa vigilar.
+        trackEvent('consulta_respondida', {
+          pais: country.path,
+          resultado: controller.signal.aborted ? 'detenida' : (fallo ?? 'ok'),
+          num_fuentes: sources?.length ?? 0,
+          longitud_respuesta: buffer.length,
         });
         // Solo se libera el composer si este sigue siendo el stream vigente: si el usuario
         // ya paró, cambió de conversación o lanzó otra consulta, no es nuestro turno.

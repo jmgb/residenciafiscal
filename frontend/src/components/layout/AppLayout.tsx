@@ -6,6 +6,7 @@ import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { GoogleAnalytics } from './GoogleAnalytics';
 import { MobileNavigation } from './MobileNavigation';
+import { PostHogAnalytics } from './PostHogAnalytics';
 import { useSidebarCollapsed } from './useSidebarCollapsed';
 
 const SIDEBAR_ID = 'app-sidebar';
@@ -83,6 +84,7 @@ export function AppLayout() {
         </main>
 
         <GoogleAnalytics />
+        <PostHogAnalytics />
       </div>
     </div>
   );
