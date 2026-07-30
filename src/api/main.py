@@ -34,13 +34,8 @@ from api.sentry_config import init_sentry
 from config import (
     DEFAULT_MODEL,
     GEMINI_FLASH,
-    GEMINI_PRO,
-    GPT_4,
-    GPT_4_MINI,
-    GPT_4_TURBO,
     GPT_5,
     GPT_5_MINI,
-    GPT_5_NANO,
     REASONING_EFFORT,
     SENTENCIA_CLAVE_MODEL,
     VALID_CATEGORIAS_PRUEBA,
@@ -61,15 +56,11 @@ UPLOAD_CHUNK_BYTES = 1024 * 1024
 
 # Modelos que /analizar acepta en el campo `modelo`. Es una allowlist deliberada:
 # el endpoint gasta dinero y no debe convertirse en un proxy abierto a cualquier
-# modelo disponible en las cuentas configuradas.
+# modelo disponible en las cuentas configuradas. Todos deben estar en el catálogo
+# del paquete, o su gasto saldría como `UNAVAILABLE`; hay un test que lo exige.
 MODELOS_PERMITIDOS = {
-    GPT_4,
-    GPT_4_MINI,
-    GPT_4_TURBO,
     GPT_5,
     GPT_5_MINI,
-    GPT_5_NANO,
-    GEMINI_PRO,
     GEMINI_FLASH,
 }
 

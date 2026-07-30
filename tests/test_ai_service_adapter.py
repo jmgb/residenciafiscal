@@ -237,15 +237,76 @@ class TestTraduccionDeParametros:
 
 
 class TestPoliticas:
-    async def test_no_hay_reintento_ni_respaldo(
+    async def test_no_hay_respaldo_de_modelo(
         self, monkeypatch: pytest.MonkeyPatch, credenciales: None
     ) -> None:
-        """Un reintento cambiaría el gasto del lote; un respaldo, el modelo declarado."""
+        """Si contestara otro modelo, el export declararía el que no respondió."""
+        adapter = FakeProviderAdapter()
+        _instalar_gateway(monkeypatch, adapter, prefixes=("gpt-",))
+
+        await _analizar()
+
+        assert adapter.requests[0].fallback_policy.enabled is False
+
+    async def test_el_reintento_cabe_dentro_del_presupuesto_declarado(
+        self, monkeypatch: pytest.MonkeyPatch, credenciales: None
+    ) -> None:
+        """Sin tope por intento, el primero puede agotar el presupuesto entero.
+
+        `per_attempt_seconds` cae en `total_seconds` cuando no se fija, así que
+        un intento colgado dejaría al reintento sin tiempo y el reintento sería
+        decorativo.
+        """
         adapter = FakeProviderAdapter()
         _instalar_gateway(monkeypatch, adapter, prefixes=("gpt-",))
 
         await _analizar()
 
         peticion = adapter.requests[0]
-        assert peticion.retry_policy.max_attempts == 1
-        assert peticion.fallback_policy.enabled is False
+        presupuesto = peticion.timeout_policy
+        assert peticion.retry_policy.max_attempts == 2
+        assert peticion.retry_policy.retry_transient_only is True
+        assert (
+            presupuesto.per_attempt_seconds * peticion.retry_policy.max_attempts
+            <= presupuesto.total_seconds
+        )
+
+    async def test_un_limite_de_ritmo_se_reintenta_y_la_sentencia_se_salva(
+        self, monkeypatch: pytest.MonkeyPatch, credenciales: None
+    ) -> None:
+        """Es el caso que motiva el reintento: 106 sentencias en tandas de 10."""
+
+        class FallaUnaVez(FakeProviderAdapter):
+            async def generate(self, request: Any, *, model: str) -> Any:
+                from llm_gateway import ProviderResponse, RateLimitedError, TokenUsage
+
+                self.requests.append(request)
+                if len(self.requests) == 1:
+                    raise RateLimitedError("demasiadas peticiones")
+                return ProviderResponse(
+                    output_text=ANALISIS_JSON,
+                    usage=TokenUsage(1000, 200),
+                    finish_reason="completed",
+                )
+
+        adapter = FallaUnaVez()
+        _instalar_gateway(monkeypatch, adapter, prefixes=("gpt-",))
+
+        result = await _analizar()
+
+        assert result["resultado_final"] == "GANA_AEAT"
+        assert len(adapter.requests) == 2
+
+    async def test_un_error_no_transitorio_no_se_reintenta(
+        self, monkeypatch: pytest.MonkeyPatch, credenciales: None
+    ) -> None:
+        """Un prompt inválido falla igual la segunda vez, y se cobra dos veces."""
+        from llm_gateway import InvalidRequestError
+
+        adapter = FakeProviderAdapter(error=InvalidRequestError("schema inaceptable"))
+        _instalar_gateway(monkeypatch, adapter, prefixes=("gpt-",))
+
+        result = await _analizar()
+
+        assert result["detail"] == "LLM request failed"
+        assert len(adapter.requests) == 1

@@ -42,3 +42,22 @@ def test_el_registro_sirve_todo_lo_que_detect_provider_afirma(prefix: str, provi
     _registrar_ids_heredados(registry)
 
     assert registry.resolve(modelo).name == provider
+
+
+def test_la_api_solo_ofrece_modelos_con_tarifa_conocida() -> None:
+    """Un modelo sin tarifa gasta dinero y lo declara como `UNAVAILABLE`.
+
+    La allowlist de `/analizar` es la única superficie donde un tercero elige
+    modelo, así que ofrecer ahí uno que el catálogo no sabe tarifar produce un
+    gasto real sin importe reconciliable.
+    """
+    from llm_gateway.models import lookup_model
+
+    from api.main import MODELOS_PERMITIDOS
+
+    sin_tarifa = sorted(m for m in MODELOS_PERMITIDOS if lookup_model(m) is None)
+
+    assert sin_tarifa == [], (
+        f"modelos ofrecidos sin tarifa en el catálogo: {sin_tarifa}; "
+        "añádelos en llm_gateway.models antes de permitirlos aquí"
+    )

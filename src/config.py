@@ -36,16 +36,14 @@ DEFAULT_CSV_NAME = "analisis.csv"
 # CONFIGURACIÓN DE OPENAI
 # ============================================================================
 
-# Modelos OpenAI disponibles
-GPT_4_MINI = "gpt-4-mini"
-GPT_4 = "gpt-4"
-GPT_4_TURBO = "gpt-4-turbo"
+# Modelos OpenAI disponibles. Solo se declaran ids que el catálogo del paquete
+# sabe tarifar: uno sin tarifa produce `costo_medicion: UNAVAILABLE`, y ofrecer
+# desde la API un modelo cuyo gasto no se puede medir es lo contrario de lo que
+# persigue el resto del pipeline.
 GPT_5 = "gpt-5.6-sol"
 GPT_5_MINI = "gpt-5.6-luna"
-GPT_5_NANO = "gpt-5.6-luna"
 
 # Modelos Gemini (si se implementa soporte)
-GEMINI_PRO = "gemini-3.6-flash"
 GEMINI_FLASH = "gemini-3.6-flash"
 
 # Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high)

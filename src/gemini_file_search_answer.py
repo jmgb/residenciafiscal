@@ -56,6 +56,11 @@ def _usage(interaction: Any) -> GeminiUsage:
             output_tokens=0,
             usage_complete=False,
         )
+    # `total_output_tokens` de la Interactions API **excluye** el razonamiento,
+    # así que sumarlo es lo correcto: una llamada medida dio 33 de entrada, 9 de
+    # salida y 1650 de razonamiento para un `total_tokens` de 1692. No confundir
+    # con la Responses API de OpenAI, donde el razonamiento ya está dentro de la
+    # salida y sumarlo lo factura dos veces.
     total_input = int(getattr(usage, "total_input_tokens", 0) or 0)
     total_output = int(getattr(usage, "total_output_tokens", 0) or 0)
     thought_tokens = int(getattr(usage, "total_thought_tokens", 0) or 0)

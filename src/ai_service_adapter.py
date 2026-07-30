@@ -43,7 +43,20 @@ from config import PROVIDER_API_KEY_ENV, detect_provider
 from gateway_setup import get_gateway
 
 REQUEST_TIMEOUT_SECONDS = 200.0
-"""Presupuesto de una sentencia entera, heredado del cliente anterior."""
+"""Presupuesto de una sentencia entera, reintento incluido. Heredado del cliente anterior."""
+
+ATTEMPT_TIMEOUT_SECONDS = 90.0
+"""Tope por intento, para que el reintento quepa dentro del presupuesto.
+
+Sin él, `per_attempt_seconds` cae en el total: un primer intento colgado 199 s
+dejaría un segundo para el reintento y este no serviría de nada. 90 s son 2,3×
+la llamada más lenta medida sobre el corpus (26,6 s a 38,3 s)."""
+
+MAX_ATTEMPTS = 2
+"""Un lote son 106 sentencias en tandas de 10 durante dos o tres horas: un
+límite de ritmo del proveedor perdería esa sentencia como registro de confianza
+BAJA. Solo se reintentan errores transitorios, y el intento fallido se factura
+y se ve, porque el gateway lo cuenta como cualquier otro."""
 
 SOURCE = "analizador-sentencias"
 
@@ -159,11 +172,14 @@ def _build_request(
         temperature=_temperature_for(ai_model, temperature),
         max_output_tokens=max_tokens,
         reasoning_effort=_reasoning_effort_for(ai_model, reasoning_effort),
-        timeout_policy=TimeoutPolicy(total_seconds=REQUEST_TIMEOUT_SECONDS),
-        # Sin reintento ni respaldo, como antes. Un reintento cambiaría el
-        # gasto de un lote de 106 sentencias, y un respaldo silencioso haría
-        # que el modelo declarado en el export no fuese el que respondió.
-        retry_policy=RetryPolicy.disabled(),
+        timeout_policy=TimeoutPolicy(
+            total_seconds=REQUEST_TIMEOUT_SECONDS,
+            per_attempt_seconds_override=ATTEMPT_TIMEOUT_SECONDS,
+        ),
+        retry_policy=RetryPolicy.transient(max_attempts=MAX_ATTEMPTS),
+        # El respaldo sí queda desactivado: si otro modelo contestara, el que
+        # el export declara no sería el que respondió, y el coste quedaría
+        # atribuido al modelo equivocado.
         fallback_policy=FallbackPolicy.disabled(),
         source=SOURCE,
     )
