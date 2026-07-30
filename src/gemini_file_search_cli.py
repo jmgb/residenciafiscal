@@ -19,9 +19,10 @@ from chat_strategy_costs import (
     SUPPORTED_FILE_SEARCH_MODELS,
 )
 from current_structured_strategy import CurrentStructuredStrategy
+from gateway_chat_writer import GatewayChatWriter
+from gateway_setup import get_gateway
 from gemini_file_search_answer import GeminiFileSearchResponder
 from gemini_file_search_store import StoreReceipt, prepare_sample_store
-from google_genai_chat_writer import create_google_genai_chat_writer
 from google_genai_file_search import create_google_genai_gateway
 from jurisprudence_retrieval_corpus import load_retrieval_corpus
 
@@ -116,7 +117,7 @@ def _compare(args: argparse.Namespace) -> int:
     receipt = _load_store(args.state)
     api_key = _api_key()
     gateway = create_google_genai_gateway(api_key)
-    writer = create_google_genai_chat_writer(api_key)
+    writer = GatewayChatWriter(get_gateway())
     corpus = load_retrieval_corpus(args.corpus.read_bytes())
     request_id = f"f0-{uuid.uuid4()}"
     output = args.output or PROJECT_ROOT / f"output/file-search/{request_id}.json"

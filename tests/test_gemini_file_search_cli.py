@@ -55,8 +55,8 @@ def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
 ) -> None:
     import gemini_file_search_cli
 
-    writer = object()
     gateway = object()
+    shared_llm_gateway = object()
     corpus = SimpleNamespace(units=[])
     captured: dict[str, Any] = {}
     corpus_path = tmp_path / "corpus.json"
@@ -84,8 +84,8 @@ def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
     )
     monkeypatch.setattr(
         gemini_file_search_cli,
-        "create_google_genai_chat_writer",
-        lambda _: writer,
+        "get_gateway",
+        lambda: shared_llm_gateway,
     )
     monkeypatch.setattr(
         gemini_file_search_cli,
@@ -115,7 +115,10 @@ def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
     )
 
     assert result == 0
-    assert captured["structured"]._writer is writer
+    from gateway_chat_writer import GatewayChatWriter
+
+    assert isinstance(captured["structured"]._writer, GatewayChatWriter)
+    assert captured["structured"]._writer._gateway is shared_llm_gateway
     assert captured["structured"]._model == "gemini-3.6-flash"
     assert captured["file_search"]._gateway is gateway
     assert captured["file_search"]._model == "gemini-3.6-flash"

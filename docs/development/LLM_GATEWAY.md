@@ -46,21 +46,24 @@ recibiendo exactamente el mismo objeto que antes.
 
 ### Estado real del cableado
 
-La migración del analizador legado está operativa, pero la del chat comparativo
-no está cerrada. `src/gemini_file_search_cli.py` todavía construye para A el
-writer específico de Google anterior; no inyecta `GatewayChatWriter`. Además,
-la factoría de `src/gateway_chat_writer.py` construye hoy otro gateway y otro
-cliente sin los `UsageSink` y `AlertSink` configurados por
-`src/gateway_setup.py`.
+La migración está cerrada para los dos consumidores compatibles con el
+paquete:
 
-Por tanto, no debe considerarse que «todo el proyecto usa el gateway» hasta:
+- el analizador legado llama a `get_gateway()` desde su fachada;
+- la estrategia A del chat inyecta `GatewayChatWriter(get_gateway())` desde el
+  CLI comparativo;
+- ambos reutilizan la misma instancia de proceso, con `LoggingUsageSink` y
+  `LoggingAlertSink`;
+- el writer temporal de Interactions y su factoría de cliente se han retirado.
 
-1. construir una sola instancia desde el composition root;
-2. inyectarla en la estrategia A sin cambiar sus call sites;
-3. probar el wiring real, incluidos sinks, modelo, tokens, coste y salida;
-4. retirar el writer temporal solo después de demostrar esa paridad.
+Los tests del composition root comprueban la conexión de cliente y sinks y el
+singleton; los tests del CLI comprueban que A recibe esa misma instancia. La
+paridad de modelo, tokens, coste y salida permanece protegida por los tests de
+la fachada y del puerto del redactor.
 
-Gemini File Search de la estrategia B seguirá fuera del paquete por diseño.
+Gemini File Search de la estrategia B sigue fuera del paquete por diseño: usa
+tools, ficheros e indexación, capacidades que `neutral-llm-gateway` excluye
+deliberadamente.
 
 **No hay tabla de precios local.** `src/model_pricing.py` se borró: dos tablas
 de tarifas acaban divergiendo, y la que nadie actualiza sigue facturando la del
@@ -165,7 +168,7 @@ Subir de versión es `uv add` con la etiqueta nueva y una revisión del
 coste. **No apuntar nunca a una ruta local en un commit**: CI ejecuta
 `uv sync --locked` sin credenciales contra el repositorio público.
 
-El encargo inicial citaba `v0.4.0`, mientras que este repositorio quedó fijado a
-`v0.5.0` para incorporar las correcciones de contrato descritas arriba. Esa
-desviación es visible y debe aceptarse expresamente antes de dar por cerrado el
-handoff; no se debe bajar de versión de forma mecánica.
+El encargo inicial citaba `v0.4.0`, pero este repositorio queda deliberadamente
+fijado a `v0.5.0`: esa versión corrige el transporte del prompt de sistema para
+JSON y normaliza `reasoning_tokens` como desglose de la salida. Bajar a `v0.4.0`
+reintroduciría los dos fallos de contrato descritos arriba.

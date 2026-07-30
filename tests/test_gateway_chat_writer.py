@@ -168,13 +168,11 @@ class TestFailures:
         with pytest.raises((OutputError, ValueError)):
             await _writer(adapter).write(_request())
 
-    async def test_the_writer_never_builds_its_own_client(self) -> None:
+    async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:
         """Las credenciales son de la aplicación, no del redactor."""
         import gateway_chat_writer
 
-        source = Path(gateway_chat_writer.__file__).read_text(encoding="utf-8")
-
-        assert "api_key" not in source or "os.environ" not in source
+        assert not hasattr(gateway_chat_writer, "create_gateway_chat_writer")
 
 
 class TestTimeBudget:

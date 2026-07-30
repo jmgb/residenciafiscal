@@ -116,7 +116,7 @@ para el subconjunto que lo justifique, mediante `make run-list`.
 | Síntoma | Causa probable |
 |---------|----------------|
 | El esfuerzo no cambia nada | El modelo no es GPT-5; el parámetro se omite por diseño |
-| `cost_usd = 0` en toda la tabla | El modelo no está en `src/model_pricing.py`; añade sus precios |
+| `cost_usd = null` y `cost_measurement = UNAVAILABLE` | El proveedor no informó uso o el modelo no está tarifado en el catálogo versionado de `llm_gateway` |
 | Timeouts con `high` | Baja a `medium`, o reduce `BATCH_SIZE` en `src/config.py` |
 | 400 en `/analizar` | La API solo admite `low`, `medium` o `high`; `minimal` no está permitido |
 

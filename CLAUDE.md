@@ -75,10 +75,10 @@ y diccionario de retorno, así que ni el CLI ni la API distinguen qué hay detr�
 `src/gateway_setup.py` construye el gateway una vez —nunca en el import— con las
 credenciales de la aplicación y conecta los efectos por puertos.
 
-Ese cableado está completo para el analizador legado, no todavía para el chat
-comparativo A: su CLI sigue usando el writer temporal de Google y la factoría
-del nuevo writer aún construiría una segunda instancia sin los sinks. El gap y
-los criterios de cierre están en
+Ese cableado está completo tanto para el analizador legado como para el chat
+comparativo A: ambos reutilizan `get_gateway()` con sus sinks. B conserva
+Gemini File Search directo porque el paquete no ofrece tools ni ficheros. Los
+límites y tests del composition root están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
 **No hay tabla de precios local**: las tarifas salen del catálogo versionado del
@@ -293,8 +293,15 @@ disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
   **gastan dinero** (smoke real de 1 PDF).
 - `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
   los ocho artefactos locales, sin LLM; valida todos sus hashes.
+- `make build-chat-f03-legal-bundle` — genera el único ZIP que debe recibir el
+  abogado, sin clave X/Y ni resultados previos.
 - `make validate-chat-f03-review` — comprueba mecánicamente que el formulario
   jurídico cerrado no deja casillas, puntuaciones ni declaraciones pendientes.
+- `make validate-chat-absences-candidate` — comprueba hashes, páginas y
+  literalidad de la propuesta aislada `DAY-05`; no la aplica al corpus.
+- `make compile-chat-f03-results CONFIRM_REVEAL=1
+  CHAT_F03_REVIEW_COMMIT=<commit>` — revela X/Y únicamente después de cerrar y
+  versionar la revisión jurídica.
 - `make export-requirements` — solo para consumidores externos; el repo no versiona
   `requirements.txt`.
 

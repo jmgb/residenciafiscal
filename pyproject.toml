@@ -106,7 +106,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["config", "prompt", "ai_service_adapter", "model_pricing", "api"]
+known-first-party = ["config", "prompt", "ai_service_adapter", "api"]
 
 [tool.ruff.format]
 quote-style = "double"

@@ -158,17 +158,17 @@ privacidad y protocolo previsto están en
 | Contexto compacto y fuentes `E<n>` | `src/structured_evidence_context.py` |
 | Estrategia A | `src/current_structured_strategy.py` |
 | Puerto del redactor A | `src/structured_answer_writer.py` |
-| Redactor A actual / destino | `src/google_genai_chat_writer.py` / `src/gateway_chat_writer.py` |
+| Redactor A sobre el gateway compartido | `src/gateway_chat_writer.py`, `src/gateway_setup.py` |
 | Estrategia B y verificación de citas | `src/gemini_file_search_answer.py` |
 | Store y gateway de B | `src/gemini_file_search_store.py`, `src/google_genai_file_search.py` |
 | Aislamiento, persistencia y logs | `src/chat_strategy_comparison.py`, `src/chat_strategy_logging.py` |
 | CLI experimental | `src/gemini_file_search_cli.py` |
 | Paquete ciego F0.3 | `src/chat_blind_review.py` |
 
-El adaptador temporal de A debe sustituirse por el paquete interno común de
-peticiones LLM cuando ese trabajo externo esté disponible. La frontera ya está
-aislada: la migración no debe cambiar el dominio, la selección de evidencias,
-el gate de grounding ni los contratos de coste.
+A ya usa el paquete común sin cambiar el dominio, la selección de evidencias,
+el gate de grounding ni los contratos de coste. B conserva su integración
+directa con Gemini porque File Search requiere tools, ficheros e indexación que
+el paquete excluye por diseño.
 
 ## 6. Coste y observabilidad
 
@@ -251,9 +251,9 @@ jurídica humana.
   reales porque todavía no existe un formulario jurídico cerrado.
 - El gap de ausencias esporádicas está documentado y validado contra dos pasajes
   literales, pero deliberadamente no aplicado al corpus.
-- El analizador legado usa `neutral-llm-gateway`; el chat comparativo A todavía
-  usa su writer temporal. No declarar completa la migración hasta inyectar el
-  gateway compartido con sus sinks y probar el composition root.
+- El analizador legado y el chat comparativo A reutilizan el mismo
+  `neutral-llm-gateway` de proceso con sus sinks; B mantiene File Search directo
+  por el límite deliberado del paquete.
 - La revisión jurídica ciega de ese paquete por un abogado especialista todavía
   no se ha realizado.
 - El límite de dos fragmentos por unidad redujo de forma material el contexto y
@@ -342,9 +342,8 @@ Contrato congelado:
    [propuesta aislada de ausencias esporádicas](../experiments/CHAT_DATA_GAP_ABSENCES.md)
    a revisión; solo después de aprobarla, incorporarla a la muestra v3 mediante
    el mismo pipeline híbrido.
-4. Completar el cableado ya iniciado del paquete común en la estrategia A,
-   reutilizando una sola instancia con sus sinks y añadiendo tests del
-   composition root.
+4. **Completado:** cablear el paquete común en A, reutilizar una sola instancia
+   con sus sinks y cubrir el composition root.
 5. Repetir las ocho consultas con el mismo modelo y generar una segunda
    revisión ciega sin sobrescribir el baseline.
 6. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional

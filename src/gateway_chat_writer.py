@@ -1,7 +1,7 @@
 """Redactor de la estrategia A sobre el paquete compartido `llm_gateway`.
 
-Implementa el mismo puerto que `GoogleGenAIChatWriter`, así que
-`CurrentStructuredStrategy` no distingue cuál está detrás. El dominio jurídico
+Implementa el puerto `StructuredAnswerWriter`, así que
+`CurrentStructuredStrategy` solo conoce el contrato local. El dominio jurídico
 no cambia: las citas se siguen resolviendo localmente desde IDs de evidencia y
 el texto judicial nunca sale del modelo.
 
@@ -101,13 +101,4 @@ def _as_writer_usage(usage: Any) -> ChatWriterUsage:
         input_tokens=usage.input_tokens or 0,
         output_tokens=usage.output_tokens or 0,
         usage_complete=usage.complete,
-    )
-
-
-def create_gateway_chat_writer(api_key: str) -> GatewayChatWriter:
-    """Construye el redactor con un cliente Gemini propio de la aplicación."""
-    from llm_gateway.factories import build_registry, create_gemini_client
-
-    return GatewayChatWriter(
-        LLMGateway(registry=build_registry(gemini_client=create_gemini_client(api_key=api_key)))
     )

@@ -72,24 +72,61 @@ contra el dominio público después de cada deploy.
       mecánico preparados en
       [`CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](../experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md)
       y `make validate-chat-f03-review`.
+      - [ ] Justo antes del handoff, ejecutar
+        `make build-chat-f03-legal-bundle`, registrar el SHA-256 del ZIP y
+        comprobar que contiene solo los cuatro Markdown permitidos y
+        `MANIFEST.json`.
+      - [ ] Entregar al abogado únicamente ese ZIP; no compartir el repositorio,
+        la clave X/Y, el build F0.3, resultados F0.2, artefactos del proveedor
+        ni código.
+      - [ ] El abogado copia la plantilla como
+        `CHAT_STRATEGY_F03_REVIEW_COMPLETED.md`, registra solo identificador no
+        personal, cualificación, experiencia y fechas, y completa las 16
+        respuestas y 8 preferencias. La comprobación de identidad queda fuera
+        del repositorio.
+      - [ ] El custodio ejecuta `make validate-chat-f03-review`; cualquier
+        casilla, `N/A`, fallo crítico o preferencia incompleta vuelve al revisor
+        antes del cierre.
+      - [ ] Versionar el formulario cerrado y registrar commit y SHA-256 antes
+        de abrir la clave. Si el abogado conoció X/Y antes, conservar la revisión
+        solo como exploratoria y repetir el gate ciego.
+      - [ ] Solo después, ejecutar `make compile-chat-f03-results
+        CONFIRM_REVEAL=1 CHAT_F03_REVIEW_COMMIT=<commit>` y versionar el JSON y
+        Markdown resultantes sin editar el formulario cerrado.
+      - [ ] Añadir una interpretación humana separada con incidencias,
+        desacuerdos y decisión —corregir datos, repetir ocho o detenerse—; el
+        compilador no debe inventarla.
     - [ ] Incorporar después la cobertura verificable de ausencias esporádicas
       mediante propuesta híbrida, compilación y tests.
       - [x] Propuesta aislada con citas exactas, hashes y validador:
         [`CHAT_DATA_GAP_ABSENCES.md`](../experiments/CHAT_DATA_GAP_ABSENCES.md).
-      - [ ] Aprobación jurídica y aplicación mediante las propuestas fuente;
-        no editar casos o derivados generados.
+      - [ ] Después de cerrar la revisión ciega, pedir al abogado que valore la
+        proposición derivada, los dos pasajes `EXACT` y el límite expreso: la
+        muestra respalda la regla de cómputo, no una definición exhaustiva de
+        qué ausencia es «esporádica».
+      - [ ] Registrar aceptación, corrección o rechazo y motivación en un
+        artefacto de revisión separado. Nunca corregir ni normalizar el texto de
+        la sentencia.
+      - [ ] Si se aprueba, actualizar las propuestas fuente de
+        `san-1226-2021` y `san-1210-2023`; recompilar casos, perfiles e índices
+        con el pipeline híbrido. No editar a mano casos o derivados generados.
+      - [ ] Ejecutar `make validate-chat-absences-candidate`, los tests de
+        contrato del caso v3 y una prueba de recuperación específica de
+        `CRIT_AUSENCIAS_ESPORADICAS`.
+      - [ ] Repetir `DAY-05` en un artefacto nuevo y comprobar que ninguna
+        respuesta invierte «se computarán [...] salvo que»; no sobrescribir el
+        baseline F0.2 ni la revisión jurídica cerrada.
     - [x] Preparar el compilador post-revelado con confirmación explícita,
       validación de identidad y resultados JSON/Markdown. No ejecutarlo hasta
       cerrar y versionar el formulario jurídico.
-    - [ ] Completar el cableado del paquete común en el chat comparativo. El
-      analizador legado ya usa la fachada del gateway, pero la estrategia A del
-      CLI todavía construye el writer específico anterior y la factoría
-      `create_gateway_chat_writer` crea un gateway separado sin `UsageSink` ni
-      `AlertSink`. Añadir tests del wiring real antes de retirar ese camino.
-      - [ ] Confirmar expresamente el pin `v0.5.0`: el encargo inicial citaba
-        `v0.4.0`, pero la versión actual corrige el contrato de mensajes/tokens.
-      - [ ] Limpiar referencias residuales a `src/model_pricing.py`, ya borrado,
-        en documentación y configuración de imports.
+    - [x] Completar el cableado del paquete común en el chat comparativo:
+      estrategia A y analizador reutilizan el singleton de `gateway_setup` con
+      `UsageSink` y `AlertSink`; el writer temporal se retiró y el composition
+      root tiene tests directos. B conserva File Search fuera del paquete.
+      - [x] Mantener el pin `v0.5.0`: `v0.4.0` reintroduciría los fallos de
+        transporte del prompt JSON y doble cómputo de `reasoning_tokens`.
+      - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
+        ya borrado, en documentación y configuración de imports.
     - [ ] Repetir las ocho con el mismo modelo; solo si pasan, ejecutar las 40.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
@@ -349,13 +386,10 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
   - Las páginas de país sin corpus deben comprobarse al revés: que siguen respondiendo
     `noindex, follow` y que **no** aparecen en el sitemap.
 - [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
-- [ ] **Corregir `CLAUDE.md`, desfasado respecto al código.** Detectado al diseñar el
-  backend del chat, y ya indujo a error una estimación de coste:
-  - Enumera 5 resultados finales; `config.py:156-164` define 7 (faltan `OTROS` y
-    `FUERA_DE_ALCANCE`).
-  - Su tabla de costes da `$0.006` por PDF con `gpt-5.6-luna`, pero `model_pricing.py:23`
-    tarifa ese modelo a `$1/M` de entrada y `$6/M` de salida, y los registros reales del
-    JSONL rondan `$0.017` por sentencia.
+- [x] **Corregir `CLAUDE.md`, desfasado respecto al código.** Ya documenta los
+  siete resultados finales y marca como desfasada la tabla histórica de costes;
+  las tarifas vigentes proceden exclusivamente del catálogo versionado de
+  `llm_gateway`.
 
 ## SEO y operación
 
