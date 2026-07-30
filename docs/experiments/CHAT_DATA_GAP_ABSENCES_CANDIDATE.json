@@ -1,0 +1,80 @@
+{
+  "schema_version": "residenciafiscal-chat-data-gap-candidate/1",
+  "status": "PROPOSED_NOT_APPLIED",
+  "created_at": "2026-07-31",
+  "based_on_commit": "d7802e5",
+  "requires_human_legal_review": true,
+  "canonical_outputs_modified": false,
+  "question_ids": [
+    "DAY-05"
+  ],
+  "topic": {
+    "criterion_id": "CRIT_AUSENCIAS_ESPORADICAS",
+    "label": "Cómputo de ausencias esporádicas en el criterio de permanencia",
+    "proposed_proposition": "Para calcular la permanencia superior a 183 días, las ausencias esporádicas se computan salvo que el contribuyente acredite su residencia fiscal en otro país.",
+    "coverage_limit": "La muestra piloto respalda la regla de cómputo y su relación con la acreditación de residencia fiscal exterior; no ofrece una definición jurisprudencial exhaustiva de cuándo una ausencia es esporádica."
+  },
+  "sources": [
+    {
+      "judgment_id": "san-1226-2021",
+      "role": "STATUTORY_TEXT_REPRODUCED_IN_JUDGMENT",
+      "source_file": "sentencias/SAN_1226_2021.pdf",
+      "source_sha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1",
+      "verbatim_path": "knowledge/jurisprudencia-v3/verbatim/san-1226-2021.pages.json",
+      "verbatim_sha256": "a4db1c543c333cddd87b9f4eb566b30c764d4dccf5567ea3ac0f7ce11b5acd44",
+      "page_index": 2,
+      "printed_page": 3,
+      "quote": "a).- Que permanezca más de 183 días, durante el año natural, en territorio español. Para determinar este período\nde permanencia en territorio español se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país.",
+      "fidelity": "EXACT"
+    },
+    {
+      "judgment_id": "san-1210-2023",
+      "role": "JUDICIAL_REASONING",
+      "source_file": "sentencias/SAN_1210_2023.pdf",
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d",
+      "verbatim_path": "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json",
+      "verbatim_sha256": "de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1",
+      "page_index": 7,
+      "printed_page": 8,
+      "quote": "Recuérdese, por lo demás, que una vez acreditada la residencia en España por más de 183 días durante el año\nnatural -normalmente por pruebas indiciarias o indirectas-, al no tenerse en cuenta las \"ausencias esporádicas\",\nes necesario que el contribuyente acredite su \"residencia ﬁscal\" en otro país.",
+      "fidelity": "EXACT"
+    }
+  ],
+  "proposed_changes": [
+    {
+      "target": "knowledge/jurisprudencia-v3/cases/san-1226-2021.case.json",
+      "operation": "ADD_SOURCE_ANCHOR_AND_RULE_LINK",
+      "details": {
+        "anchor_id": "anchor-ausencias-esporadicas-regla",
+        "criterion_id": "CRIT_AUSENCIAS_ESPORADICAS",
+        "legal_rule_id": "rule-ausencias-esporadicas"
+      }
+    },
+    {
+      "target": "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json",
+      "operation": "ADD_SOURCE_ANCHOR_AND_RULE_LINK",
+      "details": {
+        "anchor_id": "anchor-ausencias-esporadicas-razonamiento",
+        "criterion_id": "CRIT_AUSENCIAS_ESPORADICAS",
+        "legal_rule_id": "rule-ausencias-esporadicas"
+      }
+    },
+    {
+      "target": "knowledge/jurisprudencia-v3/retrieval/corpus.json",
+      "operation": "REGENERATE_ONLY_AFTER_APPROVAL",
+      "details": {
+        "query_terms": [
+          "ausencias esporádicas",
+          "cómputo de permanencia",
+          "183 días",
+          "residencia fiscal en otro país"
+        ]
+      }
+    }
+  ],
+  "approval_gate": {
+    "required": "HUMAN_LEGAL_APPROVAL",
+    "on_approval": "Actualizar las propuestas fuente, recompilar los casos y regenerar derivados; no editar directamente los JSON o Markdown generados.",
+    "on_rejection": "Conservar este artefacto como hipótesis rechazada con la motivación del revisor."
+  }
+}

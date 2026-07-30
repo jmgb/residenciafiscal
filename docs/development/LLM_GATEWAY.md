@@ -44,6 +44,24 @@ este proyecto se resuelve con un puerto (`UsageSink`, `AlertSink`, `EventSink`,
 `process_pdf_async` no se tocó, así que el CLI por lotes y la API HTTP siguen
 recibiendo exactamente el mismo objeto que antes.
 
+### Estado real del cableado
+
+La migración del analizador legado está operativa, pero la del chat comparativo
+no está cerrada. `src/gemini_file_search_cli.py` todavía construye para A el
+writer específico de Google anterior; no inyecta `GatewayChatWriter`. Además,
+la factoría de `src/gateway_chat_writer.py` construye hoy otro gateway y otro
+cliente sin los `UsageSink` y `AlertSink` configurados por
+`src/gateway_setup.py`.
+
+Por tanto, no debe considerarse que «todo el proyecto usa el gateway» hasta:
+
+1. construir una sola instancia desde el composition root;
+2. inyectarla en la estrategia A sin cambiar sus call sites;
+3. probar el wiring real, incluidos sinks, modelo, tokens, coste y salida;
+4. retirar el writer temporal solo después de demostrar esa paridad.
+
+Gemini File Search de la estrategia B seguirá fuera del paquete por diseño.
+
 **No hay tabla de precios local.** `src/model_pricing.py` se borró: dos tablas
 de tarifas acaban divergiendo, y la que nadie actualiza sigue facturando la del
 año pasado sin que nada lo delate. El importe llega con la versión del catálogo
@@ -146,3 +164,8 @@ Subir de versión es `uv add` con la etiqueta nueva y una revisión del
 `CHANGELOG` del paquete, que señala explícitamente los cambios que afectan al
 coste. **No apuntar nunca a una ruta local en un commit**: CI ejecuta
 `uv sync --locked` sin credenciales contra el repositorio público.
+
+El encargo inicial citaba `v0.4.0`, mientras que este repositorio quedó fijado a
+`v0.5.0` para incorporar las correcciones de contrato descritas arriba. Esa
+desviación es visible y debe aceptarse expresamente antes de dar por cerrado el
+handoff; no se debe bajar de versión de forma mecánica.

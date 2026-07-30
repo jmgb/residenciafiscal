@@ -46,7 +46,7 @@ class ReviewValidationResult:
         return not self.errors
 
 
-def _sections(markdown: str, level: int) -> tuple[list[str], dict[str, str]]:
+def split_sections(markdown: str, level: int) -> tuple[list[str], dict[str, str]]:
     marker = "#" * level
     matches = list(re.finditer(rf"(?m)^{marker} (.+)$", markdown))
     names = [match.group(1).strip() for match in matches]
@@ -59,7 +59,7 @@ def _sections(markdown: str, level: int) -> tuple[list[str], dict[str, str]]:
     return names, bodies
 
 
-def _line_starting(body: str, prefix: str) -> str | None:
+def line_starting(body: str, prefix: str) -> str | None:
     return next(
         (line.strip() for line in body.splitlines() if line.strip().startswith(prefix)), None
     )
@@ -79,7 +79,7 @@ def _validate_choice(errors: list[str], scope: str, line: str | None, choices: i
 
 def _validate_fields(errors: list[str], body: str, scope: str, fields: Sequence[str]) -> None:
     for field in fields:
-        line = _line_starting(body, f"- {field}:")
+        line = line_starting(body, f"- {field}:")
         if line is None or not line.partition(":")[2].strip():
             errors.append(f"{scope}/{field}: falta valor")
 
@@ -114,9 +114,9 @@ def _validate_scores(errors: list[str], body: str, scope: str) -> None:
 
 def _validate_response(errors: list[str], body: str, scope: str) -> None:
     for gate in range(1, 6):
-        _validate_choice(errors, f"{scope}/G{gate}", _line_starting(body, f"- G{gate} "), 3)
+        _validate_choice(errors, f"{scope}/G{gate}", line_starting(body, f"- G{gate} "), 3)
     _validate_scores(errors, body, scope)
-    critical = _line_starting(body, "**Error crítico:**")
+    critical = line_starting(body, "**Error crítico:**")
     _validate_choice(errors, f"{scope}/error crítico", critical, 2)
     if critical and "[x] sí" in critical.lower():
         observations = body.partition("**Observaciones:**")[2].strip()
@@ -133,7 +133,7 @@ def _validate_pair(errors: list[str], body: str, question_id: str) -> None:
     _validate_choice(
         errors,
         f"{question_id}/confianza",
-        _line_starting(body, "**Confianza:**"),
+        line_starting(body, "**Confianza:**"),
         3,
     )
     if not body.partition("**Motivo:**")[2].strip():
@@ -146,7 +146,7 @@ def validate_completed_review(
     expected_question_ids: Sequence[str],
 ) -> ReviewValidationResult:
     errors: list[str] = []
-    headings, sections = _sections(markdown, 2)
+    headings, sections = split_sections(markdown, 2)
     expected_headings = [
         "Declaración inicial del revisor jurídico",
         *expected_question_ids,
@@ -161,7 +161,7 @@ def validate_completed_review(
 
     for question_id in expected_question_ids:
         body = sections.get(question_id, "")
-        subsection_names, subsections = _sections(body, 3)
+        subsection_names, subsections = split_sections(body, 3)
         if subsection_names != ["Respuesta X", "Respuesta Y", "Preferencia de la pareja"]:
             errors.append(f"{question_id}: faltan las dos respuestas o la preferencia")
             continue

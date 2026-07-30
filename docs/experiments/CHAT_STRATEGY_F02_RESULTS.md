@@ -111,9 +111,13 @@ tokens de los documentos recuperados.
   que B confundiera residencia fiscal con extranjería.
 - En `FOR-02` y `CMP-04`, B produjo prosa sin fuentes locales verificables. El
   gate actual la bloquea en vez de degradarla silenciosamente.
-- En `DAY-05`, B recuperó una explicación jurídicamente útil sobre ausencias
-  esporádicas. La abstención de A revela una carencia del dato estructurado, no
-  una victoria automática de una estrategia.
+- En `DAY-05`, B recuperó pasajes pertinentes sobre ausencias esporádicas, pero
+  su redacción afirma que «no se computarán [...] salvo que» se acredite
+  residencia exterior, mientras las fuentes publicadas dicen que «se
+  computarán [...] salvo que». La formulación parece invertir la regla y debe
+  tratarse como posible fallo crítico hasta la revisión jurídica. La abstención
+  de A revela además una carencia del dato estructurado; ninguno de los dos
+  hechos constituye una victoria automática de una estrategia.
 - En `DAY-01` y `CDI-01`, A pide hechos para comparar el caso particular,
   mientras B contesta la regla general. Ambas conductas pueden ser correctas
   según la intención de producto.

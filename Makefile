@@ -17,7 +17,8 @@ SHELL := /bin/bash
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
-	validate-chat-f03-review \
+	build-chat-f03-legal-bundle validate-chat-f03-review \
+	validate-chat-absences-candidate compile-chat-f03-results \
 	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
 	test test-llm test-single \
@@ -71,6 +72,11 @@ CHAT_F03_PACKAGE_MD ?= ./docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md
 CHAT_F03_REVIEW_FORM ?= ./docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md
 CHAT_F03_REVEAL_KEY ?= ./docs/experiments/CHAT_STRATEGY_F03_REVEAL_KEY.json
 CHAT_F03_COMPLETED_REVIEW ?= ./docs/experiments/CHAT_STRATEGY_F03_REVIEW_COMPLETED.md
+CHAT_F03_LEGAL_BUNDLE ?= ./output/chat-f03-legal-review-bundle.zip
+CHAT_F03_RESULTS_JSON ?= ./docs/experiments/CHAT_STRATEGY_F03_RESULTS.json
+CHAT_F03_RESULTS_MD ?= ./docs/experiments/CHAT_STRATEGY_F03_RESULTS.md
+CHAT_F03_REVIEW_COMMIT ?=
+CHAT_ABSENCES_CANDIDATE ?= ./docs/experiments/CHAT_DATA_GAP_ABSENCES_CANDIDATE.json
 CASE_MARKDOWN_OUTPUT ?= ./knowledge/jurisprudencia-v3/perfiles/san-1210-2023.md
 CASE_RETRIEVAL_OUTPUT ?= ./knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json
 CASE_DERIVATIVES_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.derivatives-validation.json
@@ -128,7 +134,10 @@ help:
 	@echo "  make file-search-prepare CONFIRM_PAID=1  Crea el store F0 y sube los 5 PDF"
 	@echo "  make compare-chat-strategies CONFIRM_PAID=1 CHAT_QUESTION='...'  Ejecuta F0 con $(FILE_SEARCH_MODEL)"
 	@echo "  make build-chat-f03-review  Regenera el paquete ciego F0.3 (sin LLM)"
+	@echo "  make build-chat-f03-legal-bundle  Crea el ZIP seguro para el revisor"
 	@echo "  make validate-chat-f03-review  Valida el formulario jurídico F0.3 cerrado"
+	@echo "  make validate-chat-absences-candidate  Valida el gap aislado DAY-05"
+	@echo "  make compile-chat-f03-results CONFIRM_REVEAL=1 CHAT_F03_REVIEW_COMMIT=...  Revela F0.3"
 	@echo "  make file-search-delete CONFIRM_DELETE=1  Elimina explícitamente el store F0"
 	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
 	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
@@ -333,10 +342,34 @@ build-chat-f03-review:
 		--review-form $(CHAT_F03_REVIEW_FORM) \
 		--reveal-key $(CHAT_F03_REVEAL_KEY)
 
+build-chat-f03-legal-bundle:
+	uv run python $(PYTHON_SOURCE)/chat_legal_review_bundle.py \
+		--project-root . \
+		--output $(CHAT_F03_LEGAL_BUNDLE)
+
 validate-chat-f03-review:
 	uv run python $(PYTHON_SOURCE)/chat_legal_review_validation.py \
 		--review $(CHAT_F03_COMPLETED_REVIEW) \
 		--package-json $(CHAT_F03_PACKAGE_JSON)
+
+validate-chat-absences-candidate:
+	uv run python $(PYTHON_SOURCE)/chat_data_gap_candidate_validation.py \
+		--candidate $(CHAT_ABSENCES_CANDIDATE) \
+		--project-root .
+
+compile-chat-f03-results:
+	@test "$(CONFIRM_REVEAL)" = "1" || \
+		(echo "CONFIRM_REVEAL=1 es obligatorio: la clave X/Y es material vedado" >&2; exit 2)
+	@test -n "$(CHAT_F03_REVIEW_COMMIT)" || \
+		(echo "CHAT_F03_REVIEW_COMMIT es obligatorio: versiona primero el formulario" >&2; exit 2)
+	uv run python $(PYTHON_SOURCE)/chat_legal_review_results.py \
+		--review $(CHAT_F03_COMPLETED_REVIEW) \
+		--package-json $(CHAT_F03_PACKAGE_JSON) \
+		--reveal-key $(CHAT_F03_REVEAL_KEY) \
+		--output-json $(CHAT_F03_RESULTS_JSON) \
+		--output-markdown $(CHAT_F03_RESULTS_MD) \
+		--review-commit $(CHAT_F03_REVIEW_COMMIT) \
+		--confirm-reveal
 
 file-search-delete:
 	@test "$(CONFIRM_DELETE)" = "1" || \

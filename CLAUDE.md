@@ -75,6 +75,12 @@ y diccionario de retorno, así que ni el CLI ni la API distinguen qué hay detr�
 `src/gateway_setup.py` construye el gateway una vez —nunca en el import— con las
 credenciales de la aplicación y conecta los efectos por puertos.
 
+Ese cableado está completo para el analizador legado, no todavía para el chat
+comparativo A: su CLI sigue usando el writer temporal de Google y la factoría
+del nuevo writer aún construiría una segunda instancia sin los sinks. El gap y
+los criterios de cierre están en
+[`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
+
 **No hay tabla de precios local**: las tarifas salen del catálogo versionado del
 paquete, y `detect_provider()` delega en el mismo catálogo que usa el registro
 para elegir adaptador, para que no existan dos tablas capaces de discrepar.
@@ -209,11 +215,17 @@ las cifras están en
 [`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](docs/experiments/CHAT_STRATEGY_F02_RESULTS.md).
 F0.3 ya congeló la rúbrica y generó el paquete X/Y; la siguiente intervención
 es una revisión jurídica ciega por un abogado especialista, sin abrir la clave.
-Protocolo, rúbrica, paquete y plantilla:
+El revisor debe recibir solo el ZIP reproducible generado por
+`make build-chat-f03-legal-bundle`. La propuesta sobre ausencias esporádicas ya
+está validada, pero permanece aislada y no aplicada hasta revisión humana. El
+compilador post-revelado también está preparado y exige
+`CONFIRM_REVEAL=1`; no se ejecuta antes de cerrar el formulario. Protocolo,
+rúbrica, paquete, plantilla y gap:
 [`docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md),
 [`docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md`](docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md),
 [`docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md`](docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
-[`docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
+[`docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md);
+[`docs/experiments/CHAT_DATA_GAP_ABSENCES.md`](docs/experiments/CHAT_DATA_GAP_ABSENCES.md).
 
 ```bash
 make export-okf  # hoy: genera y valida exactamente 1 sentencia

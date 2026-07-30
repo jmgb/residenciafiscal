@@ -158,7 +158,7 @@ privacidad y protocolo previsto están en
 | Contexto compacto y fuentes `E<n>` | `src/structured_evidence_context.py` |
 | Estrategia A | `src/current_structured_strategy.py` |
 | Puerto del redactor A | `src/structured_answer_writer.py` |
-| Adaptador temporal de Gemini para A | `src/google_genai_chat_writer.py` |
+| Redactor A actual / destino | `src/google_genai_chat_writer.py` / `src/gateway_chat_writer.py` |
 | Estrategia B y verificación de citas | `src/gemini_file_search_answer.py` |
 | Store y gateway de B | `src/gemini_file_search_store.py`, `src/google_genai_file_search.py` |
 | Aislamiento, persistencia y logs | `src/chat_strategy_comparison.py`, `src/chat_strategy_logging.py` |
@@ -200,10 +200,13 @@ Ese paquete ya se genera sin LLM mediante:
 
 ```bash
 make build-chat-f03-review
+make build-chat-f03-legal-bundle
 ```
 
-El comando valida los hashes de rúbrica, banco y ocho artefactos; produce JSON,
-Markdown, plantilla y clave separados. La plantilla debe copiarse antes de
+El primer comando valida los hashes de rúbrica, banco y ocho artefactos; produce
+JSON, Markdown, plantilla y clave separados. El segundo crea el único ZIP que
+debe recibir el revisor: cuatro Markdown permitidos y un manifiesto de hashes,
+sin clave X/Y ni resultados previos. La plantilla debe copiarse antes de
 rellenarla para que una regeneración no sobrescriba una revisión jurídica. El
 gate debe ejecutarlo un abogado especialista conforme al
 [`protocolo de revisión jurídica ciega`](../experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md).
@@ -213,6 +216,21 @@ mediante:
 ```bash
 make validate-chat-f03-review
 ```
+
+Una vez cerrado y versionado el formulario, el revelado se compila sin
+sobrescribirlo:
+
+```bash
+make compile-chat-f03-results \
+  CONFIRM_REVEAL=1 \
+  CHAT_F03_REVIEW_COMMIT=<commit-del-formulario>
+```
+
+El gap `DAY-05` se ha preparado por separado en
+[`CHAT_DATA_GAP_ABSENCES.md`](../experiments/CHAT_DATA_GAP_ABSENCES.md). Sus
+citas exactas y hashes validan, pero la propuesta permanece
+`PROPOSED_NOT_APPLIED`: no modifica ni alimenta el corpus hasta la revisión
+jurídica humana.
 
 ## 7. Estado comprobado
 
@@ -227,14 +245,25 @@ make validate-chat-f03-review
   `gemini-3.5-flash-lite`.
 - F0.3 congeló una rúbrica neutral y materializó las ocho parejas como X/Y con
   orden equilibrado, sin modelo, coste, estrategia ni metadatos del proveedor.
+- Existe un ZIP reproducible y de lista permitida para entregar la revisión sin
+  exponer accidentalmente la clave.
+- El compilador post-revelado está listo y falla cerrado; no hay resultados
+  reales porque todavía no existe un formulario jurídico cerrado.
+- El gap de ausencias esporádicas está documentado y validado contra dos pasajes
+  literales, pero deliberadamente no aplicado al corpus.
+- El analizador legado usa `neutral-llm-gateway`; el chat comparativo A todavía
+  usa su writer temporal. No declarar completa la migración hasta inyectar el
+  gateway compartido con sus sinks y probar el composition root.
 - La revisión jurídica ciega de ese paquete por un abogado especialista todavía
   no se ha realizado.
 - El límite de dos fragmentos por unidad redujo de forma material el contexto y
   el coste de A.
 - Dos respuestas sustantivas de B sin fuentes verificables demostraron que el
   gate debe fallar cerrado.
-- B recuperó una explicación útil sobre ausencias esporádicas que el corpus
-  estructurado no cubría; es un gap de datos de A.
+- B recuperó fuentes sobre ausencias esporádicas que el corpus estructurado no
+  cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
+  respecto del texto literal que publica. Es simultáneamente un gap de datos de
+  A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
 - El chat productivo, el streaming A/B y la interfaz de dos respuestas siguen
   sin implementar.
 - No existe autorización para listar, compilar o publicar las 106 sentencias
@@ -309,10 +338,13 @@ Contrato congelado:
 2. Entregar únicamente los materiales permitidos a un abogado especialista,
    completar la revisión jurídica ciega baseline y cerrarla antes de abrir la
    clave X/Y.
-3. Después, incorporar a la muestra v3 la cobertura verificable de ausencias
-   esporádicas mediante el mismo pipeline híbrido.
-4. Integrar el paquete común de peticiones LLM cuando esté disponible, mediante
-   el puerto existente y con tests de contrato.
+3. Someter la
+   [propuesta aislada de ausencias esporádicas](../experiments/CHAT_DATA_GAP_ABSENCES.md)
+   a revisión; solo después de aprobarla, incorporarla a la muestra v3 mediante
+   el mismo pipeline híbrido.
+4. Completar el cableado ya iniciado del paquete común en la estrategia A,
+   reutilizando una sola instancia con sus sinks y añadiendo tests del
+   composition root.
 5. Repetir las ocho consultas con el mismo modelo y generar una segunda
    revisión ciega sin sobrescribir el baseline.
 6. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional

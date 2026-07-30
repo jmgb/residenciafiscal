@@ -62,6 +62,7 @@ Documentos especializados:
   [rúbrica](experiments/CHAT_STRATEGY_F03_RUBRIC.md),
   [paquete](experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
   [plantilla](experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
+- [Propuesta aislada y no aplicada sobre ausencias esporádicas](experiments/CHAT_DATA_GAP_ABSENCES.md).
 
 ## Normativa, producto y operación
 

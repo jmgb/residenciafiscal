@@ -46,9 +46,18 @@ Hasta cerrar y congelar la revisión no debe abrir:
 - los artefactos originales de `output/file-search/`;
 - el código del generador o los tests que permitan reconstruir la asignación.
 
-La ceguera es procedimental, no criptográfica. El custodio del experimento debe
-entregar enlaces directos a los cuatro materiales permitidos y evitar pedir al
-revisor que navegue por el directorio.
+La ceguera es procedimental, no criptográfica. El custodio no debe entregar el
+directorio del repositorio. Debe construir y enviar únicamente el ZIP saneado:
+
+```bash
+make build-chat-f03-legal-bundle
+```
+
+El ZIP contiene exactamente los cuatro Markdown permitidos y `MANIFEST.json`
+con el SHA-256 de cada uno. No contiene la clave, el manifiesto de build, los
+resultados F0.2, artefactos de proveedor ni código. El constructor usa nombres,
+permisos y fecha ZIP fijos, por lo que dos ejecuciones sobre las mismas entradas
+producen los mismos bytes.
 
 ## 4. Procedimiento
 
@@ -97,15 +106,30 @@ anterior al revelado y un SHA-256 calculado sobre ese contenido ya congelado.
 Además, `make validate-chat-f03-review` debe terminar correctamente. Solo
 entonces se abre la clave.
 
-El resultado revelado se documentará en un artefacto nuevo, sin modificar el
-formulario cerrado, e incluirá:
+El resultado revelado se documenta en artefactos nuevos, sin modificar el
+formulario cerrado. El compilador falla si la revisión está incompleta, si la
+clave no corresponde al paquete o si falta la confirmación explícita:
+
+```bash
+make compile-chat-f03-results \
+  CONFIRM_REVEAL=1 \
+  CHAT_F03_REVIEW_COMMIT=<commit-del-formulario>
+```
+
+El comando solo se ejecuta después de versionar el formulario cerrado. Genera
+JSON auditable y un resumen Markdown e incluye:
 
 - commit y SHA-256 del formulario;
 - versiones y hashes de rúbrica, paquete y banco de preguntas;
 - correspondencia X/Y;
-- gates, puntuaciones y preferencias agregadas;
-- incidencias del proceso y desacuerdos con los gates automáticos;
-- decisión explícita sobre corregir datos, repetir las ocho o detenerse.
+- gates, puntuaciones y preferencias agregadas.
+
+El compilador no inventa incidencias, desacuerdos ni decisiones. Esos tres
+elementos se documentan después como interpretación humana del resultado,
+referenciando el JSON compilado, antes de corregir datos o repetir llamadas.
+
+Mientras no exista el formulario cerrado no se generan resultados ficticios ni
+se abre la clave para completar el informe a mano.
 
 Una revisión de ocho parejas sirve como baseline y detector de fallos. No basta
 para declarar una estrategia ganadora ni para autorizar por sí sola el rollout

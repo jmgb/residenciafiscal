@@ -63,6 +63,8 @@ contra el dominio público después de cada deploy.
     - [x] Congelar una rúbrica que separe gates binarios, utilidad e intención.
     - [x] Generar un paquete ciego saneado y versionado con las ocho parejas
       F0.2, su plantilla y la clave separada.
+    - [x] Preparar un ZIP reproducible de lista permitida para el abogado,
+      excluyendo clave, build y resultados previos.
     - [ ] Obtener y cerrar la revisión jurídica ciega de un abogado especialista
       en residencia fiscal, sin abrir antes la clave X/Y. Debe completar, fechar
       y conservar `CHAT_STRATEGY_F03_REVIEW_COMPLETED.md`; una revisión técnica
@@ -72,8 +74,22 @@ contra el dominio público después de cada deploy.
       y `make validate-chat-f03-review`.
     - [ ] Incorporar después la cobertura verificable de ausencias esporádicas
       mediante propuesta híbrida, compilación y tests.
-    - [ ] Integrar el paquete común de peticiones LLM cuando esté disponible,
-      conservando el puerto y los contratos actuales.
+      - [x] Propuesta aislada con citas exactas, hashes y validador:
+        [`CHAT_DATA_GAP_ABSENCES.md`](../experiments/CHAT_DATA_GAP_ABSENCES.md).
+      - [ ] Aprobación jurídica y aplicación mediante las propuestas fuente;
+        no editar casos o derivados generados.
+    - [x] Preparar el compilador post-revelado con confirmación explícita,
+      validación de identidad y resultados JSON/Markdown. No ejecutarlo hasta
+      cerrar y versionar el formulario jurídico.
+    - [ ] Completar el cableado del paquete común en el chat comparativo. El
+      analizador legado ya usa la fachada del gateway, pero la estrategia A del
+      CLI todavía construye el writer específico anterior y la factoría
+      `create_gateway_chat_writer` crea un gateway separado sin `UsageSink` ni
+      `AlertSink`. Añadir tests del wiring real antes de retirar ese camino.
+      - [ ] Confirmar expresamente el pin `v0.5.0`: el encargo inicial citaba
+        `v0.4.0`, pero la versión actual corrige el contrato de mensajes/tokens.
+      - [ ] Limpiar referencias residuales a `src/model_pricing.py`, ya borrado,
+        en documentación y configuración de imports.
     - [ ] Repetir las ocho con el mismo modelo; solo si pasan, ejecutar las 40.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
