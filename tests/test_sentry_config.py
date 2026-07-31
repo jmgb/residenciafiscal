@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import cast
 from unittest.mock import Mock
 
+import sentry_sdk
 from sentry_sdk.types import Event
 
 from api import sentry_config
@@ -18,9 +19,22 @@ def test_init_sentry_skips_when_disabled(monkeypatch) -> None:
     init.assert_not_called()
 
 
+def test_init_sentry_skips_under_pytest(monkeypatch) -> None:
+    # La suite nunca envía telemetría al Sentry real, aunque el `.env` del
+    # desarrollador tenga la instrumentación activada para `make dev`.
+    init = Mock()
+    monkeypatch.setattr(sentry_config.sentry_sdk, "init", init)
+    monkeypatch.setenv("SENTRY_ENABLED", "true")
+    monkeypatch.setenv("SENTRY_BACKEND_DSN", "https://public@example.ingest.sentry.io/1")
+
+    assert sentry_config.init_sentry() is False
+    init.assert_not_called()
+
+
 def test_init_sentry_uses_private_defaults(monkeypatch) -> None:
     init = Mock()
     monkeypatch.setattr(sentry_config.sentry_sdk, "init", init)
+    monkeypatch.setattr(sentry_config, "running_under_pytest", lambda: False)
     monkeypatch.setenv("SENTRY_ENABLED", "true")
     monkeypatch.setenv("SENTRY_BACKEND_DSN", "https://public@example.ingest.sentry.io/1")
     monkeypatch.setenv("SENTRY_ENVIRONMENT", "production")
@@ -65,3 +79,12 @@ def test_before_send_removes_request_secrets_and_adds_service_tags() -> None:
         "service": "residencia-fiscal",
         "component": "fastapi",
     }
+
+
+def test_importar_la_app_no_activa_telemetria_en_la_suite() -> None:
+    # Regresión: `api.main` llama a `load_dotenv()` + `init_sentry()` al
+    # importarse, así que un `.env` con `SENTRY_ENABLED=true` mandaba al Sentry
+    # de producción cada excepción provocada a propósito por los tests.
+    import api.main  # noqa: F401
+
+    assert sentry_sdk.get_client().is_active() is False
