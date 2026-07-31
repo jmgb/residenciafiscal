@@ -2,8 +2,13 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import { App } from './App';
+import { installModulePreloadRecovery } from './lib/module-preload-recovery';
 import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
 import './index.css';
+
+// Antes de montar nada: si el HTML es de un deploy anterior, el primer chunk que
+// falte dispara el error durante el arranque.
+installModulePreloadRecovery();
 
 void initializeSentry({
   dsn: import.meta.env.VITE_SENTRY_DSN,

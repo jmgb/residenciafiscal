@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
 declare const __SENTRY_RELEASE__: string;
+/** Revisión del despliegue; se compara con la de `/version.json`. */
+declare const __APP_RELEASE__: string;
 
 interface ImportMetaEnv {
   readonly VITE_CHAT_MODE?: string;

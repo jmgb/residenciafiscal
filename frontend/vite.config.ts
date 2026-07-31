@@ -1,29 +1,18 @@
 /// <reference types="vitest/config" />
-import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
+import { resolveRelease } from './scripts/release.mjs';
 
 const repositoryRoot = path.resolve(__dirname, '..');
 
-const getGitRevision = (): string => {
-  try {
-    return execFileSync('git', ['rev-parse', '--short=12', 'HEAD'], {
-      cwd: repositoryRoot,
-    })
-      .toString()
-      .trim();
-  } catch {
-    return 'local';
-  }
-};
-
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, repositoryRoot, '');
-  const revision =
-    env.VITE_SENTRY_RELEASE || process.env.COMMIT_REF?.slice(0, 12) || getGitRevision();
+  // Mismo cálculo que `scripts/build-version.mjs`: el bundle y /version.json
+  // tienen que declarar el mismo despliegue o la comprobación de versión miente.
+  const revision = resolveRelease(mode);
   const release = `residencia-fiscal-frontend@${revision}`;
   const authToken = env.SENTRY_TOKEN || process.env.SENTRY_TOKEN;
   const sentryOrg = env.SENTRY_ORG_SLUG || process.env.SENTRY_ORG_SLUG;
@@ -37,6 +26,7 @@ export default defineConfig(({ mode }) => {
     envDir: repositoryRoot,
     define: {
       __SENTRY_RELEASE__: JSON.stringify(release),
+      __APP_RELEASE__: JSON.stringify(revision),
     },
     plugins: [
       react(),

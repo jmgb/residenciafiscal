@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { GOOGLE_ANALYTICS_ID } from '@/components/layout/GoogleAnalytics';
 import { SIDEBAR_COLLAPSED_STORAGE_KEY } from '@/components/layout/useSidebarCollapsed';
+import { APP_RELEASE, VERSION_MANIFEST_PATH } from '@/lib/app-version';
 import { useConversations } from '@/stores/useConversations';
 
 function renderLayout(initialPath = '/') {
@@ -230,5 +231,40 @@ describe('AppLayout', () => {
         )
       ).toHaveLength(1);
     });
+  });
+});
+
+describe('AppLayout y la versión desplegada', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+    useConversations.setState({ conversations: [] });
+  });
+
+  it('avisa desde el shell cuando el despliegue publicado ya es otro', async () => {
+    // El guardián vive en el layout para cubrir toda la app, no solo el chat:
+    // sin esta consulta, una pestaña abierta días nunca se entera de un deploy.
+    // Con una respuesta en curso el aviso sustituye a la recarga automática, que
+    // además jsdom no puede ejecutar.
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ release: `${APP_RELEASE}-siguiente` }), {
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+    const id = useConversations.getState().createConversation();
+    useConversations.getState().appendMessage(id, {
+      id: 'm1',
+      role: 'assistant',
+      content: 'Respondiendo',
+      createdAt: '2026-07-31T10:00:00.000Z',
+      isStreaming: true,
+    });
+
+    renderLayout();
+
+    expect(await screen.findByRole('status')).toHaveTextContent(/versión nueva/i);
+    expect(fetchSpy).toHaveBeenCalledWith(
+      VERSION_MANIFEST_PATH,
+      expect.objectContaining({ cache: 'no-store' })
+    );
   });
 });

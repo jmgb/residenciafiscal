@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router';
 import { getJurisdictionRoute } from '@/data/countryRoutes';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
+import { AppUpdateBanner } from './AppUpdateBanner';
 import { GoogleAnalytics } from './GoogleAnalytics';
 import { MobileNavigation } from './MobileNavigation';
 import { PostHogAnalytics } from './PostHogAnalytics';
@@ -49,6 +50,10 @@ export function AppLayout() {
       <AppSidebar id={SIDEBAR_ID} collapsed={collapsed} className='hidden lg:flex' />
 
       <div className='flex min-w-0 flex-1 flex-col'>
+        {/* Fuera del `main`, que es el contenedor de scroll: el aviso no debe
+            desaparecer al desplazar la conversación. */}
+        <AppUpdateBanner />
+
         <main
           ref={mainRef}
           tabIndex={-1}

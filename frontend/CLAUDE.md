@@ -125,16 +125,33 @@ raíz de `netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime�
 así que sus módulos compartidos van en `lib/`. No extrapoles automáticamente
 esas reglas al directorio de Functions estándar de la V1.
 
-La V1 usa Netlify Database/Postgres con transacción y bloqueo de fila; no usa el
-compare-and-swap no atómico de Blobs. La **activación productiva** sigue
-bloqueada hasta provisionar y validar Database en Deploy Preview, completar la
-política legal y autorizar el gasto. Ver `docs/project/TASKS.md`.
+La V1 usa Supabase/Postgres mediante dos RPC transaccionales y bloqueo de fila;
+no usa el compare-and-swap no atómico de Blobs. `private.chat_messages` conserva
+la pregunta y una respuesta por estrategia, incluidas citas y costes, sin IP ni
+user-agent. Solo la Function usa `SUPABASE_SECRET_KEY`; el navegador no accede a
+Supabase. Contrato: `docs/operations/SUPABASE_CHAT.md`. La activación productiva
+sigue condicionada por el Deploy Preview y la política legal de `TASKS.md`.
 
 El prototipo Edge está conservado en `netlify/prototypes/`. La Function estándar
 y sus adaptadores viven en `netlify/functions/chat/`; devuelve el protocolo SSE
 2 como cuerpo bufferizado, no como `ReadableStream`.
 `netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
 del repositorio.
+
+## Caché y versión desplegada
+
+Una SPA no vuelve a pedir el HTML mientras la pestaña viva, y un móvil conserva
+la pestaña días. Por eso el shell monta `AppUpdateBanner`, que compara
+`__APP_RELEASE__` con `/version.json` al arrancar, al recuperar el foco y al
+volver del back/forward cache: recarga sola si no hay nada en curso y avisa si
+lo hay. `main.tsx` instala además la recuperación de `vite:preloadError`, que
+recarga **una vez por bundle** cuando falta un chunk del deploy anterior.
+
+Dos trampas antes de tocar `netlify.toml`: sus cabeceras se aplican por **ruta
+pedida** (una regla para `/index.html` no cubre `/`), y el fallback `/*` captura
+también `/assets/*`, de modo que sin una regla de 404 previa un chunk borrado se
+cachea un año como HTML. Contrato completo, tabla de rutas y verificación en
+producción: [`docs/operations/CACHE_AND_RELEASES.md`](../docs/operations/CACHE_AND_RELEASES.md).
 
 ## Despliegue y analítica
 
