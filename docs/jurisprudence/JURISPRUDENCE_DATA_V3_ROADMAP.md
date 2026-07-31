@@ -593,7 +593,7 @@ El orden vigente es:
 4. **Completado:** sustituir el adaptador temporal de A por el paquete común de
    peticiones LLM, sin cambiar los contratos de dominio.
 5. Repetir las ocho preguntas con la configuración destinada al producto —A
-   con Luna + `max`; B con un modelo Gemini permitido por File Search— y una
+   con Luna + `high`; B con un modelo Gemini permitido por File Search— y una
    segunda revisión ciega. Esta ejecución compara stacks completos; no atribuir
    las diferencias exclusivamente a la recuperación.
 6. Ejecutar las 40 como evaluación conversacional A/B solo si pasan los gates.

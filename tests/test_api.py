@@ -36,8 +36,15 @@ def test_config_expone_enums(client: TestClient) -> None:
     assert "CRIT_183_DIAS" in body["criterios"]
     assert "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS" in body["categorias_prueba"]
     assert "GANA_AEAT" in body["resultados_finales"]
-    assert body["chat_model"] == "gpt-5.6-luna"
-    assert body["chat_reasoning_effort"] == "max"
+    # `/config` publica la política, así que se compara con ella: fijar aquí el
+    # esfuerzo obligaría a tocar el test justo cuando debe comprobar que el
+    # endpoint no se ha quedado anunciando una configuración que ya no rige.
+    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+
+    assert body["chat_model"] == CHAT_MODEL
+    assert body["chat_reasoning_effort"] == CHAT_REASONING_EFFORT
+    # La lista sí es literal: son los esfuerzos que el catálogo declara para
+    # Luna, y que cambien es una noticia del paquete, no de este proyecto.
     assert body["chat_reasoning_efforts_permitidos"] == [
         "none",
         "low",

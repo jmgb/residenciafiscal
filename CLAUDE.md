@@ -60,7 +60,7 @@ Arquitectura, capas de autoridad, comparador A/B y handoff:
 ### Llamadas a modelos: el paquete `llm_gateway`
 
 Las respuestas del chat pasan por **`neutral-llm-gateway`**, fijado a una
-referencia inmutable. `src/chat_model_policy.py` declara Luna + `max`, y
+referencia inmutable. `src/chat_model_policy.py` declara Luna + `high`, y
 `src/gateway_setup.py` construye el gateway bajo demanda con las credenciales,
 uso, alertas y coste. Preparar o validar el corpus nunca importa este gateway.
 
@@ -187,7 +187,7 @@ no conectar directamente el chat ni transformar las 106 sin revisión humana.
 
 El baseline histórico F0.2 redactó A sobre el corpus v3 y B con Gemini File
 Search sobre los PDF usando el mismo modelo y fuentes independientes. La
-política vigente ya no comparte modelo: A usa Luna + `max` y B un modelo Gemini
+política vigente ya no comparte modelo: A usa Luna + `high` y B un modelo Gemini
 permitido por File Search. Por tanto, las siguientes ejecuciones comparan dos
 stacks de producto y no aíslan por sí solas el efecto de la recuperación. Ocho
 consultas reales del baseline detectaron una rúbrica heredada no neutral y

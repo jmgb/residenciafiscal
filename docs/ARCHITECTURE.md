@@ -46,7 +46,7 @@ flowchart LR
 | Área | Ubicación | Responsabilidad |
 |---|---|---|
 | Configuración de dominio | `src/config.py` | Catálogos jurídicos y routing de proveedores |
-| Política del chat | `src/chat_model_policy.py` | Luna + `max`, separado del corpus |
+| Política del chat | `src/chat_model_policy.py` | Luna + `high`, separado del corpus |
 | Proveedores LLM | `src/gateway_setup.py`, `src/gateway_chat_writer.py` | Responder preguntas del chat y registrar uso/coste |
 | API HTTP | `src/api/` | Exponer estado y chat A/B; nunca analizar PDF ni preparar corpus |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |

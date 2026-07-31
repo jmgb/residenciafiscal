@@ -135,7 +135,7 @@ Reglas de comparabilidad:
 - A y B reciben la misma pregunta y la misma instrucción jurídica base; el
   router puede terminar A sin llamada;
 - los modelos son deliberadamente distintos en la configuración vigente: A
-  usa Luna + `max` y B uno de los modelos Gemini permitidos por File Search;
+  usa Luna + `high` y B uno de los modelos Gemini permitidos por File Search;
   esta prueba compara stacks de producto completos y no aísla el efecto del
   recuperador. El baseline F0.2 con el mismo modelo en ambas rutas se conserva
   como evidencia histórica controlada;
@@ -381,7 +381,7 @@ Contrato congelado:
    persistencia y la UI al flujo comparativo A/B. El selector sigue en `stub`
    por defecto y el despliegue live no está autorizado.
 8. Repetir las ocho consultas con la configuración destinada al producto —A
-   con Luna + `max`; B con un modelo Gemini permitido por File Search— y
+   con Luna + `high`; B con un modelo Gemini permitido por File Search— y
    generar una segunda revisión ciega sin sobrescribir el baseline. Interpretar
    el resultado como comparación de stacks, no como prueba aislada del
    recuperador.

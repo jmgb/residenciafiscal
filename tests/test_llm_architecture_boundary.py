@@ -6,7 +6,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = PROJECT_ROOT / "src"
 
 
-def test_la_politica_luna_max_pertenece_al_chat() -> None:
+def test_la_politica_del_modelo_pertenece_al_chat() -> None:
     from chat_model_policy import (
         CHAT_MODEL,
         CHAT_REASONING_EFFORT,
@@ -14,7 +14,7 @@ def test_la_politica_luna_max_pertenece_al_chat() -> None:
     )
 
     assert CHAT_MODEL == "gpt-5.6-luna"
-    assert CHAT_REASONING_EFFORT == "max"
+    assert CHAT_REASONING_EFFORT == "high"
     assert CHAT_REASONING_EFFORT in CHAT_SUPPORTED_REASONING_EFFORTS
 
 

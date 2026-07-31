@@ -129,7 +129,13 @@ class TestEvidenceAndPrompt:
 
 
 class TestPolicies:
-    async def test_luna_recibe_el_esfuerzo_maximo_de_la_politica_del_chat(self) -> None:
+    async def test_luna_recibe_el_esfuerzo_declarado_en_la_politica_del_chat(self) -> None:
+        """Se compara contra la política, no contra un literal.
+
+        Fijar aquí el valor obligaba a tocar el test al cambiar de esfuerzo, que
+        es justo cuando conviene que compruebe algo: que el redactor transmite
+        lo declarado en vez de dejar que el proveedor aplique su defecto.
+        """
         from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
 
         adapter = FakeProviderAdapter()
@@ -139,7 +145,7 @@ class TestPolicies:
             _request(model=CHAT_MODEL, reasoning_effort=CHAT_REASONING_EFFORT)
         )
 
-        assert adapter.requests[0].reasoning_effort == "max"
+        assert adapter.requests[0].reasoning_effort == CHAT_REASONING_EFFORT
 
     async def test_model_fallback_stays_disabled(self) -> None:
         """A no puede responder con un modelo distinto del que declara."""
@@ -205,12 +211,11 @@ class TestTimeBudget:
         await _writer(adapter).write(_request())
 
         policy = adapter.requests[0].timeout_policy
-        # Medido: A sobre Luna + `max` tardó 81,0 s, 81,7 s, 93,4 s y 95,9 s en
-        # preguntas reales del corpus de cinco. Dos de las cuatro superaban el
-        # tope anterior de 90 s, y la misma pregunta caía a un lado y al otro
-        # según la ejecución.
-        assert policy.total_seconds == 300.0
-        assert policy.per_attempt_seconds == 150.0
+        # Medido con el esfuerzo vigente (`high`): 16,3 s, 17,8 s, 22,2 s y
+        # 30,3 s en preguntas reales del corpus de cinco. El tope es 3× el peor
+        # caso. Con `max` las mismas preguntas tardaban 81-96 s y no cabían.
+        assert policy.total_seconds == 200.0
+        assert policy.per_attempt_seconds == 90.0
 
 
 class TestTemperature:

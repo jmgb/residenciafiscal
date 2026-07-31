@@ -33,7 +33,7 @@ ejecutable.
 
 | Pieza | Responsabilidad |
 |---|---|
-| `src/chat_model_policy.py` | Modelo y esfuerzo del chat: Luna + `max` |
+| `src/chat_model_policy.py` | Modelo y esfuerzo del chat: Luna + `high` |
 | `src/gateway_setup.py` | Clientes, credenciales, singleton y sinks de uso/alerta |
 | `src/gateway_chat_writer.py` | Adaptador del redactor estructurado del chat |
 | `src/current_structured_strategy.py` | Recuperación y respuesta A del comparador |
@@ -69,8 +69,8 @@ dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
 | B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
 
 El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
-salía con el valor por defecto del proveedor y declarar `max` no habría
-cambiado nada.
+salía con el valor por defecto del proveedor y declararlo en la política no
+habría cambiado nada.
 
 El importe deja de exigir un modelo de File Search: `calculate_request_cost`
 tarifa cualquier modelo catalogado y `calculate_gemini_file_search_cost`
@@ -113,23 +113,29 @@ separar tarifar de permitir, según la tabla de la sección anterior.
 ## Reintento y fallback
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
-de 300 s y máximo de 150 s por intento. El fallback de modelo está desactivado:
+de 200 s y máximo de 90 s por intento. El fallback de modelo está desactivado:
 si respondiera un modelo distinto, el coste y la comparación quedarían mal
 atribuidos.
 
-Las cifras se remidieron con A ya sobre Luna + `max`, que es cuando la medición
-significa algo. Cuatro respuestas a preguntas reales del corpus de cinco
-tardaron 81,0 s, 81,7 s, 93,4 s y 95,9 s: **dos de las cuatro superaban el tope
-anterior de 90 s**, y la misma pregunta cayó a un lado y al otro en ejecuciones
-distintas, así que no era un margen estrecho sino un corte intermitente. El
-reintento tampoco lo habría salvado: gastados 90 s de los 200 s de presupuesto,
-el segundo intento se cortaba igual y la respuesta acababa en fallo pagado dos
-veces. Un corte, además, no se distingue de una caída del proveedor.
+La cifra sigue al esfuerzo declarado, porque **la latencia la manda el
+razonamiento y no el tamaño de la pregunta**. Las mismas dos preguntas del
+corpus de cinco, medidas dos veces con cada esfuerzo:
 
-El razonamiento es lo que manda la latencia: con el mismo prompt, `max` tarda
-3,3× lo que `medium` —48,4 s frente a 14,5 s— y emite siete veces más tokens de
-salida. Los 150 s son 1,6× el peor caso medido, y el total sube en proporción
-para que sigan cabiendo dos intentos.
+| Esfuerzo | Latencia | Tokens de salida | Coste por respuesta |
+|---|---|---|---|
+| `max` | 81,0 / 81,7 / 93,4 / 95,9 s | 7 854 – 9 077 | $0.0113 – $0.0128 |
+| `high` | 16,3 / 17,8 / 22,2 / 30,3 s | 1 617 – 3 432 | $0.0038 – $0.0060 |
+
+`max` costaba entre tres y cuatro veces más tiempo y dinero por respuesta, y
+nadie había medido qué calidad compraba a cambio. En un chat que **no puede
+transmitir tokens según se generan** —el paquete excluye el streaming por
+diseño— esa diferencia es pantalla en blanco pagada a precio de salida.
+
+Con `max` dos de las cuatro respuestas superaban el tope de 90 s, y la misma
+pregunta caía a un lado y al otro según la ejecución: un corte intermitente que
+el reintento no salvaba, porque gastados 90 s de los 200 s de presupuesto el
+segundo intento se cortaba igual y la respuesta acababa en fallo pagado dos
+veces. Con `high` los 90 s son 3× el peor caso.
 
 Si se cambia el modelo o el esfuerzo, hay que repetir la medición: es una
 latencia dominada por la salida, no por el tamaño de la pregunta.

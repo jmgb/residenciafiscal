@@ -152,7 +152,7 @@ preguntas ni se promociona el modelo. Método, métricas, costes y decisión:
 ### Configuración vigente posterior a F0.2
 
 El baseline anterior conserva valor porque controló el modelo. La configuración
-destinada al producto ya no lo comparte: A usa la política Luna + `max`; B debe
+destinada al producto ya no lo comparte: A usa la política Luna + `high`; B debe
 usar uno de los modelos Gemini permitidos por File Search. Las próximas ocho
 preguntas compararán por tanto stacks completos. Una diferencia observada no se
 puede atribuir exclusivamente a la recuperación.

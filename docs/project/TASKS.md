@@ -129,16 +129,20 @@ contra el dominio público después de cada deploy.
       paquete. Se retiraron el analizador LLM y `POST /analizar`.
       - [x] Fijar el gateway al commit inmutable `208eac03` posterior a `v0.5.0`:
         conserva las correcciones de transporte/cómputo y añade validación por
-        modelo, esfuerzo `max` y el catálogo de precios del 2026-07-31.
+        modelo, esfuerzos `none|low|medium|high|xhigh|max` y el catálogo de
+        precios del 2026-07-31.
         Sustituir el SHA por una etiqueta cuando exista una release que lo incluya.
       - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
         ya borrado, en documentación y configuración de imports.
-      - [ ] Antes de activar el chat, comparar respuestas Luna + `max` sobre el
-        mismo banco de preguntas y evidencia recuperada; medir calidad,
-        latencia, tokens y coste. Nunca usar esta prueba para analizar PDF ni
-        preparar casos del corpus.
+      - [x] Medir el esfuerzo de razonamiento sobre la evidencia recuperada:
+        `max` tardaba 81-96 s y costaba $0.0113-$0.0128 por respuesta, frente a
+        16-30 s y $0.0038-$0.0060 con `high`, entre tres y cuatro veces menos
+        tiempo y dinero. La política queda en `high`. Falta comparar la
+        **calidad** de ambos con la rúbrica congelada; hasta entonces la
+        elección se justifica por coste y latencia, no por equivalencia
+        demostrada.
     - [ ] Repetir las ocho con la configuración destinada al producto —A con
-      Luna + `max`; B con un modelo Gemini permitido por File Search— y una
+      Luna + `high`; B con un modelo Gemini permitido por File Search— y una
       segunda revisión ciega. Esta ejecución compara stacks completos, no
       permite atribuir las diferencias exclusivamente al recuperador. Solo si
       pasa los gates, ejecutar las 40.
