@@ -145,7 +145,7 @@ help:
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
-	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=low|medium|high MAX_FILES="
+	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=none|low|medium|high|xhigh|max MAX_FILES="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
 	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="

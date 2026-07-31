@@ -38,6 +38,7 @@ from config import (
     GPT_5_MINI,
     REASONING_EFFORT,
     SENTENCIA_CLAVE_MODEL,
+    SUPPORTED_REASONING_EFFORTS,
     VALID_CATEGORIAS_PRUEBA,
     VALID_CRITERIOS,
     VALID_RESULTADO_FINAL,
@@ -171,6 +172,7 @@ async def get_config() -> dict[str, Any]:
         "modelo_default": DEFAULT_MODEL,
         "modelo_sentencias_clave": SENTENCIA_CLAVE_MODEL,
         "reasoning_effort_default": REASONING_EFFORT,
+        "reasoning_efforts_permitidos": list(SUPPORTED_REASONING_EFFORTS),
         "modelos_permitidos": sorted(MODELOS_PERMITIDOS),
         "criterios": sorted(VALID_CRITERIOS),
         "categorias_prueba": sorted(VALID_CATEGORIAS_PRUEBA),
@@ -186,7 +188,8 @@ async def analizar(
         str | None, Form(description="Modelo LLM; ver /config → modelos_permitidos")
     ] = None,
     reasoning_effort: Annotated[
-        str | None, Form(description="low | medium | high (solo modelos GPT-5+)")
+        str | None,
+        Form(description="Esfuerzo de razonamiento; ver /config → reasoning_efforts_permitidos"),
     ] = None,
     max_pages: Annotated[
         int | None, Form(description="Limitar páginas leídas del PDF (entero positivo)")
@@ -201,8 +204,9 @@ async def analizar(
     if not filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Solo se aceptan ficheros .pdf")
 
-    if reasoning_effort is not None and reasoning_effort not in {"low", "medium", "high"}:
-        raise HTTPException(status_code=400, detail="reasoning_effort debe ser low, medium o high")
+    if reasoning_effort is not None and reasoning_effort not in SUPPORTED_REASONING_EFFORTS:
+        allowed = ", ".join(SUPPORTED_REASONING_EFFORTS)
+        raise HTTPException(status_code=400, detail=f"reasoning_effort debe ser uno de: {allowed}")
 
     if max_pages is not None and max_pages < 1:
         # Sin esto, extract_pdf_text_with_pages() calcula un límite negativo, no lee

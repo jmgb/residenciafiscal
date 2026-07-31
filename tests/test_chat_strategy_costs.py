@@ -22,7 +22,7 @@ def test_coste_gemini_36_flash_usa_su_tarifa_versionada() -> None:
     assert cost.amount_usd == Decimal("0.017364")
     assert cost.cost_microusd == 17_364
     assert cost.measurement == "ACTUAL"
-    assert cost.pricing_version == "2026-07-30"
+    assert cost.pricing_version == "2026-07-31"
     assert cost.input_tokens == 3_321
     assert cost.retrieved_document_tokens == 5_100
     assert cost.output_tokens == 631
@@ -95,7 +95,7 @@ def test_log_jsonl_no_contiene_pregunta_ni_respuesta(tmp_path: Path) -> None:
         "status": "ok",
         "cost_microusd": 61,
         "cost_measurement": "ACTUAL",
-        "pricing_version": "2026-07-30",
+        "pricing_version": "2026-07-31",
         "model": "gemini-3.5-flash-lite",
         "input_tokens": 100,
         "retrieved_document_tokens": 20,

@@ -10,7 +10,7 @@ Hay tres niveles, de menor a mayor prioridad:
 
 | Nivel | Dónde | Alcance |
 |-------|-------|---------|
-| Por defecto | `REASONING_EFFORT = "medium"` en `src/config.py` | Todo el proyecto |
+| Por defecto | Luna + `REASONING_EFFORT = "max"` en `src/config.py` | Todo el proyecto |
 | Por ejecución | `make run EFFORT=high` → `--reasoning-effort high` | Un run del CLI |
 | Por petición | campo `reasoning_effort` del formulario en `POST /analizar` | Una llamada a la API |
 
@@ -22,9 +22,11 @@ curl -X POST -F "archivo=@sentencias/SAN_1226_2021.pdf" \
      -F "reasoning_effort=high" http://127.0.0.1:8010/analizar
 ```
 
-La API solo acepta `low`, `medium` o `high` (validado en `src/api/main.py`); un valor
-distinto devuelve 400. El valor vigente por defecto se consulta en
-`GET /config` → `reasoning_effort_default`.
+La API y el CLI aceptan `none`, `low`, `medium`, `high`, `xhigh` y `max`; un
+valor distinto devuelve 400. La lista no se duplica en la aplicación: procede
+de `reasoning_efforts` para Luna en el catálogo versionado del gateway. Los
+valores vigentes se consultan en `GET /config` mediante
+`reasoning_effort_default` y `reasoning_efforts_permitidos`.
 
 ## A qué modelos se aplica
 
@@ -44,15 +46,17 @@ fuerzan el modelo premium (`SENTENCIA_CLAVE_MODEL`) al margen de `--model`, pero
 
 ## Niveles
 
-| Nivel | Coste relativo | Cuándo usarlo |
-|-------|----------------|---------------|
-| `low` | Base | Prototipado, validar que el pipeline corre de punta a punta, sentencias cortas y de criterio único |
-| `medium` | ~1,5× | **Por defecto.** Equilibrio razonable para el grueso del corpus |
-| `high` | ~2–4× | Sentencias largas, aplicación de CDI con tie-breaker, casos con muchas pruebas cruzadas |
+| Nivel | Política orientativa |
+|-------|----------------------|
+| `none` | Sin razonamiento deliberado; útil solo para pruebas de transporte o tareas triviales |
+| `low` / `medium` | Menor latencia y coste cuando la tarea admite menos deliberación |
+| `high` / `xhigh` | Análisis complejo con un presupuesto intermedio |
+| `max` | **Por defecto del producto.** Prioriza calidad para texto jurídico |
 
-Los multiplicadores son órdenes de magnitud, no medidas: el sobrecoste llega por
-los *reasoning tokens*, que se facturan como salida y varían mucho según el
-documento. Para cifras reales de tu corpus, usa el comparador.
+Los nombres expresan presupuesto de razonamiento, no una garantía de calidad.
+El sobrecoste llega por los *reasoning tokens*, que se facturan como salida y
+varían según el documento. No se asignan multiplicadores teóricos: para cifras
+reales del corpus se usa el comparador.
 
 ## Comparador
 
@@ -72,7 +76,7 @@ Hoy son tres, de más barata a más cara:
 TEST_CONFIGURATIONS = [
     ("gpt-5.6-luna", "medium"),
     ("gpt-5.6-luna", "high"),
-    ("gpt-5.2-2025-12-11", "medium"),
+    ("gpt-5.6-luna", "max"),
 ]
 ```
 
@@ -108,8 +112,10 @@ La señal útil no es el coste aislado, sino **cuánto compras con él**:
   problema no es el esfuerzo: comprueba que el PDF tiene capa de texto, porque
   el pipeline no hace OCR.
 
-Un patrón razonable en producción es `medium` para todo el corpus y `high` solo
-para el subconjunto que lo justifique, mediante `make run-list`.
+La política vigente es Luna + `max`. Es una decisión del producto para priorizar
+calidad jurídica, no una conclusión del comparador histórico. Antes de procesar
+el corpus completo debe medirse frente a `medium`/`high` con la muestra
+controlada y revisar calidad, latencia y coste.
 
 ## Problemas frecuentes
 
@@ -118,7 +124,7 @@ para el subconjunto que lo justifique, mediante `make run-list`.
 | El esfuerzo no cambia nada | El modelo no es GPT-5; el parámetro se omite por diseño |
 | `cost_usd = null` y `cost_measurement = UNAVAILABLE` | El proveedor no informó uso o el modelo no está tarifado en el catálogo versionado de `llm_gateway` |
 | Timeouts con `high` | Baja a `medium`, o reduce `BATCH_SIZE` en `src/config.py` |
-| 400 en `/analizar` | La API solo admite `low`, `medium` o `high`; `minimal` no está permitido |
+| 400 en `/analizar` | Consulta `reasoning_efforts_permitidos` en `/config`; `minimal` no pertenece al contrato |
 
 ## Referencias
 

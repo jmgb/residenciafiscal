@@ -39,6 +39,16 @@ def test_config_expone_enums(client: TestClient) -> None:
     assert "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS" in body["categorias_prueba"]
     assert "GANA_AEAT" in body["resultados_finales"]
     assert body["modelos_permitidos"]
+    assert body["modelo_default"] == "gpt-5.6-luna"
+    assert body["reasoning_effort_default"] == "max"
+    assert body["reasoning_efforts_permitidos"] == [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max",
+    ]
 
 
 def test_analizar_rechaza_no_pdf(client: TestClient) -> None:

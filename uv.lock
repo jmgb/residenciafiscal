@@ -1120,7 +1120,7 @@ wheels = [
 [[package]]
 name = "neutral-llm-gateway"
 version = "0.5.0"
-source = { git = "https://github.com/jmgb/llm-gateway-python.git?rev=v0.5.0#6b280102521b2b9892172d55324921deea904874" }
+source = { git = "https://github.com/jmgb/llm-gateway-python.git?rev=208eac03dde785f4b9baab7f2b9b50be39950814#208eac03dde785f4b9baab7f2b9b50be39950814" }
 dependencies = [
     { name = "pydantic" },
 ]
@@ -1741,7 +1741,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.0,<1.0.0" },
     { name = "google-genai", specifier = ">=2.0.0,<3.0.0" },
     { name = "groq", specifier = ">=0.11.0,<2.0.0" },
-    { name = "neutral-llm-gateway", extras = ["openai", "gemini", "groq", "openrouter"], git = "https://github.com/jmgb/llm-gateway-python.git?rev=v0.5.0" },
+    { name = "neutral-llm-gateway", extras = ["openai", "gemini", "groq", "openrouter"], git = "https://github.com/jmgb/llm-gateway-python.git?rev=208eac03dde785f4b9baab7f2b9b50be39950814" },
     { name = "openai", specifier = ">=2.41.0,<3.0.0" },
     { name = "openpyxl", specifier = ">=3.1.0,<4.0.0" },
     { name = "pandas", specifier = ">=2.0.0,<3.0.0" },

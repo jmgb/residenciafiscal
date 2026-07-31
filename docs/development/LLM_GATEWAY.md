@@ -97,6 +97,32 @@ Ninguna de las dos es opinable; ambas rompen el analizador si se ignoran.
    valor por defecto, igual que hacía la implementación anterior con Chat
    Completions.
 
+## Reintento y respaldo del analizador
+
+`src/ai_service_adapter.py` declara la política, y las dos mitades se sostienen
+la una a la otra:
+
+| Política | Valor | Por qué |
+|---|---|---|
+| Reintento | `transient`, 2 intentos | Un lote son 106 sentencias en tandas de diez durante dos o tres horas; un límite de ritmo perdía esa sentencia como registro `BAJA` |
+| Presupuesto total | 200 s | Heredado del cliente anterior; acota la llamada entera, reintento incluido |
+| Tope por intento | 90 s | Sin él `per_attempt_seconds` cae en el total, y un primer intento colgado 199 s dejaría un segundo para el reintento |
+| Respaldo de modelo | desactivado | Si contestara otro modelo, el export declararía el que no respondió y el coste quedaría mal atribuido |
+
+Solo se reintenta lo que puede salir bien la segunda vez. Un error no
+transitorio —un esquema inaceptable— fallaría igual y se cobraría dos veces. El
+intento fallido que llegó al proveedor se factura y se ve: el gateway lo cuenta
+como cualquier otro y el coste agregado degrada a `ESTIMATED`.
+
+Los 90 s salen de latencias medidas, no de una intuición. El corpus se mueve
+entre 12,7 s y 38,3 s, y —contra lo que se esperaría— **las sentencias más
+grandes son las más rápidas**: `STS 1432/2023` son 61 712 tokens de entrada
+resueltos en 14,9 s, porque queda fuera de alcance y el modelo emite 408 tokens.
+La latencia la manda la salida, no la entrada, así que el caso lento es una
+sentencia de residencia con análisis largo, no un PDF voluminoso. Estas
+mediciones preceden a la política Luna + `max`: hay que repetir la muestra antes
+de considerar validado el tope de 90 s para esa configuración.
+
 ## El coste no miente
 
 Tres reglas heredadas del paquete que ahora se ven en los exports:
@@ -155,20 +181,22 @@ con la columna `costo_medicion`, cinco de cinco con confianza `ALTA` y coste
 
 ## Actualizar la versión del paquete
 
-Cada consumidor fija una etiqueta inmutable, así que ningún importe ni ninguna
-política de reintento cambia sin una actualización explícita:
+Cada consumidor fija una referencia inmutable, así que ningún importe ni
+ninguna capacidad cambia sin una actualización explícita:
 
 ```toml
 [tool.uv.sources]
-neutral-llm-gateway = { git = "https://github.com/jmgb/llm-gateway-python.git", rev = "v0.5.0" }
+neutral-llm-gateway = { git = "https://github.com/jmgb/llm-gateway-python.git", rev = "208eac03dde785f4b9baab7f2b9b50be39950814" }
 ```
 
-Subir de versión es `uv add` con la etiqueta nueva y una revisión del
-`CHANGELOG` del paquete, que señala explícitamente los cambios que afectan al
-coste. **No apuntar nunca a una ruta local en un commit**: CI ejecuta
+Subir de versión exige una revisión del `CHANGELOG` del paquete y regenerar
+`uv.lock`. **No apuntar nunca a una rama mutable ni a una ruta local en un
+commit**: CI ejecuta
 `uv sync --locked` sin credenciales contra el repositorio público.
 
-El encargo inicial citaba `v0.4.0`, pero este repositorio queda deliberadamente
-fijado a `v0.5.0`: esa versión corrige el transporte del prompt de sistema para
-JSON y normaliza `reasoning_tokens` como desglose de la salida. Bajar a `v0.4.0`
-reintroduciría los dos fallos de contrato descritos arriba.
+El commit fijado es posterior a `v0.5.0`, pero todavía no tiene una etiqueta
+nueva. Se necesita para admitir `none|low|medium|high|xhigh|max`, validar los
+esfuerzos por modelo y usar el catálogo de precios del 2026-07-31 (Luna:
+0,20 USD/MTok de entrada y 1,20 USD/MTok de salida). El SHA completo mantiene
+la instalación reproducible. Cuando el paquete publique una release que
+contenga `208eac03`, se sustituirá por esa etiqueta tras comprobar paridad.

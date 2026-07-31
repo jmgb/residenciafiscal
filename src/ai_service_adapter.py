@@ -89,7 +89,7 @@ async def gpt_request_for_sentencia(
         logger: Logger del pipeline, para los errores.
         temperature: Temperatura (0-1).
         response_format: "json_object" o "text".
-        reasoning_effort: "low", "medium", "high" (solo modelos de razonamiento).
+        reasoning_effort: nivel admitido por el modelo según el catálogo del gateway.
         max_tokens: Tope de tokens generados.
 
     Returns:

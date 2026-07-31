@@ -165,7 +165,7 @@ make fast-check             # lint + typecheck + tests
 ```
 
 Variables de los targets de pipeline: `INPUT=`, `OUTPUT=`, `MODEL=`,
-`EFFORT=low|medium|high`, `MAX_FILES=`.
+`EFFORT=none|low|medium|high|xhigh|max`, `MAX_FILES=`.
 
 Cada ejecución genera en `./output/`, con timestamp: `analisis_*.jsonl`,
 `analisis_*.csv`, `sentencias_*.csv`, `pruebas_*.csv` y `analisis_*.xlsx`.
@@ -173,7 +173,9 @@ Cada ejecución genera en `./output/`, con timestamp: `analisis_*.jsonl`,
 **Coste medido del último lote completo**: $3.42 para 106 sentencias ($0.032 de
 media). Las 23 sentencias marcadas en `sentencias/sentencias_CLAVE.txt` usan
 automáticamente el modelo premium (~$0.098 cada una) al margen del `--model`
-indicado. El desglose vigente está en [`CLAUDE.md`](CLAUDE.md#costes-medidos).
+elegido. Es una medición histórica, no un presupuesto vigente: el catálogo de
+precios y la política por defecto Luna + `max` cambiaron el 2026-07-31.
+El desglose vigente está en [`CLAUDE.md`](CLAUDE.md#costes-medidos).
 
 ## API
 

@@ -55,6 +55,7 @@ from config import (
     REQUIRED_FIELDS,
     SCRIPT_DESCRIPTION,
     SENTENCIA_CLAVE_MODEL,
+    SUPPORTED_REASONING_EFFORTS,
     VALID_CATEGORIAS_PRUEBA,
     # Enums para validación de schema
     VALID_CRITERIOS,
@@ -822,7 +823,7 @@ async def main_async(
 
     Args:
         max_files: Máximo número de PDFs a procesar (0 o None = sin límite)
-        reasoning_effort: Reasoning effort level (low, medium, high)
+        reasoning_effort: Nivel de esfuerzo admitido por el modelo de razonamiento.
     """
 
     if pdf_list is not None:
@@ -1012,8 +1013,8 @@ def main() -> None:
     parser.add_argument(
         "--reasoning-effort",
         default=REASONING_EFFORT,
-        choices=["low", "medium", "high"],
-        help="Reasoning effort level for GPT-5 models (default: medium)",
+        choices=SUPPORTED_REASONING_EFFORTS,
+        help=f"Reasoning effort level for GPT-5 models (default: {REASONING_EFFORT})",
     )
     args = parser.parse_args()
 

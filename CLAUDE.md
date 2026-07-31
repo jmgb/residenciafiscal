@@ -312,7 +312,7 @@ disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
 Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/docs`.
 
 `POST /analizar` acepta además los campos de formulario `modelo`, `reasoning_effort`
-(`low|medium|high`) y `max_pages` (entero positivo). Reutiliza `process_pdf_async()`, así
+(`none|low|medium|high|xhigh|max`) y `max_pages` (entero positivo). Reutiliza `process_pdf_async()`, así
 que devuelve el mismo objeto que una línea del JSONL, envuelto en
 `{"modelo_usado": ..., "analisis": {...}}`. Si el nombre del fichero está en
 `sentencias_CLAVE.txt`, se fuerza el modelo premium.
@@ -329,7 +329,7 @@ Para lotes, sigue usando `make run`.
 | Token opcional | Si `RESIDENCIAFISCAL_API_TOKEN` está en `.env`, exige la cabecera `X-API-Token`. Sin definir, la ruta queda abierta (cómodo en localhost, imprudente con `make dev-public`, que además avisa al arrancar). |
 | Límite de subida | 25 MB, cortado por `Content-Length` en un middleware **antes** de parsear el multipart, con un contador en el handler como respaldo para peticiones `chunked`. |
 | Allowlist de modelos | `modelo` solo acepta IDs declarados en `src/config.py` (ver `/config` → `modelos_permitidos`) para que el endpoint de pago no actúe como proxy abierto. El CLI sí admite IDs de OpenAI, Gemini, Groq y OpenRouter; ambos caminos comparten `detect_provider()`. |
-| Validación de entrada | Solo `.pdf`; `reasoning_effort` ∈ {low, medium, high}; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
+| Validación de entrada | Solo `.pdf`; los esfuerzos se derivan del catálogo del gateway y se exponen en `/config`; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
 
 No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
 
@@ -347,6 +347,8 @@ estimaciones posteriores.
 | **Total mixto (106)** | $0.032 avg | **$3.42** |
 
 **Esta tabla está desfasada y no debe usarse para presupuestar el próximo lote.**
+Además, el catálogo del gateway y la política por defecto Luna + `max` cambiaron
+el 2026-07-31; una medición anterior no permite estimar esa configuración.
 Un lote de cinco sentencias normales en julio de 2026 midió **$0.046/PDF** con el
 mismo modelo y el mismo `reasoning_effort`, ~3× la cifra de enero. No lo causó la
 migración al paquete: la implementación anterior, ejecutada hoy sobre

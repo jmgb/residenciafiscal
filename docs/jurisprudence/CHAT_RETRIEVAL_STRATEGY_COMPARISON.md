@@ -67,7 +67,7 @@ incompleto si una subida falla.
 ### Coste por modelo
 
 El catálogo F0 aplica las tarifas estándar vigentes y las identifica con
-`pricing_version: 2026-07-30`:
+`pricing_version: 2026-07-31`:
 
 | Modelo | Entrada y documentos recuperados | Salida, incluido razonamiento |
 |---|---:|---:|
@@ -326,7 +326,7 @@ mismo mensaje del usuario, no concatenarlas como si fueran una sola.
   "amount_usd": "0.012345",
   "measurement": "ACTUAL",
   "scope": "REQUEST_MARGINAL",
-  "pricing_version": "2026-07-30",
+  "pricing_version": "2026-07-31",
   "input_tokens": 8421,
   "output_tokens": 631,
   "retrieved_document_tokens": 0
@@ -397,7 +397,7 @@ respuesta:
   "status": "ok",
   "cost_microusd": 12345,
   "cost_measurement": "ACTUAL",
-  "pricing_version": "2026-07-30",
+  "pricing_version": "2026-07-31",
   "model": "...",
   "input_tokens": 8421,
   "retrieved_document_tokens": 5100,

@@ -97,12 +97,12 @@ class TestContratoDelPipeline:
     async def test_el_coste_sale_del_catalogo_del_paquete(
         self, monkeypatch: pytest.MonkeyPatch, credenciales: None
     ) -> None:
-        """1000 entrada y 200 salida a las tarifas de gpt-5.6-luna: 1,00 y 6,00 USD/Mtok."""
+        """1000 entrada y 200 salida a las tarifas de Luna: 0,20 y 1,20 USD/Mtok."""
         _instalar_gateway(monkeypatch, FakeProviderAdapter(), prefixes=("gpt-",))
 
         result = await _analizar()
 
-        assert result["cost_usd"] == pytest.approx(0.001 + 0.0012)
+        assert result["cost_usd"] == pytest.approx(0.0002 + 0.00024)
         assert result["cost_measurement"] == "ACTUAL"
 
     async def test_un_coste_no_calculable_es_nulo_y_nunca_cero(
@@ -219,9 +219,9 @@ class TestTraduccionDeParametros:
         adapter = FakeProviderAdapter()
         _instalar_gateway(monkeypatch, adapter, prefixes=("gpt-",))
 
-        await _analizar(reasoning_effort="high")
+        await _analizar(reasoning_effort="max")
 
-        assert adapter.requests[0].reasoning_effort == "high"
+        assert adapter.requests[0].reasoning_effort == "max"
 
     async def test_el_prompt_de_sistema_no_se_mezcla_con_el_texto_de_la_sentencia(
         self, monkeypatch: pytest.MonkeyPatch, credenciales: None

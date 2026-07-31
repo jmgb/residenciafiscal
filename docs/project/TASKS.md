@@ -123,10 +123,16 @@ contra el dominio público después de cada deploy.
       estrategia A y analizador reutilizan el singleton de `gateway_setup` con
       `UsageSink` y `AlertSink`; el writer temporal se retiró y el composition
       root tiene tests directos. B conserva File Search fuera del paquete.
-      - [x] Mantener el pin `v0.5.0`: `v0.4.0` reintroduciría los fallos de
-        transporte del prompt JSON y doble cómputo de `reasoning_tokens`.
+      - [x] Fijar el gateway al commit inmutable `208eac03` posterior a `v0.5.0`:
+        conserva las correcciones de transporte/cómputo y añade validación por
+        modelo, esfuerzo `max` y el catálogo de precios del 2026-07-31.
+        Sustituir el SHA por una etiqueta cuando exista una release que lo incluya.
       - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
         ya borrado, en documentación y configuración de imports.
+      - [ ] Repetir la muestra controlada con Luna + `max` y comprobar calidad,
+        latencia, tokens y coste antes del lote completo. Las latencias que
+        justifican el timeout de 90 s se midieron con la política anterior; es
+        una prueba manual de pago y no se ejecuta en CI.
     - [ ] Repetir las ocho con el mismo modelo; solo si pasan, ejecutar las 40.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)

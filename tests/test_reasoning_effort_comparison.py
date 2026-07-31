@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
-Comprehensive comparison test for different reasoning_effort levels.
+Manual comparison for different reasoning_effort levels.
 
-This script runs the residenciafiscal pipeline with 8 different configurations:
-- GPT-5 with reasoning_effort: high, medium, low, minimal
-- GPT-5-mini with reasoning_effort: high, medium, low, minimal
+By default this script runs Luna with medium, high and max. Edit
+TEST_CONFIGURATIONS to compare another supported model or effort.
 
 It measures:
 - Time to process
@@ -65,7 +64,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 TEST_CONFIGURATIONS = [
     ("gpt-5.6-luna", "medium"),
     ("gpt-5.6-luna", "high"),
-    ("gpt-5.2-2025-12-11", "medium"),
+    ("gpt-5.6-luna", "max"),
 ]
 
 
@@ -299,7 +298,7 @@ async def run_single_test(
 
         # Combine metrics
         result_dict = {
-            "model": model.split("-")[2],  # Extract version (5 or 5-mini)
+            "model": model,
             "reasoning_effort": reasoning_effort,
             "time_seconds": round(elapsed_time, 2),
             **metrics,
@@ -371,7 +370,7 @@ def format_results_table(results: list[dict[str, Any]]) -> pd.DataFrame:
     df = pd.DataFrame(results)
 
     # Sort by model and reasoning effort
-    effort_order = {"minimal": 0, "low": 1, "medium": 2, "high": 3}
+    effort_order = {"none": 0, "low": 1, "medium": 2, "high": 3, "xhigh": 4, "max": 5}
     df["effort_rank"] = df["reasoning_effort"].map(effort_order)
     df = df.sort_values(["model", "effort_rank"]).drop("effort_rank", axis=1)
 
@@ -389,23 +388,15 @@ def print_results_summary(results: list[dict[str, Any]]) -> None:
 
     # Calculate statistics
     print_section("Cost Comparison")
-    gpt5_costs = df[df["model"] == "5"]["cost_usd"].sum()
-    gpt5mini_costs = df[df["model"] == "5-mini"]["cost_usd"].sum()
     total_cost = df["cost_usd"].sum()
 
-    print(f"GPT-5 total cost:      ${gpt5_costs:.4f}")
-    print(f"GPT-5-mini total cost: ${gpt5mini_costs:.4f}")
-    print(f"Overall cost:          ${total_cost:.4f}")
-    print(
-        f"Cost difference:       ${abs(gpt5_costs - gpt5mini_costs):.4f} ({(abs(gpt5_costs - gpt5mini_costs) / max(gpt5_costs, gpt5mini_costs) * 100):.1f}%)"
-    )
+    for model, cost in df.groupby("model")["cost_usd"].sum().items():
+        print(f"{model}: ${cost:.4f}")
+    print(f"Overall cost: ${total_cost:.4f}")
 
     print_section("Time Comparison")
-    gpt5_time = df[df["model"] == "5"]["time_seconds"].sum()
-    gpt5mini_time = df[df["model"] == "5-mini"]["time_seconds"].sum()
-
-    print(f"GPT-5:      {gpt5_time:.2f}s")
-    print(f"GPT-5-mini: {gpt5mini_time:.2f}s")
+    for model, elapsed in df.groupby("model")["time_seconds"].sum().items():
+        print(f"{model}: {elapsed:.2f}s")
 
     print_section("Quality Comparison")
     print("\nConfidence levels:")

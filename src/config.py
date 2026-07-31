@@ -7,7 +7,7 @@ Externaliza variables, rutas y parámetros de LLM en un solo lugar.
 from pathlib import Path
 from typing import Any
 
-from llm_gateway.models import resolve_provider
+from llm_gateway.models import lookup_model, resolve_provider
 
 # ============================================================================
 # RUTAS POR DEFECTO
@@ -46,13 +46,20 @@ GPT_5_MINI = "gpt-5.6-luna"
 # Modelos Gemini (si se implementa soporte)
 GEMINI_FLASH = "gemini-3.6-flash"
 
-# Parámetro de esfuerzo de razonamiento para GPT-5 (low|medium|high)
-# Mayor esfuerzo = mayor precisión pero más lento y caro
-REASONING_EFFORT = "medium"
-
 # Modelo por defecto a usar
 DEFAULT_MODEL = GPT_5_MINI
 SENTENCIA_CLAVE_MODEL = GPT_5
+
+# La lista autoritativa procede del catálogo versionado del gateway. Así la API
+# y el CLI no mantienen una copia local de una capacidad propia del proveedor.
+_default_model_info = lookup_model(DEFAULT_MODEL)
+if _default_model_info is None or not _default_model_info.reasoning_efforts:
+    raise RuntimeError(f"El catálogo del gateway no declara reasoning_efforts para {DEFAULT_MODEL}")
+SUPPORTED_REASONING_EFFORTS = _default_model_info.reasoning_efforts
+
+# Política del producto: Luna con el máximo esfuerzo disponible prioriza la
+# calidad jurídica. El coste real se sigue registrando en cada respuesta.
+REASONING_EFFORT = "max"
 
 
 # Credenciales por proveedor. Las claves son de la aplicación: `llm_gateway` no
