@@ -9,6 +9,12 @@ contra el dominio público después de cada deploy.
 > presupuesto), la ampliación del corpus y la revisión humana. La fase 0 de
 > plataforma ya está ejecutada y medida.
 >
+> **Decisión de runtime V1 (2026-07-31):** el chat se desplegará íntegramente en
+> una Netlify Function estándar, con A y B en paralelo y deadline interno
+> inferior a 60 s. El recorrido Edge → FastAPI ya implementado no se borra: se
+> conserva como alternativa futura si hacen falta llamadas más largas o mayor
+> control operativo, pero no debe desplegarse como V1.
+>
 > El diseño y el plan viven en `docs/superpowers/`, que está en `.gitignore`: esos
 > dos ficheros son excepciones añadidas con `git add -f`. Si creas más documentos
 > ahí, no se versionarán solos.
@@ -39,10 +45,12 @@ contra el dominio público después de cada deploy.
 
 ## Producto y arquitectura
 
-- [ ] **Sustituir el motor `stub` del chat por un backend real.** El recorrido
-  React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está implementado
-  y probado, pero cerrado por defecto y no desplegado. Falta resolver fase 0b,
-  alojar el servicio Python y autorizar producción. Runbook:
+- [ ] **Sustituir el motor `stub` del chat por un backend real Netlify-only.** El
+  prototipo React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está
+  implementado y probado, pero deja de ser el objetivo de la V1. Hay que portar
+  el composition root conversacional a una Netlify Function TypeScript,
+  resolver fase 0b y autorizar producción. La implementación anterior se
+  conserva como opción futura para peticiones de más de 60 s. Runbook y corte:
   [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md). Incluye recuperación
   con fuentes trazables que el servidor verifica y convierte en referencias
   tipadas por estrategia; el navegador nunca resuelve identificadores del LLM.
@@ -127,11 +135,11 @@ contra el dominio público después de cada deploy.
       el singleton de `gateway_setup` con `UsageSink` y `AlertSink`; el workflow
       Python + agente no importa el gateway. B conserva File Search fuera del
       paquete. Se retiraron el analizador LLM y `POST /analizar`.
-      - [x] Fijar el gateway al commit inmutable `208eac03` posterior a `v0.5.0`:
-        conserva las correcciones de transporte/cómputo y añade validación por
-        modelo, esfuerzos `none|low|medium|high|xhigh|max` y el catálogo de
-        precios del 2026-07-31.
-        Sustituir el SHA por una etiqueta cuando exista una release que lo incluya.
+      - [x] Instalar el gateway desde PyPI con `>=0.7.0` y sin techo. La `0.7.0`
+        normaliza el esquema estricto de OpenAI y declara
+        `supports_temperature`, así que se retiraron los dos parches locales
+        que suplían ambas cosas, y con ellos la tabla de enrutado heredada
+        del analizador borrado.
       - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
         ya borrado, en documentación y configuración de imports.
       - [x] Medir el esfuerzo de razonamiento sobre la evidencia recuperada:
@@ -221,14 +229,28 @@ contra el dominio público después de cada deploy.
     - [x] Extender el protocolo 2 al modo comparativo A/B con `strategy`,
       `answer_start`, `answer_done`, coste y terminal global; adaptar
       `ChatMessage`/UI antes de conectar el selector al backend.
-    - [x] Implementar `POST /chat` en FastAPI con composición perezosa, secreto
-      del proxy, fuentes/coste por estrategia y logs sin consulta ni respuesta.
-    - [x] Implementar `/api/chat` como Edge Function fina con rate limit por IP,
-      proxy autenticado y transmisión del stream; no duplicar Python ni claves.
+    - [x] Implementar el prototipo `POST /chat` en FastAPI con composición
+      perezosa, secreto del proxy, fuentes/coste por estrategia y logs sin
+      consulta ni respuesta. Se conserva como referencia y posible runtime
+      futuro; no es el target de despliegue V1.
+    - [x] Implementar el proxy prototipo `/api/chat` como Edge Function fina con
+      rate limit por IP y transmisión del stream a FastAPI.
+    - [ ] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
+      portar solo el runtime online de A y B, sin trasladar a TypeScript el
+      pipeline Python de preparación del corpus.
+    - [ ] Ejecutar A y B en paralelo con aislamiento de errores, conservar el
+      orden visual A → B y cancelar todo trabajo restante antes del deadline
+      global de 50–55 s.
+    - [ ] Mantener Luna `high` en la V1 y medir durante varios días latencia
+      total, percentiles, timeouts, tokens, coste y calidad. Evaluar un esfuerzo
+      menor solo después, si la evidencia muestra que falta margen bajo 60 s.
+    - [ ] Cubrir con tests de contrato la paridad de fuentes, estados, modelo,
+      tokens, coste, cancelación y respuesta parcial respecto del prototipo
+      Python antes de retirar este del camino productivo.
     - [x] Cablear el selector seguro: solo `VITE_CHAT_MODE=live` activa el cliente;
       cualquier otro valor conserva el stub.
-    - [ ] Desplegar el servicio FastAPI en un runtime Python 3.13 con artefactos y
-      logs persistentes; validar primero un Deploy Preview según el runbook.
+    - [ ] Desplegar la Function Netlify-only en un Deploy Preview y validar una
+      consulta real completa por debajo de 60 s según el runbook actualizado.
     - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
       contrato actual es deliberadamente single-turn: el historial se muestra
       localmente, pero solo la última pregunta autosuficiente sale del navegador.
@@ -399,10 +421,11 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 
 ## Seguridad y datos
 
-- [ ] **Completar la protección económica del endpoint live.** Ya existen
-  secreto Edge → FastAPI, rate limit por IP, cierre por bandera y logs/analítica
-  sin texto de consulta. Falta un límite global de gasto con atomicidad real;
-  el rate limit actual no lo sustituye (fase 0b).
+- [ ] **Completar la protección económica del endpoint live.** El prototipo ya
+  tiene secreto Edge → FastAPI, rate limit por IP, cierre por bandera y
+  logs/analítica sin texto de consulta. La V1 debe conservar esas garantías
+  dentro de Netlify y añadir un límite global de gasto con atomicidad real; el
+  rate limit actual no lo sustituye (fase 0b).
 - [ ] **Requisitos legales previos a activar el chat real.** Bloquean la fase 3: con el
   motor en `stub` no sale nada de Netlify; con el real, la última pregunta
   autosuficiente viaja a OpenAI para A y a Google/Gemini para B.

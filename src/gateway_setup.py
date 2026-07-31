@@ -21,7 +21,7 @@ import os
 import threading
 from typing import Any
 
-from llm_gateway import CostMeasurement, LLMGateway, ProviderRegistry
+from llm_gateway import CostMeasurement, LLMGateway
 from llm_gateway.factories import (
     build_registry,
     create_gemini_client,
@@ -31,7 +31,7 @@ from llm_gateway.factories import (
 )
 from llm_gateway.ports import UsageRecord
 
-from config import LEGACY_MODEL_PREFIXES, PROVIDER_API_KEY_ENV
+from config import PROVIDER_API_KEY_ENV
 
 logger = logging.getLogger("residenciafiscal.llm")
 
@@ -115,28 +115,11 @@ def build_gateway() -> LLMGateway:
             f"Define al menos una de: {', '.join(sorted(PROVIDER_API_KEY_ENV.values()))}"
         )
 
-    registry = build_registry(**clients)
-    _registrar_ids_heredados(registry)
-
     return LLMGateway(
-        registry=registry,
+        registry=build_registry(**clients),
         usage_sink=LoggingUsageSink(),
         alert_sink=LoggingAlertSink(),
     )
-
-
-def _registrar_ids_heredados(registry: ProviderRegistry) -> None:
-    """Lo que `detect_provider()` afirma, el registro tiene que poder servirlo.
-
-    Sin esto, un id como `groq-llama-3.3` pasa la validación de credencial
-    —`detect_provider()` lo reconoce— y muere después al resolverlo, porque los
-    prefijos que el paquete registra para Groq (`llama`, `groq/`) no lo cubren.
-    El lote entero saldría como registros fallidos de confianza BAJA.
-    """
-    disponibles = set(registry.provider_names)
-    for prefix, provider in LEGACY_MODEL_PREFIXES:
-        if provider in disponibles:
-            registry.register(registry.by_name(provider), model_prefixes=(prefix,))
 
 
 _gateway: LLMGateway | None = None

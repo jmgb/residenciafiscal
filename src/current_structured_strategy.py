@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 
-from llm_gateway import ReasoningEffort
+from llm_gateway import CostMeasurement, ReasoningEffort
 
 from chat_answer_contract import StructuredChatAnswerDraft
 from chat_answer_prompt import (
@@ -12,16 +12,13 @@ from chat_answer_prompt import (
     structured_answer_prompt,
 )
 from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
-from chat_strategy_costs import (
-    GeminiUsage,
-    calculate_request_cost,
-    zero_marginal_cost,
-)
+from chat_strategy_costs import PRICING_VERSION, unknown_failure_cost, zero_marginal_cost
 from chat_strategy_models import MarginalCost, StrategyAnswer
 from jurisprudence_phase_d_retrieval import retrieve_for_chat
 from jurisprudence_retrieval_corpus_models import RetrievalCorpus
 from structured_answer_writer import (
     ChatWriterRequest,
+    ChatWriterResult,
     StructuredAnswerWriter,
 )
 from structured_evidence_context import build_structured_evidence_bundle
@@ -97,15 +94,7 @@ class CurrentStructuredStrategy:
                 reasoning_effort=self._reasoning_effort,
             )
         )
-        cost = calculate_request_cost(
-            GeminiUsage(
-                input_tokens=writer_result.usage.input_tokens,
-                retrieved_document_tokens=0,
-                output_tokens=writer_result.usage.output_tokens,
-                usage_complete=writer_result.usage.usage_complete,
-            ),
-            model=writer_result.model_used,
-        )
+        cost = _as_marginal_cost(writer_result)
         evidence_ids = tuple(dict.fromkeys(writer_result.draft.evidence_ids))
         unknown = tuple(
             evidence_id
@@ -145,6 +134,31 @@ class CurrentStructuredStrategy:
             model=writer_result.model_used,
             latency_ms=round((time.perf_counter() - started) * 1000),
         )
+
+
+def _as_marginal_cost(writer_result: ChatWriterResult) -> MarginalCost:
+    """Traduce el importe del gateway, sin volver a calcularlo.
+
+    Solo se rellena el desglose que el paquete no conoce: A no recupera
+    documentos, así que su cuenta es cero, y el resto de campos de
+    `MarginalCost` son etiquetas de alcance de este proyecto.
+
+    Un importe indisponible cae en `unknown_failure_cost()`, que es lo que el
+    proyecto ya usaba para eso: `MarginalCost` no sabe expresar `UNAVAILABLE`,
+    y ese hueco es anterior a este cambio.
+    """
+    cost = writer_result.cost
+    if cost.microusd is None or cost.amount_usd is None:
+        return unknown_failure_cost()
+    return MarginalCost(
+        amount_usd=cost.amount_usd,
+        cost_microusd=cost.microusd,
+        measurement="ACTUAL" if cost.measurement is CostMeasurement.ACTUAL else "ESTIMATED",
+        pricing_version=cost.pricing_version or PRICING_VERSION,
+        input_tokens=writer_result.usage.input_tokens,
+        output_tokens=writer_result.usage.output_tokens,
+        retrieved_document_tokens=0,
+    )
 
 
 def _grounding_error(

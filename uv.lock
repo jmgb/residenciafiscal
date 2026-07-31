@@ -1110,10 +1110,14 @@ wheels = [
 
 [[package]]
 name = "neutral-llm-gateway"
-version = "0.5.0"
-source = { git = "https://github.com/jmgb/llm-gateway-python.git?rev=208eac03dde785f4b9baab7f2b9b50be39950814#208eac03dde785f4b9baab7f2b9b50be39950814" }
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b7/de/fa04f2ae127844ca24cfed19be30acb2add562b1c30890f49d3d7d33413d/neutral_llm_gateway-0.7.0.tar.gz", hash = "sha256:04409ffc0d46392053c046dbbf85e79d8734814cdf28959f1a9fee3019ab8714", size = 148882, upload-time = "2026-07-31T11:54:59.32Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/63/bf/5728444804224489f8bc1ada4bbcf0f96fc532af741df6cb6d61d1d52bf9/neutral_llm_gateway-0.7.0-py3-none-any.whl", hash = "sha256:585e977a083eb4315bffc3b93d905ff43acf4d53b10384bd64d989ade2439500", size = 43717, upload-time = "2026-07-31T11:54:58.017Z" },
 ]
 
 [package.optional-dependencies]
@@ -1601,7 +1605,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.115.0,<1.0.0" },
     { name = "google-genai", specifier = ">=2.0.0,<3.0.0" },
     { name = "groq", specifier = ">=0.11.0,<2.0.0" },
-    { name = "neutral-llm-gateway", extras = ["openai", "gemini", "groq", "openrouter"], git = "https://github.com/jmgb/llm-gateway-python.git?rev=208eac03dde785f4b9baab7f2b9b50be39950814" },
+    { name = "neutral-llm-gateway", extras = ["gemini", "groq", "openai", "openrouter"], specifier = ">=0.7.0" },
     { name = "openai", specifier = ">=2.41.0,<3.0.0" },
     { name = "pydantic", specifier = ">=2.0.0,<3.0.0" },
     { name = "pypdf", specifier = ">=5.0.0,<7.0.0" },

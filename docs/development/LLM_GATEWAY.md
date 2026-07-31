@@ -72,43 +72,41 @@ El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
 salía con el valor por defecto del proveedor y declararlo en la política no
 habría cambiado nada.
 
-El importe deja de exigir un modelo de File Search: `calculate_request_cost`
-tarifa cualquier modelo catalogado y `calculate_gemini_file_search_cost`
-conserva la restricción de B. Antes, una A fuera de esa lista moría con
-`modelo File Search sin tarifa` **después** de haber pagado la llamada.
+El importe de A ya no se calcula aquí: lo mide el gateway y viaja en
+`ChatWriterResult.cost`. Antes, A recomponía la cuenta con las mismas
+tarifas y moría con `modelo File Search sin tarifa` si el modelo no estaba
+en la lista de B, **después** de haber pagado la llamada.
 
-## Lo que exige la Responses API y Gemini perdonaba
+## Lo que resuelve el paquete y aquí no se reimplementa
 
-Mover A a Luna destapó tres cosas que Gemini aceptaba y OpenAI no. Ninguna la
-detecta la suite por sí sola: los tests del chat usan dobles de proveedor, que
-admiten cualquier petición.
+Mover A a Luna destapó dos incompatibilidades que Gemini perdonaba y OpenAI no.
+Se parchearon aquí, y la `v0.7.0` las resolvió en origen. **Los parches locales
+se retiraron**: mantener dos sitios decidiendo lo mismo garantiza que uno de
+los dos envejezca sin que nadie lo note.
 
-**1. Modo estricto: `required` con todas las propiedades.** Un campo con valor
-por defecto en Pydantic no llega a `required`, y OpenAI rechaza el esquema
-entero con `invalid_json_schema` —`Missing 'limits'`—, no el campo. Por eso
-`StructuredChatAnswerDraft` redeclara `limits` y `evidence_ids` sin valor por
-defecto, y el prompt de A los pide explícitamente: exigir en el esquema lo que
-las instrucciones no mencionan traslada al modelo un requisito que nadie le
-comunicó. Hay una ventaja de fondo, no solo de compatibilidad: un `limits`
-ausente se convertía en tupla vacía, y eso confunde «no hay salvedades» con «el
-modelo no se pronunció», que en una respuesta jurídica no es lo mismo.
-`tests/test_chat_answer_strict_schema.py` lo comprueba sin red ni coste.
+| Problema | Quién lo resuelve |
+|---|---|
+| El modo estricto exige `required` completo y `additionalProperties: false` | `providers/strict_schema.py` reescribe el esquema antes de enviarlo |
+| Un modelo de razonamiento rechaza `temperature` | `ModelInfo.supports_temperature`; el gateway descarta la opción antes del intento |
+| Un modelo no catalogado no tiene tarifa | El catálogo versionado del paquete |
+| Qué proveedor sirve cada id | `resolve_provider` y el registro; aquí no hay tabla de enrutado |
 
-La clase base `ChatAnswerDraft` no cambia. La usa B contra File Search, que no
-impone modo estricto, y endurecerla convertiría en fallo respuestas hoy válidas
-en un camino que ya alimentó artefactos de revisión.
+Lo único que se conserva de aquellos parches es lo que **no** es del proveedor:
+`StructuredChatAnswerDraft` sigue exigiendo `limits` y `evidence_ids` porque un
+campo omitido no puede significar «no hay», y el prompt los pide explícitamente.
+Esa garantía es jurídica y ningún proveedor la da por nosotros;
+`tests/test_chat_answer_contract.py` la comprueba sin red ni coste.
 
-**2. `temperature=0` no existe para un modelo de razonamiento.** La API
-responde `Unsupported parameter`. `ChatWriterRequest` la pide a 0 por defecto
-—correcto para una tarea jurídica, y aceptado por Gemini—, así que sin el
-ajuste de `gateway_chat_writer` **todas** las respuestas de A fallarían. La
-condición se deriva del catálogo (`provider == "openai"` y `reasoning_efforts`
-declarados) en vez de una lista de nombres, y se acota a OpenAI porque Gemini 3
-también declara esfuerzos y sí admite temperatura: quitársela cambiaría el
-determinismo y con él las cifras ya medidas.
+La clase base `ChatAnswerDraft` no cambia: la usa B contra File Search, y
+endurecerla convertiría en fallo respuestas hoy válidas en un camino que ya
+alimentó artefactos de revisión.
 
-**3. El coste asumía que toda generación era de File Search.** Resuelto al
-separar tarifar de permitir, según la tabla de la sección anterior.
+El coste de A también se delega: el puerto del redactor transporta el `Cost`
+que midió el gateway en vez de que la estrategia rehaga la cuenta. Con ello
+hereda la degradación a `ESTIMATED` cuando un intento facturado no tiene
+importe conocido, que la cuenta local no sabía reproducir. B sigue calculando
+el suyo: mide sobre la Interactions API, fuera del paquete, y factura tokens
+de documento recuperado que ninguna llamada del gateway produce.
 
 ## Reintento y fallback
 
@@ -124,7 +122,7 @@ corpus de cinco, medidas dos veces con cada esfuerzo:
 | Esfuerzo | Latencia | Tokens de salida | Coste por respuesta |
 |---|---|---|---|
 | `max` | 81,0 / 81,7 / 93,4 / 95,9 s | 7 854 – 9 077 | $0.0113 – $0.0128 |
-| `high` | 16,3 / 17,8 / 22,2 / 30,3 s | 1 617 – 3 432 | $0.0038 – $0.0060 |
+| `high` | 11,1 – 36,7 s (ocho medidas) | 1 095 – 3 432 | $0.0032 – $0.0060 |
 
 `max` costaba entre tres y cuatro veces más tiempo y dinero por respuesta, y
 nadie había medido qué calidad compraba a cambio. En un chat que **no puede
@@ -135,22 +133,28 @@ Con `max` dos de las cuatro respuestas superaban el tope de 90 s, y la misma
 pregunta caía a un lado y al otro según la ejecución: un corte intermitente que
 el reintento no salvaba, porque gastados 90 s de los 200 s de presupuesto el
 segundo intento se cortaba igual y la respuesta acababa en fallo pagado dos
-veces. Con `high` los 90 s son 3× el peor caso.
+veces. Con `high` los 90 s son 2,4× el peor caso.
 
 Si se cambia el modelo o el esfuerzo, hay que repetir la medición: es una
 latencia dominada por la salida, no por el tamaño de la pregunta.
 
-## Versión fijada
+## Versión
 
-El proyecto usa una referencia Git inmutable:
+El paquete se instala desde PyPI con un mínimo y sin techo:
 
 ```toml
-[tool.uv.sources]
-neutral-llm-gateway = { git = "https://github.com/jmgb/llm-gateway-python.git", rev = "208eac03dde785f4b9baab7f2b9b50be39950814" }
+dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.7.0"]
 ```
 
-Ese commit, posterior a `v0.5.0`, añade esfuerzos
-`none|low|medium|high|xhigh|max`, validación por modelo y catálogo
-`2026-07-31`. Cuando exista una release que lo contenga, puede sustituirse el
-SHA por su etiqueta tras revisar `CHANGELOG`, regenerar `uv.lock` y ejecutar
-`make fast-check`. Nunca se fija una rama mutable ni una ruta local.
+`0.7.0` es el mínimo porque es la primera versión que normaliza el esquema
+estricto y declara `supports_temperature`: por debajo, este proyecto vuelve a
+necesitar los parches que se acaban de retirar.
+
+No hay techo por decisión explícita. El contrapeso conviene tenerlo presente:
+el propio paquete recomienda fijar una versión exacta, y sin máximo una futura
+`0.8.0` con cambios de contabilidad de coste entraría al regenerar el lock.
+`uv.lock` sigue clavando la versión resuelta y CI ejecuta `uv sync --locked`, así
+que el cambio solo se materializa cuando alguien corre `uv lock` — momento en el
+que conviene leer el `CHANGELOG`, que señala explícitamente lo que afecta al
+coste, y ejecutar `make fast-check`. Nunca se fija una rama mutable ni una ruta
+local.

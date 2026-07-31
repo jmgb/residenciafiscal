@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal, Protocol
 
-from llm_gateway import ReasoningEffort
+from llm_gateway import Cost, ReasoningEffort
 from pydantic import Field
 
 from chat_answer_contract import StructuredChatAnswerDraft
@@ -34,6 +34,17 @@ class ChatWriterResult(JurisprudenceCaseModel):
     draft: StructuredChatAnswerDraft
     usage: ChatWriterUsage
     model_used: NonEmptyText
+    cost: Cost
+    """El importe que midió el gateway, transportado sin recalcular.
+
+    Antes el redactor lo descartaba y la estrategia lo recomponía a partir de
+    los tokens y del catálogo: las mismas tarifas y la misma aritmética en
+    microdólares, hechas dos veces. Además esa cuenta se hacía sobre el uso
+    agregado, así que perdía la degradación a `ESTIMATED` que el paquete aplica
+    cuando un intento facturado no tiene importe conocido.
+
+    Es un dato del gateway, no del producto: por eso viaja el `Cost` del paquete
+    y no una copia local con otros nombres."""
 
 
 class StructuredAnswerWriter(Protocol):

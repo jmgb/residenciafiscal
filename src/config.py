@@ -5,34 +5,18 @@ módulo no define modelos para analizar sentencias: el corpus se prepara offline
 mediante Python + agente.
 """
 
-from llm_gateway.models import resolve_provider
-
 # `llm_gateway` no lee el entorno. La aplicación entrega las credenciales al
 # composition root del chat.
+#
+# No hay tabla de enrutado local: quién sirve cada modelo lo decide el catálogo
+# del paquete, que es el mismo que consulta su registro. Existió una para tolerar
+# ids heredados del analizador de sentencias, y se fue con él.
 PROVIDER_API_KEY_ENV = {
     "openai": "OPENAI_API_KEY",
     "gemini": "GEMINI_API_KEY",
     "groq": "GROQ_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",
 }
-
-# Compatibilidad de routing para IDs históricos que todavía puede recibir el
-# gateway del chat. No describe un pipeline de análisis de sentencias.
-LEGACY_MODEL_PREFIXES: tuple[tuple[str, str], ...] = (("groq-", "groq"),)
-
-
-def detect_provider(model_id: str) -> str:
-    """Resuelve el proveedor de un modelo usando primero el catálogo común."""
-    declared = resolve_provider(model_id)
-    if declared is not None:
-        return declared
-
-    lowered = model_id.lower()
-    for prefix, provider in LEGACY_MODEL_PREFIXES:
-        if lowered.startswith(prefix):
-            return provider
-    return "openrouter"
-
 
 VALID_CRITERIOS = {
     "CRIT_183_DIAS",

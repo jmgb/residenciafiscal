@@ -29,7 +29,6 @@ from llm_gateway import (
     RetryPolicy,
     TimeoutPolicy,
 )
-from llm_gateway.models import lookup_model
 
 from chat_answer_contract import StructuredChatAnswerDraft
 from structured_answer_writer import (
@@ -48,8 +47,8 @@ La cifra sigue al esfuerzo declarado en `chat_model_policy`, porque la latencia
 la manda el razonamiento y no el tamaño de la pregunta. Con `max` hubo que
 subirla: cuatro respuestas reales tardaron 81,0 s, 81,7 s, 93,4 s y 95,9 s, dos
 de ellas por encima de este tope, y la misma pregunta caía a un lado y al otro
-según la ejecución. Con `high`, cuatro respuestas a las mismas preguntas
-tardaron 16,3 s, 17,8 s, 22,2 s y 30,3 s: los 90 s son 3× el peor caso.
+según la ejecución. Con `high`, ocho respuestas a las mismas preguntas se
+reparten entre 11,1 s y 36,7 s: los 90 s son 2,4× el peor caso.
 
 No conviene dejarlo más alto «por si acaso». Un presupuesto holgado no evita
 ningún corte que 90 s no eviten ya, y en cambio alarga hasta 300 s lo que tarda
@@ -60,31 +59,6 @@ Los 200 s de total mantienen que quepan dos intentos: un tope por intento que no
 quepa dos veces en el presupuesto deja el reintento en decorativo."""
 
 WRITER_MAX_ATTEMPTS = 2
-
-
-def _temperature_for(model: str, temperature: float | None) -> float | None:
-    """Los modelos de razonamiento de OpenAI solo aceptan su temperatura por defecto.
-
-    `ChatWriterRequest` pide `temperature=0` por defecto, que es lo correcto para
-    una tarea jurídica y lo que Gemini venía aceptando. La Responses API, en
-    cambio, responde `Unsupported parameter: 'temperature' is not supported with
-    this model`, así que con la política del chat apuntando a Luna esa temperatura
-    heredada convertía **todas** las respuestas de A en un fallo.
-
-    La condición sale del catálogo del paquete y no de una lista de nombres, para
-    que un modelo nuevo no obligue a tocar esto: declarar `reasoning_efforts` es
-    lo que identifica a un modelo de razonamiento. Se acota a OpenAI a propósito;
-    Gemini 3 también los declara y sí admite temperatura, y quitársela cambiaría
-    el determinismo de la estrategia y con él las cifras ya medidas.
-
-    El catálogo no dice qué modelos admiten temperatura, así que la regla vive
-    aquí: mientras solo la necesite este proyecto, es su adaptador y no la API
-    pública del paquete.
-    """
-    info = lookup_model(model)
-    if info is None or info.provider != "openai" or not info.reasoning_efforts:
-        return temperature
-    return None
 
 
 class GatewayChatWriter:
@@ -101,7 +75,7 @@ class GatewayChatWriter:
                 messages=(Message("user", request.user_prompt),),
                 response_format=ResponseFormat.JSON_SCHEMA,
                 response_schema=StructuredChatAnswerDraft,
-                temperature=_temperature_for(request.model, request.temperature),
+                temperature=request.temperature,
                 reasoning_effort=request.reasoning_effort,
                 timeout_policy=TimeoutPolicy(
                     total_seconds=WRITER_TIMEOUT_SECONDS,
@@ -116,6 +90,7 @@ class GatewayChatWriter:
             draft=_as_draft(result.output),
             usage=_as_writer_usage(result.usage),
             model_used=result.execution.model_used,
+            cost=result.cost,
         )
 
 

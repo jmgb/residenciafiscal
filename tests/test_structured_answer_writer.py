@@ -18,6 +18,8 @@ class RecordingWriter:
         self.requests: list[Any] = []
 
     async def write(self, request: Any) -> Any:
+        from llm_gateway import Cost, CostMeasurement
+
         from chat_answer_contract import StructuredChatAnswerDraft
         from structured_answer_writer import ChatWriterResult, ChatWriterUsage
 
@@ -35,6 +37,14 @@ class RecordingWriter:
                 usage_complete=True,
             ),
             model_used=request.model,
+            # El importe lo mide el gateway, así que el doble lo aporta. Que el
+            # test tenga que darlo es la prueba de que la estrategia ya no lo
+            # recalcula a partir de tokens y tarifas.
+            cost=Cost(
+                measurement=CostMeasurement.ACTUAL,
+                microusd=60,
+                pricing_version="2026-07-31",
+            ),
         )
 
 

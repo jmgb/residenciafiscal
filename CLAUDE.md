@@ -69,9 +69,11 @@ Search directo porque el paquete no ofrece tools ni ficheros. Los límites y
 tests del composition root están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
-**No hay tabla de precios local**: las tarifas salen del catálogo versionado del
-paquete, y `detect_provider()` delega en el mismo catálogo que usa el registro
-para elegir adaptador, para que no existan dos tablas capaces de discrepar.
+**No hay tabla de precios ni de enrutado local**: las tarifas y el proveedor de
+cada modelo salen del catálogo versionado del paquete, que es el mismo que
+consulta su registro. Tampoco se reimplementan aquí el esquema estricto de
+OpenAI ni la exclusión de `temperature` en modelos de razonamiento: desde la
+`v0.7.0` los resuelve el paquete.
 
 En el chat, un coste no calculable nunca se presenta como cero y la medición
 distingue `ACTUAL`, `ESTIMATED` y `UNAVAILABLE`.
@@ -292,8 +294,12 @@ Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/
 
 La API no expone `/analizar`. `GET /config` publica la política del chat y los
 catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
-falla cerrado salvo activación y autenticación explícitas. Producción conserva
-el stub; despliegue y rollback:
+falla cerrado salvo activación y autenticación explícitas. Es el prototipo local
+y se conserva como posible arquitectura futura para peticiones de más de 60 s;
+no es el target de la V1. La V1 portará solo el runtime conversacional a una
+Netlify Function TypeScript, ejecutará A y B en paralelo y mantendrá Luna
+`high` mientras se miden varios días de latencia real. Producción conserva el
+stub; decisión, despliegue y rollback:
 [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Costes del chat

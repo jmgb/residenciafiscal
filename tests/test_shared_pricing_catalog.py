@@ -88,18 +88,3 @@ class TestCostsStillBehave:
 
         with pytest.raises(ValueError, match="no admitido en File Search"):
             calculate_gemini_file_search_cost(usage, model="gpt-5.6-luna")
-
-    def test_a_model_outside_the_catalogue_has_no_rate(self) -> None:
-        """El cálculo general acepta cualquier modelo catalogado, no cualquiera."""
-        from chat_strategy_costs import GeminiUsage, calculate_request_cost
-
-        with pytest.raises(ValueError, match="sin tarifa en el catálogo"):
-            calculate_request_cost(
-                GeminiUsage(
-                    input_tokens=1,
-                    retrieved_document_tokens=0,
-                    output_tokens=1,
-                    usage_complete=True,
-                ),
-                model="modelo-inexistente",
-            )

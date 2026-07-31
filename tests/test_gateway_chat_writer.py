@@ -172,20 +172,48 @@ class TestPolicies:
 
 class TestPortFidelity:
     async def test_it_returns_exactly_the_port_contract_and_no_more(self) -> None:
-        """El coste lo calcula la estrategia, no el redactor."""
+        """El redactor transporta el coste medido; no lo calcula.
+
+        La distinción importa: quien lo calcula sigue siendo el gateway, con su
+        catálogo y su versión de tarifas. Antes este campo no viajaba y la
+        estrategia rehacía la cuenta con las mismas tarifas, que es la
+        duplicación que este contrato elimina.
+        """
         result = await _writer(FakeProviderAdapter()).write(_request())
 
-        assert set(result.model_dump()) == {"draft", "usage", "model_used"}
+        assert set(result.model_dump()) == {"draft", "usage", "model_used", "cost"}
+
+    async def test_the_transported_cost_is_the_one_the_gateway_measured(self) -> None:
+        """120 de entrada y 30 de salida a la tarifa de Luna: 0,20 y 1,20 USD/Mtok."""
+        from chat_model_policy import CHAT_MODEL
+
+        adapter = FakeProviderAdapter()
+        adapter.name = "openai"
+
+        result = await _writer(adapter).write(_request(model=CHAT_MODEL))
+
+        assert result.cost.microusd == 60
+        assert result.cost.measurement.value == "ACTUAL"
+        assert result.cost.pricing_version
 
 
 class TestFailures:
     async def test_an_unparseable_draft_raises_rather_than_inventing_one(self) -> None:
-        from llm_gateway import OutputError
+        """Desde la v0.7.0 el error conserva los intentos, y con ellos el gasto.
+
+        Antes se propagaba el error de salida a secas y se perdía la cuenta de
+        lo pagado: una respuesta ilegible sigue siendo una llamada facturada.
+        """
+        from llm_gateway import AllAttemptsFailed, OutputError
 
         adapter = FakeProviderAdapter(text="esto no es json")
 
-        with pytest.raises((OutputError, ValueError)):
+        with pytest.raises(AllAttemptsFailed) as fallo:
             await _writer(adapter).write(_request())
+
+        assert isinstance(fallo.value.__cause__, OutputError)
+        assert fallo.value.attempts
+        assert all(intento.billable for intento in fallo.value.attempts)
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:
         """Las credenciales son de la aplicación, no del redactor."""
@@ -216,29 +244,3 @@ class TestTimeBudget:
         # caso. Con `max` las mismas preguntas tardaban 81-96 s y no cabían.
         assert policy.total_seconds == 200.0
         assert policy.per_attempt_seconds == 90.0
-
-
-class TestTemperature:
-    """La temperatura heredada rompía A al apuntar la política del chat a Luna."""
-
-    async def test_un_modelo_de_razonamiento_de_openai_no_recibe_temperatura(self) -> None:
-        """La Responses API responde `Unsupported parameter` y falla la respuesta entera."""
-        adapter = FakeProviderAdapter()
-        adapter.name = "openai"
-        from llm_gateway import LLMGateway, ProviderRegistry
-
-        registry = ProviderRegistry()
-        registry.register(adapter, model_prefixes=("gpt-",))
-        writer = GatewayChatWriter(LLMGateway(registry=registry))
-
-        await writer.write(_request(model="gpt-5.6-luna", temperature=0))
-
-        assert adapter.requests[0].temperature is None
-
-    async def test_gemini_conserva_la_temperatura_pedida(self) -> None:
-        """Sí la admite, y quitársela cambiaría el determinismo ya medido."""
-        adapter = FakeProviderAdapter()
-
-        await _writer(adapter).write(_request(model="gemini-3.6-flash", temperature=0))
-
-        assert adapter.requests[0].temperature == 0

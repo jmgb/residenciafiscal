@@ -33,7 +33,10 @@ dependencies = [
     "sentry-sdk[fastapi]>=2.66.1,<3.0.0",
     "rapidfuzz>=3.14.0,<4.0.0",
     "pyyaml>=6.0,<7.0",
-    "neutral-llm-gateway[openai,gemini,groq,openrouter]",
+    # Mínimo sin máximo: 0.7.0 es la primera versión que normaliza el esquema
+    # estricto de OpenAI y declara `supports_temperature`, las dos cosas que
+    # este proyecto parcheaba a mano.
+    "neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.7.0",
 ]
 
 # Va después de `dependencies`: en TOML todo lo que sigue a una cabecera de tabla
@@ -49,8 +52,6 @@ Issues = "https://github.com/jmgb/residenciafiscal/issues"
 # dentro de src/ para mantener estable la API interna durante esta reorganización.
 package = false
 
-[tool.uv.sources]
-neutral-llm-gateway = { git = "https://github.com/jmgb/llm-gateway-python.git", rev = "208eac03dde785f4b9baab7f2b9b50be39950814" }
 
 [dependency-groups]
 dev = [

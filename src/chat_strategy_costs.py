@@ -70,17 +70,25 @@ class GeminiUsage(JurisprudenceCaseModel):
     usage_complete: bool
 
 
-def calculate_request_cost(
+def calculate_gemini_file_search_cost(
     usage: GeminiUsage,
     *,
     model: str = DEFAULT_FILE_SEARCH_MODEL,
 ) -> MarginalCost:
-    """Importe de una generación, con documentos recuperados si los hubiera.
+    """Importe de B, la única estrategia que aún calcula el suyo.
 
-    Sirve a las dos estrategias porque la aritmética no depende del proveedor:
-    A no recupera documentos y pasa ese desglose a cero.
+    A dejó de hacerlo: su importe lo mide el gateway y viaja en
+    `ChatWriterResult.cost`. B no puede delegarlo porque mide sobre la
+    Interactions API, fuera del paquete, y porque su coste incluye los tokens de
+    documento recuperado, que se facturan como contexto de entrada y ninguna
+    llamada del gateway produce.
     """
 
+    if model not in SUPPORTED_FILE_SEARCH_MODELS:
+        raise ValueError(
+            f"modelo no admitido en File Search: {model}; "
+            f"permitidos: {', '.join(SUPPORTED_FILE_SEARCH_MODELS)}"
+        )
     input_rate, output_rate = _rate_for(model)
     input_total = usage.input_tokens + usage.retrieved_document_tokens
     raw_microusd = Decimal(input_total) * input_rate + Decimal(usage.output_tokens) * output_rate
@@ -95,21 +103,6 @@ def calculate_request_cost(
         output_tokens=usage.output_tokens,
         retrieved_document_tokens=usage.retrieved_document_tokens,
     )
-
-
-def calculate_gemini_file_search_cost(
-    usage: GeminiUsage,
-    *,
-    model: str = DEFAULT_FILE_SEARCH_MODEL,
-) -> MarginalCost:
-    """Importe de B, que solo puede correr sobre un modelo de File Search."""
-
-    if model not in SUPPORTED_FILE_SEARCH_MODELS:
-        raise ValueError(
-            f"modelo no admitido en File Search: {model}; "
-            f"permitidos: {', '.join(SUPPORTED_FILE_SEARCH_MODELS)}"
-        )
-    return calculate_request_cost(usage, model=model)
 
 
 def zero_marginal_cost() -> MarginalCost:
