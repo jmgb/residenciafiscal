@@ -56,7 +56,8 @@ export function ManifiestoPage() {
       <div className='mb-10 border-t-4 border-primary pt-6'>
         <h1 className='mb-3 font-heading text-3xl font-semibold'>Manifiesto</h1>
         <p className='text-base leading-relaxed text-muted-foreground'>
-          Reside donde mejor te traten. Decide sobre tu residencia fiscal con las sentencias en la mano.
+          Reside donde mejor te traten. Decide sobre tu residencia fiscal con las sentencias en la
+          mano.
         </p>
       </div>
 

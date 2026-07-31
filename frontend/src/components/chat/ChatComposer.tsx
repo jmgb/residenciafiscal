@@ -50,7 +50,7 @@ export function ChatComposer({
           fondo sustituye al borde superior que antes lo separaba del hilo. El
           hueco inferior lo despega del borde del viewport en vez de dejarlo
           pegado abajo. */}
-      <div className='mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border bg-card p-3 shadow-md focus-within:ring-2 focus-within:ring-ring'>
+      <div className='mx-auto flex w-full max-w-3xl items-center gap-2 rounded-2xl border border-border bg-card p-3 shadow-md focus-within:ring-2 focus-within:ring-ring'>
         <textarea
           ref={textareaRef}
           value={text}
