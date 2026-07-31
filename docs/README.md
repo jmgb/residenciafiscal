@@ -41,7 +41,8 @@ El orden recomendado de lectura es:
 1. [Arquitectura y estado vigente del chat](jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
 2. [Caso de uso conversacional](jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md).
 3. [Comparación de estrategias del chat](jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
-4. [Resultados de F0.2](experiments/CHAT_STRATEGY_F02_RESULTS.md).
+4. [Smoke pagado de la V1 Netlify-only](experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md)
+   y [resultados históricos de F0.2](experiments/CHAT_STRATEGY_F02_RESULTS.md).
 5. [Roadmap del modelo de datos v3](jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
 6. [Pipeline del caso canónico](jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).
 7. [Schema v3](jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
@@ -63,6 +64,7 @@ Documentos especializados:
   [paquete](experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
   [plantilla](experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md).
 - [Propuesta aislada y no aplicada sobre ausencias esporádicas](experiments/CHAT_DATA_GAP_ABSENCES.md).
+- [Smoke pagado de la V1 Netlify-only](experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md).
 
 ## Normativa, producto y operación
 

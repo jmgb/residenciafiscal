@@ -64,21 +64,28 @@ function isStoredStrategySource(value: unknown): value is ChatStrategySource {
 
 function isStoredCost(value: unknown): value is ChatMarginalCost {
   if (!isRecord(value)) return false;
+  const unavailable = value.measurement === 'UNAVAILABLE';
   return (
     value.currency === 'USD' &&
-    typeof value.amountUsd === 'string' &&
-    /^\d+\.\d{6}$/.test(value.amountUsd) &&
-    Number.isSafeInteger(value.costMicrousd) &&
-    (value.costMicrousd as number) >= 0 &&
-    (value.measurement === 'ACTUAL' || value.measurement === 'ESTIMATED') &&
+    (unavailable
+      ? value.amountUsd === null &&
+        value.costMicrousd === null &&
+        value.inputTokens === null &&
+        value.outputTokens === null &&
+        value.retrievedDocumentTokens === null
+      : typeof value.amountUsd === 'string' &&
+        /^\d+\.\d{6}$/.test(value.amountUsd) &&
+        Number.isSafeInteger(value.costMicrousd) &&
+        (value.costMicrousd as number) >= 0 &&
+        (value.measurement === 'ACTUAL' || value.measurement === 'ESTIMATED') &&
+        Number.isSafeInteger(value.inputTokens) &&
+        (value.inputTokens as number) >= 0 &&
+        Number.isSafeInteger(value.outputTokens) &&
+        (value.outputTokens as number) >= 0 &&
+        Number.isSafeInteger(value.retrievedDocumentTokens) &&
+        (value.retrievedDocumentTokens as number) >= 0) &&
     value.scope === 'REQUEST_MARGINAL' &&
     typeof value.pricingVersion === 'string' &&
-    Number.isSafeInteger(value.inputTokens) &&
-    (value.inputTokens as number) >= 0 &&
-    Number.isSafeInteger(value.outputTokens) &&
-    (value.outputTokens as number) >= 0 &&
-    Number.isSafeInteger(value.retrievedDocumentTokens) &&
-    (value.retrievedDocumentTokens as number) >= 0 &&
     value.excludesCorpusPreparation === true
   );
 }

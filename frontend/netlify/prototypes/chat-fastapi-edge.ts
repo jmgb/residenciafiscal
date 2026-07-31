@@ -1,5 +1,5 @@
 /**
- * Fachada same-origin del chat.
+ * Prototipo conservado de la fachada FastAPI; no forma parte del despliegue V1.
  *
  * Netlify no contiene lógica jurídica ni credenciales de proveedores: limita
  * tráfico, autentica la llamada interna y transmite el stream del servicio
@@ -83,7 +83,7 @@ export default async function chatProxy(request: Request): Promise<Response> {
 }
 
 export const config: Config = {
-  path: '/api/chat',
+  path: '/api/prototypes/chat-fastapi',
   rateLimit: {
     aggregateBy: ['ip', 'domain'],
     windowSize: 60,

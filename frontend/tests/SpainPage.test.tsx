@@ -17,9 +17,9 @@ describe('SpainPage', () => {
 
     expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: 'Consulta la jurisprudencia de residencia fiscal' })
+      screen.getByRole('heading', { name: 'Decide con las sentencias en la mano' })
     ).toBeInTheDocument();
-    expect(screen.getByText(/muestra estructurada y validada de cinco/)).toBeInTheDocument();
+    expect(screen.getByText(/Modelo de IA entrenado con 106 sentencias/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /183 días/ })).toBeInTheDocument();
   });
 

@@ -159,6 +159,54 @@ describe('parseChatEventStream', () => {
     ]);
   });
 
+  it('conserva un coste no disponible sin convertirlo en cero', async () => {
+    const unavailable = {
+      currency: 'USD',
+      amount_usd: null,
+      cost_microusd: null,
+      measurement: 'UNAVAILABLE',
+      scope: 'REQUEST_MARGINAL',
+      pricing_version: 'unavailable',
+      input_tokens: null,
+      output_tokens: null,
+      retrieved_document_tokens: null,
+      excludes_corpus_preparation: true,
+    };
+    const blocks = (['current_structured', 'gemini_file_search'] as const).flatMap((strategy) => [
+      event('answer_start', { strategy }),
+      event('sources', { strategy, sources: [] }),
+      event('answer_done', {
+        strategy,
+        status: 'error',
+        limits: ['Proveedor no disponible.'],
+        cost: unavailable,
+        model: 'unavailable',
+        latency_ms: 52_000,
+      }),
+    ]);
+
+    const chunks = await collect(streamFromText([...blocks, event('done', {})]));
+
+    expect(chunks.filter((chunk) => chunk.type === 'answer_done')).toEqual([
+      expect.objectContaining({
+        strategy: 'current_structured',
+        cost: expect.objectContaining({
+          amountUsd: null,
+          costMicrousd: null,
+          measurement: 'UNAVAILABLE',
+        }),
+      }),
+      expect.objectContaining({
+        strategy: 'gemini_file_search',
+        cost: expect.objectContaining({
+          amountUsd: null,
+          costMicrousd: null,
+          measurement: 'UNAVAILABLE',
+        }),
+      }),
+    ]);
+  });
+
   it('rechaza tokens comparativos sin estrategia', async () => {
     await expect(
       collect(

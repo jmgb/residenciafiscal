@@ -144,38 +144,48 @@ function parseAnswerStart(data: unknown): Extract<ChatChunk, { type: 'answer_sta
 
 function parseCost(value: unknown): ChatMarginalCost | null {
   if (!isRecord(value)) return null;
+  const unavailable = value.measurement === 'UNAVAILABLE';
   if (
     value.currency !== 'USD' ||
-    typeof value.amount_usd !== 'string' ||
-    !/^\d+\.\d{6}$/.test(value.amount_usd) ||
-    !Number.isSafeInteger(value.cost_microusd) ||
-    (value.cost_microusd as number) < 0 ||
-    (value.measurement !== 'ACTUAL' && value.measurement !== 'ESTIMATED') ||
+    (unavailable
+      ? value.amount_usd !== null ||
+        value.cost_microusd !== null ||
+        value.input_tokens !== null ||
+        value.output_tokens !== null ||
+        value.retrieved_document_tokens !== null
+      : typeof value.amount_usd !== 'string' ||
+        !/^\d+\.\d{6}$/.test(value.amount_usd) ||
+        !Number.isSafeInteger(value.cost_microusd) ||
+        (value.cost_microusd as number) < 0 ||
+        (value.measurement !== 'ACTUAL' && value.measurement !== 'ESTIMATED') ||
+        !Number.isSafeInteger(value.input_tokens) ||
+        (value.input_tokens as number) < 0 ||
+        !Number.isSafeInteger(value.output_tokens) ||
+        (value.output_tokens as number) < 0 ||
+        !Number.isSafeInteger(value.retrieved_document_tokens) ||
+        (value.retrieved_document_tokens as number) < 0) ||
     value.scope !== 'REQUEST_MARGINAL' ||
     typeof value.pricing_version !== 'string' ||
     !value.pricing_version ||
-    !Number.isSafeInteger(value.input_tokens) ||
-    (value.input_tokens as number) < 0 ||
-    !Number.isSafeInteger(value.output_tokens) ||
-    (value.output_tokens as number) < 0 ||
-    !Number.isSafeInteger(value.retrieved_document_tokens) ||
-    (value.retrieved_document_tokens as number) < 0 ||
     value.excludes_corpus_preparation !== true
   ) {
     return null;
   }
-  const amountMicrousd = Number(value.amount_usd.replace('.', ''));
-  if (!Number.isSafeInteger(amountMicrousd) || amountMicrousd !== value.cost_microusd) return null;
+  if (!unavailable) {
+    const amountMicrousd = Number((value.amount_usd as string).replace('.', ''));
+    if (!Number.isSafeInteger(amountMicrousd) || amountMicrousd !== value.cost_microusd)
+      return null;
+  }
   return {
     currency: 'USD',
-    amountUsd: value.amount_usd,
-    costMicrousd: value.cost_microusd as number,
-    measurement: value.measurement,
+    amountUsd: value.amount_usd as string | null,
+    costMicrousd: value.cost_microusd as number | null,
+    measurement: value.measurement as ChatMarginalCost['measurement'],
     scope: 'REQUEST_MARGINAL',
     pricingVersion: value.pricing_version,
-    inputTokens: value.input_tokens as number,
-    outputTokens: value.output_tokens as number,
-    retrievedDocumentTokens: value.retrieved_document_tokens as number,
+    inputTokens: value.input_tokens as number | null,
+    outputTokens: value.output_tokens as number | null,
+    retrievedDocumentTokens: value.retrieved_document_tokens as number | null,
     excludesCorpusPreparation: true,
   };
 }

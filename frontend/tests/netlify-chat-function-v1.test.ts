@@ -1,0 +1,199 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  type ChatFunctionDependencies,
+  config,
+  createChatHandler,
+} from '../netlify/functions/chat/chat';
+import type { ComparisonReport } from '../netlify/functions/chat/contracts';
+import { parseChatEventStream } from '../src/lib/chat-sse-protocol';
+
+const report: ComparisonReport = {
+  schema_version: 'residenciafiscal-chat-comparison/1' as const,
+  request_id: 'chat-test',
+  experimental: true as const,
+  answers: [
+    {
+      strategy: 'current_structured' as const,
+      status: 'completa' as const,
+      text: 'Respuesta A',
+      sources: [],
+      limits: [],
+      cost: {
+        currency: 'USD' as const,
+        amount_usd: '0.000001',
+        cost_microusd: 1,
+        measurement: 'ACTUAL' as const,
+        scope: 'REQUEST_MARGINAL' as const,
+        pricing_version: 'test',
+        input_tokens: 1,
+        output_tokens: 1,
+        retrieved_document_tokens: 0,
+        excludes_corpus_preparation: true as const,
+      },
+      model: 'gpt-5.6-luna',
+      latency_ms: 10,
+    },
+    {
+      strategy: 'gemini_file_search' as const,
+      status: 'completa' as const,
+      text: 'Respuesta B',
+      sources: [],
+      limits: [],
+      cost: {
+        currency: 'USD' as const,
+        amount_usd: '0.000002',
+        cost_microusd: 2,
+        measurement: 'ACTUAL' as const,
+        scope: 'REQUEST_MARGINAL' as const,
+        pricing_version: 'test',
+        input_tokens: 1,
+        output_tokens: 1,
+        retrieved_document_tokens: 0,
+        excludes_corpus_preparation: true as const,
+      },
+      model: 'gemini-test',
+      latency_ms: 12,
+    },
+  ],
+};
+
+const request = (body: unknown) =>
+  new Request('https://residenciafiscal.org/api/chat', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+const dependencies = (
+  overrides: Partial<ChatFunctionDependencies> = {}
+): ChatFunctionDependencies => ({
+  enabled: true,
+  reserveBudget: vi.fn(async () => ({ allowed: true, reservationMicrousd: 10_000 })),
+  compare: vi.fn(async () => report),
+  reconcileBudget: vi.fn(async () => undefined),
+  ...overrides,
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+describe('Netlify Function /api/chat V1', () => {
+  it('declara POST, ruta y rate limit', () => {
+    expect(config).toMatchObject({
+      path: '/api/chat',
+      method: 'POST',
+      rateLimit: { aggregateBy: ['ip', 'domain'], windowSize: 60, windowLimit: 5 },
+    });
+  });
+
+  it('permanece cerrada sin activación server-side', async () => {
+    const deps = dependencies({ enabled: false });
+    const response = await createChatHandler(deps)(request({ messages: [] }));
+
+    expect(response.status).toBe(503);
+    expect(deps.compare).not.toHaveBeenCalled();
+  });
+
+  it('falla cerrado si no puede reservar presupuesto', async () => {
+    const deps = dependencies({
+      reserveBudget: vi.fn(async () => ({ allowed: false, reservationMicrousd: 0 })),
+    });
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta' }] })
+    );
+
+    expect(response.status).toBe(429);
+    expect(deps.compare).not.toHaveBeenCalled();
+  });
+
+  it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
+    const deps = dependencies({
+      reserveBudget: vi.fn(async () => {
+        throw new Error('postgresql://usuario:secreto@host/base');
+      }),
+    });
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta' }] })
+    );
+
+    expect(response.status).toBe(503);
+    expect(await response.text()).not.toContain('secreto');
+    expect(deps.compare).not.toHaveBeenCalled();
+  });
+
+  it('aísla un fallo inesperado del comparador sin liberar una reserva potencialmente gastada', async () => {
+    const deps = dependencies({
+      compare: vi.fn(async () => {
+        throw new Error('Authorization: Bearer secreto');
+      }),
+    });
+
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta' }] })
+    );
+
+    expect(response.status).toBe(503);
+    expect(await response.text()).not.toContain('secreto');
+    expect(deps.reconcileBudget).not.toHaveBeenCalled();
+  });
+
+  it('devuelve el protocolo comparativo bufferizado y reconcilia el coste', async () => {
+    const deps = dependencies();
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toContain('text/event-stream');
+    expect(response.headers.get('x-chat-protocol')).toBe('2');
+    const body = await response.text();
+    expect(body.indexOf('"strategy":"current_structured"')).toBeLessThan(
+      body.indexOf('"strategy":"gemini_file_search"')
+    );
+    expect(body).toContain('event: done');
+    expect(deps.reconcileBudget).toHaveBeenCalledWith(
+      expect.objectContaining({ actualMicrousd: 3, actualComplete: true })
+    );
+  });
+
+  it('su respuesta completa atraviesa el parser real del frontend', async () => {
+    const response = await createChatHandler(dependencies())(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+    const chunks = [];
+    if (!response.body) throw new Error('respuesta sin body');
+
+    for await (const chunk of parseChatEventStream(response.body)) chunks.push(chunk);
+
+    expect(chunks.map((chunk) => chunk.type)).toEqual([
+      'answer_start',
+      'token',
+      'strategy_sources',
+      'answer_done',
+      'answer_start',
+      'token',
+      'strategy_sources',
+      'answer_done',
+      'done',
+    ]);
+  });
+
+  it('rechaza entradas inválidas antes de reservar presupuesto', async () => {
+    const deps = dependencies();
+    const response = await createChatHandler(deps)(request({ messages: [] }));
+
+    expect(response.status).toBe(400);
+    expect(deps.reserveBudget).not.toHaveBeenCalled();
+  });
+
+  it('rechaza preguntas de más de 500 caracteres antes de reservar presupuesto', async () => {
+    const deps = dependencies();
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'a'.repeat(501) }] })
+    );
+
+    expect(response.status).toBe(400);
+    expect(deps.reserveBudget).not.toHaveBeenCalled();
+  });
+});

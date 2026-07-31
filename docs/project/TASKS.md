@@ -5,9 +5,9 @@ contra el dominio público después de cada deploy.
 
 > **Si retomas el backend del chat**, separa dos líneas: el experimento de
 > comparación entre el corpus v3 y Gemini File Search, y la activación
-> productiva. Esta última sigue bloqueada por la **fase 0b** (cuotas y
-> presupuesto), la ampliación del corpus y la revisión humana. La fase 0 de
-> plataforma ya está ejecutada y medida.
+> productiva. El mecanismo atómico ya está implementado; la activación sigue
+> bloqueada por provisionarlo y probarlo en Deploy Preview, completar privacidad
+> y revisión humana. La fase 0 de plataforma ya está ejecutada y medida.
 >
 > **Decisión de runtime V1 (2026-07-31):** el chat se desplegará íntegramente en
 > una Netlify Function estándar, con A y B en paralelo y deadline interno
@@ -47,10 +47,11 @@ contra el dominio público después de cada deploy.
 
 - [ ] **Sustituir el motor `stub` del chat por un backend real Netlify-only.** El
   prototipo React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está
-  implementado y probado, pero deja de ser el objetivo de la V1. Hay que portar
-  el composition root conversacional a una Netlify Function TypeScript,
-  resolver fase 0b y autorizar producción. La implementación anterior se
-  conserva como opción futura para peticiones de más de 60 s. Runbook y corte:
+  implementado y probado, pero deja de ser el objetivo de la V1. El composition
+  root ya está portado a una Netlify Function TypeScript; falta
+  provisionar/validar Database, completar los gates y autorizar producción. La
+  implementación anterior se conserva como opción futura para peticiones de
+  más de 60 s. Runbook y corte:
   [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md). Incluye recuperación
   con fuentes trazables que el servidor verifica y convierte en referencias
   tipadas por estrategia; el navegador nunca resuelve identificadores del LLM.
@@ -163,22 +164,25 @@ contra el dominio público después de cada deploy.
     confirmada**: p95 de CPU 15,3 ms, streaming de 19,87 s, cabeceras en 0,30 s y los
     tres paquetes cargan en Deno. Mediciones en
     [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md).
-  - [ ] **Fase 0b — decidir el mecanismo de cuotas y presupuesto (BLOQUEANTE).** El
+  - [x] **Fase 0b — decidir el mecanismo de cuotas y presupuesto.** El
     quinto criterio falló: `onlyIfMatch` de Netlify Blobs **no da compare-and-swap**
     bajo concurrencia. Cinco peticiones simultáneas dejaron un contador de cinco
-    incrementos en dos, y todas creyeron haber escrito. Sin resolverlo, el techo de
-    gasto no es una garantía. Tres opciones en la sección 4 del diseño: clave por
-    petición con recuento por listado (validada en el mismo spike, cuesta 130–420 ms),
-    almacén con atomicidad real (proveedor externo) o cuotas best-effort.
+    incrementos en dos, y todas creyeron haber escrito. Se eligió la opción del
+    diseño con atomicidad real: Netlify Database/Postgres.
 
-    > **Para quien retome esto.** Lee en este orden: la sección 5 de
+    > **Decisión 2026-07-31:** usar Netlify Database/Postgres con transacción y
+    > `SELECT ... FOR UPDATE`. `budget-ledger.ts` reserva antes de llamar a los
+    > proveedores y reconcilia después; si la base falla, el endpoint falla
+    > cerrado. La migración y el test unitario están versionados. Falta validar
+    > el servicio real y su migración en Deploy Preview.
+    >
+    > Evidencia histórica: lee en este orden la sección 5 de
     > [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) (la evidencia del
     > fallo y la alternativa medida) y la sección 4 del diseño (las tres opciones con
-    > sus contrapartidas). **Es una decisión de producto, no técnica**: cuánto vale
-    > que el techo de gasto sea una garantía dura frente a 130–420 ms de latencia
-    > extra o un proveedor más en el stack. No la tomes tú solo; pregúntala.
+    > sus contrapartidas). La decisión prioriza una garantía dura aunque añada
+    > Database al stack.
     >
-    > Una vez decidida, la tarea 9 del plan deja de estar bloqueada. Su API pública
+    > La API pública del diseño
     > (`consumirCuota`, `reservar`, `reconciliar`, microdólares enteros, fallo
     > cerrado) sigue siendo válida y sus tests de concurrencia también: solo cambia
     > el mecanismo de escritura por debajo.
@@ -186,12 +190,12 @@ contra el dominio público después de cada deploy.
     > El trabajo vive en la rama `spike/chat-edge-platform`, **sin push**. El código
     > del spike se borró a propósito; `NETLIFY_EDGE.md` explica cómo reconstruirlo si
     > hace falta volver a medir.
-  - [ ] **Fase 1 — implementación detrás del stub.** 15 tareas TDD: nueve módulos puros
-    con Vitest y un `chat.ts` delgado. Producción sigue simulada. La tarea del
-    presupuesto queda bloqueada por la fase 0b; el resto no depende de ella.
+  - [x] **Fase 1 — implementación detrás del stub.** La Function, sus módulos
+    puros, presupuesto y adaptadores están implementados con TDD. Producción
+    sigue simulada.
 
-    > **La fuente del chat ya está decidida e implementada en el comparador
-    > local, pero no en el backend productivo.** Debe ser
+    > **La fuente del chat ya está decidida e implementada tanto en el comparador
+    > local como en la Function cerrada.** Debe ser
     > `residenciafiscal-case/3` con anclajes verbatim; no el JSONL ni el perfil
     > v2 directamente. El plan antiguo genera `lib/corpus.ts` desde el JSONL y
     > por eso sus tareas 3–6 y las partes del protocolo están marcadas como
@@ -235,20 +239,30 @@ contra el dominio público después de cada deploy.
       perezosa, secreto del proxy, fuentes/coste por estrategia y logs sin
       consulta ni respuesta. Se conserva como referencia y posible runtime
       futuro; no es el target de despliegue V1.
-    - [x] Implementar el proxy prototipo `/api/chat` como Edge Function fina con
-      rate limit por IP y transmisión del stream a FastAPI.
-    - [ ] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
+    - [x] Implementar el proxy FastAPI como Edge Function fina con rate limit y
+      transmisión del stream; se conserva fuera del camino V1 en
+      `netlify/prototypes/chat-fastapi-edge.ts`.
+    - [x] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
       portar solo el runtime online de A y B, sin trasladar a TypeScript el
       pipeline Python de preparación del corpus.
-    - [ ] Ejecutar A y B en paralelo con aislamiento de errores, conservar el
+    - [x] Ejecutar A y B en paralelo con aislamiento de errores, conservar el
       orden visual A → B y cancelar todo trabajo restante antes del deadline
       global de 50–55 s.
     - [ ] Mantener Luna `high` en la V1 y medir durante varios días latencia
       total, percentiles, timeouts, tokens, coste y calidad. Evaluar un esfuerzo
       menor solo después, si la evidencia muestra que falta margen bajo 60 s.
-    - [ ] Cubrir con tests de contrato la paridad de fuentes, estados, modelo,
-      tokens, coste, cancelación y respuesta parcial respecto del prototipo
-      Python antes de retirar este del camino productivo.
+      - [x] Ejecutar un smoke local pagado con A/B realmente en paralelo: 13,552 s
+        de pared, A `ACTUAL` USD 0,002491 y B `ESTIMATED` USD 0,002278. Corrigió
+        `labels` incompatible con Gemini API y el truncado de Luna `high` con
+        1.200 tokens. Evidencia:
+        [`CHAT_NETLIFY_V1_PAID_SMOKE.md`](../experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md).
+      - [ ] Cuadrar B con el panel de Gemini: la Interactions API devolvió citas
+        pero cero tokens de documento, por lo que el coste visible sigue siendo
+        una estimación y no un importe contable cerrado.
+    - [x] Cubrir con tests deterministas la paridad de recuperación, fuentes,
+      estados, modelo, tokens, coste, cancelación y respuesta parcial. Queda
+      pendiente la paridad real pagada del Deploy Preview antes de retirar el
+      prototipo Python como referencia.
     - [x] Cablear el selector seguro: solo `VITE_CHAT_MODE=live` activa el cliente;
       cualquier otro valor conserva el stub.
     - [ ] Desplegar la Function Netlify-only en un Deploy Preview y validar una
@@ -423,11 +437,10 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 
 ## Seguridad y datos
 
-- [ ] **Completar la protección económica del endpoint live.** El prototipo ya
-  tiene secreto Edge → FastAPI, rate limit por IP, cierre por bandera y
-  logs/analítica sin texto de consulta. La V1 debe conservar esas garantías
-  dentro de Netlify y añadir un límite global de gasto con atomicidad real; el
-  rate limit actual no lo sustituye (fase 0b).
+- [ ] **Completar la protección económica del endpoint live.** La V1 ya tiene
+  rate limit, cierre por bandera, reserva/reconciliación atómica y logs sin
+  contenido. Falta provisionar Netlify Database, aplicar la migración y probar
+  concurrencia/agotamiento en Deploy Preview antes de cerrar el gate.
 - [ ] **Requisitos legales previos a activar el chat real.** Bloquean la fase 3: con el
   motor en `stub` no sale nada de Netlify; con el real, la última pregunta
   autosuficiente viaja a OpenAI para A y a Google/Gemini para B.
@@ -438,6 +451,11 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     Verificar contractualmente las opciones de no conservación de cada ruta; no
     prometer `store: false` para un proveedor basándose en la configuración del
     otro.
+    - [x] Publicar `/privacidad` con el flujo técnico real, minimización,
+      almacenamiento local, ambos proveedores y contacto.
+    - [ ] Completar con identidad legal del responsable, base jurídica,
+      transferencias, retención efectiva y contratos verificados. La propia
+      página muestra el bloqueo y el backend permanece cerrado.
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última

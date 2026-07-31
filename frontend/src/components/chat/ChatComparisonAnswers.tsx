@@ -95,8 +95,15 @@ export function ChatComparisonAnswers({ answers }: ChatComparisonAnswersProps) {
           {answer.cost && (
             <div className='mt-3 border-t border-border pt-2 text-xs text-muted-foreground'>
               <p>
-                Coste de esta respuesta: <strong>USD {answer.cost.amountUsd}</strong> ·{' '}
-                {answer.cost.measurement === 'ACTUAL' ? 'uso medido' : 'estimación'}
+                Coste de esta respuesta:{' '}
+                <strong>
+                  {answer.cost.measurement === 'UNAVAILABLE'
+                    ? 'no disponible'
+                    : `USD ${answer.cost.amountUsd}`}
+                </strong>
+                {answer.cost.measurement !== 'UNAVAILABLE' && (
+                  <> · {answer.cost.measurement === 'ACTUAL' ? 'uso medido' : 'estimación'}</>
+                )}
               </p>
               <p className='mt-0.5'>No incluye la preparación previa del corpus.</p>
             </div>

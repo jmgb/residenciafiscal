@@ -71,7 +71,7 @@ flowchart LR
 | `src/chat_model_policy.py` | Política de inferencia de la estrategia A del chat |
 | `src/gateway_setup.py` | Clientes, uso y costes de las respuestas del chat |
 | `src/api/` | Prototipo local del chat y posible runtime futuro para llamadas largas |
-| `frontend/` | SPA React; la Function Netlify-only de la V1 está pendiente |
+| `frontend/` | SPA React y Function Netlify-only V1, implementada y cerrada por configuración |
 
 La vista completa de componentes, flujos e invariantes está en
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). La guía sobre dónde debe vivir
@@ -202,12 +202,11 @@ npm run build       # genera el corpus y compila a dist/
 ```
 
 > [!NOTE]
-> Producción sigue en **stub**: las respuestas son simuladas. El recorrido real
-> Edge → FastAPI está implementado detrás de `VITE_CHAT_MODE=live`, pero se
-> conserva como opción futura para llamadas de más de 60 s. La V1 pendiente
-> ejecutará A y B en paralelo dentro de una Netlify Function estándar,
-> mantendrá Luna `high` durante varios días de medición y no dependerá de un
-> servidor separado. Ningún recorrido está desplegado ni autorizado. Runbook:
+> Producción sigue en **stub**. La Function Netlify-only V1 ya ejecuta A y B en
+> paralelo y conserva Luna `high`, pero permanece cerrada hasta configurar la
+> base atómica, completar privacidad y superar un Deploy Preview real. El
+> recorrido Edge → FastAPI se conserva como opción futura para llamadas de más
+> de 60 s. Ningún recorrido real está autorizado en Production. Runbook:
 > [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Documentación

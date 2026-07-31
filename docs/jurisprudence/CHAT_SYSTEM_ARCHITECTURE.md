@@ -189,8 +189,9 @@ El runbook de despliegue está en
 | Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
-| Runtime V1 Netlify-only | Pendiente en `frontend/netlify/functions/`; ejecutará A y B en paralelo |
-| Proxy autenticado y rate limit | `frontend/netlify/edge-functions/chat.ts` |
+| Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta A y B en paralelo y falla cerrado |
+| Presupuesto y logs V1 | `budget-ledger.ts`, `frontend/netlify/database/migrations/` |
+| Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
 | UI y persistencia de dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
 
@@ -301,9 +302,9 @@ jurídica humana.
   cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
   respecto del texto literal que publica. Es simultáneamente un gap de datos de
   A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
-- El prototipo FastAPI, el proxy Edge, el streaming A/B y la interfaz de dos
-  respuestas están implementados detrás del stub. Falta portar el runtime a la
-  Function Netlify-only, resolver el presupuesto global y autorizar producción.
+- La Function Netlify-only, el prototipo FastAPI y la interfaz de dos respuestas
+  están implementados detrás del stub. Falta provisionar/validar Database,
+  ejecutar el Deploy Preview real y autorizar producción.
 - No existe autorización para listar, compilar o publicar las 106 sentencias
   como casos v3.
 

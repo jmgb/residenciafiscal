@@ -1,13 +1,14 @@
 # Despliegue del chat comparativo
 
-**Estado:** la V1 Netlify-only está decidida pero todavía no implementada. El
-recorrido Edge → FastAPI descrito más abajo está implementado y probado con
-dobles de proveedor, pero deja de ser el objetivo de despliegue inicial y se
-conserva como alternativa futura. Producción permanece cerrada en `stub`.
+**Estado:** la V1 Netlify-only está implementada detrás de dos cierres
+independientes (`CHAT_COMPARISON_ENABLED=false` y `VITE_CHAT_MODE=stub`). Falta
+configurar Netlify Database, completar la información legal, ejecutar un Deploy
+Preview con llamadas reales y autorizar producción. El recorrido Edge → FastAPI
+se conserva como alternativa futura fuera del camino `/api/chat`.
 **Fecha de corte:** 2026-07-31.
 
-Este runbook explica cómo se conecta el chat del navegador con el comparador
-Python. No autoriza el rollout a las 106 sentencias ni sustituye los gates de
+Este runbook explica la V1 Netlify-only y conserva, en una sección separada, el
+comparador Python futuro. No autoriza el rollout a las 106 sentencias ni sustituye los gates de
 presupuesto y revisión jurídica de [`TASKS.md`](../project/TASKS.md).
 
 ## Decisión de runtime para la V1
@@ -43,9 +44,11 @@ Restricciones deliberadas de la V1:
 - Python sigue preparando y validando el corpus fuera de línea, pero no
   participa en la petición del usuario.
 
-El runbook operativo de esta V1 se completará a la vez que su Function y sus
-tests. Hasta entonces no se deben reutilizar las variables o los pasos de
-FastAPI como si describieran el deploy Netlify-only.
+La Function espera a las dos estrategias o a su deadline y después devuelve un
+cuerpo **bufferizado** con sintaxis SSE. No usa streaming real de Netlify: una
+Function que transmite la respuesta tiene un límite menor que la ejecución
+sincrónica estándar y no sirve para este presupuesto de latencia. El parser del
+navegador conserva el protocolo 2 sin depender de ese detalle de transporte.
 
 ## Arquitectura conservada para una evolución futura
 
@@ -96,12 +99,81 @@ no token a token desde el proveedor.
 | Cliente | `frontend/src/lib/chat-engine.live.ts` | POST same-origin, validación HTTP y protocolo |
 | Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto |
 | UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos bloques separados, fuentes, límites y coste |
-| Proxy | `frontend/netlify/edge-functions/chat.ts` | Rate limit, secreto interno y streaming sin inspeccionar texto |
+| Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, presupuesto y protocolo bufferizado |
+| Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
+| Presupuesto | `frontend/netlify/functions/chat/budget-ledger.ts` | Reserva/reconciliación atómica y log sin contenido en Netlify Database |
+| Migración | `frontend/netlify/database/migrations/` | Tablas diarias y por petición |
+| Proxy futuro | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Prototipo FastAPI fuera del camino productivo |
 | HTTP Python | `src/api/chat.py` | Entrada acotada, autenticación y serialización SSE |
 | Runtime | `src/api/chat_runtime.py` | Construcción perezosa de A, B, corpus, store y logs |
 
+## Variables de la V1 Netlify-only
+
+Todas salvo `VITE_CHAT_MODE` tienen alcance **Functions** y nunca llevan prefijo
+`VITE_`.
+
+| Variable | Uso |
+|---|---|
+| `CHAT_COMPARISON_ENABLED` | Debe ser exactamente `true`; cualquier otro valor cierra el endpoint |
+| `OPENAI_API_KEY` | Redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
+| `GEMINI_API_KEY` | Gemini File Search |
+| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` de la muestra de cinco |
+| `CHAT_FILE_SEARCH_MODEL` | `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
+| `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
+| `CHAT_DAILY_BUDGET_USD` | Techo diario global, decimal USD positivo |
+| `CHAT_REQUEST_RESERVATION_USD` | Cota superior prudente por comparación, no mayor que el techo diario |
+| `NETLIFY_DB_URL` | Inyectada por Netlify Database; sin ella el presupuesto falla cerrado |
+| `VITE_CHAT_MODE` | Alcance Builds: `live` conecta el cliente; cualquier otro valor usa el stub |
+
+El precio TypeScript no es una tabla mantenida a mano. Se exporta del catálogo
+de `neutral-llm-gateway` con:
+
+```bash
+PYTHONPATH=src uv run python -m netlify_chat_pricing_catalog
+PYTHONPATH=src uv run pytest -q tests/test_netlify_chat_pricing_catalog.py
+```
+
+La reserva debe superar holgadamente el peor coste posible bajo los límites de
+salida. Si algún proveedor no informa uso completo, la reconciliación conserva
+la reserva entera como cargo prudente; un cero desconocido nunca libera gasto.
+Si el coste medido supera por error la reserva, el contador diario se satura en
+el techo y bloquea nuevas llamadas, mientras el coste real permanece en el
+registro por petición. Ese evento invalida la cota configurada y obliga a subirla
+antes de reactivar el chat.
+
+La entrada de A está acotada antes de llamar al proveedor: 500 caracteres de
+pregunta, 4 KiB como máximo por sentencia y 48 KiB para instrucciones, pregunta
+y contexto completos. El empaquetador descarta campos estructurados enteros por
+prioridad; nunca corta una cita literal. Luna conserva `high`, pero su salida
+total está limitada a 4.000 tokens. El techo anterior de 1.200 truncó el JSON
+en una llamada real porque incluye los tokens de razonamiento; 4.000 conserva
+margen sin volver al valor abierto de 6.000. Gemini File Search tiene un techo
+independiente de 2.000 tokens de salida. La reserva por petición debe dimensionarse
+con ambos límites y el máximo observado de recuperación documental.
+
+## Despliegue seguro de la V1
+
+1. Confirmar que el sitio admite Netlify Database y vincular la base. El deploy
+   debe aplicar `frontend/netlify/database/migrations/`.
+2. Configurar las variables de Functions con
+   `CHAT_COMPARISON_ENABLED=false`; mantener `VITE_CHAT_MODE=stub` en Production.
+3. Desplegar y comprobar que `POST /api/chat` responde `503` y que no se realiza
+   ninguna llamada de proveedor.
+4. En **Deploy Preview**, configurar `VITE_CHAT_MODE=live`, un presupuesto muy
+   bajo y `CHAT_COMPARISON_ENABLED=true`.
+5. Hacer una sola consulta del banco con autorización de coste. Comprobar dos
+   respuestas A → B, citas verificadas, tokens/coste visibles, duración menor de
+   60 s y un registro `chat_request_costs` sin pregunta, respuesta ni citas.
+6. Cuadrar tokens y coste con los paneles de OpenAI y Gemini; probar después
+   timeout, fallo aislado, límite por IP y agotamiento del presupuesto.
+7. Volver a ambos cierres. Activar Production exige completar privacidad,
+   observar Luna `high` durante varios días y una autorización explícita.
+
 El protocolo conceptual y las reglas de independencia siguen en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+La primera medición local real, los dos fallos de adaptador que descubrió y la
+comparación provisional de calidad, latencia y coste están en
+[`CHAT_NETLIFY_V1_PAID_SMOKE.md`](../experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md).
 
 ## Variables de la arquitectura futura Edge → FastAPI
 
@@ -162,24 +234,25 @@ procedimiento de despliegue de la V1 Netlify-only.
 
 ## Seguridad, privacidad y coste
 
-- La Edge Function limita a cinco peticiones por IP y minuto. Este límite evita
-  abuso básico, pero **no garantiza un techo global de gasto**.
-- El backend exige el secreto cuando el chat está habilitado; así no se puede
-  saltar el rate limit llamando directamente al origen.
+- La Function limita a cinco peticiones por IP y minuto y reserva presupuesto
+  global mediante una transacción con bloqueo de fila. Si Database no está
+  disponible, no se llama a ningún proveedor.
 - El navegador envía solo `role` y `content`; el backend usa únicamente la
   última pregunta de usuario para el comparador actual.
 - El historial es por ahora visual, no contexto de inferencia: una pregunta
   como «¿y en ese caso?» debe reformularse de forma autosuficiente. Incorporar
   contexto multi-turn exige un contrato de privacidad y grounding separado;
   no se resuelve reenviando todo el historial por defecto.
-- Sentry elimina cuerpo, cabeceras y variables locales. Los logs de estrategia
-  guardan métricas, modelo y coste, nunca consulta ni respuesta.
-- Los diagnósticos brutos de proveedor pueden conservarse en el informe interno,
-  pero el contrato SSE sustituye los límites de una estrategia en `error` por
-  un mensaje genérico; nunca expone excepciones al navegador.
+- Sentry elimina cuerpo, cabeceras y variables locales. Netlify Database y el
+  log estructurado guardan métricas, modelo y coste, nunca consulta, respuesta
+  ni citas.
+- La V1 no persiste diagnósticos brutos del proveedor. El contrato SSE sustituye
+  los límites de una estrategia en `error` por un mensaje genérico y nunca
+  expone excepciones al navegador.
 - El coste visible es marginal por estrategia y no incluye preparar el corpus.
-- El modo live no debe activarse hasta resolver la fase 0b. El rate limit por IP
-  y la bandera de cierre son defensa en profundidad, no un presupuesto atómico.
+- El modo live no debe activarse en Production hasta validar la migración y la
+  concurrencia en Deploy Preview. Rate limit, bandera y presupuesto atómico son
+  capas independientes.
 
 ## Rollback de la arquitectura futura
 

@@ -23,12 +23,11 @@ export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProp
     >
       <img src='/favicon.svg' alt='' className='mb-4 h-14 w-14' />
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
-        Consulta la jurisprudencia de residencia fiscal
+        Decide con las sentencias en la mano
       </h1>
       <p className='mb-3 max-w-xl text-sm leading-relaxed text-muted-foreground'>
-        La colección conserva 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre el
-        art. 9 LIRPF. La consulta usa por ahora una muestra estructurada y validada de cinco; cada
-        respuesta indica las resoluciones en las que se apoya.
+        Modelo de IA entrenado con 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre
+        el art. 9 LIRPF.
       </p>
       {legalReferences.length > 0 && <JurisdictionLegalReferences references={legalReferences} />}
       <p className='mb-8 text-sm'>

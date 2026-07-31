@@ -38,6 +38,7 @@ ejecutable.
 | `src/gateway_chat_writer.py` | Adaptador del redactor estructurado del chat |
 | `src/current_structured_strategy.py` | Recuperación y respuesta A del comparador |
 | `src/google_genai_file_search.py` | File Search B, fuera del paquete porque usa ficheros/tools |
+| `frontend/netlify/functions/chat/provider-adapters.ts` | Adaptadores Node mínimos de la V1 Netlify-only |
 
 Lo que cambia con el proveedor pertenece al paquete neutral. Lo que cambia con
 el producto —prompt jurídico, recuperación, citas, abstención, logs y límites—
@@ -45,8 +46,10 @@ permanece en esta aplicación.
 
 ## Costes y observabilidad
 
-No hay tabla de precios local. Las tarifas y `CATALOG_VERSION` proceden del
-paquete; el proyecto conserva tokens, modelo efectivo y tipo de medición:
+No hay una tabla de precios local mantenida a mano. La Function necesita un
+artefacto JSON para Node, pero se genera desde las tarifas y `CATALOG_VERSION`
+del paquete y un test exige igualdad byte a byte. El proyecto conserva tokens,
+modelo efectivo y tipo de medición:
 
 - `ACTUAL`: uso completo informado por el proveedor;
 - `ESTIMATED`: importe parcial o intento fallido facturable;
@@ -109,6 +112,19 @@ el suyo: mide sobre la Interactions API, fuera del paquete, y factura tokens
 de documento recuperado que ninguna llamada del gateway produce.
 
 ## Reintento y fallback
+
+La V1 Netlify-only no puede importar un paquete Python. Sus dos adaptadores Node
+son una excepción de runtime deliberadamente estrecha: solo traducen el contrato
+HTTP/SDK; prompts, recuperación, citas, estados y presupuesto siguen siendo del
+producto. No constituyen una segunda API pública compartida y no deben crecer
+con routing, fallback ni catálogos. Si aparece un segundo consumidor Node, rige
+la regla de los dos consumidores y ese transporte deberá extraerse a un paquete
+neutral; si vuelven a necesitarse llamadas largas, la arquitectura FastAPI usa
+ya `neutral-llm-gateway` sin duplicación.
+
+En la V1 ambos SDK se ejecutan una sola vez, sin reintentos ni fallback, bajo la
+misma señal de cancelación de 52 s. Lo siguiente describe el prototipo Python
+conservado:
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
 de 200 s y máximo de 90 s por intento. El fallback de modelo está desactivado:

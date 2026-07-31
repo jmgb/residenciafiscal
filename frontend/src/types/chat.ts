@@ -92,15 +92,15 @@ export type ChatAnswerStatus = 'completa' | 'parcial' | 'pregunta' | 'abstenció
 
 export interface ChatMarginalCost {
   currency: 'USD';
-  /** Decimal exacto de seis posiciones; nunca se calcula con `number`. */
-  amountUsd: string;
-  costMicrousd: number;
-  measurement: 'ACTUAL' | 'ESTIMATED';
+  /** Decimal exacto de seis posiciones, o null si el proveedor no informó uso. */
+  amountUsd: string | null;
+  costMicrousd: number | null;
+  measurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
   scope: 'REQUEST_MARGINAL';
   pricingVersion: string;
-  inputTokens: number;
-  outputTokens: number;
-  retrievedDocumentTokens: number;
+  inputTokens: number | null;
+  outputTokens: number | null;
+  retrievedDocumentTokens: number | null;
   excludesCorpusPreparation: true;
 }
 

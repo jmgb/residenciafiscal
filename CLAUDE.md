@@ -296,10 +296,11 @@ La API no expone `/analizar`. `GET /config` publica la política del chat y los
 catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
 falla cerrado salvo activación y autenticación explícitas. Es el prototipo local
 y se conserva como posible arquitectura futura para peticiones de más de 60 s;
-no es el target de la V1. La V1 portará solo el runtime conversacional a una
-Netlify Function TypeScript, ejecutará A y B en paralelo y mantendrá Luna
-`high` mientras se miden varios días de latencia real. Producción conserva el
-stub; decisión, despliegue y rollback:
+no es el target de la V1. El runtime conversacional ya está portado a una
+Netlify Function TypeScript: ejecuta A y B en paralelo, usa un deadline global,
+presupuesto atómico en Netlify Database y mantiene Luna `high`. Producción
+conserva el stub hasta completar configuración, privacidad y Deploy Preview;
+decisión, despliegue y rollback:
 [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Costes del chat

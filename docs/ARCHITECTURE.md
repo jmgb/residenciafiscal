@@ -37,7 +37,7 @@ flowchart LR
     OKF --> KNOWLEDGE
     NORM --> KNOWLEDGE
     KNOWLEDGE --> WEB["frontend/<br/>React"]
-    WEB --> FUNCTION["Netlify Function V1<br/>A y B en paralelo<br/>(pendiente)"]
+    WEB --> FUNCTION["Netlify Function V1<br/>A y B en paralelo<br/>implementada y cerrada"]
     KNOWLEDGE --> FUNCTION
     FILESEARCH --> FUNCTION
     WEB -. prototipo conservado .-> EDGE["Netlify Edge"]
@@ -58,8 +58,9 @@ flowchart LR
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
-| Runtime web V1 | Pendiente en `frontend/netlify/functions/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
-| Transporte web conservado | `frontend/netlify/edge-functions/chat.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
+| Runtime web V1 | `frontend/netlify/functions/chat/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
+| Presupuesto web V1 | `frontend/netlify/database/migrations/`, `budget-ledger.ts` | Reserva atómica, reconciliación y telemetría sin contenido |
+| Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
 | Pruebas | `tests/` | Gates deterministas; las llamadas LLM reales están excluidas por defecto |
@@ -93,7 +94,9 @@ dominio y con una migración de imports independiente.
    originales y devuelve anotaciones del proveedor.
 5. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
    que quede sin respaldo.
-6. La Function emite dos bloques SSE independientes en orden visual A → B y el frontend conserva
+6. La Function serializa dos bloques con protocolo SSE 2 en orden visual A → B,
+   pero devuelve el cuerpo completo de forma bufferizada para conservar el
+   límite sincrónico estándar; el frontend conserva
    respuesta, estado, fuentes, latencia y coste por
    estrategia, sin usar la salida de una como entrada de la otra.
 
@@ -124,11 +127,12 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 ## Límites actuales
 
 - Los PDF escaneados sin capa de texto no se procesan porque no hay OCR.
-- El prototipo FastAPI, el proxy Edge, el protocolo y la UI A/B están
-  implementados, pero la Function Netlify-only de la V1 sigue pendiente.
+- La Function Netlify-only, el prototipo FastAPI, el protocolo y la UI A/B están
+  implementados. Producción sigue cerrada a falta del Deploy Preview real,
+  configuración de Database y requisitos legales.
 - El frontend de producción sigue usando el motor simulado. La activación exige
-  portar el runtime online a Netlify, demostrar que el recorrido completo cabe
-  bajo 60 s, resolver cuotas/presupuesto y superar los gates humanos.
+  demostrar en Deploy Preview que el recorrido completo cabe bajo 60 s,
+  provisionar el presupuesto y superar los gates legales/humanos.
 - FastAPI no se borra: se reevaluará si hacen falta llamadas de más de 60 s,
   reintentos largos o mayor control operativo.
 - El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus

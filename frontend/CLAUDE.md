@@ -100,16 +100,11 @@ hash y cita exacta—; no se convierten artificialmente en `ChatSourceV2` porque
 no dispone de cuestión y anclaje canónicos. `ChatMessage.answers` mantiene los
 dos bloques y el schema 3 apaga cualquier streaming huérfano al rehidratar.
 
-**El runtime actualmente implementado es un prototipo en dos capas**: Netlify
-Edge expone `/api/chat`, aplica rate limit y transmite el stream; FastAPI ejecuta
-el comparador Python. No se borra, pero deja de ser el target de la V1.
-
-La V1 decidida será una Netlify Function TypeScript autosuficiente. Ejecutará A
-y B en paralelo, conservará el orden visual A → B, mantendrá Luna `high` durante
-varios días de medición y cancelará antes del límite de 60 s. Python seguirá
-preparando el corpus offline. Edge → FastAPI se conserva como evolución futura
-si hacen falta llamadas de más de 60 s o mayor control operativo. Código y
-operación:
+El runtime V1 implementado es una Netlify Function TypeScript autosuficiente.
+Ejecuta A y B en paralelo, conserva el orden visual A → B, mantiene Luna `high`
+y cancela antes del límite de 60 s. Python sigue preparando el corpus offline.
+El prototipo Edge → FastAPI no se borra y se conserva como evolución futura si
+hacen falta llamadas de más de 60 s o mayor control operativo. Código y operación:
 [`docs/operations/CHAT_DEPLOYMENT.md`](../docs/operations/CHAT_DEPLOYMENT.md).
 
 La estrategia de recuperación se debe medir con dos respuestas independientes:

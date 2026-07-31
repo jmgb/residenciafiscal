@@ -16,8 +16,8 @@ conserva el contrato especializado del experimento A/B.
 La fase F0 creó el comparador local que sigue disponible por CLI. El mismo
 dominio está expuesto en el prototipo por FastAPI, un proxy fino de Netlify Edge
 y el cliente comparativo. Ese recorrido se conserva como opción futura si se
-necesitan llamadas de más de 60 s. La V1 pendiente lo portará a una Netlify
-Function TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s.
+necesitan llamadas de más de 60 s. La V1 ya está portada a una Netlify Function
+TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s.
 Producción mantiene `VITE_CHAT_MODE=stub`; implementar cualquiera de los
 recorridos no autoriza activarlo. B usa el
 SDK oficial `google-genai`, la Interactions API y un store basado en

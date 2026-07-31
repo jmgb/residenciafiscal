@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import chatProxy, { config } from '../netlify/edge-functions/chat';
+import chatProxy, { config } from '../netlify/prototypes/chat-fastapi-edge';
 
 function request(body = '{"messages":[]}'): Request {
   return new Request('https://residenciafiscal.org/api/chat', {
@@ -20,10 +20,10 @@ function stubEnvironment(values: Record<string, string | undefined>) {
   });
 }
 
-describe('Netlify /api/chat proxy', () => {
+describe('prototipo conservado del proxy FastAPI', () => {
   it('declara ruta y rate limit por IP', () => {
     expect(config).toMatchObject({
-      path: '/api/chat',
+      path: '/api/prototypes/chat-fastapi',
       rateLimit: { aggregateBy: ['ip', 'domain'], windowSize: 60, windowLimit: 5 },
     });
   });
