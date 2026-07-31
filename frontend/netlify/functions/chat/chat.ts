@@ -2,6 +2,7 @@
 
 import { createProductionDependencies } from './composition';
 import type { ComparisonReport } from './contracts';
+import type { ChatReservationInput } from './supabase-chat-store';
 
 const MAX_REQUEST_BYTES = 200_000;
 const MAX_MESSAGES = 20;
@@ -14,7 +15,7 @@ export interface BudgetReservation {
 
 export interface ChatFunctionDependencies {
   enabled: boolean;
-  reserveBudget(requestId: string): Promise<BudgetReservation>;
+  reserveBudget(input: ChatReservationInput): Promise<BudgetReservation>;
   compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
   reconcileBudget(input: {
     requestId: string;
@@ -26,14 +27,28 @@ export interface ChatFunctionDependencies {
 }
 
 interface ChatRequestMessage {
+  id?: string;
   role: 'user' | 'assistant';
   content: string;
+}
+
+interface ParsedChatRequest {
+  question: string;
+  conversationId: string;
+  userMessageId: string;
+  countryPath: string;
 }
 
 const jsonError = (status: number, message: string) =>
   Response.json({ error: message }, { status, headers: { 'cache-control': 'no-store' } });
 
-const parseQuestion = async (request: Request): Promise<string | null> => {
+const validIdentifier = (value: unknown): value is string =>
+  typeof value === 'string' && value.length >= 1 && value.length <= 128 && /^[\w-]+$/.test(value);
+
+const validCountryPath = (value: unknown): value is string =>
+  typeof value === 'string' && /^\/[a-z0-9-]{1,63}$/.test(value);
+
+const parseQuestion = async (request: Request): Promise<ParsedChatRequest | null> => {
   const declaredLength = Number(request.headers.get('content-length'));
   if (Number.isFinite(declaredLength) && declaredLength > MAX_REQUEST_BYTES) return null;
   const body = await request.text();
@@ -64,12 +79,26 @@ const parseQuestion = async (request: Request): Promise<string | null> => {
       (item as ChatRequestMessage).content.length <= MAX_MESSAGE_CHARS
   );
   if (!valid) return null;
-  return (
-    [...messages]
-      .reverse()
-      .find((item) => item.role === 'user' && item.content.trim())
-      ?.content.trim() ?? null
-  );
+  const latestUser = [...messages]
+    .reverse()
+    .find((item) => item.role === 'user' && item.content.trim());
+  if (!latestUser) return null;
+  const bodyIdentifiers = parsed as {
+    conversation_id?: unknown;
+    country_path?: unknown;
+  };
+  return {
+    question: latestUser.content.trim(),
+    conversationId: validIdentifier(bodyIdentifiers.conversation_id)
+      ? bodyIdentifiers.conversation_id
+      : `conversation-${crypto.randomUUID()}`,
+    userMessageId: validIdentifier(latestUser.id)
+      ? latestUser.id
+      : `message-${crypto.randomUUID()}`,
+    countryPath: validCountryPath(bodyIdentifiers.country_path)
+      ? bodyIdentifiers.country_path
+      : '/espana',
+  };
 };
 
 const event = (name: string, data: unknown) => `event: ${name}\ndata: ${JSON.stringify(data)}\n\n`;
@@ -100,13 +129,19 @@ export const createChatHandler =
   async (request: Request): Promise<Response> => {
     if (request.method !== 'POST') return jsonError(405, 'Método no permitido');
     if (!dependencies.enabled) return jsonError(503, 'Chat no habilitado');
-    const question = await parseQuestion(request);
-    if (!question) return jsonError(400, 'Petición inválida');
+    const parsed = await parseQuestion(request);
+    if (!parsed) return jsonError(400, 'Petición inválida');
 
     const requestId = `chat-${crypto.randomUUID()}`;
     let reservation: BudgetReservation;
     try {
-      reservation = await dependencies.reserveBudget(requestId);
+      reservation = await dependencies.reserveBudget({
+        requestId,
+        conversationId: parsed.conversationId,
+        userMessageId: parsed.userMessageId,
+        countryPath: parsed.countryPath,
+        question: parsed.question,
+      });
     } catch {
       return jsonError(503, 'Control de presupuesto no disponible');
     }
@@ -114,7 +149,7 @@ export const createChatHandler =
 
     let report: ComparisonReport;
     try {
-      report = await dependencies.compare(question, requestId, request.signal);
+      report = await dependencies.compare(parsed.question, requestId, request.signal);
     } catch {
       // La reserva se conserva: ante uso de proveedor desconocido es más seguro
       // agotar antes el techo que liberar gasto que quizá ya se haya producido.

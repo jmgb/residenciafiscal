@@ -35,10 +35,12 @@ versionado cuando Netlify construye desde un clon limpio.
 La V1 expone `/api/chat` mediante una Function estándar autosuficiente. Ejecuta
 en paralelo la estrategia A estructurada y Gemini File Search B, aplica rate
 limit, reserva presupuesto atómico en Supabase y devuelve el protocolo
-SSE 2 como cuerpo bufferizado. Las claves de proveedor solo existen como
-variables de Functions; `VITE_CHAT_MODE` es únicamente el selector de build del
-cliente. El endpoint y el frontend permanecen cerrados por separado hasta
-superar los gates. Variables, migración, activación y rollback están en
+SSE 2 como cuerpo bufferizado. Por la limitación del plan Legacy, las claves de
+proveedor y Supabase están configuradas como variables ordinarias de todos los
+scopes, limitadas al contexto `production`; ninguna lleva prefijo `VITE_` ni se
+incluye en el cliente. `VITE_CHAT_MODE` es únicamente el selector público de
+build. El endpoint y el frontend se pueden cerrar por separado. Variables,
+migración, activación, riesgo aceptado y rollback están en
 [`CHAT_DEPLOYMENT.md`](CHAT_DEPLOYMENT.md).
 El modelo privado de mensajes y costes se documenta en
 [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md).

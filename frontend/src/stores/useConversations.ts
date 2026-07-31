@@ -1,9 +1,11 @@
 /**
  * Historial de conversaciones, persistido en localStorage.
  *
- * No hay cuentas ni backend: el historial es local al navegador. La versión
- * vive en el payload de Zustand; la clave histórica se mantiene estable para
- * poder migrar sin perder conversaciones existentes.
+ * La copia que permite reabrir conversaciones sigue siendo local al navegador.
+ * El backend persiste por separado cada turno aceptado y sus respuestas A/B,
+ * pero no reconstruye ni sincroniza este historial de Zustand. La versión vive
+ * en el payload; la clave histórica se mantiene estable para poder migrar sin
+ * perder conversaciones existentes.
  */
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';

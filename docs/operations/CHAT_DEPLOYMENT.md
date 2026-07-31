@@ -1,10 +1,11 @@
 # Despliegue del chat comparativo
 
-**Estado:** la V1 Netlify-only está implementada detrás de dos cierres
-independientes (`CHAT_COMPARISON_ENABLED=false` y `VITE_CHAT_MODE=stub`). Falta
-configurar Netlify Database, completar la información legal, ejecutar un Deploy
-Preview con llamadas reales y autorizar producción. El recorrido Edge → FastAPI
-se conserva como alternativa futura fuera del camino `/api/chat`.
+**Estado:** la V1 Netlify-only y su persistencia Supabase están implementadas y
+desplegadas en producción. El proyecto remoto, las migraciones, RLS, RPC
+atómicas y una consulta A/B productiva están verificados. El endpoint conserva
+los cierres independientes `CHAT_COMPARISON_ENABLED` y `VITE_CHAT_MODE`; siguen
+pendientes los requisitos legales indicados en `TASKS.md`. El recorrido Edge →
+FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
 **Fecha de corte:** 2026-07-31.
 
 Este runbook explica la V1 Netlify-only y conserva, en una sección separada, el
@@ -28,6 +29,9 @@ Netlify Function TypeScript
         └── B: Gemini File Search sobre los PDF ──┤ en paralelo
                                                   ▼
                                       dos respuestas independientes
+                                                  │
+                                                  ▼
+                         Supabase: pregunta + A/B + citas + coste
 ```
 
 Restricciones deliberadas de la V1:
@@ -101,16 +105,21 @@ no token a token desde el proveedor.
 | UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos bloques separados, fuentes, límites y coste |
 | Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, presupuesto y protocolo bufferizado |
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
-| Presupuesto | `frontend/netlify/functions/chat/budget-ledger.ts` | Reserva/reconciliación atómica y log sin contenido en Netlify Database |
-| Migración | `frontend/netlify/database/migrations/` | Tablas diarias y por petición |
+| Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Reserva/reconciliación y serialización de mensajes A/B |
+| Migraciones | `supabase/migrations/` | Tablas privadas de conversaciones, peticiones, mensajes y presupuesto; RPC atómicas |
 | Proxy futuro | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Prototipo FastAPI fuera del camino productivo |
 | HTTP Python | `src/api/chat.py` | Entrada acotada, autenticación y serialización SSE |
 | Runtime | `src/api/chat_runtime.py` | Construcción perezosa de A, B, corpus, store y logs |
 
 ## Variables de la V1 Netlify-only
 
-Todas salvo `VITE_CHAT_MODE` tienen alcance **Functions** y nunca llevan prefijo
-`VITE_`.
+Ninguna credencial de backend lleva prefijo `VITE_`. El objetivo es darles
+alcance **Functions**, pero la cuenta Netlify Legacy no permite scopes
+específicos. En la configuración productiva vigente se guardan como variables
+ordinarias del contexto `production` y todos los scopes. Vite solo expone las
+variables `VITE_*`, por lo que no llegan al bundle; sí pueden leerlas los
+administradores y procesos de build autorizados en Netlify. Si se contrata Pro,
+convertirlas a secretos Functions y rotarlas.
 
 | Variable | Uso |
 |---|---|
@@ -122,8 +131,13 @@ Todas salvo `VITE_CHAT_MODE` tienen alcance **Functions** y nunca llevan prefijo
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
 | `CHAT_DAILY_BUDGET_USD` | Techo diario global, decimal USD positivo |
 | `CHAT_REQUEST_RESERVATION_USD` | Cota superior prudente por comparación, no mayor que el techo diario |
-| `NETLIFY_DB_URL` | Inyectada por Netlify Database; sin ella el presupuesto falla cerrado |
+| `SUPABASE_URL` | URL del proyecto Supabase; solo backend |
+| `SUPABASE_SECRET_KEY` | Clave secreta de servidor; sin ella el endpoint falla cerrado |
 | `VITE_CHAT_MODE` | Alcance Builds: `live` conecta el cliente; cualquier otro valor usa el stub |
+
+La clave publicable, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_REF` y
+`SUPABASE_DB_PASSWORD` no pertenecen al runtime. El contrato de almacenamiento,
+campos y permisos está en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md).
 
 El precio TypeScript no es una tabla mantenida a mano. Se exporta del catálogo
 de `neutral-llm-gateway` con:
@@ -153,21 +167,29 @@ con ambos límites y el máximo observado de recuperación documental.
 
 ## Despliegue seguro de la V1
 
-1. Confirmar que el sitio admite Netlify Database y vincular la base. El deploy
-   debe aplicar `frontend/netlify/database/migrations/`.
-2. Configurar las variables de Functions con
-   `CHAT_COMPARISON_ENABLED=false`; mantener `VITE_CHAT_MODE=stub` en Production.
+1. Confirmar que `supabase migration list --linked` muestra las migraciones
+   locales y remotas, y que ambos advisors terminan sin incidencias.
+2. Configurar `SUPABASE_URL`, `SUPABASE_SECRET_KEY` y las variables de proveedor
+   como secretos de Functions si el plan lo permite. En el plan Legacy aplicar
+   la excepción documentada de variables ordinarias para el contexto
+   `production`. Empezar con `CHAT_COMPARISON_ENABLED=false` y
+   `VITE_CHAT_MODE=stub`.
 3. Desplegar y comprobar que `POST /api/chat` responde `503` y que no se realiza
    ninguna llamada de proveedor.
 4. En **Deploy Preview**, configurar `VITE_CHAT_MODE=live`, un presupuesto muy
    bajo y `CHAT_COMPARISON_ENABLED=true`.
 5. Hacer una sola consulta del banco con autorización de coste. Comprobar dos
    respuestas A → B, citas verificadas, tokens/coste visibles, duración menor de
-   60 s y un registro `chat_request_costs` sin pregunta, respuesta ni citas.
+   60 s, tres filas en `private.chat_messages` y una petición reconciliada.
 6. Cuadrar tokens y coste con los paneles de OpenAI y Gemini; probar después
    timeout, fallo aislado, límite por IP y agotamiento del presupuesto.
 7. Volver a ambos cierres. Activar Production exige completar privacidad,
    observar Luna `high` durante varios días y una autorización explícita.
+
+La activación productiva fue autorizada expresamente el 31 de julio de 2026. El
+smoke real devolvió A y B en paralelo en 20,23 s, con costes respectivos de
+0,002849 USD (`ACTUAL`) y 0,001693 USD (`ESTIMATED`). La activación técnica no
+cierra por sí sola las tareas legales y de retención de `TASKS.md`.
 
 El protocolo conceptual y las reglas de independencia siguen en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
@@ -235,17 +257,19 @@ procedimiento de despliegue de la V1 Netlify-only.
 ## Seguridad, privacidad y coste
 
 - La Function limita a cinco peticiones por IP y minuto y reserva presupuesto
-  global mediante una transacción con bloqueo de fila. Si Database no está
+  global mediante una transacción con bloqueo de fila. Si Supabase no está
   disponible, no se llama a ningún proveedor.
-- El navegador envía solo `role` y `content`; el backend usa únicamente la
-  última pregunta de usuario para el comparador actual.
+- El navegador envía un identificador aleatorio de conversación, la
+  jurisdicción y solo `id`, `role` y `content` de la última pregunta. El backend
+  no recibe el resto del historial local.
 - El historial es por ahora visual, no contexto de inferencia: una pregunta
   como «¿y en ese caso?» debe reformularse de forma autosuficiente. Incorporar
   contexto multi-turn exige un contrato de privacidad y grounding separado;
   no se resuelve reenviando todo el historial por defecto.
-- Sentry elimina cuerpo, cabeceras y variables locales. Netlify Database y el
-  log estructurado guardan métricas, modelo y coste, nunca consulta, respuesta
-  ni citas.
+- Sentry elimina cuerpo, cabeceras y variables locales. Supabase guarda la
+  pregunta aceptada y una respuesta por estrategia con modelo, tokens, coste,
+  duración, citas y límites; no guarda IP, user-agent, cookies ni diagnósticos
+  brutos del proveedor.
 - La V1 no persiste diagnósticos brutos del proveedor. El contrato SSE sustituye
   los límites de una estrategia en `error` por un mensaje genérico y nunca
   expone excepciones al navegador.

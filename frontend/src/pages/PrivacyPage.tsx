@@ -30,13 +30,15 @@ export function PrivacyPage() {
       <section className='mb-7'>
         <h2 className='mb-2 font-heading text-lg font-semibold'>Qué conserva la aplicación</h2>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
-          El servidor registra modelo, tokens, coste, duración, estado y un identificador aleatorio
-          para controlar el presupuesto. No guarda la pregunta, la respuesta ni las citas en ese
-          registro.
+          Para evaluar y mejorar el buscador, el servidor guarda en Supabase la pregunta y las dos
+          respuestas comparadas. También conserva modelo, tokens, coste, duración y citas utilizadas
+          por cada estrategia, vinculados a identificadores aleatorios de consulta y conversación.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          El historial visible se conserva en tu navegador mediante localStorage. Puedes eliminarlo
-          desde la interfaz o borrando los datos del sitio.
+          El historial visible se conserva además en tu navegador mediante localStorage. Eliminarlo
+          desde la interfaz o borrar los datos del sitio solo retira esa copia local; para solicitar
+          la eliminación de un registro del servidor, contacta indicando el identificador de la
+          conversación que aparece en su URL.
         </p>
       </section>
 

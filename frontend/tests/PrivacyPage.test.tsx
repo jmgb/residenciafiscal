@@ -15,8 +15,9 @@ describe('PrivacyPage', () => {
     expect(screen.getByText(/OpenAI/i)).toBeInTheDocument();
     expect(screen.getByText(/Google Gemini/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/no guarda la pregunta, la respuesta ni las citas/i)
+      screen.getByText(/guarda en Supabase la pregunta y las dos respuestas/i)
     ).toBeInTheDocument();
+    expect(screen.getByText(/modelo, tokens, coste, duración y citas/i)).toBeInTheDocument();
     expect(screen.getByText(/navegador.*localStorage/i)).toBeInTheDocument();
   });
 

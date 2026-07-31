@@ -38,9 +38,19 @@ function sseResponse(
   });
 }
 
+const requestContext = {
+  countryPath: '/espana',
+  countryName: 'España',
+  conversationId: 'conversation-1',
+};
+
 async function collect(engine = createLiveChatEngine()): Promise<ChatChunk[]> {
   const chunks: ChatChunk[] = [];
-  for await (const chunk of engine.askQuestion(messages, new AbortController().signal)) {
+  for await (const chunk of engine.askQuestion(
+    messages,
+    new AbortController().signal,
+    requestContext
+  )) {
     chunks.push(chunk);
   }
   return chunks;
@@ -72,7 +82,7 @@ describe('createLiveChatEngine', () => {
     ]);
   });
 
-  it('envía por POST únicamente role y content', async () => {
+  it('envía la última pregunta con identificadores pseudónimos y jurisdicción', async () => {
     const fetchSpy = vi.fn(async () => sseResponse([sseEvent('done', {})]));
     vi.stubGlobal('fetch', fetchSpy);
 
@@ -84,7 +94,9 @@ describe('createLiveChatEngine', () => {
     expect(init.method).toBe('POST');
     expect(init.headers).toEqual({ 'content-type': 'application/json' });
     expect(JSON.parse(init.body as string)).toEqual({
-      messages: [{ role: 'user', content: '¿Qué ocurre con los 183 días?' }],
+      conversation_id: 'conversation-1',
+      country_path: '/espana',
+      messages: [{ id: 'm1', role: 'user', content: '¿Qué ocurre con los 183 días?' }],
     });
     expect(init.signal).toBeInstanceOf(AbortSignal);
   });
@@ -110,13 +122,19 @@ describe('createLiveChatEngine', () => {
     ];
     const engine = createLiveChatEngine();
 
-    for await (const _chunk of engine.askQuestion(history, new AbortController().signal)) {
+    for await (const _chunk of engine.askQuestion(
+      history,
+      new AbortController().signal,
+      requestContext
+    )) {
       // Consumir.
     }
 
     const [, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
     expect(JSON.parse(init.body as string)).toEqual({
-      messages: [{ role: 'user', content: '¿Y qué ocurre con el centro de intereses?' }],
+      conversation_id: 'conversation-1',
+      country_path: '/espana',
+      messages: [{ id: 'm2', role: 'user', content: '¿Y qué ocurre con el centro de intereses?' }],
     });
   });
 

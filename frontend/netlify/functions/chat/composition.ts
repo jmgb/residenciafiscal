@@ -1,16 +1,16 @@
-import { getDatabase } from '@netlify/database';
+import { createClient } from '@supabase/supabase-js';
 import corpus from '../../../../knowledge/jurisprudencia-v3/retrieval/corpus.json';
 import san1071 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1071-2025.pages.json';
 import san1136 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1136-2016.pages.json';
 import san1210 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json';
 import san1226 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1226-2021.pages.json';
 import san1386 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1386-2017.pages.json';
-import { PostgresBudgetLedger, type SqlPool } from './budget-ledger';
 import type { ChatFunctionDependencies } from './chat';
 import { CurrentStructuredStrategy } from './current-structured-strategy';
 import { GeminiFileSearchStrategy } from './file-search-strategy';
 import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters';
 import { compareStrategiesInParallel } from './runtime';
+import { SupabaseChatStore, type SupabaseRpcClient } from './supabase-chat-store';
 
 const artifacts = {
   'san-1071-2025': san1071,
@@ -38,7 +38,8 @@ export const createProductionDependencies = (
   const openAIKey = environment.OPENAI_API_KEY?.trim();
   const geminiKey = environment.GEMINI_API_KEY?.trim();
   const storeName = environment.CHAT_FILE_SEARCH_STORE_NAME?.trim();
-  const databaseUrl = environment.NETLIFY_DB_URL?.trim();
+  const supabaseUrl = environment.SUPABASE_URL?.trim();
+  const supabaseSecretKey = environment.SUPABASE_SECRET_KEY?.trim();
   const dailyLimitMicrousd = usdToMicrousd(environment.CHAT_DAILY_BUDGET_USD);
   const reservationMicrousd = usdToMicrousd(environment.CHAT_REQUEST_RESERVATION_USD);
   const deadlineMs = deadline(environment.CHAT_DEADLINE_MS);
@@ -48,7 +49,8 @@ export const createProductionDependencies = (
     !enabled ||
     !openAIKey ||
     !geminiKey ||
-    !databaseUrl?.startsWith('postgres') ||
+    !supabaseUrl?.startsWith('https://') ||
+    !supabaseSecretKey ||
     !storeName?.startsWith('fileSearchStores/') ||
     !dailyLimitMicrousd ||
     !reservationMicrousd ||
@@ -68,8 +70,16 @@ export const createProductionDependencies = (
     };
   }
 
-  const database = getDatabase();
-  const ledger = new PostgresBudgetLedger(database.pool as unknown as SqlPool, {
+  const supabase = createClient(supabaseUrl, supabaseSecretKey, {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  });
+  const rpcClient: SupabaseRpcClient = {
+    async rpc(functionName, parameters) {
+      const { data, error } = await supabase.rpc(functionName, parameters);
+      return { data, error: error ? { message: error.message } : null };
+    },
+  };
+  const store = new SupabaseChatStore(rpcClient, {
     dailyLimitMicrousd,
     reservationMicrousd,
   });
@@ -83,7 +93,7 @@ export const createProductionDependencies = (
 
   return {
     enabled: true,
-    reserveBudget: (requestId) => ledger.reserve(requestId),
+    reserveBudget: (input) => store.reserve(input),
     compare: (question, requestId, signal) =>
       compareStrategiesInParallel({
         question,
@@ -93,21 +103,11 @@ export const createProductionDependencies = (
         strategies: [structured, fileSearch],
       }),
     reconcileBudget: async ({ requestId, actualMicrousd, actualComplete, report }) => {
-      await ledger.reconcile({
+      await store.reconcile({
         requestId,
         actualMicrousd,
         actualComplete,
-        strategies: report.answers.map((answer) => ({
-          strategy: answer.strategy,
-          status: answer.status,
-          model: answer.model,
-          latency_ms: answer.latency_ms,
-          cost_microusd: answer.cost.cost_microusd,
-          measurement: answer.cost.measurement,
-          input_tokens: answer.cost.input_tokens,
-          output_tokens: answer.cost.output_tokens,
-          retrieved_document_tokens: answer.cost.retrieved_document_tokens,
-        })),
+        report,
       });
       console.info(
         JSON.stringify({

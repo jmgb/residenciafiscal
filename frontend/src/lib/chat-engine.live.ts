@@ -5,7 +5,7 @@
  * necesario porque el 429 nativo de Netlify no pertenece al protocolo SSE.
  */
 import { ChatEngineError, parseChatEventStream } from '@/lib/chat-sse-protocol';
-import type { ChatEngine, ChatMessage } from '@/types/chat';
+import type { ChatEngine, ChatMessage, ChatRequestContext } from '@/types/chat';
 
 const CHAT_ENDPOINT = '/api/chat';
 const CHAT_PROTOCOL_VERSION = '2';
@@ -27,7 +27,11 @@ function errorForStatus(status: number): ChatEngineError {
   return new ChatEngineError('No se ha podido completar la consulta.', 'http_error', true);
 }
 
-async function requestChat(messages: ChatMessage[], signal: AbortSignal): Promise<Response> {
+async function requestChat(
+  messages: ChatMessage[],
+  signal: AbortSignal,
+  context?: ChatRequestContext
+): Promise<Response> {
   let latestUserMessage: ChatMessage | undefined;
   for (let index = messages.length - 1; index >= 0; index -= 1) {
     const message = messages[index];
@@ -46,7 +50,9 @@ async function requestChat(messages: ChatMessage[], signal: AbortSignal): Promis
       body: JSON.stringify({
         // El comparador vigente es single-turn. No reenviar respuestas A/B ni
         // hechos fiscales anteriores reduce exposición y evita ambigüedad.
-        messages: [{ role: 'user', content: latestUserMessage.content }],
+        conversation_id: context?.conversationId ?? latestUserMessage.id,
+        country_path: context?.countryPath ?? '/espana',
+        messages: [{ id: latestUserMessage.id, role: 'user', content: latestUserMessage.content }],
       }),
       signal,
     });
@@ -75,8 +81,8 @@ function validateResponse(response: Response): ReadableStream<Uint8Array> {
 
 export function createLiveChatEngine(): ChatEngine {
   return {
-    async *askQuestion(messages, signal) {
-      const response = await requestChat(messages, signal);
+    async *askQuestion(messages, signal, context) {
+      const response = await requestChat(messages, signal, context);
       yield* parseChatEventStream(validateResponse(response));
     },
   };

@@ -190,7 +190,7 @@ El runbook de despliegue está en
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
 | Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta A y B en paralelo y falla cerrado |
-| Presupuesto y logs V1 | `budget-ledger.ts`, `frontend/netlify/database/migrations/` |
+| Mensajes, presupuesto y costes V1 | `supabase-chat-store.ts`, `supabase/migrations/` |
 | Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
 | UI y persistencia de dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
@@ -213,8 +213,9 @@ Cada estrategia informa por separado:
 
 El coste marginal no incluye preparar los casos v3 ni indexar el File Search
 Store. Si Gemini omite los tokens de modalidad `document`, el coste de B es un
-límite inferior y debe marcarse `ESTIMATED`. Los logs correlacionan A y B por
-`request_id`, pero no conservan la pregunta ni la respuesta.
+límite inferior y debe marcarse `ESTIMATED`. El log operativo evita contenido;
+la persistencia privada de Supabase correlaciona por `request_id` la pregunta y
+las respuestas A/B con sus citas y costes para evaluar el producto.
 
 El recibo local del store y los artefactos de cada ejecución viven en
 `output/file-search/`, ignorado por Git. Un clon nuevo no debe asumir que ese

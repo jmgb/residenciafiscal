@@ -5,9 +5,10 @@ contra el dominio público después de cada deploy.
 
 > **Si retomas el backend del chat**, separa dos líneas: el experimento de
 > comparación entre el corpus v3 y Gemini File Search, y la activación
-> productiva. El mecanismo atómico ya está implementado; la activación sigue
-> bloqueada por provisionarlo y probarlo en Deploy Preview, completar privacidad
-> y revisión humana. La fase 0 de plataforma ya está ejecutada y medida.
+> productiva. El mecanismo atómico ya está implementado y el chat está activo en
+> producción desde el 31 de julio de 2026. Siguen pendientes privacidad,
+> retención y revisión humana; la activación técnica no satisface esos gates.
+> La fase 0 de plataforma ya está ejecutada y medida.
 >
 > **Decisión de runtime V1 (2026-07-31):** el chat se desplegará íntegramente en
 > una Netlify Function estándar, con A y B en paralelo y deadline interno
@@ -45,11 +46,11 @@ contra el dominio público después de cada deploy.
 
 ## Producto y arquitectura
 
-- [ ] **Sustituir el motor `stub` del chat por un backend real Netlify-only.** El
+- [x] **Sustituir el motor `stub` del chat por un backend real Netlify-only.** El
   prototipo React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está
   implementado y probado, pero deja de ser el objetivo de la V1. El composition
-  root ya está portado a una Netlify Function TypeScript; falta
-  provisionar/validar Database, completar los gates y autorizar producción. La
+  root está portado a una Netlify Function TypeScript, Supabase está conectado y
+  una consulta productiva A/B terminó en 20,23 s por 0,004542 USD. La
   implementación anterior se conserva como opción futura para peticiones de
   más de 60 s. Runbook y corte:
   [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md). Incluye recuperación
@@ -168,13 +169,16 @@ contra el dominio público después de cada deploy.
     quinto criterio falló: `onlyIfMatch` de Netlify Blobs **no da compare-and-swap**
     bajo concurrencia. Cinco peticiones simultáneas dejaron un contador de cinco
     incrementos en dos, y todas creyeron haber escrito. Se eligió la opción del
-    diseño con atomicidad real: Netlify Database/Postgres.
+    diseño con atomicidad real: Postgres.
 
-    > **Decisión 2026-07-31:** usar Netlify Database/Postgres con transacción y
-    > `SELECT ... FOR UPDATE`. `budget-ledger.ts` reserva antes de llamar a los
-    > proveedores y reconcilia después; si la base falla, el endpoint falla
-    > cerrado. La migración y el test unitario están versionados. Falta validar
-    > el servicio real y su migración en Deploy Preview.
+    > **Decisión actualizada 2026-07-31:** Netlify Database resultó incompatible
+    > con el plan heredado del sitio. Se trasladó el mismo contrato atómico a
+    > Supabase/Postgres: `reserve_chat_request` y `complete_chat_request` usan
+    > transacción y `SELECT ... FOR UPDATE`; si Supabase falla, el endpoint falla
+    > cerrado. El proyecto remoto, migraciones, acceso con secret key, escritura
+    > A/B, advisors y doce reservas concurrentes están validados: el techo de
+    > cinco admitió exactamente cinco. La consulta productiva posterior confirmó
+    > reserva, respuestas A/B y reconciliación; no sustituye los gates legales.
     >
     > Evidencia histórica: lee en este orden la sección 5 de
     > [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) (la evidencia del
@@ -438,9 +442,9 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 ## Seguridad y datos
 
 - [ ] **Completar la protección económica del endpoint live.** La V1 ya tiene
-  rate limit, cierre por bandera, reserva/reconciliación atómica y logs sin
-  contenido. Falta provisionar Netlify Database, aplicar la migración y probar
-  concurrencia/agotamiento en Deploy Preview antes de cerrar el gate.
+  rate limit, cierre por bandera y reserva/reconciliación atómica en Supabase.
+  El schema privado, migraciones, RPC real, advisors y concurrencia/agotamiento
+  están verificados. Falta probar el flujo completo en Deploy Preview.
 - [ ] **Requisitos legales previos a activar el chat real.** Bloquean la fase 3: con el
   motor en `stub` no sale nada de Netlify; con el real, la última pregunta
   autosuficiente viaja a OpenAI para A y a Google/Gemini para B.
@@ -452,19 +456,20 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     prometer `store: false` para un proveedor basándose en la configuración del
     otro.
     - [x] Publicar `/privacidad` con el flujo técnico real, minimización,
-      almacenamiento local, ambos proveedores y contacto.
+      almacenamiento local, persistencia Supabase, ambos proveedores y contacto.
     - [ ] Completar con identidad legal del responsable, base jurídica,
       transferencias, retención efectiva y contratos verificados. El bloqueo ya
       no se publica en `/privacidad`: es una condición interna y el backend
       permanece cerrado por configuración mientras falte.
-      > Antes de activar el chat real en producción debe completarse y validarse
-      > la identidad legal del responsable, la base jurídica, los plazos de
-      > conservación y los acuerdos con ambos proveedores. Mientras falte, el
-      > backend permanece cerrado por configuración.
+      > Antes de abrir el chat a terceros debe completarse y validarse la
+      > identidad legal del responsable, la base jurídica, los plazos de
+      > conservación/borrado de mensajes en Supabase y los acuerdos con Supabase,
+      > OpenAI y Google. No prometer un plazo hasta automatizarlo y probarlo.
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última
-    pregunta no vacía, no el historial local ni las respuestas A/B.
+    pregunta no vacía, no el historial local. Supabase guarda esa pregunta y las
+    dos respuestas A/B del turno, sin IP, user-agent ni diagnósticos brutos.
 - [x] Añadir validación automática del schema del corpus, detección de duplicados y
   trazabilidad de cada criterio hasta su sentencia de origen.
 

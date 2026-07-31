@@ -157,6 +157,33 @@ describe('Netlify Function /api/chat V1', () => {
     );
   });
 
+  it('entrega al ledger la pregunta y los identificadores pseudónimos', async () => {
+    const deps = dependencies();
+
+    const response = await createChatHandler(deps)(
+      request({
+        conversation_id: 'conversation-1',
+        country_path: '/espana',
+        messages: [
+          {
+            id: 'message-1',
+            role: 'user',
+            content: '¿Qué pruebas tiene en cuenta Hacienda?',
+          },
+        ],
+      })
+    );
+
+    expect(response.status).toBe(200);
+    expect(deps.reserveBudget).toHaveBeenCalledWith({
+      requestId: expect.stringMatching(/^chat-/),
+      conversationId: 'conversation-1',
+      userMessageId: 'message-1',
+      countryPath: '/espana',
+      question: '¿Qué pruebas tiene en cuenta Hacienda?',
+    });
+  });
+
   it('su respuesta completa atraviesa el parser real del frontend', async () => {
     const response = await createChatHandler(dependencies())(
       request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })

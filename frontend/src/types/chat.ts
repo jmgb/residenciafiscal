@@ -72,6 +72,8 @@ export type ChatRole = 'user' | 'assistant';
 export interface ChatRequestContext {
   countryPath: string;
   countryName: string;
+  /** Identificador aleatorio local; no identifica por sí solo a una persona. */
+  conversationId?: string;
 }
 
 export interface ChatMessage {

@@ -230,8 +230,9 @@ export function ChatView({
       const answerFor = (strategy: ChatStrategyId): ChatStrategyAnswer | undefined =>
         answers?.find((answer) => answer.strategy === strategy);
 
-      // Nunca registramos el texto de la consulta: es información fiscal
-      // personal. Solo medimos volumen, jurisdicción y si hubo respuesta.
+      // La analítica de producto nunca recibe el texto: solo volumen,
+      // jurisdicción y resultado. La persistencia privada del turno se realiza
+      // dentro de la Function, no mediante el SDK de analítica del navegador.
       trackEvent('consulta_enviada', {
         pais: country.path,
         es_primera_de_la_conversacion: history.length <= 1,
@@ -241,6 +242,7 @@ export function ChatView({
         for await (const chunk of engine.askQuestion(history, controller.signal, {
           countryPath: country.path,
           countryName: country.name,
+          conversationId: targetId,
         })) {
           if (chunk.type === 'answer_start') {
             answers ??= [];

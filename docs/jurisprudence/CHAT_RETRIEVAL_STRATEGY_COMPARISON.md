@@ -405,8 +405,9 @@ muestra «coste de esta respuesta; no incluye preparación del corpus». El
 almacenamiento y los embeddings de consulta se etiquetan según la tarifa
 vigente. El coste adicional de B nunca se mezcla con el consumo de A.
 
-Cada petición escribe un log estructurado sin el texto de la consulta ni de la
-respuesta:
+Cada petición escribe un log operativo estructurado sin el texto de la consulta
+ni de la respuesta. Separadamente, Supabase persiste en schema privado la
+pregunta y ambas respuestas con citas y costes para comparar calidad:
 
 ```json
 {
