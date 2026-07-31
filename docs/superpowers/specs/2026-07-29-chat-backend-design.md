@@ -164,11 +164,11 @@ y [consistencia/escrituras condicionales de Blobs](https://docs.netlify.com/buil
 | Paso | Modelo | Por qué |
 |---|---|---|
 | Router | `gpt-5.6-luna` | Clasificación con salida JSON estricta; recibe el historial acotado para resolver preguntas de seguimiento |
-| Redacción | `gpt-5.6-luna` (`GPT_5_MINI`) | Mismo modelo que usa el pipeline por defecto; contexto total limitado a 48 KB y salida a 1.200 tokens, incluido razonamiento |
+| Redacción | `gpt-5.6-luna` | Política exclusiva del chat; contexto total limitado a 48 KB y salida a 1.200 tokens, incluido razonamiento |
 
 Ambos pasos usan el mismo modelo **porque hoy no hay uno más barato disponible**:
-en `config.py:43`, `GPT_5_NANO` es un alias de `gpt-5.6-luna`, igual que
-`GPT_5_MINI`. No es una decisión de diseño, es el catálogo que hay. El router es
+`src/chat_model_policy.py` lo fija como política conversacional. No es una
+decisión del pipeline del corpus. El router es
 un paso barato por su tamaño de entrada, no por el modelo, y es el sitio donde
 cambiar el ID el día que exista un modelo de clasificación más económico.
 
