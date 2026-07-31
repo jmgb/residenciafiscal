@@ -1,6 +1,6 @@
 # Smoke pagado de la V1 Netlify-only
 
-**Fecha:** 2026-07-31.  
+**Fecha:** 2026-07-31.
 **Estado:** una observación técnica válida; no es evaluación jurídica ni autoriza
 Production.
 
