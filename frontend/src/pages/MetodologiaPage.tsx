@@ -19,28 +19,37 @@ export function MetodologiaPage() {
       <section className='mb-8'>
         <h2 className='mb-3 font-heading text-lg font-semibold'>Cómo se construye el análisis</h2>
         <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
-          Python extrae el texto íntegro por páginas y calcula sus hashes. Después, un agente
-          propone en formato estructurado los criterios de residencia, las pruebas, su valoración
-          judicial, el razonamiento del tribunal y el resultado; Python valida cada referencia
-          contra la fuente.
+          El punto de partida es siempre la sentencia original. Su texto se conserva literal, página
+          a página, junto con una huella digital que permite detectar cualquier alteración
+          posterior. Lo que escribió el tribunal no se corrige, no se completa y no se parafrasea.
         </p>
         <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
-          Las pruebas se clasifican en doce categorías —desde presencia física y desplazamientos
-          hasta trazas digitales— y cada una se registra con el criterio que ataca, si fue admitida
-          o rechazada, el peso que le dio el tribunal y la cita literal que lo respalda.
+          Sobre ese texto, un modelo de inteligencia artificial propone el análisis: qué criterios
+          de residencia se discutieron, qué pruebas se presentaron, cómo las valoró el tribunal, con
+          qué razonamiento y con qué resultado. Cada afirmación queda anclada a una cita textual, y
+          una verificación automática comprueba que esa cita existe, palabra por palabra, en la
+          sentencia. Lo que no supera esa comprobación no se publica.
+        </p>
+        <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
+          Las pruebas se clasifican en doce categorías —desde la presencia física y los
+          desplazamientos hasta las trazas digitales— y de cada una se registra a qué criterio
+          afecta, si el tribunal la admitió o la rechazó y el peso que le dio, siempre con la cita
+          literal que lo respalda.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          El repositorio no envía las sentencias a una API de modelos. Las propuestas del agente son
-          análisis derivados y requieren revisión jurídica humana antes de considerarse aprobadas.
+          Todo esto ocurre antes de publicar: el análisis se prepara y se verifica con antelación,
+          no se improvisa cada vez que alguien consulta la web. Y es una propuesta: requiere
+          revisión jurídica humana antes de considerarse aprobado.
         </p>
       </section>
 
       <section className='mb-8'>
         <h2 className='mb-3 font-heading text-lg font-semibold'>Un método, un corpus por país</h2>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          El pipeline es agnóstico de la jurisdicción: lo que cambia de un país a otro son la fuente
-          oficial, el precepto que decide la residencia y el especialista que valida el análisis.
-          Por eso las fuentes y la normativa se documentan en la página de cada país: hoy, el{' '}
+          El método es el mismo para todos los países. Lo que cambia de una jurisdicción a otra son
+          tres cosas: la fuente oficial de la que proceden las sentencias, la norma que decide la
+          residencia fiscal y el especialista que valida el análisis. Por eso las fuentes y la
+          normativa se documentan en la página de cada país: hoy, el{' '}
           <Link to='/espana/fuentes' className='text-foreground underline underline-offset-4'>
             corpus de España
           </Link>
@@ -56,8 +65,9 @@ export function MetodologiaPage() {
             jurídico ni sustituye el criterio de un profesional.
           </li>
           <li>
-            La propuesta jurídica del agente puede contener errores de interpretación. Python
-            verifica texto y referencias, pero la aprobación jurídica requiere un especialista.
+            El análisis lo genera un modelo y puede contener errores de interpretación. La
+            literalidad de las citas se comprueba de forma automática; la valoración jurídica
+            requiere un especialista.
           </li>
           <li>
             El corpus de cada país es una selección, no la totalidad de la jurisprudencia sobre la

@@ -10,7 +10,7 @@
   {
     "path": "/metodologia",
     "title": "Metodología — Residencia Fiscal",
-    "description": "Cómo se construye el análisis en cualquier jurisdicción: extracción literal con hashes, propuesta estructurada del agente y verificación de cada cita contra la fuente antes de publicar.",
+    "description": "Cómo se construye el análisis en cualquier jurisdicción: el texto de cada sentencia se conserva literal, el análisis se propone sobre esa base y cada cita se comprueba palabra por palabra contra la sentencia antes de publicarse.",
     "indexable": true,
     "image": null,
     "sitemap": { "changefreq": "monthly", "priority": "0.6" }
