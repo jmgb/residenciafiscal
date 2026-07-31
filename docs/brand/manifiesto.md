@@ -99,7 +99,7 @@ despieza en frases sueltas fuera de contexto.
 
 El claim canónico de la marca:
 
-> **Reside donde mejor te traten. Decide con las sentencias en la mano.**
+> **Reside donde mejor te traten. Decide sobre tu residencia fiscal con las sentencias en la mano.**
 
 ## Reglas de uso
 
