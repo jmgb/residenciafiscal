@@ -143,12 +143,14 @@ latencia dominada por la salida, no por el tamaño de la pregunta.
 El paquete se instala desde PyPI con un mínimo y sin techo:
 
 ```toml
-dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.7.0"]
+dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.8.0"]
 ```
 
-`0.7.0` es el mínimo porque es la primera versión que normaliza el esquema
-estricto y declara `supports_temperature`: por debajo, este proyecto vuelve a
-necesitar los parches que se acaban de retirar.
+El mínimo es `0.8.0`, y cada tramo aporta algo que aquí se da por hecho: la
+`0.7.0` normaliza el esquema estricto y declara `supports_temperature` —por
+debajo, este proyecto vuelve a necesitar los parches retirados—, y la `0.8.0`
+hace que `Execution.model_used` respete el id que reporta el proveedor, que es
+el que el comparador publica como modelo de la respuesta.
 
 No hay techo por decisión explícita. El contrapeso conviene tenerlo presente:
 el propio paquete recomienda fijar una versión exacta, y sin máximo una futura

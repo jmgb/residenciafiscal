@@ -135,11 +135,13 @@ contra el dominio público después de cada deploy.
       el singleton de `gateway_setup` con `UsageSink` y `AlertSink`; el workflow
       Python + agente no importa el gateway. B conserva File Search fuera del
       paquete. Se retiraron el analizador LLM y `POST /analizar`.
-      - [x] Instalar el gateway desde PyPI con `>=0.7.0` y sin techo. La `0.7.0`
+      - [x] Instalar el gateway desde PyPI con `>=0.8.0` y sin techo. La `0.7.0`
         normaliza el esquema estricto de OpenAI y declara
         `supports_temperature`, así que se retiraron los dos parches locales
         que suplían ambas cosas, y con ellos la tabla de enrutado heredada
-        del analizador borrado.
+        del analizador borrado. La `0.8.0` hace que `Execution.model_used`
+        respete el id del proveedor; verificado que Luna sigue reportando el
+        suyo y que el importe llega `ACTUAL` con su versión de tarifas.
       - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
         ya borrado, en documentación y configuración de imports.
       - [x] Medir el esfuerzo de razonamiento sobre la evidencia recuperada:
