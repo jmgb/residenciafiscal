@@ -298,10 +298,31 @@ falla cerrado salvo activación y autenticación explícitas. Es el prototipo lo
 y se conserva como posible arquitectura futura para peticiones de más de 60 s;
 no es el target de la V1. El runtime conversacional ya está portado a una
 Netlify Function TypeScript: ejecuta A y B en paralelo, usa un deadline global,
-presupuesto atómico en Netlify Database y mantiene Luna `high`. Producción
+reserva presupuesto y persiste mensajes/costes mediante RPC atómicas en
+Supabase, y mantiene Luna `high`. El schema es privado y el navegador no accede
+directamente; contrato y operación:
+[`docs/operations/SUPABASE_CHAT.md`](docs/operations/SUPABASE_CHAT.md). Producción
 conserva el stub hasta completar configuración, privacidad y Deploy Preview;
 decisión, despliegue y rollback:
 [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
+
+## Backups de la base de datos
+
+`scripts/backup/` respalda a diario el proyecto Supabase en el bucket R2
+`residenciafiscal-backup` mediante tres `systemd timer` del VPS `alfredo`:
+backup, check de frescura independiente y simulacro mensual no destructivo. Los
+scripts **no** llevan credenciales y **nunca** hacen `source` del `.env` —lo
+parsean con `lib-read-env.sh`—, y las units ejecutan `/bin/bash <script>` para no
+depender del bit executable del checkout.
+
+El dump cubre `private`, `public`, `auth` y `supabase_migrations`: **el dato del
+chat vive en `private`**, así que un dump de `public` saldría verde y vacío. Al
+crear un schema nuevo hay que añadirlo a `BACKUP_SCHEMAS` en `vps-backup.sh`; el
+guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan si
+alguien lo olvida. El checkout del VPS no se actualiza solo: tras tocar un script
+o una unit, `git pull` allí y relanzar `install-backup-timer.sh`. Arquitectura,
+operativa, límites y consecuencias de privacidad:
+[`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
 
 ## Costes del chat
 

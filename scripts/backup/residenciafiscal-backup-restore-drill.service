@@ -1,0 +1,19 @@
+[Unit]
+Description=Residencia Fiscal - Simulacro mensual de restauracion
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+After=network-online.target
+Wants=network-online.target
+OnFailure=residenciafiscal-backup-failure@%n.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/residenciafiscal
+ExecStart=/bin/bash /home/ubuntu/residenciafiscal/scripts/backup/check-backup-restore-drill.sh
+NoNewPrivileges=true
+PrivateTmp=true
+TimeoutStartSec=600
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=residenciafiscal-backup-restore-drill

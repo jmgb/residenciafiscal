@@ -1,0 +1,12 @@
+[Unit]
+Description=Residencia Fiscal - Timer del check de frescura
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+
+[Timer]
+# 03:05 hora local del VPS, despues de la ventana del backup de las 02:30.
+OnCalendar=*-*-* 03:05:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

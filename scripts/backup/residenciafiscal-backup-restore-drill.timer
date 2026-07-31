@@ -1,0 +1,13 @@
+[Unit]
+Description=Residencia Fiscal - Timer del simulacro mensual de restauracion
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+
+[Timer]
+# Dia 1 de cada mes a las 06:35 hora local del VPS, fuera de las ventanas de
+# backup y freshness de los demas proyectos que corren en alfredo.
+OnCalendar=*-*-01 06:35:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

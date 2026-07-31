@@ -13,6 +13,7 @@ con esos archivos.
 ├── normativa/        # fuentes XML oficiales, por jurisdicción
 ├── output/           # ejecuciones locales y logs; ignorado por Git
 ├── schemas/          # contratos JSON Schema
+├── scripts/          # operación fuera del runtime; hoy solo backups de la BD
 ├── sentencias/       # fuentes PDF oficiales y manifiestos de muestras
 ├── src/              # código Python y CLIs
 │   └── api/          # aplicación FastAPI
@@ -37,6 +38,7 @@ con esos archivos.
 | Resultado local, informe temporal o log | `output/` |
 | Contrato JSON público | `schemas/` |
 | Código de interfaz web | `frontend/` |
+| Script de operación y units de systemd | `scripts/` |
 
 ## Organización de `docs/`
 

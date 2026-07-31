@@ -1,0 +1,22 @@
+[Unit]
+Description=Residencia Fiscal - Backup diario de Supabase a Cloudflare R2
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+After=network-online.target
+Wants=network-online.target
+OnFailure=residenciafiscal-backup-failure@%n.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/residenciafiscal
+# Ejecutar via bash evita depender del bit executable del checkout git
+# (a Presupuestor le costo un status=203/EXEC diario).
+ExecStart=/bin/bash /home/ubuntu/residenciafiscal/scripts/backup/vps-backup.sh
+NoNewPrivileges=true
+PrivateTmp=true
+# Si el backup tarda mas de 20 min, falla en vez de colgarse.
+TimeoutStartSec=1200
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=residenciafiscal-backup

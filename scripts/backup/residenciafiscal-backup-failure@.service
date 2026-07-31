@@ -1,0 +1,24 @@
+[Unit]
+Description=Residencia Fiscal - Aviso Telegram de fallo en %i
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/residenciafiscal
+# %i es la unidad que fallo (llega via OnFailure=residenciafiscal-backup-failure@%n.service),
+# asi que un unico template cubre backup, freshness y restore drill, incluidos
+# los fallos que el script no puede notificar por si mismo (timeout, OOM, 203/EXEC).
+Environment=BACKUP_FAILURE_SERVICE=%i
+Environment=BACKUP_FAILURE_REFERENCE=%i
+# Con comillas: sin ellas systemd corta el valor en el primer espacio y el aviso
+# llega con el titulo "Job".
+Environment="BACKUP_FAILURE_TITLE=Job de backup FAILED"
+ExecStart=/bin/bash /home/ubuntu/residenciafiscal/scripts/backup/notify-backup-failure.sh
+NoNewPrivileges=true
+PrivateTmp=true
+TimeoutStartSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=residenciafiscal-backup-failure

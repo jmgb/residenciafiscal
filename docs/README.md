@@ -73,7 +73,7 @@ Documentos especializados:
 | Corpus normativo | [XML del BOE → preceptos](normativa/NORMATIVA.md) |
 | Producto | [Páginas de país](product/COUNTRY_PAGES.md), [analítica](product/ANALYTICS.md) |
 | Modelos | [Paquete `llm_gateway`](development/LLM_GATEWAY.md), [reasoning effort](development/REASONING_EFFORT.md) |
-| Infraestructura | [Despliegue del chat](operations/CHAT_DEPLOYMENT.md), [Netlify](operations/NETLIFY.md), [Netlify Edge](operations/NETLIFY_EDGE.md), [Cloudflare](operations/CLOUDFLARE.md), [UptimeRobot](operations/UPTIMEROBOT.md) |
+| Infraestructura | [Despliegue del chat](operations/CHAT_DEPLOYMENT.md), [persistencia Supabase](operations/SUPABASE_CHAT.md), [backups](operations/BACKUPS.md), [Netlify](operations/NETLIFY.md), [Netlify Edge](operations/NETLIFY_EDGE.md), [Cloudflare](operations/CLOUDFLARE.md), [UptimeRobot](operations/UPTIMEROBOT.md) |
 | Identidad | [Guía de marca](brand/brand-guidelines.md), [manifiesto](brand/manifiesto.md) |
 | Evidencia experimental | [`experiments/`](experiments/) |
 

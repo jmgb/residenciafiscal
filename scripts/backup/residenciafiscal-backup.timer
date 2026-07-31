@@ -1,0 +1,14 @@
+[Unit]
+Description=Residencia Fiscal - Timer del backup diario
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/BACKUPS.md
+
+[Timer]
+# 02:30 hora local del VPS. alfredo ya tiene ocupadas las ventanas 03:30-06:03
+# (comunicador, presupuestor, hermes): este hueco no compite con ninguna.
+OnCalendar=*-*-* 02:30:00
+# Si el VPS estaba apagado a esa hora, ejecuta al arrancar.
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target
