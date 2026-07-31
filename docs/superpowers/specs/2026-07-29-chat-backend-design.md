@@ -50,8 +50,9 @@ Contexto necesario para revisar este diseño sin releer el repositorio entero.
 | API FastAPI (`src/api/main.py`) | Expone estado y contratos; no analiza sentencias ni tiene rutas de pago. |
 | SPA React (`frontend/`) | Desplegada en Netlify. Estática, sin servidor. |
 | `frontend/src/lib/chat-engine.ts` | Punto único de selección del motor. Hoy `chatEngineMode = 'stub'`. |
-| `frontend/src/lib/chat-engine.stub.ts` | Motor simulado: texto pregrabado por tema, streaming falso, citas reales del corpus. |
-| `frontend/src/types/chat.ts` | Contrato `ChatEngine` / `ChatChunk` / `ChatSource`. La unión de chunks es reutilizable, pero `ChatSource` debe evolucionar para incluir cuestión, página y anclaje. |
+| `frontend/src/lib/chat-engine.stub.ts` | Motor simulado: texto pregrabado por tema, streaming falso y enlaces a sentencias reales. Sus extractos son resúmenes legados, no citas v2. |
+| `frontend/src/types/chat.ts` | Contrato `ChatEngine` / `ChatChunk` / `ChatSourceV2`, ya ampliado con cuestión, página, anclaje, fidelidad, hash y revisión. |
+| `frontend/src/lib/chat-source.ts` | Validador estructural de fuentes v2 y separación explícita de fuentes legadas. |
 | `frontend/scripts/build-corpus.mjs` | En el `prebuild`, genera `public/data/corpus.json` (30 KB, metadatos ligeros de las 106 sentencias). |
 | `output/analisis_*.jsonl` | 106 líneas, 888 KB, ~8,4 KB por sentencia. **No se versiona** (`output/` está en `.gitignore`). |
 
@@ -482,8 +483,10 @@ blanco. La respuesta incluye `Content-Type: text/event-stream; charset=utf-8`,
 
 `error` es un detalle del protocolo HTTP, **no** un cuarto `ChatChunk`. El cliente
 `chat-engine.live.ts` lo convierte en una excepción tipada; `ChatView` ya captura
-errores y conserva el texto parcial. La unión de eventos no cambia, pero sí deben
-actualizarse el tipo, la persistencia y la presentación de fuentes.
+errores y conserva el texto parcial. La unión de eventos no cambia. El tipo,
+la persistencia versionada y la presentación de fuentes ya están adaptados;
+siguen pendientes el cliente live y el parser SSE que validará este contrato en
+la frontera.
 
 `ChatSourceV2` extiende los metadatos de sentencia con:
 
@@ -503,6 +506,13 @@ actualizarse el tipo, la persistencia y la presentación de fuentes.
 Una sentencia puede producir varias fuentes si respalda proposiciones distintas.
 La UI puede agruparlas visualmente por ROJ, pero no debe deduplicarlas perdiendo
 páginas o extractos.
+
+Implementado en el frontend: `sourceId` gobierna identidad y expansión, por lo
+que dos anclajes de un mismo PDF no colisionan. Las fuentes persistidas antes de
+v2 sobreviven como `LegacyChatSource`, con un aviso explícito de que su extracto
+no es una cita judicial verificada. Nunca se completan página, anclaje o hash
+por inferencia. `areChatSourcesV2` valida además que los `sourceId` sean únicos
+dentro de cada evento; el futuro parser SSE debe reutilizar ese guardarraíl.
 
 El parser no usa `EventSource` porque la petición es `POST`. Lee `fetch().body`,
 tolera UTF-8 y eventos partidos entre chunks de red, rechaza versiones de

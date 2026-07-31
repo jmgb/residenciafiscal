@@ -79,6 +79,20 @@ El chat funciona hoy con un **stub**. `chatEngineMode` en
 simulado en la UI. Al conectar el backend real hay que cambiarlo a `'live'`,
 que apaga el aviso automáticamente.
 
+### Contrato de fuentes
+
+`src/types/chat.ts` define `ChatSourceV2`: cada cita nueva debe incluir
+`sourceId`, cuestión jurídica, anclaje, página física, página impresa opcional,
+extracto literal, fidelidad, SHA-256 del PDF y estado de revisión técnica y
+jurídica. `src/lib/chat-source.ts` es el validador canónico del navegador.
+
+La persistencia usa schema interno 2 y conserva los historiales previos como
+`LegacyChatSource`. No se deben rellenar sus campos ausentes por inferencia: la
+UI los rotula como fuentes históricas sin anclaje v2. El stub solo produce ese
+tipo legado porque sus extractos son resúmenes simulados. El futuro
+`chat-engine.live.ts` debe rechazar cualquier evento `sources` que no pase
+`isChatSourceV2`.
+
 **El runtime del backend ya está decidido, diseñado y con la plataforma
 validada**: una Netlify Edge Function en `/api/chat` que streamea por SSE y
 resuelve marcadores `[S<n>]` a ROJ reales en el servidor. Esto cierra la

@@ -1,15 +1,17 @@
 /**
  * Historial de conversaciones, persistido en localStorage.
  *
- * No hay cuentas ni backend: el historial es local al navegador. La clave está
- * VERSIONADA para poder cambiar la forma de los datos sin dejar al usuario con
- * un store corrupto.
+ * No hay cuentas ni backend: el historial es local al navegador. La versión
+ * vive en el payload de Zustand; la clave histórica se mantiene estable para
+ * poder migrar sin perder conversaciones existentes.
  */
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { isChatSourceV2, isLegacyChatSource } from '@/lib/chat-source';
 import type { ChatMessage, ChatSource, Conversation } from '@/types/chat';
 
 export const CONVERSATIONS_STORAGE_KEY = 'rf.conversations.v1';
+const CONVERSATIONS_STORAGE_VERSION = 2;
 
 const TITLE_MAX_LENGTH = 60;
 const DEFAULT_TITLE = 'Consulta sin título';
@@ -30,34 +32,12 @@ function byUpdatedDesc(a: Conversation, b: Conversation): number {
   return b.updatedAt.localeCompare(a.updatedAt);
 }
 
-const VALID_RESULTS = new Set([
-  'GANA_AEAT',
-  'GANA_CONTRIBUYENTE',
-  'PARCIAL',
-  'RETROACCION',
-  'INADMISION',
-  'DESCONOCIDO',
-]);
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
 function isStoredSource(value: unknown): value is ChatSource {
-  if (!isRecord(value)) return false;
-  return (
-    typeof value.archivo === 'string' &&
-    typeof value.roj === 'string' &&
-    typeof value.ecli === 'string' &&
-    typeof value.organo === 'string' &&
-    typeof value.fecha === 'string' &&
-    typeof value.resultado === 'string' &&
-    VALID_RESULTS.has(value.resultado) &&
-    Array.isArray(value.criterioDecisivo) &&
-    value.criterioDecisivo.every((criterio) => typeof criterio === 'string') &&
-    typeof value.esCasoResidencia === 'boolean' &&
-    typeof value.extracto === 'string'
-  );
+  return isChatSourceV2(value) || isLegacyChatSource(value);
 }
 
 function isStoredMessage(value: unknown): value is ChatMessage {
@@ -186,6 +166,12 @@ export const useConversations = create<ConversationsState>()(
       name: CONVERSATIONS_STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ conversations: state.conversations }),
+      version: CONVERSATIONS_STORAGE_VERSION,
+      migrate: (persistedState) => ({
+        conversations: clearStreamingFlags(
+          isRecord(persistedState) ? persistedState.conversations : undefined
+        ),
+      }),
 
       // El saneado va en la LECTURA, no en la escritura: `partialize` solo limpiaría lo
       // que se guarde a partir de ahora y dejaría rotos para siempre a los usuarios que

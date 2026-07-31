@@ -4,13 +4,20 @@
  * Existe para poder construir y validar toda la interfaz antes de decidir el
  * backend RAG. Emite tokens con retardo para que el streaming, el indicador de
  * escritura y el botón de detener se comporten igual que con el motor real, y
- * cita sentencias REALES del corpus para que el panel de fuentes sea
- * representativo.
+ * enlaza sentencias REALES del corpus para que el panel sea representativo.
+ * Sus extractos son resúmenes simulados y se tipan como fuentes históricas:
+ * nunca como citas v2 verificadas.
  *
  * Toda respuesta lleva un aviso explícito de que el contenido es simulado: no
  * puede confundirse con análisis jurídico real.
  */
-import type { ChatChunk, ChatEngine, ChatMessage, ChatSource, CorpusEntry } from '@/types/chat';
+import type {
+  ChatChunk,
+  ChatEngine,
+  ChatMessage,
+  CorpusEntry,
+  LegacyChatSource,
+} from '@/types/chat';
 
 const DISCLAIMER =
   '> **Respuesta simulada.** El motor de análisis todavía no está conectado. ' +
@@ -168,7 +175,7 @@ function detectTopic(question: string): StubTopic | null {
   return best?.topic ?? null;
 }
 
-function toSource(entry: CorpusEntry): ChatSource {
+function toSource(entry: CorpusEntry): LegacyChatSource {
   return {
     ...entry,
     extracto: EXTRACTO_POR_RESULTADO[entry.resultado] ?? EXTRACTO_POR_RESULTADO.DESCONOCIDO,
@@ -180,7 +187,7 @@ function toSource(entry: CorpusEntry): ChatSource {
  * Prioriza las que tienen como criterio decisivo alguno del tema detectado;
  * completa con las más recientes dentro de alcance.
  */
-export function pickSources(question: string, corpus: CorpusEntry[]): ChatSource[] {
+export function pickSources(question: string, corpus: CorpusEntry[]): LegacyChatSource[] {
   const inScope = corpus.filter((entry) => entry.esCasoResidencia);
   if (inScope.length === 0) return [];
 

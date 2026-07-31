@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   CONVERSATIONS_STORAGE_KEY,
+  clearStreamingFlags,
   deriveTitle,
   useConversations,
 } from '@/stores/useConversations';
@@ -130,7 +131,10 @@ describe('useConversations', () => {
 
   it('persiste en localStorage bajo una clave versionada', () => {
     useConversations.getState().createConversation();
-    expect(window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY)).not.toBeNull();
+    const stored = window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY);
+
+    expect(stored).not.toBeNull();
+    expect(JSON.parse(stored as string).version).toBe(2);
   });
 
   it('apaga el streaming al rehidratar una respuesta que quedó a medias', async () => {
@@ -233,6 +237,100 @@ describe('useConversations', () => {
     await useConversations.persist.rehydrate();
 
     expect(useConversations.getState().conversations.map(({ id }) => id)).toEqual(['c-valida']);
+  });
+
+  it('conserva una fuente histórica al migrar sin inventarle campos v2', async () => {
+    window.localStorage.setItem(
+      CONVERSATIONS_STORAGE_KEY,
+      JSON.stringify({
+        version: 0,
+        state: {
+          conversations: [
+            {
+              id: 'c-legada',
+              title: 'consulta antigua',
+              createdAt: '2026-07-29T10:00:00.000Z',
+              updatedAt: '2026-07-29T10:00:05.000Z',
+              messages: [
+                {
+                  id: 'a1',
+                  role: 'assistant',
+                  content: 'respuesta',
+                  createdAt: '2026-07-29T10:00:05.000Z',
+                  sources: [
+                    {
+                      archivo: 'STS_107_2018.pdf',
+                      roj: 'STS 107/2018',
+                      ecli: 'ECLI:ES:TS:2018:107',
+                      organo: 'Tribunal Supremo',
+                      fecha: '2018-01-16',
+                      resultado: 'GANA_AEAT',
+                      criterioDecisivo: ['CRIT_183_DIAS'],
+                      esCasoResidencia: true,
+                      extracto: 'Resumen histórico.',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      })
+    );
+
+    await useConversations.persist.rehydrate();
+
+    const source = useConversations.getState().getConversation('c-legada')?.messages[0]
+      .sources?.[0];
+    expect(source?.extracto).toBe('Resumen histórico.');
+    expect(source).not.toHaveProperty('sourceId');
+    expect(source).not.toHaveProperty('pageIndex');
+  });
+
+  it('descarta una conversación con una fuente que aparenta ser v2 pero no es trazable', () => {
+    const conversations = [
+      {
+        id: 'c-v2-invalida',
+        title: 'consulta',
+        createdAt: '2026-07-29T10:00:00.000Z',
+        updatedAt: '2026-07-29T10:00:05.000Z',
+        messages: [
+          {
+            id: 'a1',
+            role: 'assistant',
+            content: 'respuesta',
+            createdAt: '2026-07-29T10:00:05.000Z',
+            sources: [
+              {
+                archivo: 'SAN_1210_2023.pdf',
+                roj: 'SAN 1210/2023',
+                ecli: 'ECLI:ES:AN:2023:1210',
+                organo: 'Audiencia Nacional',
+                fecha: '2023-02-22',
+                resultado: 'GANA_AEAT',
+                criterioDecisivo: ['CRIT_183_DIAS'],
+                esCasoResidencia: true,
+                sourceId: 'source-1',
+                issueId: 'residencia-fiscal',
+                issueLabel: 'Residencia fiscal',
+                anchorId: 'anchor-1',
+                pageIndex: 0,
+                printedPage: null,
+                extracto: 'Texto que no puede atribuirse a una página válida.',
+                fidelity: 'exact',
+                sourceSha256: 'no-es-un-hash',
+                reviewStatus: {
+                  technical: 'VALIDATED',
+                  legal: 'AGENT_REVIEWED',
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    expect(clearStreamingFlags(conversations)).toEqual([]);
   });
 
   it('ignora operaciones sobre una conversación inexistente', () => {

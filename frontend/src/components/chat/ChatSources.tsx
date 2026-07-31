@@ -1,7 +1,8 @@
 import { ChevronDown, FileText } from 'lucide-react';
 import { useState } from 'react';
+import { isChatSourceV2 } from '@/lib/chat-source';
 import { cn } from '@/shared/lib/utils';
-import type { ChatSource } from '@/types/chat';
+import type { ChatSource, ChatSourceV2 } from '@/types/chat';
 
 const RESULTADO_LABEL: Record<string, string> = {
   GANA_AEAT: 'Gana AEAT',
@@ -23,6 +24,38 @@ function year(fecha: string): string {
   return fecha.slice(0, 4);
 }
 
+function sourceKey(source: ChatSource, index: number): string {
+  if (isChatSourceV2(source)) return source.sourceId;
+  return `legacy:${source.archivo}:${index}`;
+}
+
+function fidelityLabel(fidelity: ChatSourceV2['fidelity']): string {
+  if (fidelity === 'exact') return 'Cita literal exacta';
+  return 'Cita literal exacta con elipsis';
+}
+
+function pageLabel(source: ChatSourceV2): string {
+  const physical = `Página PDF ${source.pageIndex}`;
+  if (!source.printedPage || source.printedPage === String(source.pageIndex)) return physical;
+  return `${physical} · Página impresa ${source.printedPage}`;
+}
+
+function reviewLabel(source: ChatSourceV2): string {
+  const technical = {
+    GENERATED: 'Dato generado',
+    VALIDATED: 'Validación técnica',
+    NEEDS_REVIEW: 'Revisión técnica pendiente',
+    REJECTED: 'Validación técnica rechazada',
+  }[source.reviewStatus.technical];
+  const legal = {
+    UNREVIEWED: 'Pendiente de revisión jurídica',
+    AGENT_REVIEWED: 'Revisión jurídica por agente',
+    HUMAN_APPROVED: 'Revisión jurídica humana aprobada',
+    REJECTED: 'Revisión jurídica rechazada',
+  }[source.reviewStatus.legal];
+  return `${technical} · ${legal}`;
+}
+
 interface ChatSourcesProps {
   sources: ChatSource[];
 }
@@ -38,13 +71,14 @@ export function ChatSources({ sources }: ChatSourcesProps) {
         Sentencias citadas ({sources.length})
       </h3>
       <ul className='flex flex-col gap-1.5'>
-        {sources.map((source) => {
-          const isExpanded = expandedId === source.archivo;
+        {sources.map((source, index) => {
+          const itemId = sourceKey(source, index);
+          const isExpanded = expandedId === itemId;
           return (
-            <li key={source.archivo}>
+            <li key={itemId}>
               <button
                 type='button'
-                onClick={() => setExpandedId(isExpanded ? null : source.archivo)}
+                onClick={() => setExpandedId(isExpanded ? null : itemId)}
                 aria-expanded={isExpanded}
                 className='flex w-full items-center gap-2 rounded-lg border border-border bg-background px-2.5 py-2 text-left text-xs transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring'
               >
@@ -66,8 +100,33 @@ export function ChatSources({ sources }: ChatSourcesProps) {
               </button>
               {isExpanded && (
                 <div className='mt-1 rounded-lg bg-muted px-3 py-2 text-xs leading-relaxed text-secondary-foreground'>
-                  <p>{source.extracto}</p>
-                  <p className='mt-1.5 font-mono text-[0.6875rem]'>{source.ecli}</p>
+                  {isChatSourceV2(source) ? (
+                    <>
+                      <p className='font-semibold text-foreground'>{source.issueLabel}</p>
+                      <p className='mt-1 text-muted-foreground'>
+                        {pageLabel(source)} · {fidelityLabel(source.fidelity)}
+                      </p>
+                      <blockquote className='mt-2 border-l-2 border-primary/40 pl-2'>
+                        {source.extracto}
+                      </blockquote>
+                      <p className='mt-2 text-muted-foreground'>{reviewLabel(source)}</p>
+                      <p className='mt-1.5 break-all font-mono text-[0.6875rem]'>{source.ecli}</p>
+                      <p className='mt-1 break-all font-mono text-[0.6875rem]'>
+                        PDF SHA-256: {source.sourceSha256}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className='font-semibold text-foreground'>
+                        Fuente histórica sin anclaje v2
+                      </p>
+                      <p className='mt-1'>{source.extracto}</p>
+                      <p className='mt-1 text-muted-foreground'>
+                        Resumen conservado del motor simulado; no es una cita judicial verificada.
+                      </p>
+                      <p className='mt-1.5 font-mono text-[0.6875rem]'>{source.ecli}</p>
+                    </>
+                  )}
                 </div>
               )}
             </li>

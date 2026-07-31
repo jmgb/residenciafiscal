@@ -27,11 +27,44 @@ export interface CorpusEntry {
   esCasoResidencia: boolean;
 }
 
-/** Sentencia citada por una respuesta del asistente. */
-export interface ChatSource extends CorpusEntry {
-  /** Extracto mostrado al desplegar la fuente. */
+export type TechnicalReviewStatus = 'GENERATED' | 'VALIDATED' | 'NEEDS_REVIEW' | 'REJECTED';
+
+export type LegalReviewStatus = 'UNREVIEWED' | 'AGENT_REVIEWED' | 'HUMAN_APPROVED' | 'REJECTED';
+
+export interface ChatSourceReviewStatus {
+  technical: TechnicalReviewStatus;
+  legal: LegalReviewStatus;
+}
+
+/**
+ * Fuente producida antes del contrato v2.
+ *
+ * Solo se conserva para el stub y para no perder conversaciones locales
+ * antiguas. Su extracto puede ser un resumen y nunca se presenta como cita
+ * judicial verificada.
+ */
+export interface LegacyChatSource extends CorpusEntry {
   extracto: string;
 }
+
+/** Cita judicial trazable que puede emitir el protocolo del backend real. */
+export interface ChatSourceV2 extends CorpusEntry {
+  sourceId: string;
+  issueId: string;
+  issueLabel: string;
+  anchorId: string;
+  /** Página física 1-indexada del PDF. */
+  pageIndex: number;
+  printedPage: string | null;
+  /** Texto literal procedente del anclaje verificado, nunca prosa del modelo. */
+  extracto: string;
+  fidelity: 'exact' | 'exact_with_ellipsis';
+  sourceSha256: string;
+  reviewStatus: ChatSourceReviewStatus;
+}
+
+/** Fuentes que la UI puede representar durante la migración al protocolo v2. */
+export type ChatSource = ChatSourceV2 | LegacyChatSource;
 
 export type ChatRole = 'user' | 'assistant';
 

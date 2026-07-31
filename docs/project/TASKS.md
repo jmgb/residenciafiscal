@@ -195,9 +195,14 @@ contra el dominio público después de cada deploy.
     - [x] Convertir la referencia manual provisional de recuperación en el
       banco machine-readable
       `knowledge/jurisprudencia-v3/evaluations/chat-question-pilot-5.bank.json`.
-    - [ ] Evolucionar `ChatSource` y el protocolo a v2 con `issueId`,
-      `anchorId`, página, fidelidad y hash de fuente; adaptar persistencia y UI
-      sin perder varios anclajes de una misma sentencia.
+    - [x] Evolucionar el contrato de fuentes a `ChatSourceV2` con `sourceId`,
+      `issueId`, `anchorId`, página, fidelidad, hash de fuente y estado de
+      revisión; adaptar persistencia y UI sin perder varios anclajes de una
+      misma sentencia. Los historiales v1 se conservan como fuentes legadas y
+      nunca reciben trazabilidad inventada.
+    - [ ] Implementar `chat-engine.live.ts` y el parser SSE del protocolo 2;
+      validar en la frontera que cada evento `sources` contiene exclusivamente
+      `ChatSourceV2`, sin aceptar fuentes legadas desde el backend.
   - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
     rollback es quitar la variable y redesplegar.
 - [ ] **Llevar el corpus v3 de 5 a 106 sentencias.** El contrato y la muestra ya

@@ -164,6 +164,8 @@ privacidad y protocolo previsto están en
 | Aislamiento, persistencia y logs | `src/chat_strategy_comparison.py`, `src/chat_strategy_logging.py` |
 | CLI experimental | `src/gemini_file_search_cli.py` |
 | Paquete ciego F0.3 | `src/chat_blind_review.py` |
+| Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
+| Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 
 A ya usa el paquete común sin cambiar el dominio, la selección de evidencias,
 el gate de grounding ni los contratos de coste. B conserva su integración
@@ -251,6 +253,10 @@ jurídica humana.
   reales porque todavía no existe un formulario jurídico cerrado.
 - El gap de ausencias esporádicas está documentado y validado contra dos pasajes
   literales, pero deliberadamente no aplicado al corpus.
+- `ChatSourceV2` ya conserva cuestión, anclaje, página física, página impresa,
+  fidelidad, SHA-256 del PDF y revisión técnica/jurídica. La UI mantiene
+  separados varios anclajes de una sentencia y el almacenamiento v2 migra las
+  fuentes antiguas como legado explícito, sin inventar trazabilidad.
 - Solo el chat comparativo A utiliza `neutral-llm-gateway` con sus sinks; el
   corpus offline no lo importa. B mantiene File Search directo por el límite
   deliberado del paquete.
@@ -344,15 +350,19 @@ Contrato congelado:
    el mismo pipeline híbrido.
 4. **Completado:** cablear el paquete común en A, reutilizar una sola instancia
    con sus sinks y cubrir el composition root.
-5. Repetir las ocho consultas con el mismo modelo y generar una segunda
+5. **Completado:** evolucionar `ChatSourceV2`, persistencia y UI; mantener las
+   fuentes del stub y de historiales antiguos como legado no verificable.
+6. Implementar el parser SSE del protocolo 2 y exigir `ChatSourceV2` en la
+   frontera del backend real.
+7. Repetir las ocho consultas con el mismo modelo y generar una segunda
    revisión ciega sin sobrescribir el baseline.
-6. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
+8. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
    A/B.
-7. Probar `gemini-3.6-flash` solo si queda un problema atribuible a redacción,
+9. Probar `gemini-3.6-flash` solo si queda un problema atribuible a redacción,
    no a datos, grounding o evaluación.
-8. Diseñar el backend productivo únicamente después de resolver además cuotas,
+10. Diseñar el backend productivo únicamente después de resolver además cuotas,
    presupuesto, protocolo de streaming y revisión del corpus.
-9. Mantener la ampliación v3 a 106 como una autorización posterior separada.
+11. Mantener la ampliación v3 a 106 como una autorización posterior separada.
 
 ## 11. Reglas de handoff para otros agentes
 
