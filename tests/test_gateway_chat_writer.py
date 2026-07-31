@@ -207,3 +207,29 @@ class TestTimeBudget:
         policy = adapter.requests[0].timeout_policy
         assert policy.total_seconds == 200.0
         assert policy.per_attempt_seconds == 90.0
+
+
+class TestTemperature:
+    """La temperatura heredada rompía A al apuntar la política del chat a Luna."""
+
+    async def test_un_modelo_de_razonamiento_de_openai_no_recibe_temperatura(self) -> None:
+        """La Responses API responde `Unsupported parameter` y falla la respuesta entera."""
+        adapter = FakeProviderAdapter()
+        adapter.name = "openai"
+        from llm_gateway import LLMGateway, ProviderRegistry
+
+        registry = ProviderRegistry()
+        registry.register(adapter, model_prefixes=("gpt-",))
+        writer = GatewayChatWriter(LLMGateway(registry=registry))
+
+        await writer.write(_request(model="gpt-5.6-luna", temperature=0))
+
+        assert adapter.requests[0].temperature is None
+
+    async def test_gemini_conserva_la_temperatura_pedida(self) -> None:
+        """Sí la admite, y quitársela cambiaría el determinismo ya medido."""
+        adapter = FakeProviderAdapter()
+
+        await _writer(adapter).write(_request(model="gemini-3.6-flash", temperature=0))
+
+        assert adapter.requests[0].temperature == 0

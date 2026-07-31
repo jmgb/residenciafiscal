@@ -18,7 +18,13 @@ STRUCTURED_ANSWER_INSTRUCTIONS = (
     "Recibirás unidades jurídicas y fragmentos literales con IDs E<n>. "
     "Devuelve en evidence_ids únicamente los IDs que respaldan la respuesta. "
     "No copies ni reconstruyas citas dentro de answer: la aplicación resolverá "
-    "los extractos literales después."
+    "los extractos literales después. "
+    # El esquema exige ambos campos siempre. Callarlos no puede significar
+    # «sin salvedades»: eso confunde no haber encontrado ninguna con no
+    # haberse pronunciado, y una respuesta jurídica sin límites declarados se
+    # lee como una respuesta sin reservas.
+    "Incluye siempre limits y evidence_ids, con lista vacía si no procede: "
+    "omitirlos no equivale a declarar que no hay salvedades ni evidencia."
 )
 
 FILE_SEARCH_ANSWER_INSTRUCTIONS = (

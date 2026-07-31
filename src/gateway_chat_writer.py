@@ -29,6 +29,7 @@ from llm_gateway import (
     RetryPolicy,
     TimeoutPolicy,
 )
+from llm_gateway.models import lookup_model
 
 from chat_answer_contract import StructuredChatAnswerDraft
 from structured_answer_writer import (
@@ -46,6 +47,31 @@ WRITER_ATTEMPT_TIMEOUT_SECONDS = 90.0
 WRITER_MAX_ATTEMPTS = 2
 
 
+def _temperature_for(model: str, temperature: float | None) -> float | None:
+    """Los modelos de razonamiento de OpenAI solo aceptan su temperatura por defecto.
+
+    `ChatWriterRequest` pide `temperature=0` por defecto, que es lo correcto para
+    una tarea jurídica y lo que Gemini venía aceptando. La Responses API, en
+    cambio, responde `Unsupported parameter: 'temperature' is not supported with
+    this model`, así que con la política del chat apuntando a Luna esa temperatura
+    heredada convertía **todas** las respuestas de A en un fallo.
+
+    La condición sale del catálogo del paquete y no de una lista de nombres, para
+    que un modelo nuevo no obligue a tocar esto: declarar `reasoning_efforts` es
+    lo que identifica a un modelo de razonamiento. Se acota a OpenAI a propósito;
+    Gemini 3 también los declara y sí admite temperatura, y quitársela cambiaría
+    el determinismo de la estrategia y con él las cifras ya medidas.
+
+    El catálogo no dice qué modelos admiten temperatura, así que la regla vive
+    aquí: mientras solo la necesite este proyecto, es su adaptador y no la API
+    pública del paquete.
+    """
+    info = lookup_model(model)
+    if info is None or info.provider != "openai" or not info.reasoning_efforts:
+        return temperature
+    return None
+
+
 class GatewayChatWriter:
     """Una generación estructurada, sin tools, sin persistencia y sin fallback."""
 
@@ -60,7 +86,7 @@ class GatewayChatWriter:
                 messages=(Message("user", request.user_prompt),),
                 response_format=ResponseFormat.JSON_SCHEMA,
                 response_schema=StructuredChatAnswerDraft,
-                temperature=request.temperature,
+                temperature=_temperature_for(request.model, request.temperature),
                 reasoning_effort=request.reasoning_effort,
                 timeout_policy=TimeoutPolicy(
                     total_seconds=WRITER_TIMEOUT_SECONDS,

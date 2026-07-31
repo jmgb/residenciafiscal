@@ -55,6 +55,45 @@ paquete; el proyecto conserva tokens, modelo efectivo y tipo de medición:
 Un coste desconocido nunca se convierte en cero. Los logs no incluyen pregunta,
 respuesta ni texto judicial.
 
+## Lo que exige la Responses API y Gemini perdonaba
+
+`chat_model_policy` declara Luna + `max`, pero el comparador sigue pasando
+`gemini-3.5-flash-lite` a las dos estrategias: la política se anuncia en
+`/config` y todavía no llega a ninguna llamada. Conectarla destapa tres cosas
+que Gemini aceptaba y OpenAI no. Ninguna la detecta la suite por sí sola: los
+tests del chat usan dobles de proveedor, que admiten cualquier petición.
+
+**1. Modo estricto: `required` con todas las propiedades.** Un campo con valor
+por defecto en Pydantic no llega a `required`, y OpenAI rechaza el esquema
+entero con `invalid_json_schema` —`Missing 'limits'`—, no el campo. Por eso
+`StructuredChatAnswerDraft` redeclara `limits` y `evidence_ids` sin valor por
+defecto, y el prompt de A los pide explícitamente: exigir en el esquema lo que
+las instrucciones no mencionan traslada al modelo un requisito que nadie le
+comunicó. Hay una ventaja de fondo, no solo de compatibilidad: un `limits`
+ausente se convertía en tupla vacía, y eso confunde «no hay salvedades» con «el
+modelo no se pronunció», que en una respuesta jurídica no es lo mismo.
+`tests/test_chat_answer_strict_schema.py` lo comprueba sin red ni coste.
+
+La clase base `ChatAnswerDraft` no cambia. La usa B contra File Search, que no
+impone modo estricto, y endurecerla convertiría en fallo respuestas hoy válidas
+en un camino que ya alimentó artefactos de revisión.
+
+**2. `temperature=0` no existe para un modelo de razonamiento.** La API
+responde `Unsupported parameter`. `ChatWriterRequest` la pide a 0 por defecto
+—correcto para una tarea jurídica, y aceptado por Gemini—, así que sin el
+ajuste de `gateway_chat_writer` **todas** las respuestas de A fallarían. La
+condición se deriva del catálogo (`provider == "openai"` y `reasoning_efforts`
+declarados) en vez de una lista de nombres, y se acota a OpenAI porque Gemini 3
+también declara esfuerzos y sí admite temperatura: quitársela cambiaría el
+determinismo y con él las cifras ya medidas.
+
+**3. El coste de A todavía asume Gemini.** `calculate_gemini_request_cost` se
+alimenta de `SUPPORTED_FILE_SEARCH_MODELS`, dos ids de Gemini, así que una A
+sobre Luna muere con `modelo File Search sin tarifa: gpt-5.6-luna` **después**
+de haber pagado la llamada. Queda pendiente: decidir cómo se tarifa una
+estrategia que no usa File Search es una decisión del modelo de coste del chat,
+no de esta capa.
+
 ## Reintento y fallback
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
