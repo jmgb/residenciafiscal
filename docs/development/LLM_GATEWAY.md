@@ -55,13 +55,33 @@ paquete; el proyecto conserva tokens, modelo efectivo y tipo de medición:
 Un coste desconocido nunca se convierte en cero. Los logs no incluyen pregunta,
 respuesta ni texto judicial.
 
+## Cada estrategia con su modelo
+
+A y B ya no comparten modelo, y no es una preferencia sino una restricción de
+capacidad: **File Search es una capacidad de Gemini**, así que B solo puede
+correr sobre `SUPPORTED_FILE_SEARCH_MODELS` y `GeminiFileSearchResponder`
+rechaza cualquier otro. A no usa File Search, y atarla a esa lista era lo que
+dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
+
+| Estrategia | Modelo | De dónde sale |
+|---|---|---|
+| A, respuesta estructurada | `chat_model_policy.CHAT_MODEL` + `CHAT_REASONING_EFFORT` | Política del chat |
+| B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
+
+El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
+salía con el valor por defecto del proveedor y declarar `max` no habría
+cambiado nada.
+
+El importe deja de exigir un modelo de File Search: `calculate_request_cost`
+tarifa cualquier modelo catalogado y `calculate_gemini_file_search_cost`
+conserva la restricción de B. Antes, una A fuera de esa lista moría con
+`modelo File Search sin tarifa` **después** de haber pagado la llamada.
+
 ## Lo que exige la Responses API y Gemini perdonaba
 
-`chat_model_policy` declara Luna + `max`, pero el comparador sigue pasando
-`gemini-3.5-flash-lite` a las dos estrategias: la política se anuncia en
-`/config` y todavía no llega a ninguna llamada. Conectarla destapa tres cosas
-que Gemini aceptaba y OpenAI no. Ninguna la detecta la suite por sí sola: los
-tests del chat usan dobles de proveedor, que admiten cualquier petición.
+Mover A a Luna destapó tres cosas que Gemini aceptaba y OpenAI no. Ninguna la
+detecta la suite por sí sola: los tests del chat usan dobles de proveedor, que
+admiten cualquier petición.
 
 **1. Modo estricto: `required` con todas las propiedades.** Un campo con valor
 por defecto en Pydantic no llega a `required`, y OpenAI rechaza el esquema
@@ -87,23 +107,32 @@ declarados) en vez de una lista de nombres, y se acota a OpenAI porque Gemini 3
 también declara esfuerzos y sí admite temperatura: quitársela cambiaría el
 determinismo y con él las cifras ya medidas.
 
-**3. El coste de A todavía asume Gemini.** `calculate_gemini_request_cost` se
-alimenta de `SUPPORTED_FILE_SEARCH_MODELS`, dos ids de Gemini, así que una A
-sobre Luna muere con `modelo File Search sin tarifa: gpt-5.6-luna` **después**
-de haber pagado la llamada. Queda pendiente: decidir cómo se tarifa una
-estrategia que no usa File Search es una decisión del modelo de coste del chat,
-no de esta capa.
+**3. El coste asumía que toda generación era de File Search.** Resuelto al
+separar tarifar de permitir, según la tabla de la sección anterior.
 
 ## Reintento y fallback
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
-de 200 s y máximo de 90 s por intento. El fallback de modelo está desactivado:
+de 300 s y máximo de 150 s por intento. El fallback de modelo está desactivado:
 si respondiera un modelo distinto, el coste y la comparación quedarían mal
 atribuidos.
 
-Estas cifras proceden del experimento F0.2. Deben volver a medirse antes de
-activar el chat productivo con Luna + `max`; esa medición evalúa respuestas a
-preguntas, nunca análisis de PDF.
+Las cifras se remidieron con A ya sobre Luna + `max`, que es cuando la medición
+significa algo. Cuatro respuestas a preguntas reales del corpus de cinco
+tardaron 81,0 s, 81,7 s, 93,4 s y 95,9 s: **dos de las cuatro superaban el tope
+anterior de 90 s**, y la misma pregunta cayó a un lado y al otro en ejecuciones
+distintas, así que no era un margen estrecho sino un corte intermitente. El
+reintento tampoco lo habría salvado: gastados 90 s de los 200 s de presupuesto,
+el segundo intento se cortaba igual y la respuesta acababa en fallo pagado dos
+veces. Un corte, además, no se distingue de una caída del proveedor.
+
+El razonamiento es lo que manda la latencia: con el mismo prompt, `max` tarda
+3,3× lo que `medium` —48,4 s frente a 14,5 s— y emite siete veces más tokens de
+salida. Los 150 s son 1,6× el peor caso medido, y el total sube en proporción
+para que sigan cabiendo dos intentos.
+
+Si se cambia el modelo o el esfuerzo, hay que repetir la medición: es una
+latencia dominada por la salida, no por el tamaño de la pregunta.
 
 ## Versión fijada
 

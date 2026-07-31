@@ -38,11 +38,26 @@ from structured_answer_writer import (
     ChatWriterUsage,
 )
 
-WRITER_TIMEOUT_SECONDS = 200.0
+WRITER_TIMEOUT_SECONDS = 300.0
 """Presupuesto de la llamada completa, reintento incluido."""
 
-WRITER_ATTEMPT_TIMEOUT_SECONDS = 90.0
-"""Tope de cada intento, para que el reintento quepa dentro del presupuesto."""
+WRITER_ATTEMPT_TIMEOUT_SECONDS = 150.0
+"""Tope de cada intento, para que el reintento quepa dentro del presupuesto.
+
+Los 90 s anteriores se calibraron cuando A corría sobre Gemini con el esfuerzo
+por defecto. Con la política del chat —Luna y esfuerzo `max`— cuatro respuestas
+a preguntas reales del corpus de cinco tardaron 81,0 s, 81,7 s, 93,4 s y 95,9 s.
+Dos de las cuatro superaban el tope anterior, y la misma pregunta cayó a un lado
+y al otro en ejecuciones distintas: no era un margen estrecho, era un corte
+intermitente. Además el reintento no lo habría salvado, porque tras gastar 90 s
+del presupuesto de 200 s el segundo intento se habría cortado igual, cobrando
+dos veces para acabar en fallo.
+
+El razonamiento es lo que manda la latencia: con el mismo prompt, `max` tarda
+3,3× lo que `medium` (48,4 s frente a 14,5 s) y emite siete veces más tokens de
+salida. 150 s son 1,6× el peor caso medido, y el total sube a 300 s para que
+sigan cabiendo dos intentos: un tope por intento que no quepa dos veces en el
+presupuesto deja el reintento en decorativo."""
 
 WRITER_MAX_ATTEMPTS = 2
 

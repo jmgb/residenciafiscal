@@ -59,14 +59,21 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
     assert result.status == "completa"
     assert result.text == "La muestra valora conjuntamente presencia, intereses y pruebas."
     assert len(result.sources) == 2
+    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+
     assert all(source.verification == "EXACT" for source in result.sources)
-    assert result.cost.amount_usd == Decimal("0.000111")
+    # 120 de entrada y 30 de salida a la tarifa de Luna (0,20 y 1,20 USD/Mtok),
+    # que es el modelo de A desde que dejó de heredar el de File Search.
+    assert result.cost.amount_usd == Decimal("0.000060")
     assert result.cost.input_tokens == 120
     assert result.cost.output_tokens == 30
-    assert result.model == "gemini-3.5-flash-lite"
+    assert result.model == CHAT_MODEL
 
     request = writer.requests[0]
-    assert request.model == "gemini-3.5-flash-lite"
+    assert request.model == CHAT_MODEL
+    # El esfuerzo viaja con la petición: sin él, declarar `max` en la política
+    # no cambiaría nada, porque saldría el valor por defecto del proveedor.
+    assert request.reasoning_effort == CHAT_REASONING_EFFORT
     assert request.temperature == 0
     assert request.fallback_policy == "disabled"
     assert request.response_schema["title"] == "StructuredChatAnswerDraft"
@@ -102,7 +109,8 @@ async def test_referencia_desconocida_falla_cerrada_y_conserva_el_coste() -> Non
     assert result.status == "error"
     assert result.text == ""
     assert result.sources == ()
-    assert result.cost.amount_usd == Decimal("0.000111")
+    # El fallo no borra el gasto: la llamada se pagó igual, a tarifa de Luna.
+    assert result.cost.amount_usd == Decimal("0.000060")
     assert "E999" in result.limits[0]
 
 

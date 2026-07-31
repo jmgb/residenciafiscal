@@ -205,8 +205,12 @@ class TestTimeBudget:
         await _writer(adapter).write(_request())
 
         policy = adapter.requests[0].timeout_policy
-        assert policy.total_seconds == 200.0
-        assert policy.per_attempt_seconds == 90.0
+        # Medido: A sobre Luna + `max` tardó 81,0 s, 81,7 s, 93,4 s y 95,9 s en
+        # preguntas reales del corpus de cinco. Dos de las cuatro superaban el
+        # tope anterior de 90 s, y la misma pregunta caía a un lado y al otro
+        # según la ejecución.
+        assert policy.total_seconds == 300.0
+        assert policy.per_attempt_seconds == 150.0
 
 
 class TestTemperature:

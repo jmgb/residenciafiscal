@@ -4,15 +4,17 @@ from __future__ import annotations
 
 import time
 
+from llm_gateway import ReasoningEffort
+
 from chat_answer_contract import StructuredChatAnswerDraft
 from chat_answer_prompt import (
     STRUCTURED_ANSWER_INSTRUCTIONS,
     structured_answer_prompt,
 )
+from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
 from chat_strategy_costs import (
-    DEFAULT_FILE_SEARCH_MODEL,
     GeminiUsage,
-    calculate_gemini_request_cost,
+    calculate_request_cost,
     zero_marginal_cost,
 )
 from chat_strategy_models import MarginalCost, StrategyAnswer
@@ -33,12 +35,25 @@ class CurrentStructuredStrategy:
         corpus: RetrievalCorpus,
         *,
         writer: StructuredAnswerWriter,
-        model: str = DEFAULT_FILE_SEARCH_MODEL,
+        model: str = CHAT_MODEL,
+        reasoning_effort: ReasoningEffort | None = CHAT_REASONING_EFFORT,
     ) -> None:
+        """A corre sobre el modelo del chat, no sobre el de File Search.
+
+        Antes heredaba `DEFAULT_FILE_SEARCH_MODEL` porque el comparador pasaba
+        un único `--model` a las dos estrategias. Eso ataba A a lo que B
+        necesita —File Search es una capacidad de Gemini y ahí no cabe otro
+        proveedor—, de modo que la política declarada en `chat_model_policy` no
+        llegaba a ninguna llamada.
+
+        El esfuerzo también viaja: sin él la petición salía con el valor por
+        defecto del proveedor, así que declarar `max` no habría cambiado nada.
+        """
         self._corpus = corpus
         self._units = {unit.unit_id: unit for unit in corpus.units}
         self._writer = writer
         self._model = model
+        self._reasoning_effort = reasoning_effort
 
     async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
         started = time.perf_counter()
@@ -79,9 +94,10 @@ class CurrentStructuredStrategy:
                 user_prompt=structured_answer_prompt(question, bundle.context_json),
                 evidence_context=bundle.context_json,
                 response_schema=StructuredChatAnswerDraft.model_json_schema(),
+                reasoning_effort=self._reasoning_effort,
             )
         )
-        cost = calculate_gemini_request_cost(
+        cost = calculate_request_cost(
             GeminiUsage(
                 input_tokens=writer_result.usage.input_tokens,
                 retrieved_document_tokens=0,

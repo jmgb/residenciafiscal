@@ -1,9 +1,12 @@
 """Política de inferencia del chat, separada del pipeline offline del corpus."""
 
+from llm_gateway import ReasoningEffort
 from llm_gateway.models import lookup_model
 
 CHAT_MODEL = "gpt-5.6-luna"
-CHAT_REASONING_EFFORT = "max"
+CHAT_REASONING_EFFORT: ReasoningEffort = "max"
+"""Tipado con el literal del paquete: un esfuerzo inválido se ve al comprobar
+tipos, no al recibir un 400 del proveedor."""
 
 _chat_model_info = lookup_model(CHAT_MODEL)
 if _chat_model_info is None or not _chat_model_info.reasoning_efforts:

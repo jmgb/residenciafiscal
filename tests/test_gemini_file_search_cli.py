@@ -49,7 +49,7 @@ def test_modelo_inicial_y_promocion_manual_estan_en_la_allowlist() -> None:
     )
 
 
-def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
+def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
 ) -> None:
@@ -115,10 +115,18 @@ def test_compare_entrega_el_mismo_modelo_a_los_dos_redactores(
     )
 
     assert result == 0
+    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
     from gateway_chat_writer import GatewayChatWriter
 
     assert isinstance(captured["structured"]._writer, GatewayChatWriter)
     assert captured["structured"]._writer._gateway is shared_llm_gateway
-    assert captured["structured"]._model == "gemini-3.6-flash"
+
+    # `--model` gobierna solo a B. File Search es una capacidad de Gemini, así
+    # que B no puede correr sobre otro proveedor; atar A a esa restricción era
+    # lo que dejaba la política del chat sin llegar a ninguna llamada.
     assert captured["file_search"]._gateway is gateway
     assert captured["file_search"]._model == "gemini-3.6-flash"
+
+    assert captured["structured"]._model == CHAT_MODEL
+    assert captured["structured"]._reasoning_effort == CHAT_REASONING_EFFORT
+    assert captured["structured"]._model != captured["file_search"]._model

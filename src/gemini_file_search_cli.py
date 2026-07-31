@@ -13,6 +13,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
+from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
 from chat_strategy_comparison import compare_strategies
 from chat_strategy_costs import (
     DEFAULT_FILE_SEARCH_MODEL,
@@ -52,6 +53,10 @@ def _parser() -> argparse.ArgumentParser:
         "--model",
         choices=SUPPORTED_FILE_SEARCH_MODELS,
         default=DEFAULT_FILE_SEARCH_MODEL,
+        help=(
+            "Modelo de la estrategia B (File Search). No afecta a A, que usa "
+            f"la política del chat: {CHAT_MODEL} con esfuerzo {CHAT_REASONING_EFFORT}."
+        ),
     )
     compare.add_argument("--confirm-paid", action="store_true")
 
@@ -124,10 +129,13 @@ def _compare(args: argparse.Namespace) -> int:
     report = asyncio.run(
         compare_strategies(
             question=args.question,
+            # A usa la política del chat; B, el modelo de File Search. Pasar el
+            # mismo `--model` a las dos ataba A a una capacidad que no usa.
             structured=CurrentStructuredStrategy(
                 corpus,
                 writer=writer,
-                model=args.model,
+                model=CHAT_MODEL,
+                reasoning_effort=CHAT_REASONING_EFFORT,
             ),
             file_search=GeminiFileSearchResponder(
                 gateway=gateway,

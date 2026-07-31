@@ -68,10 +68,33 @@ class TestCostsStillBehave:
         assert cost.measurement == "ACTUAL"
 
     def test_an_unsupported_model_still_raises(self) -> None:
+        """B solo puede correr sobre File Search, que es una capacidad de Gemini.
+
+        Ahora hay dos motivos distintos para rechazar un modelo, y conviene que
+        el mensaje los distinga: uno catalogado pero ajeno a File Search —Luna,
+        que sí tiene tarifa y sí usa A— no es lo mismo que uno inexistente.
+        """
         from chat_strategy_costs import GeminiUsage, calculate_gemini_file_search_cost
 
-        with pytest.raises(ValueError, match="sin tarifa"):
-            calculate_gemini_file_search_cost(
+        usage = GeminiUsage(
+            input_tokens=1,
+            retrieved_document_tokens=0,
+            output_tokens=1,
+            usage_complete=True,
+        )
+
+        with pytest.raises(ValueError, match="no admitido en File Search"):
+            calculate_gemini_file_search_cost(usage, model="modelo-inexistente")
+
+        with pytest.raises(ValueError, match="no admitido en File Search"):
+            calculate_gemini_file_search_cost(usage, model="gpt-5.6-luna")
+
+    def test_a_model_outside_the_catalogue_has_no_rate(self) -> None:
+        """El cálculo general acepta cualquier modelo catalogado, no cualquiera."""
+        from chat_strategy_costs import GeminiUsage, calculate_request_cost
+
+        with pytest.raises(ValueError, match="sin tarifa en el catálogo"):
+            calculate_request_cost(
                 GeminiUsage(
                     input_tokens=1,
                     retrieved_document_tokens=0,
