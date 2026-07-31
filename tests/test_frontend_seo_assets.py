@@ -38,6 +38,7 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
         "https://residenciafiscal.org/espana",
         "https://residenciafiscal.org/manifiesto",
         "https://residenciafiscal.org/metodologia",
+        "https://residenciafiscal.org/espana/fuentes",
         "https://residenciafiscal.org/colaborar",
     ]
     assert all("?" not in location and "#" not in location for location in locations)
@@ -64,7 +65,7 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
     redirects = config["redirects"]
 
     redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in redirects}
-    for path in ("/manifiesto", "/metodologia", "/colaborar"):
+    for path in ("/manifiesto", "/metodologia", "/espana/fuentes", "/colaborar"):
         assert (path, f"{path}/index.html") in redirect_pairs
     assert redirects[-1] == {"from": "/*", "to": "/index.html", "status": 200}
 

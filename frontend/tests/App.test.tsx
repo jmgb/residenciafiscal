@@ -33,6 +33,18 @@ describe('App', () => {
     expect(screen.getByTestId('location')).toHaveTextContent('/espana');
   });
 
+  it('sirve el corpus de España en /espana/fuentes', async () => {
+    render(
+      <MemoryRouter initialEntries={['/espana/fuentes']}>
+        <LocationProbe />
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(await screen.findByRole('heading', { name: 'El corpus de España' })).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/espana/fuentes');
+  });
+
   it('redirige la ruta acentuada de Perú a su slug canónico', async () => {
     render(
       <MemoryRouter initialEntries={['/per%C3%BA']}>

@@ -57,7 +57,8 @@ jurídicos, traductores jurídicos, economistas y peritos, desarrolladores.
 - [España](https://residenciafiscal.org/espana): jurisprudencia española disponible.
 - [Residencia Fiscal](https://residenciafiscal.org/): entrada principal del proyecto.
 - [Manifiesto](https://residenciafiscal.org/manifiesto): por qué existe el proyecto.
-- [Metodología](https://residenciafiscal.org/metodologia): cómo se construyó el análisis.
+- [Metodología](https://residenciafiscal.org/metodologia): el método común a todas las jurisdicciones.
+- [Corpus de España](https://residenciafiscal.org/espana/fuentes): fuentes, corpus validado y normativa aplicada.
 - [Colaborar](https://residenciafiscal.org/colaborar): cómo aportar la jurisprudencia de un país.
 - [Sitemap](https://residenciafiscal.org/sitemap.xml): URLs públicas indexables.
 

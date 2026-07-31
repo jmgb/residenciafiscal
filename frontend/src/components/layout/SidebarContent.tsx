@@ -1,4 +1,13 @@
-import { BookOpen, Compass, Globe2, Mail, MessageSquarePlus, Trash2, Users } from 'lucide-react';
+import {
+  BookOpen,
+  Compass,
+  Globe2,
+  Mail,
+  MessageSquarePlus,
+  Shield,
+  Trash2,
+  Users,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import {
@@ -214,6 +223,15 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         >
           <Users className='h-4 w-4' aria-hidden='true' />
         </Link>
+        <Link
+          to='/privacidad'
+          onClick={onNavigate}
+          aria-label='Privacidad'
+          title='Privacidad'
+          className='flex justify-center rounded-lg p-2 text-muted-foreground outline-none hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+        >
+          <Shield className='h-4 w-4' aria-hidden='true' />
+        </Link>
         <a
           href={`mailto:${CONTACT_EMAIL}`}
           onClick={onNavigate}
@@ -244,11 +262,11 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         Metodología
       </Link>
       <Link
-        to='/metodologia#corpus'
+        to='/espana/fuentes'
         onClick={onNavigate}
         className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
       >
-        Corpus analizado
+        Corpus de España
       </Link>
       <Link
         to='/colaborar'
@@ -256,6 +274,13 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
         className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
       >
         Colaborar
+      </Link>
+      <Link
+        to='/privacidad'
+        onClick={onNavigate}
+        className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+      >
+        Privacidad
       </Link>
       <a
         href={`mailto:${CONTACT_EMAIL}`}

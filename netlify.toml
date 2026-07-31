@@ -7,6 +7,9 @@
 [build.environment]
   NODE_VERSION = "24"
 
+[functions]
+  directory = "netlify/functions"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -43,6 +46,12 @@
 [[redirects]]
   from = "/metodologia"
   to = "/metodologia/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/espana/fuentes"
+  to = "/espana/fuentes/index.html"
   status = 200
   force = true
 

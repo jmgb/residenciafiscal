@@ -1,39 +1,23 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router';
-import { NormativaAplicada } from '@/components/normativa/NormativaAplicada';
+import { Link } from 'react-router';
+import { staticRoute } from '@/data/staticRoutes';
 import { usePageTitle } from '@/lib/usePageTitle';
 
-function prefersReducedMotion(): boolean {
-  if (typeof window.matchMedia !== 'function') return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+const META = staticRoute('/metodologia');
 
+/**
+ * El método es agnóstico de la jurisdicción y se explica una sola vez. Las
+ * fuentes, el corpus y la normativa de cada país viven en su propia página
+ * (hoy, `/espana/fuentes`).
+ */
 export function MetodologiaPage() {
-  usePageTitle('Metodología', '/metodologia');
-  const { hash } = useLocation();
-
-  // React Router navega con la History API y NO provoca el salto nativo al ancla; además
-  // el contenido vive dentro de un contenedor de scroll propio, no en el documento, así
-  // que `location.hash` por sí solo no mueve nada. `scrollIntoView` sí recorre los
-  // ancestros desplazables, sea cual sea cuál de ellos scrollea.
-  useEffect(() => {
-    const id = hash.startsWith('#') ? decodeURIComponent(hash.slice(1)) : '';
-    if (!id) return;
-    const target = document.getElementById(id);
-    // jsdom no implementa `scrollIntoView`; en el navegador siempre existe.
-    if (!target || typeof target.scrollIntoView !== 'function') return;
-    target.scrollIntoView({
-      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-      block: 'start',
-    });
-  }, [hash]);
+  usePageTitle('Metodología', META.path, META.description);
 
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
       <h1 className='mb-6 font-heading text-2xl font-semibold'>Metodología</h1>
 
       <section className='mb-8'>
-        <h2 className='mb-3 font-heading text-lg font-semibold'>Cómo se construyó el análisis</h2>
+        <h2 className='mb-3 font-heading text-lg font-semibold'>Cómo se construye el análisis</h2>
         <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
           Python extrae el texto íntegro por páginas y calcula sus hashes. Después, un agente
           propone en formato estructurado los criterios de residencia, las pruebas, su valoración
@@ -51,35 +35,17 @@ export function MetodologiaPage() {
         </p>
       </section>
 
-      <section id='corpus' className='mb-8 scroll-mt-16'>
-        <h2 className='mb-3 font-heading text-lg font-semibold'>Fuentes y corpus validado</h2>
-        <ul className='mb-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground'>
-          <li>106 resoluciones judiciales españolas conservadas como fuentes.</li>
-          <li>5 sentencias estructuradas y validadas en el corpus v3 actual.</li>
-          <li>74 del Tribunal Supremo y 32 de la Audiencia Nacional.</li>
-          <li>Período 2015-2025.</li>
-          <li>Fuente: CENDOJ (Centro de Documentación Judicial).</li>
-        </ul>
+      <section className='mb-8'>
+        <h2 className='mb-3 font-heading text-lg font-semibold'>Un método, un corpus por país</h2>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          La ampliación sigue el gate 1 → 5 → 106. Una fuente no se presenta como caso estructurado
-          hasta superar la compilación, la verificación literal y la revisión correspondiente.
+          El pipeline es agnóstico de la jurisdicción: lo que cambia de un país a otro son la fuente
+          oficial, el precepto que decide la residencia y el especialista que valida el análisis.
+          Por eso las fuentes y la normativa se documentan en la página de cada país: hoy, el{' '}
+          <Link to='/espana/fuentes' className='text-foreground underline underline-offset-4'>
+            corpus de España
+          </Link>
+          , el único publicado.
         </p>
-      </section>
-
-      <section id='normativa' className='mb-8 scroll-mt-16'>
-        <h2 className='mb-3 font-heading text-lg font-semibold'>Normativa aplicada</h2>
-        <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
-          El corpus incluye el texto de la ley, no solo las sentencias: los preceptos que deciden la
-          residencia fiscal —art. 9 LIRPF y su entorno— y el artículo de residencia de los 96
-          convenios de doble imposición firmados por España. Se descarga del BOE y se publica
-          literal, sin reescribir una palabra.
-        </p>
-        <p className='mb-4 text-sm leading-relaxed text-muted-foreground'>
-          Cada precepto conserva todas sus redacciones con la fecha desde la que rigió, porque una
-          sentencia sobre el ejercicio 2010 aplicó la redacción de entonces y no la de hoy. Estos
-          son los que citan las sentencias analizadas:
-        </p>
-        <NormativaAplicada />
       </section>
 
       <section>
@@ -94,7 +60,8 @@ export function MetodologiaPage() {
             verifica texto y referencias, pero la aprobación jurídica requiere un especialista.
           </li>
           <li>
-            El corpus es una selección, no la totalidad de la jurisprudencia sobre la materia.
+            El corpus de cada país es una selección, no la totalidad de la jurisprudencia sobre la
+            materia.
           </li>
         </ul>
       </section>

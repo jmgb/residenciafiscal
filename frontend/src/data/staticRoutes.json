@@ -10,7 +10,15 @@
   {
     "path": "/metodologia",
     "title": "Metodología — Residencia Fiscal",
-    "description": "Cómo se construyó el análisis: 106 sentencias del Tribunal Supremo y la Audiencia Nacional (2015–2025), con criterios, pruebas y fallo extraídos de forma estructurada y cita literal verificable.",
+    "description": "Cómo se construye el análisis en cualquier jurisdicción: extracción literal con hashes, propuesta estructurada del agente y verificación de cada cita contra la fuente antes de publicar.",
+    "indexable": true,
+    "image": null,
+    "sitemap": { "changefreq": "monthly", "priority": "0.6" }
+  },
+  {
+    "path": "/espana/fuentes",
+    "title": "Corpus de España — Residencia Fiscal",
+    "description": "Fuentes del corpus español: 106 resoluciones del Tribunal Supremo y la Audiencia Nacional (2015–2025), 5 sentencias validadas en el corpus v3 y la normativa aplicada, del art. 9 LIRPF a los convenios de doble imposición.",
     "indexable": true,
     "image": null,
     "sitemap": { "changefreq": "monthly", "priority": "0.6" }
@@ -22,5 +30,13 @@
     "indexable": true,
     "image": null,
     "sitemap": { "changefreq": "monthly", "priority": "0.7" }
+  },
+  {
+    "path": "/privacidad",
+    "title": "Privacidad del chat — Residencia Fiscal",
+    "description": "Qué datos procesa el chat comparativo, qué proveedores intervienen y qué información conserva la aplicación.",
+    "indexable": false,
+    "image": null,
+    "sitemap": { "changefreq": "yearly", "priority": "0.1" }
   }
 ]

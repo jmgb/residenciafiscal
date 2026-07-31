@@ -1,7 +1,9 @@
 import staticRouteData from './staticRoutes.json';
 
 /**
- * Metadatos SEO de las rutas públicas que no son de país.
+ * Metadatos SEO de las rutas públicas de contenido estático. Las rutas de chat
+ * por país viven en `countryRoutes.json`; aquí entran las demás, incluidas las
+ * subpáginas de contenido de un país como `/espana/fuentes`.
  *
  * Existe por el mismo motivo que `countryRoutes.json`: la descripción de una
  * ruta la necesitan tres consumidores —la página, que la fija en runtime;

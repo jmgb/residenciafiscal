@@ -13,6 +13,15 @@ function renderFooter(collapsed = false) {
 }
 
 describe('SidebarFooter', () => {
+  it('enlaza el corpus de España a su página de país, no a la metodología', () => {
+    renderFooter();
+
+    const corpusLink = screen.getByRole('link', { name: 'Corpus de España' });
+    expect(corpusLink).toHaveAttribute('href', '/espana/fuentes');
+    const hrefs = screen.getAllByRole('link').map((link) => link.getAttribute('href'));
+    expect(hrefs).not.toContain('/metodologia#corpus');
+  });
+
   it('muestra el email completo como último elemento del menú lateral', () => {
     renderFooter();
 

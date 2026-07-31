@@ -28,7 +28,7 @@ de sentencias en lenguaje natural.
 | `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
 | `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `tests/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
 | `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. La fecha refleja una comprobación editorial real, nunca la fecha del build |
-| `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas estáticas (`/manifiesto`, `/metodologia`, `/colaborar`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar |
+| `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas de contenido estático (`/manifiesto`, `/metodologia`, `/espana/fuentes`, `/colaborar`, `/privacidad`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar. `/espana/fuentes` es contenido de país (fuentes + normativa de España); la metodología es común a todas las jurisdicciones |
 
 ## Corpus normativo
 
@@ -130,13 +130,14 @@ raíz de `netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime�
 así que sus módulos compartidos van en `lib/`. No extrapoles automáticamente
 esas reglas al directorio de Functions estándar de la V1.
 
-La **activación productiva** está bloqueada en la fase 0b: el mecanismo de
-cuotas y presupuesto necesita una decisión, porque el compare-and-swap de
-Netlify Blobs no es atómico. El experimento comparativo puede avanzar sin
-activar el chat. Ver `docs/project/TASKS.md`.
+La V1 usa Netlify Database/Postgres con transacción y bloqueo de fila; no usa el
+compare-and-swap no atómico de Blobs. La **activación productiva** sigue
+bloqueada hasta provisionar y validar Database en Deploy Preview, completar la
+política legal y autorizar el gasto. Ver `docs/project/TASKS.md`.
 
-El prototipo Edge solo necesita `@netlify/edge-functions`; el port de proveedor
-y del runtime online a la Function estándar sigue pendiente.
+El prototipo Edge está conservado en `netlify/prototypes/`. La Function estándar
+y sus adaptadores viven en `netlify/functions/chat/`; devuelve el protocolo SSE
+2 como cuerpo bufferizado, no como `ReadableStream`.
 `netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
 del repositorio.
 
