@@ -37,7 +37,7 @@ dependencies = [
     # —esquema estricto normalizado y `supports_temperature`—; la 0.8.0 hace que
     # `Execution.model_used` respete el id que reporta el proveedor, y ese valor
     # es el que el comparador publica como modelo de la respuesta.
-    "neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.8.0",
+    "neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.9.0",
 ]
 
 # Va después de `dependencies`: en TOML todo lo que sigue a una cabecera de tabla

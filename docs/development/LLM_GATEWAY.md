@@ -159,18 +159,33 @@ latencia dominada por la salida, no por el tamaño de la pregunta.
 El paquete se instala desde PyPI con un mínimo y sin techo:
 
 ```toml
-dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.8.0"]
+dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.9.0"]
 ```
 
-El mínimo es `0.8.0`, y cada tramo aporta algo que aquí se da por hecho: la
+El mínimo es `0.9.0`, y cada tramo aporta algo que aquí se da por hecho: la
 `0.7.0` normaliza el esquema estricto y declara `supports_temperature` —por
-debajo, este proyecto vuelve a necesitar los parches retirados—, y la `0.8.0`
+debajo, este proyecto vuelve a necesitar los parches retirados—, la `0.8.0`
 hace que `Execution.model_used` respete el id que reporta el proveedor, que es
-el que el comparador publica como modelo de la respuesta.
+el que el comparador publica como modelo de la respuesta, y la `0.9.0` hace que
+un `response_schema` llegue a los proveedores que no lo imponen.
+
+Ese último tramo es el aviso de esta sección cumpliéndose. Hasta la `0.9.0` los
+adaptadores de Groq y OpenRouter pedían `{"type": "json_object"}` y descartaban
+el esquema, así que el modelo respondía JSON válido con claves inventadas, el
+gateway lo rechazaba, cobraba el intento y contestaba la cascada: **cada llamada
+estructurada la servía el modelo de respaldo, a su precio**. El resultado era
+correcto y el único síntoma estaba en la factura. La misma versión evita que
+`ResponseFormat.JSON_OBJECT` falle con HTTP 400 en Groq, que rechaza ese modo si
+los mensajes no citan «json».
+
+El chat de este proyecto usa Gemini y OpenAI, que sí imponen esquema, así que su
+contabilidad no se mueve; el mínimo sube igualmente para que nadie herede el
+fallo al enrutar una estrategia a Groq u OpenRouter.
 
 No hay techo por decisión explícita. El contrapeso conviene tenerlo presente:
 el propio paquete recomienda fijar una versión exacta, y sin máximo una futura
-`0.8.0` con cambios de contabilidad de coste entraría al regenerar el lock.
+versión con cambios de contabilidad de coste entraría al regenerar el lock —
+exactamente lo que trajo la `0.9.0`.
 `uv.lock` sigue clavando la versión resuelta y CI ejecuta `uv sync --locked`, así
 que el cambio solo se materializa cuando alguien corre `uv lock` — momento en el
 que conviene leer el `CHANGELOG`, que señala explícitamente lo que afecta al
