@@ -78,7 +78,7 @@ Documentos especializados:
 ## Convenciones
 
 - Los nombres de ruta se escriben desde la raíz del repositorio, por ejemplo
-  `src/residenciafiscal.py`.
+  `src/export_jurisprudence_case.py`.
 - Los documentos jurídicos originales viven en `sentencias/` y `normativa/`;
   no se modifican durante una actualización de documentación.
 - Los resultados regenerables viven en `knowledge/` o `output/`, según estén

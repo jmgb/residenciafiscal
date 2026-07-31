@@ -48,12 +48,11 @@ export function ColaborarPage() {
             que conocen la jurisprudencia de su jurisdicción.
           </p>
           <p className='mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg'>
-            España es hoy el único país con corpus —106 sentencias del Tribunal Supremo y la
-            Audiencia Nacional, 2015-2025— y no porque el proyecto sea español, sino porque su
-            jurisprudencia se delimitó con criterio jurídico-tributario: qué resoluciones importan,
-            qué criterios del art. 9 LIRPF se aplican y en qué doce categorías se clasifica la
-            prueba son decisiones de derecho tributario, no de un modelo. El pipeline es agnóstico
-            del país; el criterio, no.
+            España es hoy el único país con fuentes delimitadas —106 sentencias del Tribunal Supremo
+            y la Audiencia Nacional, 2015-2025— y una muestra estructurada de cinco. No porque el
+            proyecto sea español, sino porque decidir qué resoluciones importan, qué criterios del
+            art. 9 LIRPF se aplican y cómo se clasifica la prueba exige criterio
+            jurídico-tributario. El pipeline es agnóstico del país; el criterio, no.
           </p>
         </header>
 
@@ -113,10 +112,10 @@ export function ColaborarPage() {
               el artículo de desempate de sus convenios de doble imposición.
             </li>
             <li className='border-l-2 border-primary pl-4'>
-              <strong className='font-semibold'>Un especialista que lo valide</strong> — el análisis
-              lo redacta un modelo de lenguaje y puede equivocarse. Ningún país se publica sin que
-              un profesional del derecho tributario de esa jurisdicción compruebe que el análisis
-              dice lo que dice la resolución.
+              <strong className='font-semibold'>Un especialista que lo valide</strong> — la
+              estructura jurídica propuesta por el agente puede equivocarse. Un profesional del
+              derecho tributario de esa jurisdicción debe comprobar que dice lo que dice la
+              resolución.
             </li>
           </ol>
         </section>
@@ -175,9 +174,9 @@ export function ColaborarPage() {
               <strong className='font-semibold'>
                 Nada se publica sin la validación de un especialista.
               </strong>{' '}
-              El análisis lo genera un modelo de lenguaje; sin un profesional de la materia que lo
-              valide, el corpus se queda sin publicar. Es la razón por la que hoy hay un solo país y
-              no veinte a medias.
+              La propuesta jurídica del agente no sustituye a un profesional de la materia; sin su
+              validación, el corpus se queda sin aprobar. Es la razón por la que hoy hay un solo
+              país y no veinte a medias.
             </p>
           </div>
         </section>

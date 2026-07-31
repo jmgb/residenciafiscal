@@ -15,10 +15,11 @@ body:
     attributes:
       label: Área afectada
       options:
-        - Pipeline CLI (src/residenciafiscal.py)
-        - API HTTP (src/api/main.py)
+        - Pipeline jurisprudencial offline
+        - API de estado (src/api/main.py)
+        - Chat / recuperación
         - Frontend (frontend/)
-        - Extracción / calidad del análisis
+        - Extracción / calidad del corpus
         - Documentación
         - Otro
     validations:
@@ -38,7 +39,7 @@ body:
       label: Pasos para reproducirlo
       description: Comando exacto, PDF usado si aplica, y salida obtenida.
       placeholder: |
-        1. make run MAX_FILES=1
+        1. make export-case-v3
         2. ...
       render: shell
     validations:
@@ -48,7 +49,7 @@ body:
     id: entorno
     attributes:
       label: Entorno
-      description: Sistema operativo, versión de Python (`uv run python -V`), commit o versión del repo, y modelo LLM usado.
+      description: Sistema operativo, versión de Python (`uv run python -V`), commit y, solo si afecta al chat, modelo LLM usado.
       placeholder: |
         SO: Ubuntu 24.04 (WSL2)
         Python: 3.13.1

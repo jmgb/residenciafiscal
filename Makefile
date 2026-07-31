@@ -2,8 +2,8 @@
 # Requiere: uv (https://docs.astral.sh/uv/)
 #
 # Estructura:
-#   1. ESENCIAL   — Lo que usas a diario (setup, dev, run)
-#   2. PIPELINE   — Ejecuciones del análisis por lotes
+#   1. ESENCIAL   — Lo que usas a diario (setup, dev)
+#   2. PIPELINE   — Corpus offline y experimentos del chat
 #   3. CALIDAD    — Lint, format, typecheck, tests
 #   4. DEPS       — Lock y actualización de dependencias
 #   5. LIMPIEZA
@@ -12,7 +12,6 @@ SHELL := /bin/bash
 
 .SILENT:
 .PHONY: help setup dev dev-api dev-frontend dev-public serve \
-	run run-sample run-resume run-resume-from run-list \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
@@ -21,7 +20,7 @@ SHELL := /bin/bash
 	validate-chat-absences-candidate compile-chat-f03-results \
 	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
-	test test-llm test-single \
+	test \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
 	clean clean-output env-print
@@ -37,9 +36,6 @@ PORT ?= 8010
 
 INPUT ?= ./sentencias
 OUTPUT ?= ./output
-MODEL ?=
-EFFORT ?=
-MAX_FILES ?=
 CITATION_JSONL ?= $(shell ls -t output/analisis_*.jsonl 2>/dev/null | head -1)
 CITATION_THRESHOLD ?= 85
 CITATION_SOURCE_FILE ?= SAN_1071_2025.pdf
@@ -92,18 +88,6 @@ CASE_ROLLOUT_STATE ?= ./output/jurisprudence-v3-rollout-state.json
 CASE_ROLLOUT_OUTPUT ?= ./knowledge/jurisprudencia-v3
 ROLLOUT_RETRY ?=
 
-# Flags opcionales: solo se añaden si la variable tiene valor
-RUN_FLAGS := --input $(INPUT) --output $(OUTPUT)
-ifneq ($(MODEL),)
-RUN_FLAGS += --model $(MODEL)
-endif
-ifneq ($(EFFORT),)
-RUN_FLAGS += --reasoning-effort $(EFFORT)
-endif
-ifneq ($(MAX_FILES),)
-RUN_FLAGS += --max-files $(MAX_FILES)
-endif
-
 # =============================================================================
 # 1. ESENCIAL
 # =============================================================================
@@ -117,11 +101,6 @@ help:
 	@echo "  make serve                API sin reload (modo producción local)"
 	@echo ""
 	@echo "=== PIPELINE ==="
-	@echo "  make run                  Procesa todos los PDFs de $(INPUT)"
-	@echo "  make run-sample           Procesa 1 PDF (prueba rápida, ~\$$0.01)"
-	@echo "  make run-resume           Continúa sobre el JSONL más reciente de $(OUTPUT)"
-	@echo "  make run-resume-from JSONL=x.jsonl  Continúa sobre un JSONL concreto"
-	@echo "  make run-list LIST=x.txt  Procesa solo los PDFs listados en un .txt"
 	@echo "  make verify-citations     Verifica frases_clave contra los PDF (sin LLM)"
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
@@ -145,7 +124,7 @@ help:
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
-	@echo "  Variables: INPUT= OUTPUT= MODEL= EFFORT=none|low|medium|high|xhigh|max MAX_FILES="
+	@echo "  Variables base: INPUT= OUTPUT="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
 	@echo "  Muestra OKF: OKF_SAMPLE_MANIFEST= OKF_SAMPLE_OUTPUT="
@@ -165,8 +144,6 @@ help:
 	@echo "  make fix                  Ruff format + check --fix"
 	@echo "  make typecheck            Mypy"
 	@echo "  make test                 Pytest (sin tests de LLM real)"
-	@echo "  make test-llm             Alias del smoke test real con 1 PDF (con coste)"
-	@echo "  make test-single          Script de humo: 1 PDF end-to-end"
 	@echo ""
 	@echo "=== DEPS ==="
 	@echo "  make lock                 Regenera uv.lock"
@@ -181,7 +158,7 @@ setup:
 	uv python install $(PY)
 	uv venv --python $(PY) $(UV_PROJECT_ENVIRONMENT)
 	uv sync
-	@echo "✅ Entorno listo. Recuerda tener OPENAI_API_KEY en .env"
+	@echo "✅ Entorno listo. El corpus offline no necesita API keys."
 
 dev:
 	@set -m; \
@@ -197,33 +174,15 @@ dev-frontend:
 	cd frontend && npm run dev
 
 dev-public:
-	@echo "⚠️  Escuchando en 0.0.0.0: /analizar gasta dinero en cada llamada."
-	@echo "   Define RESIDENCIAFISCAL_API_TOKEN en .env para exigir la cabecera X-API-Token."
+	@echo "⚠️  Escuchando en 0.0.0.0; la API actual solo expone estado y contratos."
 	$(MAKE) HOST=0.0.0.0 dev
 
 serve:
 	uv run uvicorn --app-dir $(PYTHON_SOURCE) api.main:app --host $(HOST) --port $(PORT)
 
 # =============================================================================
-# 2. PIPELINE
+# 2. PIPELINE OFFLINE DEL CORPUS
 # =============================================================================
-run:
-	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS)
-
-run-sample:
-	uv run python $(PYTHON_SOURCE)/residenciafiscal.py --input $(INPUT) --output $(OUTPUT) --max-files 1
-
-run-resume:
-	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --skip-existing
-
-run-resume-from:
-	@if [ -z "$(JSONL)" ]; then echo "❌ Falta JSONL=. Ej: make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl"; exit 1; fi
-	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --resume-from $(JSONL)
-
-run-list:
-	@if [ -z "$(LIST)" ]; then echo "❌ Falta LIST=. Ej: make run-list LIST=./mi_lista.txt"; exit 1; fi
-	uv run python $(PYTHON_SOURCE)/residenciafiscal.py $(RUN_FLAGS) --pdf-list $(LIST)
-
 verify-citations:
 	@if [ -z "$(CITATION_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
 	uv run python $(PYTHON_SOURCE)/verify_citations.py \
@@ -439,11 +398,6 @@ typecheck:
 
 test:
 	uv run pytest -q
-
-test-llm: test-single
-
-test-single:
-	uv run python tests/test_single_pdf.py
 
 # =============================================================================
 # 4. DEPS

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Literal, Protocol
 
+from llm_gateway import ReasoningEffort
 from pydantic import Field
 
 from chat_answer_contract import StructuredChatAnswerDraft
@@ -19,6 +20,7 @@ class ChatWriterRequest:
     evidence_context: str
     response_schema: dict[str, Any]
     temperature: float = 0
+    reasoning_effort: ReasoningEffort | None = None
     fallback_policy: Literal["disabled"] = "disabled"
 
 

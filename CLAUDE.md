@@ -10,29 +10,25 @@ El proyecto usa **uv** (no pip/venv a mano) y un **Makefile** como interfaz úni
 # Instalar dependencias (crea .venv con Python 3.13 e instala desde uv.lock)
 make setup
 
-# Configurar API key: rellenar OPENAI_API_KEY en .env
-cp .env.example .env
-
 # Ver todos los comandos disponibles
 make help
 
-# Ejecutar el analizador legado (106 PDF → ~$3.40 USD, ~2-3h)
-make run
-
-# Test rápido con 1 PDF
-make run-sample
+# Regenerar el piloto offline (sin llamadas LLM)
+make export-verbatim
+make export-case-v3
 
 # Levantar API + frontend (API en http://127.0.0.1:8010/docs,
 # frontend en http://127.0.0.1:5174)
 make dev
 ```
 
-> Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python src/residenciafiscal.py --help`).
+> Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python src/export_jurisprudence_case.py --help`).
 > Nunca hace falta activar el entorno: `uv run` lo resuelve solo.
 >
-> **No confundir pipelines:** `make run` genera los exports analíticos legados.
-> No construye ni autoriza el corpus v3 del chat. El corpus v3 sigue limitado a
-> la muestra congelada de cinco; no listar ni procesar las 106 como casos v3
+> **Frontera obligatoria:** las sentencias se preparan offline mediante
+> Python + agente. El gateway solo responde preguntas del chat. No añadas un
+> analizador LLM de PDF ni un endpoint `/analizar`. El corpus v3 sigue limitado
+> a la muestra congelada de cinco; no listar ni procesar las 106 como casos v3
 > hasta superar sus gates y recibir autorización expresa.
 
 La documentación se navega desde [`docs/README.md`](docs/README.md). La
@@ -42,7 +38,8 @@ arquitectura vigente y las reglas de ubicación de archivos están en
 
 ## Resumen del Proyecto
 
-Pipeline Python que analiza **106 sentencias judiciales españolas** sobre residencia fiscal (Art. 9 LIRPF) usando LLMs para extraer:
+Corpus verificable construido desde **106 sentencias judiciales españolas**
+sobre residencia fiscal (Art. 9 LIRPF). El workflow híbrido representa:
 
 - **Criterios de residencia** aplicados (183 días, centro de intereses, familia, CDI)
 - **Pruebas aportadas** por AEAT y contribuyente (aceptadas/rechazadas)
@@ -54,40 +51,30 @@ Pipeline Python que analiza **106 sentencias judiciales españolas** sobre resid
 
 ## Arquitectura
 
-Dos frontends sobre el mismo núcleo: el **CLI por lotes** y la **API HTTP**. Ambos
-llaman a `process_pdf_async()`, así que producen exactamente el mismo objeto.
-
-Cada ejecución del CLI escribe los cinco exports (`.jsonl`, dos `.csv` planos,
-`pruebas_*.csv` y `.xlsx`) con el mismo timestamp; la API no persiste nada.
-
-Esta descripción corresponde al analizador legado. La arquitectura
-jurisprudencial conversacional v3, sus capas de autoridad, el comparador A/B,
-los aprendizajes F0.2 y el handoff para agentes tienen una entrada canónica
-separada:
+El corpus y el chat son dos contextos separados. Python extrae texto literal,
+calcula hashes, valida propuestas del agente y compila el corpus v3. Solo el
+chat recupera evidencia y llama al gateway para redactar una respuesta.
+Arquitectura, capas de autoridad, comparador A/B y handoff:
 [`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
 
 ### Llamadas a modelos: el paquete `llm_gateway`
 
-Las llamadas pasan por **`neutral-llm-gateway`**, un paquete público y neutral
-fijado a una etiqueta inmutable. `gpt_request_for_sentencia`
-(`src/ai_service_adapter.py`) es una **fachada delgada**: conserva nombre, firma
-y diccionario de retorno, así que ni el CLI ni la API distinguen qué hay detrás.
-`src/gateway_setup.py` construye el gateway una vez —nunca en el import— con las
-credenciales de la aplicación y conecta los efectos por puertos.
+Las respuestas del chat pasan por **`neutral-llm-gateway`**, fijado a una
+referencia inmutable. `src/chat_model_policy.py` declara Luna + `max`, y
+`src/gateway_setup.py` construye el gateway bajo demanda con las credenciales,
+uso, alertas y coste. Preparar o validar el corpus nunca importa este gateway.
 
-Ese cableado está completo tanto para el analizador legado como para el chat
-comparativo A: ambos reutilizan `get_gateway()` con sus sinks. B conserva
-Gemini File Search directo porque el paquete no ofrece tools ni ficheros. Los
-límites y tests del composition root están en
+El comparador A usa `GatewayChatWriter(get_gateway())`; B conserva Gemini File
+Search directo porque el paquete no ofrece tools ni ficheros. Los límites y
+tests del composition root están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
 **No hay tabla de precios local**: las tarifas salen del catálogo versionado del
 paquete, y `detect_provider()` delega en el mismo catálogo que usa el registro
 para elegir adaptador, para que no existan dos tablas capaces de discrepar.
 
-Dos consecuencias visibles en los exports: `costo_usd` puede ser `null` —un
-coste que no se pudo calcular no es un coste de cero— y `costo_medicion` dice si
-el importe es `ACTUAL`, `ESTIMATED` o `UNAVAILABLE`.
+En el chat, un coste no calculable nunca se presenta como cero y la medición
+distingue `ACTUAL`, `ESTIMATED` y `UNAVAILABLE`.
 
 El paquete no tiene tools, ficheros ni streaming, y es deliberado; por eso el
 chat B sigue usando Gemini File Search por su cuenta. Rige la **regla de los dos
@@ -98,26 +85,20 @@ versión: [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
 ### Extracción de texto de los PDF (no hay OCR)
 
-Los PDF del CENDOJ son digitales con capa de texto embebida, así que el texto se
-extrae con **pypdf** (`extract_pdf_text_with_pages()` en
-`src/residenciafiscal.py`):
-Python puro, determinista y sin LLM. La función inserta marcadores de página
-1-indexados y solo limpia `\x00`; el LLM recibe ese texto y **analiza, no
-extrae**. El spike de verificación de citas (`src/citation_spike.py`) usa el mismo
-extractor.
+Los PDF del CENDOJ son digitales con capa de texto embebida. El corpus verbatim
+se extrae con **pypdf** en `src/verbatim_extraction.py`: Python puro,
+determinista y sin LLM. Conserva texto crudo por página, índices físicos y
+hashes; el agente trabaja después sobre ese artefacto.
 
 No hay OCR en el proyecto: un PDF escaneado (imagen, sin capa de texto) devuelve
 texto vacío y no se procesa. Si algún día llega uno, las opciones son OCR
 clásico (`ocrmypdf`/Tesseract) o un modelo de visión — no añadirlo antes de que
 exista el caso real.
 
-## Schema del analizador legado
+## Contrato del corpus
 
-El schema completo (criterios `CRIT_*`, las 12 categorías de prueba, campos de
-razonamiento y resultado) es fuente única en `src/prompt.py` y `src/config.py`, y
-`GET /config` lo expone en vivo. No duplicarlo aquí: se desincroniza.
-
-El chat no consume ese schema directamente. Su fuente canónica es
+Los catálogos compartidos de criterios, categorías y resultados permanecen en
+`src/config.py`; el modelo canónico del chat es
 `residenciafiscal-case/3`, documentada en
 [`docs/jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md`](docs/jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
 
@@ -273,24 +254,19 @@ make export-normativa     # regenera los 108 preceptos (sin red, sin LLM)
 make enlazar-normativa    # resuelve las citas de las sentencias a los preceptos
 ```
 
-## Sentencias Clave
+## Artefactos históricos
 
-Las sentencias listadas en `sentencias/sentencias_CLAVE.txt` usan automáticamente
-**GPT-5** (modelo premium) **independientemente del `--model` indicado**, tanto por
-CLI como por la API.
-
-**Coste real medido**: ~$0.098/sentencia clave vs ~$0.014/sentencia normal
-(ver «Costes Medidos»)
+`output/analisis_*.jsonl` y los perfiles OKF/2 proceden del analizador retirado.
+Pueden alimentar verificadores y migraciones reproducibles, pero no existe un
+comando vigente que reprocese los PDF mediante una API LLM. Git conserva el
+código anterior si alguna investigación histórica necesita consultarlo.
 
 ## Comandos Útiles
 
-Todo pasa por el Makefile (`make help` los lista todos); el CLI subyacente sigue
-disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
+Todo pasa por el Makefile (`make help` los lista todos). Los no evidentes:
 
-- `make run-resume` / `make run-resume-from JSONL=...` — ver "Reanudar una ejecución".
 - `make fast-check` — el gate obligatorio antes de commitear (lint + tipos + tests).
-- `make test` **no** llama a ningún LLM; `make test-llm` y `make test-single` sí
-  **gastan dinero** (smoke real de 1 PDF).
+- `make test` no llama a ningún LLM ni necesita secrets.
 - `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
   los ocho artefactos locales, sin LLM; valida todos sus hashes.
 - `make build-chat-f03-legal-bundle` — genera el único ZIP que debe recibir el
@@ -311,51 +287,16 @@ disponible con `uv run python src/residenciafiscal.py --help`. Los no evidentes:
 `127.0.0.1:5174` (el puerto 8010 evita chocar con el backend de presupuestor).
 Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/docs`.
 
-`POST /analizar` acepta además los campos de formulario `modelo`, `reasoning_effort`
-(`none|low|medium|high|xhigh|max`) y `max_pages` (entero positivo). Reutiliza `process_pdf_async()`, así
-que devuelve el mismo objeto que una línea del JSONL, envuelto en
-`{"modelo_usado": ..., "analisis": {...}}`. Si el nombre del fichero está en
-`sentencias_CLAVE.txt`, se fuerza el modelo premium.
+La API no expone `/analizar` ni ninguna ruta de pago. `GET /config` publica la
+política del futuro chat y los catálogos jurídicos. El endpoint conversacional
+productivo todavía no existe.
 
-**Importante**: la API es de un PDF por request y **no persiste nada** en `output/`.
-Para lotes, sigue usando `make run`.
+## Costes del chat
 
-### Guardarraíles de la API
-
-`POST /analizar` es la única ruta que gasta dinero, así que lleva:
-
-| Guardarraíl | Detalle |
-|-------------|---------|
-| Token opcional | Si `RESIDENCIAFISCAL_API_TOKEN` está en `.env`, exige la cabecera `X-API-Token`. Sin definir, la ruta queda abierta (cómodo en localhost, imprudente con `make dev-public`, que además avisa al arrancar). |
-| Límite de subida | 25 MB, cortado por `Content-Length` en un middleware **antes** de parsear el multipart, con un contador en el handler como respaldo para peticiones `chunked`. |
-| Allowlist de modelos | `modelo` solo acepta IDs declarados en `src/config.py` (ver `/config` → `modelos_permitidos`) para que el endpoint de pago no actúe como proxy abierto. El CLI sí admite IDs de OpenAI, Gemini, Groq y OpenRouter; ambos caminos comparten `detect_provider()`. |
-| Validación de entrada | Solo `.pdf`; los esfuerzos se derivan del catálogo del gateway y se exponen en `/config`; `max_pages` ≥ 1 (un valor negativo hacía que el pipeline no leyera páginas y devolviera un 200 con confianza BAJA). |
-
-No hay rate limiting. Si algún día esto se expone más allá de la LAN, hay que añadirlo.
-
-## Costes Medidos
-
-Medidos sobre el `costo_usd` real del último run completo
-(`analisis_02012026_155032.jsonl`), no estimados. Las cifras antiguas
-($0.006/PDF, $2.80 el lote) eran ~2,5× optimistas e indujeron a error en
-estimaciones posteriores.
-
-| Modelo | Coste/PDF (media real) | Subtotal |
-|--------|-----------------------:|---------:|
-| gpt-5.6-luna (83 normales) | $0.014 | $1.18 |
-| gpt-5.6-sol (23 clave) | $0.098 | $2.24 |
-| **Total mixto (106)** | $0.032 avg | **$3.42** |
-
-**Esta tabla está desfasada y no debe usarse para presupuestar el próximo lote.**
-Además, el catálogo del gateway y la política por defecto Luna + `max` cambiaron
-el 2026-07-31; una medición anterior no permite estimar esa configuración.
-Un lote de cinco sentencias normales en julio de 2026 midió **$0.046/PDF** con el
-mismo modelo y el mismo `reasoning_effort`, ~3× la cifra de enero. No lo causó la
-migración al paquete: la implementación anterior, ejecutada hoy sobre
-`SAN 1071/2025`, costó entre $0.041 y $0.049 en la misma comparación. La causa
-está en las respuestas, que hoy son bastante más largas. Cinco sentencias
-correlativas no son una muestra representativa de las 106, así que la tabla se
-rehace con el siguiente run completo, no antes.
+Cada respuesta real del chat debe mostrar y registrar por separado tokens,
+modelo efectivo, coste marginal en USD, medición y latencia. Las antiguas cifras
+por PDF son históricas y no se usan para presupuestar: ya no se analizan
+sentencias mediante el gateway.
 
 ## Gestión de dependencias (uv)
 
@@ -364,7 +305,7 @@ versiona en git**. No hay `requirements.txt` en el repo (se genera bajo demanda 
 `make export-requirements` si algún consumidor externo lo necesita).
 
 ```bash
-uv add pandas          # añadir una dependencia (actualiza pyproject + lock)
+uv add paquete         # añadir una dependencia (actualiza pyproject + lock)
 uv add --dev pytest    # dependencia solo de desarrollo
 uv remove groq         # quitarla
 make lock              # regenerar el lock tras editar pyproject a mano
@@ -375,11 +316,9 @@ Runtime: Python **3.13** (fijado en `.python-version`; `uv` lo instala solo).
 
 ## Calidad de código
 
-ruff, mypy y pytest están configurados en `pyproject.toml`. Lo que no se deduce de
-ahí: los tests que llaman a LLMs reales van marcados `@pytest.mark.manual_real_llm`
-y **quedan excluidos por defecto** (evita gasto accidental); `make test-llm` lanza
-el smoke de un PDF, y el comparador se ejecuta explícitamente con
-`uv run python tests/test_reasoning_effort_comparison.py`.
+ruff, mypy y pytest están configurados en `pyproject.toml`. La suite ordinaria
+no realiza llamadas LLM. Los experimentos conversacionales de pago exigen
+`CONFIRM_PAID=1` y no forman parte de pytest.
 
 Gate antes de commitear: `make fast-check`.
 
@@ -413,33 +352,16 @@ El gate del frontend cubre lint, tipos, tests y build, en ese orden:
 La configuración de biome tiene sus propias trampas: ver
 [`frontend/CLAUDE.md`](frontend/CLAUDE.md).
 
-## Reanudar una ejecución
-
-Cada ejecución escribe `analisis_DDMMYYYY_HHMMSS.jsonl`. Para continuar una tanda
-interrumpida hay que apuntar al JSONL **anterior**, no al del timestamp nuevo:
-
-```bash
-make run-resume                                    # el más reciente de ./output
-make run-resume-from JSONL=./output/analisis_01012026_120000.jsonl
-```
-
-`--skip-existing` resuelve el JSONL previo con `find_latest_jsonl()`, lee de él los
-`archivo` ya procesados y le **añade** los nuevos resultados; el CSV y los exports se
-regeneran completos con el timestamp de esta ejecución. Si no hay JSONL previo, avisa
-y procesa todo.
-
 ## Troubleshooting
 
 | Problema | Solución |
 |----------|----------|
-| `OPENAI_API_KEY not set` | Rellenar `.env` (`cp .env.example .env`) |
+| Falta una API key al probar el chat | Rellenar solo la credencial del proveedor usado en `.env` |
 | `uv: command not found` | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
 | Entorno desincronizado | `uv sync` (o `make setup` para recrearlo) |
 | `Address already in use` en `make dev` | `make dev PORT=9000` |
-| PDF sin texto | Solo PDFs con texto (no scans/OCR) |
-| Rate limits | Reducir `BATCH_SIZE` |
-| JSON parse error | El pipeline auto-repara; revisar logs si persiste |
-| Ejecución interrumpida | `make run-resume` (reanuda sobre el JSONL más reciente de `output/`) |
+| PDF sin texto | El workflow verbatim solo admite PDF con capa de texto; no hay OCR |
+| Una propuesta no compila | Corregir el sidecar del agente; nunca el verbatim ni el caso generado |
 
 ## Ficheros públicos del repositorio
 

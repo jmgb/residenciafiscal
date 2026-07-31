@@ -61,6 +61,7 @@ class GatewayChatWriter:
                 response_format=ResponseFormat.JSON_SCHEMA,
                 response_schema=StructuredChatAnswerDraft,
                 temperature=request.temperature,
+                reasoning_effort=request.reasoning_effort,
                 timeout_policy=TimeoutPolicy(
                     total_seconds=WRITER_TIMEOUT_SECONDS,
                     per_attempt_seconds_override=WRITER_ATTEMPT_TIMEOUT_SECONDS,

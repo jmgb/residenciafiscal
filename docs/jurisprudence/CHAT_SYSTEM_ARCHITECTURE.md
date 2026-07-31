@@ -28,18 +28,18 @@ no una fuente de Derecho.
 El contrato de producto completo está en
 [`CHAT_JURISPRUDENCE_USE_CASE.md`](CHAT_JURISPRUDENCE_USE_CASE.md).
 
-## 2. Dos pipelines que no deben confundirse
+## 2. Corpus offline y chat online
 
 El repositorio contiene dos líneas distintas:
 
 | Línea | Alcance actual | Resultado | Uso |
 |---|---|---|---|
-| Analizador legado | Puede procesar los 106 PDF mediante `make run` | JSONL, CSV y XLSX de análisis | Explotación y análisis histórico |
-| Corpus jurisprudencial v3 | Muestra congelada de cinco | Verbatim, casos por cuestión, anclajes e índice | Futuro chat verificable |
+| Preparación del corpus | Workflow Python + agente, muestra congelada de cinco | Verbatim, casos por cuestión, anclajes e índice | Fuente verificable |
+| Chat | Comparador local F0; producción todavía en `stub` | Respuestas con fuentes, coste y límites | Consulta del abogado |
 
-Que el analizador legado pueda recorrer 106 PDF **no autoriza** a generar o
-publicar 106 casos v3. El rollout v3 sigue la secuencia 1 → 5 → 106 y permanece
-detenido en cinco hasta superar sus gates de datos, evaluación y revisión.
+Los exports JSONL/CSV/XLSX que existen son históricos y no tienen un generador
+LLM activo. El rollout v3 sigue la secuencia 1 → 5 → 106 y permanece detenido
+en cinco hasta superar sus gates de datos, evaluación y revisión.
 
 Tampoco deben mezclarse los árboles:
 
@@ -251,9 +251,9 @@ jurídica humana.
   reales porque todavía no existe un formulario jurídico cerrado.
 - El gap de ausencias esporádicas está documentado y validado contra dos pasajes
   literales, pero deliberadamente no aplicado al corpus.
-- El analizador legado y el chat comparativo A reutilizan el mismo
-  `neutral-llm-gateway` de proceso con sus sinks; B mantiene File Search directo
-  por el límite deliberado del paquete.
+- Solo el chat comparativo A utiliza `neutral-llm-gateway` con sus sinks; el
+  corpus offline no lo importa. B mantiene File Search directo por el límite
+  deliberado del paquete.
 - La revisión jurídica ciega de ese paquete por un abogado especialista todavía
   no se ha realizado.
 - El límite de dos fragmentos por unidad redujo de forma material el contexto y

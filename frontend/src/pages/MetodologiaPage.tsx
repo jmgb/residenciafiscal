@@ -35,9 +35,10 @@ export function MetodologiaPage() {
       <section className='mb-8'>
         <h2 className='mb-3 font-heading text-lg font-semibold'>Cómo se construyó el análisis</h2>
         <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
-          Cada sentencia se procesa con un modelo de lenguaje que extrae, en formato estructurado,
-          los criterios de residencia aplicados (art. 9 LIRPF), las pruebas aportadas por cada parte
-          con su valoración judicial, el razonamiento del tribunal y el resultado del fallo.
+          Python extrae el texto íntegro por páginas y calcula sus hashes. Después, un agente
+          propone en formato estructurado los criterios de residencia, las pruebas, su valoración
+          judicial, el razonamiento del tribunal y el resultado; Python valida cada referencia
+          contra la fuente.
         </p>
         <p className='mb-3 text-sm leading-relaxed text-muted-foreground'>
           Las pruebas se clasifican en doce categorías —desde presencia física y desplazamientos
@@ -45,22 +46,23 @@ export function MetodologiaPage() {
           o rechazada, el peso que le dio el tribunal y la cita literal que lo respalda.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          Las resoluciones de mayor relevancia doctrinal se procesan con un modelo premium para
-          maximizar la precisión de la extracción.
+          El repositorio no envía las sentencias a una API de modelos. Las propuestas del agente son
+          análisis derivados y requieren revisión jurídica humana antes de considerarse aprobadas.
         </p>
       </section>
 
       <section id='corpus' className='mb-8 scroll-mt-16'>
-        <h2 className='mb-3 font-heading text-lg font-semibold'>Corpus analizado</h2>
+        <h2 className='mb-3 font-heading text-lg font-semibold'>Fuentes y corpus validado</h2>
         <ul className='mb-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground'>
-          <li>106 resoluciones judiciales españolas.</li>
+          <li>106 resoluciones judiciales españolas conservadas como fuentes.</li>
+          <li>5 sentencias estructuradas y validadas en el corpus v3 actual.</li>
           <li>74 del Tribunal Supremo y 32 de la Audiencia Nacional.</li>
           <li>Período 2015-2025.</li>
           <li>Fuente: CENDOJ (Centro de Documentación Judicial).</li>
         </ul>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          El corpus cubre litigios sobre residencia fiscal de personas físicas. Las resoluciones que
-          el análisis identifica como fuera de alcance quedan marcadas y no se citan como apoyo.
+          La ampliación sigue el gate 1 → 5 → 106. Una fuente no se presenta como caso estructurado
+          hasta superar la compilación, la verificación literal y la revisión correspondiente.
         </p>
       </section>
 
@@ -88,8 +90,8 @@ export function MetodologiaPage() {
             jurídico ni sustituye el criterio de un profesional.
           </li>
           <li>
-            La extracción es automática: puede contener errores de interpretación. Cada respuesta
-            cita las sentencias en las que se apoya para que puedan contrastarse en la fuente.
+            La propuesta jurídica del agente puede contener errores de interpretación. Python
+            verifica texto y referencias, pero la aprobación jurídica requiere un especialista.
           </li>
           <li>
             El corpus es una selección, no la totalidad de la jurisprudencia sobre la materia.

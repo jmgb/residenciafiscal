@@ -23,17 +23,13 @@ dependencies = [
     "google-genai>=2.0.0,<3.0.0",
     # PDF / datos / exports
     "pypdf>=5.0.0,<7.0.0",
-    "pandas>=2.0.0,<3.0.0",
-    "openpyxl>=3.1.0,<4.0.0",
     # Runtime
     "aiohttp>=3.8.0,<4.0.0",
     "pydantic>=2.0.0,<3.0.0",
     "python-dotenv>=1.0.0,<2.0.0",
-    "tqdm>=4.65.0,<5.0.0",
     # API HTTP (make dev)
     "fastapi[standard]>=0.115.0,<1.0.0",
     "uvicorn[standard]>=0.30.0,<1.0.0",
-    "python-multipart>=0.0.9,<1.0.0",
     "sentry-sdk[fastapi]>=2.66.1,<3.0.0",
     "rapidfuzz>=3.14.0,<4.0.0",
     "pyyaml>=6.0,<7.0",
@@ -63,8 +59,6 @@ dev = [
     "pytest-timeout>=2.3.0",
     "ruff>=0.14.0",
     "mypy>=1.13.0",
-    "pandas-stubs>=2.2.0",
-    "types-tqdm>=4.66.0",
     "httpx2>=2.9.0,<3.0.0",
 ]
 
@@ -76,13 +70,6 @@ asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 pythonpath = ["src", "tests"]
 timeout = 300
-# Los tests que llaman a LLMs reales (con coste) se excluyen por defecto.
-# Los scripts reales se lanzan con `make test-llm`; futuros tests pytest marcados,
-# con `pytest -m manual_real_llm`.
-addopts = "-m 'not manual_real_llm'"
-markers = [
-    "manual_real_llm: invoca un proveedor LLM real (coste + red); excluido por defecto",
-]
 
 [tool.ruff]
 line-length = 100
@@ -106,7 +93,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["config", "prompt", "ai_service_adapter", "api"]
+known-first-party = ["api", "chat_model_policy", "config", "gateway_setup"]
 
 [tool.ruff.format]
 quote-style = "double"

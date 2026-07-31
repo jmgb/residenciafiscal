@@ -4,21 +4,20 @@ Residencia Fiscal transforma documentos jurídicos oficiales en datos
 estructurados y corpus consultables. El sistema separa las fuentes originales,
 la lógica Python, los artefactos derivados y las interfaces de usuario.
 
-Conviven un analizador legado capaz de recorrer 106 PDF y un corpus v3
-verificable para el chat, validado únicamente sobre cinco. Son pipelines
-relacionados, pero no equivalentes ni intercambiables.
+El corpus v3 se prepara offline mediante Python + agente y actualmente está
+validado sobre cinco sentencias. La inferencia LLM pertenece exclusivamente al
+chat online; no existe un analizador automático de sentencias.
 
 ## Vista general
 
 ```mermaid
 flowchart LR
-    PDF["sentencias/<br/>PDF del CENDOJ"] --> PIPELINE
+    PDF["sentencias/<br/>PDF del CENDOJ"]
     BOE["normativa/<br/>XML del BOE"] --> NORM
     PDF --> FILESEARCH["Gemini File Search<br/>store piloto de 5 PDF"]
 
     subgraph PYTHON["src/"]
-        PIPELINE["Pipeline LLM<br/>residenciafiscal.py"]
-        API["API FastAPI<br/>api/main.py"]
+        API["API FastAPI<br/>estado y contratos"]
         CITES["Verificación literal<br/>citation_*"]
         CASES["Caso canónico y retrieval<br/>jurisprudence_*"]
         OKF["Publicación OKF<br/>okf_*"]
@@ -27,9 +26,6 @@ flowchart LR
         CHAT["Comparador F0.2<br/>chat_strategy_*"]
     end
 
-    API --> PIPELINE
-    PIPELINE --> RUNS["output/<br/>JSONL · CSV · XLSX"]
-    RUNS --> CITES
     PDF --> CITES
     CITES --> OKF
     PDF --> VERBATIM
@@ -47,10 +43,10 @@ flowchart LR
 
 | Área | Ubicación | Responsabilidad |
 |---|---|---|
-| Pipeline principal | `src/residenciafiscal.py` | Extraer texto de PDF, llamar al proveedor LLM y escribir exports |
-| Configuración de dominio | `src/config.py`, `src/prompt.py` | Modelos, catálogos, campos y prompt de extracción |
-| Proveedores LLM | `src/ai_service_adapter.py`, `src/gateway_setup.py` | Traducir al paquete `llm_gateway` y conectar sus efectos por puertos |
-| API HTTP | `src/api/` | Exponer el pipeline para un PDF sin persistir resultados |
+| Configuración de dominio | `src/config.py` | Catálogos jurídicos y routing de proveedores |
+| Política del chat | `src/chat_model_policy.py` | Luna + `max`, separado del corpus |
+| Proveedores LLM | `src/gateway_setup.py`, `src/gateway_chat_writer.py` | Responder preguntas del chat y registrar uso/coste |
+| API HTTP | `src/api/` | Exponer estado y contratos; nunca analizar PDF |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |
 | Jurisprudencia v3 | `src/jurisprudence_*.py` | Compilar casos, validar referencias, recuperar y evaluar |
 | OKF | `src/okf_*.py` | Normalizar, renderizar y validar perfiles publicables |
@@ -68,20 +64,12 @@ dominio y con una migración de imports independiente.
 
 ## Flujos principales
 
-### Análisis LLM
-
-1. `src/residenciafiscal.py` lee los PDF de `sentencias/`.
-2. `pypdf` extrae la capa de texto; no hay OCR.
-3. El adaptador selecciona el proveedor y aplica el prompt canónico.
-4. El pipeline valida la respuesta y escribe los artefactos locales en
-   `output/`.
-5. `src/api/main.py` reutiliza el mismo proceso para una petición individual.
-
 ### Jurisprudencia verificable
 
-1. La verificación contrasta cada cita con el texto extraído del PDF.
-2. El corpus verbatim conserva páginas, hashes y procedencia.
-3. Los módulos `jurisprudence_*` compilan el caso canónico y sus unidades de
+1. Python extrae el verbatim y conserva páginas, hashes y procedencia.
+2. El agente propone cuestiones, hechos, valoraciones y anclajes literales.
+3. Python contrasta cada cita con el PDF y los módulos `jurisprudence_*`
+   compilan el caso canónico y sus unidades de
    recuperación.
 4. Los módulos `okf_*` producen perfiles Markdown e informes laterales.
 5. Los derivados versionados se publican en `knowledge/`.
@@ -120,11 +108,12 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 - Los schemas, modelos, validadores, tests y documentación contractual deben
   evolucionar juntos.
 - Los tests ordinarios no realizan llamadas LLM ni requieren secrets.
+- Ningún módulo de preparación `jurisprudence_*` importa el gateway del chat.
 
 ## Límites actuales
 
 - Los PDF escaneados sin capa de texto no se procesan porque no hay OCR.
-- La API local no tiene rate limiting.
+- La API local solo expone estado y contratos; el backend de chat no está activo.
 - El frontend conversacional sigue usando un motor simulado. F0.2 existe como
   comparador local, pero no implementa el backend ni el streaming productivos.
 - El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus

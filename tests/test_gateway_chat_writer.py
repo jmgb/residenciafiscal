@@ -48,7 +48,8 @@ def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
     from llm_gateway import LLMGateway, ProviderRegistry
 
     registry = ProviderRegistry()
-    registry.register(adapter, model_prefixes=("gemini",))
+    prefixes = ("gpt-",) if adapter.name == "openai" else ("gemini",)
+    registry.register(adapter, model_prefixes=prefixes)
     return GatewayChatWriter(LLMGateway(registry=registry))
 
 
@@ -128,6 +129,18 @@ class TestEvidenceAndPrompt:
 
 
 class TestPolicies:
+    async def test_luna_recibe_el_esfuerzo_maximo_de_la_politica_del_chat(self) -> None:
+        from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+
+        adapter = FakeProviderAdapter()
+        adapter.name = "openai"
+
+        await _writer(adapter).write(
+            _request(model=CHAT_MODEL, reasoning_effort=CHAT_REASONING_EFFORT)
+        )
+
+        assert adapter.requests[0].reasoning_effort == "max"
+
     async def test_model_fallback_stays_disabled(self) -> None:
         """A no puede responder con un modelo distinto del que declara."""
         adapter = FakeProviderAdapter()

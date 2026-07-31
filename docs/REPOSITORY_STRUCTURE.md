@@ -57,16 +57,16 @@ con esos archivos.
 
 - Los comandos de uso diario se ejecutan mediante `make`; el Makefile resuelve
   la ubicación de `src/`.
-- Un CLI directo se ejecuta desde la raíz, por ejemplo:
+- Un CLI offline se ejecuta desde la raíz, por ejemplo:
 
   ```bash
-  uv run python src/residenciafiscal.py --help
+  uv run python src/export_jurisprudence_case.py --help
   ```
 
 - Para imports en una orden `python -c`, añade `src` al path:
 
   ```bash
-  PYTHONPATH=src uv run python -c "from config import MODEL; print(MODEL)"
+  PYTHONPATH=src uv run python -c "from chat_model_policy import CHAT_MODEL; print(CHAT_MODEL)"
   ```
 
 - Pytest y mypy reciben `src/` mediante `pyproject.toml`.

@@ -13,25 +13,18 @@ hay un SLA formal.
 
 ## Qué entra en el alcance
 
-- **`POST /analizar`** (`src/api/main.py`): es la única ruta que gasta dinero. Sus
-  guardarraíles son un token opcional (`RESIDENCIAFISCAL_API_TOKEN` +
-  cabecera `X-API-Token`), un límite de subida de 25 MB cortado por
-  `Content-Length` antes de parsear el multipart, una allowlist de modelos y
-  validación de `reasoning_effort` y `max_pages`.
+- El futuro endpoint conversacional y sus controles de cuota, autenticación y
+  presupuesto. La API actual no tiene rutas de pago.
 - Fugas de claves de API o de datos del entorno a través de logs, respuestas o
   mensajes de error.
-- Inyección de prompt que consiga que el pipeline ejecute algo distinto de
-  extraer datos de la sentencia, o que exfiltre contenido del sistema.
+- Inyección de prompt que consiga alterar las fuentes mostradas por el chat o
+  exfiltrar contenido del sistema.
 - Cualquier forma de conseguir que un tercero gaste presupuesto de API ajeno.
 
 ## Qué NO entra en el alcance
 
-- **Ausencia de rate limiting.** Es conocido y está documentado en `CLAUDE.md`.
-  La API está pensada para `127.0.0.1`. `make dev-public` avisa al arrancar.
-- **La ruta abierta sin `RESIDENCIAFISCAL_API_TOKEN`.** Es el comportamiento
-  deliberado en local; define el token si la expones.
-- Errores u omisiones del análisis producido por el LLM. Son un problema de
-  calidad, no de seguridad: abre una issue normal.
+- Errores u omisiones de la propuesta jurídica del agente. Son un problema de
+  calidad de datos, no de seguridad: abre una issue normal.
 - Vulnerabilidades de dependencias sin explotabilidad demostrada en este
   proyecto. Dependabot ya vigila las actualizaciones.
 

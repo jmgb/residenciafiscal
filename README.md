@@ -16,9 +16,10 @@
 
 ---
 
-Pipeline en Python que analiza con LLMs **106 sentencias del Tribunal Supremo y
-la Audiencia Nacional** (2015-2025) sobre residencia fiscal de personas físicas
-(**Art. 9 LIRPF**), y convierte cada resolución en datos estructurados:
+Proyecto con **106 sentencias fuente del Tribunal Supremo y la Audiencia
+Nacional** (2015-2025) sobre residencia fiscal de personas físicas
+(**Art. 9 LIRPF**). El corpus estructurado v3 está validado por ahora sobre una
+muestra de cinco para consulta jurídica:
 
 - **Criterios de residencia** aplicados: 183 días, ausencias esporádicas, centro
   de intereses económicos y vitales, presunción familiar, tie-breaker del CDI.
@@ -37,31 +38,35 @@ entrar si alguien aporta su jurisprudencia — ver
 [Un país, un corpus](#un-país-un-corpus).
 
 > [!WARNING]
-> El análisis lo genera un modelo de lenguaje y **puede contener errores**. No es
-> asesoramiento jurídico ni fiscal. Para citar una resolución, usa siempre el
-> texto oficial del CENDOJ. Ver [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
+> La estructura jurídica la propone un agente y **puede contener errores**. No
+> es asesoramiento jurídico ni fiscal. Python conserva el texto literal, hashes
+> y validaciones; para citar una resolución, usa siempre el texto oficial del
+> CENDOJ. Ver [`sentencias/AVISO_LEGAL.md`](sentencias/AVISO_LEGAL.md).
 
 ## Arquitectura
 
-Dos frontends sobre el mismo núcleo. Ambos llaman a `process_pdf_async()`, así
-que producen exactamente el mismo objeto.
+El corpus se prepara offline sin llamadas del repositorio a APIs de modelos. El
+gateway se reserva para responder preguntas cuando se implemente el chat real.
 
 ```mermaid
 flowchart LR
-    PDFS["sentencias/<br/>106 PDFs"] -->|CLI| CORE
-    HTTP["POST /analizar<br/>src/api/main.py"] -->|API| CORE
-    CORE["process_pdf_async()<br/>src/residenciafiscal.py<br/>src/prompt.py · src/config.py"] <--> LLM["OpenAI · Gemini<br/>Groq · OpenRouter"]
-    CORE --> OUT["output/<br/>jsonl · csv · xlsx"]
-    CORE --> RESP["JSON en la respuesta"]
-    OUT --> WEB["frontend/<br/>residenciafiscal.org"]
+    PDFS["sentencias/<br/>PDF oficiales"] --> PY["Python<br/>texto · páginas · hashes"]
+    PY --> AGENT["Agente<br/>propuesta jurídica"]
+    AGENT --> GATES["Python<br/>gates · citas · compilación"]
+    GATES --> CORPUS["knowledge/jurisprudencia-v3"]
+    QUESTION["Pregunta del usuario"] --> RETRIEVAL["Recuperación de casos"]
+    CORPUS --> RETRIEVAL
+    RETRIEVAL --> CHAT["Gateway LLM del chat<br/>Luna + max"]
+    CHAT --> ANSWER["Respuesta con citas y coste"]
 ```
 
 | Archivo | Función |
 |---------|---------|
-| `src/residenciafiscal.py` | Pipeline principal (async, lotes de 10 PDFs) |
-| `src/api/main.py` | API HTTP (FastAPI), 1 PDF por petición |
-| `src/prompt.py` | System prompt con el contexto legal y el schema JSON |
-| `src/config.py` | Modelos, rutas, enums y campos requeridos |
+| `src/verbatim_*.py` | Extracción literal por páginas y hashes |
+| `src/jurisprudence_*.py` | Compilación, validación y recuperación del corpus v3 |
+| `src/chat_model_policy.py` | Política de inferencia del futuro chat |
+| `src/gateway_setup.py` | Clientes, uso y costes de las respuestas del chat |
+| `src/api/main.py` | API de estado y contratos; no analiza sentencias |
 | `frontend/` | SPA React desplegada en Netlify |
 
 La vista completa de componentes, flujos e invariantes está en
@@ -77,7 +82,7 @@ reescribe en ningún punto del pipeline.
 
 | Fuente | Derivado | Cómo se genera |
 |--------|----------|----------------|
-| `sentencias/` — 106 PDF del CENDOJ | `knowledge/jurisprudencia/` | LLM + verificación de citas contra el PDF |
+| `sentencias/` — 106 PDF del CENDOJ | `knowledge/jurisprudencia-v3/` | Python + agente + gates literales |
 | `normativa/es/` — 104 normas en XML del BOE | `knowledge/normativa/es/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
 
 Del corpus normativo se publica **un Markdown por artículo**, no por ley: los
@@ -115,7 +120,7 @@ Un país entra cuando existen tres cosas. Rara vez las aporta una sola persona:
 |---|---|
 | **Una fuente pública oficial** de resoluciones, con sus condiciones de reutilización | El corpus se publica desde la fuente original y sin licencia clara no se publica. Los PDF deben llevar capa de texto: no hay OCR |
 | **El precepto nacional que decide la residencia** — el equivalente al [art. 9 LIRPF](https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764) — y el artículo de desempate de sus convenios | El análisis de una sentencia no se sostiene sin la norma que aplica |
-| **Un especialista que valide el resultado** | El análisis lo redacta un modelo de lenguaje y puede equivocarse. Ningún país se publica sin que un profesional del derecho tributario de esa jurisdicción lo valide |
+| **Un especialista que valide el resultado** | La propuesta jurídica del agente puede equivocarse. Ningún país se publica sin que un profesional del derecho tributario de esa jurisdicción lo valide |
 
 Lo que **no** hace falta aportar: el pipeline, la verificación de citas contra el
 documento fuente, el schema de extracción ni el frontend. Eso ya existe y es
@@ -147,7 +152,6 @@ Requiere [uv](https://docs.astral.sh/uv/) — gestiona Python y las dependencias
 curl -LsSf https://astral.sh/uv/install.sh | sh   # si no lo tienes
 
 make setup                  # instala Python 3.13 + dependencias en .venv
-cp .env.example .env        # y rellena OPENAI_API_KEY
 make help                   # lista todos los comandos
 ```
 
@@ -156,46 +160,28 @@ No hace falta activar ningún entorno: `uv run` lo resuelve solo.
 ## Uso
 
 ```bash
-make run-sample             # 1 PDF, prueba rápida (~$0.01)
-make run                    # los 106 PDFs de ./sentencias (~$2.80, 2-3 h)
-make run-resume             # continúa sobre el JSONL más reciente de ./output
+make export-verbatim        # extrae el PDF piloto sin LLM
+make export-case-v3         # compila el caso propuesto por el agente
+make export-case-v3-sample  # regenera y valida la muestra de cinco
 make dev                    # API + frontend en desarrollo
 make dev-api                # solo API HTTP, Swagger en http://127.0.0.1:8010/docs
 make fast-check             # lint + typecheck + tests
 ```
 
-Variables de los targets de pipeline: `INPUT=`, `OUTPUT=`, `MODEL=`,
-`EFFORT=none|low|medium|high|xhigh|max`, `MAX_FILES=`.
-
-Cada ejecución genera en `./output/`, con timestamp: `analisis_*.jsonl`,
-`analisis_*.csv`, `sentencias_*.csv`, `pruebas_*.csv` y `analisis_*.xlsx`.
-
-**Coste medido del último lote completo**: $3.42 para 106 sentencias ($0.032 de
-media). Las 23 sentencias marcadas en `sentencias/sentencias_CLAVE.txt` usan
-automáticamente el modelo premium (~$0.098 cada una) al margen del `--model`
-elegido. Es una medición histórica, no un presupuesto vigente: el catálogo de
-precios y la política por defecto Luna + `max` cambiaron el 2026-07-31.
-El desglose vigente está en [`CLAUDE.md`](CLAUDE.md#costes-medidos).
+La propuesta jurídica de cada sentencia se prepara en una sesión de agente. No
+existe un target que envíe los PDF a OpenAI. Los comandos Python extraen,
+validan y compilan de forma determinista.
 
 ## API
 
 | Método | Ruta        | Descripción                                     |
 |--------|-------------|-------------------------------------------------|
-| GET    | `/health`   | Estado y API keys detectadas                    |
-| GET    | `/config`   | Modelos, criterios y categorías vigentes        |
-| POST   | `/analizar` | Sube un PDF y devuelve el análisis estructurado |
+| GET    | `/health`   | Estado y frontera entre corpus y chat            |
+| GET    | `/config`   | Política del chat, criterios y categorías        |
 | GET    | `/docs`     | Swagger UI                                      |
 
-```bash
-curl -X POST -F "archivo=@sentencias/SAN_1226_2021.pdf" \
-  http://127.0.0.1:8010/analizar | jq .
-```
-
-`POST /analizar` gasta dinero en cada llamada. Si defines
-`RESIDENCIAFISCAL_API_TOKEN` en `.env`, la ruta exige la cabecera `X-API-Token`;
-hazlo siempre que uses `make dev-public`, que escucha en `0.0.0.0`. La API es de
-un PDF por petición y **no persiste nada** en `output/`: para lotes, usa
-`make run`. Detalle de los guardarraíles en [`CLAUDE.md`](CLAUDE.md).
+La API no expone `/analizar`. El futuro endpoint conversacional utilizará el
+gateway únicamente después de recuperar evidencia del corpus.
 
 ## Frontend
 

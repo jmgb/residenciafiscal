@@ -8,18 +8,17 @@ determinista, no llama a proveedores LLM y no necesita secrets.
 ```bash
 make test          # pytest sin llamadas LLM reales
 make fast-check    # lint + formato + mypy + pytest
-make test-single   # smoke end-to-end con 1 PDF; realiza una llamada de pago
-make test-llm      # alias de make test-single
 ```
 
-Los scripts que usan un proveedor real llevan el marker
-`manual_real_llm`. `pyproject.toml` los excluye de la ejecución ordinaria.
+Los experimentos conversacionales de pago se ejecutan desde targets que exigen
+`CONFIRM_PAID=1`; nunca forman parte de pytest.
 
 ## Organización
 
 | Grupo | Cobertura |
 |---|---|
-| `test_api.py`, `test_sentry_config.py` | API FastAPI, validación de entradas y telemetría |
+| `test_api.py`, `test_sentry_config.py` | API FastAPI de estado/contratos y telemetría |
+| `test_llm_architecture_boundary.py` | Corpus offline sin gateway; política LLM exclusiva del chat |
 | `test_citation_*.py`, `test_verify_citations_cli.py` | Matching, fidelidad literal y CLI de citas |
 | `test_jurisprudence_*.py` | Caso v3, retrieval, evaluaciones y rollout |
 | `test_okf_*.py` | Normalización, anotaciones, bundles y renderizado OKF |
@@ -31,42 +30,9 @@ Los scripts que usan un proveedor real llevan el marker
 Las factories compartidas permanecen en `tests/` para que pytest las encuentre a
 través del `pythonpath` configurado.
 
-## Smoke test con un PDF
-
-`make test-single`:
-
-1. crea directorios temporales;
-2. copia una sentencia de `sentencias/`;
-3. ejecuta `src/residenciafiscal.py`;
-4. comprueba que se generen JSONL y CSV;
-5. muestra un resumen y elimina el entorno temporal.
-
-Requisitos:
-
-```bash
-make setup
-cp .env.example .env  # configura al menos un proveedor
-make test-single
-```
-
-El equivalente directo es:
-
-```bash
-uv run python tests/test_single_pdf.py
-```
-
-## Comparación de reasoning effort
-
-El comparador procesa el mismo PDF varias veces y tiene un coste mayor:
-
-```bash
-uv run python tests/test_reasoning_effort_comparison.py
-uv run python tests/test_reasoning_effort_comparison.py \
-  --pdf sentencias/STS_4220_2024.pdf
-```
-
-No incorpores estos scripts a la suite predeterminada. Cualquier test con red o
-coste debe ser explícito y quedar fuera del CI ordinario.
+No añadas smoke tests que envíen PDF a un proveedor. La preparación del corpus
+se prueba con fixtures, verbatim y compiladores deterministas. Las pruebas
+reales del chat parten de preguntas y evidencia ya recuperada.
 
 ## Añadir una prueba
 

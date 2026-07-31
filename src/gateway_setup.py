@@ -1,20 +1,17 @@
 """Construcción del gateway compartido y conexión de sus efectos.
 
 `llm_gateway` no lee el entorno ni guarda credenciales, así que las claves las
-entrega la aplicación. Este módulo es el único punto del analizador donde eso
-ocurre, y por eso es también donde se conectan los puertos: el recuento de
-tokens y coste que el adaptador anterior imprimía a mano lo emite ahora
-`LoggingUsageSink` desde el `UsageRecord`, que llega con el proveedor, el
-modelo que de verdad respondió y ni una línea del prompt o de la respuesta.
+entrega la aplicación. Este módulo es el composition root de la inferencia del
+chat y conecta sus puertos: `LoggingUsageSink` recibe el proveedor, el modelo
+que de verdad respondió, tokens y coste, sin recibir el prompt ni la respuesta.
 
 Los precios no se declaran aquí. Salen del catálogo versionado del paquete, que
 es exactamente la razón por la que `model_pricing.py` dejó de existir: dos
 tablas de precios acaban divergiendo, y la que nadie actualiza sigue facturando
 la tarifa del año pasado sin que nada lo delate.
 
-El gateway se construye en la primera llamada y no en el import. Construirlo al
-importar obligaría a cualquier módulo que toque `config` a tener claves de
-proveedores que quizá no va a usar, y dejaría los tests dependiendo del `.env`.
+El gateway se construye en la primera llamada y no en el import. Así preparar o
+validar el corpus offline nunca exige claves ni inicializa clientes de modelos.
 """
 
 from __future__ import annotations

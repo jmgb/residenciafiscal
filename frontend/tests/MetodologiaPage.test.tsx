@@ -48,10 +48,15 @@ function stubReducedMotion(matches: boolean) {
 }
 
 describe('MetodologiaPage', () => {
-  it('renderiza el corpus analizado', () => {
+  it('distingue las fuentes del corpus v3 validado', () => {
     renderPage(['/metodologia']);
-    expect(screen.getByRole('heading', { name: 'Corpus analizado' })).toBeInTheDocument();
-    expect(screen.getByText('106 resoluciones judiciales españolas.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Fuentes y corpus validado' })).toBeInTheDocument();
+    expect(
+      screen.getByText('106 resoluciones judiciales españolas conservadas como fuentes.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('5 sentencias estructuradas y validadas en el corpus v3 actual.')
+    ).toBeInTheDocument();
   });
 
   it('sin hash no desplaza nada', () => {

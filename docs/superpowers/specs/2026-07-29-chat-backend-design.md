@@ -46,8 +46,8 @@ Contexto necesario para revisar este diseño sin releer el repositorio entero.
 
 | Pieza | Estado |
 |---|---|
-| Pipeline Python (`residenciafiscal.py`) | Procesa PDFs por lotes. **No se toca.** |
-| API FastAPI (`src/api/main.py`, 260 líneas) | Envuelve el pipeline: 1 PDF → análisis. Solo corre en local, no está desplegada. **No se toca.** |
+| Pipeline jurisprudencial v3 | Prepara el corpus offline con Python + agente; no llama a APIs LLM. |
+| API FastAPI (`src/api/main.py`) | Expone estado y contratos; no analiza sentencias ni tiene rutas de pago. |
 | SPA React (`frontend/`) | Desplegada en Netlify. Estática, sin servidor. |
 | `frontend/src/lib/chat-engine.ts` | Punto único de selección del motor. Hoy `chatEngineMode = 'stub'`. |
 | `frontend/src/lib/chat-engine.stub.ts` | Motor simulado: texto pregrabado por tema, streaming falso, citas reales del corpus. |

@@ -75,10 +75,10 @@ export function CountryPage({ country }: CountryPageProps) {
               artículo de desempate de sus convenios de doble imposición.
             </li>
             <li className='border-l-2 border-primary pl-4'>
-              <strong className='font-semibold'>Un especialista que lo valide</strong> — el análisis
-              lo redacta un modelo de lenguaje, así que ningún país se publica sin que un
-              profesional del derecho tributario de esa jurisdicción compruebe que el análisis dice
-              lo que dice la resolución.
+              <strong className='font-semibold'>Un especialista que lo valide</strong> — la
+              estructura jurídica propuesta por el agente puede equivocarse, así que un profesional
+              del derecho tributario de esa jurisdicción debe comprobar que dice lo que dice la
+              resolución.
             </li>
           </ol>
 

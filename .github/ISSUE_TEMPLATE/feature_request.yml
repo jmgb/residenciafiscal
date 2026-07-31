@@ -14,10 +14,11 @@ body:
     attributes:
       label: Área
       options:
-        - Pipeline CLI (src/residenciafiscal.py)
-        - API HTTP (src/api/main.py)
+        - Pipeline jurisprudencial offline
+        - API de estado (src/api/main.py)
+        - Chat / recuperación
         - Frontend (frontend/)
-        - Schema de extracción (src/prompt.py)
+        - Schema jurisprudencial v3
         - Documentación
         - Otro
     validations:
@@ -35,7 +36,7 @@ body:
     id: propuesta
     attributes:
       label: Propuesta
-      description: Cómo lo resolverías. Si afecta al schema de extracción, indica el nombre del campo y sus valores posibles.
+      description: Cómo lo resolverías. Si afecta al schema v3, indica el nombre del campo y sus valores posibles.
     validations:
       required: true
 

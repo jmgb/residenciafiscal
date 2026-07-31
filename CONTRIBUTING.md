@@ -131,16 +131,14 @@ abrir el PR.
 
 ## Coste de las pruebas
 
-**Los tests por defecto no llaman a ningún LLM y no cuestan dinero.** Los que sí
-gastan llevan el marker `manual_real_llm` y están excluidos vía `addopts` en
-`pyproject.toml`.
+**Los tests no llaman a ningún LLM y no cuestan dinero.** La preparación del
+corpus tampoco envía PDF a proveedores.
 
 | Comando | Coste |
 |---------|-------|
 | `make test` | 0 |
-| `make test-single` / `make test-llm` | ~$0.01–0.04 (1 PDF) |
-| `uv run python tests/test_reasoning_effort_comparison.py` | 3 llamadas de pago sobre el mismo PDF (ver `TEST_CONFIGURATIONS`) |
-| `make run` | ~$3.42 medidos para 106 PDF; varía con modelos y precios |
+| `make export-verbatim` / `make export-case-v3` | 0 |
+| `make compare-chat-strategies CONFIRM_PAID=1 ...` | Variable; dos respuestas del chat |
 
 Nunca añadas a la suite por defecto un test que llame a un proveedor real, ni un
 job de CI que consuma secrets. Si hace falta, va en un workflow aparte con

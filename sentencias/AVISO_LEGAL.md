@@ -25,9 +25,9 @@ CENDOJ, sin modificar su contenido.
 
 ## Cómo se usan aquí
 
-Los PDFs se incluyen en el repositorio con una única finalidad: que el análisis
-del pipeline sea **reproducible**. Cualquiera puede clonar, ejecutar `make run`
-y obtener el mismo corpus de resultados sin depender de descargas manuales.
+Los PDFs se incluyen para que la extracción literal, los hashes, las citas y la
+compilación del corpus sean **reproducibles**. El workflow combina Python y una
+propuesta de agente; el repositorio no envía los PDF a una API LLM.
 
 No se persigue crear una base de datos jurisprudencial alternativa ni sustituir
 al CENDOJ como fuente oficial. Para citar una resolución en un contexto
