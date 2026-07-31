@@ -2,7 +2,7 @@ import { Send, Square } from 'lucide-react';
 import { type KeyboardEvent, useRef, useState } from 'react';
 import { Button } from '@/shared/components/ui/button';
 
-const MAX_LENGTH = 2000;
+const MAX_LENGTH = 500;
 const TEXTAREA_MAX_HEIGHT_PX = 160;
 
 interface ChatComposerProps {
@@ -45,8 +45,10 @@ export function ChatComposer({
   };
 
   return (
-    <div className='shrink-0 border-t border-border bg-background px-4 py-3'>
-      <div className='mx-auto flex w-full max-w-3xl items-end gap-2'>
+    <div className='shrink-0 bg-canvas px-4 pb-4 pt-2'>
+      {/* El composer flota como tarjeta blanca sobre el lienzo: el contraste de
+          fondo sustituye al borde superior que antes lo separaba del hilo. */}
+      <div className='mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm focus-within:ring-2 focus-within:ring-ring'>
         <textarea
           ref={textareaRef}
           value={text}
@@ -60,7 +62,7 @@ export function ChatComposer({
           rows={1}
           placeholder={placeholder}
           aria-label='Consulta'
-          className='max-h-40 min-h-10 flex-1 resize-none rounded-xl border border-input bg-background px-3 py-2 text-sm leading-relaxed outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring'
+          className='max-h-40 min-h-10 flex-1 resize-none bg-transparent px-2 py-2 text-sm leading-relaxed outline-none placeholder:text-muted-foreground'
         />
         {isStreaming ? (
           <Button

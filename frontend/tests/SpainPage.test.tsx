@@ -23,10 +23,11 @@ describe('SpainPage', () => {
     expect(screen.getByRole('button', { name: /183 días/ })).toBeInTheDocument();
   });
 
-  it('mantiene el aviso del motor simulado de la home', () => {
+  it('no muestra la banda de aviso del motor simulado en la home', () => {
     renderPage();
 
-    expect(screen.getByRole('status', { name: 'Aviso: motor simulado' })).toBeInTheDocument();
+    expect(screen.queryByRole('status', { name: 'Aviso: motor simulado' })).not.toBeInTheDocument();
+    expect(screen.queryByText(/está activo el motor simulado/i)).not.toBeInTheDocument();
   });
 
   it('expone el marco jurídico con su fuente oficial y fecha de revisión', () => {

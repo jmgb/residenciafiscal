@@ -112,15 +112,16 @@ describe('ChatView', () => {
     ).toBeInTheDocument();
   });
 
-  it('explica los límites de la demo y protege los datos del usuario', () => {
+  // El aviso del stub vivía en la banda ámbar y ensuciaba la home; el aviso de
+  // contenido simulado lo lleva ahora el propio texto de cada respuesta del stub.
+  it('no pinta ninguna banda de aviso cuando el motor es simulado', () => {
     renderChat();
-    const banner = screen.getByRole('status', { name: /motor simulado/i });
 
-    expect(banner).toHaveTextContent(/está activo el motor simulado/i);
-    expect(banner).toHaveTextContent(/referencias corresponden a sentencias reales/i);
-    expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
-    expect(banner).toHaveTextContent(/verifica siempre la fuente original/i);
-    expect(banner).toHaveTextContent(/no incluyas datos personales o identificativos/i);
+    expect(screen.queryByRole('status', { name: /motor simulado/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('status', { name: /investigación jurídica/i })
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/está activo el motor simulado/i)).not.toBeInTheDocument();
   });
 
   it('mantiene el aviso jurídico y de privacidad cuando el motor es real', () => {

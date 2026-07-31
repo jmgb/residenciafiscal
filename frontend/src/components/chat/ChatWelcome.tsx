@@ -1,7 +1,7 @@
+import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { JurisdictionLegalReferences } from '@/components/jurisdiction/JurisdictionLegalReferences';
 import type { LegalReference } from '@/data/countryRoutes';
-import { Button } from '@/shared/components/ui/button';
 
 export const SUGGESTED_PROMPTS = [
   '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
@@ -39,17 +39,21 @@ export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProp
           Por qué existe este proyecto: lee el manifiesto
         </Link>
       </p>
-      <div className='grid w-full max-w-2xl gap-2 sm:grid-cols-2'>
-        {SUGGESTED_PROMPTS.map((prompt) => (
-          <Button
+      {/* Panel elevado: las sugerencias son una sola superficie blanca sobre el
+          lienzo gris, separadas por hairlines en lugar de por huecos. */}
+      <div className='w-full max-w-2xl overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm'>
+        {SUGGESTED_PROMPTS.map((prompt, index) => (
+          <button
             key={prompt}
             type='button'
-            variant='outline'
             onClick={() => onSelectPrompt(prompt)}
-            className='h-auto whitespace-normal px-3 py-3 text-left text-sm font-normal'
+            className={`flex w-full items-center gap-3 px-4 py-3.5 text-left text-sm text-foreground transition-colors hover:bg-primary-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
+              index > 0 ? 'border-t border-border' : ''
+            }`}
           >
-            {prompt}
-          </Button>
+            <span className='min-w-0 flex-1 leading-snug'>{prompt}</span>
+            <ChevronRight className='h-4 w-4 shrink-0 text-muted-foreground' aria-hidden='true' />
+          </button>
         ))}
       </div>
     </div>

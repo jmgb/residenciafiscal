@@ -45,7 +45,7 @@ export function AppLayout() {
   }, [location.pathname]);
 
   return (
-    <div className='flex h-screen supports-[height:100dvh]:h-dvh overflow-hidden bg-background'>
+    <div className='flex h-screen supports-[height:100dvh]:h-dvh overflow-hidden bg-canvas'>
       <AppSidebar id={SIDEBAR_ID} collapsed={collapsed} className='hidden lg:flex' />
 
       <div className='flex min-w-0 flex-1 flex-col'>
@@ -55,7 +55,7 @@ export function AppLayout() {
           aria-label='Contenido principal'
           className='flex min-h-0 flex-1 flex-col overflow-hidden focus:outline-none'
         >
-          <div className='sticky top-0 z-30 flex shrink-0 items-center gap-3 border-b border-border bg-background/95 px-4 py-2 backdrop-blur supports-[backdrop-filter]:bg-background/80'>
+          <div className='sticky top-0 z-30 flex shrink-0 items-center gap-3 border-b border-border bg-canvas/95 px-4 py-2 backdrop-blur supports-[backdrop-filter]:bg-canvas/80'>
             <MobileNavigation />
             <Button
               type='button'

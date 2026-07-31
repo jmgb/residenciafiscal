@@ -44,36 +44,34 @@ function TypingIndicator() {
   );
 }
 
-function SafetyBanner({ isStub }: { isStub: boolean }) {
+function SafetyBanner() {
   return (
     <div
       role='status'
-      aria-label={isStub ? 'Aviso: motor simulado' : 'Aviso de investigación jurídica'}
+      aria-label='Aviso de investigación jurídica'
       className='mx-auto mb-3 flex w-full max-w-3xl items-start gap-2 rounded-lg border border-accent-500/40 bg-accent px-3 py-2 text-xs leading-relaxed text-accent-foreground'
     >
       <AlertTriangle className='mt-0.5 h-4 w-4 shrink-0' aria-hidden='true' />
-      {isStub ? (
-        <p>
-          <strong>Demo:</strong> está activo el motor simulado. Las respuestas y los extractos
-          mostrados son simulados, aunque las referencias corresponden a sentencias reales. Esta
-          herramienta sirve para investigación y no constituye asesoramiento jurídico. Verifica
-          siempre la fuente original y no incluyas datos personales o identificativos en la
-          consulta.
-        </p>
-      ) : (
-        <p>
-          <strong>Comparación experimental:</strong> esta herramienta sirve para investigación y no
-          constituye asesoramiento jurídico. Verifica siempre la fuente original y no incluyas datos
-          personales o identificativos en la consulta.
-        </p>
-      )}
+      <p>
+        <strong>Comparación experimental:</strong> esta herramienta sirve para investigación y no
+        constituye asesoramiento jurídico. Verifica siempre la fuente original y no incluyas datos
+        personales o identificativos en la consulta.
+        <a className='ml-1 underline' href='/privacidad'>
+          Privacidad
+        </a>
+        .
+      </p>
     </div>
   );
 }
 
 export interface ChatViewProps {
   engine: ChatEngine;
-  /** Muestra el aviso de contenido simulado. */
+  /**
+   * Motor simulado activo. Con el stub NO se pinta ninguna banda de aviso: el
+   * texto de cada respuesta simulada ya declara su naturaleza (`chat-engine.stub`),
+   * y la banda jurídica se reserva para las respuestas reales.
+   */
   isStub: boolean;
   /** Ruta canónica de la vista que contiene el chat. */
   canonicalPath?: string;
@@ -356,7 +354,7 @@ export function ChatView({
         data-testid='chat-scroll'
         className='flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4'
       >
-        <SafetyBanner isStub={isStub} />
+        {!isStub && <SafetyBanner />}
 
         {hasMessages ? (
           <div

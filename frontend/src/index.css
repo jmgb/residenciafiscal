@@ -9,6 +9,10 @@
   /* Base */
   --color-background: #ffffff;
   --color-foreground: #0f172a;
+  /* Lienzo de la aplicación: gris frío bajo el que las superficies blancas
+     (`card`) se leen como piezas elevadas. Comparte tono con `sidebar` para que
+     el marco de la app sea una sola superficie y el contenido, otra. */
+  --color-canvas: #f8fafc;
   --color-card: #ffffff;
   --color-card-foreground: #0f172a;
   --color-popover: #ffffff;

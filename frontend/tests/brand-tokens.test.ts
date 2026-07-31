@@ -109,6 +109,7 @@ describe('contraste de la tabla del brandbook', () => {
   // desfasada y hay que actualizarla a mano.
   const pares: [string, string, string, number][] = [
     ['foreground', 'background', 'libre', 17.85],
+    ['foreground', 'canvas', 'libre', 17.06],
     ['foreground', 'muted', 'libre', 16.3],
     ['secondary-foreground', 'secondary', 'libre', 13.35],
     ['primary', 'background', 'libre', 11.5],
@@ -120,7 +121,9 @@ describe('contraste de la tabla del brandbook', () => {
     ['success', 'background', 'libre', 5.02],
     ['warning', 'background', 'libre', 5.02],
     ['accent-600', 'background', 'libre', 5.02],
+    ['primary', 'canvas', 'libre', 10.99],
     ['muted-foreground', 'background', 'texto secundario sobre blanco', 4.76],
+    ['muted-foreground', 'canvas', 'texto secundario sobre el lienzo', 4.55],
   ];
 
   it.each(pares)('%s sobre %s cumple AA (%s)', (fg, bg, _uso, esperado) => {
@@ -235,7 +238,9 @@ describe('escalas de color', () => {
     `^(?:${[
       '\\[.*\\]', // valores arbitrarios: text-[10px], bg-[--var]
       'current|inherit|transparent|white|black',
-      'none|auto|full|px|inner|outline',
+      // `inset` es la variante de `ring-`/`shadow-` que dibuja hacia dentro:
+      // comparte prefijo con las clases de color pero no resuelve ningún token.
+      'none|auto|full|px|inner|inset|outline',
       '(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald' +
         '|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)(?:-\\d{1,3})?',
       '[trblxyse](?:-.*)?', // direccionales de border: border-b, border-l-4

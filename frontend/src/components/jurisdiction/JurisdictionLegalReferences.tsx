@@ -18,7 +18,7 @@ interface JurisdictionLegalReferencesProps {
 export const JurisdictionLegalReferences = ({ references }: JurisdictionLegalReferencesProps) => (
   <section
     aria-labelledby='jurisdiction-legal-framework'
-    className='mb-6 w-full max-w-xl rounded-lg border border-border bg-background p-4 text-left'
+    className='mb-6 w-full max-w-xl rounded-lg border border-border bg-card p-4 text-left shadow-sm'
   >
     <h2
       id='jurisdiction-legal-framework'

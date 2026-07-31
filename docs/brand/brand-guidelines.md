@@ -54,9 +54,11 @@ los ratios y avisa si la tabla caduca).
 | Par | Ratio | Uso permitido |
 | --- | --- | --- |
 | `foreground` sobre `background` | 17.85:1 | Libre |
+| `foreground` sobre `canvas` | 17.06:1 | Libre |
 | `foreground` sobre `secondary`/`muted` | 16.30:1 | Libre |
 | `secondary-foreground` sobre `secondary` | 13.35:1 | Libre |
 | `primary` sobre `background` | 11.50:1 | Libre |
+| `primary` sobre `canvas` | 10.99:1 | Libre |
 | `primary-foreground` sobre `primary` | 10.99:1 | Libre |
 | `primary` sobre `accent` | 11.09:1 | Libre |
 | `accent-foreground` sobre `accent` | 8.75:1 | Patrón de bloque de aviso |
@@ -64,13 +66,16 @@ los ratios y avisa si la tabla caduca).
 | `accent-400` sobre `primary` | 5.36:1 | Solo isotipo y superficies azules |
 | `success` / `warning` / `accent-600` sobre blanco (y viceversa) | 5.02:1 | Libre, incluido texto de badge |
 | `muted-foreground` sobre `background` | 4.76:1 | Texto secundario **solo sobre blanco**, sin bajar de 12 px |
+| `muted-foreground` sobre `canvas` | 4.55:1 | Texto secundario sobre el lienzo, sin bajar de 12 px (margen mínimo) |
 | **`muted-foreground` sobre `muted`/`secondary`** | **4.34:1** | ❌ Falla AA |
 | **`accent-500` (`#d97706`) sobre blanco** | **3.19:1** | ❌ Nunca lleva texto |
 
 Dos reglas que salen de la tabla:
 
 1. **`muted-foreground` no va sobre superficie teñida.** Los metadatos dentro de una
-   tarjeta `muted`/`secondary` van en `secondary-foreground` (13.35:1).
+   tarjeta `muted`/`secondary` van en `secondary-foreground` (13.35:1). El lienzo
+   (`canvas`) sí lo admite, pero con 4.55:1 no queda margen: cualquier lienzo más
+   oscuro rompe AA y obliga a recalcular la tabla entera.
 2. **`accent-500` no lleva texto encima ni es texto.** Para texto ámbar sobre blanco,
    `accent-600`; para bloques de aviso, fondo `accent` + texto `accent-foreground`.
 
@@ -92,6 +97,10 @@ nunca por color.
 
 ## 5. Composición
 
+- **Dos superficies, no una:** el marco de la app (shell, barra superior, zona del
+  composer) y el `sidebar` van sobre `canvas`; el contenido —marco jurídico,
+  sugerencias, burbujas, composer— es `card` blanco con `border` y `shadow-sm`. El
+  contraste de fondo, no la línea divisoria, es lo que separa las piezas.
 - **Radio:** `0.5rem` base; tarjetas y diálogos en `lg`, badges en píldora, isotipo 14/64.
 - **Bordes antes que sombras:** `1px` de `border` para separar; `shadow-lg` solo en
   flotantes. Ninguna sombra de color.
@@ -188,6 +197,11 @@ Antes de publicar cualquier pieza —interfaz, OG, copy, correo—:
 
 ## Change log
 
+- **2026-07-31** — Token `canvas` (`#f8fafc`, el mismo gris del `sidebar`) añadido para
+  separar el marco de la aplicación de las superficies blancas de contenido. Tres pares
+  nuevos en la tabla; `muted-foreground` sobre `canvas` se queda en 4.55:1, el par más
+  ajustado que cumple AA. Retirada además la banda ámbar de «motor simulado»: el aviso
+  de contenido simulado lo lleva el texto de cada respuesta del stub.
 - **2026-07-29** — Creado. Isotipo «RF» bicolor elegido entre seis propuestas (se
   descartaron el anillo de los 183 días y la frontera porque a 16 px pierden el elemento
   que las hace legibles, y la balanza por ser el recurso más visto del sector). Token
