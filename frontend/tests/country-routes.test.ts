@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES } from '@/data/countryRoutes';
+import {
+  COUNTRY_ROUTE_REDIRECTS,
+  COUNTRY_ROUTES,
+  getJurisdictionRoute,
+  SPAIN_ROUTE,
+} from '@/data/countryRoutes';
 
 describe('country routes', () => {
   it('declara metadata SEO personalizada para cada ruta', () => {
@@ -55,6 +60,14 @@ describe('country routes', () => {
         expect(reference.reviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
     }
+  });
+
+  it('resuelve las subpáginas de un país a su jurisdicción', () => {
+    expect(getJurisdictionRoute('/espana/fuentes')).toBe(SPAIN_ROUTE);
+    expect(getJurisdictionRoute('/espana')).toBe(SPAIN_ROUTE);
+    expect(getJurisdictionRoute('/consulta')).toBe(SPAIN_ROUTE);
+    expect(getJurisdictionRoute('/metodologia')).toBeUndefined();
+    expect(getJurisdictionRoute('/colaborar')).toBeUndefined();
   });
 
   it('declara redirecciones ASCII para los nombres de países con tildes', () => {

@@ -193,6 +193,12 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
 }
 
 export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentProps) {
+  const location = useLocation();
+  const jurisdiction = getJurisdictionRoute(location.pathname);
+  // El corpus es contenido de país: solo se enlaza el de la jurisdicción activa,
+  // y solo si está publicado. Los países pendientes no tienen página de fuentes.
+  const corpusCountry = jurisdiction?.corpusStatus === 'published' ? jurisdiction : undefined;
+
   if (collapsed) {
     return (
       <div className='shrink-0 border-t border-sidebar-border px-2 py-3'>
@@ -261,13 +267,15 @@ export function SidebarFooter({ collapsed = false, onNavigate }: SidebarContentP
       >
         Metodología
       </Link>
-      <Link
-        to='/espana/fuentes'
-        onClick={onNavigate}
-        className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
-      >
-        Corpus de España
-      </Link>
+      {corpusCountry && (
+        <Link
+          to={`${corpusCountry.path}/fuentes`}
+          onClick={onNavigate}
+          className='block rounded px-2 py-1.5 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring'
+        >
+          Corpus de {corpusCountry.name}
+        </Link>
+      )}
       <Link
         to='/colaborar'
         onClick={onNavigate}

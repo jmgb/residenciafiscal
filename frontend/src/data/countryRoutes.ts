@@ -38,10 +38,13 @@ export function getCountryRoute(pathname: string): CountryRoute | undefined {
 }
 
 export function getJurisdictionRoute(pathname: string): CountryRoute | undefined {
-  const countryRoute = getCountryRoute(pathname);
+  const normalizedPath = normalizeRoutePath(pathname);
+  // Las subpáginas de un país (`/espana/fuentes`) pertenecen a su jurisdicción.
+  const countryRoute = COUNTRY_ROUTES.find(
+    (route) => route.path === normalizedPath || normalizedPath.startsWith(`${route.path}/`)
+  );
   if (countryRoute) return countryRoute;
 
-  const normalizedPath = normalizeRoutePath(pathname);
   if (normalizedPath === '/consulta' || normalizedPath.startsWith('/c/')) return SPAIN_ROUTE;
 
   return undefined;
