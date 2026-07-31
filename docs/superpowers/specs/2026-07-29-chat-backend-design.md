@@ -2,8 +2,10 @@
 
 > [!CAUTION]
 > **Documento histórico parcialmente superado.** Conserva el razonamiento y el
-> spike que llevaron a elegir Netlify Edge, pero no describe el corte vigente:
-> Edge es ahora un proxy fino y FastAPI ejecuta el comparador Python A/B. No
+> spike que llevaron a elegir Netlify Edge. Desde el 2026-07-31, la V1 decidida
+> es una Netlify Function estándar autosuficiente, con A y B en paralelo y
+> deadline inferior a 60 s. El prototipo Edge → FastAPI no se borra y se
+> conserva como opción futura para llamadas de más de 60 s. No
 > implementes las tareas ni variables de este documento sin contrastarlas con
 > [`CHAT_SYSTEM_ARCHITECTURE.md`](../../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
 > [`CHAT_DEPLOYMENT.md`](../../operations/CHAT_DEPLOYMENT.md) y

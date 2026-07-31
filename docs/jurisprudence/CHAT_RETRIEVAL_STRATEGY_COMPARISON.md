@@ -14,9 +14,12 @@ conserva el contrato especializado del experimento A/B.
 ## Implementación F0 y baseline histórico
 
 La fase F0 creó el comparador local que sigue disponible por CLI. El mismo
-dominio está ahora expuesto, con composición perezosa, por FastAPI, un proxy
-fino de Netlify Edge y el cliente comparativo del frontend. Producción mantiene
-`VITE_CHAT_MODE=stub`; implementar el recorrido no autoriza activarlo. B usa el
+dominio está expuesto en el prototipo por FastAPI, un proxy fino de Netlify Edge
+y el cliente comparativo. Ese recorrido se conserva como opción futura si se
+necesitan llamadas de más de 60 s. La V1 pendiente lo portará a una Netlify
+Function TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s.
+Producción mantiene `VITE_CHAT_MODE=stub`; implementar cualquiera de los
+recorridos no autoriza activarlo. B usa el
 SDK oficial `google-genai`, la Interactions API y un store basado en
 `models/gemini-embedding-2`.
 
@@ -262,8 +265,8 @@ presentación:
   2. Respuesta B — Gemini File Search
 ```
 
-La presentación es siempre A y después B. La implementación puede ejecutar
-trabajo interno en paralelo para reducir latencia, pero debe almacenar y emitir
+La presentación es siempre A y después B. La V1 debe ejecutar ambas estrategias
+en paralelo para reducir latencia, pero debe almacenar y emitir
 cada resultado como una unidad independiente y nunca alimentar una estrategia
 con la salida de la otra.
 

@@ -1,14 +1,58 @@
 # Despliegue del chat comparativo
 
-**Estado:** recorrido implementado y probado con dobles de proveedor; cerrado
-por defecto; sin smoke E2E de pago, no desplegado ni autorizado en producción.
+**Estado:** la V1 Netlify-only está decidida pero todavía no implementada. El
+recorrido Edge → FastAPI descrito más abajo está implementado y probado con
+dobles de proveedor, pero deja de ser el objetivo de despliegue inicial y se
+conserva como alternativa futura. Producción permanece cerrada en `stub`.
 **Fecha de corte:** 2026-07-31.
 
 Este runbook explica cómo se conecta el chat del navegador con el comparador
 Python. No autoriza el rollout a las 106 sentencias ni sustituye los gates de
 presupuesto y revisión jurídica de [`TASKS.md`](../project/TASKS.md).
 
-## Corte de responsabilidades
+## Decisión de runtime para la V1
+
+La primera versión se desplegará íntegramente en una **Netlify Function
+estándar**. No dependerá de un servidor Python ni de otro origen:
+
+```text
+React
+  POST /api/chat
+        │
+        ▼
+Netlify Function TypeScript
+  validación + cuota + protocolo SSE 2
+        │
+        ├── A: corpus v3 + redactor LLM ──────────┐
+        └── B: Gemini File Search sobre los PDF ──┤ en paralelo
+                                                  ▼
+                                      dos respuestas independientes
+```
+
+Restricciones deliberadas de la V1:
+
+- A y B empiezan en paralelo y no comparten resultados ni contexto;
+- la presentación sigue siendo A → B, aunque B termine antes;
+- el deadline interno debe dejar margen al límite no configurable de 60 s de
+  Netlify; objetivo inicial: terminar o cancelar antes de 50–55 s;
+- A mantendrá Luna con esfuerzo `high` durante la primera observación en uso;
+  se medirán durante varios días latencia total, percentiles, timeouts, tokens,
+  coste y calidad antes de decidir si existe motivo para bajar el esfuerzo;
+- ningún reintento puede prolongar la petición más allá del deadline global;
+- si una estrategia falla o agota su tiempo, la otra respuesta se conserva;
+- Python sigue preparando y validando el corpus fuera de línea, pero no
+  participa en la petición del usuario.
+
+El runbook operativo de esta V1 se completará a la vez que su Function y sus
+tests. Hasta entonces no se deben reutilizar las variables o los pasos de
+FastAPI como si describieran el deploy Netlify-only.
+
+## Arquitectura conservada para una evolución futura
+
+El siguiente diseño ya existe en el repositorio y **no se borra**. Puede volver
+a ser preferible si la evaluación demuestra que el chat necesita llamadas de
+más de 60 s, reintentos largos, procesos pesados, almacenamiento local
+persistente o mayor control operativo del runtime:
 
 ```text
 React
@@ -24,7 +68,7 @@ FastAPI POST /chat
         │
         ▼
 comparador Python
-  A: corpus v3 + neutral-llm-gateway (Luna + max)
+  A: corpus v3 + neutral-llm-gateway (Luna + high)
   B: Gemini File Search sobre los PDF
         │
         ▼
@@ -32,7 +76,7 @@ dos respuestas independientes
   texto + citas verificadas + límites + coste USD
 ```
 
-Netlify no ejecuta el dominio Python. La Edge Function es una fachada fina:
+En esta alternativa, Netlify no ejecuta el dominio Python. La Edge Function es una fachada fina:
 no recupera sentencias, no redacta, no calcula precios y no recibe claves de
 OpenAI o Gemini. FastAPI conserva el composition root porque ahí viven el
 corpus v3, la verificación literal, el gateway compartido y File Search.
@@ -59,7 +103,7 @@ no token a token desde el proveedor.
 El protocolo conceptual y las reglas de independencia siguen en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 
-## Variables
+## Variables de la arquitectura futura Edge → FastAPI
 
 ### Servicio Python
 
@@ -95,7 +139,10 @@ Configurar con alcance **Builds**:
 Las claves de proveedores se quedan en el servicio Python. La Edge Function no
 las necesita.
 
-## Despliegue seguro por etapas
+## Despliegue seguro de la arquitectura futura
+
+Estos pasos quedan conservados para una reevaluación posterior; no son el
+procedimiento de despliegue de la V1 Netlify-only.
 
 1. Desplegar FastAPI en un runtime Python 3.13 con `CHAT_COMPARISON_ENABLED=false`.
 2. Verificar `/health` y que `POST /chat` devuelve `503`; no se incurre en coste.
@@ -134,7 +181,7 @@ las necesita.
 - El modo live no debe activarse hasta resolver la fase 0b. El rate limit por IP
   y la bandera de cierre son defensa en profundidad, no un presupuesto atómico.
 
-## Rollback
+## Rollback de la arquitectura futura
 
 1. Poner `VITE_CHAT_MODE=stub` en Netlify y redesplegar.
 2. Poner `CHAT_COMPARISON_ENABLED=false` en el backend.

@@ -1,9 +1,11 @@
 # Backend del chat de residenciafiscal.org — Plan de implementación
 
 > [!CAUTION]
-> **Plan histórico; no ejecutar como backlog vigente.** La implementación final
-> no replica dominio, precios ni proveedores en Edge: Netlify limita y transmite,
-> mientras FastAPI compone el comparador Python A/B. El estado y los siguientes
+> **Plan histórico; no ejecutar como backlog vigente.** La V1 decidida el
+> 2026-07-31 será una Netlify Function estándar autosuficiente, con A y B en
+> paralelo y deadline inferior a 60 s. El prototipo Edge → FastAPI ya
+> implementado se conserva como opción futura para llamadas más largas, pero no
+> es el target inicial. El estado y los siguientes
 > pasos autorizados están en
 > [`CHAT_SYSTEM_ARCHITECTURE.md`](../../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
 > [`CHAT_DEPLOYMENT.md`](../../operations/CHAT_DEPLOYMENT.md) y

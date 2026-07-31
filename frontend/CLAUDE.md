@@ -100,10 +100,16 @@ hash y cita exacta—; no se convierten artificialmente en `ChatSourceV2` porque
 no dispone de cuestión y anclaje canónicos. `ChatMessage.answers` mantiene los
 dos bloques y el schema 3 apaga cualquier streaming huérfano al rehidratar.
 
-**El runtime está implementado en dos capas**: Netlify Edge expone `/api/chat`,
-aplica rate limit y transmite el stream; FastAPI ejecuta el comparador Python y
-emite el protocolo. La Edge Function no contiene lógica jurídica, precios ni
-claves de proveedores. Código y operación:
+**El runtime actualmente implementado es un prototipo en dos capas**: Netlify
+Edge expone `/api/chat`, aplica rate limit y transmite el stream; FastAPI ejecuta
+el comparador Python. No se borra, pero deja de ser el target de la V1.
+
+La V1 decidida será una Netlify Function TypeScript autosuficiente. Ejecutará A
+y B en paralelo, conservará el orden visual A → B, mantendrá Luna `high` durante
+varios días de medición y cancelará antes del límite de 60 s. Python seguirá
+preparando el corpus offline. Edge → FastAPI se conserva como evolución futura
+si hacen falta llamadas de más de 60 s o mayor control operativo. Código y
+operación:
 [`docs/operations/CHAT_DEPLOYMENT.md`](../docs/operations/CHAT_DEPLOYMENT.md).
 
 La estrategia de recuperación se debe medir con dos respuestas independientes:
@@ -118,18 +124,19 @@ de candidatos con reranking local solo se evaluará después de esta comparació
   [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md)
 - Límites de plataforma medidos: [`docs/operations/NETLIFY_EDGE.md`](../docs/operations/NETLIFY_EDGE.md)
 
-Si vas a escribir la edge function, lee primero el último: tiene tres trampas
-que cuestan un deploy cada una. La más cara es que **todo `.ts` en la raíz de
-`netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime—, así que
-los módulos compartidos van en `lib/`.
+Si vas a modificar el proxy Edge conservado, lee primero el último: tiene tres
+trampas que cuestan un deploy cada una. La más cara es que **todo `.ts` en la
+raíz de `netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime—,
+así que sus módulos compartidos van en `lib/`. No extrapoles automáticamente
+esas reglas al directorio de Functions estándar de la V1.
 
 La **activación productiva** está bloqueada en la fase 0b: el mecanismo de
 cuotas y presupuesto necesita una decisión, porque el compare-and-swap de
 Netlify Blobs no es atómico. El experimento comparativo puede avanzar sin
 activar el chat. Ver `docs/project/TASKS.md`.
 
-La Edge Function solo necesita `@netlify/edge-functions`; las integraciones de
-proveedor permanecen en Python.
+El prototipo Edge solo necesita `@netlify/edge-functions`; el port de proveedor
+y del runtime online a la Function estándar sigue pendiente.
 `netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
 del repositorio.
 
@@ -141,5 +148,6 @@ verificación en [`docs/operations/NETLIFY.md`](../docs/operations/NETLIFY.md) y
 [`docs/operations/CLOUDFLARE.md`](../docs/operations/CLOUDFLARE.md). Integración
 de Google Analytics 4 documentada en [`docs/product/ANALYTICS.md`](../docs/product/ANALYTICS.md).
 
-El navegador llama al endpoint same-origin `/api/chat`, por lo que el origen
-privado de FastAPI no se añade a `connect-src`.
+El navegador llama al endpoint same-origin `/api/chat`. La V1 no necesita añadir
+otro origen a `connect-src`; la alternativa futura Edge → FastAPI tampoco lo
+expone directamente al navegador.

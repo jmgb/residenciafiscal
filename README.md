@@ -55,12 +55,11 @@ flowchart LR
     PY --> AGENT["Agente<br/>propuesta jurídica"]
     AGENT --> GATES["Python<br/>gates · citas · compilación"]
     GATES --> CORPUS["knowledge/jurisprudencia-v3"]
-    QUESTION["Pregunta del usuario"] --> EDGE["Netlify Edge<br/>/api/chat"]
-    EDGE --> API["FastAPI<br/>/chat"]
-    API --> A["A · recuperación v3<br/>Luna + max"]
+    QUESTION["Pregunta del usuario"] --> NETLIFY["Netlify Function V1<br/>/api/chat · A y B en paralelo"]
+    NETLIFY --> A["A · recuperación v3<br/>Luna + high"]
     CORPUS --> A
     PDFS --> B["B · Gemini File Search<br/>PDF de la muestra"]
-    API --> B
+    NETLIFY --> B
     A --> ANSWER["Dos respuestas separadas<br/>citas + coste USD"]
     B --> ANSWER
 ```
@@ -71,8 +70,8 @@ flowchart LR
 | `src/jurisprudence_*.py` | Compilación, validación y recuperación del corpus v3 |
 | `src/chat_model_policy.py` | Política de inferencia de la estrategia A del chat |
 | `src/gateway_setup.py` | Clientes, uso y costes de las respuestas del chat |
-| `src/api/` | API del chat y de estado; no analiza sentencias |
-| `frontend/` | SPA React y proxy Edge desplegados en Netlify |
+| `src/api/` | Prototipo local del chat y posible runtime futuro para llamadas largas |
+| `frontend/` | SPA React; la Function Netlify-only de la V1 está pendiente |
 
 La vista completa de componentes, flujos e invariantes está en
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). La guía sobre dónde debe vivir
@@ -204,8 +203,11 @@ npm run build       # genera el corpus y compila a dist/
 
 > [!NOTE]
 > Producción sigue en **stub**: las respuestas son simuladas. El recorrido real
-> React → Netlify Edge → FastAPI → comparador A/B está implementado detrás de
-> `VITE_CHAT_MODE=live`, pero no está desplegado ni autorizado. Runbook:
+> Edge → FastAPI está implementado detrás de `VITE_CHAT_MODE=live`, pero se
+> conserva como opción futura para llamadas de más de 60 s. La V1 pendiente
+> ejecutará A y B en paralelo dentro de una Netlify Function estándar,
+> mantendrá Luna `high` durante varios días de medición y no dependerá de un
+> servidor separado. Ningún recorrido está desplegado ni autorizado. Runbook:
 > [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Documentación

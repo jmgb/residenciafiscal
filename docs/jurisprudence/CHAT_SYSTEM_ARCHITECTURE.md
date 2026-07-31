@@ -1,8 +1,10 @@
 # Arquitectura vigente del sistema jurisprudencial conversacional
 
-**Estado:** arquitectura experimental implementada sobre cinco sentencias;
-endpoint FastAPI, proxy Edge, protocolo y UI A/B conectados detrás de `stub`;
-revisión humana, despliegue productivo y rollout v3 a 106 no autorizados.
+**Estado:** comparador experimental implementado sobre cinco sentencias. El
+prototipo FastAPI + proxy Edge está conectado detrás de `stub`, pero la V1 se
+ha decidido Netlify-only y todavía debe implementarse. FastAPI se conserva como
+opción futura para llamadas de más de 60 s; revisión humana, producción y
+rollout v3 a 106 no están autorizados.
 **Fecha de corte:** 2026-07-31.
 
 Este documento es la puerta de entrada canónica para entender el sistema de
@@ -148,12 +150,21 @@ Reglas de comparabilidad:
   excepción del proveedor;
 - el coste incurrido se conserva incluso cuando el gate bloquea la prosa.
 
-La misma comparación sigue disponible por CLI y está conectada a FastAPI, un
-proxy fino de Netlify Edge y el frontend. Todas las capas permanecen cerradas
-por defecto: producción usa `stub` y el servicio rechaza el chat si no se
-habilita explícitamente. Hoy el comparador espera A y después B; una
-implementación futura podrá trabajar internamente en paralelo, pero debe emitir
-y conservar los dos bloques independientes en orden A → B. El contrato
+La misma comparación sigue disponible por CLI y el prototipo está conectado a
+FastAPI, un proxy fino de Netlify Edge y el frontend. Todas las capas permanecen
+cerradas por defecto: producción usa `stub`.
+
+La **V1 de producto** sustituirá ese recorrido por una Netlify Function
+TypeScript autosuficiente. A y B se ejecutarán en paralelo; conservarán errores,
+fuentes y costes separados y se presentarán en orden estable A → B. La Function
+cancelará antes de alcanzar los 60 s del runtime y mantendrá Luna con esfuerzo
+`high`. Durante los primeros días se medirán latencia, percentiles, timeouts,
+tokens, coste y calidad; bajar el esfuerzo será una decisión posterior basada
+en esos datos, no una condición previa del despliegue.
+
+El prototipo FastAPI no se elimina. Se conserva como arquitectura futura más
+robusta si el producto acaba necesitando llamadas de más de 60 s, reintentos
+largos, almacenamiento persistente o mayor control del proceso. El contrato
 completo, comandos, privacidad y protocolo previsto están en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 El runbook de despliegue está en
@@ -178,6 +189,7 @@ El runbook de despliegue está en
 | Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
+| Runtime V1 Netlify-only | Pendiente en `frontend/netlify/functions/`; ejecutará A y B en paralelo |
 | Proxy autenticado y rate limit | `frontend/netlify/edge-functions/chat.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
 | UI y persistencia de dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
@@ -289,9 +301,9 @@ jurídica humana.
   cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
   respecto del texto literal que publica. Es simultáneamente un gap de datos de
   A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
-- El endpoint, el proxy Edge, el streaming A/B y la interfaz de dos respuestas
-  están implementados detrás del stub. Falta alojar FastAPI, resolver el
-  presupuesto global y autorizar la activación productiva.
+- El prototipo FastAPI, el proxy Edge, el streaming A/B y la interfaz de dos
+  respuestas están implementados detrás del stub. Falta portar el runtime a la
+  Function Netlify-only, resolver el presupuesto global y autorizar producción.
 - No existe autorización para listar, compilar o publicar las 106 sentencias
   como casos v3.
 
@@ -314,8 +326,8 @@ Las cifras, preguntas y límites exactos de F0.2 están en
 6. **Fallar cerrado sin fuentes.** Una prosa plausible no se publica como
    respuesta jurisprudencial si no puede verificarse.
 7. **No confundir modelo, recuperación y datos.** El baseline con el mismo
-   modelo ayudó a aislar la recuperación. La configuración actual A=Luna+
-   `max` y B=Gemini File Search mide stacks completos; sus diferencias no se
+   modelo ayudó a aislar la recuperación. La configuración implementada
+   A=Luna+`high` y B=Gemini File Search mide stacks completos; sus diferencias no se
    atribuyen solo al corpus o al recuperador. Un modelo más caro tampoco
    corrige un gap de datos ni una evaluación sesgada.
 8. **No confundir etiquetas del router con calidad de respuesta.** Explicar una
@@ -377,22 +389,26 @@ Contrato congelado:
    fuentes del stub y de historiales antiguos como legado no verificable.
 6. **Completado:** implementar el parser y transporte del protocolo 2
    individual como base compatible.
-7. **Completado:** extender el protocolo, FastAPI, el proxy Edge, la
-   persistencia y la UI al flujo comparativo A/B. El selector sigue en `stub`
-   por defecto y el despliegue live no está autorizado.
-8. Repetir las ocho consultas con la configuración destinada al producto —A
+7. **Completado como prototipo:** extender el protocolo, FastAPI, el proxy Edge,
+   la persistencia y la UI al flujo comparativo A/B. El selector sigue en
+   `stub`; este recorrido se conserva como opción futura, no como deploy V1.
+8. Portar el runtime online a una Netlify Function TypeScript, ejecutar A y B
+   en paralelo, fijar un deadline de 50–55 s y mantener Luna `high` mientras se
+   miden varios días de tráfico controlado.
+9. Repetir las ocho consultas con la configuración destinada al producto —A
    con Luna + `high`; B con un modelo Gemini permitido por File Search— y
    generar una segunda revisión ciega sin sobrescribir el baseline. Interpretar
    el resultado como comparación de stacks, no como prueba aislada del
    recuperador.
-9. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
+10. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
    A/B.
-10. Probar `gemini-3.6-flash` solo si queda un problema atribuible a redacción,
+11. Probar `gemini-3.6-flash` solo si queda un problema atribuible a redacción,
    no a datos, grounding o evaluación.
-11. Resolver cuotas y presupuesto, desplegar el backend ya implementado en un
-   entorno de integración y completar la revisión del corpus antes de autorizar
-   producción.
-12. Mantener la ampliación v3 a 106 como una autorización posterior separada.
+12. Resolver cuotas y presupuesto, desplegar la V1 Netlify-only en un entorno
+   de integración y completar la revisión del corpus antes de producción.
+13. Reevaluar Edge → FastAPI únicamente si la evidencia exige llamadas de más
+   de 60 s o garantías operativas que la Function no pueda ofrecer.
+14. Mantener la ampliación v3 a 106 como una autorización posterior separada.
 
 ## 11. Reglas de handoff para otros agentes
 

@@ -17,7 +17,7 @@ flowchart LR
     PDF --> FILESEARCH["Gemini File Search<br/>store piloto de 5 PDF"]
 
     subgraph PYTHON["src/"]
-        API["API FastAPI<br/>estado y contratos"]
+        API["API FastAPI local<br/>prototipo / opción futura"]
         CITES["Verificación literal<br/>citation_*"]
         CASES["Caso canónico y retrieval<br/>jurisprudence_*"]
         OKF["Publicación OKF<br/>okf_*"]
@@ -37,8 +37,11 @@ flowchart LR
     OKF --> KNOWLEDGE
     NORM --> KNOWLEDGE
     KNOWLEDGE --> WEB["frontend/<br/>React"]
-    WEB --> EDGE["Netlify Edge<br/>/api/chat"]
-    EDGE --> API
+    WEB --> FUNCTION["Netlify Function V1<br/>A y B en paralelo<br/>(pendiente)"]
+    KNOWLEDGE --> FUNCTION
+    FILESEARCH --> FUNCTION
+    WEB -. prototipo conservado .-> EDGE["Netlify Edge"]
+    EDGE -. opción futura .-> API
 ```
 
 ## Componentes
@@ -48,14 +51,15 @@ flowchart LR
 | Configuración de dominio | `src/config.py` | Catálogos jurídicos y routing de proveedores |
 | Política del chat | `src/chat_model_policy.py` | Luna + `high`, separado del corpus |
 | Proveedores LLM | `src/gateway_setup.py`, `src/gateway_chat_writer.py` | Responder preguntas del chat y registrar uso/coste |
-| API HTTP | `src/api/` | Exponer estado y chat A/B; nunca analizar PDF ni preparar corpus |
+| API HTTP Python | `src/api/` | Prototipo local y posible runtime futuro para llamadas de más de 60 s |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |
 | Jurisprudencia v3 | `src/jurisprudence_*.py` | Compilar casos, validar referencias, recuperar y evaluar |
 | OKF | `src/okf_*.py` | Normalizar, renderizar y validar perfiles publicables |
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
-| Transporte web | `frontend/netlify/edge-functions/chat.ts`, `frontend/src/lib/chat-*` | Proxy autenticado, protocolo SSE comparativo y presentación A/B |
+| Runtime web V1 | Pendiente en `frontend/netlify/functions/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
+| Transporte web conservado | `frontend/netlify/edge-functions/chat.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
 | Pruebas | `tests/` | Gates deterministas; las llamadas LLM reales están excluidas por defecto |
@@ -81,15 +85,15 @@ dominio y con una migración de imports independiente.
 
 1. El frontend permanece en `stub` por defecto; un build `live` envía la
    pregunta a `/api/chat`.
-2. Netlify Edge aplica rate limit por IP y transmite la petición autenticada a
-   FastAPI sin contener lógica jurídica ni claves de proveedor.
-3. A recupera unidades v3, limita el contexto y redacta mediante IDs de
-   evidencia que se resuelven localmente.
+2. La V1 usa una Netlify Function TypeScript autosuficiente, con rate limit,
+   presupuesto y un deadline global de 50–55 s.
+3. La Function inicia A y B en paralelo. A recupera unidades v3, limita el
+   contexto y redacta mediante IDs de evidencia que se resuelven localmente.
 4. B consulta de forma independiente un File Search Store con los cinco PDF
    originales y devuelve anotaciones del proveedor.
 5. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
    que quede sin respaldo.
-6. FastAPI emite dos bloques SSE independientes y el frontend conserva
+6. La Function emite dos bloques SSE independientes en orden visual A → B y el frontend conserva
    respuesta, estado, fuentes, latencia y coste por
    estrategia, sin usar la salida de una como entrada de la otra.
 
@@ -120,10 +124,13 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 ## Límites actuales
 
 - Los PDF escaneados sin capa de texto no se procesan porque no hay OCR.
-- El endpoint, el proxy Edge, el protocolo y la UI A/B están implementados,
-  pero el backend Python no está desplegado y ambas capas fallan cerradas.
+- El prototipo FastAPI, el proxy Edge, el protocolo y la UI A/B están
+  implementados, pero la Function Netlify-only de la V1 sigue pendiente.
 - El frontend de producción sigue usando el motor simulado. La activación exige
-  desplegar FastAPI, resolver cuotas/presupuesto y superar los gates humanos.
+  portar el runtime online a Netlify, demostrar que el recorrido completo cabe
+  bajo 60 s, resolver cuotas/presupuesto y superar los gates humanos.
+- FastAPI no se borra: se reevaluará si hacen falta llamadas de más de 60 s,
+  reintentos largos o mayor control operativo.
 - El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus
   automáticamente.
 
