@@ -200,9 +200,15 @@ contra el dominio público después de cada deploy.
       revisión; adaptar persistencia y UI sin perder varios anclajes de una
       misma sentencia. Los historiales v1 se conservan como fuentes legadas y
       nunca reciben trazabilidad inventada.
-    - [ ] Implementar `chat-engine.live.ts` y el parser SSE del protocolo 2;
+    - [x] Implementar `chat-engine.live.ts` y el parser SSE individual del
+      protocolo 2;
       validar en la frontera que cada evento `sources` contiene exclusivamente
-      `ChatSourceV2`, sin aceptar fuentes legadas desde el backend.
+      `ChatSourceV2`, sin aceptar fuentes legadas desde el backend. Tolera
+      eventos y UTF-8 partidos, exige un único terminal, distingue errores HTTP
+      no SSE y envía solo `role` y `content`. El motor sigue sin seleccionarse.
+    - [ ] Extender el protocolo 2 al modo comparativo A/B con `strategy`,
+      `answer_start`, `answer_done`, coste y terminal global; adaptar
+      `ChatMessage`/UI antes de conectar el selector al backend.
   - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
     rollback es quitar la variable y redesplegar.
 - [ ] **Llevar el corpus v3 de 5 a 106 sentencias.** El contrato y la muestra ya

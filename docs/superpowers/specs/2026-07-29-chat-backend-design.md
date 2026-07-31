@@ -484,9 +484,10 @@ blanco. La respuesta incluye `Content-Type: text/event-stream; charset=utf-8`,
 `error` es un detalle del protocolo HTTP, **no** un cuarto `ChatChunk`. El cliente
 `chat-engine.live.ts` lo convierte en una excepción tipada; `ChatView` ya captura
 errores y conserva el texto parcial. La unión de eventos no cambia. El tipo,
-la persistencia versionada y la presentación de fuentes ya están adaptados;
-siguen pendientes el cliente live y el parser SSE que validará este contrato en
-la frontera.
+la persistencia versionada, la presentación de fuentes, el parser SSE y el
+transporte live individual ya están adaptados. El motor continúa inactivo y la
+extensión comparativa con `strategy`, coste y terminales por respuesta sigue
+pendiente.
 
 `ChatSourceV2` extiende los metadatos de sentencia con:
 
@@ -512,7 +513,8 @@ que dos anclajes de un mismo PDF no colisionan. Las fuentes persistidas antes de
 v2 sobreviven como `LegacyChatSource`, con un aviso explícito de que su extracto
 no es una cita judicial verificada. Nunca se completan página, anclaje o hash
 por inferencia. `areChatSourcesV2` valida además que los `sourceId` sean únicos
-dentro de cada evento; el futuro parser SSE debe reutilizar ese guardarraíl.
+dentro de cada evento; el parser SSE reutiliza ese guardarraíl antes de entregar
+las fuentes a la UI.
 
 El parser no usa `EventSource` porque la petición es `POST`. Lee `fetch().body`,
 tolera UTF-8 y eventos partidos entre chunks de red, rechaza versiones de

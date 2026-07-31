@@ -16,6 +16,12 @@
 > tareas de endpoint, SSE y cliente tampoco implementan este contrato y no
 > deben ejecutarse literalmente. La unión con reranking local queda aplazada.
 >
+> El 2026-07-31 se implementaron fuera de este plan el parser y transporte
+> **individuales** del protocolo 2 en `frontend/src/lib/chat-sse-protocol.ts` y
+> `chat-engine.live.ts`, con `ChatSourceV2` estricto. No se activaron. Las
+> instrucciones de protocolo 1 de la tarea 13 siguen siendo históricas y la
+> extensión A/B con `strategy` y costes permanece pendiente.
+>
 > La fase 0 medida y los módulos agnósticos al corpus siguen siendo
 > aprovechables. Véanse el
 > [caso de uso](../../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md), el

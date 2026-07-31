@@ -89,9 +89,13 @@ jurídica. `src/lib/chat-source.ts` es el validador canónico del navegador.
 La persistencia usa schema interno 2 y conserva los historiales previos como
 `LegacyChatSource`. No se deben rellenar sus campos ausentes por inferencia: la
 UI los rotula como fuentes históricas sin anclaje v2. El stub solo produce ese
-tipo legado porque sus extractos son resúmenes simulados. El futuro
-`chat-engine.live.ts` debe rechazar cualquier evento `sources` que no pase
-`isChatSourceV2`.
+tipo legado porque sus extractos son resúmenes simulados.
+
+`src/lib/chat-sse-protocol.ts` y `src/lib/chat-engine.live.ts` implementan el
+protocolo 2 individual y rechazan cualquier evento `sources` que no contenga
+fuentes v2 únicas. El cliente live existe pero **no está seleccionado** por
+`chat-engine.ts`: antes hay que ampliar el protocolo al modo comparativo A/B con
+estrategia, coste y terminales por respuesta.
 
 **El runtime del backend ya está decidido, diseñado y con la plataforma
 validada**: una Netlify Edge Function en `/api/chat` que streamea por SSE y
