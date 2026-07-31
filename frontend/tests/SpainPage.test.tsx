@@ -19,7 +19,7 @@ describe('SpainPage', () => {
     expect(
       screen.getByRole('heading', { name: 'Consulta la jurisprudencia de residencia fiscal' })
     ).toBeInTheDocument();
-    expect(screen.getByText(/106 sentencias del Tribunal Supremo/)).toBeInTheDocument();
+    expect(screen.getByText(/muestra estructurada y validada de cinco/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /183 días/ })).toBeInTheDocument();
   });
 

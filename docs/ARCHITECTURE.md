@@ -36,7 +36,9 @@ flowchart LR
     CASES --> KNOWLEDGE["knowledge/<br/>corpus versionados"]
     OKF --> KNOWLEDGE
     NORM --> KNOWLEDGE
-    KNOWLEDGE --> WEB["frontend/<br/>React + Netlify"]
+    KNOWLEDGE --> WEB["frontend/<br/>React"]
+    WEB --> EDGE["Netlify Edge<br/>/api/chat"]
+    EDGE --> API
 ```
 
 ## Componentes
@@ -46,13 +48,14 @@ flowchart LR
 | Configuración de dominio | `src/config.py` | Catálogos jurídicos y routing de proveedores |
 | Política del chat | `src/chat_model_policy.py` | Luna + `max`, separado del corpus |
 | Proveedores LLM | `src/gateway_setup.py`, `src/gateway_chat_writer.py` | Responder preguntas del chat y registrar uso/coste |
-| API HTTP | `src/api/` | Exponer estado y contratos; nunca analizar PDF |
+| API HTTP | `src/api/` | Exponer estado y chat A/B; nunca analizar PDF ni preparar corpus |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |
 | Jurisprudencia v3 | `src/jurisprudence_*.py` | Compilar casos, validar referencias, recuperar y evaluar |
 | OKF | `src/okf_*.py` | Normalizar, renderizar y validar perfiles publicables |
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
+| Transporte web | `frontend/netlify/edge-functions/chat.ts`, `frontend/src/lib/chat-*` | Proxy autenticado, protocolo SSE comparativo y presentación A/B |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
 | Pruebas | `tests/` | Gates deterministas; las llamadas LLM reales están excluidas por defecto |
@@ -74,16 +77,20 @@ dominio y con una migración de imports independiente.
 4. Los módulos `okf_*` producen perfiles Markdown e informes laterales.
 5. Los derivados versionados se publican en `knowledge/`.
 
-### Chat jurisprudencial F0.2
+### Chat jurisprudencial comparativo
 
-1. La pregunta entra en un comparador local, todavía no conectado al frontend.
-2. A recupera unidades v3, limita el contexto y redacta mediante IDs de
+1. El frontend permanece en `stub` por defecto; un build `live` envía la
+   pregunta a `/api/chat`.
+2. Netlify Edge aplica rate limit por IP y transmite la petición autenticada a
+   FastAPI sin contener lógica jurídica ni claves de proveedor.
+3. A recupera unidades v3, limita el contexto y redacta mediante IDs de
    evidencia que se resuelven localmente.
-3. B consulta de forma independiente un File Search Store con los cinco PDF
+4. B consulta de forma independiente un File Search Store con los cinco PDF
    originales y devuelve anotaciones del proveedor.
-4. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
+5. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
    que quede sin respaldo.
-5. El comparador conserva respuesta, estado, fuentes, latencia y coste por
+6. FastAPI emite dos bloques SSE independientes y el frontend conserva
+   respuesta, estado, fuentes, latencia y coste por
    estrategia, sin usar la salida de una como entrada de la otra.
 
 Arquitectura, estado, aprendizajes y siguiente gate:
@@ -113,9 +120,10 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 ## Límites actuales
 
 - Los PDF escaneados sin capa de texto no se procesan porque no hay OCR.
-- La API local solo expone estado y contratos; el backend de chat no está activo.
-- El frontend conversacional sigue usando un motor simulado. F0.2 existe como
-  comparador local, pero no implementa el backend ni el streaming productivos.
+- El endpoint, el proxy Edge, el protocolo y la UI A/B están implementados,
+  pero el backend Python no está desplegado y ambas capas fallan cerradas.
+- El frontend de producción sigue usando el motor simulado. La activación exige
+  desplegar FastAPI, resolver cuotas/presupuesto y superar los gates humanos.
 - El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus
   automáticamente.
 

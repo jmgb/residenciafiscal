@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { chatEngine } from '@/lib/chat-engine';
+import { chatEngine, resolveChatEngineMode } from '@/lib/chat-engine';
 import { resetCorpusCache } from '@/lib/corpus';
 import type { ChatChunk, ChatMessage } from '@/types/chat';
 
@@ -19,6 +19,13 @@ afterEach(() => {
 });
 
 describe('chatEngine', () => {
+  it('solo activa el motor real mediante una opción explícita', () => {
+    expect(resolveChatEngineMode('live')).toBe('live');
+    expect(resolveChatEngineMode(undefined)).toBe('stub');
+    expect(resolveChatEngineMode('true')).toBe('stub');
+    expect(resolveChatEngineMode('LIVE')).toBe('stub');
+  });
+
   it('avisa dentro de la respuesta cuando no puede cargar las sentencias', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.stubGlobal(

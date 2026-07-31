@@ -8,6 +8,7 @@ Arranque en local:
 Endpoints:
     GET  /health        Estado del servicio y separación de pipelines
     GET  /config        Política del chat y taxonomías vigentes
+    POST /chat          Comparación A/B por SSE; cerrada por defecto
     GET  /docs          Swagger UI (autogenerado por FastAPI)
 
 La preparación de sentencias no se expone por HTTP: es un workflow offline
@@ -22,6 +23,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
+from api.chat import router as chat_router
 from api.sentry_config import init_sentry
 from chat_model_policy import (
     CHAT_MODEL,
@@ -39,9 +41,10 @@ init_sentry()
 
 app = FastAPI(
     title="Residencia Fiscal API",
-    description="Contratos del corpus offline y del futuro chat jurisprudencial.",
-    version="0.2.0",
+    description="Contratos del corpus offline y del chat jurisprudencial comparativo.",
+    version="0.3.0",
 )
+app.include_router(chat_router)
 
 
 @app.get("/", include_in_schema=False)
@@ -61,7 +64,7 @@ async def health() -> dict[str, Any]:
 
 @app.get("/config")
 async def get_config() -> dict[str, Any]:
-    """Política del futuro chat y taxonomías del corpus."""
+    """Política vigente del chat y taxonomías del corpus."""
     return {
         "chat_model": CHAT_MODEL,
         "chat_reasoning_effort": CHAT_REASONING_EFFORT,

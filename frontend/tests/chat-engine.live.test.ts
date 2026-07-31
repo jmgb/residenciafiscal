@@ -89,6 +89,37 @@ describe('createLiveChatEngine', () => {
     expect(init.signal).toBeInstanceOf(AbortSignal);
   });
 
+  it('envía solo la última pregunta y no el contenido vacío de respuestas A/B', async () => {
+    const fetchSpy = vi.fn(async () => sseResponse([sseEvent('done', {})]));
+    vi.stubGlobal('fetch', fetchSpy);
+    const history: ChatMessage[] = [
+      messages[0],
+      {
+        id: 'a1',
+        role: 'assistant',
+        content: '',
+        createdAt: '2026-07-31T10:00:01.000Z',
+        answers: [],
+      },
+      {
+        id: 'm2',
+        role: 'user',
+        content: '¿Y qué ocurre con el centro de intereses?',
+        createdAt: '2026-07-31T10:00:02.000Z',
+      },
+    ];
+    const engine = createLiveChatEngine();
+
+    for await (const _chunk of engine.askQuestion(history, new AbortController().signal)) {
+      // Consumir.
+    }
+
+    const [, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
+    expect(JSON.parse(init.body as string)).toEqual({
+      messages: [{ role: 'user', content: '¿Y qué ocurre con el centro de intereses?' }],
+    });
+  });
+
   it.each([
     [429, 'rate_limited', true],
     [503, 'unavailable', true],

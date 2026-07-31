@@ -134,7 +134,60 @@ describe('useConversations', () => {
     const stored = window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY);
 
     expect(stored).not.toBeNull();
-    expect(JSON.parse(stored as string).version).toBe(2);
+    expect(JSON.parse(stored as string).version).toBe(3);
+  });
+
+  it('conserva y cierra las dos respuestas comparativas al rehidratar', () => {
+    const conversations = [
+      {
+        id: 'c-comparativa',
+        title: 'consulta comparativa',
+        createdAt: '2026-07-31T10:00:00.000Z',
+        updatedAt: '2026-07-31T10:00:05.000Z',
+        messages: [
+          {
+            id: 'a1',
+            role: 'assistant',
+            content: '',
+            createdAt: '2026-07-31T10:00:05.000Z',
+            isStreaming: true,
+            answers: [
+              {
+                strategy: 'current_structured',
+                status: 'completa',
+                content: 'Respuesta A.',
+                sources: [],
+                limits: [],
+                cost: {
+                  currency: 'USD',
+                  amountUsd: '0.010000',
+                  costMicrousd: 10000,
+                  measurement: 'ACTUAL',
+                  scope: 'REQUEST_MARGINAL',
+                  pricingVersion: '2026-07-31',
+                  inputTokens: 100,
+                  outputTokens: 20,
+                  retrievedDocumentTokens: 0,
+                  excludesCorpusPreparation: true,
+                },
+                model: 'luna',
+                latencyMs: 100,
+                isStreaming: true,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const sanitized = clearStreamingFlags(conversations);
+
+    expect(sanitized[0].messages[0].isStreaming).toBe(false);
+    expect(sanitized[0].messages[0].answers?.[0]).toMatchObject({
+      strategy: 'current_structured',
+      content: 'Respuesta A.',
+      isStreaming: false,
+    });
   });
 
   it('apaga el streaming al rehidratar una respuesta que quedó a medias', async () => {

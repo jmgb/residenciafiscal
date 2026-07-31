@@ -1,10 +1,10 @@
 /**
  * Implementación SIMULADA del motor de chat.
  *
- * Existe para poder construir y validar toda la interfaz antes de decidir el
- * backend RAG. Emite tokens con retardo para que el streaming, el indicador de
- * escritura y el botón de detener se comporten igual que con el motor real, y
- * enlaza sentencias REALES del corpus para que el panel sea representativo.
+ * Permanece como modo seguro por defecto aunque el recorrido live ya exista.
+ * Emite tokens con retardo para que el streaming, el indicador de escritura y
+ * el botón de detener se comporten igual que con el motor real, y enlaza
+ * sentencias REALES del corpus para que el panel sea representativo.
  * Sus extractos son resúmenes simulados y se tipan como fuentes históricas:
  * nunca como citas v2 verificadas.
  *
@@ -20,7 +20,7 @@ import type {
 } from '@/types/chat';
 
 const DISCLAIMER =
-  '> **Respuesta simulada.** El motor de análisis todavía no está conectado. ' +
+  '> **Respuesta simulada.** Esta consulta usa el motor de demostración. ' +
   'El texto siguiente es un ejemplo del formato de respuesta; las sentencias ' +
   'citadas sí son reales y provienen del corpus analizado.\n\n';
 

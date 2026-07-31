@@ -2,7 +2,7 @@
 
 ## Decisión de producto
 
-El caso de uso principal del corpus y del futuro chat es ayudar a un abogado a
+El caso de uso principal del corpus y del chat jurisprudencial es ayudar a un abogado a
 investigar un caso particular de residencia fiscal mediante sentencias
 comparables.
 

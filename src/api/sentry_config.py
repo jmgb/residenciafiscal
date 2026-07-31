@@ -45,6 +45,7 @@ def init_sentry() -> bool:
             LoggingIntegration(level=logging.INFO, event_level=logging.ERROR),
         ],
         send_default_pii=False,
+        include_local_variables=False,
         attach_stacktrace=True,
         max_breadcrumbs=50,
         before_send=before_send,

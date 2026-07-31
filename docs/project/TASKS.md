@@ -39,9 +39,13 @@ contra el dominio público después de cada deploy.
 
 ## Producto y arquitectura
 
-- [ ] **Sustituir el motor `stub` del chat por un backend real.** Diseñado y planificado:
-  Netlify Edge Function en `/api/chat`, recuperación con fuentes trazables y
-  citas por marcadores `[S<n>]` que el servidor resuelve al ROJ real.
+- [ ] **Sustituir el motor `stub` del chat por un backend real.** El recorrido
+  React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está implementado
+  y probado, pero cerrado por defecto y no desplegado. Falta resolver fase 0b,
+  alojar el servicio Python y autorizar producción. Runbook:
+  [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md). Incluye recuperación
+  con fuentes trazables que el servidor verifica y convierte en referencias
+  tipadas por estrategia; el navegador nunca resuelve identificadores del LLM.
   La arquitectura vigente, el estado implementado y el orden de handoff están
   en
   [`CHAT_SYSTEM_ARCHITECTURE.md`](../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
@@ -133,7 +137,11 @@ contra el dominio público después de cada deploy.
         mismo banco de preguntas y evidencia recuperada; medir calidad,
         latencia, tokens y coste. Nunca usar esta prueba para analizar PDF ni
         preparar casos del corpus.
-    - [ ] Repetir las ocho con el mismo modelo; solo si pasan, ejecutar las 40.
+    - [ ] Repetir las ocho con la configuración destinada al producto —A con
+      Luna + `max`; B con un modelo Gemini permitido por File Search— y una
+      segunda revisión ciega. Esta ejecución compara stacks completos, no
+      permite atribuir las diferencias exclusivamente al recuperador. Solo si
+      pasa los gates, ejecutar las 40.
   - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
   - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
@@ -200,17 +208,28 @@ contra el dominio público después de cada deploy.
       revisión; adaptar persistencia y UI sin perder varios anclajes de una
       misma sentencia. Los historiales v1 se conservan como fuentes legadas y
       nunca reciben trazabilidad inventada.
-    - [x] Implementar `chat-engine.live.ts` y el parser SSE individual del
-      protocolo 2;
+    - [x] Implementar `chat-engine.live.ts` y la base individual del protocolo 2;
       validar en la frontera que cada evento `sources` contiene exclusivamente
       `ChatSourceV2`, sin aceptar fuentes legadas desde el backend. Tolera
       eventos y UTF-8 partidos, exige un único terminal, distingue errores HTTP
-      no SSE y envía solo `role` y `content`. El motor sigue sin seleccionarse.
-    - [ ] Extender el protocolo 2 al modo comparativo A/B con `strategy`,
+      no SSE y envía solo `role` y `content`. La extensión A/B posterior conserva
+      esta compatibilidad.
+    - [x] Extender el protocolo 2 al modo comparativo A/B con `strategy`,
       `answer_start`, `answer_done`, coste y terminal global; adaptar
       `ChatMessage`/UI antes de conectar el selector al backend.
-  - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_ENGINE_MODE=live` en Netlify. El
-    rollback es quitar la variable y redesplegar.
+    - [x] Implementar `POST /chat` en FastAPI con composición perezosa, secreto
+      del proxy, fuentes/coste por estrategia y logs sin consulta ni respuesta.
+    - [x] Implementar `/api/chat` como Edge Function fina con rate limit por IP,
+      proxy autenticado y transmisión del stream; no duplicar Python ni claves.
+    - [x] Cablear el selector seguro: solo `VITE_CHAT_MODE=live` activa el cliente;
+      cualquier otro valor conserva el stub.
+    - [ ] Desplegar el servicio FastAPI en un runtime Python 3.13 con artefactos y
+      logs persistentes; validar primero un Deploy Preview según el runbook.
+    - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
+      contrato actual es deliberadamente single-turn: el historial se muestra
+      localmente, pero solo la última pregunta autosuficiente sale del navegador.
+  - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_MODE=live` en el contexto de
+    Netlify autorizado. El rollback es volver a `stub` y deshabilitar el backend.
 - [ ] **Llevar el corpus v3 de 5 a 106 sentencias.** El contrato y la muestra ya
   están congelados. La expansión está parada hasta autorizar el manifiesto real
   de los 106 PDF y organizar la revisión humana; bloquea la activación
@@ -376,18 +395,24 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 
 ## Seguridad y datos
 
-- [ ] Proteger el futuro endpoint del chat con autenticación/cuotas y rate
-  limiting, y evitar que las consultas sensibles aparezcan completas en logs o analítica.
+- [ ] **Completar la protección económica del endpoint live.** Ya existen
+  secreto Edge → FastAPI, rate limit por IP, cierre por bandera y logs/analítica
+  sin texto de consulta. Falta un límite global de gasto con atomicidad real;
+  el rate limit actual no lo sustituye (fase 0b).
 - [ ] **Requisitos legales previos a activar el chat real.** Bloquean la fase 3: con el
-  motor en `stub` no sale nada de Netlify, con el real la pregunta viaja a OpenAI.
-  - [ ] Aviso de que no es asesoramiento jurídico, visible junto al chat. Hoy ese papel
-    lo cumple el aviso de contenido simulado, que **desaparece** al activar `live`: si no
-    se sustituye, la activación quita una advertencia en vez de cambiarla.
-  - [ ] Política de privacidad que declare el envío de la consulta a OpenAI como
-    encargado del tratamiento, con `store: false` y sin conservación en servidor. Los
-    criterios de residencia invitan a escribir dónde vive uno y dónde está su familia.
-  - [ ] Aviso en la caja de entrada de no incluir datos identificativos: es la única
-    mitigación que actúa antes de que el dato salga.
+  motor en `stub` no sale nada de Netlify; con el real, la última pregunta
+  autosuficiente viaja a OpenAI para A y a Google/Gemini para B.
+  - [x] Aviso de que no es asesoramiento jurídico visible junto al chat tanto en
+    `stub` como en `live`; el modo live no afirma que la respuesta sea simulada.
+  - [ ] Publicar una política de privacidad que declare ambos proveedores, base
+    jurídica, transferencias, retención efectiva y encargados del tratamiento.
+    Verificar contractualmente las opciones de no conservación de cada ruta; no
+    prometer `store: false` para un proveedor basándose en la configuración del
+    otro.
+  - [x] Aviso visible antes del envío para no incluir datos personales o
+    identificativos.
+  - [x] Minimización técnica: el cliente live envía exclusivamente la última
+    pregunta no vacía, no el historial local ni las respuestas A/B.
 - [x] Añadir validación automática del schema del corpus, detección de duplicados y
   trazabilidad de cada criterio hasta su sentencia de origen.
 

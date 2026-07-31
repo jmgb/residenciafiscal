@@ -13,8 +13,9 @@ hay un SLA formal.
 
 ## Qué entra en el alcance
 
-- El futuro endpoint conversacional y sus controles de cuota, autenticación y
-  presupuesto. La API actual no tiene rutas de pago.
+- El endpoint conversacional `/chat`, su proxy `/api/chat` y sus controles de
+  cuota, autenticación y presupuesto. La ruta de pago existe, pero permanece
+  cerrada por defecto y no está desplegada en producción.
 - Fugas de claves de API o de datos del entorno a través de logs, respuestas o
   mensajes de error.
 - Inyección de prompt que consiga alterar las fuentes mostradas por el chat o

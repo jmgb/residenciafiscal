@@ -1,4 +1,5 @@
 import type { ChatMessage } from '@/types/chat';
+import { ChatComparisonAnswers } from './ChatComparisonAnswers';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatSources } from './ChatSources';
 
@@ -28,8 +29,12 @@ export function ChatBubble({ message }: ChatBubbleProps) {
           isUser ? 'rounded-tr-none bg-primary-100' : 'rounded-tl-none bg-card border border-border'
         }`}
       >
-        <ChatMessageContent content={message.content} isUser={isUser} />
-        {message.isStreaming && (
+        {!isUser && message.answers ? (
+          <ChatComparisonAnswers answers={message.answers} />
+        ) : (
+          <ChatMessageContent content={message.content} isUser={isUser} />
+        )}
+        {message.isStreaming && !message.answers && (
           <span className='ml-0.5 animate-pulse text-muted-foreground'>▍</span>
         )}
         {!isUser && message.sources && <ChatSources sources={message.sources} />}

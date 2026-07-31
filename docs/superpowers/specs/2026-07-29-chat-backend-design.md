@@ -1,5 +1,14 @@
 # Backend del chat de residenciafiscal.org — Diseño
 
+> [!CAUTION]
+> **Documento histórico parcialmente superado.** Conserva el razonamiento y el
+> spike que llevaron a elegir Netlify Edge, pero no describe el corte vigente:
+> Edge es ahora un proxy fino y FastAPI ejecuta el comparador Python A/B. No
+> implementes las tareas ni variables de este documento sin contrastarlas con
+> [`CHAT_SYSTEM_ARCHITECTURE.md`](../../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
+> [`CHAT_DEPLOYMENT.md`](../../operations/CHAT_DEPLOYMENT.md) y
+> [`TASKS.md`](../../project/TASKS.md), que son las fuentes actuales.
+
 **Fecha**: 2026-07-29
 **Estado**: aprobado · fase 0 ejecutada el 2026-07-29 · **bloqueado en la fase 0b**
 **Continúa**: [`2026-07-29-frontend-chatbot-design.md`](2026-07-29-frontend-chatbot-design.md), que dejó el backend explícitamente fuera de alcance

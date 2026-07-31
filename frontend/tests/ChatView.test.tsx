@@ -112,9 +112,30 @@ describe('ChatView', () => {
     ).toBeInTheDocument();
   });
 
-  it('muestra el aviso de motor simulado', () => {
+  it('explica los límites de la demo y protege los datos del usuario', () => {
     renderChat();
-    expect(screen.getByRole('status', { name: /motor simulado/i })).toBeInTheDocument();
+    const banner = screen.getByRole('status', { name: /motor simulado/i });
+
+    expect(banner).toHaveTextContent(/está activo el motor simulado/i);
+    expect(banner).toHaveTextContent(/referencias corresponden a sentencias reales/i);
+    expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
+    expect(banner).toHaveTextContent(/verifica siempre la fuente original/i);
+    expect(banner).toHaveTextContent(/no incluyas datos personales o identificativos/i);
+  });
+
+  it('mantiene el aviso jurídico y de privacidad cuando el motor es real', () => {
+    render(
+      <MemoryRouter>
+        <ChatView engine={createFakeEngine()} isStub={false} />
+      </MemoryRouter>
+    );
+
+    const banner = screen.getByRole('status', { name: /investigación jurídica/i });
+    expect(banner).toHaveTextContent(/comparación experimental/i);
+    expect(banner).not.toHaveTextContent(/respuestas.*simuladas/i);
+    expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
+    expect(banner).toHaveTextContent(/verifica siempre la fuente original/i);
+    expect(banner).toHaveTextContent(/no incluyas datos personales o identificativos/i);
   });
 
   it('envía la consulta y pinta el mensaje del usuario', async () => {
@@ -172,6 +193,122 @@ describe('ChatView', () => {
 
     expect(await screen.findByText('STS 107/2018')).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Sentencias citadas' })).toBeInTheDocument();
+  });
+
+  it('presenta la comparación A/B como dos respuestas independientes con su coste', async () => {
+    const user = userEvent.setup();
+    const cost = {
+      currency: 'USD' as const,
+      amountUsd: '0.012345',
+      costMicrousd: 12345,
+      measurement: 'ACTUAL' as const,
+      scope: 'REQUEST_MARGINAL' as const,
+      pricingVersion: '2026-07-31',
+      inputTokens: 100,
+      outputTokens: 20,
+      retrievedDocumentTokens: 0,
+      excludesCorpusPreparation: true as const,
+    };
+    const engine: ChatEngine = {
+      async *askQuestion(): AsyncIterable<ChatChunk> {
+        yield { type: 'answer_start', strategy: 'current_structured' };
+        yield { type: 'token', strategy: 'current_structured', text: 'Respuesta estructurada.' };
+        yield {
+          type: 'strategy_sources',
+          strategy: 'current_structured',
+          sources: [
+            {
+              strategy: 'current_structured',
+              judgmentId: 'STS-107-2018',
+              page: 7,
+              sourceSha256: 'a'.repeat(64),
+              quote: 'Cita literal A.',
+              verification: 'EXACT',
+            },
+          ],
+        };
+        yield {
+          type: 'answer_done',
+          strategy: 'current_structured',
+          status: 'completa',
+          limits: [],
+          cost,
+          model: 'luna',
+          latencyMs: 100,
+        };
+        yield { type: 'answer_start', strategy: 'gemini_file_search' };
+        yield { type: 'token', strategy: 'gemini_file_search', text: 'Respuesta File Search.' };
+        yield { type: 'strategy_sources', strategy: 'gemini_file_search', sources: [] };
+        yield {
+          type: 'answer_done',
+          strategy: 'gemini_file_search',
+          status: 'parcial',
+          limits: ['Cobertura limitada.'],
+          cost: { ...cost, amountUsd: '0.020000', costMicrousd: 20000 },
+          model: 'gemini-2.5-flash',
+          latencyMs: 200,
+        };
+        yield { type: 'done' };
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta comparativa');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    const structured = await screen.findByRole('region', {
+      name: 'Respuesta con corpus estructurado',
+    });
+    const fileSearch = screen.getByRole('region', { name: 'Respuesta con Gemini File Search' });
+    expect(structured).toHaveTextContent('Respuesta estructurada.');
+    expect(structured).toHaveTextContent('USD 0.012345');
+    expect(structured).toHaveTextContent('Cita literal A.');
+    expect(fileSearch).toHaveTextContent('Respuesta File Search.');
+    expect(fileSearch).toHaveTextContent('USD 0.020000');
+    expect(fileSearch).toHaveTextContent('Cobertura limitada.');
+    expect(screen.getByText(/comparación experimental/i)).toBeInTheDocument();
+  });
+
+  it('conserva A y muestra el fallo de B si se corta el stream comparativo', async () => {
+    const user = userEvent.setup();
+    const engine: ChatEngine = {
+      async *askQuestion(): AsyncIterable<ChatChunk> {
+        yield { type: 'answer_start', strategy: 'current_structured' };
+        yield { type: 'token', strategy: 'current_structured', text: 'Respuesta A conservada.' };
+        yield {
+          type: 'answer_done',
+          strategy: 'current_structured',
+          status: 'completa',
+          limits: [],
+          cost: {
+            currency: 'USD',
+            amountUsd: '0.010000',
+            costMicrousd: 10000,
+            measurement: 'ACTUAL',
+            scope: 'REQUEST_MARGINAL',
+            pricingVersion: '2026-07-31',
+            inputTokens: 100,
+            outputTokens: 20,
+            retrievedDocumentTokens: 0,
+            excludesCorpusPreparation: true,
+          },
+          model: 'luna',
+          latencyMs: 100,
+        };
+        throw new Error('corte antes de B');
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(
+      await screen.findByRole('region', { name: 'Respuesta con corpus estructurado' })
+    ).toHaveTextContent('Respuesta A conservada.');
+    expect(
+      screen.getByRole('region', { name: 'Respuesta con Gemini File Search' })
+    ).toHaveTextContent(/no se ha podido completar esta estrategia/i);
   });
 
   it('despliega el extracto de una fuente al pulsarla', async () => {

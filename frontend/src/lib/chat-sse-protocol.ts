@@ -5,7 +5,13 @@
  * stream de bytes ya aceptado por el transporte en `ChatChunk` verificados.
  */
 import { areChatSourcesV2 } from '@/lib/chat-source';
-import type { ChatChunk } from '@/types/chat';
+import type {
+  ChatAnswerStatus,
+  ChatChunk,
+  ChatMarginalCost,
+  ChatStrategyId,
+  ChatStrategySource,
+} from '@/types/chat';
 
 export class ChatEngineError extends Error {
   constructor(
@@ -49,14 +55,30 @@ function parseEventBlock(block: string): ParsedSseEvent | null {
   }
 }
 
-function parseToken(data: unknown): ChatChunk {
+const STRATEGIES = ['current_structured', 'gemini_file_search'] as const;
+const ANSWER_STATUSES = ['completa', 'parcial', 'pregunta', 'abstención', 'error'] as const;
+
+function isStrategy(value: unknown): value is ChatStrategyId {
+  return STRATEGIES.some((strategy) => strategy === value);
+}
+
+function isAnswerStatus(value: unknown): value is ChatAnswerStatus {
+  return ANSWER_STATUSES.some((status) => status === value);
+}
+
+function parseToken(data: unknown, comparative: boolean): Extract<ChatChunk, { type: 'token' }> {
   if (!isRecord(data) || typeof data.text !== 'string') {
     throw new ChatEngineError('El servidor envió un token inválido.', 'invalid_event');
   }
-  return { type: 'token', text: data.text };
+  if (comparative && !isStrategy(data.strategy)) {
+    throw new ChatEngineError('El servidor envió un token sin estrategia.', 'invalid_event');
+  }
+  return comparative
+    ? { type: 'token', strategy: data.strategy as ChatStrategyId, text: data.text }
+    : { type: 'token', text: data.text };
 }
 
-function parseSources(data: unknown): ChatChunk {
+function parseLegacySources(data: unknown): ChatChunk {
   if (!isRecord(data) || !areChatSourcesV2(data.sources)) {
     throw new ChatEngineError(
       'El servidor envió fuentes sin trazabilidad válida.',
@@ -64,6 +86,127 @@ function parseSources(data: unknown): ChatChunk {
     );
   }
   return { type: 'sources', sources: data.sources };
+}
+
+function parseStrategySource(value: unknown): ChatStrategySource | null {
+  if (!isRecord(value)) return null;
+  if (
+    !isStrategy(value.strategy) ||
+    typeof value.judgment_id !== 'string' ||
+    !value.judgment_id ||
+    !Number.isSafeInteger(value.page) ||
+    (value.page as number) < 1 ||
+    typeof value.source_sha256 !== 'string' ||
+    !/^[0-9a-f]{64}$/i.test(value.source_sha256) ||
+    typeof value.quote !== 'string' ||
+    !value.quote.trim() ||
+    value.verification !== 'EXACT'
+  ) {
+    return null;
+  }
+  return {
+    strategy: value.strategy,
+    judgmentId: value.judgment_id,
+    page: value.page as number,
+    sourceSha256: value.source_sha256,
+    quote: value.quote,
+    verification: value.verification,
+  };
+}
+
+function parseStrategySources(data: unknown): Extract<ChatChunk, { type: 'strategy_sources' }> {
+  if (!isRecord(data) || !isStrategy(data.strategy) || !Array.isArray(data.sources)) {
+    throw new ChatEngineError(
+      'El servidor envió fuentes comparativas inválidas.',
+      'invalid_sources'
+    );
+  }
+  const sources = data.sources.map(parseStrategySource);
+  if (sources.some((source) => source === null)) {
+    throw new ChatEngineError(
+      'El servidor envió fuentes comparativas inválidas.',
+      'invalid_sources'
+    );
+  }
+  const valid = sources as ChatStrategySource[];
+  if (valid.some((source) => source.strategy !== data.strategy)) {
+    throw new ChatEngineError('El servidor mezcló fuentes de dos estrategias.', 'invalid_sources');
+  }
+  return { type: 'strategy_sources', strategy: data.strategy, sources: valid };
+}
+
+function parseAnswerStart(data: unknown): Extract<ChatChunk, { type: 'answer_start' }> {
+  if (!isRecord(data) || !isStrategy(data.strategy) || Object.keys(data).length !== 1) {
+    throw new ChatEngineError('El servidor inició una respuesta inválida.', 'invalid_event');
+  }
+  return { type: 'answer_start', strategy: data.strategy };
+}
+
+function parseCost(value: unknown): ChatMarginalCost | null {
+  if (!isRecord(value)) return null;
+  if (
+    value.currency !== 'USD' ||
+    typeof value.amount_usd !== 'string' ||
+    !/^\d+\.\d{6}$/.test(value.amount_usd) ||
+    !Number.isSafeInteger(value.cost_microusd) ||
+    (value.cost_microusd as number) < 0 ||
+    (value.measurement !== 'ACTUAL' && value.measurement !== 'ESTIMATED') ||
+    value.scope !== 'REQUEST_MARGINAL' ||
+    typeof value.pricing_version !== 'string' ||
+    !value.pricing_version ||
+    !Number.isSafeInteger(value.input_tokens) ||
+    (value.input_tokens as number) < 0 ||
+    !Number.isSafeInteger(value.output_tokens) ||
+    (value.output_tokens as number) < 0 ||
+    !Number.isSafeInteger(value.retrieved_document_tokens) ||
+    (value.retrieved_document_tokens as number) < 0 ||
+    value.excludes_corpus_preparation !== true
+  ) {
+    return null;
+  }
+  const amountMicrousd = Number(value.amount_usd.replace('.', ''));
+  if (!Number.isSafeInteger(amountMicrousd) || amountMicrousd !== value.cost_microusd) return null;
+  return {
+    currency: 'USD',
+    amountUsd: value.amount_usd,
+    costMicrousd: value.cost_microusd as number,
+    measurement: value.measurement,
+    scope: 'REQUEST_MARGINAL',
+    pricingVersion: value.pricing_version,
+    inputTokens: value.input_tokens as number,
+    outputTokens: value.output_tokens as number,
+    retrievedDocumentTokens: value.retrieved_document_tokens as number,
+    excludesCorpusPreparation: true,
+  };
+}
+
+function parseAnswerDone(data: unknown): Extract<ChatChunk, { type: 'answer_done' }> {
+  if (
+    !isRecord(data) ||
+    !isStrategy(data.strategy) ||
+    !isAnswerStatus(data.status) ||
+    !Array.isArray(data.limits) ||
+    !data.limits.every((limit) => typeof limit === 'string') ||
+    typeof data.model !== 'string' ||
+    !data.model ||
+    !Number.isSafeInteger(data.latency_ms) ||
+    (data.latency_ms as number) < 0
+  ) {
+    throw new ChatEngineError('El servidor terminó una respuesta inválida.', 'invalid_event');
+  }
+  const cost = parseCost(data.cost);
+  if (!cost) {
+    throw new ChatEngineError('El servidor envió un coste inválido.', 'invalid_event');
+  }
+  return {
+    type: 'answer_done',
+    strategy: data.strategy,
+    status: data.status,
+    limits: data.limits,
+    cost,
+    model: data.model,
+    latencyMs: data.latency_ms as number,
+  };
 }
 
 function parseServerError(data: unknown): ChatEngineError {
@@ -98,6 +241,9 @@ export async function* parseChatEventStream(
   const decoder = new TextDecoder();
   let pending = '';
   let terminalSeen = false;
+  let comparative = false;
+  let activeStrategy: ChatStrategyId | null = null;
+  const completedStrategies = new Set<ChatStrategyId>();
 
   try {
     for (;;) {
@@ -123,15 +269,72 @@ export async function* parseChatEventStream(
           );
         }
 
+        if (event.name === 'answer_start') {
+          const chunk = parseAnswerStart(event.data);
+          const expected = STRATEGIES[completedStrategies.size];
+          if (
+            activeStrategy ||
+            completedStrategies.has(chunk.strategy) ||
+            chunk.strategy !== expected
+          ) {
+            throw new ChatEngineError(
+              'El servidor alteró el orden de estrategias.',
+              'invalid_event'
+            );
+          }
+          comparative = true;
+          activeStrategy = chunk.strategy;
+          yield chunk;
+          continue;
+        }
         if (event.name === 'token') {
-          yield parseToken(event.data);
+          const chunk = parseToken(event.data, comparative);
+          if (comparative && chunk.strategy !== activeStrategy) {
+            throw new ChatEngineError(
+              'El servidor mezcló tokens de dos estrategias.',
+              'invalid_event'
+            );
+          }
+          yield chunk;
           continue;
         }
         if (event.name === 'sources') {
-          yield parseSources(event.data);
+          const chunk = comparative
+            ? parseStrategySources(event.data)
+            : parseLegacySources(event.data);
+          if (
+            comparative &&
+            chunk.type === 'strategy_sources' &&
+            chunk.strategy !== activeStrategy
+          ) {
+            throw new ChatEngineError(
+              'El servidor mezcló fuentes de dos estrategias.',
+              'invalid_sources'
+            );
+          }
+          yield chunk;
+          continue;
+        }
+        if (event.name === 'answer_done') {
+          if (!comparative || !activeStrategy) {
+            throw new ChatEngineError(
+              'El servidor terminó una respuesta no iniciada.',
+              'invalid_event'
+            );
+          }
+          const chunk = parseAnswerDone(event.data);
+          if (chunk.strategy !== activeStrategy) {
+            throw new ChatEngineError('El servidor terminó otra estrategia.', 'invalid_event');
+          }
+          completedStrategies.add(activeStrategy);
+          activeStrategy = null;
+          yield chunk;
           continue;
         }
         if (event.name === 'done') {
+          if (comparative && (activeStrategy || completedStrategies.size !== STRATEGIES.length)) {
+            throw new ChatEngineError('La comparación llegó incompleta.', 'stream_truncated', true);
+          }
           terminalSeen = true;
           yield parseDone(event.data);
           continue;

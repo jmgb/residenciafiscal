@@ -74,10 +74,11 @@ contextos.
 
 ## Estado del motor
 
-El chat funciona hoy con un **stub**. `chatEngineMode` en
-`src/lib/chat-engine.ts` vale `'stub'`, lo que activa el aviso de contenido
-simulado en la UI. Al conectar el backend real hay que cambiarlo a `'live'`,
-que apaga el aviso automáticamente.
+Producción funciona hoy con un **stub**. `src/lib/chat-engine.ts` es el selector
+único: solo `VITE_CHAT_MODE=live` elige el cliente real; cualquier valor ausente
+o inesperado conserva el stub. El modo real mantiene un aviso de investigación
+experimental, privacidad y revisión de fuentes; no reutiliza el aviso de
+contenido simulado.
 
 ### Contrato de fuentes
 
@@ -86,22 +87,24 @@ que apaga el aviso automáticamente.
 extracto literal, fidelidad, SHA-256 del PDF y estado de revisión técnica y
 jurídica. `src/lib/chat-source.ts` es el validador canónico del navegador.
 
-La persistencia usa schema interno 2 y conserva los historiales previos como
+La persistencia usa schema interno 3 y conserva los historiales previos como
 `LegacyChatSource`. No se deben rellenar sus campos ausentes por inferencia: la
 UI los rotula como fuentes históricas sin anclaje v2. El stub solo produce ese
 tipo legado porque sus extractos son resúmenes simulados.
 
-`src/lib/chat-sse-protocol.ts` y `src/lib/chat-engine.live.ts` implementan el
-protocolo 2 individual y rechazan cualquier evento `sources` que no contenga
-fuentes v2 únicas. El cliente live existe pero **no está seleccionado** por
-`chat-engine.ts`: antes hay que ampliar el protocolo al modo comparativo A/B con
-estrategia, coste y terminales por respuesta.
+El protocolo 2 conserva compatibilidad con la respuesta individual anterior y
+añade el modo comparativo estricto A → B: `answer_start`, tokens y fuentes con
+`strategy`, `answer_done` con coste decimal y un único terminal global. Las
+fuentes comparativas usan `ChatStrategySource` —estrategia, sentencia, página,
+hash y cita exacta—; no se convierten artificialmente en `ChatSourceV2` porque B
+no dispone de cuestión y anclaje canónicos. `ChatMessage.answers` mantiene los
+dos bloques y el schema 3 apaga cualquier streaming huérfano al rehidratar.
 
-**El runtime del backend ya está decidido, diseñado y con la plataforma
-validada**: una Netlify Edge Function en `/api/chat` que streamea por SSE y
-resuelve marcadores `[S<n>]` a ROJ reales en el servidor. Esto cierra la
-elección de plataforma frente a FastAPI, pero no predetermina qué recuperación
-ofrece mejores respuestas.
+**El runtime está implementado en dos capas**: Netlify Edge expone `/api/chat`,
+aplica rate limit y transmite el stream; FastAPI ejecuta el comparador Python y
+emite el protocolo. La Edge Function no contiene lógica jurídica, precios ni
+claves de proveedores. Código y operación:
+[`docs/operations/CHAT_DEPLOYMENT.md`](../docs/operations/CHAT_DEPLOYMENT.md).
 
 La estrategia de recuperación se debe medir con dos respuestas independientes:
 la actual, basada en el corpus v3 estructurado, y Gemini File Search sobre los
@@ -125,8 +128,8 @@ cuotas y presupuesto necesita una decisión, porque el compare-and-swap de
 Netlify Blobs no es atómico. El experimento comparativo puede avanzar sin
 activar el chat. Ver `docs/project/TASKS.md`.
 
-Las dependencias del backend (`openai`, `zod`, `@netlify/blobs`,
-`@netlify/edge-functions`) ya están instaladas y verificadas en Deno.
+La Edge Function solo necesita `@netlify/edge-functions`; las integraciones de
+proveedor permanecen en Python.
 `netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
 del repositorio.
 
@@ -138,5 +141,5 @@ verificación en [`docs/operations/NETLIFY.md`](../docs/operations/NETLIFY.md) y
 [`docs/operations/CLOUDFLARE.md`](../docs/operations/CLOUDFLARE.md). Integración
 de Google Analytics 4 documentada en [`docs/product/ANALYTICS.md`](../docs/product/ANALYTICS.md).
 
-Al conectar el backend real hay que ampliar `connect-src` en la CSP de
-`netlify.toml` con el origen de la API.
+El navegador llama al endpoint same-origin `/api/chat`, por lo que el origen
+privado de FastAPI no se añade a `connect-src`.

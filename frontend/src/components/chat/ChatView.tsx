@@ -5,7 +5,13 @@ import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import { type CountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
-import type { ChatEngine, ChatMessage, ChatSource } from '@/types/chat';
+import type {
+  ChatEngine,
+  ChatMessage,
+  ChatSource,
+  ChatStrategyAnswer,
+  ChatStrategyId,
+} from '@/types/chat';
 import { ChatBubble } from './ChatBubble';
 import { ChatComposer } from './ChatComposer';
 import { ChatWelcome } from './ChatWelcome';
@@ -38,18 +44,29 @@ function TypingIndicator() {
   );
 }
 
-function StubBanner() {
+function SafetyBanner({ isStub }: { isStub: boolean }) {
   return (
     <div
       role='status'
-      aria-label='Aviso: motor simulado'
+      aria-label={isStub ? 'Aviso: motor simulado' : 'Aviso de investigación jurídica'}
       className='mx-auto mb-3 flex w-full max-w-3xl items-start gap-2 rounded-lg border border-accent-500/40 bg-accent px-3 py-2 text-xs leading-relaxed text-accent-foreground'
     >
       <AlertTriangle className='mt-0.5 h-4 w-4 shrink-0' aria-hidden='true' />
-      <p>
-        <strong>Demo:</strong> el motor de análisis todavía no está conectado. Las respuestas son
-        simuladas y no constituyen asesoramiento jurídico. Las sentencias citadas sí son reales.
-      </p>
+      {isStub ? (
+        <p>
+          <strong>Demo:</strong> está activo el motor simulado. Las respuestas y los extractos
+          mostrados son simulados, aunque las referencias corresponden a sentencias reales. Esta
+          herramienta sirve para investigación y no constituye asesoramiento jurídico. Verifica
+          siempre la fuente original y no incluyas datos personales o identificativos en la
+          consulta.
+        </p>
+      ) : (
+        <p>
+          <strong>Comparación experimental:</strong> esta herramienta sirve para investigación y no
+          constituye asesoramiento jurídico. Verifica siempre la fuente original y no incluyas datos
+          personales o identificativos en la consulta.
+        </p>
+      )}
     </div>
   );
 }
@@ -142,7 +159,9 @@ export function ChatView({
   const lastMessage = messages.at(-1);
   // El contenido del último mensaje es lo único que cambia mientras llegan tokens:
   // sin él el autoscroll se quedaría congelado en la respuesta larga en curso.
-  const lastMessageContent = lastMessage?.content ?? '';
+  const lastMessageContent = `${lastMessage?.content ?? ''}${
+    lastMessage?.answers?.map((answer) => answer.content).join('') ?? ''
+  }`;
 
   // `messages.length` y `lastMessageContent` son las dependencias DISPARADORAS del
   // autoscroll aunque su valor no se lea dentro del efecto: quitarlas dejaría el scroll
@@ -203,7 +222,15 @@ export function ChatView({
 
       let buffer = '';
       let sources: ChatSource[] | undefined;
+      let answers: ChatStrategyAnswer[] | undefined;
       let fallo: string | undefined;
+
+      const updateAnswers = () => {
+        updateMessage(targetId, assistantId, { answers: answers ? [...answers] : undefined });
+      };
+
+      const answerFor = (strategy: ChatStrategyId): ChatStrategyAnswer | undefined =>
+        answers?.find((answer) => answer.strategy === strategy);
 
       // Nunca registramos el texto de la consulta: es información fiscal
       // personal. Solo medimos volumen, jurisdicción y si hubo respuesta.
@@ -217,24 +244,79 @@ export function ChatView({
           countryPath: country.path,
           countryName: country.name,
         })) {
-          if (chunk.type === 'token') {
-            buffer += chunk.text;
-            updateMessage(targetId, assistantId, { content: buffer });
+          if (chunk.type === 'answer_start') {
+            answers ??= [];
+            answers.push({
+              strategy: chunk.strategy,
+              content: '',
+              sources: [],
+              limits: [],
+              isStreaming: true,
+            });
+            updateAnswers();
+          } else if (chunk.type === 'token') {
+            if (chunk.strategy) {
+              const answer = answerFor(chunk.strategy);
+              if (answer) {
+                answer.content += chunk.text;
+                updateAnswers();
+              }
+            } else {
+              buffer += chunk.text;
+              updateMessage(targetId, assistantId, { content: buffer });
+            }
           } else if (chunk.type === 'sources') {
             sources = chunk.sources;
+          } else if (chunk.type === 'strategy_sources') {
+            const answer = answerFor(chunk.strategy);
+            if (answer) {
+              answer.sources = chunk.sources;
+              updateAnswers();
+            }
+          } else if (chunk.type === 'answer_done') {
+            const answer = answerFor(chunk.strategy);
+            if (answer) {
+              answer.status = chunk.status;
+              answer.limits = chunk.limits;
+              answer.cost = chunk.cost;
+              answer.model = chunk.model;
+              answer.latencyMs = chunk.latencyMs;
+              answer.isStreaming = false;
+              updateAnswers();
+            }
           }
         }
       } catch {
         if (!controller.signal.aborted) {
           const errorMessage = 'No se ha podido completar la consulta. Inténtalo de nuevo.';
-          buffer = buffer ? `${buffer}\n\n_${errorMessage}_` : errorMessage;
+          if (answers) {
+            const strategies: ChatStrategyId[] = ['current_structured', 'gemini_file_search'];
+            answers = strategies.map((strategy) => {
+              const existing = answerFor(strategy);
+              if (existing?.status) return existing;
+              return {
+                strategy,
+                status: 'error',
+                content: existing?.content || 'No se ha podido completar esta estrategia.',
+                sources: existing?.sources ?? [],
+                limits: [errorMessage],
+                isStreaming: false,
+              };
+            });
+          } else {
+            buffer = buffer ? `${buffer}\n\n_${errorMessage}_` : errorMessage;
+          }
           fallo = 'error_motor';
         }
       } finally {
-        if (controller.signal.aborted && !buffer) buffer = 'Respuesta detenida.';
+        if (controller.signal.aborted && !buffer && !answers) buffer = 'Respuesta detenida.';
+        if (answers) {
+          answers = answers.map((answer) => ({ ...answer, isStreaming: false }));
+        }
         updateMessage(targetId, assistantId, {
           content: buffer,
           sources,
+          answers,
           isStreaming: false,
         });
         // El nº de fuentes distingue una respuesta apoyada en el corpus de una
@@ -242,8 +324,13 @@ export function ChatView({
         trackEvent('consulta_respondida', {
           pais: country.path,
           resultado: controller.signal.aborted ? 'detenida' : (fallo ?? 'ok'),
-          num_fuentes: sources?.length ?? 0,
-          longitud_respuesta: buffer.length,
+          num_fuentes:
+            sources?.length ??
+            answers?.reduce((total, answer) => total + answer.sources.length, 0) ??
+            0,
+          longitud_respuesta:
+            buffer.length +
+            (answers?.reduce((total, answer) => total + answer.content.length, 0) ?? 0),
         });
         // Solo se libera el composer si este sigue siendo el stream vigente: si el usuario
         // ya paró, cambió de conversación o lanzó otra consulta, no es nuestro turno.
@@ -258,7 +345,8 @@ export function ChatView({
   );
 
   const hasMessages = messages.length > 0;
-  const showTypingIndicator = isStreaming && lastMessage?.isStreaming && !lastMessage.content;
+  const showTypingIndicator =
+    isStreaming && lastMessage?.isStreaming && !lastMessage.content && !lastMessage.answers?.length;
 
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
@@ -268,7 +356,7 @@ export function ChatView({
         data-testid='chat-scroll'
         className='flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4'
       >
-        {isStub && <StubBanner />}
+        <SafetyBanner isStub={isStub} />
 
         {hasMessages ? (
           <div

@@ -29,6 +29,148 @@ async function collect(stream: ReadableStream<Uint8Array>): Promise<ChatChunk[]>
 }
 
 describe('parseChatEventStream', () => {
+  it('mantiene separadas las dos estrategias con sus fuentes, estado y coste', async () => {
+    const cost = {
+      currency: 'USD',
+      amount_usd: '0.012345',
+      cost_microusd: 12345,
+      measurement: 'ACTUAL',
+      scope: 'REQUEST_MARGINAL',
+      pricing_version: '2026-07-31',
+      input_tokens: 8421,
+      output_tokens: 631,
+      retrieved_document_tokens: 0,
+      excludes_corpus_preparation: true,
+    };
+    const source = {
+      strategy: 'current_structured',
+      judgment_id: 'STS-2024-1234',
+      page: 7,
+      source_sha256: 'a'.repeat(64),
+      quote: 'Texto literal de la sentencia.',
+      verification: 'EXACT',
+    };
+
+    const chunks = await collect(
+      streamFromText([
+        event('answer_start', { strategy: 'current_structured' }),
+        event('token', { strategy: 'current_structured', text: 'Respuesta A.' }),
+        event('sources', { strategy: 'current_structured', sources: [source] }),
+        event('answer_done', {
+          strategy: 'current_structured',
+          status: 'completa',
+          limits: [],
+          cost,
+          model: 'luna',
+          latency_ms: 1200,
+        }),
+        event('answer_start', { strategy: 'gemini_file_search' }),
+        event('token', { strategy: 'gemini_file_search', text: 'Respuesta B.' }),
+        event('sources', {
+          strategy: 'gemini_file_search',
+          sources: [{ ...source, strategy: 'gemini_file_search' }],
+        }),
+        event('answer_done', {
+          strategy: 'gemini_file_search',
+          status: 'parcial',
+          limits: ['Falta contraste.'],
+          cost: { ...cost, amount_usd: '0.020000', cost_microusd: 20000 },
+          model: 'gemini-2.5-flash',
+          latency_ms: 900,
+        }),
+        event('done', {}),
+      ])
+    );
+
+    expect(chunks).toEqual([
+      { type: 'answer_start', strategy: 'current_structured' },
+      { type: 'token', strategy: 'current_structured', text: 'Respuesta A.' },
+      {
+        type: 'strategy_sources',
+        strategy: 'current_structured',
+        sources: [
+          {
+            strategy: 'current_structured',
+            judgmentId: 'STS-2024-1234',
+            page: 7,
+            sourceSha256: 'a'.repeat(64),
+            quote: 'Texto literal de la sentencia.',
+            verification: 'EXACT',
+          },
+        ],
+      },
+      {
+        type: 'answer_done',
+        strategy: 'current_structured',
+        status: 'completa',
+        limits: [],
+        cost: {
+          currency: 'USD',
+          amountUsd: '0.012345',
+          costMicrousd: 12345,
+          measurement: 'ACTUAL',
+          scope: 'REQUEST_MARGINAL',
+          pricingVersion: '2026-07-31',
+          inputTokens: 8421,
+          outputTokens: 631,
+          retrievedDocumentTokens: 0,
+          excludesCorpusPreparation: true,
+        },
+        model: 'luna',
+        latencyMs: 1200,
+      },
+      { type: 'answer_start', strategy: 'gemini_file_search' },
+      { type: 'token', strategy: 'gemini_file_search', text: 'Respuesta B.' },
+      {
+        type: 'strategy_sources',
+        strategy: 'gemini_file_search',
+        sources: [
+          {
+            strategy: 'gemini_file_search',
+            judgmentId: 'STS-2024-1234',
+            page: 7,
+            sourceSha256: 'a'.repeat(64),
+            quote: 'Texto literal de la sentencia.',
+            verification: 'EXACT',
+          },
+        ],
+      },
+      {
+        type: 'answer_done',
+        strategy: 'gemini_file_search',
+        status: 'parcial',
+        limits: ['Falta contraste.'],
+        cost: {
+          currency: 'USD',
+          amountUsd: '0.020000',
+          costMicrousd: 20000,
+          measurement: 'ACTUAL',
+          scope: 'REQUEST_MARGINAL',
+          pricingVersion: '2026-07-31',
+          inputTokens: 8421,
+          outputTokens: 631,
+          retrievedDocumentTokens: 0,
+          excludesCorpusPreparation: true,
+        },
+        model: 'gemini-2.5-flash',
+        latencyMs: 900,
+      },
+      { type: 'done' },
+    ]);
+  });
+
+  it('rechaza tokens comparativos sin estrategia', async () => {
+    await expect(
+      collect(
+        streamFromText([
+          event('answer_start', { strategy: 'current_structured' }),
+          event('token', { text: 'Sin dueño.' }),
+          event('done', {}),
+        ])
+      )
+    ).rejects.toMatchObject({ code: 'invalid_event' });
+  });
+
   it('convierte token, fuentes v2 y done en ChatChunk', async () => {
     const source = makeChatSourceV2();
     const chunks = await collect(

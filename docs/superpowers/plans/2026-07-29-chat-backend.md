@@ -1,5 +1,14 @@
 # Backend del chat de residenciafiscal.org — Plan de implementación
 
+> [!CAUTION]
+> **Plan histórico; no ejecutar como backlog vigente.** La implementación final
+> no replica dominio, precios ni proveedores en Edge: Netlify limita y transmite,
+> mientras FastAPI compone el comparador Python A/B. El estado y los siguientes
+> pasos autorizados están en
+> [`CHAT_SYSTEM_ARCHITECTURE.md`](../../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
+> [`CHAT_DEPLOYMENT.md`](../../operations/CHAT_DEPLOYMENT.md) y
+> [`TASKS.md`](../../project/TASKS.md).
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 > **PLAN BLOQUEADO Y PARCIALMENTE SUPERADO (2026-07-29).** No ejecutar las

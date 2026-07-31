@@ -8,10 +8,17 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { isChatSourceV2, isLegacyChatSource } from '@/lib/chat-source';
-import type { ChatMessage, ChatSource, Conversation } from '@/types/chat';
+import type {
+  ChatMarginalCost,
+  ChatMessage,
+  ChatSource,
+  ChatStrategyAnswer,
+  ChatStrategySource,
+  Conversation,
+} from '@/types/chat';
 
 export const CONVERSATIONS_STORAGE_KEY = 'rf.conversations.v1';
-const CONVERSATIONS_STORAGE_VERSION = 2;
+const CONVERSATIONS_STORAGE_VERSION = 3;
 
 const TITLE_MAX_LENGTH = 60;
 const DEFAULT_TITLE = 'Consulta sin título';
@@ -40,6 +47,63 @@ function isStoredSource(value: unknown): value is ChatSource {
   return isChatSourceV2(value) || isLegacyChatSource(value);
 }
 
+function isStoredStrategySource(value: unknown): value is ChatStrategySource {
+  if (!isRecord(value)) return false;
+  return (
+    (value.strategy === 'current_structured' || value.strategy === 'gemini_file_search') &&
+    typeof value.judgmentId === 'string' &&
+    Number.isSafeInteger(value.page) &&
+    (value.page as number) > 0 &&
+    typeof value.sourceSha256 === 'string' &&
+    /^[0-9a-f]{64}$/i.test(value.sourceSha256) &&
+    typeof value.quote === 'string' &&
+    value.quote.trim().length > 0 &&
+    value.verification === 'EXACT'
+  );
+}
+
+function isStoredCost(value: unknown): value is ChatMarginalCost {
+  if (!isRecord(value)) return false;
+  return (
+    value.currency === 'USD' &&
+    typeof value.amountUsd === 'string' &&
+    /^\d+\.\d{6}$/.test(value.amountUsd) &&
+    Number.isSafeInteger(value.costMicrousd) &&
+    (value.costMicrousd as number) >= 0 &&
+    (value.measurement === 'ACTUAL' || value.measurement === 'ESTIMATED') &&
+    value.scope === 'REQUEST_MARGINAL' &&
+    typeof value.pricingVersion === 'string' &&
+    Number.isSafeInteger(value.inputTokens) &&
+    (value.inputTokens as number) >= 0 &&
+    Number.isSafeInteger(value.outputTokens) &&
+    (value.outputTokens as number) >= 0 &&
+    Number.isSafeInteger(value.retrievedDocumentTokens) &&
+    (value.retrievedDocumentTokens as number) >= 0 &&
+    value.excludesCorpusPreparation === true
+  );
+}
+
+function isStoredAnswer(value: unknown): value is ChatStrategyAnswer {
+  if (!isRecord(value)) return false;
+  const validStatus =
+    value.status === undefined ||
+    ['completa', 'parcial', 'pregunta', 'abstención', 'error'].includes(value.status as string);
+  return (
+    (value.strategy === 'current_structured' || value.strategy === 'gemini_file_search') &&
+    validStatus &&
+    typeof value.content === 'string' &&
+    Array.isArray(value.sources) &&
+    value.sources.every(isStoredStrategySource) &&
+    Array.isArray(value.limits) &&
+    value.limits.every((limit) => typeof limit === 'string') &&
+    (value.cost === undefined || isStoredCost(value.cost)) &&
+    (value.model === undefined || typeof value.model === 'string') &&
+    (value.latencyMs === undefined ||
+      (Number.isSafeInteger(value.latencyMs) && (value.latencyMs as number) >= 0)) &&
+    typeof value.isStreaming === 'boolean'
+  );
+}
+
 function isStoredMessage(value: unknown): value is ChatMessage {
   if (!isRecord(value)) return false;
   return (
@@ -49,7 +113,9 @@ function isStoredMessage(value: unknown): value is ChatMessage {
     typeof value.createdAt === 'string' &&
     (value.isStreaming === undefined || typeof value.isStreaming === 'boolean') &&
     (value.sources === undefined ||
-      (Array.isArray(value.sources) && value.sources.every(isStoredSource)))
+      (Array.isArray(value.sources) && value.sources.every(isStoredSource))) &&
+    (value.answers === undefined ||
+      (Array.isArray(value.answers) && value.answers.every(isStoredAnswer)))
   );
 }
 
@@ -83,12 +149,24 @@ export function clearStreamingFlags(conversations: unknown): Conversation[] {
   let changed = valid.length !== conversations.length;
 
   const sanitized = valid.map((conversation) => {
-    if (!conversation.messages.some((message) => message.isStreaming)) return conversation;
+    if (
+      !conversation.messages.some(
+        (message) => message.isStreaming || message.answers?.some((answer) => answer.isStreaming)
+      )
+    ) {
+      return conversation;
+    }
     changed = true;
     return {
       ...conversation,
       messages: conversation.messages.map((message) =>
-        message.isStreaming ? { ...message, isStreaming: false } : message
+        message.isStreaming || message.answers?.some((answer) => answer.isStreaming)
+          ? {
+              ...message,
+              isStreaming: false,
+              answers: message.answers?.map((answer) => ({ ...answer, isStreaming: false })),
+            }
+          : message
       ),
     };
   });

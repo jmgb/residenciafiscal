@@ -1,19 +1,23 @@
 /**
  * Punto único de selección del motor de chat.
  *
- * Hoy solo existe el stub. Cuando llegue el backend RAG, aquí se decidirá
- * entre implementaciones y `chatEngineMode` pasará a `'live'`, lo que apaga
- * automáticamente el aviso de contenido simulado en la UI.
+ * El build activa explícitamente `live` con `VITE_CHAT_MODE=live`. Cualquier
+ * valor ausente o inesperado conserva el stub y su aviso visible.
  */
 
 import { SPAIN_ROUTE } from '@/data/countryRoutes';
+import { createLiveChatEngine } from '@/lib/chat-engine.live';
 import { createStubChatEngine } from '@/lib/chat-engine.stub';
 import { corpusLoadFailed, loadCorpus } from '@/lib/corpus';
 import type { ChatChunk, ChatEngine, ChatMessage, ChatRequestContext } from '@/types/chat';
 
 export type ChatEngineMode = 'stub' | 'live';
 
-export const chatEngineMode: ChatEngineMode = 'stub';
+export function resolveChatEngineMode(value: string | undefined): ChatEngineMode {
+  return value === 'live' ? 'live' : 'stub';
+}
+
+export const chatEngineMode = resolveChatEngineMode(import.meta.env.VITE_CHAT_MODE);
 
 const DEFAULT_CONTEXT: ChatRequestContext = {
   countryPath: SPAIN_ROUTE.path,
@@ -34,6 +38,11 @@ export const chatEngine: ChatEngine = {
       if (signal.aborted) return;
       yield { type: 'token', text: UNSUPPORTED_COUNTRY_MESSAGE(context.countryName) };
       yield { type: 'done' };
+      return;
+    }
+
+    if (chatEngineMode === 'live') {
+      yield* createLiveChatEngine().askQuestion(messages, signal, context);
       return;
     }
 

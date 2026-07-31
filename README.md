@@ -46,7 +46,8 @@ entrar si alguien aporta su jurisprudencia — ver
 ## Arquitectura
 
 El corpus se prepara offline sin llamadas del repositorio a APIs de modelos. El
-gateway se reserva para responder preguntas cuando se implemente el chat real.
+gateway se reserva para responder preguntas del chat online, que permanece
+cerrado por defecto mientras no se autorice su despliegue.
 
 ```mermaid
 flowchart LR
@@ -54,20 +55,24 @@ flowchart LR
     PY --> AGENT["Agente<br/>propuesta jurídica"]
     AGENT --> GATES["Python<br/>gates · citas · compilación"]
     GATES --> CORPUS["knowledge/jurisprudencia-v3"]
-    QUESTION["Pregunta del usuario"] --> RETRIEVAL["Recuperación de casos"]
-    CORPUS --> RETRIEVAL
-    RETRIEVAL --> CHAT["Gateway LLM del chat<br/>Luna + max"]
-    CHAT --> ANSWER["Respuesta con citas y coste"]
+    QUESTION["Pregunta del usuario"] --> EDGE["Netlify Edge<br/>/api/chat"]
+    EDGE --> API["FastAPI<br/>/chat"]
+    API --> A["A · recuperación v3<br/>Luna + max"]
+    CORPUS --> A
+    PDFS --> B["B · Gemini File Search<br/>PDF de la muestra"]
+    API --> B
+    A --> ANSWER["Dos respuestas separadas<br/>citas + coste USD"]
+    B --> ANSWER
 ```
 
 | Archivo | Función |
 |---------|---------|
 | `src/verbatim_*.py` | Extracción literal por páginas y hashes |
 | `src/jurisprudence_*.py` | Compilación, validación y recuperación del corpus v3 |
-| `src/chat_model_policy.py` | Política de inferencia del futuro chat |
+| `src/chat_model_policy.py` | Política de inferencia de la estrategia A del chat |
 | `src/gateway_setup.py` | Clientes, uso y costes de las respuestas del chat |
-| `src/api/main.py` | API de estado y contratos; no analiza sentencias |
-| `frontend/` | SPA React desplegada en Netlify |
+| `src/api/` | API del chat y de estado; no analiza sentencias |
+| `frontend/` | SPA React y proxy Edge desplegados en Netlify |
 
 La vista completa de componentes, flujos e invariantes está en
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). La guía sobre dónde debe vivir
@@ -179,9 +184,10 @@ validan y compilan de forma determinista.
 | GET    | `/health`   | Estado y frontera entre corpus y chat            |
 | GET    | `/config`   | Política del chat, criterios y categorías        |
 | GET    | `/docs`     | Swagger UI                                      |
+| POST   | `/chat`     | Comparación A/B por SSE; cerrada por defecto     |
 
-La API no expone `/analizar`. El futuro endpoint conversacional utilizará el
-gateway únicamente después de recuperar evidencia del corpus.
+La API no expone `/analizar`. `/chat` utiliza el gateway únicamente después de
+recuperar evidencia y exige habilitación y autenticación server-side.
 
 ## Frontend
 
@@ -197,10 +203,10 @@ npm run build       # genera el corpus y compila a dist/
 ```
 
 > [!NOTE]
-> El motor de conversación es hoy un **stub**. La interfaz está completa y las
-> sentencias que cita son reales, pero las respuestas son simuladas. El backend
-> RAG está pendiente de decidir; la UI muestra el aviso automáticamente mientras
-> `chatEngineMode` valga `'stub'`.
+> Producción sigue en **stub**: las respuestas son simuladas. El recorrido real
+> React → Netlify Edge → FastAPI → comparador A/B está implementado detrás de
+> `VITE_CHAT_MODE=live`, pero no está desplegado ni autorizado. Runbook:
+> [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Documentación
 

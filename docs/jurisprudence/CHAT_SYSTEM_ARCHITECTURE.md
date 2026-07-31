@@ -1,9 +1,9 @@
 # Arquitectura vigente del sistema jurisprudencial conversacional
 
 **Estado:** arquitectura experimental implementada sobre cinco sentencias;
-rúbrica y paquete ciego F0.3 generados; revisión humana pendiente; chat
-productivo y rollout v3 a 106 no autorizados.
-**Fecha de corte:** 2026-07-30.
+endpoint FastAPI, proxy Edge, protocolo y UI A/B conectados detrás de `stub`;
+revisión humana, despliegue productivo y rollout v3 a 106 no autorizados.
+**Fecha de corte:** 2026-07-31.
 
 Este documento es la puerta de entrada canónica para entender el sistema de
 jurisprudencia conversacional. Explica qué existe, cómo se relacionan sus
@@ -35,7 +35,7 @@ El repositorio contiene dos líneas distintas:
 | Línea | Alcance actual | Resultado | Uso |
 |---|---|---|---|
 | Preparación del corpus | Workflow Python + agente, muestra congelada de cinco | Verbatim, casos por cuestión, anclajes e índice | Fuente verificable |
-| Chat | Comparador local F0; producción todavía en `stub` | Respuestas con fuentes, coste y límites | Consulta del abogado |
+| Chat | Comparador A/B accesible por contrato HTTP; producción todavía en `stub` | Respuestas con fuentes, coste y límites | Consulta del abogado |
 
 Los exports JSONL/CSV/XLSX que existen son históricos y no tienen un generador
 LLM activo. El rollout v3 sigue la secuencia 1 → 5 → 106 y permanece detenido
@@ -132,21 +132,32 @@ salida experimental:
 
 Reglas de comparabilidad:
 
-- A y B reciben la misma pregunta y el mismo modelo explícito cuando invocan
-  un LLM; el router puede terminar A sin llamada;
-- comparten la instrucción jurídica base, pero no el contexto recuperado;
+- A y B reciben la misma pregunta y la misma instrucción jurídica base; el
+  router puede terminar A sin llamada;
+- los modelos son deliberadamente distintos en la configuración vigente: A
+  usa Luna + `max` y B uno de los modelos Gemini permitidos por File Search;
+  esta prueba compara stacks de producto completos y no aísla el efecto del
+  recuperador. El baseline F0.2 con el mismo modelo en ambas rutas se conserva
+  como evidencia histórica controlada;
+- no comparten el contexto recuperado;
 - A usa IDs opacos `E<n>`; B obtiene fuentes de las anotaciones del proveedor;
 - ninguna recibe candidatos, puntuaciones, fuentes ni prosa de la otra;
 - no existe fallback cruzado;
 - una respuesta sustantiva sin fuentes verificables se retira como `error`;
+- un `error` público conserva estado y coste, pero no el texto bruto de la
+  excepción del proveedor;
 - el coste incurrido se conserva incluso cuando el gate bloquea la prosa.
 
-La comparación es local mediante CLI. Todavía no está conectada al backend del
-chat ni al frontend. Hoy el CLI espera A y después B; una implementación futura
-podrá trabajar internamente en paralelo, pero debe emitir y conservar los dos
-bloques independientes en orden A → B. El contrato completo, comandos,
-privacidad y protocolo previsto están en
+La misma comparación sigue disponible por CLI y está conectada a FastAPI, un
+proxy fino de Netlify Edge y el frontend. Todas las capas permanecen cerradas
+por defecto: producción usa `stub` y el servicio rechaza el chat si no se
+habilita explícitamente. Hoy el comparador espera A y después B; una
+implementación futura podrá trabajar internamente en paralelo, pero debe emitir
+y conservar los dos bloques independientes en orden A → B. El contrato
+completo, comandos, privacidad y protocolo previsto están en
 [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+El runbook de despliegue está en
+[`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md).
 
 ### Componentes de código
 
@@ -166,7 +177,10 @@ privacidad y protocolo previsto están en
 | Paquete ciego F0.3 | `src/chat_blind_review.py` |
 | Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
-| Parser SSE individual y transporte live inactivo | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
+| Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
+| Proxy autenticado y rate limit | `frontend/netlify/edge-functions/chat.ts` |
+| Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
+| UI y persistencia de dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
 
 A ya usa el paquete común sin cambiar el dominio, la selección de evidencias,
 el gate de grounding ni los contratos de coste. B conserva su integración
@@ -258,10 +272,10 @@ jurídica humana.
   fidelidad, SHA-256 del PDF y revisión técnica/jurídica. La UI mantiene
   separados varios anclajes de una sentencia y el almacenamiento v2 migra las
   fuentes antiguas como legado explícito, sin inventar trazabilidad.
-- El cliente individual del protocolo 2 ya valida status, `Content-Type`,
-  versión, terminal, JSON y fuentes v2; tolera eventos y caracteres UTF-8
-  partidos. Todavía no está seleccionado por `chat-engine.ts` y no implementa
-  la extensión comparativa con `strategy`, costes y dos bloques de respuesta.
+- El protocolo 2 valida status, `Content-Type`, versión, orden A → B, terminal,
+  JSON, fuentes exactas y costes decimales; tolera eventos y caracteres UTF-8
+  partidos. `VITE_CHAT_MODE=live` lo selecciona explícitamente y cualquier otro
+  valor mantiene el stub.
 - Solo el chat comparativo A utiliza `neutral-llm-gateway` con sus sinks; el
   corpus offline no lo importa. B mantiene File Search directo por el límite
   deliberado del paquete.
@@ -275,8 +289,9 @@ jurídica humana.
   cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
   respecto del texto literal que publica. Es simultáneamente un gap de datos de
   A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
-- El chat productivo, el streaming A/B y la interfaz de dos respuestas siguen
-  sin implementar.
+- El endpoint, el proxy Edge, el streaming A/B y la interfaz de dos respuestas
+  están implementados detrás del stub. Falta alojar FastAPI, resolver el
+  presupuesto global y autorizar la activación productiva.
 - No existe autorización para listar, compilar o publicar las 106 sentencias
   como casos v3.
 
@@ -298,8 +313,11 @@ Las cifras, preguntas y límites exactos de F0.2 están en
    verifica fuentes.
 6. **Fallar cerrado sin fuentes.** Una prosa plausible no se publica como
    respuesta jurisprudencial si no puede verificarse.
-7. **Medir con el mismo modelo antes de subir de modelo.** Un modelo más caro no
-   corrige un gap del corpus ni una evaluación sesgada.
+7. **No confundir modelo, recuperación y datos.** El baseline con el mismo
+   modelo ayudó a aislar la recuperación. La configuración actual A=Luna+
+   `max` y B=Gemini File Search mide stacks completos; sus diferencias no se
+   atribuyen solo al corpus o al recuperador. Un modelo más caro tampoco
+   corrige un gap de datos ni una evaluación sesgada.
 8. **No confundir etiquetas del router con calidad de respuesta.** Explicar una
    regla general y pedir hechos pueden ser conductas simultáneamente útiles.
 9. **Tratar A y B como complementarias hasta medirlas.** La unión con reranking
@@ -358,17 +376,22 @@ Contrato congelado:
 5. **Completado:** evolucionar `ChatSourceV2`, persistencia y UI; mantener las
    fuentes del stub y de historiales antiguos como legado no verificable.
 6. **Completado:** implementar el parser y transporte del protocolo 2
-   individual, sin activar el motor live.
-7. Extender el protocolo al flujo comparativo A/B antes de conectarlo al
-   selector o al frontend productivo.
-8. Repetir las ocho consultas con el mismo modelo y generar una segunda
-   revisión ciega sin sobrescribir el baseline.
+   individual como base compatible.
+7. **Completado:** extender el protocolo, FastAPI, el proxy Edge, la
+   persistencia y la UI al flujo comparativo A/B. El selector sigue en `stub`
+   por defecto y el despliegue live no está autorizado.
+8. Repetir las ocho consultas con la configuración destinada al producto —A
+   con Luna + `max`; B con un modelo Gemini permitido por File Search— y
+   generar una segunda revisión ciega sin sobrescribir el baseline. Interpretar
+   el resultado como comparación de stacks, no como prueba aislada del
+   recuperador.
 9. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
    A/B.
 10. Probar `gemini-3.6-flash` solo si queda un problema atribuible a redacción,
    no a datos, grounding o evaluación.
-11. Diseñar el backend productivo únicamente después de resolver además cuotas,
-   presupuesto, protocolo de streaming y revisión del corpus.
+11. Resolver cuotas y presupuesto, desplegar el backend ya implementado en un
+   entorno de integración y completar la revisión del corpus antes de autorizar
+   producción.
 12. Mantener la ampliación v3 a 106 como una autorización posterior separada.
 
 ## 11. Reglas de handoff para otros agentes

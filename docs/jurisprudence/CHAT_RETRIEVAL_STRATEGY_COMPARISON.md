@@ -1,21 +1,23 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
-**Estado:** F0.2 implementada y evaluada con ocho consultas reales; F0.3 tiene
-rúbrica y paquete ciego listos, con revisión jurídica ciega por un abogado
-especialista pendiente; banco completo de 40 y promoción a 3.6 aplazados.
+**Estado:** F0.2 conserva el baseline de ocho consultas; F0.3 tiene rúbrica y
+paquete ciego listos; el transporte A/B está conectado detrás de `stub`. La
+revisión jurídica, el banco de 40 y la activación productiva siguen pendientes.
 **Alcance inicial:** las cinco sentencias piloto.
-**Fecha de decisión:** 2026-07-30.
+**Fecha de actualización:** 2026-07-31.
 
 La vista consolidada de capas, componentes, estado, aprendizajes y siguiente
 gate está en
 [`CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md). Este documento
 conserva el contrato especializado del experimento A/B.
 
-## Implementación F0
+## Implementación F0 y baseline histórico
 
-La fase F0 implementa el comparador local previo al chat productivo. No cambia
-`chatEngineMode` ni conecta todavía el frontend. Usa el SDK oficial
-`google-genai`, la Interactions API y un store basado en
+La fase F0 creó el comparador local que sigue disponible por CLI. El mismo
+dominio está ahora expuesto, con composición perezosa, por FastAPI, un proxy
+fino de Netlify Edge y el cliente comparativo del frontend. Producción mantiene
+`VITE_CHAT_MODE=stub`; implementar el recorrido no autoriza activarlo. B usa el
+SDK oficial `google-genai`, la Interactions API y un store basado en
 `models/gemini-embedding-2`.
 
 Interactions exige `google-genai >= 2.0.0`: el esquema anterior dejó de
@@ -147,6 +149,18 @@ estructurada sobre ausencias esporádicas. Por ello no se ejecutan aún las 40
 preguntas ni se promociona el modelo. Método, métricas, costes y decisión:
 [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
 
+### Configuración vigente posterior a F0.2
+
+El baseline anterior conserva valor porque controló el modelo. La configuración
+destinada al producto ya no lo comparte: A usa la política Luna + `max`; B debe
+usar uno de los modelos Gemini permitidos por File Search. Las próximas ocho
+preguntas compararán por tanto stacks completos. Una diferencia observada no se
+puede atribuir exclusivamente a la recuperación.
+
+La frontera, los motivos y el tratamiento de coste están en
+[`LLM_GATEWAY.md`](../development/LLM_GATEWAY.md). El despliegue cerrado por
+defecto está en [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md).
+
 ## Decisión
 
 Durante la fase experimental, cada mensaje del usuario producirá dos respuestas
@@ -155,9 +169,10 @@ consecutivas y visualmente separadas:
 1. **Respuesta A — Sistema estructurado actual.**
 2. **Respuesta B — Gemini File Search.**
 
-Las dos estrategias reciben la misma pregunta y el mismo historial permitido,
-pero trabajan de forma independiente. Ninguna puede consumir la respuesta, los
-candidatos, las puntuaciones ni las conclusiones de la otra.
+Las dos estrategias reciben la misma última pregunta autosuficiente, pero
+trabajan de forma independiente. El historial permanece local en esta versión
+single-turn. Ninguna puede consumir la respuesta, los candidatos, las
+puntuaciones ni las conclusiones de la otra.
 
 El objetivo es comparar con evidencia qué enfoque recupera y explica mejor las
 sentencias. Las dos respuestas no implican que existan dos verdades jurídicas:

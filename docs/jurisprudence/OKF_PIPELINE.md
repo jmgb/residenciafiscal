@@ -472,7 +472,7 @@ verificador falle. El gate jurídico es no presentar nunca texto aproximado como
 literal. Las tasas sirven para decidir revisión, calidad del análisis y
 prioridad, no para maquillar el corpus bajando el umbral.
 
-La evaluación de recuperación del futuro chat tendrá su banco de preguntas y
+La evaluación de recuperación del chat tiene su banco de preguntas y
 sus métricas de recall por separado. El inventario y la primera verdad de
 referencia manual ya existen en
 [`CHAT_USER_QUESTION_CATALOG.md`](CHAT_USER_QUESTION_CATALOG.md) y

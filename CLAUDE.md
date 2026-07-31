@@ -185,12 +185,15 @@ E0 deja preparado el rollout controlado de fase E. El siguiente trabajo
 —crear el manifiesto real y ejecutar sus lotes— requiere autorización expresa;
 no conectar directamente el chat ni transformar las 106 sin revisión humana.
 
-El comparador F0.2 ya redacta A sobre el corpus v3 y B con Gemini File Search
-sobre los PDF, usando el mismo modelo y fuentes independientes. Ocho consultas
-reales detectaron una rúbrica heredada no neutral y falta de cobertura
-estructurada sobre ausencias esporádicas; por eso no deben ejecutarse todavía
-las 40 ni promoverse a 3.6. La arquitectura vigente, los aprendizajes y el
-orden autorizado están en
+El baseline histórico F0.2 redactó A sobre el corpus v3 y B con Gemini File
+Search sobre los PDF usando el mismo modelo y fuentes independientes. La
+política vigente ya no comparte modelo: A usa Luna + `max` y B un modelo Gemini
+permitido por File Search. Por tanto, las siguientes ejecuciones comparan dos
+stacks de producto y no aíslan por sí solas el efecto de la recuperación. Ocho
+consultas reales del baseline detectaron una rúbrica heredada no neutral y
+falta de cobertura estructurada sobre ausencias esporádicas; por eso no deben
+ejecutarse todavía las 40 ni promoverse a 3.6. La arquitectura vigente, los
+aprendizajes y el orden autorizado están en
 [`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md);
 las cifras están en
 [`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](docs/experiments/CHAT_STRATEGY_F02_RESULTS.md).
@@ -287,9 +290,11 @@ Todo pasa por el Makefile (`make help` los lista todos). Los no evidentes:
 `127.0.0.1:5174` (el puerto 8010 evita chocar con el backend de presupuestor).
 Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/docs`.
 
-La API no expone `/analizar` ni ninguna ruta de pago. `GET /config` publica la
-política del futuro chat y los catálogos jurídicos. El endpoint conversacional
-productivo todavía no existe.
+La API no expone `/analizar`. `GET /config` publica la política del chat y los
+catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
+falla cerrado salvo activación y autenticación explícitas. Producción conserva
+el stub; despliegue y rollback:
+[`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
 ## Costes del chat
 
@@ -327,7 +332,7 @@ En CI hay dos workflows, uno por área, ambos en push y PR contra `main`:
 | Workflow | Cubre | Pasos |
 |----------|-------|-------|
 | `.github/workflows/ci.yml` | Python (todo salvo `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
-| `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest |
+| `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest → build |
 
 **Ninguno usa secrets, a propósito**: la suite Python por defecto no llama a ningún
 LLM. Si algún día hace falta un job con API real, va en un workflow aparte con
@@ -340,7 +345,9 @@ tests de pytest que leen ficheros del frontend (`test_frontend_seo_assets.py` va
 tests sin gate, porque `frontend.yml` no corre pytest. Si añades un test Python que
 lea otra ruta, comprueba que no esté en `paths-ignore`.
 
-El gate del frontend cubre lint, tipos, tests y build, en ese orden:
+El gate de CI del frontend cubre lint, tipos, tests y build, en ese orden. El
+gate local `npm run fast-check` ejecuta los tres primeros; usa además
+`npm run build` cuando cambien build, prerender, Edge o configuración de Vite:
 
 - **Corre `npm run build`**, y con él los hooks `prebuild`/`postbuild` de npm. No
   necesita `output/`, que no se versiona: sin JSONL del pipeline,

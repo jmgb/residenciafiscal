@@ -6,8 +6,9 @@ El frontend ya tiene una entrada por país para que la navegación y la arquitec
 crecer sin rehacer el menú:
 
 - `/` redirige a `/espana`.
-- `/espana` conserva literalmente la experiencia que antes vivía en la home: el chat, las
-  sugerencias de preguntas y el aviso del motor simulado.
+- `/espana` conserva literalmente la experiencia que antes vivía en la home: el chat y las
+  sugerencias de preguntas. El aviso depende del selector: contenido simulado en `stub` e
+  investigación experimental en `live`.
 - La barra lateral incluye España y las rutas reservadas para las jurisdicciones prioritarias
   de Europa, Estados Unidos y Latinoamérica.
 - Las rutas pendientes muestran la misma plantilla: una **invitación a contribuir**

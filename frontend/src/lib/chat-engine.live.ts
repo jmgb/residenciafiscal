@@ -28,12 +28,25 @@ function errorForStatus(status: number): ChatEngineError {
 }
 
 async function requestChat(messages: ChatMessage[], signal: AbortSignal): Promise<Response> {
+  let latestUserMessage: ChatMessage | undefined;
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message?.role === 'user' && message.content.trim().length > 0) {
+      latestUserMessage = message;
+      break;
+    }
+  }
+  if (!latestUserMessage) {
+    throw new ChatEngineError('Falta una pregunta de usuario.', 'invalid_request');
+  }
   try {
     return await fetch(CHAT_ENDPOINT, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        messages: messages.map(({ role, content }) => ({ role, content })),
+        // El comparador vigente es single-turn. No reenviar respuestas A/B ni
+        // hechos fiscales anteriores reduce exposición y evita ambigüedad.
+        messages: [{ role: 'user', content: latestUserMessage.content }],
       }),
       signal,
     });

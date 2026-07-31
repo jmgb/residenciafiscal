@@ -590,14 +590,18 @@ El orden vigente es:
    especialista antes de revelar X/Y.
 3. Incorporar después la cobertura de ausencias esporádicas a la muestra v3,
    con propuesta jurídica, anclajes exactos y compilación reproducible.
-4. Sustituir el adaptador temporal de A por el paquete común de peticiones LLM
-   cuando esté disponible, sin cambiar los contratos de dominio.
-5. Repetir las ocho preguntas con el mismo modelo y una segunda revisión ciega.
+4. **Completado:** sustituir el adaptador temporal de A por el paquete común de
+   peticiones LLM, sin cambiar los contratos de dominio.
+5. Repetir las ocho preguntas con la configuración destinada al producto —A
+   con Luna + `max`; B con un modelo Gemini permitido por File Search— y una
+   segunda revisión ciega. Esta ejecución compara stacks completos; no atribuir
+   las diferencias exclusivamente a la recuperación.
 6. Ejecutar las 40 como evaluación conversacional A/B solo si pasan los gates.
 7. Probar `gemini-3.6-flash` únicamente si persiste un problema atribuible al
    redactor.
-8. Retomar el backend productivo después de resolver también cuotas,
-   presupuesto y protocolo de streaming.
+8. Desplegar el backend y transporte comparativo ya implementados solo después
+   de resolver cuotas y presupuesto; mantener `stub` como modo productivo hasta
+   recibir autorización expresa.
 9. Ampliar v3 de 5 a 106 únicamente mediante autorización expresa y el rollout
    reanudable de fase E.
 
