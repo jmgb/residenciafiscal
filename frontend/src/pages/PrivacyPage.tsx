@@ -40,7 +40,7 @@ export function PrivacyPage() {
         </p>
       </section>
 
-      <section className='mb-7'>
+      <section>
         <h2 className='mb-2 font-heading text-lg font-semibold'>Contacto</h2>
         <p className='text-sm leading-relaxed text-muted-foreground'>
           Para consultas de privacidad, escribe a{' '}
@@ -50,12 +50,6 @@ export function PrivacyPage() {
           .
         </p>
       </section>
-
-      <aside className='rounded-lg border border-accent-500/40 bg-accent p-3 text-sm text-accent-foreground'>
-        Antes de activar el chat real en producción debe completarse y validarse la identidad legal
-        del responsable, la base jurídica, los plazos de conservación y los acuerdos con ambos
-        proveedores. Mientras falte, el backend permanece cerrado por configuración.
-      </aside>
     </div>
   );
 }

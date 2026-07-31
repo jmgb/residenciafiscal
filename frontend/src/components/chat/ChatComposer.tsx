@@ -45,10 +45,12 @@ export function ChatComposer({
   };
 
   return (
-    <div className='shrink-0 bg-canvas px-4 pb-4 pt-2'>
+    <div className='shrink-0 bg-canvas px-4 pb-8 pt-3'>
       {/* El composer flota como tarjeta blanca sobre el lienzo: el contraste de
-          fondo sustituye al borde superior que antes lo separaba del hilo. */}
-      <div className='mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm focus-within:ring-2 focus-within:ring-ring'>
+          fondo sustituye al borde superior que antes lo separaba del hilo. El
+          hueco inferior lo despega del borde del viewport en vez de dejarlo
+          pegado abajo. */}
+      <div className='mx-auto flex w-full max-w-3xl items-end gap-2 rounded-2xl border border-border bg-card p-3 shadow-md focus-within:ring-2 focus-within:ring-ring'>
         <textarea
           ref={textareaRef}
           value={text}
@@ -62,7 +64,9 @@ export function ChatComposer({
           rows={1}
           placeholder={placeholder}
           aria-label='Consulta'
-          className='max-h-40 min-h-10 flex-1 resize-none bg-transparent px-2 py-2 text-sm leading-relaxed outline-none placeholder:text-muted-foreground'
+          // El padding vertical simétrico centra la primera línea dentro de la
+          // caja alta; `min-h-14` es solo el suelo, no fija el alto.
+          className='max-h-40 min-h-14 flex-1 resize-none bg-transparent px-3 py-4 text-base leading-relaxed outline-none placeholder:text-muted-foreground'
         />
         {isStreaming ? (
           <Button
@@ -70,9 +74,10 @@ export function ChatComposer({
             variant='outline'
             size='icon'
             onClick={onStop}
+            className='h-11 w-11'
             aria-label='Detener respuesta'
           >
-            <Square className='h-4 w-4' aria-hidden='true' />
+            <Square className='h-5 w-5' aria-hidden='true' />
           </Button>
         ) : (
           <Button
@@ -80,9 +85,10 @@ export function ChatComposer({
             size='icon'
             onClick={handleSubmit}
             disabled={!canSend}
+            className='h-11 w-11'
             aria-label='Enviar consulta'
           >
-            <Send className='h-4 w-4' aria-hidden='true' />
+            <Send className='h-5 w-5' aria-hidden='true' />
           </Button>
         )}
       </div>

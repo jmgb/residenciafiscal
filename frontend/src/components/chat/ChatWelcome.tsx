@@ -21,7 +21,6 @@ export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProp
       data-testid='chat-welcome'
       className='flex flex-1 flex-col items-center justify-center px-4 py-8 text-center'
     >
-      <img src='/favicon.svg' alt='' className='mb-4 h-14 w-14' />
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
         Decide con las sentencias en la mano
       </h1>

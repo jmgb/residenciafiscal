@@ -454,8 +454,13 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     - [x] Publicar `/privacidad` con el flujo técnico real, minimización,
       almacenamiento local, ambos proveedores y contacto.
     - [ ] Completar con identidad legal del responsable, base jurídica,
-      transferencias, retención efectiva y contratos verificados. La propia
-      página muestra el bloqueo y el backend permanece cerrado.
+      transferencias, retención efectiva y contratos verificados. El bloqueo ya
+      no se publica en `/privacidad`: es una condición interna y el backend
+      permanece cerrado por configuración mientras falte.
+      > Antes de activar el chat real en producción debe completarse y validarse
+      > la identidad legal del responsable, la base jurídica, los plazos de
+      > conservación y los acuerdos con ambos proveedores. Mientras falte, el
+      > backend permanece cerrado por configuración.
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última

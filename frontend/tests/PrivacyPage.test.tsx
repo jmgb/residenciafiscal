@@ -20,14 +20,15 @@ describe('PrivacyPage', () => {
     expect(screen.getByText(/navegador.*localStorage/i)).toBeInTheDocument();
   });
 
-  it('hace visible el requisito legal pendiente antes de activar el chat', () => {
+  it('no publica el pendiente legal interno en la página', () => {
     render(
       <MemoryRouter>
         <PrivacyPage />
       </MemoryRouter>
     );
 
-    expect(screen.getByText(/identidad legal del responsable/i)).toBeInTheDocument();
+    expect(screen.queryByText(/identidad legal del responsable/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/cerrado por configuración/i)).not.toBeInTheDocument();
   });
 
   it('mantiene la descripción canónica y noindex después de hidratar', () => {
