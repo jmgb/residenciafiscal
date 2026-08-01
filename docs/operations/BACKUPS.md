@@ -1,7 +1,7 @@
 # Backups de la base de datos
 
 > **Estado**: instalado y verificado el 2026-07-31.
-> **Método**: tres `systemd timer` en el VPS `alfredo` → `scripts/backup/`.
+> **Método**: tres `systemd timer` de backup y un timer de retención del chat preparado para el VPS `alfredo`.
 > **Destino**: bucket `residenciafiscal-backup` de Cloudflare R2.
 > **Proyecto Supabase**: `qqrwirtdnomapahglvlv` (`eu-west-1`, PostgreSQL 17).
 
@@ -16,7 +16,7 @@ ellos están señaladas donde aparecen.
 
 ## Qué responde cada pieza
 
-El sistema contesta tres preguntas distintas, y son distintas a propósito: un
+El sistema contesta cuatro preguntas distintas, y son distintas a propósito: un
 backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto.
 
 | Pregunta | Pieza | Cuándo |
@@ -24,8 +24,9 @@ backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto.
 | ¿Se ha ejecutado el backup? | `residenciafiscal-backup.timer` → `vps-backup.sh` | Diario, 02:30 local del VPS |
 | ¿Hay en R2 un backup reciente y legible? | `residenciafiscal-backup-freshness.timer` → `check-backup-freshness.sh` | Diario, 03:05 |
 | ¿Podemos recuperarlo? | `residenciafiscal-backup-restore-drill.timer` → `check-backup-restore-drill.sh` | Día 1 de cada mes, 06:35 |
+| ¿Se ha aplicado la retención de Supabase? | `residenciafiscal-chat-retention.timer` → `scripts/privacy/purge-chat-data.sh` | Diario, 03:20 |
 
-Los tres timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
+Los timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
 estaba apagado) y `RandomizedDelaySec=300`. Los huecos horarios están elegidos
 para no solaparse con los backups de Presupuestor y Comunicador, que ya ocupan la
 franja 03:30–06:03 en la misma máquina.
@@ -41,7 +42,7 @@ vps-backup.sh
   2. cabecera de metadatos + gzip
   3. aws s3 cp  →  s3://residenciafiscal-backup/YYYY-MM-DD_HHMMSS_full.sql.gz
   4. aws s3 ls  →  verifica que el objeto existe en destino
-  5. borra los objetos de más de 30 días
+  5. borra los objetos de más de `${RETENTION_DAYS}` días
   6. guardián de cobertura: ¿hay algún schema con tablas fuera del dump?
         │
         ▼ (si algo falla)
@@ -92,10 +93,12 @@ faltan.
 | `SUPABASE_DB_PASSWORD` | Password de Postgres para `pg_dump` / `psql` |
 | `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ACCOUNT_ID` | Credenciales y endpoint de R2 |
 | `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID` | Alertas de fallo (opcionales: sin ellas el script avisa por journal y sigue) |
+| `CHAT_RETENTION_DAYS` | Plazo aprobado para el purgado del chat; obligatorio para instalar el timer |
+| `BACKUP_RETENTION_DAYS` | Retención de snapshots R2; si se omite, usa `CHAT_RETENTION_DAYS` y, sin ambos, el fallback histórico de 30 días |
 
-El `.env` del VPS **contiene solo esas siete claves**, no una copia del `.env` de
-desarrollo: las credenciales de OpenAI, Gemini, Sentry o PostHog no tienen nada
-que hacer en la máquina que hace backups.
+El `.env` del VPS **contiene solo las claves operativas de backup y retención**,
+no una copia del `.env` de desarrollo: las credenciales de OpenAI, Gemini, Sentry
+o PostHog no tienen nada que hacer en la máquina que hace backups.
 
 Ajustables por entorno sin tocar código: `BACKUP_R2_BUCKET`,
 `BACKUP_RETENTION_DAYS` (30), `BACKUP_POOLER_HOST`,
@@ -108,13 +111,17 @@ Ajustables por entorno sin tocar código: `BACKUP_R2_BUCKET`,
 ssh -o RemoteCommand=none alfredo
 git clone https://github.com/jmgb/residenciafiscal.git /home/ubuntu/residenciafiscal
 
-# 2. .env mínimo con las siete claves de la tabla anterior
+# 2. .env mínimo con las claves de backup de la tabla anterior y, si se instala
+#    el purgado, CHAT_RETENTION_DAYS con el plazo aprobado
 #    (copiar los valores desde el .env local; nunca versionarlo)
 vi /home/ubuntu/residenciafiscal/.env
 chmod 600 /home/ubuntu/residenciafiscal/.env
 
 # 3. Instalar units y timers (idempotente: repetible tras cada git pull)
 sudo bash /home/ubuntu/residenciafiscal/scripts/backup/install-backup-timer.sh
+
+# Después de aprobar y configurar CHAT_RETENTION_DAYS:
+sudo bash /home/ubuntu/residenciafiscal/scripts/privacy/install-chat-retention-timer.sh
 ```
 
 El instalador comprueba las claves del `.env`, instala `postgresql-client-17`
@@ -165,6 +172,9 @@ ssh -o RemoteCommand=none alfredo \
 # Forzar el check de frescura
 ssh -o RemoteCommand=none alfredo 'sudo systemctl start residenciafiscal-backup-freshness.service'
 
+# Ejecutar el purgado del chat ahora
+ssh -o RemoteCommand=none alfredo 'sudo systemctl start residenciafiscal-chat-retention.service'
+
 # Listar backups en R2 (desde local, con el .env del repo)
 ./scripts/backup/restore-from-r2.sh
 
@@ -214,8 +224,9 @@ Contenido real del dump, descargado de R2 y descomprimido: 4 tablas `private`
 las RPC que usa la Function— y 28 bloques `COPY`. Es la comprobación que
 distingue un backup correcto de uno verde y vacío.
 
-Próximas ejecuciones automáticas: 02:31, 03:09 y el día 1 a las 06:39 (hora local
-del VPS, con el desfase aleatorio ya aplicado).
+Próximas ejecuciones automáticas de los tres timers de backup: 02:31, 03:09 y el
+día 1 a las 06:39 (hora local del VPS, con el desfase aleatorio ya aplicado). El
+timer de retención queda pendiente de instalar tras aprobar `CHAT_RETENTION_DAYS`.
 
 ## Privacidad
 
@@ -223,12 +234,12 @@ El dump se lleva a R2 **las preguntas de los usuarios y las respuestas de ambas
 estrategias** (`private.chat_messages`), sin IP ni user-agent. Eso tiene tres
 consecuencias que hay que tener presentes al tocar la política de datos:
 
-- Los backups son una copia de datos personales con **30 días de vida propia**
-  fuera de Supabase. Un borrado en la base no los alcanza.
+- Los backups son una copia de datos personales con la vida propia definida por
+  `BACKUP_RETENTION_DAYS` fuera de Supabase. Un borrado en la base no los alcanza.
 - Si algún día se promete un plazo de conservación en `/privacidad`, el plazo
   aplicable es el mayor de los dos: el de la base y el de los backups.
 - Ante una solicitud de supresión, la respuesta honesta incluye que la copia
-  desaparece de los backups como mucho 30 días después.
+  desaparece de los backups como mucho al agotarse `BACKUP_RETENTION_DAYS`.
 
 El bucket es privado, sin URL pública, y R2 cifra en reposo. Los dumps **no** se
 cifran con clave propia antes de subirlos: quien tenga las credenciales R2 lee el
@@ -240,7 +251,7 @@ contenido.
    lo escrito entre el último backup y el incidente.
 2. **Restauración manual.** No hay automatismo; requiere una persona.
 3. **El simulacro mensual no aplica el SQL.** Verifica descarga y descompresión.
-4. **Retención plana**: 30 diarios. Sin retención semanal ni mensual.
+4. **Retención plana**: snapshots diarios hasta `BACKUP_RETENTION_DAYS`. Sin retención semanal ni mensual.
 5. **Depende del VPS.** Si `alfredo` está caído, no hay backup esa noche; el
    check de frescura del día siguiente lo delata.
 6. **El checkout del VPS puede quedarse atrás** respecto al repo. Presupuestor

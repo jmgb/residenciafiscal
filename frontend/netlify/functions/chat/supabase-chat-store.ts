@@ -26,6 +26,12 @@ interface ChatReconciliationInput {
   report: ComparisonReport;
 }
 
+interface ChatFailureInput {
+  requestId: string;
+  status: 'failed' | 'timed_out';
+  failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
+}
+
 interface ReservationResult {
   allowed: boolean;
   reservation_microusd: number;
@@ -96,6 +102,15 @@ export class SupabaseChatStore {
       p_actual_microusd: input.actualMicrousd,
       p_actual_complete: input.actualComplete,
       p_answers: input.report.answers.map(answerForPersistence),
+    });
+    if (error) throw new Error('Supabase no disponible');
+  }
+
+  async fail(input: ChatFailureInput): Promise<void> {
+    const { error } = await this.client.rpc('fail_chat_request', {
+      p_request_id: input.requestId,
+      p_status: input.status,
+      p_failure_code: input.failureCode,
     });
     if (error) throw new Error('Supabase no disponible');
   }

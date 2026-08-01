@@ -1,0 +1,19 @@
+[Unit]
+Description=Residencia Fiscal - Purgado diario de datos del chat
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/SUPABASE_CHAT.md
+After=network-online.target
+Wants=network-online.target
+OnFailure=residenciafiscal-backup-failure@%n.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/residenciafiscal
+ExecStart=/bin/bash /home/ubuntu/residenciafiscal/scripts/privacy/purge-chat-data.sh
+NoNewPrivileges=true
+PrivateTmp=true
+TimeoutStartSec=300
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=residenciafiscal-chat-retention

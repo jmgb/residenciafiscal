@@ -38,7 +38,19 @@ export function PrivacyPage() {
           El historial visible se conserva además en tu navegador mediante localStorage. Eliminarlo
           desde la interfaz o borrar los datos del sitio solo retira esa copia local; para solicitar
           la eliminación de un registro del servidor, contacta indicando el identificador de la
-          conversación que aparece en su URL.
+          conversación que aparece en su URL. Ese identificador no basta por sí solo para acreditar
+          la identidad: verificaremos la solicitud por un canal separado.
+        </p>
+      </section>
+
+      <section className='mb-7'>
+        <h2 className='mb-2 font-heading text-lg font-semibold'>Retención y supresión</h2>
+        <p className='text-sm leading-relaxed text-muted-foreground'>
+          La aplicación elimina los registros del servidor conforme al plazo de retención aprobado y
+          ejecuta un purgado periódico. Las copias de seguridad cifradas y privadas de R2 tienen su
+          propia retención: tras una supresión, una copia puede permanecer hasta que expire ese
+          plazo. La política legal definitiva, la identidad del responsable y la base jurídica deben
+          validarse antes de ofrecer el chat como servicio abierto a terceros.
         </p>
       </section>
 

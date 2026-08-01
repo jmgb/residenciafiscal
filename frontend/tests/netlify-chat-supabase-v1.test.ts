@@ -157,4 +157,27 @@ describe('persistencia privada del chat en Supabase', () => {
       })
     ).rejects.toThrow('Supabase no disponible');
   });
+
+  it('registra un fallo técnico sin liberar la reserva', async () => {
+    const rpc = vi.fn(async () => ({ data: true, error: null }));
+    const store = new SupabaseChatStore(
+      { rpc },
+      {
+        dailyLimitMicrousd: 1_000_000,
+        reservationMicrousd: 50_000,
+      }
+    );
+
+    await store.fail({
+      requestId: 'chat-request-1',
+      status: 'failed',
+      failureCode: 'comparison_error',
+    });
+
+    expect(rpc).toHaveBeenCalledWith('fail_chat_request', {
+      p_request_id: 'chat-request-1',
+      p_status: 'failed',
+      p_failure_code: 'comparison_error',
+    });
+  });
 });

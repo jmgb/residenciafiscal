@@ -71,6 +71,7 @@ const dependencies = (
   reserveBudget: vi.fn(async () => ({ allowed: true, reservationMicrousd: 10_000 })),
   compare: vi.fn(async () => report),
   reconcileBudget: vi.fn(async () => undefined),
+  failBudget: vi.fn(async () => undefined),
   ...overrides,
 });
 
@@ -123,10 +124,12 @@ describe('Netlify Function /api/chat V1', () => {
   });
 
   it('aísla un fallo inesperado del comparador sin liberar una reserva potencialmente gastada', async () => {
+    const failBudget = vi.fn(async () => undefined);
     const deps = dependencies({
       compare: vi.fn(async () => {
         throw new Error('Authorization: Bearer secreto');
       }),
+      failBudget,
     });
 
     const response = await createChatHandler(deps)(
@@ -136,6 +139,9 @@ describe('Netlify Function /api/chat V1', () => {
     expect(response.status).toBe(503);
     expect(await response.text()).not.toContain('secreto');
     expect(deps.reconcileBudget).not.toHaveBeenCalled();
+    expect(failBudget).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'failed', failureCode: 'comparison_error' })
+    );
   });
 
   it('devuelve el protocolo comparativo bufferizado y reconcilia el coste', async () => {

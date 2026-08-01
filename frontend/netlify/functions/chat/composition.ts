@@ -66,6 +66,7 @@ export const createProductionDependencies = (
       async compare() {
         throw new Error('Chat no configurado');
       },
+      async failBudget() {},
       async reconcileBudget() {},
     };
   }
@@ -102,6 +103,7 @@ export const createProductionDependencies = (
         deadlineMs,
         strategies: [structured, fileSearch],
       }),
+    failBudget: (input) => store.fail(input),
     reconcileBudget: async ({ requestId, actualMicrousd, actualComplete, report }) => {
       await store.reconcile({
         requestId,

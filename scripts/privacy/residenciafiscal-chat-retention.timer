@@ -1,0 +1,12 @@
+[Unit]
+Description=Residencia Fiscal - Timer de retención del chat
+Documentation=file:///home/ubuntu/residenciafiscal/docs/operations/SUPABASE_CHAT.md
+
+[Timer]
+# Después del backup y de su comprobación de frescura.
+OnCalendar=*-*-* 03:20:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

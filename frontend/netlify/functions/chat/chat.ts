@@ -17,6 +17,11 @@ export interface ChatFunctionDependencies {
   enabled: boolean;
   reserveBudget(input: ChatReservationInput): Promise<BudgetReservation>;
   compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
+  failBudget(input: {
+    requestId: string;
+    status: 'failed' | 'timed_out';
+    failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
+  }): Promise<void>;
   reconcileBudget(input: {
     requestId: string;
     reservationMicrousd: number;
@@ -153,6 +158,15 @@ export const createChatHandler =
     } catch {
       // La reserva se conserva: ante uso de proveedor desconocido es más seguro
       // agotar antes el techo que liberar gasto que quizá ya se haya producido.
+      try {
+        await dependencies.failBudget({
+          requestId,
+          status: request.signal.aborted ? 'timed_out' : 'failed',
+          failureCode: request.signal.aborted ? 'aborted' : 'comparison_error',
+        });
+      } catch {
+        // Mantener la respuesta cerrada si también falla el registro del fallo.
+      }
       return jsonError(503, 'Comparación no disponible');
     }
     const actualMicrousd = report.answers.reduce(

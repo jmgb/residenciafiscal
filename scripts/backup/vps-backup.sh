@@ -16,7 +16,6 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ENV_FILE="${BACKUP_ENV_FILE:-$PROJECT_ROOT/.env}"
 
 R2_BUCKET="${BACKUP_R2_BUCKET:-residenciafiscal-backup}"
-RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-30}"
 POOLER_HOST="${BACKUP_POOLER_HOST:-aws-0-eu-west-1.pooler.supabase.com}"
 TEMP_DIR="/tmp/residenciafiscal-backup-$$"
 
@@ -62,6 +61,13 @@ R2_SECRET_ACCESS_KEY="$(read_env_var_or_current "$ENV_FILE" R2_SECRET_ACCESS_KEY
 R2_ACCOUNT_ID="$(read_env_var_or_current "$ENV_FILE" R2_ACCOUNT_ID)"
 SUPABASE_DB_PASSWORD="$(read_env_var_or_current "$ENV_FILE" SUPABASE_DB_PASSWORD)"
 SUPABASE_REF="$(read_env_var_or_current "$ENV_FILE" SUPABASE_REF)"
+BACKUP_RETENTION_DAYS="$(read_env_var_or_current "$ENV_FILE" BACKUP_RETENTION_DAYS)"
+CHAT_RETENTION_DAYS="$(read_env_var_or_current "$ENV_FILE" CHAT_RETENTION_DAYS)"
+
+# Si no hay una configuración específica para R2, acompasa los snapshots con
+# el plazo de chat aprobado. El fallback histórico de 30 días se mantiene hasta
+# que se configure la política explícita.
+RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-${CHAT_RETENTION_DAYS:-30}}"
 
 missing=()
 [[ -z "${R2_ACCESS_KEY_ID:-}"     ]] && missing+=("R2_ACCESS_KEY_ID")
@@ -73,6 +79,11 @@ missing=()
 if [[ ${#missing[@]} -gt 0 ]]; then
     echo "ERROR: Variables de entorno faltantes en $ENV_FILE:" >&2
     printf '  - %s\n' "${missing[@]}" >&2
+    exit 1
+fi
+
+if [[ ! "$RETENTION_DAYS" =~ ^[1-9][0-9]{0,3}$ ]] || (( RETENTION_DAYS > 3650 )); then
+    echo "ERROR: BACKUP_RETENTION_DAYS/CHAT_RETENTION_DAYS debe ser un entero entre 1 y 3650" >&2
     exit 1
 fi
 

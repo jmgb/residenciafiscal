@@ -56,11 +56,26 @@ La Function no escribe tablas directamente. Solo puede invocar con
   guarda la pregunta en una sola transacción;
 - `complete_chat_request`: guarda A/B, reconcilia el coste real y completa la
   petición en una sola transacción.
+- `fail_chat_request`: marca una reserva como `failed` o `timed_out` con un
+  código técnico acotado, sin guardar el diagnóstico del proveedor ni liberar
+  la reserva potencialmente consumida.
+
+Las operaciones de ciclo de vida viven en el schema privado y no se exponen por
+la Data API:
+
+- `private.purge_expired_chat_data(cutoff)`: elimina peticiones y mensajes
+  anteriores al cutoff, y después conversaciones que ya no tienen peticiones.
+- `private.delete_chat_conversation(conversation_id)`: suprime una conversación
+  completa tras verificar la identidad fuera de la base de datos.
 
 La migración canónica es
 `supabase/migrations/20260731161251_chat_persistence_and_budget.sql`. La segunda
 migración retira un permiso público inseguro de `rls_auto_enable()` que traía el
-proyecto nuevo. Los advisors de seguridad y rendimiento terminan sin incidencias.
+proyecto nuevo. Las migraciones de ciclo de vida añaden el índice de la FK de
+presupuesto y serializan el borrado. `db lint` no devuelve errores de esquema;
+los advisors mantienen avisos informativos esperables para tablas privadas con
+RLS sin políticas públicas y, mientras el índice recién creado no acumula uso,
+su posible infrautilización.
 
 ## Credenciales y fronteras
 
@@ -106,11 +121,36 @@ File Search en 6,41 s y costó 1.693 microdólares `ESTIMATED`. Total observado:
 4.542 microdólares (0,004542 USD). Las dos estrategias se ejecutaron en
 paralelo.
 
-## Privacidad pendiente
+## Retención y supresión
 
 Persistir contenido cambia el contrato anterior, que solo guardaba métricas.
-La página `/privacidad` ya declara pregunta, respuestas, citas y costes, pero
-antes de abrir el chat a terceros siguen pendientes en `TASKS.md` la identidad
-del responsable, base jurídica, encargados/transferencias y un plazo efectivo de
-retención y borrado. Hasta decidirlo, no se añade un borrado automático ni se
-promete un plazo que el sistema no aplique.
+La página `/privacidad` declara pregunta, respuestas, citas y costes. El plazo
+real se configura mediante `CHAT_RETENTION_DAYS`; el timer falla cerrado si falta
+esa variable. No se publica ni se promete un plazo hasta aprobarlo jurídicamente.
+
+Instalación del purgado diario en el VPS:
+
+```bash
+sudo bash scripts/privacy/install-chat-retention-timer.sh
+sudo systemctl start residenciafiscal-chat-retention.service
+```
+
+El procedimiento de supresión requiere verificación de identidad fuera de la
+base de datos y un ticket operativo. El UUID visible de la URL no es una prueba
+suficiente:
+
+```bash
+bash scripts/privacy/delete-chat-conversation.sh \
+  --conversation-id conversation-... \
+  --ticket PRIV-123 \
+  --confirm-delete
+```
+
+La función elimina la copia primaria de Supabase. Las copias R2 no se reescriben
+individualmente; el backup que contenga el registro desaparece al aplicar
+`BACKUP_RETENTION_DAYS` (o `CHAT_RETENTION_DAYS` si no hay override). La respuesta
+al solicitante debe informar de ese límite y no afirmar borrado inmediato de los
+backups.
+
+Siguen pendientes fuera del código: identidad legal del responsable, base
+jurídica, transferencias y contratos verificados con Supabase, OpenAI y Google.
