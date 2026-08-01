@@ -509,8 +509,12 @@ comprueban párrafo a párrafo contra la fuente.
   `countryRoutes.json`, prerenderizados por ruta y con las 29 en el sitemap.
   **Falta `schema.org`**, que era la otra mitad de esta tarea.
 - [x] Marcar cada landing de país con datos estructurados (`schema.org`) (1 de agosto de
-  2026): `BreadcrumbList` en `CountryPage` y `Legislation` en `TaxTreaty`, este último
-  solo cuando el convenio está resuelto. Sin `FAQPage` ni `Article`. Se componen en
+  2026): `BreadcrumbList` en `CountryPage` y en `SpainPage` —`/espana` monta el chat y
+  no la plantilla compartida, así que se quedaba fuera siendo la landing de mayor
+  prioridad— y `Legislation` en `TaxTreaty`, este último solo cuando el convenio de
+  **esa** página está resuelto: al navegar entre países, el render previo al efecto
+  llegaba a declarar el convenio de la jurisdicción anterior. Sin `FAQPage` ni
+  `Article`. Se componen en
   `frontend/src/lib/structured-data.ts`, se emiten desde el árbol de React —así el HTML
   prerenderizado y la SPA no divergen— y `tests/entry-server.test.tsx` comprueba que
   llegan al HTML servido. La fecha se publica como `legislationDateVersion`, nunca como

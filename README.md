@@ -206,12 +206,36 @@ npm run build       # genera el corpus y compila a dist/
 ```
 
 > [!NOTE]
-> Producción sigue en **stub**. La Function Netlify-only V1 ya ejecuta A y B en
-> paralelo y conserva Luna `high`, pero permanece cerrada hasta configurar la
-> base atómica, completar privacidad y superar un Deploy Preview real. El
-> recorrido Edge → FastAPI se conserva como opción futura para llamadas de más
-> de 60 s. Ningún recorrido real está autorizado en Production. Runbook:
-> [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
+> El chat está **activo en Production** desde el 31 de julio de 2026: la Function
+> Netlify-only V1 ejecuta A y B en paralelo y conserva Luna `high`. El rollback
+> es volver a `stub`. La activación técnica no cierra la privacidad ni la
+> revisión jurídica del corpus, que siguen pendientes. El recorrido
+> Edge → FastAPI se conserva como opción futura para llamadas de más de 60 s.
+> Runbook: [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
+
+## Errores en producción (Sentry)
+
+Sentry instrumenta **dos** de los tres runtimes: la API FastAPI
+(`src/api/sentry_config.py`) y la SPA React (`frontend/src/lib/sentry-runtime.ts`).
+La Netlify Function del chat todavía **no está cubierta**; sus fallos se observan
+por el evento estructurado `chat_request_failed`.
+
+Los dos runtimes se inicializan solo con la telemetría habilitada y un DSN
+presente, envían `sendDefaultPii: false` y borran cabeceras, cookies y cuerpo de
+la petición antes de enviar el evento: una pregunta del chat es dato fiscal y no
+debe viajar a un servicio de errores. La suite de pytest no instrumenta nada,
+aunque el `.env` local tenga la telemetría encendida, porque provoca excepciones
+a propósito.
+
+| Variable | Ámbito | Nota |
+|----------|--------|------|
+| `SENTRY_ENABLED`, `SENTRY_BACKEND_DSN` | API | Sin ambas, la API no inicializa Sentry |
+| `SENTRY_ENVIRONMENT`, `SENTRY_RELEASE`, `SENTRY_TRACES_SAMPLE_RATE` | API | Entorno, versión y muestreo de trazas |
+| `VITE_SENTRY_ENABLED`, `VITE_SENTRY_DSN` | Frontend | Todo `VITE_*` es **público** en el bundle; el DSN identifica el proyecto, no es un token |
+| `VITE_SENTRY_ENVIRONMENT`, `VITE_SENTRY_TRACES_SAMPLE_RATE` | Frontend | Equivalentes de navegador |
+| `SENTRY_ORG_SLUG`, `SENTRY_TOKEN` | Build | Solo para subir sourcemaps. **Nunca** con prefijo `VITE_` |
+
+Nombres y valores de ejemplo, en [`.env.example`](.env.example).
 
 ## Documentación
 

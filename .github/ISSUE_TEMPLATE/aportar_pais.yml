@@ -1,5 +1,5 @@
-name: Aportar la jurisprudencia de un país
-description: Proponer el corpus de residencia fiscal de tu jurisdicción para que su página se publique
+name: Aportar la jurisprudencia de un país / Contribute a country's case law
+description: Proponer el corpus de residencia fiscal de tu jurisdicción / Propose the tax residence corpus of your jurisdiction
 title: 'Aportar jurisprudencia: '
 # GitHub solo aplica etiquetas que ya existen en el repositorio: `help wanted`
 # existe, `corpus` todavía no. Si se crea, añadirla aquí.
@@ -24,11 +24,39 @@ body:
         [`sentencias/AVISO_LEGAL.md`](https://github.com/jmgb/residenciafiscal/blob/main/sentencias/AVISO_LEGAL.md)
         para el criterio que se aplicó al corpus español.
 
+        **Puedes responder en inglés o en español.**
+
+        ---
+
+        EN — Thank you. The pipeline is country-agnostic: it analyses rulings, checks
+        every quotation against the source document and publishes the court's
+        reasoning with its page number. The legal judgement is not: the Spanish case
+        law was delimited with tax expertise, and opening another jurisdiction
+        requires the same.
+
+        You don't need to write code, and you don't need to provide all three things
+        at once — if you can only point to your country's official source, open the
+        issue anyway. You do need to know the subject: this project is addressed to
+        **professionals in taxation and international tax law**.
+
+        Before you continue: **do not attach documents here.** We first agree on the
+        source and its reuse conditions; without a clear licence the corpus is not
+        published. See
+        [`sentencias/AVISO_LEGAL.md`](https://github.com/jmgb/residenciafiscal/blob/main/sentencias/AVISO_LEGAL.md)
+        for the criteria applied to the Spanish corpus.
+
+        **Answer in English or in Spanish, whichever you prefer.**
+
   - type: input
     id: pais
     attributes:
-      label: País
-      description: Jurisdicción cuya jurisprudencia propones. Cualquier país, no solo los que ya tienen ruta en la web.
+      label: País / Country
+      description: |
+        Jurisdicción cuya jurisprudencia propones. Cualquier país, no solo los que ya
+        tienen ruta en la web.
+
+        EN — The jurisdiction whose case law you are proposing. Any country, not only
+        those that already have a page on the site.
       placeholder: Portugal
     validations:
       required: true
@@ -36,67 +64,87 @@ body:
   - type: textarea
     id: fuente
     attributes:
-      label: Fuente pública oficial de resoluciones
+      label: Fuente pública oficial de resoluciones / Official public source of rulings
       description: |
         Buscador o repositorio oficial del que se descargarían las resoluciones, con URL.
         Indica si los documentos llevan capa de texto o son escaneados: el pipeline no
         hace OCR, así que un PDF escaneado hoy no se procesa.
+
+        EN — The official search engine or repository the rulings would be downloaded
+        from, with its URL. Say whether the documents have an embedded text layer or
+        are scanned images: there is no OCR in the pipeline, so a scanned PDF cannot
+        be processed today.
       placeholder: |
-        Buscador: https://...
-        Órganos cubiertos: Supremo Tribunal Administrativo, ...
-        Formato: PDF con texto embebido / escaneado / HTML
+        Buscador / Search engine: https://...
+        Órganos cubiertos / Courts covered: Supremo Tribunal Administrativo, ...
+        Formato / Format: PDF con texto embebido / escaneado / HTML
     validations:
       required: true
 
   - type: textarea
     id: reutilizacion
     attributes:
-      label: Condiciones de reutilización
+      label: Condiciones de reutilización / Reuse conditions
       description: |
         Qué permite la fuente: licencia, términos de uso o norma que regule la reutilización
         de las resoluciones. Indica también si van pseudonimizadas en origen o si habría que
         anonimizarlas antes de publicarlas.
+
+        EN — What the source allows: licence, terms of use or the rule governing reuse
+        of the rulings. Say also whether they are pseudonymised at source or would have
+        to be anonymised before publication.
     validations:
       required: true
 
   - type: textarea
     id: precepto
     attributes:
-      label: Precepto nacional que decide la residencia
+      label: Precepto nacional que decide la residencia / National provision that decides residence
       description: |
         El equivalente al art. 9 LIRPF español: la norma que define cuándo una persona física
         es residente fiscal. Añade el enlace a su texto oficial y, si existe, el boletín oficial
         del que se puede descargar de forma estructurada.
+
+        EN — The equivalent of the Spanish art. 9 LIRPF: the provision that defines when
+        an individual is a tax resident. Add a link to its official text and, if there is
+        one, the official gazette it can be downloaded from in a structured format.
       placeholder: |
-        Norma: art. 16 CIRS
-        Texto oficial: https://...
-        Boletín con datos abiertos: sí / no
+        Norma / Provision: art. 16 CIRS
+        Texto oficial / Official text: https://...
+        Boletín con datos abiertos / Gazette with open data: sí / no — yes / no
 
   - type: input
     id: volumen
     attributes:
-      label: Volumen aproximado
-      description: Cuántas resoluciones sobre residencia fiscal calculas que existen y en qué rango de años. Una cifra orientativa vale.
-      placeholder: ~80 resoluciones, 2015-2025
+      label: Volumen aproximado / Approximate volume
+      description: |
+        Cuántas resoluciones sobre residencia fiscal calculas que existen y en qué rango de
+        años. Una cifra orientativa vale.
+
+        EN — How many tax residence rulings you estimate exist, and over what range of
+        years. A rough figure is enough.
+      placeholder: ~80 resoluciones / rulings, 2015-2025
 
   - type: dropdown
     id: aportacion
     attributes:
-      label: Qué puedes aportar
+      label: Qué puedes aportar / What you can contribute
+      description: |
+        EN — Pick every option that applies.
       multiple: true
       options:
-        - Localizar y descargar las resoluciones
-        - Aportar la normativa nacional de residencia
-        - Validar jurídicamente el análisis del modelo (fiscalidad / tributación)
-        - Traducir o adaptar el schema de extracción a la terminología nacional
-        - Solo señalo la fuente; no puedo participar en el resto
+        - Localizar y descargar las resoluciones / Find and download the rulings
+        - Aportar la normativa nacional de residencia / Provide the national residence legislation
+        - Validar jurídicamente el análisis del modelo / Legally validate the model's analysis
+        - Traducir o adaptar el schema de extracción / Translate or adapt the extraction schema
+        - Solo señalo la fuente; no puedo participar en el resto / I can only point to the source
     validations:
       required: true
 
   - type: textarea
     id: revision
     attributes:
-      label: Quién validaría el análisis
+      label: Quién validaría el análisis / Who would validate the analysis
       description: |
         El análisis lo redacta un modelo de lenguaje y puede equivocarse, así que un país no se
         publica sin la validación de un profesional del derecho tributario de esa jurisdicción.
@@ -104,22 +152,33 @@ body:
         asumir esa validación. No hace falta ejercer como abogado, pero sí acreditar
         conocimiento de la materia.
 
+        EN — The analysis is drafted by a language model and can be wrong, so no country is
+        published without validation by a tax law professional from that jurisdiction. Tell
+        us about your specialisation in international or domestic taxation, or who could take
+        that validation on. You don't need to practise as a lawyer, but you do need
+        demonstrable knowledge of the subject.
+
   - type: textarea
     id: contexto
     attributes:
-      label: Contexto adicional
+      label: Contexto adicional / Additional context
       description: |
         Particularidades del país que afecten al análisis: criterio de días distinto, reglas
         de desempate propias, instancias administrativas previas al tribunal, etc.
 
+        EN — Anything specific to the country that affects the analysis: a different day-count
+        test, its own tie-breaker rules, administrative stages before the courts, and so on.
+
   - type: checkboxes
     id: comprobaciones
     attributes:
-      label: Comprobaciones previas
+      label: Comprobaciones previas / Before you open the issue
+      description: |
+        EN — All three are required.
       options:
-        - label: He comprobado que no hay ya una issue abierta para este país.
+        - label: He comprobado que no hay ya una issue abierta para este país. / I have checked that there is no open issue for this country.
           required: true
-        - label: La fuente que propongo es pública y oficial, no una recopilación de terceros.
+        - label: La fuente que propongo es pública y oficial, no una recopilación de terceros. / The source I propose is public and official, not a third-party compilation.
           required: true
-        - label: Entiendo que no debo adjuntar documentos a esta issue antes de acordar sus condiciones de reutilización.
+        - label: Entiendo que no debo adjuntar documentos a esta issue antes de acordar sus condiciones de reutilización. / I understand that I must not attach documents to this issue before its reuse conditions are agreed.
           required: true

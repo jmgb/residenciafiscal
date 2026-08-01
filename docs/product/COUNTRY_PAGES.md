@@ -133,7 +133,10 @@ Y su propia metadata de buscador, que ya no se compone en el código:
 
 Cada página de país emite dos bloques JSON-LD, y solo dos:
 
-- **`BreadcrumbList`** con la jerarquía del sitio, en `CountryPage`.
+- **`BreadcrumbList`** con la jerarquía del sitio, en `CountryPage` y también en `SpainPage`.
+  `/espana` no usa la plantilla compartida —monta el chat—, así que era la única landing sin
+  marcar, justo la de mayor prioridad del sitemap. `tests/entry-server.test.tsx` recorre
+  `COUNTRY_ROUTES` entera para que la próxima página con plantilla propia no se caiga igual.
 - **`Legislation`** con el artículo de residencia del convenio, en `TaxTreaty`, y **solo cuando el
   convenio está resuelto**: se declara el precepto que la página publica, no el identificador que
   esperaba encontrar. Un país sin convenio no emite este bloque.

@@ -18,9 +18,11 @@ tributación internacional**.
 
 Empieza abriendo una issue con la plantilla
 [**Aportar la jurisprudencia de un país**](https://github.com/jmgb/residenciafiscal/issues/new?template=aportar_pais.yml).
-Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento. Si no
-usas GitHub, escribe a **info@residenciafiscal.org**: es el mismo canal, no un
-plan B. La versión pública de esta guía está en
+Ahí se acuerda la fuente y sus condiciones antes de mover ningún documento. La
+plantilla es **bilingüe (español e inglés)** y se puede responder en cualquiera de
+los dos idiomas: la invitación es mundial y no puede exigir español para entrar.
+Si no usas GitHub, escribe a **info@residenciafiscal.org**: es el mismo canal, no
+un plan B. La versión pública de esta guía está en
 [residenciafiscal.org/colaborar](https://residenciafiscal.org/colaborar).
 
 ### Quién puede colaborar

@@ -359,6 +359,26 @@ escribe en `reports/`, que está en `.gitignore` porque el repositorio es públi
 Métricas, trampas de la API y por qué divergen:
 [`docs/operations/WEEKLY_TRAFFIC_REPORT.md`](docs/operations/WEEKLY_TRAFFIC_REPORT.md).
 
+## Errores en producción (Sentry)
+
+Hay **dos** runtimes instrumentados y uno que no: la API FastAPI
+(`src/api/sentry_config.py`) y la SPA React (`frontend/src/lib/sentry-runtime.ts`)
+mandan a Sentry; la Netlify Function del chat **no está cubierta**, y sus fallos
+solo se ven hoy en el evento estructurado `chat_request_failed`. No des por
+instrumentado el chat productivo.
+
+Los dos initializers fallan cerrado —sin `*_ENABLED` y sin DSN no arrancan— y
+borran cabeceras, cookies y cuerpo antes de enviar el evento, con
+`send_default_pii=False`. Es deliberado: una pregunta del chat es dato fiscal y
+no puede acabar en un servicio de errores. `init_sentry()` además se desactiva
+bajo pytest, porque la suite provoca excepciones a propósito.
+
+Variables en `.env.example` y tabla en [`README.md`](README.md#errores-en-producción-sentry).
+Dos trampas: todo `VITE_*` viaja **público** en el bundle (el DSN puede, un token
+no), y `SENTRY_TOKEN`/`SENTRY_ORG_SLUG` son solo del build de sourcemaps y nunca
+llevan ese prefijo. El token de Sentry filtrado en la historia de git el
+2026-03-19 está revocado; la variable canónica vigente es `SENTRY_TOKEN`.
+
 ## Costes del chat
 
 Cada respuesta real del chat debe mostrar y registrar por separado tokens,

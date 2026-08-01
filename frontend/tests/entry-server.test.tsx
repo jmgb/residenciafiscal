@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { render } from '@/entry-server';
 import { readEmbeddedTreatyPreload, TREATY_PRELOAD_ELEMENT_ID } from '@/lib/treaty-preload';
 import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
@@ -65,6 +66,40 @@ describe('entry-server', () => {
     expect(html).toContain('no tienen convenio');
     expect(html).not.toContain('Cargando el convenio');
   });
+
+  it('sirve los datos estructurados en el HTML, que es donde los lee el bot', () => {
+    const html = render('/francia', { [ENTRY.boeId]: { entry: ENTRY, texto: TEXTO } });
+
+    const bloques = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
+      (match) => JSON.parse(match[1])
+    );
+    expect(bloques.map((bloque) => bloque['@type'])).toEqual(['BreadcrumbList', 'Legislation']);
+    expect(bloques[0].itemListElement[1].item).toBe('https://residenciafiscal.org/francia');
+    expect(bloques[1].legislationIdentifier).toBe('BOE-A-1997-12729');
+  });
+
+  it('marca todas las rutas de país, también las que no usan CountryPage', () => {
+    // `/espana` se renderiza con `SpainPage`, no con la plantilla compartida, y
+    // por eso se quedó sin datos estructurados: es la landing con más prioridad
+    // del sitio. El gate recorre la lista entera para que la próxima página de
+    // país con plantilla propia no vuelva a caerse en silencio.
+    for (const route of COUNTRY_ROUTES) {
+      const html = render(route.path);
+      const bloques = [
+        ...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g),
+      ].map((match) => JSON.parse(match[1]));
+      const breadcrumb = bloques.find((bloque) => bloque['@type'] === 'BreadcrumbList');
+
+      expect(breadcrumb, `${route.path} sin BreadcrumbList`).toBeDefined();
+      expect(breadcrumb.itemListElement.at(-1)).toMatchObject({
+        name: route.name,
+        item: `https://residenciafiscal.org${route.path}`,
+      });
+    }
+    // Renderiza el árbol entero una vez por país, así que es el test más caro de
+    // la suite y su coste crece con cada ruta nueva. Con los 5 s por defecto
+    // agotaba el plazo de forma intermitente al competir por CPU.
+  }, 30_000);
 
   it('renderiza también las rutas que no son de país', () => {
     expect(render('/manifiesto')).toContain('Manifiesto');
