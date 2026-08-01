@@ -221,9 +221,11 @@ Los tres servicios se lanzaron a mano tras instalar los timers, con
 - **Frescura**: `Backup freshness OK … (0h old, gzip ok)`.
 - **Simulacro**: `Backup restore drill OK … (3074 lines decompressed)`.
 
-Contenido real del dump, descargado de R2 y descomprimido: 4 tablas `private`
-(`chat_conversations`, `chat_messages`, `chat_requests`,
-`chat_retention_purge_audit`),
+Contenido real del dump del 31 de julio, descargado de R2 y descomprimido: 5
+tablas `private` (`chat_conversations`, `chat_daily_budgets`, `chat_messages`,
+`chat_requests`, `chat_retention_purge_audit`). Los dumps posteriores a la
+migración `20260801094912` deben contener 4 tablas `private`: se elimina
+`chat_daily_budgets` porque ya no existe el presupuesto monetario global,
 23 tablas `auth`, el registro de `supabase_migrations`, 7 funciones —incluidas
 las RPC que usa la Function— y 28 bloques `COPY`. Es la comprobación que
 distingue un backup correcto de uno verde y vacío.
