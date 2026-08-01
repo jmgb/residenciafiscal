@@ -232,7 +232,8 @@ distingue un backup correcto de uno verde y vacío.
 
 Próximas ejecuciones automáticas de los tres timers de backup: 02:31, 03:09 y el
 día 1 a las 06:39 (hora local del VPS, con el desfase aleatorio ya aplicado). El
-timer de retención queda pendiente de instalar tras aprobar `CHAT_RETENTION_DAYS`.
+timer de retención está instalado y activo; el 2026-08-01 ejecutó el primer
+purgado real con 15 días de retención, cero candidatos y cero borrados.
 
 ## Privacidad
 

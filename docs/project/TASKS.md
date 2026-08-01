@@ -494,9 +494,12 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     conversaciones huérfanas, con cutoff, timer, dry-run, límite por lote y
     auditoría privada. Coordinarlo con R2 sigue pendiente de la aprobación del
     plazo: borrar Supabase no borra un backup existente.
-  - [ ] Aprobar legalmente el plazo y configurar `CHAT_RETENTION_DAYS`,
-    `CHAT_RETENTION_PURGE_ENABLED=true` y, tras observar dry-run,
-    `CHAT_RETENTION_DRY_RUN=false`.
+  - [x] Configurar técnicamente el plazo operativo en 15 días y activar
+    `CHAT_RETENTION_PURGE_ENABLED=true` tras el dry-run. La primera ejecución
+    real con `CHAT_RETENTION_DRY_RUN=false` terminó con cero candidatos y cero
+    borrados.
+  - [ ] Obtener y archivar la aprobación jurídica formal del plazo, base jurídica
+    y texto de `/privacidad`; la activación operativa no sustituye ese requisito.
   - [x] Implementar y probar el procedimiento de supresión solicitado por el
     usuario. Sin cuentas, la identidad se verifica fuera de la base de datos,
     se exige ticket y confirmación, y el UUID visible no basta por sí solo.

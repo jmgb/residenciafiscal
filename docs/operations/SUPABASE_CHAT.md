@@ -126,7 +126,9 @@ paralelo.
 Persistir contenido cambia el contrato anterior, que solo guardaba métricas.
 La página `/privacidad` declara pregunta, respuestas, citas y costes. El plazo
 real se configura mediante `CHAT_RETENTION_DAYS`; el timer falla cerrado si falta
-esa variable. No se publica ni se promete un plazo hasta aprobarlo jurídicamente.
+esa variable. La operación actual del VPS usa 15 días, con el borrado activado
+tras la autorización operativa explícita del proyecto; esto no sustituye la
+aprobación jurídica formal ni cambia lo que debe declarar `/privacidad`.
 
 El job sigue el patrón operativo de Presupuestor:
 
@@ -154,6 +156,10 @@ La instalación del timer no activa el borrado. La secuencia segura es: instalar
 observar dry-run durante el periodo acordado, revisar la auditoría con compliance
 y solo entonces configurar `CHAT_RETENTION_PURGE_ENABLED=true` y, cuando proceda,
 `CHAT_RETENTION_DRY_RUN=false`.
+
+Estado operativo a 2026-08-01: `CHAT_RETENTION_DAYS=15`, job habilitado,
+`CHAT_RETENTION_DRY_RUN=false` y primera ejecución real completada con cero
+candidatos y cero borrados. El timer diario queda activo en el VPS `alfredo`.
 
 El procedimiento de supresión requiere verificación de identidad fuera de la
 base de datos y un ticket operativo. El UUID visible de la URL no es una prueba
