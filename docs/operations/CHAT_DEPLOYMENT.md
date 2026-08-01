@@ -162,8 +162,7 @@ prioridad; nunca corta una cita literal. Luna conserva `high`, pero su salida
 total está limitada a 4.000 tokens. El techo anterior de 1.200 truncó el JSON
 en una llamada real porque incluye los tokens de razonamiento; 4.000 conserva
 margen sin volver al valor abierto de 6.000. Gemini File Search tiene un techo
-independiente de 2.000 tokens de salida. La reserva por petición debe dimensionarse
-con ambos límites y el máximo observado de recuperación documental.
+independiente de 2.000 tokens de salida.
 
 ## Despliegue seguro de la V1
 

@@ -184,11 +184,14 @@ cd /ruta/al/repo/frontend
 Esto afecta a la tarea de integración local del plan del chat, que daba por
 hecho que `netlify dev` funcionaría.
 
-### El plugin de Sentry falla sin token, pero no rompe el build
+### El plugin de Sentry exige un token válido
 
-Sin `SENTRY_TOKEN`, `@sentry/vite-plugin` registra `Invalid token (http status:
-401)` al crear la release y al subir sourcemaps. El build continúa y el deploy
-sale. Es ruido esperable en despliegues manuales desde local.
+Con un `SENTRY_TOKEN` inválido, `@sentry/vite-plugin` registra HTTP 401 al crear
+la release y subir sourcemaps, aunque el build puede continuar. Si la variable
+falta, la configuración actual no activa el plugin. El build de producción del
+1 de agosto de 2026 confirmó autenticación correcta, creación de release y
+subida de los cuatro artefactos de sourcemap; un 401 futuro vuelve a ser una
+incidencia de credencial, no ruido esperado.
 
 ## Cómo reproducir
 

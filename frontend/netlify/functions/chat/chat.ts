@@ -102,6 +102,25 @@ const parseQuestion = async (request: Request): Promise<ParsedChatRequest | null
 
 const event = (name: string, data: unknown) => `event: ${name}\ndata: ${JSON.stringify(data)}\n\n`;
 
+type ChatFailureStage = 'record' | 'compare' | 'complete';
+
+const logChatFailure = (input: {
+  requestId: string;
+  failureCode: string;
+  stage: ChatFailureStage;
+  status?: 'failed' | 'timed_out';
+}) => {
+  console.error(
+    JSON.stringify({
+      event: 'chat_request_failed',
+      request_id: input.requestId,
+      failure_code: input.failureCode,
+      stage: input.stage,
+      ...(input.status ? { status: input.status } : {}),
+    })
+  );
+};
+
 export const serializeComparison = (report: ComparisonReport): string => {
   const events: string[] = [];
   for (const answer of report.answers) {
@@ -142,6 +161,7 @@ export const createChatHandler =
         question: parsed.question,
       });
     } catch {
+      logChatFailure({ requestId, failureCode: 'record_error', stage: 'record' });
       return jsonError(503, 'Registro de conversación no disponible');
     }
     const effectiveRequestId = recordedRequest.requestId;
@@ -151,11 +171,19 @@ export const createChatHandler =
       report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
     } catch {
       // El fallo se registra sin exponer el diagnóstico del proveedor.
+      const status = request.signal.aborted ? 'timed_out' : 'failed';
+      const failureCode = request.signal.aborted ? 'aborted' : 'comparison_error';
+      logChatFailure({
+        requestId: effectiveRequestId,
+        failureCode,
+        stage: 'compare',
+        status,
+      });
       try {
         await dependencies.failRequest({
           requestId: effectiveRequestId,
-          status: request.signal.aborted ? 'timed_out' : 'failed',
-          failureCode: request.signal.aborted ? 'aborted' : 'comparison_error',
+          status,
+          failureCode,
         });
       } catch {
         // Mantener la respuesta cerrada si también falla el registro del fallo.
@@ -175,6 +203,11 @@ export const createChatHandler =
         report,
       });
     } catch {
+      logChatFailure({
+        requestId: effectiveRequestId,
+        failureCode: 'completion_error',
+        stage: 'complete',
+      });
       return jsonError(503, 'Registro de coste no disponible');
     }
     return new Response(serializeComparison(report), {

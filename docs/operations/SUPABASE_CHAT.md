@@ -69,14 +69,13 @@ la Data API:
 
 La migración inicial histórica es
 `supabase/migrations/20260731161251_chat_persistence_and_budget.sql`; la
-migración vigente
-`supabase/migrations/20260801094912_chat_message_limit_without_budget.sql`
-elimina la tabla y columnas de presupuesto monetario y deja solo el coste real
+migración vigente `20260801104446_restore_chat_observability_only.sql` elimina
+la tabla y columnas de presupuesto monetario y deja solo el coste real
 observado. La segunda migración retira un permiso público inseguro de
 `rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de
-vida serializan el borrado. `db lint` no devuelve errores de esquema;
-los advisors mantienen avisos informativos esperables para tablas privadas con
-RLS sin políticas públicas.
+vida serializan el borrado. `db lint` no devuelve errores de esquema; los
+advisors mantienen avisos informativos esperables para tablas privadas con RLS
+sin políticas públicas.
 
 ## Credenciales y fronteras
 
@@ -112,8 +111,8 @@ Una comprobación real ejecutada mediante la API guardó una consulta, tres
 mensajes y dos respuestas, registró 2.000 microdólares de coste observado y
 eliminó después los registros sintéticos. La idempotencia de la consulta se
 prueba reutilizando el mismo par `conversation_id`/`user_message_id`; no se
-crean filas duplicadas ni se reserva dinero. No imprimir claves ni cuerpos reales
-al validar producción.
+crean filas duplicadas ni se reserva dinero. No imprimir claves ni cuerpos
+reales al validar producción.
 
 El smoke productivo del 31 de julio devolvió protocolo 2 y HTTP 200 en 20,23 s;
 por contrato, el handler solo responde 200 después de completar las dos RPC. A

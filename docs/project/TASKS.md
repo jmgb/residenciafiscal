@@ -513,16 +513,14 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
   - [ ] Implementar un límite fuerte por usuario autenticado cuando existan
     cuentas y una identidad estable; no convertir el almacenamiento local en
     prueba de identidad.
-  - [ ] Instrumentar errores y gasto. `chat_cost_reconciled`
-    (`frontend/netlify/functions/chat/composition.ts:112`) solo se emite en el
-    camino feliz; las respuestas 503 no emiten ningún evento con `request_id`, así que hoy no hay sobre
-    qué alertar cuando algo falla. Emitir un evento de fallo equivalente, elegir
-    canal (drenaje de logs de Netlify o Sentry, que aún no cubre la Function) y
-    solo entonces configurar alertas por gasto y por tasa de error. Queda además
-    verificar en el histórico productivo que el evento aparece con costes y
-    tokens de A/B y sin pregunta ni respuesta: el contrato está cubierto por
-    test, pero la consulta inmediata del log solo mostró la duración de la
-    Function.
+  - [x] Instrumentar los fallos 503 con `request_id`, `failure_code` y etapa
+    (`record`, `compare`, `complete`) mediante el evento estructurado
+    `chat_request_failed`, sin registrar la excepción del proveedor ni contenido
+    fiscal. El contrato queda cubierto por test.
+  - [ ] Elegir el canal operativo (drenaje de logs de Netlify o Sentry, que aún
+    no cubre la Function), configurar alertas por tasa de error y gasto, y
+    verificar en producción que `chat_request_failed` y
+    `chat_cost_reconciled` llegan sin pregunta ni respuesta.
   - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la medición. B sale
     `ESTIMATED` cuando la Interactions API cita documentos pero devuelve cero
     tokens de documento
@@ -539,7 +537,8 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     scope Functions y rotarlas durante el cambio.
 - [ ] **Completar la protección operativa del endpoint live.** La V1 ya tiene
   rate limit, cierre por bandera, límite blando configurable de sesión y ledger
-  privado en Supabase. Falta cerrar observabilidad y coste contable de Gemini;
+  privado en Supabase. Falta configurar alertas operativas y cerrar el coste
+  contable de Gemini;
   el límite fuerte por usuario queda condicionado a disponer de cuentas.
 - [ ] **Requisitos legales pendientes con el chat real activo.** La última
   pregunta autosuficiente viaja a OpenAI para A y a Google/Gemini para B; la

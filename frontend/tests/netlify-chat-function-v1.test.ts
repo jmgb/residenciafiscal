@@ -97,8 +97,11 @@ describe('Netlify Function /api/chat V1', () => {
   });
 
   it('falla cerrado si no puede registrar la consulta', async () => {
+    let attemptedRequestId = '';
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const deps = dependencies({
-      recordRequest: vi.fn(async () => {
+      recordRequest: vi.fn(async ({ requestId }) => {
+        attemptedRequestId = requestId;
         throw new Error('ledger unavailable');
       }),
     });
@@ -108,6 +111,14 @@ describe('Netlify Function /api/chat V1', () => {
 
     expect(response.status).toBe(503);
     expect(deps.compare).not.toHaveBeenCalled();
+    expect(errorLog).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: 'chat_request_failed',
+        request_id: attemptedRequestId,
+        failure_code: 'record_error',
+        stage: 'record',
+      })
+    );
   });
 
   it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
@@ -126,7 +137,8 @@ describe('Netlify Function /api/chat V1', () => {
   });
 
   it('aísla un fallo inesperado del comparador y registra el fallo técnico', async () => {
-    const failRequest = vi.fn(async () => undefined);
+    const failRequest = vi.fn<ChatFunctionDependencies['failRequest']>(async () => undefined);
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const deps = dependencies({
       compare: vi.fn(async () => {
         throw new Error('Authorization: Bearer secreto');
@@ -144,6 +156,44 @@ describe('Netlify Function /api/chat V1', () => {
     expect(failRequest).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'failed', failureCode: 'comparison_error' })
     );
+    const failedEvent = errorLog.mock.calls
+      .map(([entry]) => JSON.parse(String(entry)) as Record<string, unknown>)
+      .find((entry) => entry.event === 'chat_request_failed');
+    expect(failedEvent).toMatchObject({
+      event: 'chat_request_failed',
+      request_id: expect.stringMatching(/^chat-/),
+      failure_code: 'comparison_error',
+      stage: 'compare',
+      status: 'failed',
+    });
+    expect(JSON.stringify(errorLog.mock.calls)).not.toContain('Authorization: Bearer secreto');
+    const failRequestCall = failRequest.mock.calls[0];
+    if (!failRequestCall) throw new Error('missing fail request call');
+    expect(failedEvent?.request_id).toBe((failRequestCall[0] as { requestId: string }).requestId);
+  });
+
+  it('registra un fallo de persistencia de coste con request_id y failure_code', async () => {
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const deps = dependencies({
+      completeRequest: vi.fn(async () => {
+        throw new Error('database unavailable');
+      }),
+    });
+
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+
+    expect(response.status).toBe(503);
+    const failedEvent = errorLog.mock.calls
+      .map(([entry]) => JSON.parse(String(entry)) as Record<string, unknown>)
+      .find((entry) => entry.event === 'chat_request_failed');
+    expect(failedEvent).toMatchObject({
+      event: 'chat_request_failed',
+      request_id: expect.stringMatching(/^chat-/),
+      failure_code: 'completion_error',
+      stage: 'complete',
+    });
   });
 
   it('devuelve el protocolo comparativo bufferizado y registra el coste', async () => {

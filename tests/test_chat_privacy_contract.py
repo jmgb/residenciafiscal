@@ -67,8 +67,8 @@ def test_la_automatizacion_exige_retencion_explicita_y_no_muestra_contenido() ->
     assert "CHAT_RETENTION_PURGE_ENABLED" in purge
     assert "CHAT_RETENTION_DRY_RUN" in purge
     assert "CHAT_RETENTION_BATCH_LIMIT" in purge
-    assert ':-false' in purge
-    assert ':-true' in purge
+    assert ":-false" in purge
+    assert ":-true" in purge
     assert "Falta CHAT_RETENTION_DAYS" in purge
     assert "content" not in purge.lower()
 
