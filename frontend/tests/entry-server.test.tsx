@@ -68,6 +68,15 @@ describe('entry-server', () => {
     expect(html).not.toContain('Cargando el convenio');
   });
 
+  it('publica en /espana la sección estática que lee un buscador sin JavaScript', () => {
+    const html = render('/espana');
+
+    expect(html).toContain('La residencia fiscal en España: qué dice el art. 9 LIRPF');
+    expect(html).toContain('Permanencia de más de 183 días');
+    expect(html).toContain('Núcleo principal de los intereses económicos');
+    expect(html).toContain('no una aprobación humana');
+  });
+
   it('sirve los datos estructurados en el HTML, que es donde los lee el bot', () => {
     const html = render('/francia', { [ENTRY.boeId]: { entry: ENTRY, texto: TEXTO } });
 

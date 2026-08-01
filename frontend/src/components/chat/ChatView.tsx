@@ -1,6 +1,6 @@
 import { AlertTriangle } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import { type CountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
 import {
@@ -95,7 +95,13 @@ export function ChatView({
   canonicalPath = '/',
   country = SPAIN_ROUTE,
 }: ChatViewProps) {
-  usePageTitle(undefined, canonicalPath);
+  const { pathname } = useLocation();
+  // El título es el de la ruta de país, escrito en `countryRoutes.json`: es el
+  // mismo que fija el prerender, y componerlo aquí haría divergir bot y SPA.
+  // `/consulta` y `/c/:id` heredan el de España porque canonicalizan allí, pero
+  // solo la URL canónica se indexa: un crawler con JavaScript no debe ver cómo
+  // estas rutas deshacen el `noindex` de la shell.
+  usePageTitle(country.title, canonicalPath, country.description, pathname === canonicalPath, true);
   const { conversationId } = useParams();
   const navigate = useNavigate();
 

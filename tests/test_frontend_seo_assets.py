@@ -132,9 +132,42 @@ def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
     redirects = config["redirects"]
 
     redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in redirects}
-    for path in ("/manifiesto", "/metodologia", "/espana/fuentes", "/colaborar"):
+    for path in ("/manifiesto", "/metodologia", "/espana/fuentes", "/colaborar", "/privacidad"):
         assert (path, f"{path}/index.html") in redirect_pairs
-    assert redirects[-1] == {"from": "/*", "to": "/index.html", "status": 200}
+    assert redirects[-1] == {"from": "/*", "to": "/404.html", "status": 404}
+
+
+def test_spa_only_routes_keep_serving_the_shell_before_the_404_fallback() -> None:
+    """`/consulta` y `/c/:id` no tienen fichero físico: sin regla propia, el
+    fallback 404 las mataría. Deben servir la shell con 200 y quedar antes."""
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    redirects = config["redirects"]
+
+    fallback = redirects.index(next(r for r in redirects if r["from"] == "/*"))
+    for path in ("/consulta", "/c/*"):
+        rule = next(r for r in redirects if r["from"] == path)
+        assert rule["to"] == "/index.html"
+        assert rule["status"] == 200
+        assert redirects.index(rule) < fallback
+
+
+def test_unknown_routes_are_a_real_404_not_a_soft_404() -> None:
+    """Antes cualquier ruta inexistente devolvía la shell con 200, `robots`
+    index y canonical hacia `/` (que además redirige): un soft 404 por URL."""
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    fallback = config["redirects"][-1]
+
+    assert fallback == {"from": "/*", "to": "/404.html", "status": 404}
+
+
+def test_the_spa_shell_is_not_indexable() -> None:
+    """Desde que `/` redirige a `/espana`, la shell no es ninguna página
+    pública: solo la sirven `/consulta` y `/c/*`. El prerender reescribe la
+    meta `robots` de cada ruta real, así que puede ser `noindex` sin coste."""
+    shell = (PROJECT_ROOT / "frontend" / "index.html").read_text(encoding="utf-8")
+
+    assert '<meta name="robots" content="noindex, follow" />' in shell
+    assert '<meta name="robots" content="index, follow" />' not in shell
 
 
 def test_collaborate_route_serves_its_prerender() -> None:

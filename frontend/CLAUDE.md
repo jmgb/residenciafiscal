@@ -186,10 +186,14 @@ lo hay. `main.tsx` instala además la recuperación de `vite:preloadError`, que
 recarga **una vez por bundle** cuando falta un chunk del deploy anterior.
 
 Dos trampas antes de tocar `netlify.toml`: sus cabeceras se aplican por **ruta
-pedida** (una regla para `/index.html` no cubre `/`), y el fallback `/*` captura
-también `/assets/*`, de modo que sin una regla de 404 previa un chunk borrado se
-cachea un año como HTML. Contrato completo, tabla de rutas y verificación en
-producción: [`docs/operations/CACHE_AND_RELEASES.md`](../docs/operations/CACHE_AND_RELEASES.md).
+pedida** (una regla para `/index.html` no cubre `/`), y el fallback `/*` **ya no
+sirve la shell**: devuelve `404.html` con 404, porque toda ruta pública tiene
+fichero prerenderizado y una URL inexistente servida con 200 era un soft 404
+(la shell además es `noindex`). Las únicas rutas sin fichero físico —`/consulta`
+y `/c/*`— tienen su propia regla 200 antes del fallback; si añades otra ruta
+solo-SPA, necesita la suya o morirá con 404. Contrato completo, tabla de rutas y
+verificación en producción:
+[`docs/operations/CACHE_AND_RELEASES.md`](../docs/operations/CACHE_AND_RELEASES.md).
 
 ## Despliegue y analítica
 

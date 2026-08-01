@@ -76,6 +76,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/privacidad"
+  to = "/privacidad/index.html"
+  status = 200
+  force = true
+
 # La home real del sitio es `/espana`: es la que publica el sitemap con
 # prioridad 1.0 y la que el prerenderizado escribe con contenido. `/` servía
 # `dist/index.html`, que conserva el `<div id="root">` vacío porque el
@@ -105,7 +111,25 @@
   to = "/404.html"
   status = 404
 
+# Únicas rutas sin fichero físico que deben servir la SPA: la interfaz de
+# consulta y las conversaciones. Van antes del fallback porque este ya no
+# devuelve la shell.
 [[redirects]]
-  from = "/*"
+  from = "/consulta"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "/c/*"
+  to = "/index.html"
+  status = 200
+
+# Toda ruta pública tiene fichero prerenderizado y las de aplicación tienen su
+# regla arriba, así que lo que llega aquí no existe. Antes el fallback devolvía
+# la shell con 200, `robots: index` y canonical hacia `/` —que además
+# redirige—: un soft 404 por cada URL inventada. La función del chat no pasa
+# por aquí: declara su propio path `/api/chat`.
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

@@ -96,6 +96,15 @@ function fakeLayout(element: HTMLElement, clientHeight: number, scrollHeight: ()
   Object.defineProperty(element, 'scrollHeight', { configurable: true, get: scrollHeight });
 }
 
+/** Deja en el head una única meta robots `noindex`, como la de la shell. */
+function seedShellRobotsMeta() {
+  document.head.querySelector('meta[name="robots"]')?.remove();
+  const robots = document.createElement('meta');
+  robots.setAttribute('name', 'robots');
+  robots.setAttribute('content', 'noindex, follow');
+  document.head.appendChild(robots);
+}
+
 describe('ChatView', () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -104,6 +113,60 @@ describe('ChatView', () => {
 
   afterEach(() => {
     vi.unstubAllEnvs();
+  });
+
+  it('solo la ruta canónica queda indexable en runtime', async () => {
+    seedShellRobotsMeta();
+
+    render(
+      <MemoryRouter initialEntries={['/espana']}>
+        <Routes>
+          <Route
+            path='/espana'
+            element={<ChatView engine={createFakeEngine()} isStub canonicalPath='/espana' />}
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(document.querySelector('meta[name="robots"]')).toHaveAttribute(
+        'content',
+        'index, follow'
+      );
+    });
+  });
+
+  it('las rutas solo-SPA no deshacen el noindex de la shell al renderizarse', async () => {
+    // Un crawler que ejecute JavaScript en `/consulta` o `/c/:id` ve el DOM
+    // final: si el hook las marcara `index`, revertiría la política de la shell.
+    for (const path of ['/consulta', '/c/abc123']) {
+      seedShellRobotsMeta();
+
+      const view = render(
+        <MemoryRouter initialEntries={[path]}>
+          <Routes>
+            <Route
+              path='/consulta'
+              element={<ChatView engine={createFakeEngine()} isStub canonicalPath='/espana' />}
+            />
+            <Route
+              path='/c/:conversationId'
+              element={<ChatView engine={createFakeEngine()} isStub canonicalPath='/espana' />}
+            />
+          </Routes>
+        </MemoryRouter>
+      );
+
+      await waitFor(() => {
+        expect(document.title).toBe('Residencia fiscal en España: jurisprudencia del art. 9 LIRPF');
+      });
+      expect(document.querySelector('meta[name="robots"]')).toHaveAttribute(
+        'content',
+        'noindex, follow'
+      );
+      view.unmount();
+    }
   });
 
   it('muestra la bienvenida y los prompts sugeridos cuando no hay mensajes', () => {

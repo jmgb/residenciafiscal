@@ -13,9 +13,11 @@
  *    bundle —o que lo posponga— indexaba páginas vacías. Ahora cada copia lleva
  *    la página ya renderizada por `dist-ssr/entry-server.js`.
  *
- * El rewrite `/* → /index.html` de Netlify no está forzado, así que el archivo
- * físico gana y esas URLs sirven la copia correcta; en el navegador se monta la
- * misma aplicación de siempre sobre ese HTML.
+ * Cada ruta prerenderizada se sirve desde su fichero físico (las de país por
+ * las reglas `200!` de `_redirects`, las estáticas por las de `netlify.toml`);
+ * el fallback `/*` devuelve `404.html` con 404, así que una ruta sin copia
+ * prerenderizada ni regla propia deja de existir para el navegador. En el
+ * navegador se monta la misma aplicación de siempre sobre ese HTML.
  *
  * Se ejecuta en `postbuild`, después de `vite build` y del build SSR.
  *

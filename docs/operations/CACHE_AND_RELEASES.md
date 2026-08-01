@@ -41,7 +41,9 @@ A eso se sumaban tres defectos de configuración medidos en producción el
 | `/data/*` | `public, max-age=0, must-revalidate` | No llevan hash y se regeneran en cada build. Tienen ETag: revalidar cuesta un 304 vacío |
 | `/version.json` | `no-store` | Es lo que delata el deploy nuevo; cachearlo lo inutiliza |
 
-Y dos redirecciones **antes** del fallback de la SPA:
+Y dos redirecciones **antes** del fallback (que desde agosto de 2026 ya no
+sirve la shell: devuelve `404.html` con 404 para que una URL inexistente no sea
+un soft 404; `/consulta` y `/c/*` conservan su regla 200 propia):
 
 ```toml
 [[redirects]]
@@ -79,7 +81,7 @@ editable, porque el borrador del composer vive solo en su estado local.
 Todo fallo se traduce a «no hay nada nuevo»: una falsa alarma recarga la página
 en la cara del usuario y, si el manifiesto no fuese fiable, se repetiría en
 bucle. Por eso también se descarta una respuesta cuyo `Content-Type` no sea JSON
-—sería la shell del fallback— y no se compara nada cuando el release es `local`,
+—sería el `404.html` del fallback— y no se compara nada cuando el release es `local`,
 que es lo que devuelve el cálculo fuera de un despliegue.
 
 ## Red de seguridad: `vite:preloadError`
