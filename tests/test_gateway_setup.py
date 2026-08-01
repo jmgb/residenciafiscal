@@ -1,8 +1,23 @@
 from __future__ import annotations
 
+import tomllib
+from pathlib import Path
 from typing import Any
 
 import pytest
+
+
+def test_gateway_dependency_esta_fijada_exactamente_a_0_9_0() -> None:
+    pyproject = tomllib.loads(
+        (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
+    )
+    dependencias = [
+        dependencia
+        for dependencia in pyproject["project"]["dependencies"]
+        if dependencia.startswith("neutral-llm-gateway")
+    ]
+
+    assert dependencias == ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.9.0"]
 
 
 def _clear_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
