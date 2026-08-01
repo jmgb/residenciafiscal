@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
+import { STATIC_ROUTES } from '@/data/staticRoutes';
 import { render } from '@/entry-server';
 import { readEmbeddedTreatyPreload, TREATY_PRELOAD_ELEMENT_ID } from '@/lib/treaty-preload';
 import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
@@ -100,6 +101,27 @@ describe('entry-server', () => {
     // la suite y su coste crece con cada ruta nueva. Con los 5 s por defecto
     // agotaba el plazo de forma intermitente al competir por CPU.
   }, 30_000);
+
+  it('marca también las rutas estáticas que sí se indexan', () => {
+    // `/privacidad` es `noindex` y queda fuera a propósito: los datos
+    // estructurados son para el buscador, y ahí no hay buscador que los lea.
+    for (const route of STATIC_ROUTES.filter((candidate) => candidate.indexable)) {
+      const html = render(route.path);
+      const bloques = [
+        ...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g),
+      ].map((match) => JSON.parse(match[1]));
+      const breadcrumb = bloques.find((bloque) => bloque['@type'] === 'BreadcrumbList');
+
+      expect(breadcrumb, `${route.path} sin BreadcrumbList`).toBeDefined();
+      expect(breadcrumb.itemListElement.at(-1).item).toBe(
+        `https://residenciafiscal.org${route.path}`
+      );
+    }
+  }, 30_000);
+
+  it('no marca lo que no se indexa', () => {
+    expect(render('/privacidad')).not.toContain('application/ld+json');
+  });
 
   it('renderiza también las rutas que no son de país', () => {
     expect(render('/manifiesto')).toContain('Manifiesto');

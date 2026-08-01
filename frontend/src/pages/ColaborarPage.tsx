@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { staticRoute } from '@/data/staticRoutes';
 import {
@@ -8,12 +9,14 @@ import {
   countryContributionUrl,
   EXPERT_PROFILES,
 } from '@/lib/contribution';
+import { breadcrumbJsonLd } from '@/lib/structured-data';
 import { usePageTitle } from '@/lib/usePageTitle';
 
 // Título y descripción salen de `staticRoutes.json`, que es también lo que lee
 // `scripts/prerender.mjs`: si estuvieran escritos aquí, el visitante y el bot
 // podrían acabar leyendo descripciones distintas.
 const META = staticRoute(COLLABORATE_PATH);
+const BREADCRUMB = breadcrumbJsonLd([{ name: 'Colaborar', path: COLLABORATE_PATH }]);
 
 /** Lo que ya existe y por tanto nadie tiene que volver a construir. */
 const YA_EXISTE = [
@@ -30,6 +33,7 @@ export function ColaborarPage() {
 
   return (
     <div className='w-full overflow-y-auto'>
+      <JsonLd data={BREADCRUMB} />
       <div className='mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14'>
         <header className='border-t-4 border-primary pt-6'>
           <p className='mb-3 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary'>

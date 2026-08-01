@@ -1,8 +1,11 @@
 import { Link } from 'react-router';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { staticRoute } from '@/data/staticRoutes';
+import { breadcrumbJsonLd } from '@/lib/structured-data';
 import { usePageTitle } from '@/lib/usePageTitle';
 
 const META = staticRoute('/metodologia');
+const BREADCRUMB = breadcrumbJsonLd([{ name: 'Metodología', path: META.path }]);
 
 /**
  * El método es agnóstico de la jurisdicción y se explica una sola vez. Las
@@ -14,6 +17,7 @@ export function MetodologiaPage() {
 
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
+      <JsonLd data={BREADCRUMB} />
       <h1 className='mb-6 font-heading text-2xl font-semibold'>Metodología</h1>
 
       <section className='mb-8'>

@@ -139,6 +139,8 @@ Cada página de país emite dos bloques JSON-LD, y solo dos:
   `COUNTRY_ROUTES` entera para que la próxima página con plantilla propia no se caiga igual.
   `/espana/fuentes` lo lleva también, encadenado bajo España: es contenido de país y la única
   ruta con tres niveles. `breadcrumbJsonLd` recibe por eso la lista de tramos, no un país.
+  Las estáticas indexables (`/manifiesto`, `/metodologia`, `/colaborar`) lo emiten igual;
+  `/privacidad` no, porque es `noindex` y ahí no hay buscador que lo lea.
 - **`Legislation`** con el artículo de residencia del convenio, en `TaxTreaty`, y **solo cuando el
   convenio está resuelto**: se declara el precepto que la página publica, no el identificador que
   esperaba encontrar. Un país sin convenio no emite este bloque.

@@ -114,3 +114,28 @@ def test_the_version_manifest_is_never_cached() -> None:
     cache_control = _headers_for("/version.json")["Cache-Control"]
 
     assert "no-store" in cache_control
+
+
+def test_the_root_redirects_to_the_spain_landing() -> None:
+    """La raíz servía la shell sin contenido y no era canónica de nada.
+
+    El prerenderizado escribe una copia por ruta en su subdirectorio, pero no
+    toca `dist/index.html`: quien pedía `/` sin ejecutar JavaScript no recibía
+    ni una línea de texto, y la página declaraba `canonical` hacia sí misma sin
+    estar en el sitemap. Con el `301`, la home del sitio pasa a ser `/espana`,
+    que es la que ya publica el sitemap con prioridad `1.0`.
+
+    `force` es obligatorio: `dist/index.html` existe, y Netlify sirve el fichero
+    antes que una redirección que no lo lleve.
+    """
+    redirects = _config()["redirects"]
+    index = _redirect_index(lambda redirect: redirect["from"] == "/")
+
+    assert redirects[index]["to"] == "/espana"
+    assert redirects[index]["status"] == 301
+    assert redirects[index]["force"] is True
+
+    # Netlify aplica la primera coincidencia: detrás del fallback la regla sería
+    # inalcanzable, porque `/*` captura también la raíz.
+    fallback = _redirect_index(lambda redirect: redirect["from"] == "/*")
+    assert index < fallback

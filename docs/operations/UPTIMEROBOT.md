@@ -36,6 +36,23 @@ de «sirve lo que debe»:
 El corpus se vigila aparte porque el chat no funciona sin él y su desaparición no
 rompe la home.
 
+## La home responde ahora con un `301`
+
+Desde el 1 de agosto de 2026, `https://residenciafiscal.org/` redirige de forma
+permanente a `/espana`: la raíz servía la shell sin contenido prerenderizado
+(ver [`../product/COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md)). El monitor
+`803628459` apunta a la raíz, así que **depende de que UptimeRobot siga la
+redirección**, cosa que hace por defecto. La palabra clave existe en el destino:
+`/espana` contiene `Residencia Fiscal` en su `<title>` y en su contenido.
+
+Conviene saber una cosa incómoda: ese monitor estaba en verde **antes** del
+cambio aunque la raíz sirviera una página en blanco, porque la marca aparecía en
+el `<title>` de la shell. Una palabra clave que vive en el `head` comprueba que
+Netlify responde, no que la página tenga contenido.
+
+**Comprobar tras el primer deploy con el `301`** que el monitor sigue en verde;
+si no, apuntarlo directamente a `https://residenciafiscal.org/espana`.
+
 ## Cloudflare: el User-Agent importa
 
 La zona está detrás de Cloudflare con una regla de WAF que bloquea User-Agents de

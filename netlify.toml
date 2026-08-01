@@ -76,6 +76,19 @@
   status = 200
   force = true
 
+# La home real del sitio es `/espana`: es la que publica el sitemap con
+# prioridad 1.0 y la que el prerenderizado escribe con contenido. `/` servía
+# `dist/index.html`, que conserva el `<div id="root">` vacío porque el
+# prerenderizado no toca la shell, así que un rastreador que no ejecute
+# JavaScript recibía una página en blanco con `canonical` hacia sí misma.
+# `force` es imprescindible: el fichero existe, y sin él Netlify lo sirve en vez
+# de redirigir.
+[[redirects]]
+  from = "/"
+  to = "/espana"
+  status = 301
+  force = true
+
 # El fallback de abajo captura cualquier ruta, incluidos los ficheros que la SPA
 # pide por `fetch` o como módulo. Sin estas dos reglas, un chunk borrado por un
 # deploy nuevo devuelve la shell HTML con 200 y las cabeceras `immutable` de
