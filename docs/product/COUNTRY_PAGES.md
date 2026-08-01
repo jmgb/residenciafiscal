@@ -38,6 +38,7 @@ Las rutas reservadas actualmente son:
 | Suiza | `/suiza` |
 | Andorra | `/andorra` |
 | Italia | `/italia` |
+| Mónaco | `/monaco` |
 | México | `/mexico` |
 | Argentina | `/argentina` |
 | Bolivia | `/bolivia` |
@@ -58,6 +59,17 @@ Las rutas reservadas actualmente son:
 | República Dominicana | `/republica-dominicana` |
 | Uruguay | `/uruguay` |
 | Venezuela | `/venezuela` |
+| Marruecos | `/marruecos` |
+| Rusia | `/rusia` |
+| Emiratos Árabes Unidos | `/emiratos-arabes-unidos` |
+| Kuwait | `/kuwait` |
+
+Las cinco últimas se reservaron el 1 de agosto de 2026 por presencia en el corpus español,
+no por demanda de búsqueda: Mónaco, Marruecos, Rusia, Emiratos y Kuwait son las
+jurisdicciones que más aparecen en las resoluciones y que todavía no tenían ruta. El criterio
+está razonado en [`TASKS.md`](../project/TASKS.md), junto con la advertencia de que 31 de las
+106 sentencias son la misma saga de becarios y que en ellas el país es solo el destino de la
+beca, no la jurisdicción en disputa.
 
 ## Organización del código
 
@@ -112,6 +124,33 @@ Y su propia metadata de buscador, que ya no se compone en el código:
   sin corpus publica un convenio que se mueve muy de tarde en tarde.
 - `treatyBoeId`: identificador del BOE del convenio de doble imposición entre España y ese país,
   o `null` si no hay convenio en vigor. Ver la sección siguiente.
+- `code`: código ISO 3166-1 alfa-2 en minúscula. Es la clave que comparte con el dato
+  (`normativa/es/`, el campo `jurisdiccion` del corpus normativo); la ruta es un slug legible y no
+  sirve para cruzar la web con los artefactos. Sin este campo, cada consumidor reconstruía la
+  correspondencia por su cuenta.
+
+### Datos estructurados (`schema.org`)
+
+Cada página de país emite dos bloques JSON-LD, y solo dos:
+
+- **`BreadcrumbList`** con la jerarquía del sitio, en `CountryPage`.
+- **`Legislation`** con el artículo de residencia del convenio, en `TaxTreaty`, y **solo cuando el
+  convenio está resuelto**: se declara el precepto que la página publica, no el identificador que
+  esperaba encontrar. Un país sin convenio no emite este bloque.
+
+No hay `FAQPage` —no hay preguntas— ni `Article` —no hay autor humano—. Marcar contenido que no
+existe es lo que penaliza un buscador, no lo que lo mejora.
+
+Los dos se componen en `frontend/src/lib/structured-data.ts` y se emiten con
+`frontend/src/components/seo/JsonLd.tsx`, **dentro del árbol de React**: así el HTML prerenderizado
+y la SPA no pueden divergir, y el dato sale una sola vez del corpus normativo. Lo que el corpus no
+sabe se omite: sin `urlBoe` no hay `url`, y sin `vigenteDesde` no hay fecha. La fecha se publica
+como `legislationDateVersion` —la redacción consolidada— y nunca como `legislationDate`, que sería
+la firma del convenio y es un dato que el corpus no tiene. `legislationLegalForce` sale de
+`derogada`, no de un cálculo propio.
+
+`frontend/tests/entry-server.test.tsx` comprueba que los dos bloques llegan al HTML servido, que es
+donde los lee el bot.
 
 ## El convenio de doble imposición con España
 
@@ -134,7 +173,8 @@ Tres límites, todos en el copy de la página:
 - No sustituye al corpus: la página sigue diciendo que no hay jurisprudencia de ese país.
 - `null` significa **no hay convenio en vigor**, comprobado contra la
   [relación oficial de la AEAT](https://sede.agenciatributaria.gob.es/Sede/normativa-criterios-interpretativos/fiscalidad-internacional/convenios-doble-imposicion-firmados-espana.html),
-  y la página lo dice explícitamente. Hoy son Guatemala, Haití, Honduras, Nicaragua y Perú.
+  y la página lo dice explícitamente. Hoy son Mónaco, Guatemala, Haití, Honduras, Nicaragua y
+  Perú.
 
 `tests/test_country_tax_treaties.py` ata cada `treatyBoeId` al corpus: comprueba que existe, que
 el título oficial de la norma nombra a ese país —un identificador equivocado publicaría el
@@ -214,7 +254,7 @@ invitación: veintiocho placeholders casi idénticos no le sirven a nadie en un 
 de serlo cuando cada una pasó a publicar el convenio de doble imposición con España, con su
 artículo de residencia, su texto literal y su enlace al BOE: contenido distinto en cada ruta,
 verificable y útil para quien busca su situación entre dos países. `corpusStatus` e `indexable`
-siguen siendo decisiones separadas, y hoy las 29 rutas están en el sitemap.
+siguen siendo decisiones separadas, y hoy todas las rutas están en el sitemap.
 
 Lo que **no** cambia con la indexación: la página sigue diciendo que no hay jurisprudencia de ese
 país, y el convenio se presenta como norma española que resuelve la doble residencia, no como el

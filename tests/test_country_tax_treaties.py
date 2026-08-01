@@ -47,12 +47,16 @@ NOMBRE_EN_LA_NORMA: dict[str, str] = {
     "/republica-dominicana": "República Dominicana",
     "/uruguay": "República Oriental del Uruguay",
     "/venezuela": "República Bolivariana de Venezuela",
+    "/marruecos": "Reino de Marruecos",
+    "/rusia": "Federación Rusa",
+    "/emiratos-arabes-unidos": "Emiratos Árabes Unidos",
+    "/kuwait": "Estado de Kuwait",
 }
 
 # Países sin convenio en vigor con España según la relación oficial de la AEAT.
 # Declararlo es una afirmación de la web, así que se fija aquí igual que el
 # resto: si algún día se firma uno, este test obliga a revisarlo.
-SIN_CONVENIO = ("/guatemala", "/haiti", "/honduras", "/nicaragua", "/peru")
+SIN_CONVENIO = ("/monaco", "/guatemala", "/haiti", "/honduras", "/nicaragua", "/peru")
 
 
 def _rutas() -> list[dict]:

@@ -12,6 +12,13 @@ const legalReferenceSchema = z.object({
 
 const countryRouteSchema = z.object({
   name: z.string().min(1),
+  /**
+   * Código ISO 3166-1 alfa-2 en minúscula: la misma clave que usan
+   * `normativa/<code>/` y el campo `jurisdiccion` del corpus. La ruta es un
+   * slug legible (`/espana`) y no sirve para cruzar la web con los datos; sin
+   * este campo, cada consumidor tendría que reconstruir la correspondencia.
+   */
+  code: z.string().regex(/^[a-z]{2}$/),
   path: z.string().startsWith('/'),
   corpusStatus: z.enum(['published', 'pending']),
   legalReferences: z.array(legalReferenceSchema),

@@ -46,6 +46,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://residenciafiscal.org/monaco</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://residenciafiscal.org/mexico</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -142,6 +147,26 @@
   </url>
   <url>
     <loc>https://residenciafiscal.org/venezuela</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://residenciafiscal.org/marruecos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://residenciafiscal.org/rusia</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://residenciafiscal.org/emiratos-arabes-unidos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://residenciafiscal.org/kuwait</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

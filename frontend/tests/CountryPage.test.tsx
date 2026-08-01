@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
 import { CONTACT_EMAIL, EXPERT_PROFILES } from '@/lib/contribution';
 import { loadNormativa } from '@/lib/normativa';
+import { treatyJsonLd } from '@/lib/structured-data';
 import { TreatyPreloadContext } from '@/lib/treaty-preload';
 import { CountryPage } from '@/pages/CountryPage';
 
@@ -48,6 +49,17 @@ vi.mock('@/lib/normativa', () => ({
   loadPrecepto: vi.fn(async () => URUGUAY.texto),
   sentenciasDe: () => [],
 }));
+
+/**
+ * El JSON-LD conserva su comportamiento real, pero se espía: es la única forma
+ * de ver **cada render**, incluido el intermedio que el navegador llega a
+ * pintar antes de que corra el efecto. Después de un `rerender`, el DOM ya solo
+ * enseña el estado final, así que una aserción sobre él no vería el cruce.
+ */
+vi.mock('@/lib/structured-data', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/structured-data')>();
+  return { ...actual, treatyJsonLd: vi.fn(actual.treatyJsonLd) };
+});
 
 function countryByPath(path: string): CountryRoute {
   const route = COUNTRY_ROUTES.find((candidate) => candidate.path === path);
@@ -170,6 +182,27 @@ describe('CountryPage', () => {
     ).toBeInTheDocument();
   });
 
+  it('no declara el convenio del país anterior en ningún render de la ruta nueva', async () => {
+    // El efecto que reinicia la ficha corre **después** de pintar: hasta
+    // entonces el componente conserva el convenio del país del que se viene.
+    // Ese render intermedio metía el `Legislation` de Uruguay en la URL de
+    // Chile, que es exactamente la divergencia entre SPA y prerenderizado que
+    // el contrato prohíbe. La comprobación mira todos los renders, no el DOM
+    // final.
+    const { rerender } = renderCountry('/uruguay');
+    expect(await screen.findByText(/residente de un Estado/)).toBeInTheDocument();
+
+    vi.mocked(treatyJsonLd).mockClear();
+    rerender(
+      <MemoryRouter initialEntries={['/chile']}>
+        <CountryPage country={countryByPath('/chile')} />
+      </MemoryRouter>
+    );
+
+    const declarados = vi.mocked(treatyJsonLd).mock.calls.map(([precepto]) => precepto.boeId);
+    expect(declarados).not.toContain(URUGUAY.entry.boeId);
+  });
+
   it('recupera el convenio precargado al volver a su página', async () => {
     // El HTML prerenderizado trae el convenio de esa página embebido. Al
     // navegar a otro país y volver, el estado del componente ya es el del
@@ -235,6 +268,37 @@ describe('CountryPage', () => {
     expect(
       screen.queryByRole('link', { name: /Texto oficial del convenio en el BOE/ })
     ).not.toBeInTheDocument();
+  });
+
+  it('marca la ruta con datos estructurados de jerarquía y convenio', async () => {
+    const { container } = renderCountry('/uruguay');
+    await screen.findByText(/residente de un Estado/);
+
+    const bloques = [...container.querySelectorAll('script[type="application/ld+json"]')].map(
+      (script) => JSON.parse(script.textContent ?? '')
+    );
+    const tipos = bloques.map((bloque) => bloque['@type']);
+    expect(tipos).toContain('BreadcrumbList');
+    expect(tipos).toContain('Legislation');
+
+    const convenio = bloques.find((bloque) => bloque['@type'] === 'Legislation');
+    expect(convenio.legislationIdentifier).toBe('BOE-A-2011-6551');
+    expect(convenio.url).toBe('https://www.boe.es/buscar/act.php?id=BOE-A-2011-6551#a4');
+
+    // Ni preguntas ni autor humano: marcar `FAQPage` o `Article` sería declarar
+    // un contenido que la página no tiene.
+    expect(tipos).not.toContain('FAQPage');
+    expect(tipos).not.toContain('Article');
+  });
+
+  it('no declara convenio estructurado cuando España no lo tiene con ese país', () => {
+    const { container } = renderCountry('/peru');
+
+    const tipos = [...container.querySelectorAll('script[type="application/ld+json"]')].map(
+      (script) => JSON.parse(script.textContent ?? '')['@type']
+    );
+    expect(tipos).toContain('BreadcrumbList');
+    expect(tipos).not.toContain('Legislation');
   });
 
   it('marca por falta de corpus, no por una fecha prometida', () => {

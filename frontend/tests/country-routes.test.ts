@@ -8,7 +8,7 @@ import {
 
 describe('country routes', () => {
   it('declara metadata SEO personalizada para cada ruta', () => {
-    expect(COUNTRY_ROUTES).toHaveLength(29);
+    expect(COUNTRY_ROUTES).toHaveLength(34);
     expect(COUNTRY_ROUTES.slice(0, 9).map((route) => route.name)).toEqual([
       'España',
       'Estados Unidos',
@@ -53,7 +53,7 @@ describe('country routes', () => {
   });
 
   it('da a cada país un título y una descripción propios', () => {
-    // Veintinueve páginas con la misma metadata compiten entre sí y no
+    // Decenas de páginas con la misma metadata compiten entre sí y no
     // posicionan ninguna: el título y la descripción son lo que las distingue
     // en el buscador, así que ninguno puede repetirse ni quedarse en plantilla.
     const titles = COUNTRY_ROUTES.map((route) => route.title);
@@ -70,12 +70,19 @@ describe('country routes', () => {
 
   it('declara el convenio de doble imposición con España de cada país', () => {
     // `null` es una declaración, no un hueco: significa que no hay convenio en
-    // vigor. Estos cinco están comprobados contra la relación oficial de la
+    // vigor. Estos seis están comprobados contra la relación oficial de la
     // AEAT, así que la página puede decirlo en vez de callarse.
     const sinConvenio = COUNTRY_ROUTES.filter(
       (route) => route.corpusStatus === 'pending' && route.treatyBoeId === null
     ).map((route) => route.path);
-    expect(sinConvenio).toEqual(['/guatemala', '/haiti', '/honduras', '/nicaragua', '/peru']);
+    expect(sinConvenio).toEqual([
+      '/monaco',
+      '/guatemala',
+      '/haiti',
+      '/honduras',
+      '/nicaragua',
+      '/peru',
+    ]);
     // España no tiene convenio consigo misma; su marco es el art. 9 LIRPF.
     expect(SPAIN_ROUTE.treatyBoeId).toBeNull();
 
@@ -98,6 +105,19 @@ describe('country routes', () => {
         expect(reference.reviewedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       }
     }
+  });
+
+  it('identifica cada jurisdicción con su código ISO, no solo con el slug de la ruta', () => {
+    // El dato usa el código ISO (`normativa/es/`, `jurisdiccion: 'es'`) y las
+    // rutas usan slug (`/espana`). Sin una clave común, cruzar la web con el
+    // corpus de un segundo país obliga a inventar la correspondencia cada vez.
+    expect(SPAIN_ROUTE.code).toBe('es');
+    expect(COUNTRY_ROUTES.find((route) => route.path === '/reino-unido')?.code).toBe('gb');
+    expect(COUNTRY_ROUTES.find((route) => route.path === '/republica-dominicana')?.code).toBe('do');
+
+    const codes = COUNTRY_ROUTES.map((route) => route.code);
+    expect(new Set(codes).size).toBe(COUNTRY_ROUTES.length);
+    for (const code of codes) expect(code).toMatch(/^[a-z]{2}$/);
   });
 
   it('resuelve las subpáginas de un país a su jurisdicción', () => {

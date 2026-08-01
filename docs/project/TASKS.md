@@ -45,34 +45,49 @@ contra el dominio público después de cada deploy.
   sentencias y sus limitaciones.
 - [x] Añadir `/metodologia` a `frontend/public/sitemap.xml`
   y enlazarla desde `frontend/public/llms.txt`.
-- [ ] **P1 — Ampliar las rutas de país.** Hay 29 rutas y el corpus normativo ya
-  tiene **98 convenios de doble imposición** publicados artículo a artículo, así
-  que cada país nuevo es una entrada en `countryRoutes.json` (`name`, `path`,
-  `treatyBoeId`, `title`, `description`, `sitemap`) y nada más: el bloque del
-  convenio, el prerenderizado y el sitemap salen solos. Contrato en
+- [x] **P1 — Primera ampliación de rutas de país por presencia en el corpus**
+  (1 de agosto de 2026). Se añadieron cinco: **Mónaco** (`/monaco`, sin
+  convenio), **Marruecos**, **Rusia**, **Emiratos Árabes Unidos** y **Kuwait**.
+  Son las jurisdicciones que más aparecen en las resoluciones y no tenían ruta.
+  Cada una es una entrada en `countryRoutes.json` (`name`, `code`, `path`,
+  `treatyBoeId`, `title`, `description`, `sitemap`); el bloque del convenio, el
+  prerenderizado, los redirects y el sitemap salen solos. Contrato en
   [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
 
-  **El orden no es «todos los que tienen CDI».** Una página por convenio son ~98
-  URLs con el mismo esqueleto y un articulado que además es casi idéntico entre
-  convenios —todos siguen el Modelo OCDE—, y eso es exactamente el contenido
-  fino que dejó las 28 anteriores en `noindex` hasta ahora. Dos criterios, en
-  este orden:
+  **Dos correcciones al criterio que estaba escrito aquí**, ambas medidas:
 
-  1. **Aparece en el corpus de sentencias.** Es el único contenido que este
-     proyecto tiene y nadie más: jurisprudencia española real sobre esa
-     jurisdicción. Medido sobre `knowledge/jurisprudencia-v3/cases/`, los
-     nombrados en las resoluciones que **todavía no tienen ruta** son Mónaco
-     (65 menciones), Marruecos (30), Rusia (24), Guinea (11), Japón (10),
-     Dinamarca (10) y Emiratos Árabes Unidos (9). Ojo: Mónaco y Guinea no
-     tienen convenio con España, y su página sería igual de válida —dice que no
-     lo hay, que es justo lo que busca quien pregunta por Mónaco—.
-  2. **Demanda real de expatriación española**: Emiratos, Irlanda, Países Bajos,
-     Bélgica, Luxemburgo, Malta, Chipre, Tailandia, Singapur, Canadá.
+  1. **La saga de becarios infla el recuento por menciones.** 31 de las 106
+     sentencias son el mismo pleito —becas ICEX y ausencias esporádicas— y en
+     ellas el país es el destino de la beca, no la jurisdicción en disputa. Eso
+     descarta Kenia, Taiwán, Irán, Túnez, Egipto, Corea del Sur, Ucrania,
+     Noruega, Rumanía, Israel, China, Turquía, Arabia Saudí, Dinamarca y
+     Bélgica: una sentencia cada uno, misma doctrina, sin análisis de su
+     convenio. El campo fiable es `judgment.countries`, no contar el nombre del
+     país en el texto.
+  2. **Una ruta nueva no trae hoy ni una sentencia a la página.** El bloque «lo
+     aplican N sentencias» de `TaxTreaty.tsx` sale de `normativa.json`, y solo
+     cuatro preceptos de convenio tienen sentencias enlazadas: Reino Unido (4),
+     Suiza (2), EE. UU. (1) y el CDI argentino de 1992 (1). Mientras 41 de las
+     106 no citen ningún artículo en su registro estructurado, una página nueva
+     es el articulado del convenio y nada más.
 
-  **Antes de la segunda tanda, medir la primera.** Las 29 actuales se publicaron
-  el 1 de agosto de 2026 y todavía no hay ni un dato de Search Console. Si a las
-  4-6 semanas no se indexan o no reciben impresiones, ampliar a 98 multiplica un
-  formato que no funciona; si funcionan, el criterio de arriba prioriza solo.
+  Quedan fuera y necesitan trabajo previo, no una entrada en JSON: **Gibraltar**
+  (el acuerdo fiscal de 2019 no está en `normativa/es/`), **Guinea Ecuatorial**
+  (sin convenio) y **Ucrania** (solo existiría el convenio con la URSS de 1986,
+  `BOE-A-1986-25055`, y aplicárselo hay que verificarlo, no deducirlo).
+- [ ] **P1 — Segunda tanda de rutas de país, solo después de medir la primera.**
+  Diez países con convenio ya publicado, coste de una línea cada uno: **Países
+  Bajos, Bélgica, Irlanda, Luxemburgo, Malta, Chipre, Canadá, Singapur,
+  Tailandia y China**. El criterio aquí es **demanda real de expatriación
+  española**, no el corpus: ninguno aporta contenido único hoy, son puro long
+  tail, y por eso van después y no antes.
+
+  **El gate es medir, no el calendario.** Las 34 rutas vigentes se publicaron el
+  1 de agosto de 2026 y no hay ni un dato de Search Console. Si a las 4-6 semanas
+  no se indexan o no reciben impresiones, ampliar multiplica un formato que no
+  funciona; si funcionan, esta lista ya está priorizada. Para llegar a los ~98
+  convenios hace falta antes la tarea de cruzar cada página con sus sentencias:
+  sin eso son 98 URLs con el mismo esqueleto.
 - [ ] **P1 — Cruzar cada página de país con las sentencias del corpus que lo
   mencionan.** Vale más que setenta rutas nuevas: es contenido único y
   verificable —Reino Unido aparece en 115 pasajes, Suiza en 111, Argentina en
@@ -80,6 +95,11 @@ contra el dominio público después de cada deploy.
   BOE y en cualquier despacho. Requiere decidir cómo se extrae la mención
   (el nombre del país en los hechos probados no siempre es la jurisdicción en
   disputa) y respetar el invariante de literalidad.
+  - El campo que sirve es `judgment.countries`, pero **es texto libre sin
+    normalizar**: conviven `JAPÓN`, `Méjico`, `Tailandia;Dinamarca` y
+    `Reino Unido (CDI 1975; referido también CDI 2013)`. Normalizarlo a ISO
+    3166-1 alfa-2 —la misma clave `code` que ya usa `countryRoutes.json`— es el
+    primer paso, y solapa con tipar las 36 determinaciones residenciales.
 
 ## Producto y arquitectura
 
@@ -476,10 +496,11 @@ comprueban párrafo a párrafo contra la fuente.
   - El contrato de qué necesita una jurisdicción nueva está en
     [`NORMATIVA.md`](../normativa/NORMATIVA.md#una-jurisdicción-por-directorio) y en
     [`CONTRIBUTING.md`](../../CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país).
-  - Decisión pendiente que conviene cerrar de paso: unificar la clave de
-    jurisdicción. El dato usa ISO (`es`) y las rutas del frontend usan slug
-    (`/espana`); añadir un campo `code` a `frontend/src/data/countryRoutes.json`
-    es un cambio de una línea.
+  - [x] Clave de jurisdicción unificada (1 de agosto de 2026): las 29 entradas de
+    `frontend/src/data/countryRoutes.json` llevan `code` con el ISO 3166-1 alfa-2
+    en minúscula, el mismo que usan `normativa/es/` y el campo `jurisdiccion` del
+    corpus. Validado por zod y por `tests/country-routes.test.ts`, que exige
+    formato y unicidad. La ruta sigue siendo un slug legible y no vale como clave.
 
 ## SEO y contenido
 
@@ -487,9 +508,14 @@ comprueban párrafo a párrafo contra la fuente.
   landing de país (1 de agosto de 2026): `title` y `description` propios en
   `countryRoutes.json`, prerenderizados por ruta y con las 29 en el sitemap.
   **Falta `schema.org`**, que era la otra mitad de esta tarea.
-- [ ] Marcar cada landing de país con datos estructurados (`schema.org`). Candidatos:
-  `Legislation` para el convenio y `BreadcrumbList` para la jerarquía; sin inventar
-  `FAQPage` ni `Article` donde no hay ni preguntas ni autor humano.
+- [x] Marcar cada landing de país con datos estructurados (`schema.org`) (1 de agosto de
+  2026): `BreadcrumbList` en `CountryPage` y `Legislation` en `TaxTreaty`, este último
+  solo cuando el convenio está resuelto. Sin `FAQPage` ni `Article`. Se componen en
+  `frontend/src/lib/structured-data.ts`, se emiten desde el árbol de React —así el HTML
+  prerenderizado y la SPA no divergen— y `tests/entry-server.test.tsx` comprueba que
+  llegan al HTML servido. La fecha se publica como `legislationDateVersion`, nunca como
+  `legislationDate`: el corpus conoce la redacción vigente, no la firma del convenio.
+  Contrato en [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
 - [x] Mostrar en cada landing las fuentes legales del convenio con España: título oficial,
   artículo de residencia, redacción vigente, texto literal y enlace al BOE, o la
   declaración explícita de que no hay convenio en vigor. Todo sale del corpus normativo
@@ -506,24 +532,38 @@ página pública en `/colaborar`. Desde el 1 de agosto de 2026 las landings de p
 que es contenido propio y verificable, así que la invitación ya no depende de una
 sola URL para poder encontrarse.
 
-- [ ] **Traducir la plantilla `aportar_pais.yml` al inglés.** La invitación es
-  mundial pero el formulario está solo en español, así que Brasil, Haití y toda
-  jurisdicción no hispanohablante se topan con un formulario que no entienden.
-  Mismo problema, un nivel más abajo: el schema de extracción también está en
-  español, y un corpus no hispano necesita traductor jurídico antes que
-  desarrollador.
+- [x] **Traducir la plantilla `aportar_pais.yml` al inglés** (1 de agosto de 2026).
+  La plantilla es bilingüe: los `label` llevan los dos idiomas separados por ` / `
+  y las ayudas largas ponen el español primero y el inglés tras `EN — `.
+  `tests/test_issue_template_pais.py` fija esa convención, los ids —incluido el
+  `pais` que GitHub prerrellena— y que las tres comprobaciones previas siguen
+  siendo obligatorias; sin ese gate, una edición en español deja media plantilla
+  sin traducir en silencio.
+  - [ ] Sigue pendiente un nivel más abajo: el schema de extracción también está
+    en español, y un corpus no hispano necesita traductor jurídico antes que
+    desarrollador.
+- [ ] **Hacer público el repositorio, o la invitación no existe.**
+  `jmgb/residenciafiscal` es **privado** (comprobado el 1 de agosto de 2026): la
+  URL que construye `contribution.ts` devuelve `404` a cualquier visitante
+  anónimo, igual que los enlaces de `CONTRIBUTING.md`, `SECURITY.md` y
+  `sentencias/AVISO_LEGAL.md` que publica la web. Toda la ruta de contribución
+  está rota de extremo a extremo hasta que se abra. Es el bloqueo real de las
+  tareas que siguen, no una tarea más de la lista.
 - [ ] **Verificar en GitHub el prerrellenado de la issue.** `contribution.ts`
   construye `?template=aportar_pais.yml&title=…&pais=<País>`; el formato de query
-  y el YAML están validados, pero **no se ha comprobado contra GitHub en vivo**
-  que rellene el campo `pais`. Abrir la URL una vez tras el deploy.
+  y el YAML están validados por test, pero **no se ha comprobado contra GitHub en
+  vivo** que rellene el campo `pais`. No se pudo verificar el 1 de agosto de 2026:
+  con el repositorio privado la URL responde `404` sin sesión. Abrirla una vez
+  después de hacerlo público.
 - [ ] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
   `labels:` de la plantilla. Hoy usa `help wanted` porque GitHub solo aplica
   etiquetas que ya existen. Con varias propuestas de país a la vez, una etiqueta
   por país ordena el backlog.
-- [ ] **Difundir `/colaborar` fuera de GitHub.** Con las landings en `noindex`, el
-  descubrimiento depende de `/colaborar`, de `llms.txt` y de canales externos
-  (colegios de abogados, asociaciones de fiscalistas, LinkedIn). Sin difusión, la
-  invitación solo la ve quien ya está dentro.
+- [ ] **Difundir `/colaborar` fuera de GitHub.** Desde que las landings de país son
+  indexables, el descubrimiento ya no depende de una sola URL, pero sigue
+  necesitando canales externos (colegios de abogados, asociaciones de fiscalistas,
+  LinkedIn) además de `/colaborar` y `llms.txt`. Difundir antes de abrir el
+  repositorio manda al visitante a un `404`.
 - [ ] **Decidir si activar GitHub Discussions.** Una propuesta de país es una
   conversación antes que una tarea; hoy todo entra como issue. Requiere activarlo
   en la web del repositorio.
@@ -637,7 +677,10 @@ sola URL para poder encontrarse.
 
 - [ ] Crear una landing específica por país (`/españa`, `/portugal`, etc.) con información detallada sobre la residencia fiscal, criterios, obligaciones y particularidades de cada país.
 - [x] Configurar Sentry para la API y el frontend y documentar sus variables de
-  entorno (`c0fb582`). Queda pendiente reflejarlo en `README.md` y `CLAUDE.md`.
+  entorno (`c0fb582`), reflejado en `README.md` y `CLAUDE.md` el 1 de agosto de
+  2026 con la tabla de variables y el límite que importa: la Netlify Function del
+  chat **no** está instrumentada, y sus fallos solo se ven en
+  `chat_request_failed`.
 - [ ] **Configurar Resend para correo transaccional.** Las credenciales necesarias
   ya están disponibles en el `.env` de la raíz; reutilizar sus nombres sin leer,
   imprimir, copiar ni versionar los valores.
@@ -657,11 +700,29 @@ sola URL para poder encontrarse.
   - Añadir pruebas con mocks, documentar únicamente los nombres de variables en
     `.env.example` y ejecutar un único smoke real explícito después de verificar
     dominio y destinatario.
-- [ ] Configurar PostHog para el frontend y documentar sus variables de entorno.
+- [x] Configurar PostHog para el frontend y documentar sus variables de entorno.
+  Estaba implementado (`PostHogAnalytics.tsx`, montado una vez en `AppLayout`, con
+  su suite) y sin documentar; documentado el 1 de agosto de 2026 en
+  [`ANALYTICS.md`](../product/ANALYTICS.md) junto a GA4. **El frontend no lee
+  ninguna variable**: el ID de GA4 y la clave de proyecto de PostHog son públicos
+  por diseño y viajan en el bundle; las `POSTHOG_*` del `.env` son de servidor y
+  las usa el informe semanal. La puerta de activación es única
+  (`isGoogleAnalyticsEnabled`) para las dos analíticas.
 - [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
   devuelven `200` desde `https://residenciafiscal.org/`.
 - [ ] Registrar `https://residenciafiscal.org/sitemap.xml` en Google Search Console
   y revisar la primera descarga y los errores de cobertura.
+  - **Bloqueado por permisos, no por el sitemap** (1 de agosto de 2026). El
+    sitemap responde `200` con 33 URLs y Googlebot lo descarga sin problema; solo
+    el User-Agent `curl` recibe `403` del WAF. El envío por API falla con `403`
+    tanto en `sc-domain:residenciafiscal.org` como en
+    `https://residenciafiscal.org/`: la única propiedad accesible a la service
+    account `presupuestor-claude-skill@presupuestor-485509.iam.gserviceaccount.com`
+    es `sc-domain:presupuestor.com`.
+  - Para desbloquearlo: crear y verificar la propiedad de `residenciafiscal.org` en
+    Search Console y añadir esa service account en *Settings → Users and
+    permissions*. Después el envío es un solo comando del skill
+    `google-search-console`.
 - [ ] Revisar durante varios días los eventos del WAF. Ajustar la regla custom si
   los User-Agents genéricos (`curl`, `axios`, `python-requests`) bloquean monitores
   o integraciones legítimas.

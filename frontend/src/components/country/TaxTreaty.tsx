@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { JsonLd } from '@/components/seo/JsonLd';
 import type { CountryRoute } from '@/data/countryRoutes';
 import { loadNormativa, loadPrecepto, sentenciasDe } from '@/lib/normativa';
+import { treatyJsonLd } from '@/lib/structured-data';
 import { useTreatyPreload } from '@/lib/treaty-preload';
 import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
 
@@ -16,7 +18,7 @@ const AEAT_CONVENIOS =
  */
 type EstadoConvenio =
   | { fase: 'cargando' }
-  | { fase: 'fallo' }
+  | { fase: 'fallo'; boeId: string }
   | { fase: 'listo'; entry: PreceptoEntry };
 
 /**
@@ -42,6 +44,19 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
   );
   const [texto, setTexto] = useState<PreceptoTexto | null>(preload?.texto ?? null);
 
+  // El efecto que reinicia la ficha corre **después** de pintar, así que en el
+  // primer render de la ruta nueva `estado` es todavía el del país anterior.
+  // Ese render llegaba al navegador: publicaba el convenio de otra
+  // jurisdicción y, peor, metía su `Legislation` en el JSON-LD de esta URL,
+  // divergiendo del HTML prerenderizado. Por eso la ficha no se compone del
+  // estado en bruto, sino de lo que lleva el identificador de **esta** página.
+  // El articulado se filtra aparte porque es el texto legal literal, y el
+  // aviso de fallo también: si no, el error de Francia se leería como el de
+  // Chile.
+  const convenio = estado.fase === 'listo' && estado.entry.boeId === boeId ? estado.entry : null;
+  const articulado = texto?.boeId === boeId ? texto : null;
+  const fallo = estado.fase === 'fallo' && estado.boeId === boeId;
+
   useEffect(() => {
     if (!boeId) return;
     // Con precarga no hace falta red, pero sí volver a fijar el estado: quien
@@ -64,7 +79,7 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
       if (!vigente) return;
       const encontrado = entradas.find((precepto) => precepto.boeId === boeId);
       if (!encontrado) {
-        setEstado({ fase: 'fallo' });
+        setEstado({ fase: 'fallo', boeId });
         return;
       }
       setEstado({ fase: 'listo', entry: encontrado });
@@ -106,49 +121,55 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
       <h2 id='country-treaty' className='mb-3 font-heading text-2xl font-semibold'>
         Convenio de doble imposición España–{country.name}
       </h2>
-      {estado.fase === 'cargando' && (
+      {!convenio && !fallo && (
         <p className='text-sm leading-relaxed text-muted-foreground'>Cargando el convenio…</p>
       )}
-      {estado.fase === 'fallo' && (
+      {fallo && (
         <p className='max-w-2xl text-sm leading-relaxed text-muted-foreground'>
           No se ha podido cargar el convenio desde el corpus normativo. Su identificador en el BOE
           es <span className='font-mono text-xs'>{boeId}</span>.
         </p>
       )}
-      {estado.fase === 'listo' && (
+      {convenio && (
         <>
+          {/*
+           * El dato estructurado se emite solo con el convenio resuelto: se
+           * declara el precepto que la página está publicando, no el
+           * identificador que esperaba encontrar.
+           */}
+          <JsonLd data={treatyJsonLd(convenio)} />
           <p className='mb-4 max-w-2xl text-sm leading-relaxed text-secondary-foreground'>
-            {estado.entry.norma}
+            {convenio.norma}
           </p>
           <dl className='mb-5 grid gap-2 text-sm sm:grid-cols-2'>
             <div>
               <dt className='inline font-semibold'>Artículo de residencia: </dt>
               <dd className='inline text-secondary-foreground'>
-                {estado.entry.designacion}
-                {estado.entry.epigrafe ? ` — ${estado.entry.epigrafe}` : ''}
+                {convenio.designacion}
+                {convenio.epigrafe ? ` — ${convenio.epigrafe}` : ''}
               </dd>
             </div>
             <div>
               <dt className='inline font-semibold'>Identificador del BOE: </dt>
               <dd className='inline font-mono text-xs text-secondary-foreground'>
-                {estado.entry.boeId}
+                {convenio.boeId}
               </dd>
             </div>
-            {estado.entry.vigenteDesde && (
+            {convenio.vigenteDesde && (
               <div>
                 <dt className='inline font-semibold'>Redacción vigente desde: </dt>
-                <dd className='inline text-secondary-foreground'>{estado.entry.vigenteDesde}</dd>
+                <dd className='inline text-secondary-foreground'>{convenio.vigenteDesde}</dd>
               </div>
             )}
-            {estado.entry.totalSentencias > 0 && (
+            {convenio.totalSentencias > 0 && (
               <div>
                 <dt className='inline font-semibold'>En el corpus español: </dt>
                 <dd className='inline text-secondary-foreground'>
-                  {estado.entry.totalSentencias === 1
+                  {convenio.totalSentencias === 1
                     ? 'lo aplica 1 sentencia'
-                    : `lo aplican ${estado.entry.totalSentencias} sentencias`}{' '}
+                    : `lo aplican ${convenio.totalSentencias} sentencias`}{' '}
                   (
-                  {sentenciasDe(estado.entry)
+                  {sentenciasDe(convenio)
                     .map((archivo) => archivo.replace(/\.pdf$/i, '').replace(/_/g, ' '))
                     .join(', ')}
                   )
@@ -157,11 +178,11 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
             )}
           </dl>
 
-          {estado.entry.urlBoe && (
+          {convenio.urlBoe && (
             <p className='mb-6'>
               <a
                 className='control-focus control-press inline-flex items-center justify-center rounded-md border border-border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-secondary'
-                href={estado.entry.urlBoe}
+                href={convenio.urlBoe}
                 rel='noreferrer'
                 target='_blank'
               >
@@ -170,13 +191,13 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
             </p>
           )}
 
-          {texto && (
+          {articulado && (
             <div className='rounded-lg border border-border bg-muted p-5'>
               <h3 className='mb-3 font-heading text-sm font-semibold'>
-                {estado.entry.designacion} del convenio, literal
+                {convenio.designacion} del convenio, literal
               </h3>
               <div className='space-y-3 text-sm leading-relaxed text-secondary-foreground'>
-                {texto.articulado.map((parrafo) => (
+                {articulado.articulado.map((parrafo) => (
                   <p key={parrafo}>{parrafo}</p>
                 ))}
               </div>

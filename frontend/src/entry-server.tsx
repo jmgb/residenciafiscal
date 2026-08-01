@@ -4,7 +4,7 @@
  * La SPA solo existía en el navegador: el HTML que servía Netlify era una shell
  * con `<div id="root"></div>`, así que sin JavaScript no había ni una línea de
  * texto. Un buscador que no ejecute el bundle —o que lo posponga— indexaba
- * páginas vacías, y eso vaciaba de sentido publicar 29 rutas de país.
+ * páginas vacías, y eso vaciaba de sentido publicar las rutas de país.
  *
  * Aquí no hay servidor en producción: esto corre una vez por ruta durante
  * `npm run build` (`scripts/prerender.mjs`) y su salida se escribe en el HTML
