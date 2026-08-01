@@ -2,6 +2,7 @@
 
 import { createProductionDependencies } from './composition';
 import type { ComparisonReport } from './contracts';
+import type { ChatObservability } from './observability';
 import type { ChatRequestInput } from './supabase-chat-store';
 
 const MAX_REQUEST_BYTES = 200_000;
@@ -10,6 +11,7 @@ const MAX_MESSAGE_CHARS = 500;
 
 export interface ChatFunctionDependencies {
   enabled: boolean;
+  observability: ChatObservability;
   recordRequest(input: ChatRequestInput): Promise<{ requestId: string }>;
   compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
   failRequest(input: {
@@ -102,24 +104,12 @@ const parseQuestion = async (request: Request): Promise<ParsedChatRequest | null
 
 const event = (name: string, data: unknown) => `event: ${name}\ndata: ${JSON.stringify(data)}\n\n`;
 
-type ChatFailureStage = 'record' | 'compare' | 'complete';
-
-const logChatFailure = (input: {
-  requestId: string;
-  failureCode: string;
-  stage: ChatFailureStage;
-  status?: 'failed' | 'timed_out';
-}) => {
-  console.error(
-    JSON.stringify({
-      event: 'chat_request_failed',
-      request_id: input.requestId,
-      failure_code: input.failureCode,
-      stage: input.stage,
-      ...(input.status ? { status: input.status } : {}),
-    })
-  );
-};
+/**
+ * Solo el nombre de la clase del error sale del `catch`. El mensaje del
+ * proveedor puede traer el prompt incrustado y nunca se propaga.
+ */
+const errorNameOf = (error: unknown): string | undefined =>
+  error instanceof Error ? error.name : undefined;
 
 export const serializeComparison = (report: ComparisonReport): string => {
   const events: string[] = [];
@@ -160,8 +150,13 @@ export const createChatHandler =
         countryPath: parsed.countryPath,
         question: parsed.question,
       });
-    } catch {
-      logChatFailure({ requestId, failureCode: 'record_error', stage: 'record' });
+    } catch (error) {
+      await dependencies.observability.recordFailure({
+        requestId,
+        failureCode: 'record_error',
+        stage: 'record',
+        errorName: errorNameOf(error),
+      });
       return jsonError(503, 'Registro de conversación no disponible');
     }
     const effectiveRequestId = recordedRequest.requestId;
@@ -169,15 +164,16 @@ export const createChatHandler =
     let report: ComparisonReport;
     try {
       report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
-    } catch {
+    } catch (error) {
       // El fallo se registra sin exponer el diagnóstico del proveedor.
       const status = request.signal.aborted ? 'timed_out' : 'failed';
       const failureCode = request.signal.aborted ? 'aborted' : 'comparison_error';
-      logChatFailure({
+      await dependencies.observability.recordFailure({
         requestId: effectiveRequestId,
         failureCode,
         stage: 'compare',
         status,
+        errorName: errorNameOf(error),
       });
       try {
         await dependencies.failRequest({
@@ -202,11 +198,12 @@ export const createChatHandler =
         actualComplete,
         report,
       });
-    } catch {
-      logChatFailure({
+    } catch (error) {
+      await dependencies.observability.recordFailure({
         requestId: effectiveRequestId,
         failureCode: 'completion_error',
         stage: 'complete',
+        errorName: errorNameOf(error),
       });
       return jsonError(503, 'Registro de coste no disponible');
     }

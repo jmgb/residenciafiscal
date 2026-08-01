@@ -1,0 +1,12 @@
+[Unit]
+Description=Residencia Fiscal daily chat ledger Telegram digest
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/ai_projects/residenciafiscal
+ExecStart=/bin/bash /home/ubuntu/ai_projects/residenciafiscal/scripts/agentic/daily_chat_cost_telegram_runner.sh
+TimeoutStartSec=300
+StandardOutput=journal
+StandardError=journal

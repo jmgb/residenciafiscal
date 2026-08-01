@@ -1,0 +1,11 @@
+[Unit]
+Description=Send Residencia Fiscal chat ledger digest every day at 09:15 (Europe/Madrid)
+
+[Timer]
+OnCalendar=*-*-* 09:15:00 Europe/Madrid
+Persistent=true
+AccuracySec=1min
+Unit=residenciafiscal-daily-chat-cost-telegram.service
+
+[Install]
+WantedBy=timers.target

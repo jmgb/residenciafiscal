@@ -670,10 +670,34 @@ sola URL para poder encontrarse.
     (`record`, `compare`, `complete`) mediante el evento estructurado
     `chat_request_failed`, sin registrar la excepción del proveedor ni contenido
     fiscal. El contrato queda cubierto por test.
-  - [ ] Elegir el canal operativo (drenaje de logs de Netlify o Sentry, que aún
-    no cubre la Function), configurar alertas por tasa de error y gasto, y
-    verificar en producción que `chat_request_failed` y
-    `chat_cost_reconciled` llegan sin pregunta ni respuesta.
+  - [x] **Elegir el canal operativo y configurar alertas** (1 de agosto de 2026).
+    Se descartó el drenaje de logs de Netlify —es de plan Pro— y se separaron los
+    dos canales por naturaleza: **los errores van a Sentry**, al proyecto propio
+    `residencia-fiscal-chat`, y **el gasto a Telegram**, porque no es un error y
+    Sentry lo mide mal. Verificado de extremo a extremo: Sentry devolvió `200` al
+    envelope que produce el código y la issue aparece como
+    `chat_request_failed: comparison_error (compare)`; el resumen diario leyó el
+    ledger real de producción.
+    - La Function **no usa `@sentry/node`**, y es deliberado: el SDK captura
+      breadcrumbs de consola y contexto del runtime por defecto, y este runtime
+      loguea eventos estructurados por consola. `observability.ts` construye el
+      envelope con `fetch`, así que lo que sale es exactamente lo que se lee en
+      `buildEnvelope`: código de fallo, etapa, `request_id` y nombre de clase del
+      error saneado. Nunca la pregunta, la respuesta ni el `message` del
+      proveedor, que puede traer el prompt incrustado.
+    - **Dos reglas de alerta, no una.** Con el tráfico actual una alerta por tasa
+      no saltaría nunca, así que además de «5 fallos en 1 h» hay otra que avisa
+      del primer fallo nuevo y de las regresiones.
+    - El gasto sale de la RPC `chat_daily_stats`, que devuelve solo recuentos,
+      sumas y percentiles: el script no puede leer contenido aunque quiera.
+    - [ ] **Queda configurarlo en producción**, sin lo cual nada de esto se
+      activa: `CHAT_SENTRY_ENABLED=true` y `CHAT_SENTRY_DSN` como variables
+      ordinarias del contexto `production` y todos los scopes —la cuenta Netlify
+      Legacy **no** permite scope Functions, igual que con el resto de
+      credenciales del backend— y **nunca** con prefijo `VITE_`; después,
+      redeploy. Y en el VPS, instalar el timer
+      `residenciafiscal-daily-chat-cost-telegram`. Runbook:
+      [`CHAT_OBSERVABILITY.md`](../operations/CHAT_OBSERVABILITY.md).
   - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la medición. B sale
     `ESTIMATED` cuando la Interactions API cita documentos pero devuelve cero
     tokens de documento
@@ -795,19 +819,27 @@ sola URL para poder encontrarse.
   (`isGoogleAnalyticsEnabled`) para las dos analíticas.
 - [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
   devuelven `200` desde `https://residenciafiscal.org/`.
-- [ ] Registrar `https://residenciafiscal.org/sitemap.xml` en Google Search Console
-  y revisar la primera descarga y los errores de cobertura.
-  - **Bloqueado por permisos, no por el sitemap** (1 de agosto de 2026). El
-    sitemap responde `200` con 33 URLs y Googlebot lo descarga sin problema; solo
-    el User-Agent `curl` recibe `403` del WAF. El envío por API falla con `403`
-    tanto en `sc-domain:residenciafiscal.org` como en
-    `https://residenciafiscal.org/`: la única propiedad accesible a la service
-    account `presupuestor-claude-skill@presupuestor-485509.iam.gserviceaccount.com`
-    es `sc-domain:presupuestor.com`.
-  - Para desbloquearlo: crear y verificar la propiedad de `residenciafiscal.org` en
-    Search Console y añadir esa service account en *Settings → Users and
-    permissions*. Después el envío es un solo comando del skill
-    `google-search-console`.
+- [x] **Registrar el sitemap en Google Search Console** (1 de agosto de 2026).
+  La propiedad `sc-domain:residenciafiscal.org` ya existía; el bloqueo era solo
+  que la service account
+  `presupuestor-claude-skill@presupuestor-485509.iam.gserviceaccount.com` no
+  estaba dada de alta en ella. Añadida como usuario, el envío por API funcionó.
+  Google descargó el sitemap con **0 errores y 0 avisos**.
+  - **El recuento delataba un sitemap viejo.** Search Console registraba `5` URLs
+    —justo `/espana` más las cuatro estáticas, es decir, el sitemap anterior a
+    publicar las rutas de país— mientras producción servía ya 38. Había
+    descargado una versión previa al deploy del día. Reenviarlo lo corrigió: 38
+    URLs, `indexed: 0` por recién descargado.
+  - Verificar el recuento tras cada deploy que añada rutas: un sitemap servido
+    correctamente y una versión obsoleta en Google se ven igual desde fuera.
+  - **No se pudo automatizar la verificación de propiedad**, por si hace falta
+    otro dominio: la Site Verification API está deshabilitada en el proyecto GCP
+    `presupuestor-485509` y la cuenta `gcloud` local no tiene acceso a él. Las
+    alternativas son verificar desde la UI —lo que se hizo— o crear un proyecto
+    GCP propio del repositorio con su service account, que además rompería el
+    acoplamiento de que este proyecto use credenciales de `presupuestor`.
+  - `GSC_SITE_URL` queda declarada en `.env.example` para que el skill
+    `google-search-console` no necesite el flag `--site-url`.
 - [ ] Revisar durante varios días los eventos del WAF. Ajustar la regla custom si
   los User-Agents genéricos (`curl`, `axios`, `python-requests`) bloquean monitores
   o integraciones legítimas.

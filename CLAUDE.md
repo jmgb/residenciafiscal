@@ -382,17 +382,27 @@ Métricas, trampas de la API y por qué divergen:
 
 ## Errores en producción (Sentry)
 
-Hay **dos** runtimes instrumentados y uno que no: la API FastAPI
-(`src/api/sentry_config.py`) y la SPA React (`frontend/src/lib/sentry-runtime.ts`)
-mandan a Sentry; la Netlify Function del chat **no está cubierta**, y sus fallos
-solo se ven hoy en el evento estructurado `chat_request_failed`. No des por
-instrumentado el chat productivo.
+Los **tres** runtimes mandan a Sentry, cada uno a su proyecto: la API FastAPI
+(`src/api/sentry_config.py`), la SPA React (`frontend/src/lib/sentry-runtime.ts`)
+y, desde el 1 de agosto de 2026, la Netlify Function del chat
+(`frontend/netlify/functions/chat/observability.ts` → `residencia-fiscal-chat`).
 
-Los dos initializers fallan cerrado —sin `*_ENABLED` y sin DSN no arrancan— y
-borran cabeceras, cookies y cuerpo antes de enviar el evento, con
+Los tres fallan cerrado —sin `*_ENABLED` y sin DSN no arrancan— y borran
+cabeceras, cookies y cuerpo antes de enviar el evento, con
 `send_default_pii=False`. Es deliberado: una pregunta del chat es dato fiscal y
 no puede acabar en un servicio de errores. `init_sentry()` además se desactiva
 bajo pytest, porque la suite provoca excepciones a propósito.
+
+**La Function no usa el SDK de Sentry, y es deliberado.** Construye el envelope a
+mano con `fetch` porque `@sentry/node` captura breadcrumbs de consola y contexto
+del runtime por defecto, y este runtime loguea eventos estructurados por consola;
+desactivar cada captura automática es más frágil que escribir el payload. Lo que
+sale hacia Sentry es exactamente lo que se lee en `buildEnvelope`: código de
+fallo, etapa, `request_id` y nombre de clase del error, **nunca** la pregunta, la
+respuesta ni el `message` de la excepción del proveedor, que puede traer el
+prompt incrustado. `error.name` se sanea contra `[A-Za-z][A-Za-z0-9_]{0,39}` y
+cualquier otra cosa se descarta como `unknown`. El coste **no** va a Sentry: no
+es un error y su canal es el resumen diario sobre el ledger de Supabase.
 
 Variables en `.env.example` y tabla en [`README.md`](README.md#errores-en-producción-sentry).
 Dos trampas: todo `VITE_*` viaja **público** en el bundle (el DSN puede, un token

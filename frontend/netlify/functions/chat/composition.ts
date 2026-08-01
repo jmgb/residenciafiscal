@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { ChatFunctionDependencies } from './chat';
 import { CurrentStructuredStrategy } from './current-structured-strategy';
 import { GeminiFileSearchStrategy } from './file-search-strategy';
+import { createChatObservability } from './observability';
 import { productionCorpus, productionVerbatimArtifacts } from './production-corpus';
 import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters';
 import { compareStrategiesInParallel } from './runtime';
@@ -23,6 +24,7 @@ export const createProductionDependencies = (
   const deadlineMs = deadline(environment.CHAT_DEADLINE_MS);
   const fileSearchModel = environment.CHAT_FILE_SEARCH_MODEL?.trim() || 'gemini-3.5-flash-lite';
   const enabled = environment.CHAT_COMPARISON_ENABLED === 'true';
+  const observability = createChatObservability(environment);
   if (
     !enabled ||
     !openAIKey ||
@@ -35,6 +37,7 @@ export const createProductionDependencies = (
   ) {
     return {
       enabled: false,
+      observability,
       async recordRequest() {
         throw new Error('Chat no configurado');
       },
@@ -66,6 +69,7 @@ export const createProductionDependencies = (
 
   return {
     enabled: true,
+    observability,
     recordRequest: (input) => store.record(input),
     compare: (question, requestId, signal) =>
       compareStrategiesInParallel({
@@ -83,26 +87,23 @@ export const createProductionDependencies = (
         actualComplete,
         report,
       });
-      console.info(
-        JSON.stringify({
-          event: 'chat_cost_reconciled',
-          request_id: requestId,
-          actual_microusd: actualMicrousd,
-          actual_complete: actualComplete,
-          strategies: report.answers.map((answer) => ({
-            strategy: answer.strategy,
-            status: answer.status,
-            model: answer.model,
-            reasoning_effort: answer.reasoning_effort,
-            latency_ms: answer.latency_ms,
-            cost_microusd: answer.cost.cost_microusd,
-            measurement: answer.cost.measurement,
-            input_tokens: answer.cost.input_tokens,
-            output_tokens: answer.cost.output_tokens,
-            retrieved_document_tokens: answer.cost.retrieved_document_tokens,
-          })),
-        })
-      );
+      await observability.recordCost({
+        requestId,
+        actualMicrousd,
+        actualComplete,
+        strategies: report.answers.map((answer) => ({
+          strategy: answer.strategy,
+          status: answer.status,
+          model: answer.model,
+          reasoning_effort: answer.reasoning_effort,
+          latency_ms: answer.latency_ms,
+          cost_microusd: answer.cost.cost_microusd,
+          measurement: answer.cost.measurement,
+          input_tokens: answer.cost.input_tokens,
+          output_tokens: answer.cost.output_tokens,
+          retrieved_document_tokens: answer.cost.retrieved_document_tokens,
+        })),
+      });
     },
   };
 };

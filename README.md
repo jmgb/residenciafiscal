@@ -215,17 +215,23 @@ npm run build       # genera el corpus y compila a dist/
 
 ## Errores en producción (Sentry)
 
-Sentry instrumenta **dos** de los tres runtimes: la API FastAPI
-(`src/api/sentry_config.py`) y la SPA React (`frontend/src/lib/sentry-runtime.ts`).
-La Netlify Function del chat todavía **no está cubierta**; sus fallos se observan
-por el evento estructurado `chat_request_failed`.
+Sentry instrumenta los **tres** runtimes, cada uno en su propio proyecto: la API
+FastAPI (`src/api/sentry_config.py`), la SPA React
+(`frontend/src/lib/sentry-runtime.ts`) y la Netlify Function del chat
+(`frontend/netlify/functions/chat/observability.ts`).
 
-Los dos runtimes se inicializan solo con la telemetría habilitada y un DSN
-presente, envían `sendDefaultPii: false` y borran cabeceras, cookies y cuerpo de
-la petición antes de enviar el evento: una pregunta del chat es dato fiscal y no
+Los tres se inicializan solo con la telemetría habilitada y un DSN presente,
+envían `sendDefaultPii: false` y borran cabeceras, cookies y cuerpo de la
+petición antes de enviar el evento: una pregunta del chat es dato fiscal y no
 debe viajar a un servicio de errores. La suite de pytest no instrumenta nada,
 aunque el `.env` local tenga la telemetría encendida, porque provoca excepciones
 a propósito.
+
+La Function no usa el SDK: construye el envelope con `fetch` y envía un evento
+sintético con código de fallo, etapa, `request_id` y nombre de clase del error.
+Nunca viaja la pregunta, la respuesta ni el `message` de la excepción del
+proveedor. El coste se sigue observando por `chat_cost_reconciled` en los logs y
+por el resumen diario del ledger, no por Sentry.
 
 | Variable | Ámbito | Nota |
 |----------|--------|------|
@@ -233,6 +239,7 @@ a propósito.
 | `SENTRY_ENVIRONMENT`, `SENTRY_RELEASE`, `SENTRY_TRACES_SAMPLE_RATE` | API | Entorno, versión y muestreo de trazas |
 | `VITE_SENTRY_ENABLED`, `VITE_SENTRY_DSN` | Frontend | Todo `VITE_*` es **público** en el bundle; el DSN identifica el proyecto, no es un token |
 | `VITE_SENTRY_ENVIRONMENT`, `VITE_SENTRY_TRACES_SAMPLE_RATE` | Frontend | Equivalentes de navegador |
+| `CHAT_SENTRY_ENABLED`, `CHAT_SENTRY_DSN` | Netlify Function | Proyecto `residencia-fiscal-chat`. Runtime de servidor: **nunca** con prefijo `VITE_`. La cuenta Legacy no admite scope Functions; van como variables ordinarias de `production` |
 | `SENTRY_ORG_SLUG`, `SENTRY_TOKEN` | Build | Solo para subir sourcemaps. **Nunca** con prefijo `VITE_` |
 
 Nombres y valores de ejemplo, en [`.env.example`](.env.example).

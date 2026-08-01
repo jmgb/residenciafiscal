@@ -5,6 +5,7 @@ import {
   createChatHandler,
 } from '../netlify/functions/chat/chat';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
+import { ConsoleChatObservability } from '../netlify/functions/chat/observability';
 import { parseChatEventStream } from '../src/lib/chat-sse-protocol';
 
 const report: ComparisonReport = {
@@ -70,6 +71,7 @@ const dependencies = (
   overrides: Partial<ChatFunctionDependencies> = {}
 ): ChatFunctionDependencies => ({
   enabled: true,
+  observability: new ConsoleChatObservability(),
   recordRequest: vi.fn(async ({ requestId }) => ({ requestId })),
   compare: vi.fn(async () => report),
   completeRequest: vi.fn(async () => undefined),
