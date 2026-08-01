@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -124,7 +124,7 @@ describe('ChatView', () => {
     expect(screen.queryByText(/está activo el motor simulado/i)).not.toBeInTheDocument();
   });
 
-  it('mantiene el aviso jurídico y de privacidad cuando el motor es real', () => {
+  it('mantiene el aviso jurídico y el enlace de privacidad cuando el motor es real', () => {
     render(
       <MemoryRouter>
         <ChatView engine={createFakeEngine()} isStub={false} />
@@ -132,11 +132,14 @@ describe('ChatView', () => {
     );
 
     const banner = screen.getByRole('status', { name: /investigación jurídica/i });
-    expect(banner).toHaveTextContent(/comparación experimental/i);
+    expect(banner).toHaveTextContent(/^Aviso:/i);
     expect(banner).not.toHaveTextContent(/respuestas.*simuladas/i);
     expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
-    expect(banner).toHaveTextContent(/verifica siempre la fuente original/i);
-    expect(banner).toHaveTextContent(/no incluyas datos personales o identificativos/i);
+    expect(banner).toHaveTextContent(/consultar a un profesional antes de tomar decisiones/i);
+    expect(within(banner).getByRole('link', { name: 'Privacidad' })).toHaveAttribute(
+      'href',
+      '/privacidad'
+    );
   });
 
   it('envía la consulta y pinta el mensaje del usuario', async () => {
