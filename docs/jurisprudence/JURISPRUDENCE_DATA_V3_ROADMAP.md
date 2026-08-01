@@ -418,26 +418,33 @@ independiente. Contrato, método, artefactos y límites:
 
 ### Fase E — 106 sentencias
 
-**E0 completada (2026-07-30), sin crear el listado ni procesar las 106.**
+**E0 completada el 30 de julio y rollout técnico E ejecutado el 1 de agosto de
+2026.**
 
 La preparación incorpora resultado residencial tipado, regeneración sin
 regresión de las cinco, holdout congelado, schema de manifiesto, estado
-reanudable, reintentos y gates técnico/humano. La primera medición independiente
-reduce la exactitud de conducta al 75 % y la seguridad de abstención/pregunta al
-83,33 %; queda registrada sin ajustar el router. Detalle:
+reanudable, reintentos y gates técnico/humano. Tras autorización expresa se creó
+el manifiesto y se procesaron 106/106 sentencias en 11 lotes. El agregado conserva
+los 106 casos y excluye de recuperación 39 fuera de ámbito: quedan 67 documentos
+y 74 unidades recuperables. La primera medición independiente sobre el corpus
+completo mantiene la exactitud de conducta en 75 % y la seguridad de
+abstención/pregunta en 83,33 %, pero reduce recall esperado @3 a 47,86 %,
+precisión relevante a 33,33 % y recall de contraste a 12,50 %. Queda registrada
+sin ajustar el router ni promoverlo al chat. Detalle:
 [`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).
 
 Requisitos previos:
 
 - [x] schema v3 congelado con extensión opcional compatible;
-- [ ] manifiesto explícito de los 106 PDFs y hashes;
+- [x] manifiesto explícito de los 106 PDFs y hashes de todas sus entradas;
 - [x] orquestación reanudable y publicación atómica;
 - [x] política de revisión humana;
 - [x] gates técnicos y jurídicos medidos con cinco;
 - [x] decisión de almacenamiento de verbatim e índice.
 
 Los borradores pueden generarse automáticamente. Solo se publican como
-revisados los elementos aprobados según la política editorial.
+revisados los elementos aprobados según la política editorial. Los 1.620
+elementos actuales están `AGENT_REVIEWED` y ninguno `HUMAN_APPROVED`.
 
 ### Fase F0 — Comparador local de estrategias sobre cinco sentencias
 

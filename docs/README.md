@@ -47,7 +47,7 @@ El orden recomendado de lectura es:
 6. [Pipeline del caso canónico](jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).
 7. [Schema v3](jurisprudence/JURISPRUDENCE_CASE_SCHEMA_V3.md).
 8. [Recuperación de fase D](jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md) y
-   [estado de fase E0](jurisprudence/JURISPRUDENCE_PHASE_E0.md).
+   [estado y resultados de fases E0/E](jurisprudence/JURISPRUDENCE_PHASE_E0.md).
 
 Documentos especializados:
 

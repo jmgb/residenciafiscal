@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2021-01-28",
+    "ecli": "ECLI:ES:TS:2021:111",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-111-2021",
+    "roj": "STS 111/2021",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-111-2021.case.json",
+    "case_sha256": "1a246a2b543c92a96c797e538c1058bbb75e6c10c2743f02a04aa4b8679c65c7",
+    "source_sha256": "cd550eec53df3d961314161ef67eeb164ef30e375f2dbb11287a87ba5276bb1d"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR: devolución de retenciones a fondo de pensiones (entidad no residente)",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-111-2021",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR: devolución de retenciones a fondo de pensiones (entidad no residente)\nNO APLICA - fuera de alcance\nJURISPRUDENCIA\nRoj: STS 111/2021 - ECLI:ES:TS:2021:111\nId Cendoj: 28079130022021100008\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 28/01/2021\nNº de Recurso: 6037/2018\nNº de Resolución: 109/2021\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: ISAAC MERINO JARA\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 7519/2018,\nATS 4786/2020,\nSTS 111/2021\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 109/2021\nFecha de sentencia: 28/01/2021\nTipo de procedimiento: R. CAS",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: STS 111/2021 - ECLI:ES:TS:2021:111\nId Cendoj: 28079130022021100008\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 28/01/2021\nNº de Recurso: 6037/2018\nNº de Resolución: 109/2021\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: ISAAC MERINO JARA\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 7519/2018,\nATS 4786/2020,\nSTS 111/2021\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 109/2021\nFecha de sentencia: 28/01/2021\nTipo de procedimiento: R. CAS"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cd550eec53df3d961314161ef67eeb164ef30e375f2dbb11287a87ba5276bb1d"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-111-2021-fuera-de-alcance"
+    }
+  ]
+}

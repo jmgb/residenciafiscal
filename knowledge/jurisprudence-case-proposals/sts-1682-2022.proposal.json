@@ -1,0 +1,733 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se rechaza que fuese un error; se considera coherente con el resto de circunstancias.",
+      "category": "OTROS",
+      "description": "En la escritura de donación el recurrente se identifica como estudiante y “vecino de Burgos” indicando dirección en Burgos.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar manifestación espontánea de domicilio/residencia en Burgos a fecha de devengo.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "escritura pública de donación (17/02/2017)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "No prueba por sí solo la residencia, pero se valora como elemento adicional no rectificado en 5 años.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Mantenimiento del empadronamiento en Burgos hasta 22/09/2017; alta posterior en Madrid.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indicio administrativo de residencia en Burgos durante el periodo 2012-2017.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "certificado/constancia de empadronamiento"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se utiliza para concluir que no residió en Madrid todo el periodo; enlaza con manifestación del propio actor en conclusiones.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Movimientos bancarios del pago del Colegio Mayor en Madrid que muestran estancia solo de septiembre 2012 a marzo 2014 (descontando agosto 2013).",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Delimitar temporalmente la presencia en Madrid y refutar permanencia continuada 2012-2017.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "movimientos bancarios pago Colegio Mayor"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera indicio incompatible con la residencia habitual en Madrid alegada.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Consta que el domicilio de Burgos fue el declarado por el recurrente a efectos de notificaciones en 4 cuentas bancarias abiertas en Burgos (BBVA, Bankia, EVO con su madre).",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar vinculación estable con Burgos y coherencia de domicilio habitual allí.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "domicilio de notificaciones en cuentas bancarias"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Elemento corroborador del resto (domicilio fiscal/empadronamiento/escritura/cuentas).",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Se señala que el propio actor recepcionó las propuestas de liquidación en el domicilio de Burgos.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indicio de localización operativa/residencial en Burgos en fechas cercanas a la comprobación.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "notificaciones propuestas de liquidación recibidas en Burgos"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El TS considera que la cuestión de 'ausencias temporales' no fue ratio decidendi principal; su discusión resulta inocua si ya se concluye mayor permanencia en Burgos.",
+      "category": "OTROS",
+      "description": "Invocación de Consultas DGT (V1136-09, V07010-07) para sostener que ausencias por estudios no rompen convivencia y se califican como ausencia temporal a efectos del art. 28 Ley 22/2009.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Sostener interpretación administrativa del concepto de ausencias temporales por estudios.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Consultas DGT sobre convivencia/ausencias por estudios"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se admite como dato de estudios, pero se considera insuficiente para acreditar residencia habitual por permanencia (días) en Madrid.",
+      "category": "OTROS",
+      "description": "Copia de justificantes de estudios cursados en Madrid (Grado 2012-2016).",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Evidenciar estancia y vinculación académica en Madrid durante varios cursos.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "justificantes/matrículas estudios en Madrid (Universidad Pontificia Comillas-ICAI)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Sirve para acotar estancia en Colegio Mayor (sep 2012-mar 2014), pero no prueba permanencia en Madrid el resto del periodo 2012-2017.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Cargos bancarios (BBVA) por domiciliaciones del Colegio Mayor en Madrid para acreditar residencia durante esos estudios.",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar alojamiento efectivo en Madrid en parte del periodo 2012-2014.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "domiciliaciones BBVA Colegio Mayor Madrid"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Acredita alojamiento desde agosto 2016, pero no desvirtúa la residencia habitual en Burgos durante el conjunto del quinquenio ni se acompañó de prueba de días.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Contrato de arrendamiento de habitación en Madrid, indicando inicio el 31/08/2016.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar vivienda/uso efectivo en Madrid desde 31/08/2016.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "contrato arrendamiento habitación Madrid (piso compartido)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-010"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La instancia considera que movimientos bancarios no son representativos de residencia habitual en Madrid por tratarse de ausencias por estudios y por falta de cuantificación de días.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Estadística de disposiciones de efectivo: 80,33% en Madrid y 11,5% en Burgos; importes también considerados por el recurrente.",
+      "evidence_id": "evidence-legacy-010",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Inferir presencia física y residencia habitual en Madrid por frecuencia de disposiciones.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "retiradas de efectivo en cajeros (tarjeta BBVA)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-011"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "Se reputa insuficiente/no representativo para fijar residencia habitual frente al resto de indicios y sin prueba de días de permanencia.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "42 transacciones de la tarjeta/cuenta EVO con compras en supermercados de Madrid.",
+      "evidence_id": "evidence-legacy-011",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Inferir vida cotidiana y residencia en Madrid por recurrencia de compras.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "transacciones EVO (compras supermercados Madrid)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-012"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se toma en cuenta para ubicar estancias (Lyon/UK), pero perjudica su tesis de permanencia en Madrid y no acredita días de permanencia comparados Madrid/Burgos.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Alegó que no residió en Burgos desde 2012 salvo vacaciones; y reconoció estancias principales en Lyon (abril 2014-agosto 2016) y Leamington Spa (mayo-julio 2016).",
+      "evidence_id": "evidence-legacy-012",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener que su centro de vida/permanencia estaba fuera de Burgos (Madrid/Francia/UK) y que Burgos era meramente vacacional.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "manifestaciones del recurrente (alegaciones/conclusiones)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.",
+      "consequences": [],
+      "decisive_reasoning": "El TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2012,
+          2017
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-1682-2022.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-1682-2022"
+    },
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2022-05-03",
+    "ecli": "ES:TS:2022:1682",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-1682-2022",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 1682/2022",
+    "source_file": "sentencias/STS_1682_2022.pdf",
+    "tax_years": [
+      2012,
+      2017
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_OTRO"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "en la escritura de donación"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "estudiante, y\nvecino de Burgos"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "sin que sea admisible entender"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "mantuvo su empadronamiento en Burgos"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "hasta el 22 de septiembre 2017"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "no es por sí solo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "movimientos bancarios"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "Colegio\nMayor"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "septiembre de 2012\nhasta marzo de 2014"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "domicilio\nde Burgos"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "a efectos de notiﬁcaciones en las 4 cuentas bancarias"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "lo que mal se compadece"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "debiendo recordarse que fue el propio actor quien recepcionó las mismas en el domicilio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "una \"ausencia temporal justiﬁcada"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "Dirección General de Tributos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "Copia de los justiﬁcantes de los estudios"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "durante los\ncursos 2012-2013"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "movimientos bancarios"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "Colegio\nMayor"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "septiembre de 2012\nhasta marzo de 2014"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "fue posteriormente, el 31 de agosto de 2016"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "contrato de arrendamiento"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "comenzó a residir"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "de los pretendidos movimientos bancarios no cabe extraer las consecuencias"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "compras en Madrid"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "en cualquier caso los mismos no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "abril\nde 2014 y agosto de 2016"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "residió, principalmente en Lyon (Francia"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "mayo a julio de 2016"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "Leamington Spa"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

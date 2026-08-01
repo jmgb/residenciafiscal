@@ -1,0 +1,396 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acto administrativo vigente y base del procedimiento; la Sala confirma su adecuación al ordenamiento",
+      "category": "OTROS",
+      "description": "Acuerdo de liquidación provisional dictado por la Oficina Nacional de Gestión Tributaria (devolución parcial denegada)",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la sujeción de las percepciones al IRNR y la liquidación practicada",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Acuerdo liquidación provisional 26-03-2019"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Aplicación del artículo 20 del Convenio entre España y la Federación Rusa (16/12/1998) que impide gravamen en Rusia",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Rusia",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Determinar que la renta no puede gravarse en Rusia y, por tanto, debe considerarse obtenida en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Convenio España-Rusia (art.20)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Resolución administrativa previa que la Sala estima adecuada y confirma",
+      "category": "OTROS",
+      "description": "Resolución confirmatoria del TEAC que desestimó la reclamación contra la liquidación",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Confirmar la valoración administrativa y la aplicación del IRNR",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Resolución TEAC 29-06-2020"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "No acreditó que el plan sea un \"plan anual de cooperación internacional aprobado en Consejo de Ministros\"; la Sala exige prueba de ese extremo y la considera insuficiente",
+      "category": "OTROS",
+      "description": "Plan de Internacionalización de la Economía Española aportado por la parte actora como marco de las becas ICEX",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar que las becas se encuadran en un plan anual de cooperación internacional y son exentas (art.14.1.b TRLIRNR)",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Documento 4 - Plan de Internacionalización 2014/2015"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala considera que esas sentencias no resuelven la misma cuestión litigiosa y no constituyen precedente obligatorio para el caso; por tanto no son aptas para fundamentar la pretensión",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "STS 4306/2017, 4305/2017, 4307/2017 y 334/2018 invocadas por la parte actora como precedente de no tributación",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener trato diferenciado y fundamento para no sujeción o exención",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Sentencias TS y otras (invocadas por la demanda)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala estima que las consultas no son comparables por diferencia de supuestos (países, convenios y planes distintos) y no sirven para desvirtuar la aplicación del CDI aplicable",
+      "category": "OTROS",
+      "description": "Consultas tributarias invocadas por la parte actora sobre régimen de becas (una referida a Kuwait, otra a Plan 2011)",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Aportar interpretación administrativa favorable a la no sujeción/exención",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Consultas vinculantes (NUM000, NUM001)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
+      "consequences": [],
+      "decisive_reasoning": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2015
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-3306-2025.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-3306-2025"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Rusia"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2025-07-11",
+    "ecli": "ES:AN:2025:3306",
+    "is_tax_residence_case": true,
+    "judgment_id": "san-3306-2025",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 3306/2025",
+    "source_file": "sentencias/SAN_3306_2025.pdf",
+    "tax_years": [
+      2015
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "acuerdo de liquidación provisional de 26 de marzo de 2019"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "el artículo 20 del CDI España-Rusia determina que dichos rendimientos no pueden gravarse en\nRusia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 1,
+          "verbatim_text": "resolución\ndel Tribunal Económico-Administrativo Central de 29 de junio de 2020"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 4,
+          "verbatim_text": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "no resuelven la misma cuestión litigiosa"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "se refería a una beca para Kuwait, país con el que no existía Convenio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

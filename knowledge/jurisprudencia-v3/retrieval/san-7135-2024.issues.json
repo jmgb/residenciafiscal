@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso",
+    "decision_date": "2024-12-23",
+    "ecli": "ES:AN:2024:7135",
+    "is_tax_residence_case": false,
+    "judgment_id": "san-7135-2024",
+    "roj": "SAN 7135/2024",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-7135-2024.case.json",
+    "case_sha256": "612946761425deb21b62e7653a4f7f8b37bb07eda92eb21a637d7e766b78456c",
+    "source_sha256": "4c1a06e82dfc7ffe9531ce698268d993c01ee681b879b5f84510d5a1b4cc3467"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "OTROS: procedimiento sobre concesión de nacionalidad por residencia (Código Civil), no análisis de residencia fiscal IRPF",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-7135-2024",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nOTROS: procedimiento sobre concesión de nacionalidad por residencia (Código Civil), no análisis de residencia fiscal IRPF\nNO APLICA - fuera de alcance\nJURISPRUDENCIA\nRoj: SAN 7135/2024 - ECLI:ES:AN:2024:7135\nId Cendoj: 28079230042024100760\nÓrgano: Audiencia Nacional. Sala de lo Contencioso\nSede: Madrid\nSección: 4\nFecha: 23/12/2024\nNº de Recurso: 438/2023\nNº de Resolución:\nProcedimiento: Procedimiento ordinario\nPonente: ANA ISABEL MARTIN VALERO\nTipo de Resolución: Sentencia\nA U D I E N C I A N A C I O N A L\nSala de lo Contencioso-Administrativo\nSECCIÓN CUARTA\nNúm. de Recurso:  0000438/2023\nTipo de Recurso:  PROCEDIMIENTO ORDINARIO\nNúm. Registro General:  0002437/2023\nDemandante:  Azucena\nProcurador:  JOSE MARIA TORREJON SAMPEDRO\nLetrado:  SAN",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: SAN 7135/2024 - ECLI:ES:AN:2024:7135\nId Cendoj: 28079230042024100760\nÓrgano: Audiencia Nacional. Sala de lo Contencioso\nSede: Madrid\nSección: 4\nFecha: 23/12/2024\nNº de Recurso: 438/2023\nNº de Resolución:\nProcedimiento: Procedimiento ordinario\nPonente: ANA ISABEL MARTIN VALERO\nTipo de Resolución: Sentencia\nA U D I E N C I A N A C I O N A L\nSala de lo Contencioso-Administrativo\nSECCIÓN CUARTA\nNúm. de Recurso:  0000438/2023\nTipo de Recurso:  PROCEDIMIENTO ORDINARIO\nNúm. Registro General:  0002437/2023\nDemandante:  Azucena\nProcurador:  JOSE MARIA TORREJON SAMPEDRO\nLetrado:  SAN"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "4c1a06e82dfc7ffe9531ce698268d993c01ee681b879b5f84510d5a1b4cc3467"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-7135-2024-fuera-de-alcance"
+    }
+  ]
+}

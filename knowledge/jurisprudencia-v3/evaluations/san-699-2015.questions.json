@@ -1,0 +1,38 @@
+{
+  "judgment_id": "san-699-2015",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió SAN 699/2015 este supuesto de residencia: Para 2005 el tribunal aplica principalmente el criterio objetivo de permanencia (>183 días) y el del núcleo principal de intereses económicos (actividades y movimientos económicos en España) para declarar residencia. Para 2006 admite la res?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012",
+        "evidence-legacy-013",
+        "evidence-legacy-014",
+        "evidence-legacy-015",
+        "evidence-legacy-016",
+        "evidence-legacy-017"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

@@ -1274,6 +1274,11 @@
           "title": "Ecli",
           "type": "string"
         },
+        "is_tax_residence_case": {
+          "default": true,
+          "title": "Is Tax Residence Case",
+          "type": "boolean"
+        },
         "judgment_id": {
           "minLength": 1,
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",

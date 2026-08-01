@@ -1,0 +1,131 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "conclusion": "IRNR | IIC: Litigio sobre tributación y comparabilidad de Fondos de Inversión no residentes y devolución de retenciones (IRNR)",
+      "consequences": [],
+      "decisive_reasoning": "NO APLICA - fuera de alcance",
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "outcome": "OTROS",
+      "residence_determination": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "54cf3cf5a1d9b60cf962cd78266fabe84fe895ed78616b1e568e3945ccc06789",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-1432-2023.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-1432-2023"
+    },
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2023-04-05",
+    "ecli": "ECLI:ES:TS:2023:1432",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-1432-2023",
+    "page_count": 45,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 1432/2023",
+    "source_file": "sentencias/STS_1432_2023.pdf",
+    "source_sha256": "2959abe2dd389a64d71f393a7e0968d9a57bfdf1f73533dbc8f3b54473af48a6",
+    "tax_years": []
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [],
+      "fact_ids": [],
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "issue_type": "OTHER",
+      "legal_rule_ids": [],
+      "question": "¿Está la resolución dentro del corpus residencial?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-decision",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 600,
+          "page_index": 1,
+          "printed_page": "1",
+          "start_offset": 0,
+          "verbatim_text": "JURISPRUDENCIA\nRoj: STS 1432/2023 - ECLI:ES:TS:2023:1432\nId Cendoj: 28079130022023100100\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 05/04/2023\nNº de Recurso: 7260/2021\nNº de Resolución: 454/2023\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: RAFAEL TOLEDANO CANTERO\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 8311/2021,\nATS 9385/2022,\nSTS 1432/2023\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 454/2023\nFecha de sentencia: 05/04/2023\nTipo de procedimient"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "2959abe2dd389a64d71f393a7e0968d9a57bfdf1f73533dbc8f3b54473af48a6"
+    }
+  ],
+  "treaty_analyses": []
+}

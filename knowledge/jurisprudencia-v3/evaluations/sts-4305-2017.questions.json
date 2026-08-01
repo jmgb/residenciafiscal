@@ -1,0 +1,31 @@
+{
+  "judgment_id": "sts-4305-2017",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 4305/2017 este supuesto de residencia: El litigio versa sobre si la estancia en Panamá por una beca ICEX (más de 183 días fuera de España en 2011) puede calificarse como “ausencia esporádica” (art. 9.1.a LIRPF) y, por tanto, computarse como permanencia en España. El TS fija que ?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

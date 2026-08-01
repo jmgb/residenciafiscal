@@ -8,6 +8,7 @@
     "court": "Audiencia Nacional",
     "decision_date": "2023-02-22",
     "ecli": "ECLI:ES:AN:2023:1210",
+    "is_tax_residence_case": true,
     "judgment_id": "san-1210-2023",
     "roj": "SAN 1210/2023",
     "tax_years": [

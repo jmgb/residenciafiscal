@@ -1,0 +1,131 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "conclusion": "OTROS: Controversia sobre Impuesto sobre Sociedades y aplicación del art.19.6 TRLIS (interpretación de imputación temporal en transmisiones de participaciones), no análisis de residencia de persona física",
+      "consequences": [],
+      "decisive_reasoning": "NO APLICA - fuera de alcance",
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "outcome": "OTROS",
+      "residence_determination": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "c2939ba018a0c38dcce02dbe1905bbae05460922b50f0d2faf9bdfe1885d4fa8",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-1814-2021.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-1814-2021"
+    },
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2021-05-06",
+    "ecli": "ES:TS:2021:1814",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-1814-2021",
+    "page_count": 14,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 1814/2021",
+    "source_file": "sentencias/STS_1814_2021.pdf",
+    "source_sha256": "5ce01a37db7068649845d1d5d23c26e3c66cee2a14815cafa0be859c4806e63d",
+    "tax_years": []
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [],
+      "fact_ids": [],
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "issue_type": "OTHER",
+      "legal_rule_ids": [],
+      "question": "¿Está la resolución dentro del corpus residencial?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-decision",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 600,
+          "page_index": 1,
+          "printed_page": "1",
+          "start_offset": 0,
+          "verbatim_text": "JURISPRUDENCIA\nRoj: STS 1814/2021 - ECLI:ES:TS:2021:1814\nId Cendoj: 28079130022021100202\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 06/05/2021\nNº de Recurso: 1208/2020\nNº de Resolución: 630/2021\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: FRANCISCO JOSE NAVARRO SANCHIS\nTipo de Resolución: Sentencia\nResoluciones del caso: TEAC, 02-03-2016.,\nSAN 4508/2019,\nATS 5540/2020,\nSTS 1814/2021\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 630/2021\nFecha de sentencia: 06/05/20"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "5ce01a37db7068649845d1d5d23c26e3c66cee2a14815cafa0be859c4806e63d"
+    }
+  ],
+  "treaty_analyses": []
+}

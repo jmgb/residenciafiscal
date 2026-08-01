@@ -41,7 +41,9 @@ class RolloutDocument(JurisprudenceCaseModel):
     source_file: NonEmptyText
     source_sha256: Sha256
     proposal_path: NonEmptyText
+    proposal_sha256: Sha256 | None = None
     evaluation_path: NonEmptyText
+    evaluation_sha256: Sha256 | None = None
     batch_id: Identifier
     risk: RolloutRisk
 

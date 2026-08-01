@@ -1,0 +1,461 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "La AEAT deniega la devolución y liquida IRPF como residente por no acreditarse residencia fiscal en EEUU mediante certificado ni tributación allí.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Estados Unidos",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El TS declara innecesario pronunciarse sobre la exigencia probatoria del certificado al negar la existencia de ausencias esporádicas en el caso.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Justificar el cómputo de ausencias como “esporádicas” y, por tanto, mantener la residencia fiscal en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "falta de certificado de residencia fiscal EEUU / falta de prueba de tributación"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El TS asume el hecho (beca) pero concluye que precisamente exige permanencia fuera >183 días y no puede ser esporádica.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Indicio alegado por el Abogado del Estado: la estancia en el extranjero deriva de una beca para prácticas con objeto y duración determinados.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Sostener que la estancia fuera es temporal y debe reputarse “ausencia esporádica”.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "beca ICEX temporal para prácticas/formación"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El TS prioriza el elemento objetivo (duración/intensidad de la permanencia fuera) y niega que la voluntad determine el carácter esporádico.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Indicio alegado por el Abogado del Estado: el interesado presentó declaración IRPF en España considerándose residente.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Inferir voluntad de seguir residiendo fiscalmente en España durante la estancia fuera.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "presentación declaración IRPF en España"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Es el hecho base que el TS toma como inmutable y decisivo para negar la residencia fiscal en España.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Hecho declarado cierto (y reconocido por la Administración) de permanencia fuera de España más de 183 días en 2011 por la beca ICEX.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Demostrar que no se cumple el criterio de permanencia >183 días en España y que no procede computar como ausencias esporádicas.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "permanencia fuera de España >183 días (Chicago, 2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El TS considera que la beca exige necesariamente permanencia fuera de España por más de 183 días y que ello impide calificarla de esporádica.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Descripción de que en 2011 desarrolló su labor en la Oficina Económica y Comercial de España en Chicago (EEUU) por beca ICEX.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Explicar y acreditar la causa y continuidad de la estancia prolongada fuera de España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "actividad por beca ICEX en Oficina Económica y Comercial (Chicago)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se tiene por acreditado el acto de solicitud y el planteamiento de no residencia, aunque la decisión descansa en la permanencia fuera >183 días.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Presentación de modelo 210 IRNR (sin EP) solicitando devolución de retenciones IRPF 2011 al considerarse no residente.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Canalizar la pretensión de no residencia y devolución de retenciones.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "modelo 210 IRNR solicitando devolución"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El TS parte de hechos inmutables: el interesado permaneció fuera de España más de 183 días en 2011 por una beca ICEX. Interpreta que “ausencias esporádicas” son solo las ocasionales y breves, accesorias a una permanencia principal en España; no pueden abarcar una ausencia prolongada superior a 183 días. Por ello, no procede computar esa ausencia como permanencia en España ni mantener la residencia fiscal española durante ese periodo. Al no existir “ausencias esporádicas”, resulta irrelevante pronunciarse sobre la exigencia del certificado de residencia fiscal extranjero en este caso.",
+      "consequences": [],
+      "decisive_reasoning": "El TS parte de hechos inmutables: el interesado permaneció fuera de España más de 183 días en 2011 por una beca ICEX. Interpreta que “ausencias esporádicas” son solo las ocasionales y breves, accesorias a una permanencia principal en España; no pueden abarcar una ausencia prolongada superior a 183 días. Por ello, no procede computar esa ausencia como permanencia en España ni mantener la residencia fiscal española durante ese periodo. Al no existir “ausencias esporádicas”, resulta irrelevante pronunciarse sobre la exigencia del certificado de residencia fiscal extranjero en este caso.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "0f9e2b0f529bc4b36701121832013811a118418f4b9aecd528c7e5bc5d7e323c",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-115-2018.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-115-2018"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Estados Unidos"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2018-01-16",
+    "ecli": "ECLI:ES:TS:2018:115",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-115-2018",
+    "page_count": 11,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 115/2018",
+    "source_file": "sentencias/STS_115_2018.pdf",
+    "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236",
+    "tax_years": [
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2415,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 2295,
+          "verbatim_text": "a lo haber acreditado su residencia ﬁscal en Estados Unidos\nmediante el oportuno certiﬁcado ni acreditado su tributación"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4798,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 4747,
+          "verbatim_text": "el traslado al exterior se\nproduce por la concesión"
+        },
+        {
+          "end_offset": 4894,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 4823,
+          "verbatim_text": "de una beca para realizar prácticas, con objeto y duración\ndeterminados"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 207,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 109,
+          "verbatim_text": "el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2442,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2358,
+          "verbatim_text": "a) que el interesado\npermaneció fuera de España durante más de 183 días del año 2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 5270,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 5258,
+          "verbatim_text": "la concesión"
+        },
+        {
+          "end_offset": 5547,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 5434,
+          "verbatim_text": "de una beca de estudios como\nla concedida exige necesariamente la permanencia fuera de España por más de 183 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1639,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 1596,
+          "verbatim_text": "Considerándose no residente ﬁscal en España"
+        },
+        {
+          "end_offset": 1683,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 1664,
+          "verbatim_text": "presentó modelo 210"
+        },
+        {
+          "end_offset": 1795,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 1770,
+          "verbatim_text": "solicitando la devolución"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    }
+  ],
+  "treaty_analyses": []
+}

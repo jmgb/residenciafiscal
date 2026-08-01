@@ -1,0 +1,216 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "La AEAT aleg\u0003o que el interesado no aport\u0003o certificado acreditativo de residencia por la autoridad fiscal competente de otro pa\u0003s",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Estados Unidos (Miami)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Demostrar que no resid\u0003a fiscalmente en otro pa\u0003s y que la ausencia era espor\u0003adica",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "ausencia de certificado de residencia fiscal"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Documento administrativo que prueba la pr\u0003actica de la retenci\u0003n y el importe reclamado; la Sala acuerda la devoluci\u0003n al estimar la no residencia",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Importe de retenciones practicadas por ICEX en 2011 por 3.292,54 euros que se reclamaron a devoluci\u0003n",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar la retenci\u0003n efectuada y el derecho a su devoluci\u0003n si no existe residencia en Espa\u0003na",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "retenciones ICEX ejercicio 2011"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.",
+      "consequences": [],
+      "decisive_reasoning": "El Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-698-2018.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-698-2018"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Estados Unidos (Miami)"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+    "decision_date": "2018-02-08",
+    "ecli": "ES:TS:2018:698",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-698-2018",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 698/2018",
+    "source_file": "sentencias/STS_698_2018.pdf",
+    "tax_years": [
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "Durante dicho ejercicio 2011 le fue retenida por el ICEX la cantidad de 3.292,54 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

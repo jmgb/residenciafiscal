@@ -86,10 +86,14 @@ def _build_document(
     project_root: Path,
 ) -> RolloutBuildResult:
     source = _resolve_input(project_root, document.source_file)
-    _resolve_input(project_root, document.proposal_path)
-    _resolve_input(project_root, document.evaluation_path)
+    proposal = _resolve_input(project_root, document.proposal_path)
+    evaluation = _resolve_input(project_root, document.evaluation_path)
     if sha256_file(source) != document.source_sha256:
         raise ValueError(f"{document.judgment_id}.source_sha256 no coincide")
+    if document.proposal_sha256 and sha256_file(proposal) != document.proposal_sha256:
+        raise ValueError(f"{document.judgment_id}.proposal_sha256 no coincide")
+    if document.evaluation_sha256 and sha256_file(evaluation) != document.evaluation_sha256:
+        raise ValueError(f"{document.judgment_id}.evaluation_sha256 no coincide")
     sample_document = _sample_document(document)
     result = export_jurisprudence_document(
         sample_document,

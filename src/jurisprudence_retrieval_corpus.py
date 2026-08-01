@@ -93,7 +93,8 @@ def build_retrieval_corpus(
                 index_sha256=sha256_file(path),
             )
         )
-        units.extend(index.units)
+        if index.judgment.is_tax_residence_case:
+            units.extend(index.units)
     return RetrievalCorpus(
         schema_version="residenciafiscal-retrieval-corpus/1",
         sample_id=sample_id,

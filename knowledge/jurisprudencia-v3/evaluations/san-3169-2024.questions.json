@@ -1,0 +1,33 @@
+{
+  "judgment_id": "san-3169-2024",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió SAN 3169/2024 este supuesto de residencia: La Sala aplica el criterio objetivo de permanencia (>183 días) como decisivo; las alegaciones del recurrente sobre ausencias por motivos de salud y certificados extranjeros no acreditaron residencia fiscal en Ecuador para los ejercicios. La?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

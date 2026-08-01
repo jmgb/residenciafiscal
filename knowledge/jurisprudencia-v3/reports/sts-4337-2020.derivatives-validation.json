@@ -1,0 +1,12 @@
+{
+  "case_sha256": "8d9ff9bec5c504e097e0a62ed0465592d2d994b92e678d57cc6e09d00020c93d",
+  "judgment_id": "sts-4337-2020",
+  "legal_issue_count": 1,
+  "literal_anchor_count": 1,
+  "literal_fragment_count": 1,
+  "markdown_sha256": "6083a5f4f563fba7cb87785914b6aa2421a9a29a0d48fcc22631dd6a21367238",
+  "retrieval_sha256": "9c847738029e4f08bf10f0b8c7be6d04fda82cdb55055a55f4a0145ce468bf71",
+  "retrieval_unit_count": 1,
+  "validation": "passed",
+  "verbatim_sha256": "6b87e399e7e84a3017f259af25464e993155bbb98b45c02329eb01ef5083af7d"
+}

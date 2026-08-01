@@ -1,0 +1,33 @@
+{
+  "judgment_id": "sts-1682-2022",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 1682/2022 este supuesto de residencia: El litigio versa sobre residencia habitual dentro de España (CCAA) a efectos de ISD (Ley 22/2009, arts. 28 y 32), usando como criterio principal el “mayor número de días” en los 5 años previos al devengo, computando “ausencias temporales”. ?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2023-06-08",
+    "ecli": "ES:TS:2023:2652",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-2652-2023",
+    "roj": "STS 2652/2023",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-2652-2023.case.json",
+    "case_sha256": "f08a47dca56b67bd6d1e7b98a57669d6b6a37d9466a42a2246ee2503c8a8beee",
+    "source_sha256": "220cd7ffd248205dff6428499cb857f59003d67e283efeaa8e9d12d27a8d83ba"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR: análisis sobre cláusula antiabuso y carga de la prueba en el Impuesto sobre la Renta de No Residentes",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-2652-2023",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR: análisis sobre cláusula antiabuso y carga de la prueba en el Impuesto sobre la Renta de No Residentes\nNO APLICA - fuera de alcance\nFALLAMOS\nEn atención a lo expuesto, y en nombre de Su Majestad El Rey, la Sección Segunda de la Sala de lo Contencioso\nAdministrativo de la Audiencia Nacional, ha decidido:\n1º.- ESTIMAR el recurso contencioso-administrativo interpuesto por la entidad GLOBAL NORAY S.L.,\nrepresentada por la Procuradora Doña Silvia Rodríguez Senín contra la resolución del Tribunal Económico\nAdministrativo Central, de fecha 5 de julio de 2017, R.G 2155/2014, a que las presentes actuaciones se\ncontraen, la cual se anula por no ser conforme a derecho, así como la liquidación impugnada de la que deriva.\n2º.- No hacer",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1943,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1343,
+              "verbatim_text": "FALLAMOS\nEn atención a lo expuesto, y en nombre de Su Majestad El Rey, la Sección Segunda de la Sala de lo Contencioso\nAdministrativo de la Audiencia Nacional, ha decidido:\n1º.- ESTIMAR el recurso contencioso-administrativo interpuesto por la entidad GLOBAL NORAY S.L.,\nrepresentada por la Procuradora Doña Silvia Rodríguez Senín contra la resolución del Tribunal Económico\nAdministrativo Central, de fecha 5 de julio de 2017, R.G 2155/2014, a que las presentes actuaciones se\ncontraen, la cual se anula por no ser conforme a derecho, así como la liquidación impugnada de la que deriva.\n2º.- No hacer"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "220cd7ffd248205dff6428499cb857f59003d67e283efeaa8e9d12d27a8d83ba"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-2652-2023-fuera-de-alcance"
+    }
+  ]
+}

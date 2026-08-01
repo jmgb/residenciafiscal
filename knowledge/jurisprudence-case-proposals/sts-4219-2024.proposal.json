@@ -1,0 +1,599 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La instancia parte de los hechos del acta de conformidad y entiende ajustado a Derecho considerarla residente fiscal en España.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Acta de conformidad del procedimiento inspector (inicio 26/11/2014), con hechos admitidos y referencia a contenido probatorio (págs. 53 y ss.).",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que la contribuyente era residente fiscal en España en 2010-2013.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "acta de conformidad Inspección (14/07/2015)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La sentencia identifica este como criterio aplicado por la Inspección para concluir residencia en España.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Conclusión inspectora de residencia en España por radicar el núcleo principal de intereses económicos en España (art. 9.1.b LIRPF).",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Fundamentar la residencia fiscal en España por centro de intereses económicos.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "calificación residencia por intereses económicos (art. 9.1.b LIRPF)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La instancia considera “hecho indiscutible” la tributación limitada, con efecto excluyente para la residencia CDI en RU.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Hecho considerado probado/indiscutido: tributación en Reino Unido bajo “tributación por remesas” o “remittance basis”, calificada como imposición limitada no sujeta a renta mundial.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La instancia considera “hecho indiscutible” la tributación limitada, con efecto excluyente para la residencia CDI en RU.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Sostener que, a efectos del art. 4.1 CDI, no es residente CDI en Reino Unido y no procede aplicar art. 4.2 (desempate).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "régimen fiscal RU 'remittance basis' (imposición limitada)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se describen como rentas objeto de regularización tras considerar residencia en España.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Rentas regularizadas: intereses de cuentas bancarias en España (rendimientos capital mobiliario) e imputación de rentas por tenencia de inmueble en municipio español.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar existencia de rentas en España sometidas a IRPF por residencia y omisión de declaración.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "rentas descubiertas: intereses cuentas y renta imputada inmueble"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Consta como hecho relevante del procedimiento y base de la regularización.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Hecho: no presentó declaración-liquidación IRPF en España en 2010-2013 por considerarse residente en Reino Unido.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Evidenciar incumplimiento declarativo en España ligado a la controversia de residencia.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "ausencia de declaración IRPF en España 2010-2013"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se menciona como elemento adicional (“amén... inexistencia de procedimiento amistoso”), sin aparecer como ratio exclusiva.",
+      "category": "OTROS",
+      "description": "Referencia de la instancia a la inexistencia de procedimiento amistoso instado por la recurrente.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Reforzar la tesis de la instancia sobre el planteamiento del conflicto de residencia y la falta de activación de mecanismos del CDI.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "inexistencia de procedimiento amistoso (MAP)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La instancia prioriza la tributación efectiva (renta mundial) y aplica el art. 4.1 CDI para excluir residencia CDI en RU pese al certificado.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificados de residencia fiscal emitidos por la autoridad competente del Reino Unido “a efectos del Convenio”.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La instancia prioriza la tributación efectiva (renta mundial) y aplica el art. 4.1 CDI para excluir residencia CDI en RU pese al certificado.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en Reino Unido y existencia de doble residencia a resolver con art. 4.2 CDI.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "certificados de residencia fiscal Reino Unido (a efectos CDI)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se acepta el hecho de que tributó bajo ese régimen, pero se usa en contra para negar residencia CDI en RU conforme a art. 4.1 CDI.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Declaración en Reino Unido bajo el régimen de “tributación por remesas” (remittance basis).",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Se acepta el hecho de que tributó bajo ese régimen, pero se usa en contra para negar residencia CDI en RU conforme a art. 4.1 CDI.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener que era residente fiscal en RU y que el certificado británico debía respetarse.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "declaración en Reino Unido bajo 'remittance basis'"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "OTROS",
+      "description": "Alegación de que el caso era de doble residencia y debía resolverse aplicando los criterios de desempate del art. 4.2 CDI.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Forzar la aplicación del CDI (tie-breaker) en lugar de norma interna exclusivamente.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "invocación art. 4.2 CDI (reglas desempate)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.",
+      "consequences": [],
+      "decisive_reasoning": "La instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2010,
+          2011,
+          2012,
+          2013
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-4219-2024.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-4219-2024"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Reino Unido"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2024-07-22",
+    "ecli": "ECLI:ES:TS:2024:4219",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-4219-2024",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 4219/2024",
+    "source_file": "sentencias/STS_4219_2024.pdf",
+    "tax_years": [
+      2010,
+      2011,
+      2012,
+      2013
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009"
+      ],
+      "criterion_ids": [
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "deriva de acta de\nconformidad, la recurrente se ha aquietado a los hechos descritos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "en aplicación de lo dispuesto en el art. 9.1.b"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "por radicar en España el núcleo principal de\nsus intereses económicos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "remittance\nbasis"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "Es un hecho indiscutible"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "tributó en Reino Unido bajo"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "lo que determina la\nno sujeción"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "por toda su renta mundial"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "rentas descubiertas, consistentes en unos intereses de cuentas bancarias"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "y en una imputación de rentas"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "de un bien inmueble"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "En los ejercicios comprobados, 2010 a 2013, la recurrente no presentó declaración\nliquidación por el IRPF"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "de inexistencia de procedimiento amistoso\ninstado por la aquí recurrente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "venía obligada a reconocer validez a los certiﬁcados de residencia\nemitidos"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "a efectos del Convenio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "país en que presentó declaración"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "bajo el régimen"
+        },
+        {
+          "page_index": 2,
+          "verbatim_text": "tributación por remesas\" o \"remittance\nbasis"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "supuesto de doble residencia que debía resolverse aplicando\nlos criterios de desempate ﬁjados en el art. 4.2 CDI"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

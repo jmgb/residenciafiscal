@@ -1,0 +1,16 @@
+{
+  "anchor_count": 6,
+  "case_sha256": "73fa0492dab5dcd4ec5a299420442efeaeb810bdcdbe4f3a82de7d874d3794ee",
+  "evidence_finding_count": 6,
+  "fact_count": 0,
+  "fragment_count": 10,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-4306-2017",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "5da301b2d67690dd3cb82c90091eeb0dcff82d6c91d81a64d9173bae6de34d6a"
+}

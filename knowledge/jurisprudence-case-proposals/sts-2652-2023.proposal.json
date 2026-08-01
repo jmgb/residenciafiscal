@@ -1,0 +1,119 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "conclusion": "IRNR: análisis sobre cláusula antiabuso y carga de la prueba en el Impuesto sobre la Renta de No Residentes",
+      "consequences": [],
+      "decisive_reasoning": "NO APLICA - fuera de alcance",
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "outcome": "OTROS",
+      "residence_determination": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-2652-2023.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-2652-2023"
+    },
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2023-06-08",
+    "ecli": "ES:TS:2023:2652",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-2652-2023",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 2652/2023",
+    "source_file": "sentencias/STS_2652_2023.pdf",
+    "tax_years": []
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [],
+      "fact_ids": [],
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "issue_type": "OTHER",
+      "legal_rule_ids": [],
+      "question": "¿Está la resolución dentro del corpus residencial?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-decision",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "FALLAMOS\nEn atención a lo expuesto, y en nombre de Su Majestad El Rey, la Sección Segunda de la Sala de lo Contencioso\nAdministrativo de la Audiencia Nacional, ha decidido:\n1º.- ESTIMAR el recurso contencioso-administrativo interpuesto por la entidad GLOBAL NORAY S.L.,\nrepresentada por la Procuradora Doña Silvia Rodríguez Senín contra la resolución del Tribunal Económico\nAdministrativo Central, de fecha 5 de julio de 2017, R.G 2155/2014, a que las presentes actuaciones se\ncontraen, la cual se anula por no ser conforme a derecho, así como la liquidación impugnada de la que deriva.\n2º.- No hacer"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

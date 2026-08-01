@@ -1,0 +1,119 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "conclusion": "OTROS: controversia sobre plazo y requisitos formales para ejercer la opción por régimen especial (IRPF/IRNR), sin valoración probatoria sobre permanencia, domicilio, centro de intereses o criterios típicos de residencia fiscal de persona física",
+      "consequences": [],
+      "decisive_reasoning": "NO APLICA - fuera de alcance",
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "outcome": "OTROS",
+      "residence_determination": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-1102-2020.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-1102-2020"
+    },
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2020-05-18",
+    "ecli": "ES:TS:2020:1102",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-1102-2020",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 1102/2020",
+    "source_file": "sentencias/STS_1102_2020.pdf",
+    "tax_years": []
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "criterion_ids": [],
+      "evidence_ids": [],
+      "fact_ids": [],
+      "holding_id": "holding-fuera-de-alcance",
+      "issue_id": "fuera-de-alcance",
+      "issue_type": "OTHER",
+      "legal_rule_ids": [],
+      "question": "¿Está la resolución dentro del corpus residencial?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-decision",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 1,
+          "verbatim_text": "JURISPRUDENCIA\nRoj: STS 1102/2020 - ECLI:ES:TS:2020:1102\nId Cendoj: 28079130022020100201\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 18/05/2020\nNº de Recurso: 5692/2017\nNº de Resolución: 463/2020\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: JOSE ANTONIO MONTERO FERNANDEZ\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ CAT 5335/2017,\nATS 1817/2018,\nSTS 1102/2020\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 463/2020\nFecha de sentencia: 18/05/2020\nTipo de pro"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

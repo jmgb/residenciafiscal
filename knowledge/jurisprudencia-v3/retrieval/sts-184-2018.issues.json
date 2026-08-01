@@ -1,0 +1,524 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "Ucrania"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2018-01-18",
+    "ecli": "ES:TS:2018:184",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-184-2018",
+    "roj": "STS 184/2018",
+    "tax_years": [
+      2011
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-184-2018.case.json",
+    "case_sha256": "a99383b9f1175b707a06542d8a7e8cdb1b661244b81b7d039f69ca1b05035099",
+    "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS fija que la estancia >183 días por beca no es ausencia esporádica; por ello, no procede condicionar el no cómputo a aportar certificado extranjero.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La AEAT deniega la devolución por no haberse aportado certificado acreditativo de residencia fiscal emitido por autoridad extranjera competente.",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Ucrania",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "El TS fija que la estancia >183 días por beca no es ausencia esporádica; por ello, no procede condicionar el no cómputo a aportar certificado extranjero.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Mantener la condición de residente en España computando ausencias como esporádicas (art. 9.1.a LIRPF)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "exigencia de certificado de residencia fiscal extranjero (no aportado)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS confirma que el criterio determinante es objetivo (duración/intensidad) y no exige acreditar tributación extranjera en este supuesto para negar el carácter esporádico.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La AEAT (gestión/TEAR) menciona que no se acreditó la tributación de la renta en el Estado de destino.",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Ucrania",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "El TS confirma que el criterio determinante es objetivo (duración/intensidad) y no exige acreditar tributación extranjera en este supuesto para negar el carácter esporádico.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Evitar “desimposición” y sostener tributación por IRPF en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "exigencia de acreditar tributación en el extranjero (no acreditada)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessment_reason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Indicio alegado por la Administración: el contribuyente presentó en España declaración de IRPF, considerándose residente fiscal.",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Inferir intención de residir en España y calificar la estancia exterior como ausencia esporádica",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "presentación de declaración IRPF en España"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS rechaza vincular “ausencias esporádicas” a un elemento volitivo/intencional y atiende solo al dato objetivo de duración/intensidad.",
+          "category": "OTROS",
+          "description": "Indicios alegados por la Administración: beca con objeto y duración determinada; ICEX paga transporte de ida y vuelta.",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Sostener que la salida al extranjero fue temporal y, por tanto, “ausencia esporádica”",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "condiciones de la beca (temporalidad/transporte) como indicios"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Hecho no controvertido en instancia; sirve de base fáctica para constatar permanencia fuera y aplicar el criterio objetivo.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Contrato/beca ICEX: labor del 1/10/2010 al 30/09/2011 en la Oficina Económica y Comercial de España en Kiev (Ucrania).",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar estancia y actividad continuada en el extranjero durante el periodo relevante",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contrato/beca ICEX y destino Kiev"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessment_reason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Presentación del modelo 210 (IRNR) el 19/02/2015 solicitando devolución de retenciones practicadas en 2011 por considerarse no residente.",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Sostener la tesis de no residencia fiscal en España y reclamar devolución",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "presentación modelo 210 IRNR solicitando devolución"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Hecho administrativo pacífico en el pleito como presupuesto de la devolución, sin incidencia directa en la interpretación de residencia.",
+          "category": "OTROS",
+          "description": "Retención a cuenta de IRPF en 2011 por ICEX: 3.105 euros.",
+          "evidence_id": "evidence-legacy-007",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Cuantificar el importe de devolución solicitada (no estrictamente residencia)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "retenciones IRPF practicadas por ICEX (importe)"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Ucrania"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_categories": [
+          "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "OTROS",
+          "ACTIVIDAD_ECONOMICA_Y_GESTION"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011
+          ]
+        },
+        "tax_years": [
+          2011
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El TS confirma la sentencia de instancia y fija que, para aplicar el art. 9.1.a LIRPF, una permanencia fuera de España superior a 183 días por disfrute de beca no puede calificarse como “ausencia esporádica”.\nEl concepto de ausencias esporádicas se interpreta atendiendo exclusivamente al dato objetivo de duración o intensidad de la permanencia fuera, sin elemento volitivo.\nEn consecuencia, la AEAT no puede exigir, en este supuesto, que se aporte certificado de residencia fiscal extranjera como condición para no computar la ausencia como permanencia en España.",
+        "consequences": [],
+        "decisive_reasoning": "El TS confirma la sentencia de instancia y fija que, para aplicar el art. 9.1.a LIRPF, una permanencia fuera de España superior a 183 días por disfrute de beca no puede calificarse como “ausencia esporádica”.\nEl concepto de ausencias esporádicas se interpreta atendiendo exclusivamente al dato objetivo de duración o intensidad de la permanencia fuera, sin elemento volitivo.\nEn consecuencia, la AEAT no puede exigir, en este supuesto, que se aporte certificado de residencia fiscal extranjera como condición para no computar la ausencia como permanencia en España.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-evidence-007"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006",
+          "evidence-legacy-007"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-184-2018",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nexigencia de certificado de residencia fiscal extranjero (no aportado)\nLa AEAT deniega la devolución por no haberse aportado certificado acreditativo de residencia fiscal emitido por autoridad extranjera competente.\nMantener la condición de residente en España computando ausencias como esporádicas (art. 9.1.a LIRPF)\nREJECTED\nEl TS fija que la estancia >183 días por beca no es ausencia esporádica; por ello, no procede condicionar el no cómputo a aportar certificado extranjero.\nexigencia de acreditar tributación en el extranjero (no acreditada)\nLa AEAT (gestión/TEAR) menciona que no se acreditó la tributación de la renta en el Estado de destino.\nEvitar “desimposición” y sostener tributación por IRPF en España\nREJECTED\nEl TS confirma que el criterio determinante es objetivo (duración/intensidad) y no exige acreditar tributación extranjera en este supuesto para negar el carácter esporádico.\npresentación de declaración IRPF en España\nIndicio alegado por la Administración: el contribuyente presentó en España declaración de IRPF, considerándose residente fiscal.\nInferir intención de residir en España y calificar la estancia exterior como ausencia esporádica\nUNRESOLVED\ncondiciones de la beca (temporalidad/transporte) como indicios\nIndicios alegados por la Administración: beca con objeto y duración determinada; ICEX paga transporte de ida y vuelta.\nSostener que la salida al extranjero fue temporal y, por tanto, “ausencia esporádica”\nREJECTED\nEl TS rechaza vincular “ausencias esporádicas” a un elemento volitivo/intencional y atiende solo al dato objetivo de duración/intensidad.\ncontrato/beca ICEX y destino Kiev\nContrato/beca ICEX: labor del 1/10/2010 al 30/09/2011 en la Oficina Económica y Comercial de España en Kiev (Ucrania).\nAcreditar estancia y actividad continuada en el extranjero durante el periodo relevante\nACCEPTED\nHecho no controvertido en instancia; sirve de base fáctica para constatar permanencia fuera y aplicar el criterio objetivo.\npresentación modelo 210 IRNR solicitando devolución\nPresentación del modelo 210 (IRNR) el 19/02/2015 solicitando devolución de retenciones practicadas en 2011 por considerarse no residente.\nSostener la tesis de no residencia fiscal en España y reclamar devolución\nUNRESOLVED\nretenciones IRPF practicadas por ICEX (importe)\nRetención a cuenta de IRPF en 2011 por ICEX: 3.105 euros.\nCuantificar el importe de devolución solicitada (no estrictamente residencia)\nACCEPTED\nHecho administrativo pacífico en el pleito como presupuesto de la devolución, sin incidencia directa en la interpretación de residencia.\nEl TS confirma la sentencia de instancia y fija que, para aplicar el art. 9.1.a LIRPF, una permanencia fuera de España superior a 183 días por disfrute de beca no puede calificarse como “ausencia esporádica”.\nEl concepto de ausencias esporádicas se interpreta atendiendo exclusivamente al dato objetivo de duración o intensidad de la permanencia fuera, sin elemento volitivo.\nEn consecuencia, la AEAT no puede exigir, en este supuesto, que se aporte certificado de residencia fiscal extranjera como condición para no computar la ausencia como permanencia en España.\nEl TS confirma la sentencia de instancia y fija que, para aplicar el art. 9.1.a LIRPF, una permanencia fuera de España superior a 183 días por disfrute de beca no puede calificarse como “ausencia esporádica”.\nEl concepto de ausencias esporádicas se interpreta atendiendo exclusivamente al dato objetivo de duración o intensidad de la permanencia fuera, sin elemento volitivo.\nEn consecuencia, la AEAT no puede exigir, en este supuesto, que se aporte certificado de residencia fiscal extranjera como condición para no computar la ausencia como permanencia en España.\nNOT_DECIDED\n2011\ndenegó la devolución\nal no haber aportado certiﬁcado acreditativo de residencia\nni haber acreditado la tributación de la renta percibida en los\nEstados de destino\nel recurrente presentó\nen España la declaración del IRPF\ncon objeto y duración\ndeterminados\ndesarrollaría su labor\nKiev (Ucrania), hechos que no fueron\ncontrovertidos\nel modelo 210\nsolicitó la devolución\nle fue retenida\nla cantidad de 3.105 euros",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2404,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2384,
+              "verbatim_text": "denegó la devolución"
+            },
+            {
+              "end_offset": 2542,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2484,
+              "verbatim_text": "al no haber aportado certiﬁcado acreditativo de residencia"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2692,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2610,
+              "verbatim_text": "ni haber acreditado la tributación de la renta percibida en los\nEstados de destino"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 716,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 660,
+              "verbatim_text": "el recurrente presentó\nen España la declaración del IRPF"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 473,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 439,
+              "verbatim_text": "con objeto y duración\ndeterminados"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1514,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1492,
+              "verbatim_text": "desarrollaría su labor"
+            },
+            {
+              "end_offset": 1680,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1629,
+              "verbatim_text": "Kiev (Ucrania), hechos que no fueron\ncontrovertidos"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2091,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2078,
+              "verbatim_text": "el modelo 210"
+            },
+            {
+              "end_offset": 2174,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2152,
+              "verbatim_text": "solicitó la devolución"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-007",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1755,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1740,
+              "verbatim_text": "le fue retenida"
+            },
+            {
+              "end_offset": 1794,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1768,
+              "verbatim_text": "la cantidad de 3.105 euros"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-184-2018-residencia-fiscal"
+    }
+  ]
+}

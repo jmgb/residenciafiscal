@@ -1,0 +1,16 @@
+{
+  "anchor_count": 1,
+  "case_sha256": "1a246a2b543c92a96c797e538c1058bbb75e6c10c2743f02a04aa4b8679c65c7",
+  "evidence_finding_count": 0,
+  "fact_count": 0,
+  "fragment_count": 1,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-111-2021",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "7e41064f34400b5aea8e6d0b634685ad966128889b2ce082da74a3fee0c8cdf1"
+}

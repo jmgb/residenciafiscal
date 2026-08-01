@@ -1,0 +1,28 @@
+{
+  "judgment_id": "sts-184-2018",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 184/2018 este supuesto de residencia: El litigio versa sobre si un becario ICEX debe tributar por IRPF en España cuando permanece fuera más de 183 días (art. 9.1.a LIRPF).\nLa AEAT pretendía computar como permanencia en España las ausencias por entenderlas “esporádicas” y exigir?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

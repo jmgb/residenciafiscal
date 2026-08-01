@@ -210,8 +210,10 @@ contra el dominio público después de cada deploy.
     > tarjetas llevan hechos, valoración, resultado por cuestión y fragmentos
     > verbatim. Cada marcador debe resolverse a **sentencia + cuestión + página**.
     >
-    > El diseño y la validación con 1 y 5 sentencias ya están completados. La
-    > ampliación a 106 y la aprobación jurídica humana siguen pendientes.
+    > El diseño y la validación con 1, 5 y 106 sentencias ya están completados.
+    > Las 106 permanecen como borrador interno `AGENT_REVIEWED_ONLY`; la
+    > aprobación jurídica humana y la decisión de conectarlas al chat siguen
+    > pendientes.
   - [ ] **Fase 2 — evaluación.** El banco de 40 preguntas está versionado, pero
     sus etiquetas heredadas evalúan el router y no son todavía una rúbrica
     neutral para comparar respuestas A/B. Bloquean los gates binarios
@@ -260,26 +262,31 @@ contra el dominio público después de cada deploy.
         `labels` incompatible con Gemini API y el truncado de Luna `high` con
         1.200 tokens. Evidencia:
         [`CHAT_NETLIFY_V1_PAID_SMOKE.md`](../experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md).
-      - [ ] Cuadrar B con el panel de Gemini: la Interactions API devolvió citas
-        pero cero tokens de documento, por lo que el coste visible sigue siendo
-        una estimación y no un importe contable cerrado.
     - [x] Cubrir con tests deterministas la paridad de recuperación, fuentes,
-      estados, modelo, tokens, coste, cancelación y respuesta parcial. Queda
-      pendiente la paridad real pagada del Deploy Preview antes de retirar el
-      prototipo Python como referencia.
+      estados, modelo, tokens, coste, cancelación y respuesta parcial. El smoke
+      productivo pagado del 31 de julio confirmó además A/B en paralelo y
+      persistencia/reconciliación en Supabase; el prototipo Python se conserva
+      únicamente como referencia de la arquitectura futura.
     - [x] Cablear el selector seguro: solo `VITE_CHAT_MODE=live` activa el cliente;
       cualquier otro valor conserva el stub.
-    - [ ] Desplegar la Function Netlify-only en un Deploy Preview y validar una
-      consulta real completa por debajo de 60 s según el runbook actualizado.
+    - [ ] Añadir un Deploy Preview reproducible para validar cambios futuros sin
+      probar primero en producción. La V1 ya está desplegada y el smoke
+      productivo terminó en 20,23 s; esta tarea es un guardarraíl para próximos
+      cambios, no un bloqueo técnico de la versión vigente.
     - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
       contrato actual es deliberadamente single-turn: el historial se muestra
       localmente, pero solo la última pregunta autosuficiente sale del navegador.
-  - [ ] **Fase 3 — activación.** Poner `VITE_CHAT_MODE=live` en el contexto de
-    Netlify autorizado. El rollback es volver a `stub` y deshabilitar el backend.
-- [ ] **Llevar el corpus v3 de 5 a 106 sentencias.** El contrato y la muestra ya
-  están congelados. La expansión está parada hasta autorizar el manifiesto real
-  de los 106 PDF y organizar la revisión humana; bloquea la activación
-  productiva del chat. Estado y siguiente gate:
+  - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están
+    activos en Production desde el 31 de julio de 2026. El rollback es volver a
+    `stub` y deshabilitar el backend. La activación técnica no cierra privacidad,
+    retención ni revisión jurídica.
+- [x] **Procesar técnicamente el corpus v3 de 5 a 106 sentencias.** El rollout
+  autorizado se ejecutó el 1 de agosto de 2026 desde un manifiesto bloqueado por
+  hashes: 106/106 documentos `BUILD_PASSED` en 11 lotes, 67 casos dentro del
+  ámbito recuperable, 39 conservados como fuera de ámbito y 74 unidades de
+  recuperación. El resultado es un borrador interno
+  `AGENT_REVIEWED_ONLY`, no un corpus jurídicamente aprobado ni conectado al
+  chat. Estado, métricas y operación:
   [`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](../jurisprudence/JURISPRUDENCE_PHASE_E0.md).
   - [x] Diseñar `residenciafiscal-case/3` a partir del caso de uso principal y
     de los doce gaps del piloto de 40 preguntas; probarlo con 1 sentencia y
@@ -302,6 +309,17 @@ contra el dominio público después de cada deploy.
       el corpus o si fallan los gates.
     - [x] Preparar la fase E0 con holdout independiente, contrato de manifiesto,
       ejecución reanudable y gates, sin crear el listado de las 106.
+    - [x] Crear el manifiesto real con hashes de PDF, propuesta y evaluación;
+      generar los 101 borradores restantes sin reescribir citas; y ejecutar los
+      11 lotes hasta obtener 106/106 builds válidos.
+    - [x] Generar el corpus agregado, el informe de calidad y un banco técnico de
+      117 preguntas. La línea base obtiene recall esperado de 52,14 % @5 y
+      77,78 % @12; el holdout congelado cae a 47,86 % @3, precisión 33,33 % y
+      recall de contraste 12,50 %, por lo que no se promueve este retriever al
+      chat como estrategia definitiva.
+  - [ ] **Obtener aprobación jurídica humana del corpus de 106.** No hay revisor
+    disponible: los 1.620 elementos jurídicos siguen `AGENT_REVIEWED`, con 0
+    `HUMAN_APPROVED`. La revisión automática no debe registrarse como humana.
   - [ ] Revisar el piloto `san-1071-2025`: 3 cuestiones jurídicas propuestas y **0
     aprobadas**, más 5 textos del análisis pendientes. Las decisiones se registran en
     `knowledge/annotations/san-1071-2025.yaml` con `status: approved`,
@@ -313,8 +331,8 @@ contra el dominio público después de cada deploy.
     publicación atómica y no descubre PDFs por defecto.
   - [x] Ejecutar y revisar de forma asistida la muestra de 5 fijada en
     `sentencias/okf_muestra_5.json`. Las 17 citas heredadas ya están
-    clasificadas; sigue pendiente la aprobación jurídica humana y por eso no se
-    autorizan las 106.
+    clasificadas. La aprobación jurídica humana sigue pendiente; la autorización
+    posterior permitió procesar las 106 solo como `AGENT_REVIEWED_ONLY`.
   - [x] Materializar para la muestra de cinco el corpus verbatim por páginas
     definido en
     [`docs/jurisprudence/VERBATIM_CORPUS.md`](../jurisprudence/VERBATIM_CORPUS.md)
@@ -441,13 +459,67 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
 
 ## Seguridad y datos
 
+- [x] **Cerrar la parte técnica de la persistencia productiva en Supabase.** La
+  V1 guarda una pregunta y sus dos respuestas por turno. Migraciones, RLS, RPC,
+  advisors, concurrencia, backup, fallos, dry-run, auditoría y una petición
+  productiva están verificados. Queda la aprobación legal y algunos huecos
+  operativos:
+  - [x] Implementar el purgado de `chat_messages`, `chat_requests` y
+    conversaciones huérfanas, con cutoff, timer, dry-run, límite por lote y
+    auditoría privada. Coordinarlo con R2 sigue pendiente de la aprobación del
+    plazo: borrar Supabase no borra un backup existente.
+  - [ ] Aprobar legalmente el plazo y configurar `CHAT_RETENTION_DAYS`,
+    `CHAT_RETENTION_PURGE_ENABLED=true` y, tras observar dry-run,
+    `CHAT_RETENTION_DRY_RUN=false`.
+  - [x] Implementar y probar el procedimiento de supresión solicitado por el
+    usuario. Sin cuentas, la identidad se verifica fuera de la base de datos,
+    se exige ticket y confirmación, y el UUID visible no basta por sí solo.
+  - [x] Añadir estados `failed`/`timed_out` y una RPC idempotente de fallo sin
+    guardar diagnósticos brutos del proveedor. Los fallos de proveedor y del
+    deadline ya quedan distinguidos de las respuestas completadas.
+  - [ ] Añadir un barrido explícito de reservas `reserved` abandonadas: si falla
+    la RPC de reconciliación o muere la Function antes de llamarla, la reserva
+    puede seguir consumiendo el techo hasta el cambio de fecha.
+  - [ ] Hacer idempotente `reserve_chat_request`: reintentar el mismo mensaje
+    hoy choca con `UNIQUE (conversation_id, user_message_id)` y se traduce a un
+    503 indistinguible de una caída real.
+  - [ ] Instrumentar errores y gasto. `chat_cost_reconciled`
+    (`frontend/netlify/functions/chat/composition.ts:112`) solo se emite en el
+    camino feliz; las tres respuestas 503 y el 429 de presupuesto agotado de
+    `chat.ts` no emiten ningún evento con `request_id`, así que hoy no hay sobre
+    qué alertar cuando algo falla. Emitir un evento de fallo equivalente, elegir
+    canal (drenaje de logs de Netlify o Sentry, que aún no cubre la Function) y
+    solo entonces configurar alertas por gasto y por tasa de error. Queda además
+    verificar en el histórico productivo que el evento aparece con costes y
+    tokens de A/B y sin pregunta ni respuesta: el contrato está cubierto por
+    test, pero la consulta inmediata del log solo mostró la duración de la
+    Function.
+  - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la reserva. B sale
+    `ESTIMATED` cuando la Interactions API cita documentos pero devuelve cero
+    tokens de documento
+    (`frontend/netlify/functions/chat/file-search-strategy.ts:79`), lo que fija
+    `actual_complete=false` en todos los turnos; con ese valor
+    `complete_chat_request` carga `greatest(reserva, real)`, es decir **siempre
+    la reserva completa**. Consecuencia práctica: el techo diario no limita
+    gasto sino número de consultas —con los 1,00 y 0,05 USD de `.env.example`,
+    20 turnos al día— aunque un turno real cueste 0,004542 USD. Cuadrar primero
+    el importe con el panel de Google y ajustar después
+    `CHAT_REQUEST_RESERVATION_USD` y `CHAT_DAILY_BUDGET_USD`.
+  - [ ] Ejecutar al menos trimestralmente un restore real del último dump en una
+    base aislada y comprobar las cinco tablas `private`; el simulacro mensual
+    vigente solo descarga, descomprime y cuenta líneas.
+  - [ ] Rotar `SUPABASE_SECRET_KEY`, `OPENAI_API_KEY` y `GEMINI_API_KEY` si cambia
+    el acceso al equipo o se sospecha exposición. Si Netlify pasa a Pro,
+    convertirlas de variables ordinarias de todos los scopes a secretos de
+    scope Functions y rotarlas durante el cambio.
 - [ ] **Completar la protección económica del endpoint live.** La V1 ya tiene
   rate limit, cierre por bandera y reserva/reconciliación atómica en Supabase.
-  El schema privado, migraciones, RPC real, advisors y concurrencia/agotamiento
-  están verificados. Falta probar el flujo completo en Deploy Preview.
-- [ ] **Requisitos legales previos a activar el chat real.** Bloquean la fase 3: con el
-  motor en `stub` no sale nada de Netlify; con el real, la última pregunta
-  autosuficiente viaja a OpenAI para A y a Google/Gemini para B.
+  El schema privado, migraciones, RPC real, advisors, concurrencia/agotamiento y
+  un smoke productivo están verificados. Falta cerrar observabilidad, estados de
+  fallo y coste contable de Gemini en la tarea anterior.
+- [ ] **Requisitos legales pendientes con el chat real activo.** La última
+  pregunta autosuficiente viaja a OpenAI para A y a Google/Gemini para B; la
+  activación técnica del 31 de julio no sustituye estos requisitos.
   - [x] Aviso de que no es asesoramiento jurídico visible junto al chat tanto en
     `stub` como en `live`; el modo live no afirma que la respuesta sea simulada.
   - [ ] Publicar una política de privacidad que declare ambos proveedores, base
@@ -458,9 +530,9 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     - [x] Publicar `/privacidad` con el flujo técnico real, minimización,
       almacenamiento local, persistencia Supabase, ambos proveedores y contacto.
     - [ ] Completar con identidad legal del responsable, base jurídica,
-      transferencias, retención efectiva y contratos verificados. El bloqueo ya
-      no se publica en `/privacidad`: es una condición interna y el backend
-      permanece cerrado por configuración mientras falte.
+      transferencias, retención efectiva y contratos verificados. El chat ya
+      está activo para pruebas productivas, por lo que esta deuda debe cerrarse
+      antes de difundirlo a terceros como servicio disponible.
       > Antes de abrir el chat a terceros debe completarse y validarse la
       > identidad legal del responsable, la base jurídica, los plazos de
       > conservación/borrado de mensajes en Supabase y los acuerdos con Supabase,

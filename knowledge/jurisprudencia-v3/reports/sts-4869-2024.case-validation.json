@@ -1,0 +1,16 @@
+{
+  "anchor_count": 1,
+  "case_sha256": "0bdbb391e6a1d55be09214a5bbd6a4d50167e77533b2937376d11752ef98b4ad",
+  "evidence_finding_count": 0,
+  "fact_count": 0,
+  "fragment_count": 1,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-4869-2024",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "44d17a338496179b51d3c52bfa7bc14220e43ca26c92fdf39b03f03b5eb3f514"
+}

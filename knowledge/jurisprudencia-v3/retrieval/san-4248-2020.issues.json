@@ -1,0 +1,852 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "República Argentina",
+      "Convenio entre Reino de España y República Argentina (1991)"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decision_date": "2020-12-09",
+    "ecli": "ES:AN:2020:4248",
+    "is_tax_residence_case": true,
+    "judgment_id": "san-4248-2020",
+    "roj": "SAN 4248/2020",
+    "tax_years": [
+      2006,
+      2007,
+      2008
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-4248-2020.case.json",
+    "case_sha256": "359444bb8ef1b5867efdec61d2e4c6b46140d633a8fc393c6d9e1010916c312f",
+    "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Prueba administrativa con presunción; no desvirtuada por el recurrente",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Registro en bases de datos de la AEAT que le considera residente fiscal en España de forma ininterrumpida desde 2003",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar antecedente administrativo de residencia en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Bases de datos AEAT - consideración como residente desde 2003"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Actos ante la Administración que gozan de presunción; el contribuyente no solicitó rectificación",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Presentación de autoliquidaciones por el IRPF desde el ejercicio 2003 hasta 2011",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Demostrar que tributó en España como residente",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Declaraciones IRPF 2003-2011"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Vivienda y domicilio habituales en España contribuyen a determinar vivienda permanente y centro de intereses",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Domicilio habitual declarado en C/ DIRECCION000 nº NUM004, y título de propiedad de inmueble en URBANIZACION000, Ávila",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar vivienda permanente en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Domicilio en Madrid y vivienda en Ávila (escrituras/registro)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Sentencia firme que ya declaró la residencia en España; fundamento importante para la decisión",
+          "category": "OTROS",
+          "description": "Resolución judicial previa que declaró la residencia del interesado en España en relación con la sociedad DIRECCION001",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Efecto de cosa juzgada/precedente sobre la residencia",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Sentencia TSJ Madrid 20-05-2016"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Los pasaportes justifican entradas y salidas pero no acreditan residencia fiscal",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Pasaportes argentinos, vigentes en los años 2006-2008, compulsados, que muestran salidas y entradas en territorio argentino",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar estancia y permanencia en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Pasaportes argentinos (entradas/salidas)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "No acredita por sí la residencia fiscal en Argentina",
+          "category": "OTROS",
+          "description": "DNI argentino aportado por el interesado",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar vínculo administrativo con Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Documento Nacional de Identidad argentino"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Aporta vínculo familiar pero no es suficiente para desplazar la presunción y demostrar centro de intereses en Argentina",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Certificado de nacimiento de la hija nacido en Argentina en 2007",
+          "evidence_id": "evidence-legacy-007",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar vínculos personales/familiares en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificado nacimiento hija en Argentina"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Solo consta adquisición en 2007; para 2006 no prueba vivienda permanente en Argentina; en 2007-2008 coexistencia de vivienda en ambos países",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Escritura aportada que acredita adquisición de inmueble en Buenos Aires el 2-1-2007",
+          "evidence_id": "evidence-legacy-008",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar vivienda permanente en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Título de propiedad inmueble en Buenos Aires"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Considerados los únicos documentos potencialmente relevantes, pero el certificado no especifica tributación por renta mundial, por lo que no prueba residencia fiscal plena según Convenio",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificados expedidos por autoridades fiscales argentinas en 2012 que declaran al interesado residente en Argentina en 2006-2008",
+          "evidence_id": "evidence-legacy-009",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Convenio entre Reino de España y República Argentina (1991)",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Considerados los únicos documentos potencialmente relevantes, pero el certificado no especifica tributación por renta mundial, por lo que no prueba residencia fiscal plena según Convenio",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar residencia fiscal en Argentina y su sujeción a tributación allí",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificados de residencia fiscal argentinos (2006-2008)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Acreditan consumos pero únicamente esa circunstancia; no bastan para declarar residencia fiscal",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Relación de facturas de compras en establecimientos, peluquerías, supermercados, restaurantes, tiendas, médicos, etc. en Argentina",
+          "evidence_id": "evidence-legacy-010",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar vida cotidiana y consumos en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Relación de facturas y tickets en Argentina"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Corrobora vinculaciones profesionales con Argentina pero no desvirtúa el centro económico en España",
+          "category": "TRAZAS_DIGITALES",
+          "description": "Relación de notas de prensa e internet relativas a conciertos, entrevistas y actividades en Argentina",
+          "evidence_id": "evidence-legacy-011",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar desplazamientos y actividad profesional en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Notas de prensa e internet sobre giras en Argentina"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-012"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Testimonios no considerados trascendentes para justificar residencia fiscal en Argentina",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Declaraciones testificales: Directora Área socios internacionales SGAE y mánager para España",
+          "evidence_id": "evidence-legacy-012",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Aportar información sobre actividad y gestión de derechos",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Testifical Dª Emma (SGAE) y Dª Eufrasia (mánager España)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-013"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Prueba accesoria que no aporta control suficiente sobre residencia fiscal",
+          "category": "SALUD_Y_SERVICIOS_PERSONALES",
+          "description": "Dos recibos de Swiss Medical de fechas 27-02-2006 y 27-03-2006 aportados por el recurrente",
+          "evidence_id": "evidence-legacy-013",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar uso de servicios de salud en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Recibos Swiss Medical (feb y mar 2006)"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "República Argentina",
+          "Convenio entre Reino de España y República Argentina (1991)"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_CENTRO_INTERESES_VITALES",
+          "CRIT_PRESUNCION_FAMILIA",
+          "CRIT_CDI_TIEBREAKER"
+        ],
+        "evidence_categories": [
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "VIVIENDA_Y_USO_EFECTIVO",
+          "OTROS",
+          "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "FAMILIA_Y_ENTORNO_PERSONAL",
+          "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "TRAZAS_DIGITALES",
+          "TESTIFICAL_Y_PERICIAL",
+          "SALUD_Y_SERVICIOS_PERSONALES"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2006,
+            2007,
+            2008
+          ]
+        },
+        "tax_years": [
+          2006,
+          2007,
+          2008
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.",
+        "consequences": [],
+        "decisive_reasoning": "El tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2006,
+            2007,
+            2008
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-evidence-007",
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-evidence-009",
+          "anchor-legacy-evidence-010",
+          "anchor-legacy-evidence-011",
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-evidence-013"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_CENTRO_INTERESES_VITALES",
+          "CRIT_PRESUNCION_FAMILIA",
+          "CRIT_CDI_TIEBREAKER"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006",
+          "evidence-legacy-007",
+          "evidence-legacy-008",
+          "evidence-legacy-009",
+          "evidence-legacy-010",
+          "evidence-legacy-011",
+          "evidence-legacy-012",
+          "evidence-legacy-013"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-4248-2020",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\nBases de datos AEAT - consideración como residente desde 2003\nRegistro en bases de datos de la AEAT que le considera residente fiscal en España de forma ininterrumpida desde 2003\nAcreditar antecedente administrativo de residencia en España\nACCEPTED\nPrueba administrativa con presunción; no desvirtuada por el recurrente\nDeclaraciones IRPF 2003-2011\nPresentación de autoliquidaciones por el IRPF desde el ejercicio 2003 hasta 2011\nDemostrar que tributó en España como residente\nACCEPTED\nActos ante la Administración que gozan de presunción; el contribuyente no solicitó rectificación\nDomicilio en Madrid y vivienda en Ávila (escrituras/registro)\nDomicilio habitual declarado en C/ DIRECCION000 nº NUM004, y título de propiedad de inmueble en URBANIZACION000, Ávila\nAcreditar vivienda permanente en España\nACCEPTED\nVivienda y domicilio habituales en España contribuyen a determinar vivienda permanente y centro de intereses\nSentencia TSJ Madrid 20-05-2016\nResolución judicial previa que declaró la residencia del interesado en España en relación con la sociedad DIRECCION001\nEfecto de cosa juzgada/precedente sobre la residencia\nACCEPTED\nSentencia firme que ya declaró la residencia en España; fundamento importante para la decisión\nPasaportes argentinos (entradas/salidas)\nPasaportes argentinos, vigentes en los años 2006-2008, compulsados, que muestran salidas y entradas en territorio argentino\nAcreditar estancia y permanencia en Argentina\nREJECTED\nLos pasaportes justifican entradas y salidas pero no acreditan residencia fiscal\nDocumento Nacional de Identidad argentino\nDNI argentino aportado por el interesado\nAcreditar vínculo administrativo con Argentina\nREJECTED\nNo acredita por sí la residencia fiscal en Argentina\nCertificado nacimiento hija en Argentina\nCertificado de nacimiento de la hija nacido en Argentina en 2007\nAcreditar vínculos personales/familiares en Argentina\nPARTIAL\nAporta vínculo familiar pero no es suficiente para desplazar la presunción y demostrar centro de intereses en Argentina\nTítulo de propiedad inmueble en Buenos Aires\nEscritura aportada que acredita adquisición de inmueble en Buenos Aires el 2-1-2007\nAcreditar vivienda permanente en Argentina\nPARTIAL\nSolo consta adquisición en 2007; para 2006 no prueba vivienda permanente en Argentina; en 2007-2008 coexistencia de vivienda en ambos países\nCertificados de residencia fiscal argentinos (2006-2008)\nCertificados expedidos por autoridades fiscales argentinas en 2012 que declaran al interesado residente en Argentina en 2006-2008\nAcreditar residencia fiscal en Argentina y su sujeción a tributación allí\nPARTIAL\nConsiderados los únicos documentos potencialmente relevantes, pero el certificado no especifica tributación por renta mundial, por lo que no prueba residencia fiscal plena según Convenio\nRelación de facturas y tickets en Argentina\nRelación de facturas de compras en establecimientos, peluquerías, supermercados, restaurantes, tiendas, médicos, etc. en Argentina\nAcreditar vida cotidiana y consumos en Argentina\nPARTIAL\nAcreditan consumos pero únicamente esa circunstancia; no bastan para declarar residencia fiscal\nNotas de prensa e internet sobre giras en Argentina\nRelación de notas de prensa e internet relativas a conciertos, entrevistas y actividades en Argentina\nAcreditar desplazamientos y actividad profesional en Argentina\nPARTIAL\nCorrobora vinculaciones profesionales con Argentina pero no desvirtúa el centro económico en España\nTestifical Dª Emma (SGAE) y Dª Eufrasia (mánager España)\nDeclaraciones testificales: Directora Área socios internacionales SGAE y mánager para España\nAportar información sobre actividad y gestión de derechos\nREJECTED\nTestimonios no considerados trascendentes para justificar residencia fiscal en Argentina\nRecibos Swiss Medical (feb y mar 2006)\nDos recibos de Swiss Medical de fechas 27-02-2006 y 27-03-2006 aportados por el recurrente\nAcreditar uso de servicios de salud en Argentina\nREJECTED\nPrueba accesoria que no aporta control suficiente sobre residencia fiscal\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nNOT_DECIDED\n2006\n2007\n2008\nse venía considerado residente ﬁscal en España en los 9\nejercicios ﬁscales precedentes\nhabía presentado las autoliquidaciones por el Impuesto sobre la Renta de las Personas Físicas desde\nel ejercicio 2003\nEra propietario de un inmueble tipo residencia\nen el municipio de\nCASA000  (Ávila\nya ha sido declarado por sentencia ﬁrme que el interesado tenía su residencia ﬁscal en España\nlos pasaportes argentinos\njustiﬁcan las entradas y salidas\npero no su\nresidencia ﬁscal\nTampoco el hecho de estar en posesión de documento nacional de identidad argentino acredita su residencia\nCertiﬁcado de nacimiento de la hija del Sr.  Eutimio , en territorio argentino\nque el 2 de enero\nde 2007 habría adquirido un inmueble en Buenos Aires\nLos únicos documentos que podrían ser relevantes\nson los certiﬁcados\nde residencia ﬁscal en Argentina\nRelación de facturas de compras\nrealizadas en el territorio de la República Argentina\nRelación de notas de prensa e internet relativas a los conciertos\nen la República Argentina\nlas testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal\ndos\nrecibos de Swiss Medical de fechas 27 de febrero de 2006 y 27 de marzo de 2006",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4914,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 4828,
+              "verbatim_text": "se venía considerado residente ﬁscal en España en los 9\nejercicios ﬁscales precedentes"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3178,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3061,
+              "verbatim_text": "había presentado las autoliquidaciones por el Impuesto sobre la Renta de las Personas Físicas desde\nel ejercicio 2003"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2640,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2594,
+              "verbatim_text": "Era propietario de un inmueble tipo residencia"
+            },
+            {
+              "end_offset": 2709,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2675,
+              "verbatim_text": "en el municipio de\nCASA000  (Ávila"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 740,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 647,
+              "verbatim_text": "ya ha sido declarado por sentencia ﬁrme que el interesado tenía su residencia ﬁscal en España"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3286,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3261,
+              "verbatim_text": "los pasaportes argentinos"
+            },
+            {
+              "end_offset": 3330,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3298,
+              "verbatim_text": "justiﬁcan las entradas y salidas"
+            },
+            {
+              "end_offset": 3372,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3345,
+              "verbatim_text": "pero no su\nresidencia ﬁscal"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3491,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3386,
+              "verbatim_text": "Tampoco el hecho de estar en posesión de documento nacional de identidad argentino acredita su residencia"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-007",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1342,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 1264,
+              "verbatim_text": "Certiﬁcado de nacimiento de la hija del Sr.  Eutimio , en territorio argentino"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-008",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5087,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 5017,
+              "verbatim_text": "que el 2 de enero\nde 2007 habría adquirido un inmueble en Buenos Aires"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-009",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 72,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 24,
+              "verbatim_text": "Los únicos documentos que podrían ser relevantes"
+            },
+            {
+              "end_offset": 154,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 102,
+              "verbatim_text": "son los certiﬁcados\nde residencia ﬁscal en Argentina"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-010",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2475,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2444,
+              "verbatim_text": "Relación de facturas de compras"
+            },
+            {
+              "end_offset": 2636,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2583,
+              "verbatim_text": "realizadas en el territorio de la República Argentina"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-011",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2784,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2719,
+              "verbatim_text": "Relación de notas de prensa e internet relativas a los conciertos"
+            },
+            {
+              "end_offset": 2886,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2861,
+              "verbatim_text": "en la República Argentina"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-012",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3977,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3894,
+              "verbatim_text": "las testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-013",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3441,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3359,
+              "verbatim_text": "dos\nrecibos de Swiss Medical de fechas 27 de febrero de 2006 y 27 de marzo de 2006"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-4248-2020-residencia-fiscal"
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acta inspectoría aporta la motivación y cuantificación que el Tribunal considera relevante para la liquidación",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Acta de disconformidad de la Inspección que incrementa la base imponible y califica importes como rendimientos y ganancias no declaradas.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar ingresos no declarados y justificar liquidación",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Acta de disconformidad 16/05/2012"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El Tribunal considera probado que el pagaré fue descontado y abonado en 2006, por lo que la ganancia se imputa a 2006",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Registro bancario/operación de descuento del pagaré derivado de la venta del terreno y abono en cuenta el 6/10/2006.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que el cobro de la venta se produjo en 2006",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Descuento pagaré 06/10/2006"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El Tribunal aplica la presunción legal al no aportarse prueba suficiente en contrario",
+      "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "description": "Argumento/presunción de la Administración (y asumida por la resolución recurrida) de que la residencia habitual del cónyuge y de los hijos menores en España presume la residencia del contribuyente.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Desvirtuar la alegación de residencia en el extranjero y presumir residencia en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Presunción por residencia de cónyuge e hijos"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El Tribunal considera que, pese a su veracidad, no acredita la permanencia efectiva por más de 183 días en 2006",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Certificado de baja en el Registro de Matrícula de la Embajada de España en Malabo, indica residencia desde 20/07/2003 y baja el 30/11/2009.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia efectiva en Guinea durante periodo alegado",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificado de Baja Consular (Embajada en Malabo) 11/07/2011"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El Tribunal entiende que el contrato por sí solo no prueba permanencia por más de 183 días en 2006",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Contrato de arrendamiento de vivienda sita en Malabo a favor del recurrente.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar domicilio y permanencia en Guinea",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Contrato de arrendamiento Malabo 15/04/2004"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "No suficiente para acreditar permanencia efectiva; tribunal exige certificado de residencia expedido por autoridades de Guinea",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Certificado que consta inscrito en CERA desde 31/03/2005 a 30/11/2009 con domicilio en Malabo.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia en Guinea durante periodo alegado",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Inscripción Censo Electoral de Españoles Residentes Ausentes (CERA) 03/10/2012"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El Tribunal considera que la escritura no prueba por sí sola la permanencia por más de 183 días en 2006",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Escritura de compra de un terreno en Guinea.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar vinculación patrimonial y estancia en Guinea",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Escritura compraventa terreno Guinea 13/12/2005"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Tribunal rechaza muchas facturas por ser emitidas por la constructora del contribuyente y por faltas de presupuestos, licencias y pago; admite ciertos importes reducidos considerados por la Inspección",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Diversas facturas expedidas por la mercantil DIRECCION002 por obras realizadas, importe total alegado 335.263,35€ y informe de arquitecto.",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Aumentar valor de adquisición inmueble y anular ganancia patrimonial",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Facturas obras DIRECCION002 (2000-2003)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.",
+      "consequences": [],
+      "decisive_reasoning": "El Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "PARCIAL",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2006
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "e4ccf976d111faabb1930ce90e0b732349802832e4fc0269086ebfcba53d1d9b",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-4187-2023.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-4187-2023"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "República de Guinea Ecuatorial"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decision_date": "2023-05-31",
+    "ecli": "ES:AN:2023:4187",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-4187-2023",
+    "page_count": 9,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 4187/2023",
+    "source_file": "sentencias/SAN_4187_2023.pdf",
+    "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d",
+    "tax_years": [
+      2006
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3553,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 3456,
+          "verbatim_text": "en la que la Inspección consideró que la Base imponible general debía ser incrementada en 120.000"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3655,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3569,
+          "verbatim_text": "El pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3202,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3122,
+          "verbatim_text": "juega en su contra la presunción de residencia en España al residir en este país"
+        },
+        {
+          "end_offset": 3276,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3243,
+          "verbatim_text": "su cónyuge y de sus hijos menores"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 87,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 16,
+          "verbatim_text": "residente en esta demarcación consular desde el día 20 de julio de 2003"
+        },
+        {
+          "end_offset": 140,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 102,
+          "verbatim_text": "BAJA con fecha 30 de\nnoviembre de 2009"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 222,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 170,
+          "verbatim_text": "Contrato de arrendamiento de vivienda sita en Malabo"
+        },
+        {
+          "end_offset": 307,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 251,
+          "verbatim_text": "concertado el 15 de abril\nde 2004 a favor de D.  Gonzalo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1105,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 979,
+          "verbatim_text": "ﬁgurado inscrito en el Censo Electoral de Españoles Residentes Ausentes desde 31/03/2005\na 30/11/2009, con domicilio en Malabo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1251,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1183,
+          "verbatim_text": "Escritura de compraventa de un terreno en Guinea en fecha 13/12/2005"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1955,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 1906,
+          "verbatim_text": "facturas expedidas por la mercantil  DIRECCION002"
+        },
+        {
+          "end_offset": 2106,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 2086,
+          "verbatim_text": "aportando un informe"
+        },
+        {
+          "end_offset": 3084,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 3051,
+          "verbatim_text": "informe realizado en\nmayo de 2012"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    }
+  ],
+  "treaty_analyses": []
+}

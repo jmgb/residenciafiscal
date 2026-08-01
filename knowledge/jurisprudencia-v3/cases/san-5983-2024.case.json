@@ -1,0 +1,542 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corrobora número de días de estancia fuera y permite inferir permanencia en España; considerado decisivo.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Información de Banco Sabadell sobre uso de tarjetas de crédito para reconstruir estancias en el extranjero: 23 días (2007), 15 días (2008), 1 día (2009).",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Demostrar permanencia superior a 183 días en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "extracto Banco Sabadell - tarjetas"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Los consumos son indicativos de ocupación permanente y no ocasional.",
+      "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "description": "Consumos de energía eléctrica y agua que demuestran ocupación permanente del inmueble Magna Marbella.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar uso efectivo y ocupación continuada de vivienda en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "facturas electricidad y agua Magna Marbella"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La dirección y gestión de intereses económicos en España es indicio claro de residencia fiscal.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Listado de sociedades españolas en las que ejercía cargos (presidente, administrador, apoderado) y participaciones (Autos Zeus, Hipodromos Costa del Sol, etc.).",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar centro de intereses económicos y gestión desde España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "nombramientos y participaciones en sociedades españolas"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Movimientos bancarios relevantes sin justificación que respaldan la regularización; contribuye a acreditar actividad patrimonial en España.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Ingresos en cinco cuentas del Banco Sabadell por 1.683.528,19€ (2007); 285.095,05€ (2008); 140.968,65€ (2009) sin justificación de origen.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar ganancias de patrimonio no justificadas y vinculación económica en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "extractos - ingresos en cuentas Banco Sabadell"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Compra materializada en España sin acreditación del medio de pago; relevante para la regularización patrimonial.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Factura de compra de Porsche 911 Cabriolet por 90.989,27€ con matrícula española.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar aplicación de fondos y ganancias patrimoniales no justificadas",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "factura compra vehículo PORSCHE 14/02/2008"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "Alegación no acreditada documentalmente; contradicha por indicios y registros en España.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Alegación del recurrente de residencia en Gibraltar y domicilio en DIRECCION000, Gibraltar.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en Gibraltar y excluir cómputo de días en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "declaración domicilio Gibraltar (DIRECCION000)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Documento aporta prueba directa de convivencia y domicilio del cónyuge en Marbella, reforzando presunción de residencia.",
+      "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "description": "Sentencia de incapacitación y tutela que indica matrimonio en 2010 y convivencia desde 1998 con Doña Justa, domiciliada en Marbella; tutela concedida a la esposa.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar vínculo familiar y presunción de residencia en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "sentencia de incapacitación y tutela (19/11/2018)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "No se acreditó la devolución ni la conexión entre transferencias; la Sala considera insuficiente la alegación.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Alegación del recurrente de que se devolvieron 320.000€ y que movimientos vinculados anulan ganancia patrimonial.",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Desvirtuar imputación de ganancia patrimonial",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "alegación devolución transferencias (320.000€)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.",
+      "consequences": [],
+      "decisive_reasoning": "El tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2007,
+          2009
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "3ab7c8bd9449651f2cc88b4ae200fae40a3bce6c7dce795b4895406ef9d6610b",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5983-2024.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-5983-2024"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Gibraltar"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4ª",
+    "decision_date": "2024-10-29",
+    "ecli": "ECLI:ES:AN:2024:5983",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-5983-2024",
+    "page_count": 8,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 5983/2024",
+    "source_file": "sentencias/SAN_5983_2024.pdf",
+    "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7",
+    "tax_years": [
+      2007,
+      2009
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 718,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 667,
+          "verbatim_text": "de 23 días en 2007, 15 días en 2008 y 1 día en 2009"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1613,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 1577,
+          "verbatim_text": "consumos de energía eléctrica y\nagua"
+        },
+        {
+          "end_offset": 1698,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 1663,
+          "verbatim_text": "demuestran una ocupación permanente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2150,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 2092,
+          "verbatim_text": "operaba y gestionaba desde España sus intereses económicos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1331,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1250,
+          "verbatim_text": "1 .683.528,19\neuros en 2007; 285.095,05 euros en 2008, y 140.968,65 euros en 2009"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 487,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 417,
+          "verbatim_text": "adquirido el 14\nde febrero de 2008, y por 90.989,27 euros, un vehículo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4262,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4226,
+          "verbatim_text": "alegó que era residente en Gibraltar"
+        },
+        {
+          "end_offset": 4354,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4302,
+          "verbatim_text": "domicilio se hallaba en el  DIRECCION000 , Gibraltar"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4579,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4485,
+          "verbatim_text": "se indica que el recurrente se casó en 2010 con Doña  Justa , con quien ya convivía\ndesde 1998"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2583,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2531,
+          "verbatim_text": "No se ha acreditado que se ha devuelto 320.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    }
+  ],
+  "treaty_analyses": []
+}

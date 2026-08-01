@@ -1,0 +1,26 @@
+{
+  "judgment_id": "sts-4434-2017",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 4434/2017 este supuesto de residencia: El Tribunal estima probado que el recurrente permaneció fuera de España más de 183 días (2011) y que esa estancia obedeció a una beca ICEX, por lo que no puede reputarse como ausencia esporádica. Predomina el criterio objetivo de permanenci?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

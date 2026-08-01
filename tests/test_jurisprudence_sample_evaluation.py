@@ -41,9 +41,14 @@ def test_ejecuta_el_banco_completo_con_trazabilidad() -> None:
         evaluate_question_bank,
         parse_question_pilot,
     )
+    from jurisprudence_sample_manifest import load_sample_manifest
 
+    manifest = load_sample_manifest(MANIFEST_PATH)
     corpus = build_retrieval_corpus(
-        tuple(sorted(RETRIEVAL_ROOT.glob("san-*.issues.json"))),
+        tuple(
+            RETRIEVAL_ROOT / f"{document.judgment_id}.issues.json"
+            for document in manifest.documents
+        ),
         sample_id="jurisprudencia-v3-piloto-5",
         project_root=PROJECT_ROOT,
     )

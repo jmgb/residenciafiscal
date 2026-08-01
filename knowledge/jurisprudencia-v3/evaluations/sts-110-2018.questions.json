@@ -1,0 +1,25 @@
+{
+  "judgment_id": "sts-110-2018",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 110/2018 este supuesto de residencia: El Tribunal se apoya primordialmente en el criterio objetivo de permanencia (>183 días) y declara que una estancia superior a 183 días vinculada a una beca continuada no puede ser calificada como ausencia esporádica. No hace necesaria la ac?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

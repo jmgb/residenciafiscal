@@ -1,0 +1,834 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "Principado de Mónaco"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decision_date": "2022-05-11",
+    "ecli": "ES:AN:2022:2347",
+    "is_tax_residence_case": true,
+    "judgment_id": "san-2347-2022",
+    "roj": "SAN 2347/2022",
+    "tax_years": [
+      2007
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-2347-2022.case.json",
+    "case_sha256": "32c321dc1bc4da051508aaa32c1928f68ff20393de115d535f0847a923f1654a",
+    "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Corroborado por otros indicios concordantes",
+          "category": "TRAZAS_DIGITALES",
+          "description": "Constancia gráfica de intensa vida pública vinculada a actos sociales a través de internet.",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar presencia y vida pública en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "constancia gráfica en internet"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Corroborado por otros indicios concordantes",
+          "category": "SALUD_Y_SERVICIOS_PERSONALES",
+          "description": "Consta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona.",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar núcleo familiar y presencia familiar en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "revisiones médicas esposa"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Aporta indicio directo de estancias concordante con otros medios",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Reservas de viajes y hoteles a nombre del matrimonio que exteriorizan su presencia en determinadas fechas en España.",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Demostrar estancias efectivas en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "reservas viajes y hoteles"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Acredita uso efectivo de vivienda y se considera prueba decisiva junto a consumos",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Identificados hasta cinco inmuebles a nombre de su esposa con consumos eléctricos en algunos de ellos.",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar disponibilidad y uso de vivienda en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "inmuebles a nombre de la esposa"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Corroborado por consumos y demás indicios patrimoniales",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Acceso a inmuebles a través de sociedades propiedad de la esposa, numerosas fincas en Avenida y zona de golf con consumos eléctricos.",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar patrimonio y uso de inmuebles en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "inmuebles acceso por sociedades"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Acredita vida cotidiana en España y es valorada como prueba fehaciente",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Entregas de gasóleo bonificado en domicilio, facturaciones a nombre del contribuyente, entrega de cápsulas Nespresso en domicilio.",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Demostrar vida cotidiana y uso efectivo de domicilio en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "consumos y entregas (gasoil, Nespresso, facturas)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Indicio significativo del núcleo económico en España",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Participación en órganos de gobierno de Banesto y otras sociedades; figura como administrador de diversas fundaciones.",
+          "evidence_id": "evidence-legacy-007",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar centro de intereses económicos y actividad gestionadora en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "cargos en sociedades y fundaciones"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Corroborado con otros indicios patrimoniales",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Minucioso seguimiento de las cuentas bancarias por la Inspección.",
+          "evidence_id": "evidence-legacy-008",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar movimientos económicos y origen/destino de fondos vinculados a España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "seguimiento cuentas bancarias"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Refuerza el conjunto indicios sobre estancia y arraigo en España",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Pago de seguros, seguridad, cuotas de clubs deportivos, golf, polo, fútbol o gimnasios, la mayoría en provincia de Barcelona.",
+          "evidence_id": "evidence-legacy-009",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar arraigo social y personal en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pagos y cuotas locales"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Prueba insuficiente para acreditar residencia efectiva o permanencia >183 días en Mónaco",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Carte de resident del Principado de Mónaco aportada por el recurrente.",
+          "evidence_id": "evidence-legacy-010",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Principado de Mónaco",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Prueba insuficiente para acreditar residencia efectiva o permanencia >183 días en Mónaco",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar residencia fiscal y permanencia en Mónaco",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Carte de resident (Mónaco)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Posesión o alquiler de inmueble no prueba por sí sola ocupación efectiva como residencia habitual",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Copia de tres contratos privados de alquiler fechados en 2002, 2005 y 2008.",
+          "evidence_id": "evidence-legacy-011",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar morada habitual en Mónaco",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contratos privados de alquiler (Mónaco)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-012"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Certificados administrativos insuficientes para acreditar residencia efectiva o permanencia >183 días",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Copias de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular.",
+          "evidence_id": "evidence-legacy-012",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Principado de Mónaco",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Certificados administrativos insuficientes para acreditar residencia efectiva o permanencia >183 días",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar inscripción y residencia administrativa en el extranjero",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificados consulares (Marsella)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-013"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "Documental identificativa sin valor para justificar residencia efectiva en Mónaco",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Copia de pasaporte español aportada en expediente.",
+          "evidence_id": "evidence-legacy-013",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Complementar documentación de identidad y residencia",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pasaporte español (copia)"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Principado de Mónaco"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_PRESUNCION_FAMILIA"
+        ],
+        "evidence_categories": [
+          "TRAZAS_DIGITALES",
+          "SALUD_Y_SERVICIOS_PERSONALES",
+          "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "VIVIENDA_Y_USO_EFECTIVO",
+          "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "CONSUMOS_FINANCIEROS",
+          "FAMILIA_Y_ENTORNO_PERSONAL",
+          "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2007
+          ]
+        },
+        "tax_years": [
+          2007
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.",
+        "consequences": [],
+        "decisive_reasoning": "La Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2007
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-evidence-007",
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-evidence-009",
+          "anchor-legacy-evidence-010",
+          "anchor-legacy-evidence-011",
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-evidence-013"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS",
+          "CRIT_PRESUNCION_FAMILIA"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006",
+          "evidence-legacy-007",
+          "evidence-legacy-008",
+          "evidence-legacy-009",
+          "evidence-legacy-010",
+          "evidence-legacy-011",
+          "evidence-legacy-012",
+          "evidence-legacy-013"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-2347-2022",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nconstancia gráfica en internet\nConstancia gráfica de intensa vida pública vinculada a actos sociales a través de internet.\nAcreditar presencia y vida pública en España\nACCEPTED\nCorroborado por otros indicios concordantes\nrevisiones médicas esposa\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona.\nAcreditar núcleo familiar y presencia familiar en España\nACCEPTED\nCorroborado por otros indicios concordantes\nreservas viajes y hoteles\nReservas de viajes y hoteles a nombre del matrimonio que exteriorizan su presencia en determinadas fechas en España.\nDemostrar estancias efectivas en España\nACCEPTED\nAporta indicio directo de estancias concordante con otros medios\ninmuebles a nombre de la esposa\nIdentificados hasta cinco inmuebles a nombre de su esposa con consumos eléctricos en algunos de ellos.\nAcreditar disponibilidad y uso de vivienda en España\nACCEPTED\nAcredita uso efectivo de vivienda y se considera prueba decisiva junto a consumos\ninmuebles acceso por sociedades\nAcceso a inmuebles a través de sociedades propiedad de la esposa, numerosas fincas en Avenida y zona de golf con consumos eléctricos.\nAcreditar patrimonio y uso de inmuebles en España\nACCEPTED\nCorroborado por consumos y demás indicios patrimoniales\nconsumos y entregas (gasoil, Nespresso, facturas)\nEntregas de gasóleo bonificado en domicilio, facturaciones a nombre del contribuyente, entrega de cápsulas Nespresso en domicilio.\nDemostrar vida cotidiana y uso efectivo de domicilio en España\nACCEPTED\nAcredita vida cotidiana en España y es valorada como prueba fehaciente\ncargos en sociedades y fundaciones\nParticipación en órganos de gobierno de Banesto y otras sociedades; figura como administrador de diversas fundaciones.\nAcreditar centro de intereses económicos y actividad gestionadora en España\nACCEPTED\nIndicio significativo del núcleo económico en España\nseguimiento cuentas bancarias\nMinucioso seguimiento de las cuentas bancarias por la Inspección.\nAcreditar movimientos económicos y origen/destino de fondos vinculados a España\nACCEPTED\nCorroborado con otros indicios patrimoniales\npagos y cuotas locales\nPago de seguros, seguridad, cuotas de clubs deportivos, golf, polo, fútbol o gimnasios, la mayoría en provincia de Barcelona.\nAcreditar arraigo social y personal en España\nACCEPTED\nRefuerza el conjunto indicios sobre estancia y arraigo en España\nCarte de resident (Mónaco)\nCarte de resident del Principado de Mónaco aportada por el recurrente.\nAcreditar residencia fiscal y permanencia en Mónaco\nREJECTED\nPrueba insuficiente para acreditar residencia efectiva o permanencia >183 días en Mónaco\ncontratos privados de alquiler (Mónaco)\nCopia de tres contratos privados de alquiler fechados en 2002, 2005 y 2008.\nAcreditar morada habitual en Mónaco\nREJECTED\nPosesión o alquiler de inmueble no prueba por sí sola ocupación efectiva como residencia habitual\ncertificados consulares (Marsella)\nCopias de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular.\nAcreditar inscripción y residencia administrativa en el extranjero\nREJECTED\nCertificados administrativos insuficientes para acreditar residencia efectiva o permanencia >183 días\npasaporte español (copia)\nCopia de pasaporte español aportada en expediente.\nComplementar documentación de identidad y residencia\nREJECTED\nDocumental identificativa sin valor para justificar residencia efectiva en Mónaco\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nNOT_DECIDED\n2007\nExistencia de una intensa vida pública vinculada a actos sociales de los que existe constancia gráﬁca a\ntravés de internet\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona\nSe han\nobtenido reservas de viajes y hoteles a nombre del matrimonio\nidentiﬁcado hasta un total de cinco diferentes inmuebles a nombre de su\nesposa en los que se ha observado consumos eléctricos\nA través de determinadas\nsociedades\nel matrimonio ha tenido acceso a determinados inmuebles\nEntregas de gasóleo boniﬁcado \"en el domicilio del Sr.  Teresa \", facturaciones realizadas a D.\nCasiano\nentrega de cápsulas Nespresso en el domicilio\nParticipación en los órganos de gobierno de Banesto\nFigura como administrador de\nlas fundaciones\nMinucioso seguimiento de las cuentas bancarias\nPago de seguros,\nseguridad, cuotas de clubs deportivos\nla mayoría ubicados en la provincia\nde Barcelona\nCarte de resident del principado de Mónaco\nCopia de tres contratos privados de alquiler entre el Sr.  Teresa  y  DIRECCION012 , fechados\nCopia de certiﬁcados de residencia expedidos por el Consul General en Marsella de inscripción en el registro\nconsular de residente\nCopia de pasaporte español",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 475,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 353,
+              "verbatim_text": "Existencia de una intensa vida pública vinculada a actos sociales de los que existe constancia gráﬁca a\ntravés de internet"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 754,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 663,
+              "verbatim_text": "Consta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 925,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 857,
+              "verbatim_text": "Se han\nobtenido reservas de viajes y hoteles a nombre del matrimonio"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1229,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1104,
+              "verbatim_text": "identiﬁcado hasta un total de cinco diferentes inmuebles a nombre de su\nesposa en los que se ha observado consumos eléctricos"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1289,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1254,
+              "verbatim_text": "A través de determinadas\nsociedades"
+            },
+            {
+              "end_offset": 1444,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1389,
+              "verbatim_text": "el matrimonio ha tenido acceso a determinados inmuebles"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2138,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2035,
+              "verbatim_text": "Entregas de gasóleo boniﬁcado \"en el domicilio del Sr.  Teresa \", facturaciones realizadas a D.\nCasiano"
+            },
+            {
+              "end_offset": 2240,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2195,
+              "verbatim_text": "entrega de cápsulas Nespresso en el domicilio"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-007",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2317,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2266,
+              "verbatim_text": "Participación en los órganos de gobierno de Banesto"
+            },
+            {
+              "end_offset": 2473,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2429,
+              "verbatim_text": "Figura como administrador de\nlas fundaciones"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-008",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2644,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2598,
+              "verbatim_text": "Minucioso seguimiento de las cuentas bancarias"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-009",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2704,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2650,
+              "verbatim_text": "Pago de seguros,\nseguridad, cuotas de clubs deportivos"
+            },
+            {
+              "end_offset": 2789,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2741,
+              "verbatim_text": "la mayoría ubicados en la provincia\nde Barcelona"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-010",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3375,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 3333,
+              "verbatim_text": "Carte de resident del principado de Mónaco"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-011",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3633,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 3540,
+              "verbatim_text": "Copia de tres contratos privados de alquiler entre el Sr.  Teresa  y  DIRECCION012 , fechados"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-012",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3537,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 3407,
+              "verbatim_text": "Copia de certiﬁcados de residencia expedidos por el Consul General en Marsella de inscripción en el registro\nconsular de residente"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-013",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3404,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 3378,
+              "verbatim_text": "Copia de pasaporte español"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-2347-2022-residencia-fiscal"
+    }
+  ]
+}

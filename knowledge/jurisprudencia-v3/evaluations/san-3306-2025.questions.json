@@ -1,0 +1,27 @@
+{
+  "judgment_id": "san-3306-2025",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió SAN 3306/2025 este supuesto de residencia: La Sala interpreta los arts. 8.1.a) y 9.1.a) LIRPF (183 días y ausencias esporádicas), afirmando que la permanencia fuera >183 días por disfrute de una beca no constituye ausencia esporádica y que la valoración debe ser objetiva sobre la du?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

@@ -8,6 +8,7 @@
     "court": "Audiencia Nacional",
     "decision_date": "2025-02-18",
     "ecli": "ECLI:ES:AN:2025:1071",
+    "is_tax_residence_case": true,
     "judgment_id": "san-1071-2025",
     "roj": "SAN 1071/2025",
     "tax_years": [

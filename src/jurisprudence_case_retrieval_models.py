@@ -48,6 +48,7 @@ class RetrievalJudgment(JurisprudenceCaseModel):
     decision_date: date
     tax_years: tuple[int, ...]
     countries: tuple[NonEmptyText, ...]
+    is_tax_residence_case: bool = True
 
 
 class RetrievalFacets(JurisprudenceCaseModel):

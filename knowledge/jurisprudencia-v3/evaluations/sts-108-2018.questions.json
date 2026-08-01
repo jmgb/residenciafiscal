@@ -1,0 +1,24 @@
+{
+  "judgment_id": "sts-108-2018",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 108/2018 este supuesto de residencia: El Tribunal considera probado que la interesada permaneció fuera de España más de 183 días (2011 y 2012) por disfrute de beca ICEX; por ello la ausencia no es 'esporádica' y el criterio objetivo de permanencia (>183 días) decide la residenc?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

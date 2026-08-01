@@ -1,0 +1,24 @@
+{
+  "judgment_id": "san-5217-2022",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió SAN 5217/2022 este supuesto de residencia: El tribunal analiza el criterio de permanencia (>183 días) y la figura de las ausencias esporádicas (art.9.1.a LIRPF). Declara probado un traslado laboral prolongado fuera de España para los jugadores, considera que dichas ausencias no son ?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

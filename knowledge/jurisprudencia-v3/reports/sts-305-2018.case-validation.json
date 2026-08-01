@@ -1,0 +1,16 @@
+{
+  "anchor_count": 4,
+  "case_sha256": "344e0bd9c084e39b03d3bed1fbe560c3d2ba1cec69ac5a2a6e8959cba479386c",
+  "evidence_finding_count": 4,
+  "fact_count": 0,
+  "fragment_count": 7,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-305-2018",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "6068bd88f821edef26a83174466b1d0e8a6f26606c0fbdebb7d513bbf1fbb8d7"
+}

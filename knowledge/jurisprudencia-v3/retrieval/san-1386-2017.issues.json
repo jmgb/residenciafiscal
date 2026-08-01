@@ -8,6 +8,7 @@
     "court": "Audiencia Nacional",
     "decision_date": "2017-03-30",
     "ecli": "ECLI:ES:AN:2017:1386",
+    "is_tax_residence_case": true,
     "judgment_id": "san-1386-2017",
     "roj": "SAN 1386/2017",
     "tax_years": [

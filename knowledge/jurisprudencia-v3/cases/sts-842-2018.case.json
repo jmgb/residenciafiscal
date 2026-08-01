@@ -1,0 +1,274 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala considera esos indicios insuficientes para desvirtuar la prueba objetiva de estancia continuada fuera de España.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Hecho de que el interesado \"había presentado autoliquidación\" por el IRPF en su día, invocado como indicio de residencia",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar intención de residir en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "autoliquidación IRPF presentada"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala considera probado y no esporádico el hecho objetivo de residir fuera más de 183 días; la beca y su duración acreditan la permanencia.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Contrato/actividad derivada de beca ICEX: desempeño desde 1-10-2010 hasta 30-9-2011 en Oficina Económica y Comercial en Nairobi",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar permanencia continuada fuera de España (>183 días) y finalidad profesional",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "contrato/beca ICEX (destino Nairobi)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acto administrativo presentado por el interesado que refleja su alegación de no residencia; valorado junto con contrato y duración de la estancia.",
+      "category": "OTROS",
+      "description": "Presentación del modelo 210 el 19-02-2015 solicitando devolución de retenciones a cuenta del IRPF por considerarse no residente",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Solicitar devolución acreditando condición de no residente",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "modelo 210 IRNR (solicitud de devolución)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho reconocido). Frente a la posición administrativa que vinculaba la exclusión al certificado de residencia en el extranjero, aplica un criterio objetivo: la duración continuada (beca) impide calificar la ausencia como esporádica, por lo que no procede tributar en España por IRPF.",
+      "consequences": [],
+      "decisive_reasoning": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho reconocido). Frente a la posición administrativa que vinculaba la exclusión al certificado de residencia en el extranjero, aplica un criterio objetivo: la duración continuada (beca) impide calificar la ausencia como esporádica, por lo que no procede tributar en España por IRPF.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "dbdbdcfc6d45578ddc015c756d71be9201b05ea943bceada0e92b141c3e90d71",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-842-2018.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-842-2018"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Kenia"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2018-03-06",
+    "ecli": "ES:TS:2018:842",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-842-2018",
+    "page_count": 7,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 842/2018",
+    "source_file": "sentencias/STS_842_2018.pdf",
+    "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b",
+    "tax_years": [
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_OTRO"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 494,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 438,
+          "verbatim_text": "el recurrente presentó\nen España la declaración del IRPF"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1509,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 1418,
+          "verbatim_text": "desarrollaría su labor, desde el 1 de octubre de 2010 hasta el\n30 de septiembre de 2011, en"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2058,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 1965,
+          "verbatim_text": "con fecha de 19 de febrero de 2015 el modelo 210 del impuesto sobre la renta de no residentes"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    }
+  ],
+  "treaty_analyses": []
+}

@@ -1,0 +1,13 @@
+{
+  "corpus_sha256": "99dd35272a92251c5987966af1c05407956a32e14f0912c5f7909cf0ad8e6dc6",
+  "document_count": 106,
+  "human_approved_documents": 0,
+  "manifest_sha256": "883d5c533989fe1c2ab7e91d3c9171a804982b13de9cd3b17d24f912424b5f3c",
+  "publication_status": "AGENT_REVIEWED_ONLY",
+  "quality_sha256": "78b22590008027cca254773d596610dfed81c87648ed430b9bc68323cf534c8a",
+  "retrieval_document_count": 67,
+  "retrieval_unit_count": 74,
+  "rollout_id": "jurisprudencia-v3-fase-e",
+  "schema_version": "residenciafiscal-rollout-build/1",
+  "state_sha256": "9604c6dcec2f3e0dd278fc1b2c279308654a6c929cf4cecbfa796e9206184993"
+}

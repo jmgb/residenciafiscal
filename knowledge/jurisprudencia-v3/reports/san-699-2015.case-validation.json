@@ -1,0 +1,16 @@
+{
+  "anchor_count": 17,
+  "case_sha256": "8fa660dd24f740a1566d40bbfaee23ace4cd3f12f8dc15061f27bbf14b12b6c5",
+  "evidence_finding_count": 17,
+  "fact_count": 0,
+  "fragment_count": 27,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "san-699-2015",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "f7f7f008a970ce59f2308a2c2b04883e40c96074aec06b9bd90af6cceecfbd1d"
+}

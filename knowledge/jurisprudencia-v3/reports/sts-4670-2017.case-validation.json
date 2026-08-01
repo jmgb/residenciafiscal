@@ -1,0 +1,16 @@
+{
+  "anchor_count": 4,
+  "case_sha256": "7059f3a5c24781bf3ae7c10c5e91ccfdde567c2c7d49e158a96c6d0dbf740334",
+  "evidence_finding_count": 4,
+  "fact_count": 0,
+  "fragment_count": 7,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-4670-2017",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "8fd084c186c76435e3d1c9658f480395f4699b97c3e6873da5154394df4dfb65"
+}

@@ -1,0 +1,555 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corroborado por otros indicios administrativos y contractuales; sitúa domicilio en España de forma fehaciente",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Diez escrituras públicas, una anterior sitúa domicilio en Rusia y las nueve posteriores lo sitúan en España",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar domicilio habitual en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "10 escrituras públicas"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acredita de forma decisiva la residencia legal y la continuidad necesaria; requisito para permiso de larga duración requiere presencia continuada",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Permiso de residencia desde 23-04-2007 y de larga duración desde 23-04-2011",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar residencia legal continuada en España y permanencia exigida para obtener permiso de larga duración",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Permiso de residencia 23/04/2007; larga duración 23/04/2011"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corrobora la realización de actividad económica y gestión desde España, reforzando la residencia fiscal en España",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Contrato de trabajo con Atlanta Consultar SL y Luzes de Valencia Limousine; contratos en 2011 también con domicilio en España",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar centro de intereses económicos y gestión en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Contratos de trabajo con domicilio español"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Indicio concordante de vida cotidiana en España que corrobora otros documentos",
+      "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "description": "Serie de facturas de compra de electrodomésticos durante el año 2009 y una de 2010",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar vida cotidiana y presencia en vivienda en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Facturas compra electrodomésticos 2009-2010"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Prueba indiciaria de presencia y vida habitual en España, coherente con resto de indicios",
+      "category": "OTROS",
+      "description": "Póliza de seguro de un vehículo cuyo conductor habitual es el actor hasta el año 2012",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indicar presencia y utilización habitual de bienes en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Póliza seguro vehículo (conductor habitual hasta 2012)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corrobora permanencia continuada en España y desvirtúa la alegación de residencia en el extranjero",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Existencia de varias renovaciones del contrato de residencia y trabajo",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar continuidad de la residencia y la actividad en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Renovaciones contrato residencia y trabajo"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal aprecia que se refiere solo al ejercicio 2008 y no acredita residencia durante todo el ejercicio ni desvirtúa la residencia legal en España",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificado fiscal de residencia en la Federación Rusa referido al ejercicio 2008",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Federación Rusa",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El tribunal aprecia que se refiere solo al ejercicio 2008 y no acredita residencia durante todo el ejercicio ni desvirtúa la residencia legal en España",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en Rusia durante el ejercicio 2008",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificado fiscal de residencia en Federación Rusa (2008)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal considera que la presentación de la declaración de 2008 no prueba la residencia en Rusia durante todo ese ejercicio ni la desvinculación de España",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Presentación de la declaración de renta correspondiente al ejercicio 2008 en Rusia",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Federación Rusa",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El tribunal considera que la presentación de la declaración de 2008 no prueba la residencia en Rusia durante todo ese ejercicio ni la desvinculación de España",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar cumplimiento fiscal y residencia en Rusia en 2008",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Declaración de renta en Rusia (ejercicio 2008)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La Sala considera probados actos y documentos que muestran fijación de la residencia en España (permiso de residencia continuado, contratos laborales con domicilio español, escrituras posteriores situando domicilio en España). El certificado ruso se refiere solo a 2008 y la documentación española y los permisos administrativos desvirtúan la pretensión de residencia en Rusia, por lo que prevalece la residencia fiscal en España.",
+      "consequences": [],
+      "decisive_reasoning": "La Sala considera probados actos y documentos que muestran fijación de la residencia en España (permiso de residencia continuado, contratos laborales con domicilio español, escrituras posteriores situando domicilio en España). El certificado ruso se refiere solo a 2008 y la documentación española y los permisos administrativos desvirtúan la pretensión de residencia en Rusia, por lo que prevalece la residencia fiscal en España.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2008,
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "a453520517eda73fbef24e8455c5bec60a518dbf8d8deffd4f2068cef6ff0cf5",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5640-2023.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-5640-2023"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Federación Rusa"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decision_date": "2023-10-03",
+    "ecli": "ES:AN:2023:5640",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-5640-2023",
+    "page_count": 6,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 5640/2023",
+    "source_file": "sentencias/SAN_5640_2023.pdf",
+    "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2",
+    "tax_years": [
+      2008,
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2588,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2505,
+          "verbatim_text": "Diez escrituras públicas, de las cuales la anterior en el tiempo sitúa el domicilio"
+        },
+        {
+          "end_offset": 2672,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2618,
+          "verbatim_text": "situándolo sin embargo en España las nueve posteriores"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3214,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3115,
+          "verbatim_text": "Permiso de residencia desde el 23 de abril de 2007 y de larga duración desde el 23 de abril de 2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3293,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3219,
+          "verbatim_text": "Contrato de trabajo con Atlanta Consultar SL y Luzes de Valencia Limousine"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2855,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2769,
+          "verbatim_text": "Una serie de facturas de compra de electrodomésticos durante el año 2009 y una de 2010"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2763,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2678,
+          "verbatim_text": "Póliza de seguro de un vehículo cuyo conductor habitual es el actor hasta el año 2012"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2931,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2861,
+          "verbatim_text": "Existencia de varias renovaciones del contrato de residencia y trabajo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3964,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3808,
+          "verbatim_text": "El certiﬁcado ﬁscal de residencia en la Federación Rusa, se reﬁere al ejercicio 2008 (y no se acredita la\nresidencia en dicho país durante todo el ejercicio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4082,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3969,
+          "verbatim_text": "la presentación de la declaración de renta en dicho país\nes la correspondiente al ejercicio 2008, que nada prueba"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    }
+  ],
+  "treaty_analyses": []
+}

@@ -1,0 +1,387 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El Tribunal estima que la existencia de estancia continuada superior a 183 días y su finalidad profesional impiden calificarla de ausencia esporádica; no procede la exigencia automática de certificado de residencia en otro Estado.",
+      "category": "OTROS",
+      "description": "Propuesta de resolución de la Oficina de Gestión Tributaria en Asturias denegando devolución por falta de certificado de residencia fiscal en otro Estado y no acreditar tributación en destino.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que la ausencia era esporádica y que debía tributar en España; justificar la denegación de la devolución.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "propuesta de resolución denegatoria"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala de lo Contencioso revoca la conclusión del TEAR al considerar probado que la estancia en el extranjero excedió 183 días y no fue esporádica.",
+      "category": "OTROS",
+      "description": "Resoluciones del Tribunal Económico-Administrativo Regional del Principado de Asturias de 23 de octubre de 2015 desestimando las reclamaciones del contribuyente.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Respaldar la postura administrativa de que no procedía devolución por no acreditarse no residencia.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "resoluciones TEAR (desestimación)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El Tribunal no niega la existencia de esas presentaciones pero considera que no desvirtúan la prueba objetiva de residencia fuera de España por más de 183 días; por tanto no son decisivas.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Hecho de que el recurrente presentó en España autoliquidaciones por IRPF en su día (argumento de la AEAT para inferir residencia).",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar intención de residir en España y considerar la ausencia como esporádica.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "presentación declaraciones IRPF"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala considera este hecho cierto y determinante: la estancia mediante beca durante más de 183 días constituye residencia fuera de España y no ausencia esporádica.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Contrato de beca ICEX por el que desarrollaría su labor desde 1/10/2010 hasta 30/9/2011 en la Oficina Económica y Comercial de España en Teherán (estancia prolongada).",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Demostrar permanencia superior a 183 días en el extranjero (2011) y que la ausencia no es esporádica.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "contrato beca ICEX (Teherán)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corrobora la naturaleza continuada de las estancias en el extranjero y respalda la interpretación objetiva del criterio de 183 días.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "El período formativo continuó en 2012 en la empresa Hispavista, S.L. en Santiago de Chile (actividad en el extranjero tras la beca).",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar continuidad y no esporadicidad de las estancias en el extranjero; reforzar que la ausencia no era temporal/ocasional.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "prácticas en Hispavista S.L. (Santiago de Chile)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Documento administrativo presentado por el recurrente que formaliza su alegación de no residencia; valorado conjuntamente con las pruebas de permanencia.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Solicitud de devolución mediante modelo 210 del IRNR, presentado el 19 de febrero de 2015, solicitando devolución de retenciones ingresadas por IRPF para 2011 y 2012.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Formalizar la petición de devolución por considerarse no residente; acreditar su condición en procedimientos administrativos.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "presentación modelo 210 (IRNR) 19/02/2015"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho objetivo). Declara que esa estancia por beca no constituye ausencia esporádica y, por tanto, el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF en España. Rechaza la exigencia de acreditar tributación en el Estado receptor salvo en caso de paraíso fiscal, por lo que prevalecen las pruebas de permanencia aportadas por el recurrente.",
+      "consequences": [],
+      "decisive_reasoning": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho objetivo). Declara que esa estancia por beca no constituye ausencia esporádica y, por tanto, el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF en España. Rechaza la exigencia de acreditar tributación en el Estado receptor salvo en caso de paraíso fiscal, por lo que prevalecen las pruebas de permanencia aportadas por el recurrente.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2011,
+          2012
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-700-2018.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-700-2018"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Irán (Teherán) y Chile (Santiago de Chile)"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+    "decision_date": "2018-02-08",
+    "ecli": "ES:TS:2018:700",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-700-2018",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 700/2018",
+    "source_file": "sentencias/STS_700_2018.pdf",
+    "tax_years": [
+      2011,
+      2012
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "denegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España por el IRPF al no haber aportado certiﬁcado acreditativo de residencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "el\nmencionado órgano de revisión las desestimó mediante resoluciones de 23 de octubre de 2015"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal en nuestro país"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "suscribió un contrato, conforme al cual desarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30 de\nseptiembre de 2011, en la Oﬁcina"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "El período formativo continuó\ndurante el año 2012 y se desarrolló también en la empresa Hispavista, S.L. en Santiago de Chile"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "el contribuyente presentó en la Agencia Tributaria (AEAT)\ncon fecha de 19 de febrero de 2015 el modelo 210 del impuesto sobre la renta de no residentes (IRNR"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

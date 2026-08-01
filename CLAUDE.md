@@ -27,9 +27,10 @@ make dev
 >
 > **Frontera obligatoria:** las sentencias se preparan offline mediante
 > Python + agente. El gateway solo responde preguntas del chat. No añadas un
-> analizador LLM de PDF ni un endpoint `/analizar`. El corpus v3 sigue limitado
-> a la muestra congelada de cinco; no listar ni procesar las 106 como casos v3
-> hasta superar sus gates y recibir autorización expresa.
+> analizador LLM de PDF ni un endpoint `/analizar`. El rollout autorizado de las
+> 106 ya está procesado como borrador interno `AGENT_REVIEWED_ONLY`: no lo
+> presentes como revisado por una persona ni lo conectes al chat sin una decisión
+> posterior basada en sus evaluaciones.
 
 La documentación se navega desde [`docs/README.md`](docs/README.md). La
 arquitectura vigente y las reglas de ubicación de archivos están en
@@ -174,18 +175,21 @@ La fase D añade recuperación estructurada, diversificación, 20 paráfrasis y 
 conductas `preguntar`/`abstenerse`; supera sus gates y aplaza embeddings para el
 piloto. Método, métricas y límites:
 [`docs/jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](docs/jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
-E0 añade determinación residencial tipada, regenera las cinco sin regresión,
-congela un holdout independiente y prepara estado reanudable y gates por lote.
-El holdout obtiene 75 % de conducta y no puede usarse para ajustar fase D.
-Contrato operativo, política de revisión y límite expreso de no listar/procesar
-todavía las 106:
+E0 añadió determinación residencial tipada, regeneró las cinco sin regresión,
+congeló un holdout independiente y preparó estado reanudable y gates por lote.
+La fase E autorizada se ejecutó el 1 de agosto de 2026: 106/106 builds pasan,
+67 casos entran en recuperación, 39 quedan marcados fuera de ámbito y el corpus
+agregado contiene 74 unidades. Todo el contenido nuevo sigue
+`AGENT_REVIEWED_ONLY`; el holdout obtiene 75 % de conducta y no puede usarse
+para ajustar el retriever. Contrato operativo, resultados y política de revisión:
 [`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md).
 El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
 cada caso canónico. Su contrato está en
 [`docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md`](docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md).
-E0 deja preparado el rollout controlado de fase E. El siguiente trabajo
-—crear el manifiesto real y ejecutar sus lotes— requiere autorización expresa;
-no conectar directamente el chat ni transformar las 106 sin revisión humana.
+El manifiesto real, los borradores, los 11 lotes y los informes de fase E ya
+están materializados. El siguiente gate es jurídico y de producto: no registrar
+aprobación humana inexistente ni conectar el corpus completo directamente al
+chat, porque su holdout de recuperación no justifica esa promoción.
 
 El baseline histórico F0.2 redactó A sobre el corpus v3 y B con Gemini File
 Search sobre los PDF usando el mismo modelo y fuentes independientes. La

@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2023-06-22",
+    "ecli": "ES:TS:2023:2806",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-2806-2023",
+    "roj": "STS 2806/2023",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-2806-2023.case.json",
+    "case_sha256": "929bda7a2c7ee7340aec9b54bdf9d2945ac99e06982ce1150b80d4df79be3bec",
+    "source_sha256": "f3a49038c7c2c36bd022e2e0d3d7bbe337e837f57c65f6ed2ab206849b2ecbe3"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR / cláusula antiabuso aplicada a sociedades (residencia de personas jurídicas, beneficiario efectivo)",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance: el análisis judicial se centra en la compatibilidad de la cláusula antiabuso del art.14.1.h TRLIRNR con Derecho UE y sobre quién debe probar el abuso en el ámbito societario (IRNR), no en residencia de persona física.",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-2806-2023",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR / cláusula antiabuso aplicada a sociedades (residencia de personas jurídicas, beneficiario efectivo)\nNO APLICA - fuera de alcance: el análisis judicial se centra en la compatibilidad de la cláusula antiabuso del art.14.1.h TRLIRNR con Derecho UE y sobre quién debe probar el abuso en el ámbito societario (IRNR), no en residencia de persona física.\nJURISPRUDENCIA\nRoj: STS 2806/2023 - ECLI:ES:TS:2023:2806\nId Cendoj: 28079130022023100208\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 22/06/2023\nNº de Recurso: 6517/2021\nNº de Resolución: 851/2023\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: RAFAEL TOLEDANO CANTERO\nTipo de Resolución: Sentencia\nResoluciones del caso: SAN 3390/2021,\nAAAN 5732/2021,\nATS 9396/2022,\nSTS 2806/2023\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 851/2023\nFecha de sentencia: 22/06/2023\nTipo de",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: STS 2806/2023 - ECLI:ES:TS:2023:2806\nId Cendoj: 28079130022023100208\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 22/06/2023\nNº de Recurso: 6517/2021\nNº de Resolución: 851/2023\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: RAFAEL TOLEDANO CANTERO\nTipo de Resolución: Sentencia\nResoluciones del caso: SAN 3390/2021,\nAAAN 5732/2021,\nATS 9396/2022,\nSTS 2806/2023\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 851/2023\nFecha de sentencia: 22/06/2023\nTipo de"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "f3a49038c7c2c36bd022e2e0d3d7bbe337e837f57c65f6ed2ab206849b2ecbe3"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-2806-2023-fuera-de-alcance"
+    }
+  ]
+}

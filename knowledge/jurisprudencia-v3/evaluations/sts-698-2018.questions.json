@@ -1,0 +1,23 @@
+{
+  "judgment_id": "sts-698-2018",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 698/2018 este supuesto de residencia: El tribunal aplica primariamente el criterio objetivo de permanencia: la estancia fuera de España superior a 183 días durante el año natural es determinante. Declara que las estancias derivadas de una beca no son \"ausencias esporádicas\" y, ?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

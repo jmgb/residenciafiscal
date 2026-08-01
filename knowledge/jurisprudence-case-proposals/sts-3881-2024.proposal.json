@@ -1,0 +1,984 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se toma como antecedente procedimental y base de los hechos relevantes del litigio.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Incoación de acta por IP 2014 firmada en disconformidad, regularizando a obligación personal por considerar residente en España.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Fundamentar la regularización por residencia fiscal en España (IP por obligación personal remisión a residencia IRPF).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "acta de disconformidad Inspección (IP 2014)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El tribunal lo tiene por hecho pacífico, pero declara que no resulta determinante para el art. 9.1.a) LIRPF.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Reconstrucción de permanencia: 172 días España; 30 Reino Unido; 131 Alemania; 32 días indeterminados.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Negar o no poder afirmar permanencia >183 días en España y encuadrar el análisis hacia criterios alternativos.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "cómputo de días por país (2014)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se valora negativamente la ausencia de prueba aportada por el interesado sobre los 32 días restantes.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "La Inspección no determina 32 días y el contribuyente tampoco acredita en qué país estuvo.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Evidenciar falta de acreditación de permanencia fuera de España y reforzar inferencias en favor de España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "días no acreditados (32)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se tiene por hecho relevante (régimen de tributación) para enmarcar el conflicto, aunque la Administración no impugnó el certificado.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Consta que en RU solo se incluyeron rentas Chelsea en un periodo y en el siguiente no hubo autoliquidación, alegándose solo retenciones.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido (CDI 1975; referido también CDI 2013)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Se tiene por hecho relevante (régimen de tributación) para enmarcar el conflicto, aunque la Administración no impugnó el certificado.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Mostrar tributación limitada en RU y contextualizar el debate sobre residencia/“remittance basis”.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "situación fiscal en Reino Unido (remittance basis/retenciones)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera hecho relevante para descartar acreditación fiscal en Alemania y para la ponderación del conflicto.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "No se presentó autoliquidación en Alemania; se indica que solo hubo retenciones del Stuttgart en 2014.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido (CDI 1975; referido también CDI 2013)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Se considera hecho relevante para descartar acreditación fiscal en Alemania y para la ponderación del conflicto.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Debilitar la tesis de residencia fiscal alemana y ausencia de sujeción por renta mundial allí.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "ausencia de autoliquidación en Alemania (retenciones)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El tribunal acepta su integración en un análisis conjunto (no monista), junto al patrimonio.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Datos de retribuciones percibidas por el contribuyente en 2014, vinculadas a contratos/cesiones con clubes (incluido Valencia CF).",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Ponderar dónde radica el núcleo principal de intereses económicos (rentas de trabajo/actividad profesional).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "retribuciones por clubes (Valencia/Chelsea/Stuttgart)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera ponderación fáctica extensa y ajustada: el mayor peso de activos/rendimientos en España sustenta art. 9.1.b LIRPF.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Comparativa de activos/rendimientos: España 1.778.771,22€ vs extranjero (RU+Alemania) 1.724.237,32€; referencia a depósitos y saldos.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que el conjunto de intereses económicos/patrimoniales se concentra en España (art. 9.1.b LIRPF) y apoyar centro de intereses vitales CDI.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "depósitos y saldos bancarios (comparativa España vs extranjero)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se acepta como elemento patrimonial relevante en el análisis conjunto del art. 9.1.b LIRPF.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Titularidad de inmueble en España (Alcanar) valorado en 360.000€ (según declaración del recurrente en IP).",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar localización de patrimonio inmobiliario en España como indicio relevante del núcleo de intereses económicos (art. 9.1.b).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "inmueble en Alcanar (referencia catastral)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se integra como parte del conjunto patrimonial radicado en España.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Titularidad de dos vehículos valorados en 55.000€, destacándose la matrícula española.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Refuerzo indiciario de vinculación patrimonial/administrativa con España (centro de intereses).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "vehículos con matrícula española"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-010"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "El tribunal afirma vivienda permanente en España y utiliza este dato para activar el tiebreaker; incluso aceptando vivienda en RU, el centro vital resulta España.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Hecho probado de vivienda permanente en España; además se razona que dispuso de vivienda arrendada en Valencia en 2014 (según alegaciones en vía TEAR).",
+      "evidence_id": "evidence-legacy-010",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Aplicar el primer escalón del art. 4.2 CDI (vivienda permanente) y, subsidiariamente, soporte al centro de intereses vitales.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "vivienda permanente en España y alquiler en Valencia"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-011"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se consideran elemento de contextualización; la conclusión descansa principalmente en intereses económicos/patrimoniales.",
+      "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+      "description": "Vínculos personales localizados en España (padre apoderado; hermana relacionada con alquiler de inmueble).",
+      "evidence_id": "evidence-legacy-011",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Reforzar el “centro de intereses vitales” del art. 4.2 CDI (relaciones personales y económicas más estrechas).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "vínculos personales en España (padre apoderado; hermana)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-012"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se recoge como hecho; no es el paso decisivo porque se resuelve antes por centro de intereses vitales.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Dato de nacionalidad española del contribuyente, contemplado como criterio subsidiario en el CDI.",
+      "evidence_id": "evidence-legacy-012",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Apoyar, en su caso, el escalón de nacionalidad en el art. 4.2 CDI.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "nacionalidad española"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-013"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se admite como hecho (posición del contribuyente), pero no acredita por sí misma la no residencia.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Autoliquidación del Impuesto sobre el Patrimonio 2014 por obligación real, basada en considerarse no residente fiscal en España.",
+      "evidence_id": "evidence-legacy-013",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener que no concurre residencia fiscal en España (y por tanto no procede obligación personal).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "autoliquidación IP 2014 por obligación real"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-014"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal destaca que la Administración no cuestionó su validez/alcance, pero ello no impide doble residencia y desempate a favor de España.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificado expedido por autoridades del Reino Unido acreditando residencia fiscal, invocado a efectos del CDI España-RU.",
+      "evidence_id": "evidence-legacy-014",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido (CDI 1975; referido también CDI 2013)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El tribunal destaca que la Administración no cuestionó su validez/alcance, pero ello no impide doble residencia y desempate a favor de España.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en Reino Unido y forzar la aplicación del CDI (y/o prevalencia frente a norma interna).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "certificado de residencia fiscal Reino Unido (a efectos CDI)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-015"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se admiten los hechos, pero no se acepta que por sí solos determinen el art. 9.1.b LIRPF (se exige ponderación conjunta).",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Hechos sobre relación laboral/deportiva: contrato con Chelsea; cesión a Valencia hasta julio 2014; cesión a Stuttgart desde agosto 2014.",
+      "evidence_id": "evidence-legacy-015",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener que la actividad profesional y rentas principales se localizaron fuera de España (Alemania) y, por ello, el centro económico no está en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "contratos/cesiones deportivas (Chelsea, Valencia, Stuttgart)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-016"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El TS rechaza que deba prevalecer un único elemento (lugar de obtención de renta) y exige ponderación integral con patrimonio y otros vínculos.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Alegación de que el centro de intereses económicos debe fijarse por comparación de cuantías de rendimientos del trabajo, predominando los obtenidos fuera de España.",
+      "evidence_id": "evidence-legacy-016",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Excluir residencia española por art. 9.1.b LIRPF al situar el “núcleo” donde se obtiene la mayor parte de la renta (Alemania).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "tesis monista: residencia según mayor renta por país (Alemania)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-017"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El tribunal destaca expresamente que respecto a esos 32 días el interesado “no aportó prueba alguna”.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "No aportación de prueba por el interesado sobre el país de permanencia en 32 días del año 2014.",
+      "evidence_id": "evidence-legacy-017",
+      "fact_ids": [],
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar permanencia fuera de España para evitar que se consolide residencia española por indicios o para soportar su tesis de residencia extranjera.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "ausencia de prueba sobre 32 días no determinados"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "El TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).",
+      "consequences": [],
+      "decisive_reasoning": "El TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2014
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-3881-2024.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-3881-2024"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Alemania (principal); Reino Unido (subsidiario)",
+      "Reino Unido (CDI 1975; referido también CDI 2013)"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2024-07-09",
+    "ecli": "ECLI:ES:TS:2024:3881",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-3881-2024",
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 3881/2024",
+    "source_file": "sentencias/STS_3881_2024.pdf",
+    "tax_years": [
+      2014
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-evidence-013",
+        "anchor-legacy-evidence-014",
+        "anchor-legacy-evidence-015",
+        "anchor-legacy-evidence-016",
+        "anchor-legacy-evidence-017"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012",
+        "evidence-legacy-013",
+        "evidence-legacy-014",
+        "evidence-legacy-015",
+        "evidence-legacy-016",
+        "evidence-legacy-017"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "El 3 de julio de 2017, la Inspección Regional de la AEAT le incoó acta por el Impuesto sobre el Patrimonio,\nperiodo 2014"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "permaneció al menos 172 días en\nEspaña, 30 días en el Reino Unido y 131 en Alemania"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "los restantes 32 días"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "la\nInspección no pudo determinar, ni el obligado tributario tampoco acreditó"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "En el Reino Unido"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "se incluyeron únicamente las rentas percibidas del\nChelsea"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "su\núnica tributación fueron las retenciones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "En Alemania no se presentó ninguna autoliquidación, señalando que su única tributación fueron las\nretenciones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "sumadas retribuciones (exclusivamente las\nsatisfechas por el Valencia CF) y depósitos y saldos bancarios"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "acredita en España activos y rendimientos por\nimporte de 1.778.771,22 euros"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "en todo el extranjero"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "1.724.237,32 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "titular de un inmueble (en\nAlcanar"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "referencia catastral), valorado en otros 360.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "y de dos vehículos"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "de matrícula española"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "valorados en otros 55.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 16,
+          "verbatim_text": "El recurrente dispone de vivienda permanente en España"
+        },
+        {
+          "page_index": 16,
+          "verbatim_text": "aceptando la disponibilidad permanente de una vivienda de alquiler en Valencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 13,
+          "verbatim_text": "se hallaban en España al menos su padre que era su apoderado\ny su hermana"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 13,
+          "verbatim_text": "Finalmente, la nacionalidad de D.  Olegario  es la española"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-013",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "presentó autoliquidación del Impuesto sobre el Patrimonio 2014, por obligación real, al\nconsiderar que no era residente ﬁscal"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-014",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "la ADMINISTRACIÓN"
+        },
+        {
+          "page_index": 12,
+          "verbatim_text": "no cuestionó la validez y alcance del certiﬁcado"
+        },
+        {
+          "page_index": 13,
+          "verbatim_text": "lo considera\nválido y eﬁcaz y aplica las reglas de desempate"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-015",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "Tenía contrato con\nChelsea"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "cedido al Valencia"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "en agosto de 2014 fue cedido"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-016",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 4,
+          "verbatim_text": "considerar también"
+        },
+        {
+          "page_index": 4,
+          "verbatim_text": "bienes y derechos patrimoniales"
+        },
+        {
+          "page_index": 5,
+          "verbatim_text": "no debe prevalecer la tesis \"monista"
+        },
+        {
+          "page_index": 5,
+          "verbatim_text": "sino la tesis ecléctica o integral"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-017",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 14,
+          "verbatim_text": "sin que\nse haya podido acreditar el lugar"
+        },
+        {
+          "page_index": 14,
+          "verbatim_text": "de los restantes 32 días, respecto a los que el interesado no\naportó prueba alguna"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "treaty_analyses": []
+}

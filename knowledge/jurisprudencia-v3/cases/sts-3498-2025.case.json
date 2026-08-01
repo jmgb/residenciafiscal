@@ -1,0 +1,857 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera hecho base principal para aplicar la primera regla de desempate del CDI (vivienda permanente) y concluir residencia en España.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Consta en el expediente una vivienda en San Roque (Cádiz), DIRECCION000, desde 23/05/2008.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar vivienda permanente a disposición en España (primer criterio art. 4.2.a CDI).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "titularidad vivienda San Roque (Cádiz)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Indicio reforzador de permanencia y arraigo en España, no desmentido por el contribuyente.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Alta en el padrón municipal de Estepona (Málaga), al menos desde 2014.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Reforzar residencia efectiva/permanencia en España y vínculos administrativos estables.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "empadronamiento Estepona"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se valora como indicio adverso complementario al criterio decisivo de vivienda permanente.",
+      "category": "SALUD_Y_SERVICIOS_PERSONALES",
+      "description": "Inscrito desde 2013 en el censo de extranjeros residentes a efectos de asistencia sanitaria; se menciona cumplimentación del modelo S1 para reclamar prestaciones sanitarias en España.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indiciar residencia/estancia significativa en España y autodeclaración de residencia para acceso a servicios.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "censo extranjeros asistencia sanitaria / modelo S1"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Indicio coherente con domicilio español y permanencia, refuerza el cuadro probatorio.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "En 2013 da de alta un vehículo en España (baja en 2016) y en 2017 da de alta dos vehículos, señalando domicilio DIRECCION001 (Estepona).",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indiciar residencia administrativa/vida ordinaria en España (domicilio declarado).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "vehículos dados de alta/baja con domicilio en Estepona"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se menciona como elemento contextual/indiciario, pero la decisión se apoya principalmente en vivienda permanente (CDI).",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Procedimientos incoados por datos suministrados por la Administración tributaria de Reino Unido; se indica que se remitieron por haberse comunicado al pagador que residía fiscalmente en España.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Se menciona como elemento contextual/indiciario, pero la decisión se apoya principalmente en vivienda permanente (CDI).",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Evidenciar que el contribuyente comunicó residencia fiscal en España y justificar inicio de comprobación; reforzar residencia en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "intercambio de información Reino Unido → España"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera enlace indiciario racional conforme art. 108.2 LGT para concluir residencia en España.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Inferencia judicial basada en indicios (vivienda, padrón, asistencia sanitaria, vehículos) como enlace preciso y directo.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Construir presunción/razonamiento indiciario para afirmar residencia en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "presunción indiciaria por 'criterio humano' art. 108.2 LGT"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "Se recoge como indicio adicional, pero la sentencia se apoya decisivamente en la regla de vivienda permanente del CDI.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "La RTEAR afirma que existen indicios más que suficientes relativos a permanencia en España por periodo superior a 183 días.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar permanencia superior a 183 días en España (art. 9.1.a LIRPF).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "indicios de permanencia >183 días (mención RTEAR)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El TS reitera que su validez debe presumirse, pero en este caso no genera duda razonable frente a la falta de prueba de vivienda en UK y los indicios de España.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificado de residencia fiscal emitido por autoridades del Reino Unido, aportado por el contribuyente.",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El TS reitera que su validez debe presumirse, pero en este caso no genera duda razonable frente a la falta de prueba de vivienda en UK y los indicios de España.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Probar residencia fiscal en Reino Unido y activar conflicto de residencia a resolver por art. 4 CDI.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "certificado de residencia fiscal Reino Unido (a efectos CDI)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "El recurrente afirma aportar declaraciones de renta en Reino Unido de los ejercicios comprobados.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Reino Unido",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "El TS declara que prescinde del análisis de datos/circunstancias como la alegada tributación en UK por no ser necesarios para decidir.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar tributación en UK y sostener residencia fiscal allí.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "declaraciones de la renta presentadas en Reino Unido"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-010"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Aporta certificados de retenciones de la pensión percibida en Reino Unido (2014 a 2019).",
+      "evidence_id": "evidence-legacy-010",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Sostener que la pensión solo puede gravarse en UK (art. 17 CDI) y reforzar residencia UK.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "certificado de retenciones de pensión en Reino Unido (2014-2019)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-011"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Aporta pasaporte (sin detalle de sellos/entradas-salidas en el extracto).",
+      "evidence_id": "evidence-legacy-011",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Intentar acreditar desplazamientos/presencia y residencia habitual en Reino Unido.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "pasaporte"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-012"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "Se rechaza por carecer de respaldo probatorio; se considera decisivo que no identifique vivienda en UK.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Alegación del recurrente de que el criterio de vivienda permanente se cumple en ambos Estados, sin concretar domicilio/vivienda en UK.",
+      "evidence_id": "evidence-legacy-012",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Afirmar vivienda permanente en UK para evitar que el primer tie-breaker le sea desfavorable.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "alegación de vivienda permanente en Reino Unido sin identificar"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "Aunque la Sala reprocha que AEAT y la instancia omitieran valorar formal/materialmente el certificado de residencia UK, mantiene el fallo porque, aplicando el art. 4.2 CDI, el primer criterio (vivienda permanente) resuelve el caso. Se da por probada la disponibilidad de vivienda en España y se constatan vínculos administrativos (padrón, asistencia sanitaria, vehículos) sin prueba en contrario. El contribuyente no identifica ni prueba vivienda en Reino Unido, por lo que no existe duda razonable para desplazar la residencia a UK.",
+      "consequences": [],
+      "decisive_reasoning": "Aunque la Sala reprocha que AEAT y la instancia omitieran valorar formal/materialmente el certificado de residencia UK, mantiene el fallo porque, aplicando el art. 4.2 CDI, el primer criterio (vivienda permanente) resuelve el caso. Se da por probada la disponibilidad de vivienda en España y se constatan vínculos administrativos (padrón, asistencia sanitaria, vehículos) sin prueba en contrario. El contribuyente no identifica ni prueba vivienda en Reino Unido, por lo que no existe duda razonable para desplazar la residencia a UK.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2014,
+          2015,
+          2016
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "31e5dbc14d023dd4832af4c1979dfd41155b0e05145f46ff0ef1a2e44628054d",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-3498-2025.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-sts-3498-2025"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Reino Unido"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2025-07-15",
+    "ecli": "ECLI:ES:TS:2025:3498",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-3498-2025",
+    "page_count": 12,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 3498/2025",
+    "source_file": "sentencias/STS_3498_2025.pdf",
+    "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f",
+    "tax_years": [
+      2014,
+      2015,
+      2016
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012"
+      ],
+      "criterion_ids": [
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2039,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2009,
+          "verbatim_text": "al Sr.  Fausto  sólo le consta"
+        },
+        {
+          "end_offset": 2082,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2057,
+          "verbatim_text": "una vivienda en San\nRoque"
+        },
+        {
+          "end_offset": 2130,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2103,
+          "verbatim_text": "desde el 23 de mayo de 2008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2214,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2132,
+          "verbatim_text": "constando de alta en el padrón municipal de Estepona\n(Málaga), al menos desde 2014"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 641,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 588,
+          "verbatim_text": "consta inscrito desde 2013 en el censo de extranjeros"
+        },
+        {
+          "end_offset": 728,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 692,
+          "verbatim_text": "a efectos de la asistencia sanitaria"
+        },
+        {
+          "end_offset": 1169,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1140,
+          "verbatim_text": "ha cumplimentado el modelo S1"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1620,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1590,
+          "verbatim_text": "En 2013 da de alta un vehículo"
+        },
+        {
+          "end_offset": 1702,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1670,
+          "verbatim_text": "En 2017 da de alta dos\nvehículos"
+        },
+        {
+          "end_offset": 1750,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1729,
+          "verbatim_text": "señala como domicilio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2695,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2656,
+          "verbatim_text": "Reino\nUnido dio a España la información"
+        },
+        {
+          "end_offset": 2885,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2853,
+          "verbatim_text": "que residía ﬁscalmente en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2985,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 2889,
+          "verbatim_text": "genera un enlace,\npreciso y directo, según las reglas del criterio humano ( art. 108.2 de la LGT"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3711,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3676,
+          "verbatim_text": "existen indicios más que suﬁcientes"
+        },
+        {
+          "end_offset": 3813,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3779,
+          "verbatim_text": "por un periodo superior a 183 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1851,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 1829,
+          "verbatim_text": "minimiza indebidamente"
+        },
+        {
+          "end_offset": 1865,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 1852,
+          "verbatim_text": "la presunción"
+        },
+        {
+          "end_offset": 1949,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 1935,
+          "verbatim_text": "del certiﬁcado"
+        },
+        {
+          "end_offset": 1999,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 1958,
+          "verbatim_text": "expedido por la autoridad del Reino\nUnido"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4913,
+          "page_index": 11,
+          "printed_page": "11",
+          "start_offset": 4896,
+          "verbatim_text": "en el Reino Unido"
+        },
+        {
+          "end_offset": 2682,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 2644,
+          "verbatim_text": "prescindir del análisis de otros datos"
+        },
+        {
+          "end_offset": 2848,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 2815,
+          "verbatim_text": "tales como la alegada tributación"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2667,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 2644,
+          "verbatim_text": "prescindir del análisis"
+        },
+        {
+          "end_offset": 2965,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 2906,
+          "verbatim_text": "el régimen de retención relativo a las pensiones percibidas"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1033,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1011,
+          "verbatim_text": "junto con su\npasaporte"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3474,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 3414,
+          "verbatim_text": "aﬁrmación que carece de la más mínima\nprueba de su veracidad"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    }
+  ],
+  "treaty_analyses": []
+}

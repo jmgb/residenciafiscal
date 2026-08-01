@@ -1,0 +1,503 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "Colombia",
+      "España-Colombia"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso",
+    "decision_date": "2022-05-23",
+    "ecli": "ES:AN:2022:2229",
+    "is_tax_residence_case": true,
+    "judgment_id": "san-2229-2022",
+    "roj": "SAN 2229/2022",
+    "tax_years": [
+      2014
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-2229-2022.case.json",
+    "case_sha256": "9c1c4f12dbdf46b20a80f7cb17a1ec38e38a4770dc42d65d7b3b9141fe13405f",
+    "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Acredita la calificación jurídica y fue confirmada por la resolución administrativa y por la Audiencia Nacional.",
+          "category": "OTROS",
+          "description": "Acuerdo de la Oficina Nacional de Gestión Tributaria que estimó parcialmente la devolución y aplicó el gravamen del 8% sobre la beca.",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar que la beca es rendimiento de trabajo sujeto al IRNR y justificar la liquidación.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Acuerdo de liquidación ONGT 26/3/2019"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Audiencia Nacional declara ajustada a derecho la resolución del TEAC y confirma la liquidación.",
+          "category": "OTROS",
+          "description": "Resolución del Tribunal Económico-Administrativo Central que desestimó la reclamación contra la liquidación.",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Confirmar la calificación administrativa y el mantenimiento de la liquidación.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Resolución TEAC 21/7/2020"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "El tribunal analiza y aplica dichos preceptos al caso, considerando que la beca tiene naturaleza de rendimiento del trabajo.",
+          "category": "OTROS",
+          "description": "Citado por la Administración para calificar la beca como rendimiento de trabajo y para valorar la sujeción tributaria.",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Fundamentar jurídicamente la sujeción de la beca al IRNR y el régimen aplicable.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Normativa: art.13 TRLIRNR y art.19 CDI España-Colombia"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "No ha acreditado que el plan aportado reúna las condiciones formales de 'plan anual de cooperación internacional aprobado en Consejo de Ministros'.",
+          "category": "OTROS",
+          "description": "Plan estratégico de internacionalización de la economía española aportado por la parte actora como documento 6.",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar que las becas ICEX se enmarcan en un 'plan anual de cooperación internacional aprobado en Consejo de Ministros' y, por tanto, la exención del art.14.1.b TRLIRNR.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Documento 6: Plan de Internacionalización"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El tribunal considera que esas sentencias no resuelven la misma cuestión litigiosa ni son aplicables al régimen de becas ICEX aquí discutido.",
+          "category": "OTROS",
+          "description": "Sentencias del Tribunal Supremo invocadas por el actor para argumentar trato distinto o no tributación.",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Demostrar precedentes favorables que justificarían la no tributación o exención de la beca.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Sentencias TS citadas (STS 4306/2017, 4305/2017, 4307/2017, 334/2018)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El tribunal señala que el concepto de retribución pública no atiende a la existencia de relación laboral o estatutaria, por lo que esa alegación no desvirtúa la calificación legal.",
+          "category": "OTROS",
+          "description": "Alegación del actor de que no existía relación laboral o de dependencia entre el becario y la Administración concedente.",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Sostener que la beca no debía calificarse como retribución pública ni rendimiento del trabajo.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Alegación ausencia relación laboral"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "El propio relato procesal y la sentencia indican que se admite la residencia en Colombia en el ejercicio, considerándola en la decisión.",
+          "category": "OTROS",
+          "description": "La parte actora alega residencia fiscal fuera de España (Colombia); la cuestión de residencia no fue discutida por la Administración.",
+          "evidence_id": "evidence-legacy-007",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Probar la residencia fiscal del contribuyente en Colombia en 2014.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Alegación residencia en Colombia"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Colombia",
+          "España-Colombia"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_categories": [
+          "OTROS"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2014
+          ]
+        },
+        "tax_years": [
+          2014
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El tribunal considera probado que el recurrente fue residente en Colombia en 2014 y, aplicando el art.13 TRLIRNR junto con el art.19 del CDI España-Colombia, concluye que la beca constituye rendimiento del trabajo sujeto al IRNR (tipo 8%) y no concurre la exención invocada. Rechaza las pruebas del actor por insuficiencia o falta de identidad de supuestos con sentencias citadas; en consecuencia la tesis administrativa prevalece.",
+        "consequences": [],
+        "decisive_reasoning": "El tribunal considera probado que el recurrente fue residente en Colombia en 2014 y, aplicando el art.13 TRLIRNR junto con el art.19 del CDI España-Colombia, concluye que la beca constituye rendimiento del trabajo sujeto al IRNR (tipo 8%) y no concurre la exención invocada. Rechaza las pruebas del actor por insuficiencia o falta de identidad de supuestos con sentencias citadas; en consecuencia la tesis administrativa prevalece.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2014
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-evidence-007"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006",
+          "evidence-legacy-007"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-2229-2022",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nAcuerdo de liquidación ONGT 26/3/2019\nAcuerdo de la Oficina Nacional de Gestión Tributaria que estimó parcialmente la devolución y aplicó el gravamen del 8% sobre la beca.\nAcreditar que la beca es rendimiento de trabajo sujeto al IRNR y justificar la liquidación.\nACCEPTED\nAcredita la calificación jurídica y fue confirmada por la resolución administrativa y por la Audiencia Nacional.\nResolución TEAC 21/7/2020\nResolución del Tribunal Económico-Administrativo Central que desestimó la reclamación contra la liquidación.\nConfirmar la calificación administrativa y el mantenimiento de la liquidación.\nACCEPTED\nLa Audiencia Nacional declara ajustada a derecho la resolución del TEAC y confirma la liquidación.\nNormativa: art.13 TRLIRNR y art.19 CDI España-Colombia\nCitado por la Administración para calificar la beca como rendimiento de trabajo y para valorar la sujeción tributaria.\nFundamentar jurídicamente la sujeción de la beca al IRNR y el régimen aplicable.\nACCEPTED\nEl tribunal analiza y aplica dichos preceptos al caso, considerando que la beca tiene naturaleza de rendimiento del trabajo.\nDocumento 6: Plan de Internacionalización\nPlan estratégico de internacionalización de la economía española aportado por la parte actora como documento 6.\nAcreditar que las becas ICEX se enmarcan en un 'plan anual de cooperación internacional aprobado en Consejo de Ministros' y, por tanto, la exención del art.14.1.b TRLIRNR.\nREJECTED\nNo ha acreditado que el plan aportado reúna las condiciones formales de 'plan anual de cooperación internacional aprobado en Consejo de Ministros'.\nSentencias TS citadas (STS 4306/2017, 4305/2017, 4307/2017, 334/2018)\nSentencias del Tribunal Supremo invocadas por el actor para argumentar trato distinto o no tributación.\nDemostrar precedentes favorables que justificarían la no tributación o exención de la beca.\nREJECTED\nEl tribunal considera que esas sentencias no resuelven la misma cuestión litigiosa ni son aplicables al régimen de becas ICEX aquí discutido.\nAlegación ausencia relación laboral\nAlegación del actor de que no existía relación laboral o de dependencia entre el becario y la Administración concedente.\nSostener que la beca no debía calificarse como retribución pública ni rendimiento del trabajo.\nREJECTED\nEl tribunal señala que el concepto de retribución pública no atiende a la existencia de relación laboral o estatutaria, por lo que esa alegación no desvirtúa la calificación legal.\nAlegación residencia en Colombia\nLa parte actora alega residencia fiscal fuera de España (Colombia); la cuestión de residencia no fue discutida por la Administración.\nProbar la residencia fiscal del contribuyente en Colombia en 2014.\nACCEPTED\nEl propio relato procesal y la sentencia indican que se admite la residencia en Colombia en el ejercicio, considerándola en la decisión.\nEl tribunal considera probado que el recurrente fue residente en Colombia en 2014 y, aplicando el art.13 TRLIRNR junto con el art.19 del CDI España-Colombia, concluye que la beca constituye rendimiento del trabajo sujeto al IRNR (tipo 8%) y no concurre la exención invocada. Rechaza las pruebas del actor por insuficiencia o falta de identidad de supuestos con sentencias citadas; en consecuencia la tesis administrativa prevalece.\nEl tribunal considera probado que el recurrente fue residente en Colombia en 2014 y, aplicando el art.13 TRLIRNR junto con el art.19 del CDI España-Colombia, concluye que la beca constituye rendimiento del trabajo sujeto al IRNR (tipo 8%) y no concurre la exención invocada. Rechaza las pruebas del actor por insuficiencia o falta de identidad de supuestos con sentencias citadas; en consecuencia la tesis administrativa prevalece.\nNOT_DECIDED\n2014\nLa Oﬁcina Nacional de Gestión Tributaria, dictó liquidación el 26/3/2019, resolviendo esta petición, en la que\nacordó la devolución parcial\ncontra la resolución del Tribunal Económico Administrativo Central (TEAC), de\n21/7/2020\nLa liquidación\nentiende que la\nbeca tiene la consideración de rendimiento de trabajo sujeto al IRNR, de acuerdo con\nel artículo\n13.1.c)2º del TRLIRNR\nen relación con el artículo 19 del CDI España-Colombia\nno ha acreditado que reúna las\ncondiciones para ser considerado como \" plan anual de cooperación internacional aprobado en Consejo de\nMinistros\nno cabe duda de que las sentencias que menciona no resuelven la misma cuestión litigiosa\nEl concepto de retribución pública de la LIRNR no atiende a relaciones laborales o estatutarias\naquí se ha admitido que fue residente en Colombia\ny, por ello\ndebía tributar por el IRNR al 8",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3649,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3510,
+              "verbatim_text": "La Oﬁcina Nacional de Gestión Tributaria, dictó liquidación el 26/3/2019, resolviendo esta petición, en la que\nacordó la devolución parcial"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1403,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 1316,
+              "verbatim_text": "contra la resolución del Tribunal Económico Administrativo Central (TEAC), de\n21/7/2020"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 751,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 737,
+              "verbatim_text": "La liquidación"
+            },
+            {
+              "end_offset": 930,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 830,
+              "verbatim_text": "entiende que la\nbeca tiene la consideración de rendimiento de trabajo sujeto al IRNR, de acuerdo con"
+            },
+            {
+              "end_offset": 980,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 947,
+              "verbatim_text": "el artículo\n13.1.c)2º del TRLIRNR"
+            },
+            {
+              "end_offset": 1164,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1110,
+              "verbatim_text": "en relación con el artículo 19 del CDI España-Colombia"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 469,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 326,
+              "verbatim_text": "no ha acreditado que reúna las\ncondiciones para ser considerado como \" plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2514,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2426,
+              "verbatim_text": "no cabe duda de que las sentencias que menciona no resuelven la misma cuestión litigiosa"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3537,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3442,
+              "verbatim_text": "El concepto de retribución pública de la LIRNR no atiende a relaciones laborales o estatutarias"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-007",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 526,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 465,
+              "verbatim_text": "aquí se ha admitido que fue residente en Colombia\ny, por ello"
+            },
+            {
+              "end_offset": 605,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 574,
+              "verbatim_text": "debía tributar por el IRNR al 8"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-2229-2022-residencia-fiscal"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "anchor_count": 1,
+  "case_sha256": "454ea43b116a8c36d493875391081e436b807bf8b4679863e70c63edfb7578ac",
+  "evidence_finding_count": 0,
+  "fact_count": 0,
+  "fragment_count": 1,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-3270-2019",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "4e5ad27423c4709f6b335050a9b419a0153cc4ecb92f2a030c29f78b478c856d"
+}

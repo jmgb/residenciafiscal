@@ -1,0 +1,16 @@
+{
+  "anchor_count": 6,
+  "case_sha256": "c7da84b28a17a51b934ca8351302a9918b537dbc128ab8cae0ed8f6fb5b235d8",
+  "evidence_finding_count": 6,
+  "fact_count": 0,
+  "fragment_count": 10,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-115-2018",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "0f9e2b0f529bc4b36701121832013811a118418f4b9aecd528c7e5bc5d7e323c"
+}

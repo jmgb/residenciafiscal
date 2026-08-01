@@ -1,0 +1,467 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2018-01-18",
+    "ecli": "ES:TS:2018:183",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-183-2018",
+    "roj": "STS 183/2018",
+    "tax_years": [
+      2011,
+      2012
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-183-2018.case.json",
+    "case_sha256": "be8936039124375e757e5926404d44b73dcc06425ec64e7e657b92ab94add84b",
+    "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS rechaza una interpretación amplia: una ausencia prolongada (>183 días) no puede ser “esporádica” aunque sea por beca temporal.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "La Administración argumenta que la estancia en el extranjero deriva de una beca con objeto y duración determinados, por lo que sería una “ausencia esporádica”.",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Reputar la estancia exterior como ausencia esporádica computable como permanencia en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "beca temporal ICEX (formación)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS declara irrelevante el propósito de retorno o que se costee el regreso para delimitar si la ausencia es esporádica.",
+          "category": "OTROS",
+          "description": "La Administración invoca que el organismo concedente sufraga el transporte de ida y vuelta, como indicio de intención de retorno a España.",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar elemento volitivo de retorno y calificar la ausencia como esporádica.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "transporte ida/vuelta sufragado por ICEX"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "REJECTED",
+          "assessment_reason": "El TS fija un criterio objetivo (duración/intensidad) y niega que la voluntad/indicios de retorno definan lo esporádico cuando la ausencia es prolongada.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "La Administración sostiene que el recurrente presentó declaración IRPF en España, deduciendo intención de residir en España.",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Inferir residencia fiscal en España (intención y vínculo con el sistema fiscal español).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "presentación declaración IRPF en España"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessment_reason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La Administración denuncia que la sentencia de instancia prescinde de la obligación de acreditar residencia fiscal en el extranjero, evitando “desimposición”.",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "España",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "El TS considera innecesario pronunciarse sobre el modo de acreditar residencia fiscal extranjera al no existir ausencias esporádicas en el caso.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Exigir prueba de residencia fiscal en otro país para neutralizar el cómputo de ausencias esporádicas.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "falta de certificado de residencia fiscal extranjera"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "El TS lo toma como hecho inmutable en casación y base del juicio: ausencia superior a 183 días.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Hecho cierto y reconocido: el recurrente permaneció fuera de España más de 183 días del año natural (2011) por la beca.",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Demostrar no permanencia en España >183 días (y, por tanto, no residencia por criterio de días).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "permanencia fuera de España >183 días (hecho reconocido)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "El TS conecta la beca con una ausencia prolongada incompatible con el concepto de “esporádica”.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "La beca ICEX y el contrato suscrito exigían una actividad formativa continuada en el país de destino, impidiendo mantener residencia habitual en España.",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Justificar que la ausencia fue continuada/prolongada y no esporádica.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contrato/beca ICEX con exigencia de actividad formativa en destino"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_categories": [
+          "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "OTROS",
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011,
+            2012
+          ]
+        },
+        "tax_years": [
+          2011,
+          2012
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El TS parte de un hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días por una beca ICEX.\nInterpreta “ausencias esporádicas” en sentido objetivo y gramatical: lo esporádico es ocasional y necesariamente breve.\nUna ausencia prolongada y superior a 183 días no puede complementar una “permanencia” en España; al contrario, la neutraliza.\nPor ello, no cabe computar tal ausencia como días en España y se confirma la estimación del contribuyente (devolución de retenciones).",
+        "consequences": [],
+        "decisive_reasoning": "El TS parte de un hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días por una beca ICEX.\nInterpreta “ausencias esporádicas” en sentido objetivo y gramatical: lo esporádico es ocasional y necesariamente breve.\nUna ausencia prolongada y superior a 183 días no puede complementar una “permanencia” en España; al contrario, la neutraliza.\nPor ello, no cabe computar tal ausencia como días en España y se confirma la estimación del contribuyente (devolución de retenciones).",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011,
+            2012
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-183-2018",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca temporal ICEX (formación)\nLa Administración argumenta que la estancia en el extranjero deriva de una beca con objeto y duración determinados, por lo que sería una “ausencia esporádica”.\nReputar la estancia exterior como ausencia esporádica computable como permanencia en España.\nREJECTED\nEl TS rechaza una interpretación amplia: una ausencia prolongada (>183 días) no puede ser “esporádica” aunque sea por beca temporal.\ntransporte ida/vuelta sufragado por ICEX\nLa Administración invoca que el organismo concedente sufraga el transporte de ida y vuelta, como indicio de intención de retorno a España.\nAcreditar elemento volitivo de retorno y calificar la ausencia como esporádica.\nREJECTED\nEl TS declara irrelevante el propósito de retorno o que se costee el regreso para delimitar si la ausencia es esporádica.\npresentación declaración IRPF en España\nLa Administración sostiene que el recurrente presentó declaración IRPF en España, deduciendo intención de residir en España.\nInferir residencia fiscal en España (intención y vínculo con el sistema fiscal español).\nREJECTED\nEl TS fija un criterio objetivo (duración/intensidad) y niega que la voluntad/indicios de retorno definan lo esporádico cuando la ausencia es prolongada.\nfalta de certificado de residencia fiscal extranjera\nLa Administración denuncia que la sentencia de instancia prescinde de la obligación de acreditar residencia fiscal en el extranjero, evitando “desimposición”.\nExigir prueba de residencia fiscal en otro país para neutralizar el cómputo de ausencias esporádicas.\nUNRESOLVED\npermanencia fuera de España >183 días (hecho reconocido)\nHecho cierto y reconocido: el recurrente permaneció fuera de España más de 183 días del año natural (2011) por la beca.\nDemostrar no permanencia en España >183 días (y, por tanto, no residencia por criterio de días).\nACCEPTED\nEl TS lo toma como hecho inmutable en casación y base del juicio: ausencia superior a 183 días.\ncontrato/beca ICEX con exigencia de actividad formativa en destino\nLa beca ICEX y el contrato suscrito exigían una actividad formativa continuada en el país de destino, impidiendo mantener residencia habitual en España.\nJustificar que la ausencia fue continuada/prolongada y no esporádica.\nACCEPTED\nEl TS conecta la beca con una ausencia prolongada incompatible con el concepto de “esporádica”.\nEl TS parte de un hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días por una beca ICEX.\nInterpreta “ausencias esporádicas” en sentido objetivo y gramatical: lo esporádico es ocasional y necesariamente breve.\nUna ausencia prolongada y superior a 183 días no puede complementar una “permanencia” en España; al contrario, la neutraliza.\nPor ello, no cabe computar tal ausencia como días en España y se confirma la estimación del contribuyente (devolución de retenciones).\nEl TS parte de un hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días por una beca ICEX.\nInterpreta “ausencias esporádicas” en sentido objetivo y gramatical: lo esporádico es ocasional y necesariamente breve.\nUna ausencia prolongada y superior a 183 días no puede complementar una “permanencia” en España; al contrario, la neutraliza.\nPor ello, no cabe computar tal ausencia como días en España y se confirma la estimación del contribuyente (devolución de retenciones).\nNOT_DECIDED\n2011\n2012\nno cabe reputar ocasional o esporádica una ausencia\nsuperior a 183 días\nEl propósito de retorno\nsufrague los\ncostes\nno son datos\npara delimitar\nsi una ausencia es esporádica\ndebe atender exclusivamente al dato objetivo de la duración o\nintensidad\nhace innecesario que nos pronunciemos sobre la tercera\nel interesado\npermaneció fuera de España durante más de 183 días del año 2011\nprecisamente por imperativo de la beca obtenida y del\ncontrato suscrito",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4620,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 4569,
+              "verbatim_text": "no cabe reputar ocasional o esporádica una ausencia"
+            },
+            {
+              "end_offset": 500,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 481,
+              "verbatim_text": "superior a 183 días"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2362,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2339,
+              "verbatim_text": "El propósito de retorno"
+            },
+            {
+              "end_offset": 2449,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2430,
+              "verbatim_text": "sufrague los\ncostes"
+            },
+            {
+              "end_offset": 2500,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2488,
+              "verbatim_text": "no son datos"
+            },
+            {
+              "end_offset": 2577,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2533,
+              "verbatim_text": "para delimitar\nsi una ausencia es esporádica"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 613,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 541,
+              "verbatim_text": "debe atender exclusivamente al dato objetivo de la duración o\nintensidad"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4036,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 3982,
+              "verbatim_text": "hace innecesario que nos pronunciemos sobre la tercera"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4849,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 4772,
+              "verbatim_text": "el interesado\npermaneció fuera de España durante más de 183 días del año 2011"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1501,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1430,
+              "verbatim_text": "precisamente por imperativo de la beca obtenida y del\ncontrato suscrito"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-183-2018-residencia-fiscal"
+    }
+  ]
+}

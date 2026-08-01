@@ -1,0 +1,42 @@
+{
+  "judgment_id": "sts-2735-2023",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 2735/2023 este supuesto de residencia: La Inspección calificó residente en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos). El TS declara que, aportado certificado de residencia fiscal en EEUU “a efectos del CDI”, debe presumirse válido y determina con?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012",
+        "evidence-legacy-013",
+        "evidence-legacy-014",
+        "evidence-legacy-015",
+        "evidence-legacy-016",
+        "evidence-legacy-017",
+        "evidence-legacy-018",
+        "evidence-legacy-019",
+        "evidence-legacy-020",
+        "evidence-legacy-021"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

@@ -1,0 +1,463 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "Kuwait"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2020-11-23",
+    "ecli": "ES:AN:2020:3960",
+    "is_tax_residence_case": true,
+    "judgment_id": "san-3960-2020",
+    "roj": "SAN 3960/2020",
+    "tax_years": [
+      2011
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/san-3960-2020.case.json",
+    "case_sha256": "03d64251dad2c860ea99c9fe898f0b95d781283fb579cffb449e431f6f39b33f",
+    "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Considerada probatoria y decisiva para concluir que no hubo imposición en Kuwait y, por tanto, que no procede la devolución.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Nota verbal de la Embajada del Estado de Kuwait en Madrid certificando que en 2011 no existía impuesto sobre la renta de personas físicas ni emisión de certificados de residencia fiscal para españoles.",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": {
+            "defects": [],
+            "document_type": "OTHER",
+            "issuing_authority": null,
+            "jurisdiction": "Kuwait",
+            "nature": "TAX",
+            "period_end": null,
+            "period_start": null,
+            "probative_effect": "Considerada probatoria y decisiva para concluir que no hubo imposición en Kuwait y, por tanto, que no procede la devolución.",
+            "tax_scope": "NOT_STATED"
+          },
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar que en Kuwait no hubo tributación sobre renta mundial en 2011 (ausencia de gravamen) y, por tanto, que no existió doble imposición.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "nota verbal Embajada de Kuwait 20-06-2018"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Acto administrativo ajustado a Derecho; la Sala lo confirma y lo considera válido para la finalidad administrativa perseguida.",
+          "category": "OTROS",
+          "description": "Resolución de la Dependencia de Asistencia y Servicios Tributarios de la Delegación Central de Grandes Contribuyentes practicando liquidación provisional y denegando la devolución solicitada.",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Formalizar la posición administrativa de denegar la devolución de retenciones.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Resolución 3-09-2013 Denegación devolución"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Corrobora que las rentas procedían de entidad residente en España y que se practicaron las retenciones legalmente exigibles.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Constancia (en autos) de que la empresa DIRECCION000 (NIF NUM000) practicó retenciones sobre los rendimientos del trabajo abonados a la recurrente.",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar que las rentas fueron satisfechas por entidad residente en España y sujetas a retención.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "retenciones practicadas por empleador residente en España"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala considera acreditada la presencia en Kuwait y admite la prueba como indicativa de residencia desde abril de 2011.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Copia del pasaporte con el sello de entrada en Kuwait aportada por la recurrente.",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Demostrar permanencia y presencia física en Kuwait durante 2011.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pasaporte sello entrada Kuwait"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Contribuye a probar el arraigo familiar y la residencia en Kuwait; la Sala valora positivamente este indicio.",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Contrato de arrendamiento en DIRECCION001 y facturas; en el contrato figura como arrendatario el cónyuge de la recurrente.",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar vivienda y núcleo familiar en Kuwait (arraigo y residencia habitual del cónyuge/familia).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contrato arrendamiento Kuwait (cónyuge arrendatario)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "La Sala considera el hecho cierto pero lo valora como tangencial y no determinante para la devolución solicitada en vía IRNR.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Presentó declaración por IRPF ejercicio 2011 con rendimientos del trabajo, obteniendo devolución de 25,94 euros (presentada 2-7-2012).",
+          "evidence_id": "evidence-legacy-006",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Acreditar actuaciones fiscales en España y posible tributación por ciertas rentas.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "declaración IRPF 2011 presentada en España"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Kuwait"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_VITALES",
+          "CRIT_PRESUNCION_FAMILIA"
+        ],
+        "evidence_categories": [
+          "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "OTROS",
+          "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "VIVIENDA_Y_USO_EFECTIVO",
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011
+          ]
+        },
+        "tax_years": [
+          2011
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala considera probada la residencia de la recurrente en Kuwait desde abril de 2011 (por sellos y contrato/traslado laboral) y acepta que estuvo menos de 183 días en España. No obstante, la cuestión principal es que las rentas abonadas por entidad residente en España constituyen hecho imponible del IRNR y, dado que Kuwait no gravó esas rentas en 2011, no concurrió doble imposición que obligue a la devolución.",
+        "consequences": [],
+        "decisive_reasoning": "La Sala considera probada la residencia de la recurrente en Kuwait desde abril de 2011 (por sellos y contrato/traslado laboral) y acepta que estuvo menos de 183 días en España. No obstante, la cuestión principal es que las rentas abonadas por entidad residente en España constituyen hecho imponible del IRNR y, dado que Kuwait no gravó esas rentas en 2011, no concurrió doble imposición que obligue a la devolución.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-evidence-006"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_AUSENCIAS_ESPORADICAS",
+          "CRIT_CENTRO_INTERESES_VITALES",
+          "CRIT_PRESUNCION_FAMILIA"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005",
+          "evidence-legacy-006"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "san-3960-2020",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nnota verbal Embajada de Kuwait 20-06-2018\nNota verbal de la Embajada del Estado de Kuwait en Madrid certificando que en 2011 no existía impuesto sobre la renta de personas físicas ni emisión de certificados de residencia fiscal para españoles.\nAcreditar que en Kuwait no hubo tributación sobre renta mundial en 2011 (ausencia de gravamen) y, por tanto, que no existió doble imposición.\nACCEPTED\nConsiderada probatoria y decisiva para concluir que no hubo imposición en Kuwait y, por tanto, que no procede la devolución.\nResolución 3-09-2013 Denegación devolución\nResolución de la Dependencia de Asistencia y Servicios Tributarios de la Delegación Central de Grandes Contribuyentes practicando liquidación provisional y denegando la devolución solicitada.\nFormalizar la posición administrativa de denegar la devolución de retenciones.\nACCEPTED\nActo administrativo ajustado a Derecho; la Sala lo confirma y lo considera válido para la finalidad administrativa perseguida.\nretenciones practicadas por empleador residente en España\nConstancia (en autos) de que la empresa DIRECCION000 (NIF NUM000) practicó retenciones sobre los rendimientos del trabajo abonados a la recurrente.\nAcreditar que las rentas fueron satisfechas por entidad residente en España y sujetas a retención.\nACCEPTED\nCorrobora que las rentas procedían de entidad residente en España y que se practicaron las retenciones legalmente exigibles.\npasaporte sello entrada Kuwait\nCopia del pasaporte con el sello de entrada en Kuwait aportada por la recurrente.\nDemostrar permanencia y presencia física en Kuwait durante 2011.\nACCEPTED\nLa Sala considera acreditada la presencia en Kuwait y admite la prueba como indicativa de residencia desde abril de 2011.\ncontrato arrendamiento Kuwait (cónyuge arrendatario)\nContrato de arrendamiento en DIRECCION001 y facturas; en el contrato figura como arrendatario el cónyuge de la recurrente.\nAcreditar vivienda y núcleo familiar en Kuwait (arraigo y residencia habitual del cónyuge/familia).\nACCEPTED\nContribuye a probar el arraigo familiar y la residencia en Kuwait; la Sala valora positivamente este indicio.\ndeclaración IRPF 2011 presentada en España\nPresentó declaración por IRPF ejercicio 2011 con rendimientos del trabajo, obteniendo devolución de 25,94 euros (presentada 2-7-2012).\nAcreditar actuaciones fiscales en España y posible tributación por ciertas rentas.\nACCEPTED\nLa Sala considera el hecho cierto pero lo valora como tangencial y no determinante para la devolución solicitada en vía IRNR.\nLa Sala considera probada la residencia de la recurrente en Kuwait desde abril de 2011 (por sellos y contrato/traslado laboral) y acepta que estuvo menos de 183 días en España. No obstante, la cuestión principal es que las rentas abonadas por entidad residente en España constituyen hecho imponible del IRNR y, dado que Kuwait no gravó esas rentas en 2011, no concurrió doble imposición que obligue a la devolución.\nLa Sala considera probada la residencia de la recurrente en Kuwait desde abril de 2011 (por sellos y contrato/traslado laboral) y acepta que estuvo menos de 183 días en España. No obstante, la cuestión principal es que las rentas abonadas por entidad residente en España constituyen hecho imponible del IRNR y, dado que Kuwait no gravó esas rentas en 2011, no concurrió doble imposición que obligue a la devolución.\nNOT_DECIDED\n2011\nQue en el año 2011 no existía en Kuwait impuesto sobre la renta obtenida por personas físicas\nPor Resolución de 3 de septiembre de 2013\nse practica liquidación provisional, denegando la solicitud\nde devolución\nabonada por entidad residente en España. Sobre la renta abonada, se realizó\nla correspondiente retención\naportó copia del pasaporte con\nel sello de entrada en Kuwait\ncontrato de arrendamiento en  DIRECCION001\nﬁgura como arrendatario el cónyuge\nen fecha\n2 de julio de 2012 había presentado también declaración por IRPF ejercicio 2011\nobteniendo una devolución por importe de 25,94 euros",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1922,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1829,
+              "verbatim_text": "Que en el año 2011 no existía en Kuwait impuesto sobre la renta obtenida por personas físicas"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3873,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3832,
+              "verbatim_text": "Por Resolución de 3 de septiembre de 2013"
+            },
+            {
+              "end_offset": 4064,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3991,
+              "verbatim_text": "se practica liquidación provisional, denegando la solicitud\nde devolución"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2724,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 2620,
+              "verbatim_text": "abonada por entidad residente en España. Sobre la renta abonada, se realizó\nla correspondiente retención"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3222,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3162,
+              "verbatim_text": "aportó copia del pasaporte con\nel sello de entrada en Kuwait"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3268,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3226,
+              "verbatim_text": "contrato de arrendamiento en  DIRECCION001"
+            },
+            {
+              "end_offset": 3363,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3329,
+              "verbatim_text": "ﬁgura como arrendatario el cónyuge"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-006",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2773,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2685,
+              "verbatim_text": "en fecha\n2 de julio de 2012 había presentado también declaración por IRPF ejercicio 2011"
+            },
+            {
+              "end_offset": 2864,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2812,
+              "verbatim_text": "obteniendo una devolución por importe de 25,94 euros"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "san-3960-2020-residencia-fiscal"
+    }
+  ]
+}

@@ -141,6 +141,7 @@ def build_retrieval_index(
             decision_date=judgment.decision_date,
             tax_years=judgment.tax_years,
             countries=judgment.countries,
+            is_tax_residence_case=judgment.is_tax_residence_case,
         ),
         units=tuple(_build_unit(case, index) for index in range(len(case.legal_issues))),
     )

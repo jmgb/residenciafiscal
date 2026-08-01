@@ -8,6 +8,7 @@
     "court": "Audiencia Nacional",
     "decision_date": "2021-03-04",
     "ecli": "ECLI:ES:AN:2021:1226",
+    "is_tax_residence_case": true,
     "judgment_id": "san-1226-2021",
     "roj": "SAN 1226/2021",
     "tax_years": [

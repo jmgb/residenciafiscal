@@ -14,7 +14,8 @@ SHELL := /bin/bash
 .PHONY: help setup dev dev-api dev-frontend dev-public serve \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
-	evaluate-holdout-e0 rollout-init rollout-status rollout-next \
+	evaluate-holdout-e0 evaluate-rollout-e rollout-init rollout-status rollout-next \
+	rollout-bootstrap rollout-finalize \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
 	validate-chat-absences-candidate compile-chat-f03-results \
@@ -83,9 +84,15 @@ CASE_PARAPHRASES ?= ./docs/experiments/CHAT_QUESTION_PARAPHRASES_5.json
 CASE_PHASE_D_REPORT ?= ./knowledge/jurisprudencia-v3/reports/phase-d-retrieval-evaluation.json
 CASE_HOLDOUT_LOCK ?= ./docs/experiments/CHAT_QUESTION_HOLDOUT_E.lock.json
 CASE_HOLDOUT_REPORT ?= ./knowledge/jurisprudencia-v3/reports/phase-e0-holdout-evaluation.json
-CASE_ROLLOUT_MANIFEST ?=
+CASE_ROLLOUT_LEGACY ?= ./output/analisis_02012026_155032.jsonl
+CASE_ROLLOUT_MANIFEST ?= ./sentencias/jurisprudence_v3_rollout_106.json
 CASE_ROLLOUT_STATE ?= ./output/jurisprudence-v3-rollout-state.json
 CASE_ROLLOUT_OUTPUT ?= ./knowledge/jurisprudencia-v3
+CASE_ROLLOUT_GENERATED_AT ?= 2026-08-01T00:00:00+02:00
+CASE_ROLLOUT_BATCH_SIZE ?= 10
+CASE_ROLLOUT_BANK ?= ./knowledge/jurisprudencia-v3/evaluations/rollout-106.bank.json
+CASE_ROLLOUT_EVALUATION ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.retrieval-evaluation.json
+CASE_ROLLOUT_HOLDOUT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.holdout-evaluation.json
 ROLLOUT_RETRY ?=
 
 # =============================================================================
@@ -121,6 +128,9 @@ help:
 	@echo "  make rollout-init         Inicializa estado; requiere CASE_ROLLOUT_MANIFEST"
 	@echo "  make rollout-status       Inspecciona lotes sin ejecutar documentos"
 	@echo "  make rollout-next         Ejecuta/reanuda un lote explícito"
+	@echo "  make rollout-bootstrap    Prepara verbatim, borradores faltantes y manifiesto"
+	@echo "  make rollout-finalize     Agrega corpus e informe tras completar todos los lotes"
+	@echo "  make evaluate-rollout-e   Mide cobertura técnica del corpus ampliado"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -134,7 +144,7 @@ help:
 	@echo "  Muestra v3: CASE_SAMPLE_MANIFEST= CASE_SAMPLE_OUTPUT= CASE_QUESTION_PILOT="
 	@echo "  Fase D: CASE_PARAPHRASES= CASE_PHASE_D_REPORT="
 	@echo "  Fase E0: CASE_HOLDOUT_LOCK= CASE_HOLDOUT_REPORT="
-	@echo "  Rollout: CASE_ROLLOUT_MANIFEST= CASE_ROLLOUT_STATE= CASE_ROLLOUT_OUTPUT= ROLLOUT_RETRY=1"
+	@echo "  Rollout: CASE_ROLLOUT_LEGACY= CASE_ROLLOUT_MANIFEST= CASE_ROLLOUT_STATE= CASE_ROLLOUT_OUTPUT= ROLLOUT_RETRY=1"
 	@echo ""
 	@echo "=== CALIDAD ==="
 	@echo "  make fast-check           Lint + format + typecheck + tests (gate pre-commit)"
@@ -337,6 +347,15 @@ file-search-delete:
 		--state $(FILE_SEARCH_STATE) \
 		--confirm-delete
 
+rollout-bootstrap:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_bootstrap.py \
+		--legacy $(CASE_ROLLOUT_LEGACY) \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--project-root . \
+		--generated-at $(CASE_ROLLOUT_GENERATED_AT) \
+		--batch-size $(CASE_ROLLOUT_BATCH_SIZE)
+
 rollout-init:
 	@test -n "$(CASE_ROLLOUT_MANIFEST)" || \
 		(echo "CASE_ROLLOUT_MANIFEST es obligatorio" >&2; exit 2)
@@ -356,6 +375,26 @@ rollout-next:
 		--state $(CASE_ROLLOUT_STATE) \
 		--output-root $(CASE_ROLLOUT_OUTPUT) \
 		--project-root . $(if $(ROLLOUT_RETRY),--retry-failed,)
+
+rollout-finalize:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_completion.py \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--state $(CASE_ROLLOUT_STATE) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--project-root .
+
+evaluate-rollout-e:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_evaluation.py \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--bank $(CASE_ROLLOUT_BANK) \
+		--report $(CASE_ROLLOUT_EVALUATION) \
+		--project-root .
+	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \
+		--corpus $(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
+		--lock $(CASE_HOLDOUT_LOCK) \
+		--output $(CASE_ROLLOUT_HOLDOUT) \
+		--project-root .
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

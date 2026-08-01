@@ -1,0 +1,416 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España",
+      "Andorra"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2024-06-19",
+    "ecli": "ECLI:ES:TS:2024:3585",
+    "is_tax_residence_case": true,
+    "judgment_id": "sts-3585-2024",
+    "roj": "STS 3585/2024",
+    "tax_years": [
+      2011,
+      2012,
+      2014,
+      2016
+    ]
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-3585-2024.case.json",
+    "case_sha256": "a442cdb83c416933cd31a61e22017364bbc1b94ed31278d983f503e062ab4151",
+    "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Instancia las consideró procedentes para crear calendario de residencia; Sala Suprema determina que no pueden excluirse automáticamente y deben valorarse en instancia",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Extractos y movimientos de tarjetas virtuales adquiridas por TAVITOYS y usados por los socios; base del \"calendario de residencia\"",
+          "evidence_id": "evidence-legacy-001",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Demostrar permanencia superior a 183 días en España (reconstrucción de días de estancia)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "extractos tarjetas virtuales"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "PARTIAL",
+          "assessment_reason": "Instancia los tuvo como fundamento de la regularización; el Tribunal Supremo estima que su exclusión por aplicación rígida del art.11 LOPJ no procede sin ponderación",
+          "category": "OTROS",
+          "description": "Correos electrónicos, facturas y archivos incautados en la entrada utilizados para imputar rentas y vincular operaciones en Andorra y España",
+          "evidence_id": "evidence-legacy-002",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Acreditar la imputación de rentas en Andorra frente a España y el origen de inversiones",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "correos electrónicos y facturas obtenidos en entrada"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessment_reason": "Auto ejecutado y confirmado por sentencia del TSJ de Cataluña; la Sala lo considera relevante para ponderar la exclusión de pruebas",
+          "category": "OTROS",
+          "description": "Auto del Juzgado de lo Contencioso-Administrativo nº11 de Barcelona que amparó la entrada el 16/06/2016, confirmado en apelación",
+          "evidence_id": "evidence-legacy-003",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "AEAT",
+          "probative_purpose": "Justificar la titulación habilitante para la entrada y la procedencia de las diligencias de inspección",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Auto judicial de autorización de entrada 14-06-2016"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessment_reason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Escrito de oposición de TAVITOYS (16/10/2023) alegando que la finalidad de la entrada fue recabar documentación sobre los socios; invocación de apertura de procedimientos a los socios días próximos a la entrada",
+          "evidence_id": "evidence-legacy-004",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Probar finalidad espuria/abuso de la entrada y que la Administración ocultó información al Juzgado",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "escrito de oposición y alegación de apertura procedimientos a socios (15/6/2016)"
+        },
+        {
+          "anchor_ids": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessment_reason": null,
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Argumentación procesal de la recurrente solicitando se aprecie abuso de derecho y ocultación de información al juez que autorizó la entrada",
+          "evidence_id": "evidence-legacy-005",
+          "fact_ids": [],
+          "foreign_document": null,
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "offered_by": "TAXPAYER",
+          "probative_purpose": "Desvirtuar la idoneidad/necesidad de la autorización y, subsidiariamente, pedir retroacción",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "escrito de oposición 16/10/2023"
+        }
+      ],
+      "facets": {
+        "countries": [
+          "España",
+          "Andorra"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS"
+        ],
+        "evidence_categories": [
+          "CONSUMOS_FINANCIEROS",
+          "OTROS",
+          "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "TESTIFICAL_Y_PERICIAL"
+        ],
+        "evidence_parties": [
+          "AEAT",
+          "TAXPAYER"
+        ],
+        "has_treaty": false,
+        "issue_type": "TAX_RESIDENCE",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "RETROACCION",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011,
+            2012,
+            2014,
+            2016
+          ]
+        },
+        "tax_years": [
+          2011,
+          2012,
+          2014,
+          2016
+        ],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala de instancia negó validez probatoria a los datos obtenidos en la entrada al entender que no concurría el presupuesto de procedimiento inspector previamente notificado y por ello no se acreditaron los 183 días ni la prevalencia de rentas en España. El TS estima que la exclusión automática no procede tras ponderación (STC 97/2019) y ordena retrotraer actuaciones para que la instancia valore conforme a derecho el conjunto probatorio, sin excluir de plano las pruebas obtenidas en la entrada.",
+        "consequences": [],
+        "decisive_reasoning": "La Sala de instancia negó validez probatoria a los datos obtenidos en la entrada al entender que no concurría el presupuesto de procedimiento inspector previamente notificado y por ello no se acreditaron los 183 días ni la prevalencia de rentas en España. El TS estima que la exclusión automática no procede tras ponderación (STC 97/2019) y ordena retrotraer actuaciones para que la instancia valore conforme a derecho el conjunto probatorio, sin excluir de plano las pruebas obtenidas en la entrada.",
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "outcome": "RETROACCION",
+        "residence_determination": {
+          "non_resident_from": null,
+          "other_country": null,
+          "spanish_residence": "NOT_DECIDED",
+          "tax_years": [
+            2011,
+            2012,
+            2014,
+            2016
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-evidence-001",
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-evidence-005"
+        ],
+        "criterion_ids": [
+          "CRIT_183_DIAS",
+          "CRIT_CENTRO_INTERESES_ECONOMICOS"
+        ],
+        "evidence_ids": [
+          "evidence-legacy-001",
+          "evidence-legacy-002",
+          "evidence-legacy-003",
+          "evidence-legacy-004",
+          "evidence-legacy-005"
+        ],
+        "fact_ids": [],
+        "holding_id": "holding-residencia-fiscal",
+        "issue_id": "residencia-fiscal",
+        "issue_type": "TAX_RESIDENCE",
+        "legal_rule_ids": [],
+        "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-3585-2024",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nextractos tarjetas virtuales\nExtractos y movimientos de tarjetas virtuales adquiridas por TAVITOYS y usados por los socios; base del \"calendario de residencia\"\nDemostrar permanencia superior a 183 días en España (reconstrucción de días de estancia)\nPARTIAL\nInstancia las consideró procedentes para crear calendario de residencia; Sala Suprema determina que no pueden excluirse automáticamente y deben valorarse en instancia\ncorreos electrónicos y facturas obtenidos en entrada\nCorreos electrónicos, facturas y archivos incautados en la entrada utilizados para imputar rentas y vincular operaciones en Andorra y España\nAcreditar la imputación de rentas en Andorra frente a España y el origen de inversiones\nPARTIAL\nInstancia los tuvo como fundamento de la regularización; el Tribunal Supremo estima que su exclusión por aplicación rígida del art.11 LOPJ no procede sin ponderación\nAuto judicial de autorización de entrada 14-06-2016\nAuto del Juzgado de lo Contencioso-Administrativo nº11 de Barcelona que amparó la entrada el 16/06/2016, confirmado en apelación\nJustificar la titulación habilitante para la entrada y la procedencia de las diligencias de inspección\nACCEPTED\nAuto ejecutado y confirmado por sentencia del TSJ de Cataluña; la Sala lo considera relevante para ponderar la exclusión de pruebas\nescrito de oposición y alegación de apertura procedimientos a socios (15/6/2016)\nEscrito de oposición de TAVITOYS (16/10/2023) alegando que la finalidad de la entrada fue recabar documentación sobre los socios; invocación de apertura de procedimientos a los socios días próximos a la entrada\nProbar finalidad espuria/abuso de la entrada y que la Administración ocultó información al Juzgado\nUNRESOLVED\nescrito de oposición 16/10/2023\nArgumentación procesal de la recurrente solicitando se aprecie abuso de derecho y ocultación de información al juez que autorizó la entrada\nDesvirtuar la idoneidad/necesidad de la autorización y, subsidiariamente, pedir retroacción\nUNRESOLVED\nLa Sala de instancia negó validez probatoria a los datos obtenidos en la entrada al entender que no concurría el presupuesto de procedimiento inspector previamente notificado y por ello no se acreditaron los 183 días ni la prevalencia de rentas en España. El TS estima que la exclusión automática no procede tras ponderación (STC 97/2019) y ordena retrotraer actuaciones para que la instancia valore conforme a derecho el conjunto probatorio, sin excluir de plano las pruebas obtenidas en la entrada.\nLa Sala de instancia negó validez probatoria a los datos obtenidos en la entrada al entender que no concurría el presupuesto de procedimiento inspector previamente notificado y por ello no se acreditaron los 183 días ni la prevalencia de rentas en España. El TS estima que la exclusión automática no procede tras ponderación (STC 97/2019) y ordena retrotraer actuaciones para que la instancia valore conforme a derecho el conjunto probatorio, sin excluir de plano las pruebas obtenidas en la entrada.\nNOT_DECIDED\n2011\n2012\n2014\n2016\nCalendario de residencia\nconsumos efectuados con las tarjetas virtuales adquiridas\ndocumentos, correos electrónicos, facturas, extractos\nde tarjetas, archivos\nfue objeto de impugnación\nSentencia 642\nde 12 de septiembre de 2017\nﬁnalidad espuria\napertura de los procedimientos\nun\ndía más tarde\nla existencia de una ﬁnalidad espuria en la entrada y\nregistro examinada",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-evidence-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3869,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3845,
+              "verbatim_text": "Calendario de residencia"
+            },
+            {
+              "end_offset": 3977,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3920,
+              "verbatim_text": "consumos efectuados con las tarjetas virtuales adquiridas"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 407,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 332,
+              "verbatim_text": "documentos, correos electrónicos, facturas, extractos\nde tarjetas, archivos"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2572,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2547,
+              "verbatim_text": "fue objeto de impugnación"
+            },
+            {
+              "end_offset": 2758,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2717,
+              "verbatim_text": "Sentencia 642\nde 12 de septiembre de 2017"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-004",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3504,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3488,
+              "verbatim_text": "ﬁnalidad espuria"
+            },
+            {
+              "end_offset": 3782,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3752,
+              "verbatim_text": "apertura de los procedimientos"
+            },
+            {
+              "end_offset": 3868,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3852,
+              "verbatim_text": "un\ndía más tarde"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+        },
+        {
+          "anchor_id": "anchor-legacy-evidence-005",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3539,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3467,
+              "verbatim_text": "la existencia de una ﬁnalidad espuria en la entrada y\nregistro examinada"
+            }
+          ],
+          "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-3585-2024-residencia-fiscal"
+    }
+  ]
+}

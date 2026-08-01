@@ -1,0 +1,16 @@
+{
+  "anchor_count": 21,
+  "case_sha256": "8527f4c634ebdce9505ac1b484971304608ca14ffdd62ed92ad4a6ee06a9d502",
+  "evidence_finding_count": 21,
+  "fact_count": 0,
+  "fragment_count": 48,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-2735-2023",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "5371117c72af1c384d941fd9cce3cde4d259653bd93517821790320bcfabbe8b"
+}

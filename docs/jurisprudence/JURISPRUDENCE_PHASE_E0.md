@@ -1,9 +1,27 @@
-# Fase E0 — preparación del rollout jurisprudencial
+# Fase E0 y E — preparación y ejecución del rollout jurisprudencial
+
+## Estado actual
+
+El rollout técnico autorizado se ejecutó el 1 de agosto de 2026. El manifiesto
+`sentencias/jurisprudence_v3_rollout_106.json` fija PDF, propuesta y evaluación
+por SHA-256. Los 11 lotes terminaron con 106/106 documentos `BUILD_PASSED`:
+
+- 42 documentos de riesgo `HIGH` y 64 `STANDARD`;
+- 106 casos y perfiles v3 trazables;
+- 67 documentos dentro del ámbito de recuperación y 39 fuera de ámbito;
+- 74 unidades de recuperación agregadas;
+- 350 anclajes exactos, 243 anclajes exactos con elipsis y 936 fragmentos de
+  fuente;
+- 1.620 elementos jurídicos `AGENT_REVIEWED` y 0 `HUMAN_APPROVED`.
+
+La publicación del build es `AGENT_REVIEWED_ONLY`. Es un corpus interno
+procesado, no una aprobación jurídica humana ni una autorización para sustituir
+la estrategia del chat.
 
 ## Alcance y decisión
 
-E0 prepara la expansión del corpus sin crear el listado de las 106 sentencias
-ni ejecutar ese lote. Quedan implementados:
+E0 preparó la expansión del corpus, antes de que se autorizara crear el listado
+de las 106 sentencias y ejecutar sus lotes. Dejó implementados:
 
 - resultado residencial tipado y proyectado al índice;
 - regeneración y validación de las cinco sentencias;
@@ -13,8 +31,9 @@ ni ejecutar ese lote. Quedan implementados:
 - reintentos explícitos, ejecución por lotes y gates separados;
 - política de revisión técnica y jurídica.
 
-No existe todavía un manifiesto real de fase E. Ningún PDF fuera de la muestra
-de cinco se ha transformado a v3.
+Ese límite histórico terminó con la autorización del 1 de agosto. La fase E
+posterior usó el mismo contrato y los mismos gates para materializar el corpus
+completo descrito en «Estado actual».
 
 ## Resultado residencial tipado
 
@@ -101,14 +120,16 @@ Artefactos:
 ## Contrato del rollout
 
 El schema versionado
-`schemas/residenciafiscal-rollout-v1.schema.json` describe un manifiesto futuro.
-No contiene ni genera el listado real.
+`schemas/residenciafiscal-rollout-v1.schema.json` describe el manifiesto. El
+listado real está versionado en
+`sentencias/jurisprudence_v3_rollout_106.json` y se genera de forma explícita a
+partir del legado autorizado; no se descubren PDF implícitamente.
 
-Cada entrada deberá fijar:
+Cada entrada fija:
 
 - `judgment_id`;
 - PDF y SHA-256;
-- propuesta y banco de evaluación;
+- propuesta y banco de evaluación, también bloqueados por hash;
 - `batch_id` explícito y contiguo;
 - riesgo `HIGH` o `STANDARD`.
 
@@ -158,7 +179,7 @@ Orden recomendado de revisión dentro de cada sentencia:
 Todos los niveles deben aprobarse antes de publicación; la prioridad solo
 ordena el trabajo.
 
-## Operación futura
+## Operación
 
 Medir el holdout:
 
@@ -166,22 +187,71 @@ Medir el holdout:
 make evaluate-holdout-e0
 ```
 
-Cuando se autorice crear el manifiesto real:
+Regenerar las entradas y el manifiesto determinista:
 
 ```bash
-make rollout-init CASE_ROLLOUT_MANIFEST=<manifiesto>
+make rollout-bootstrap
+```
+
+Iniciar o reanudar los lotes:
+
+```bash
+make rollout-init
 make rollout-status
-make rollout-next CASE_ROLLOUT_MANIFEST=<manifiesto>
-make rollout-next CASE_ROLLOUT_MANIFEST=<manifiesto> ROLLOUT_RETRY=1
+make rollout-next
+make rollout-next ROLLOUT_RETRY=1
 ```
 
 `rollout-init` no sobrescribe un estado existente. `rollout-status` es de solo
 lectura. `rollout-next` procesa únicamente el primer lote incompleto declarado
 en el manifiesto.
 
-## Próximo paso bloqueado deliberadamente
+Cerrar el agregado y ejecutar la evaluación técnica completa:
 
-Falta crear y revisar el manifiesto completo de las 106 sentencias, asignar sus
-lotes y riesgos, e iniciar la ejecución. E0 no realiza ninguna de esas acciones
-por instrucción expresa. El holdout indica además que el router aún no debe
-conectarse al chat productivo.
+```bash
+make rollout-finalize
+make evaluate-rollout-e
+```
+
+`rollout-finalize` comprueba de nuevo los hashes de cada caso y derivado antes
+de agregar. No concede aprobación humana.
+
+## Evaluación del corpus completo
+
+El banco técnico de fase E contiene 117 preguntas. Su recall esperado es
+52,14 % @5 y 77,78 % @12. No evalúa por sí solo la conducta conversacional.
+
+El holdout E0 se volvió a ejecutar sin modificarlo ni ajustar el retriever:
+
+| Métrica | Corpus de 106 |
+|---|---:|
+| Exactitud de conducta | 75,00 % |
+| Seguridad sin fuentes | 83,33 % |
+| Recall esperado @3 | 47,86 % |
+| Precisión relevante @3 | 33,33 % |
+| Recall de contraste @3 | 12,50 % |
+
+Los resultados no justifican conectar este retriever al chat como estrategia
+definitiva. El holdout conserva la política `OBSERVE_ONLY_NO_TUNING`.
+
+Artefactos principales:
+
+- build: `knowledge/jurisprudencia-v3/rollout-build.json`;
+- corpus completo aislado:
+  `knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json`;
+- calidad: `knowledge/jurisprudencia-v3/reports/rollout-106.quality.json`;
+- evaluación técnica:
+  `knowledge/jurisprudencia-v3/reports/rollout-106.retrieval-evaluation.json`;
+- holdout:
+  `knowledge/jurisprudencia-v3/reports/rollout-106.holdout-evaluation.json`.
+
+`knowledge/jurisprudencia-v3/retrieval/corpus.json` conserva la muestra
+congelada de cinco usada por Fase D y el chat. El cierre del rollout no la
+sobrescribe.
+
+## Próximo gate
+
+Falta revisión jurídica humana. No existe revisor disponible y el agente no
+suplanta esa identidad, por lo que los 1.620 elementos siguen pendientes. En
+paralelo, cualquier promoción al chat requiere mejorar y validar recuperación
+con un banco de desarrollo separado; el holdout no se usa para afinarla.

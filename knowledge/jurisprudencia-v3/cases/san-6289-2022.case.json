@@ -1,0 +1,539 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal admite los certificados para cuantificar 126 días fuera de España, pero estima que no acreditan entradas/salidas a España ni permiten inferir fehacientemente que el resto del año estuvo en España.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Certificado de la Administración de EEUU y certificado migratorio expedido en Lima (Perú) de 5/5/2014, que permiten computar estancias en Miami y Perú por 126 días en 2011.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Demostrar días de permanencia en el extranjero y, por diferencia, que el resto del año estuvo en España (>183 días).",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificados EEUU y Perú (movimientos 2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "El tribunal estima que el padrón por sí no constituye prueba fehaciente de permanencia física superior a 183 días en el año.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Constancia de empadronamiento en CALLE000 nº NUM004 de Madrid hasta el 18-03-2011.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar residencia habitual en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Empadronamiento (INE) hasta 18-03-2011"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal aprecia que el consumo acreditado puede corresponder a la finca vendida en febrero de 2011 y no prueba permanencia continuada durante el año.",
+      "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "description": "Referencia en el modelo 347 de imputación de cobros realizada por ENDESA correspondiente al ejercicio 2011.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar vida doméstica en España mediante consumos eléctricos.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Imputación de cobros por ENDESA / consumo luz 2011"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "La compra de un inmueble es indicio relevante pero no prueba por sí la residencia efectiva durante el año 2011.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Escritura pública del 28-10-2011 por importe de 2.600.000 euros de una vivienda en CALLE003 nº NUM008 de Madrid.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar titularidad y posible vivienda habitual en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Escritura pública adquisición inmueble en Madrid (28/10/2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "La declaración testimonial corrobora un domicilio, pero la constatación de ausencia en la notificación limita su valor probatorio sobre la permanencia anual.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Diligencia de notificación en la que una empleada del hogar manifiesta que el obligado tributario tiene su domicilio en CALLE003 nº NUM008 y que en ese momento no se encontraba en el domicilio.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar presencia/uso de vivienda y señalar domicilio habitual.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Diligencia notificación y declaración empleada del hogar (11/04/2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal indica que el guardamuebles no acredita la residencia efectiva en España; puede incluso respaldar la tesis de estancias fuera del país.",
+      "category": "OTROS",
+      "description": "Contrato de guardamuebles con depósito de 248 artículos valorados en 40 millones de pesetas (240.404,84€), aportado por URBANO MUDANZAS SL.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar existencia de efectos fuera de vivienda que podrían indicar estancia fuera de España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Contrato guardamuebles URBANO MUDANZAS SL (18/11/1998)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "El tribunal observa que la ausencia de sellos en las copias no permite acreditar fehacientemente permanencias o ausencias del territorio y que la Administración podría haber aportado pasaporte con sellos.",
+      "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+      "description": "Copias de pasaportes aportadas por el recurrente en las que no constan sellos de entrada/salida del territorio español.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar ausencias o entradas/salidas y, por tanto, negar residencia en España en 2011.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Copias de pasaportes (sin sellos)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "UNRESOLVED",
+      "assessment_reason": null,
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Alegación del recurrente de que no disponía de medios económicos en España, no tenía rentas, ni saldos bancarios ni actividad económica.",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Demostrar la falta de centro de intereses económicos en España.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Alegación de ausencia de saldos bancarios y rentas en España"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.",
+      "consequences": [],
+      "decisive_reasoning": "La Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_CONTRIBUYENTE",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "970bf56c3ea5b16dc6533bd48dafbd8c4fc7ed2a8b92570dfb32a6f504be31dc",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-6289-2022.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-6289-2022"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Perú"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decision_date": "2022-12-07",
+    "ecli": "ES:AN:2022:6289",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-6289-2022",
+    "page_count": 8,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 6289/2022",
+    "source_file": "sentencias/SAN_6289_2022.pdf",
+    "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236",
+    "tax_years": [
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2044,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1982,
+          "verbatim_text": "se deduce que ha estado ente Miami y Perú un total\nde 126 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3452,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3395,
+          "verbatim_text": "consta empadronado en dicho domicilio hasta el 18-03-2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4079,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3991,
+          "verbatim_text": "Consta en el modelo 347 del ejercicio 2011 una imputación de cobros realizada por ENDESA"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4132,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 4086,
+          "verbatim_text": "Mediante escritura pública de fecha 28-10-2011"
+        },
+        {
+          "end_offset": 4295,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 4247,
+          "verbatim_text": "adquiere un inmueble en la  CALLE003  nº  NUM008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4545,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 4436,
+          "verbatim_text": "nos atiende una\nempleada de hogar que maniﬁesta que el obligado tributario tiene su domicilio en la  CALLE003"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 139,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 121,
+          "verbatim_text": "se aporta contrato"
+        },
+        {
+          "end_offset": 277,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 210,
+          "verbatim_text": "donde deposita 248\nartículos por un valor de 40 millones de pesetas"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1483,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1371,
+          "verbatim_text": "Se han\nadjuntado las copias de los pasaportes y no constan los sellos de entrada y salida del territorio Español"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1657,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1587,
+          "verbatim_text": "Carece de\nactividad económica en España, ni rentas ni saldos bancarios"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    }
+  ],
+  "treaty_analyses": []
+}

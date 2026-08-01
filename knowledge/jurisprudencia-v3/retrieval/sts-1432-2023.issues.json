@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2023-04-05",
+    "ecli": "ECLI:ES:TS:2023:1432",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-1432-2023",
+    "roj": "STS 1432/2023",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-1432-2023.case.json",
+    "case_sha256": "06872329301a1371a07f311e3fbf9a522995c140053bc65f2a902801a8765b4d",
+    "source_sha256": "2959abe2dd389a64d71f393a7e0968d9a57bfdf1f73533dbc8f3b54473af48a6"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR | IIC: Litigio sobre tributación y comparabilidad de Fondos de Inversión no residentes y devolución de retenciones (IRNR)",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-1432-2023",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR | IIC: Litigio sobre tributación y comparabilidad de Fondos de Inversión no residentes y devolución de retenciones (IRNR)\nNO APLICA - fuera de alcance\nJURISPRUDENCIA\nRoj: STS 1432/2023 - ECLI:ES:TS:2023:1432\nId Cendoj: 28079130022023100100\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 05/04/2023\nNº de Recurso: 7260/2021\nNº de Resolución: 454/2023\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: RAFAEL TOLEDANO CANTERO\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 8311/2021,\nATS 9385/2022,\nSTS 1432/2023\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 454/2023\nFecha de sentencia: 05/04/2023\nTipo de procedimient",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: STS 1432/2023 - ECLI:ES:TS:2023:1432\nId Cendoj: 28079130022023100100\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 05/04/2023\nNº de Recurso: 7260/2021\nNº de Resolución: 454/2023\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: RAFAEL TOLEDANO CANTERO\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 8311/2021,\nATS 9385/2022,\nSTS 1432/2023\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 454/2023\nFecha de sentencia: 05/04/2023\nTipo de procedimient"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "2959abe2dd389a64d71f393a7e0968d9a57bfdf1f73533dbc8f3b54473af48a6"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-1432-2023-fuera-de-alcance"
+    }
+  ]
+}

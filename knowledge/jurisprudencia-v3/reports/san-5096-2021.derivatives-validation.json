@@ -1,0 +1,12 @@
+{
+  "case_sha256": "f5cbd8e8af4d5c29a8ac35715cbe15f93297058f50fab9f15c477766bea630d4",
+  "judgment_id": "san-5096-2021",
+  "legal_issue_count": 1,
+  "literal_anchor_count": 12,
+  "literal_fragment_count": 18,
+  "markdown_sha256": "0838c4cfd0f88a37f98a8d9763d463a963375d06ce9641e63238b0ea5dea05df",
+  "retrieval_sha256": "cb961b3249ec53d6d0702bb55c537aab7a02412ae1fe06fe6673ea18a0d6852c",
+  "retrieval_unit_count": 1,
+  "validation": "passed",
+  "verbatim_sha256": "9c76444995f787b17314c8b201a24a8c3ed78f01eb4ed142b9962903136221c2"
+}

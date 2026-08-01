@@ -4,27 +4,27 @@
   "sources": [
     {
       "index_resource": "knowledge/jurisprudencia-v3/retrieval/san-1071-2025.issues.json",
-      "index_sha256": "a7e0888ff84a3892697505cb69c4e4eb364886b71a6d356d6a7ac69897abd21e",
+      "index_sha256": "ab06d2b968b00a62672e1f97d2d46ed12962cebf3d0f95bdea00b11b7caaac0a",
       "judgment_id": "san-1071-2025"
     },
     {
       "index_resource": "knowledge/jurisprudencia-v3/retrieval/san-1136-2016.issues.json",
-      "index_sha256": "57df3a81c6a97ca7fe001636aca21a77a166841fadd40b48e8a916a6d3570764",
+      "index_sha256": "df3689e0d110652df10fcef08aa9c01b4aa852f328ca7b92fa5d0b641a01d58f",
       "judgment_id": "san-1136-2016"
     },
     {
       "index_resource": "knowledge/jurisprudencia-v3/retrieval/san-1210-2023.issues.json",
-      "index_sha256": "f4edabbb8c8fd4e8648bcc09c18eaecb8afbb7e1620afec9bc9ee9c647dce0d0",
+      "index_sha256": "2d03aa7ed0ba7da31d8618c2a8b741f3d25bbbda57790c32e2601df81b9ba280",
       "judgment_id": "san-1210-2023"
     },
     {
       "index_resource": "knowledge/jurisprudencia-v3/retrieval/san-1226-2021.issues.json",
-      "index_sha256": "efc812e0d98570ec6507658b0d053ccf9924da17fc974698d8d6d5fb67451c82",
+      "index_sha256": "7907e5fe371ad0b7995e90613d3a9f10838e5e23c103a64ce8108742822c0126",
       "judgment_id": "san-1226-2021"
     },
     {
       "index_resource": "knowledge/jurisprudencia-v3/retrieval/san-1386-2017.issues.json",
-      "index_sha256": "39d47b4d66f17622beb1cae284f26e97a309a6b33e042f65f46c861b47385a55",
+      "index_sha256": "166de56333f2644475fe6f2ade11733cc0f79c59c06b6754ac77bdd436e858c6",
       "judgment_id": "san-1386-2017"
     }
   ],

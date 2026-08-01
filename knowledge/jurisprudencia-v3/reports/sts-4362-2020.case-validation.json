@@ -1,0 +1,16 @@
+{
+  "anchor_count": 1,
+  "case_sha256": "4124db2210c7e3d313d8664f3d15c11d2e974cd8c231a613a78821311c952021",
+  "evidence_finding_count": 0,
+  "fact_count": 0,
+  "fragment_count": 1,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "sts-4362-2020",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "3f19cb13abff1c2f6226541523793b28838a1c9c574a47e7cb0a61f89924d48c"
+}

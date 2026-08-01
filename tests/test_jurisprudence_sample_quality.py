@@ -11,10 +11,13 @@ MANIFEST_PATH = PROJECT_ROOT / "sentencias/jurisprudence_v3_sample_5.json"
 
 
 def test_mide_calidad_sin_confundir_nulos_con_campos_invalidos() -> None:
-    from jurisprudence_sample_quality import build_sample_quality_report
+    from jurisprudence_sample_quality import (
+        build_sample_quality_report,
+        case_paths_from_manifest,
+    )
 
     report = build_sample_quality_report(
-        tuple(sorted(CASES_ROOT.glob("san-*.case.json"))),
+        case_paths_from_manifest(MANIFEST_PATH, cases_root=CASES_ROOT),
         sample_id="jurisprudencia-v3-piloto-5",
         project_root=PROJECT_ROOT,
     )

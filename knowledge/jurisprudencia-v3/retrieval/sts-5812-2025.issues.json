@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2025-12-09",
+    "ecli": "ES:TS:2025:5812",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-5812-2025",
+    "roj": "STS 5812/2025",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-5812-2025.case.json",
+    "case_sha256": "c7a0ad82537589b0ba350291cba9d0e810421fddd0234d7d03061fc3e03aeb35",
+    "source_sha256": "d23eb1589b23499e03f29b33c958539a9fb56b960f35dcebb3b8401cf5447518"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR: disputa sobre deducibilidad de provisiones técnicas para entidades aseguradoras no residentes (art. 24.6 TRLIRNR)",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-5812-2025",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR: disputa sobre deducibilidad de provisiones técnicas para entidades aseguradoras no residentes (art. 24.6 TRLIRNR)\nNO APLICA - fuera de alcance\nJURISPRUDENCIA\nRoj: STS 5812/2025 - ECLI:ES:TS:2025:5812\nId Cendoj: 28079130022025100323\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 09/12/2025\nNº de Recurso: 6223/2023\nNº de Resolución: 1587/2025\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: FRANCISCO JOSE NAVARRO SANCHIS\nTipo de Resolución: Sentencia\nResoluciones del caso: TEAC, 10-07-2019,\nSAN 2415/2023,\nAAAN 7091/2023,\nATS 6254/2024,\nSTS 5812/2025\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 1.587/2025\nFecha de s",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: STS 5812/2025 - ECLI:ES:TS:2025:5812\nId Cendoj: 28079130022025100323\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 09/12/2025\nNº de Recurso: 6223/2023\nNº de Resolución: 1587/2025\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: FRANCISCO JOSE NAVARRO SANCHIS\nTipo de Resolución: Sentencia\nResoluciones del caso: TEAC, 10-07-2019,\nSAN 2415/2023,\nAAAN 7091/2023,\nATS 6254/2024,\nSTS 5812/2025\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 1.587/2025\nFecha de s"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d23eb1589b23499e03f29b33c958539a9fb56b960f35dcebb3b8401cf5447518"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-5812-2025-fuera-de-alcance"
+    }
+  ]
+}

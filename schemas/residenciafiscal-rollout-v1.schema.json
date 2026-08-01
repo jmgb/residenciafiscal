@@ -14,6 +14,19 @@
           "title": "Evaluation Path",
           "type": "string"
         },
+        "evaluation_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evaluation Sha256"
+        },
         "judgment_id": {
           "minLength": 1,
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
@@ -24,6 +37,19 @@
           "minLength": 1,
           "title": "Proposal Path",
           "type": "string"
+        },
+        "proposal_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proposal Sha256"
         },
         "risk": {
           "$ref": "#/$defs/RolloutRisk"

@@ -204,15 +204,15 @@ ficha legible, pero no un índice suficiente para este caso de uso:
 - el corpus ligero del frontend no contenía la estructura necesaria para esta
   comparación.
 
-El caso `residenciafiscal-case/3` ya resuelve esas carencias para la muestra de
-cinco: incorpora cuestiones canónicas, hechos y pruebas relacionados,
-resultados por cuestión, verbatim por páginas y unidades de recuperación.
+El caso `residenciafiscal-case/3` resuelve esas carencias y ya se ha aplicado a
+las 106 sentencias: incorpora cuestiones canónicas, hechos y pruebas
+relacionados, resultados por cuestión, verbatim por páginas y unidades de
+recuperación. Los borradores nuevos siguen `AGENT_REVIEWED_ONLY`.
 
-Eso no autoriza todavía la expansión a 106. F0.2 detectó un gap concreto de
-cobertura sobre ausencias esporádicas y demostró que las etiquetas heredadas
-del router no son una evaluación neutral de respuestas redactadas. Primero se
-congela la rúbrica, se corrige la muestra y se repite el gate; después se decide
-si el contrato está listo para ampliar.
+F0.2 detectó un gap concreto de cobertura sobre ausencias esporádicas y demostró
+que las etiquetas heredadas del router no son una evaluación neutral de
+respuestas redactadas. El rollout técnico posterior no elimina ese límite ni
+autoriza por sí solo promover el corpus completo al chat.
 
 ## Criterios de aceptación del corpus
 
@@ -253,13 +253,13 @@ rúbrica neutral, revisión humana ciega y corregir la cobertura de ausencias
 esporádicas. Resultados:
 [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
 
-E0 añade una comprobación independiente: en el holdout congelado la conducta
+E0 añadió una comprobación independiente: en el holdout congelado la conducta
 correcta baja al 75 % y la seguridad de no devolver fuentes cuando debe
-preguntar o abstenerse queda en 83,33 %. Ese banco es exclusivamente de
-observación y no puede utilizarse para ajustar el router. Por ello los datos
-sirven para investigación y evaluación interna sobre las cinco resoluciones,
-pero el chat productivo aún no está autorizado.
+preguntar o abstenerse queda en 83,33 %. Repetido sobre las 106, el recall
+esperado @3 queda en 47,86 %, la precisión relevante en 33,33 % y el recall de
+contraste en 12,50 %. Ese banco es exclusivamente de observación y no puede
+utilizarse para ajustar el router. Por ello el corpus completo sirve como
+borrador de investigación y evaluación interna, pero no se promueve al chat.
 
-El contrato, la primera medición independiente, el rollout reanudable y el
-límite expreso de no listar ni procesar todavía las 106 sentencias están en
+El contrato, las mediciones y el resultado del rollout reanudable están en
 [`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).

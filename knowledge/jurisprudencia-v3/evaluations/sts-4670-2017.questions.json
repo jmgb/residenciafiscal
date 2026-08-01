@@ -1,0 +1,25 @@
+{
+  "judgment_id": "sts-4670-2017",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Cómo resolvió STS 4670/2017 este supuesto de residencia: El Tribunal aplica primordialmente el criterio objetivo de permanencia (>183 días) y concluye que la estancia por beca ICEX no puede reputarse ausencias esporádicas. Rechaza someter la decisión al requisito probatorio de certificado de resi?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "required_evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004"
+      ],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "residencia-fiscal"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}

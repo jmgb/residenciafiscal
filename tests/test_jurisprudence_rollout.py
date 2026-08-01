@@ -344,3 +344,58 @@ def test_rollout_rechaza_una_cuestion_residencial_nueva_sin_faceta_tipadada(
     assert result.failed == ("san-1210-2023",)
     state = load_rollout_state(state_path)
     assert "residence_determination" in (state.documents[0].last_error or "")
+
+
+def test_rollout_rechaza_una_propuesta_que_cambio_tras_congelar_el_manifiesto(
+    tmp_path: Path,
+) -> None:
+    from test_export_jurisprudence_sample import _copy_pilot_project
+
+    from jurisprudence_rollout import load_rollout_state
+    from jurisprudence_rollout_pipeline import execute_rollout_next_batch
+
+    project_root = _copy_pilot_project(tmp_path)
+    proposal = project_root / "knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json"
+    evaluation = (
+        project_root / "knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json"
+    )
+    manifest_path = project_root / "rollout.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "schema_version": "residenciafiscal-rollout/1",
+                "rollout_id": "rollout-input-congelado",
+                "expected_documents": 1,
+                "documents": [
+                    {
+                        "judgment_id": "san-1210-2023",
+                        "source_file": "sentencias/SAN_1210_2023.pdf",
+                        "source_sha256": sha256_file(project_root / "sentencias/SAN_1210_2023.pdf"),
+                        "proposal_path": (
+                            "knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json"
+                        ),
+                        "proposal_sha256": "0" * 64,
+                        "evaluation_path": (
+                            "knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json"
+                        ),
+                        "evaluation_sha256": sha256_file(evaluation),
+                        "batch_id": "batch-001",
+                        "risk": "HIGH",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = execute_rollout_next_batch(
+        manifest_path=manifest_path,
+        state_path=project_root / "state.json",
+        output_root=project_root / "build",
+        project_root=project_root,
+    )
+
+    assert result.failed == ("san-1210-2023",)
+    state = load_rollout_state(project_root / "state.json")
+    assert "proposal_sha256" in (state.documents[0].last_error or "")
+    assert sha256_file(proposal) != "0" * 64

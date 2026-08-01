@@ -1,0 +1,782 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acta y acuerdo contienen la relación de indicios que motivan la liquidación y fueron valorados como fundamento probatorio por la Sala.",
+      "category": "OTROS",
+      "description": "Acta de disconformidad (07/11/2013) y acuerdo de rectificación (08/01/2014) iniciados por la Dependencia Regional de Inspección de Las Palmas.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la existencia de indicios y motivación de la inspección sobre residencia y bases de liquidación",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Acta A02 y acuerdo de rectificación A23"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se considera indicio relevante del arraigo y uso de bienes en España; contribuye a la convergencia indiciaria.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Figurar empadronado en DIRECCION000 (Gran Canaria) desde el 20 de mayo de 2002.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar vínculo administrativo y posible residencia habitual en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Empadronamiento en Gran Canaria"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La titularidad y valor catastral de inmuebles son indicios objetivos que, junto con otros, sitúan el núcleo patrimonial en España.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Titularidad de cuatro viviendas en España (valor catastral acumulado próximo a un millón en 2009/2010) frente a una en Marruecos y un piso alquilado en Francia.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la existencia de patrimonio inmobiliario con uso/posesión en España y, por tanto, centro de intereses",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Propiedad de cuatro viviendas en España"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Consideradas como indicio convergente sobre utilización habitual de las viviendas en España.",
+      "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+      "description": "Facturas de consumo considerable durante todo el año en las viviendas de su propiedad en España.",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar uso efectivo y vida cotidiana en las viviendas españolas",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Facturas de consumo en viviendas españolas"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La tenencia reiterada de vehículos de alto valor en España es elemento indiciario junto con inmuebles y cuentas.",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Titularidad de seis vehículos en España, incl. Porsche Cayenne (marzo 2008) y Hyundai H1 (agosto 2009).",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Indiciar tenencia de bienes de alto valor y utilización en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Matriculación y compras de vehículos (Porsche, Hyundai)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La Sala considera decisivo el volumen y regularidad de las transferencias a cuentas españolas; corroborado con otros indicios converge en que el núcleo económico está en España.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Cuentas bancarias españolas con movimientos significativos: 632.841,53€ (2008); 2.983.831,23€ (2009); 862.424,66€ (2010). Transferencias periódicas del Grupo Vickers.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar cobros y domiciliación de ingresos en España que sitúan la fuente de rentas/gestión en España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Extractos y transferencias a Caja Insular de Canarias"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Se valora como indicio relevante de que cobros profesionales se canalizan por España, reforzando el centro de intereses.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Transferencias periódicas recibidas del GRUPO VICKERS en cuenta de Caja Insular de Canarias, importe mensual aproximado de 25.000€.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar percepción de rentas profesionales en cuenta española",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Transferencias periódicas VICKERS (~25.000€/mes)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Constituye indicio de vinculación administrativa y operativa con España que complementa otros elementos.",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Indicaciones reiteradas de domicilios de contacto y notificaciones en Gran Canaria en relaciones con empresas (Securitas, Caja Insular, American Express, Spanair-Plus).",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Mostrar uso habitual de direcciones españolas en la actividad y servicios",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Domicilios de contacto en relaciones con terceros"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "La Sala admite su carácter indiciario pero lo considera insuficiente; apunta que el certificado se expide a todo nacional estadounidense y no prueba tributación por renta mundial.",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificado y acta de notoriedad de Florida aportadas por el recurrente alegando residencia en EEUU.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Marruecos; Estados Unidos",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La Sala admite su carácter indiciario pero lo considera insuficiente; apunta que el certificado se expide a todo nacional estadounidense y no prueba tributación por renta mundial.",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en EE.UU. y sometimiento a imposición allí",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificado de residencia en Estados Unidos (Florida)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-010"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "Se consideran copias, no debidamente traducidas y manifiestamente insuficientes frente a la abundante prueba indiciaria articulada por la Inspección.",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Certificados/ extractos de SOCIÉTÉ GÉNÉRALE MAROCAINE DE BANQUES y ARAB BANK PLC sobre saldos y operaciones en Marruecos.",
+      "evidence_id": "evidence-legacy-010",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Probar tenencia de fondos y mov. bancarios en Marruecos que justificarían transferencias a España",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Extractos y certificados bancarios marroquíes (Arab Bank, Société Générale)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-011"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala indica que simples contratos de alquiler no prueban residencia prolongada; se requiere demostración de permanencia efectiva.",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Contratos de arrendamiento aportados para sostener residencias en el extranjero (p. ej. piso en Nueva York).",
+      "evidence_id": "evidence-legacy-011",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia efectiva prolongada en el extranjero",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Contratos de alquiler en Nueva York y otros arrendamientos"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-012"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La documentación no acredita que las rentas se obtuvieran en EE.UU. o Marruecos y, en algunos casos, no estaba traducida o demostraba solo la titularidad puntual de bienes.",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Certificados emitidos por dirección de GRUPO VICKERS y documentación de participación en sociedades que describen la actividad del recurrente.",
+      "evidence_id": "evidence-legacy-012",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar que la actividad se desarrolla fuera de España y justificar cobros como reembolso de gastos",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificados de altos directivos de VICKERS y documentación societaria"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La Sala constata que no se superan 183 días (criterio a) y analiza el art.9.1.b: valora de forma conjunta indicios patrimoniales y financieros (viviendas, cuentas y transferencias, vehículos, domicilios de contacto) que convergen en que el núcleo de intereses económicos está en España; estima que los certificados extranjeros son insuficientes para desvirtuar esos indicios, por lo que confirma la residencia en España.",
+      "consequences": [],
+      "decisive_reasoning": "La Sala constata que no se superan 183 días (criterio a) y analiza el art.9.1.b: valora de forma conjunta indicios patrimoniales y financieros (viviendas, cuentas y transferencias, vehículos, domicilios de contacto) que convergen en que el núcleo de intereses económicos está en España; estima que los certificados extranjeros son insuficientes para desvirtuar esos indicios, por lo que confirma la residencia en España.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2008,
+          2009,
+          2010
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "9c76444995f787b17314c8b201a24a8c3ed78f01eb4ed142b9962903136221c2",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5096-2021.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-5096-2021"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Marruecos; Estados Unidos"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decision_date": "2021-11-10",
+    "ecli": "ES:AN:2021:5096",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-5096-2021",
+    "page_count": 12,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 5096/2021",
+    "source_file": "sentencias/SAN_5096_2021.pdf",
+    "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa",
+    "tax_years": [
+      2008,
+      2009,
+      2010
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3238,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 3196,
+          "verbatim_text": "se formalizó el acta de disconformidad A02"
+        },
+        {
+          "end_offset": 3325,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 3293,
+          "verbatim_text": "con una propuesta de liquidación"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 611,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 533,
+          "verbatim_text": "ﬁgura empadronado en  DIRECCION000  (Gran Canaria) desde el 20 de mayo de 2002"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 832,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 762,
+          "verbatim_text": "Es propietario de cuatro viviendas en España frente a una en Marruecos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1084,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 981,
+          "verbatim_text": "Existen facturas de consumo considerable durante todo el año en las viviendas de su propiedad en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1176,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1134,
+          "verbatim_text": "Es propietario de seis vehículos en España"
+        },
+        {
+          "end_offset": 1386,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1346,
+          "verbatim_text": "Porsche Cayenne, adquirido en marzo 2008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1662,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1615,
+          "verbatim_text": "el total de transferencias e\ningresos recibidos"
+        },
+        {
+          "end_offset": 1722,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1698,
+          "verbatim_text": "roza los cuatro millones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2120,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 2091,
+          "verbatim_text": "Las transferencias periódicas"
+        },
+        {
+          "end_offset": 2312,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 2263,
+          "verbatim_text": "por un importe mensual aproximado de 25.000\neuros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1901,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1825,
+          "verbatim_text": "Indica reiteradamente domicilios de contacto y notiﬁcaciones en Gran Canaria"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4177,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4164,
+          "verbatim_text": "el certiﬁcado"
+        },
+        {
+          "end_offset": 891,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 822,
+          "verbatim_text": "es expedido\na todo nacional estadounidense por el mero hecho de serlo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2468,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2414,
+          "verbatim_text": "no hallarse debidamente\ntraducidos y constituir copias"
+        },
+        {
+          "end_offset": 2590,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 2563,
+          "verbatim_text": "maniﬁestamente insuﬁcientes"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 5135,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 5059,
+          "verbatim_text": "no basta con aportar\ncopia del contrato de alquiler de un piso en Nueva York"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4181,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 4089,
+          "verbatim_text": "documentación -carente de traducción mediante intérprete jurado- relativa a su participación"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    }
+  ],
+  "treaty_analyses": []
+}

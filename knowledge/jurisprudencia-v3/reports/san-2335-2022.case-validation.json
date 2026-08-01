@@ -1,0 +1,16 @@
+{
+  "anchor_count": 9,
+  "case_sha256": "9e2304382a16f821d6985518c2bdf77d316424f1a15c797906c94e9c3ef720d3",
+  "evidence_finding_count": 9,
+  "fact_count": 0,
+  "fragment_count": 12,
+  "holding_count": 1,
+  "input_artifact_count": 2,
+  "judgment_id": "san-2335-2022",
+  "legal_issue_count": 1,
+  "legal_review": "AGENT_REVIEWED",
+  "question_evaluation_count": 1,
+  "technical_review": "VALIDATED",
+  "validation": "passed",
+  "verbatim_sha256": "38a74af47698a869ae1d2d26baaccb57e3b4e4ef541cce01e890be07de501e84"
+}

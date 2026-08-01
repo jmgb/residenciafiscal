@@ -1,0 +1,815 @@
+{
+  "burden_of_proof_steps": [],
+  "evidence_findings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Acredita que no cumplió 183 días en Ecuador y que no existía certificado de residencia para los ejercicios, destruyendo la alegación de residencia extranjera",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificado remitido por el Director General del Servicio de Rentas Internas de Ecuador (21-06-2013) que señala que el Sr. Pablo no cumple 183 días en Ecuador para 2008-2011 y que no emitieron certificado de residencia.",
+      "evidence_id": "evidence-legacy-001",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Países Bajos (Holanda)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Acredita que no cumplió 183 días en Ecuador y que no existía certificado de residencia para los ejercicios, destruyendo la alegación de residencia extranjera",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que no estaba sujeto a tributación en Ecuador y desvirtuar alegada residencia ecuatoriana",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Certificado Director General SRI 21/06/2013"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-002"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Documentación interna detallada y correlacionada que permite inferir la simulación y la procedencia de fondos; la Sala la considera suficiente",
+      "category": "OTROS",
+      "description": "Acta de comprobación, informe de disconformidad y acuerdo de liquidación que recogen el análisis global de las operaciones (préstamos, donaciones, disposiciones bancarias) y concluyen simulación.",
+      "evidence_id": "evidence-legacy-002",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Probar la existencia del entramado de operaciones y la simulación que justifica la regularización",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "DECISIVE",
+      "subtype": "Acta A02 / Informe de disconformidad / acuerdo de liquidación"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-003"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Corrobora la secuencia de ingresos desde CDE y su inmediata transmisión a los hijos; respalda la tesis de confusión patrimonial",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Movimientos e ingresos por transferencias procedentes de CDE HOLDING BV y transferencias posteriores a los hijos; la cuenta figura a nombre del Sr. Pablo con su hijo Fidel autorizado.",
+      "evidence_id": "evidence-legacy-003",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la disposición efectiva de fondos en España y la gestión por parte del núcleo familiar",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Extractos cuenta BANKIA (cuenta NUM010)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-004"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La escritura pública acredita la titularidad de los hijos y es elemento relevante para inferir la falta de lógica económica de los préstamos al padre",
+      "category": "VIVIENDA_Y_USO_EFECTIVO",
+      "description": "Escritura pública de donación de la totalidad de las acciones de CDE HOLDING BV a favor de los hijos (31-12-2008).",
+      "evidence_id": "evidence-legacy-004",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que los hijos eran titulares de la sociedad y la secuencia posterior de operaciones",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Escritura pública donación participaciones 31/12/2008"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-005"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Contratos documentados que constan en el expediente y en los balances de la sociedad; la Sala los valora como parte del conjunto indiciario",
+      "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+      "description": "Contratos privados donde CDE HOLDING BV concede préstamos al Sr. Pablo por importes elevados, con condiciones genéricas y garantías referidas a participaciones y bienes.",
+      "evidence_id": "evidence-legacy-005",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la existencia formal de préstamos que la Inspección considera simulados",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Contratos privados de préstamo (20/06/2009, 20/06/2011 y private de 11/02/2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-006"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Los balances muestran el asiento contable del préstamo y los dividendos recibidos por la sociedad; la Sala considera esto relevante y concordante con otros indicios",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Balances y memoria de CDE HOLDING BV donde figura registrado el préstamo a favor del Sr. Pablo y los ingresos por dividendos.",
+      "evidence_id": "evidence-legacy-006",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Países Bajos (Holanda)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "Los balances muestran el asiento contable del préstamo y los dividendos recibidos por la sociedad; la Sala considera esto relevante y concordante con otros indicios",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar que el préstamo consta contablemente en la sociedad y la procedencia de fondos",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Cuentas/balance CDE HOLDING BV (2009, 2011)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-007"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "Informe técnico de terceros y acta de comprobación con documentación coetánea; valorada favorablemente por la Sala",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Informe de auditoría que recoge la existencia del préstamo y actas de la Inspección que documentan las comprobaciones.",
+      "evidence_id": "evidence-legacy-007",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Corroborar la anotación contable del préstamo y las disposiciones",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Informe de auditoría (BDO) y actas de inspección"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-008"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La correlación temporal de las transferencias y su origen refuerzan la tesis de fondos procedentes de la sociedad holandesa",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Trazas de transferencias internacionales (ordenante CDE HOLDING BV -> Banco Itaú -> ingreso en cuenta Bankia del Sr. Pablo) y su cronología (23/06/2009, 26/06/2009).",
+      "evidence_id": "evidence-legacy-008",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Probar el origen externo de los fondos y la secuencia inmediata hasta las donaciones a hijos",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Transferencia desde Banco Mees a Banco Itaú y posterior ingreso en Bankia"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-009"
+      ],
+      "assessment": "ACCEPTED",
+      "assessment_reason": "La presentación del modelo 720 por los hijos contrasta con la ausencia del padre y es indicio de la titularidad y posesión real por parte de los hijos",
+      "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+      "description": "Los hijos presentan el modelo 720 declarando su participación en CDE HOLDING BV desde 2012; el obligado no presenta dicho modelo.",
+      "evidence_id": "evidence-legacy-009",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "AEAT",
+      "probative_purpose": "Acreditar la vinculación patrimonial de los hijos y la falta de declaración del padre",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Presentación modelo 720 por hijos y ausencia del padre"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-010"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala considera que los certificados se refieren a ejercicios anteriores a los examinados o no acreditan tributación por renta mundial en los ejercicios controvertidos",
+      "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+      "description": "Certificados aportados por el recurrente que, según el actor, acreditaban su residencia fiscal en Ecuador y su vivienda alquilada allí.",
+      "evidence_id": "evidence-legacy-010",
+      "fact_ids": [],
+      "foreign_document": {
+        "defects": [],
+        "document_type": "OTHER",
+        "issuing_authority": null,
+        "jurisdiction": "Países Bajos (Holanda)",
+        "nature": "TAX",
+        "period_end": null,
+        "period_start": null,
+        "probative_effect": "La Sala considera que los certificados se refieren a ejercicios anteriores a los examinados o no acreditan tributación por renta mundial en los ejercicios controvertidos",
+        "tax_scope": "NOT_STATED"
+      },
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar residencia fiscal en Ecuador y justificar que las ausencias en España eran esporádicas",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Certificados del Servicio de Rentas Internas de Ecuador (aportados por recurrente)"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-011"
+      ],
+      "assessment": "REJECTED",
+      "assessment_reason": "La Sala considera la alegación insuficientemente acreditada y prevalece el criterio objetivo de permanencia; no basta la mera alegación sin pruebas contemporáneas",
+      "category": "TESTIFICAL_Y_PERICIAL",
+      "description": "Alegación del recurrente de que su permanencia en España (>183 días) se debió a motivos de salud (fuerza mayor) y que vivía en precario en casa de un hijo.",
+      "evidence_id": "evidence-legacy-011",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Calificar las estancias en España como ausencias esporádicas (desvirtuar cómputo de 183 días)",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Alegación de fuerza mayor por estado de salud / declaración del recurrente"
+    },
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-012"
+      ],
+      "assessment": "PARTIAL",
+      "assessment_reason": "La Sala admite que existieron devoluciones pero las considera realizadas durante el procedimiento inspector y no decisivas para destruir la apreciación de simulación hecha sobre el conjunto de indicios",
+      "category": "CONSUMOS_FINANCIEROS",
+      "description": "Movimientos de devolución de importes que el recurrente alega acreditan reembolsos del préstamo.",
+      "evidence_id": "evidence-legacy-012",
+      "fact_ids": [],
+      "foreign_document": null,
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "offered_by": "TAXPAYER",
+      "probative_purpose": "Acreditar la realidad del préstamo y capacidad de devolución",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "role": "CORROBORATIVE",
+      "subtype": "Devoluciones registradas (30/12/2014; 24/07/2015; 31/07/2015)"
+    }
+  ],
+  "facts": [],
+  "holdings": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001"
+      ],
+      "conclusion": "La Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.",
+      "consequences": [],
+      "decisive_reasoning": "La Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.",
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "outcome": "GANA_AEAT",
+      "residence_determination": {
+        "non_resident_from": null,
+        "other_country": null,
+        "spanish_residence": "NOT_DECIDED",
+        "tax_years": [
+          2009,
+          2010,
+          2011
+        ]
+      },
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "judgment": {
+    "analysis_provenance": {
+      "generated_at": "2026-08-01T00:00:00+02:00",
+      "input_artifacts": [
+        {
+          "kind": "VERBATIM",
+          "sha256": "28319ef9b0be5bd197a46158b6824fa1d58b50ccc426108346e894b640bbfc1f",
+          "source_path": "knowledge/jurisprudencia-v3/verbatim/san-3169-2024.pages.json"
+        },
+        {
+          "kind": "LEGACY_ANALYSIS",
+          "sha256": "03bb76aa84ce79321d631e3710df57471db2176aed7b5e1b3c77e3bc0e7870a4",
+          "source_path": "output/analisis_02012026_155032.jsonl"
+        }
+      ],
+      "model_id": "legacy-analysis-agent-reviewed",
+      "notes": "Migración conservadora; la determinación residencial no se infiere del resultado global.",
+      "producer": "residenciafiscal-legacy-bootstrap",
+      "prompt_sha256": null,
+      "run_id": "legacy-bootstrap-san-3169-2024"
+    },
+    "chamber": null,
+    "countries": [
+      "España",
+      "Ecuador",
+      "Países Bajos (Holanda)"
+    ],
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decision_date": "2024-05-14",
+    "ecli": "ES:AN:2024:3169",
+    "extractor": {
+      "name": "pypdf",
+      "version": "6.14.2"
+    },
+    "is_tax_residence_case": true,
+    "judgment_id": "san-3169-2024",
+    "page_count": 18,
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+      "reviewed_at": "2026-08-01",
+      "reviewed_by": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 3169/2024",
+    "source_file": "sentencias/SAN_3169_2024.pdf",
+    "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9",
+    "tax_years": [
+      2009,
+      2010,
+      2011
+    ]
+  },
+  "legal_issues": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012"
+      ],
+      "criterion_ids": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence_ids": [
+        "evidence-legacy-001",
+        "evidence-legacy-002",
+        "evidence-legacy-003",
+        "evidence-legacy-004",
+        "evidence-legacy-005",
+        "evidence-legacy-006",
+        "evidence-legacy-007",
+        "evidence-legacy-008",
+        "evidence-legacy-009",
+        "evidence-legacy-010",
+        "evidence-legacy-011",
+        "evidence-legacy-012"
+      ],
+      "fact_ids": [],
+      "holding_id": "holding-residencia-fiscal",
+      "issue_id": "residencia-fiscal",
+      "issue_type": "TAX_RESIDENCE",
+      "legal_rule_ids": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    }
+  ],
+  "legal_rules": [],
+  "presence_events": [],
+  "presence_periods": [],
+  "review": {
+    "legal": "AGENT_REVIEWED",
+    "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+    "reviewed_at": "2026-08-01",
+    "reviewed_by": "agent:codex",
+    "technical": "VALIDATED"
+  },
+  "schema_version": "residenciafiscal-case/3",
+  "source_anchors": [
+    {
+      "anchor_id": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1513,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1485,
+          "verbatim_text": "se revisó las bases internas"
+        },
+        {
+          "end_offset": 1738,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1666,
+          "verbatim_text": "no cumple con el tiempo\nmínimo de permanencia en el Ecuador, de 183 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2407,
+          "page_index": 11,
+          "printed_page": "11",
+          "start_offset": 2317,
+          "verbatim_text": "de la lectura tanto del acta A02, el Informe de disconformidad y el acuerdo de liquidación"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1217,
+          "page_index": 11,
+          "printed_page": "11",
+          "start_offset": 1133,
+          "verbatim_text": "ingresadas todas ellas por transferencia en la cuenta  NUM010 , de la entidad BANKIA"
+        },
+        {
+          "end_offset": 1298,
+          "page_index": 11,
+          "printed_page": "11",
+          "start_offset": 1261,
+          "verbatim_text": "autorizado en la misma su hijo  Fidel"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4337,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 4308,
+          "verbatim_text": "Escritura Pública de donación"
+        },
+        {
+          "end_offset": 332,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 309,
+          "verbatim_text": "31 de diciembre de 2008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1173,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 1124,
+          "verbatim_text": "contrato es ﬁrmado en fecha 11 de febrero de 2011"
+        },
+        {
+          "end_offset": 1394,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 1348,
+          "verbatim_text": "El importe prestado asciende a 3.000.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2094,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 2070,
+          "verbatim_text": "en el activo del balance"
+        },
+        {
+          "end_offset": 396,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 336,
+          "verbatim_text": "consta un préstamo por\nimporte registrado de 1.050.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1739,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1711,
+          "verbatim_text": "en la memoria de la sociedad"
+        },
+        {
+          "end_offset": 1894,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1820,
+          "verbatim_text": "se ha concedido un préstamo al señor\nPablo  por importe de 1.050.000 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 925,
+          "page_index": 15,
+          "printed_page": "15",
+          "start_offset": 889,
+          "verbatim_text": "orden de transferencia internacional"
+        },
+        {
+          "end_offset": 1045,
+          "page_index": 15,
+          "printed_page": "15",
+          "start_offset": 973,
+          "verbatim_text": "importe de 950.000 euros con destino a la cuenta  NUM011  del BANCO ITAÚ"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1256,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1221,
+          "verbatim_text": "Todos ellos presentan el modelo 720"
+        },
+        {
+          "end_offset": 1448,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1377,
+          "verbatim_text": "El obligado tributario, el señor  Pablo , no presenta dicha declaración"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 665,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 565,
+          "verbatim_text": "certiﬁcados emitidos por el Servicio de Rentas Internas de Ecuador su\nresidencia ﬁscal en dicho país"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 531,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 450,
+          "verbatim_text": "dicha estancia se debió a razones de fuerza mayor derivadas de su estado de\nsalud"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchor_id": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 563,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 452,
+          "verbatim_text": "las devoluciones realizadas tuvieron lugar cuando D.  Pablo  se hallaba\nsometido a un proceso de regularización"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    }
+  ],
+  "treaty_analyses": []
+}

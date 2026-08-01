@@ -1,11 +1,9 @@
 # Arquitectura vigente del sistema jurisprudencial conversacional
 
-**Estado:** comparador experimental implementado sobre cinco sentencias. El
-prototipo FastAPI + proxy Edge está conectado detrás de `stub`, pero la V1 se
-ha decidido Netlify-only y todavía debe implementarse. FastAPI se conserva como
-opción futura para llamadas de más de 60 s; revisión humana, producción y
-rollout v3 a 106 no están autorizados.
-**Fecha de corte:** 2026-07-31.
+**Estado del corpus:** el rollout v3 técnico contiene 106 casos, 67 dentro del
+ámbito recuperable y 74 unidades. Sigue `AGENT_REVIEWED_ONLY`; no sustituye la
+revisión humana ni está promovido como corpus del chat.
+**Fecha de corte del corpus:** 2026-08-01.
 
 Este documento es la puerta de entrada canónica para entender el sistema de
 jurisprudencia conversacional. Explica qué existe, cómo se relacionan sus
@@ -36,12 +34,12 @@ El repositorio contiene dos líneas distintas:
 
 | Línea | Alcance actual | Resultado | Uso |
 |---|---|---|---|
-| Preparación del corpus | Workflow Python + agente, muestra congelada de cinco | Verbatim, casos por cuestión, anclajes e índice | Fuente verificable |
+| Preparación del corpus | Workflow Python + agente, 106 borradores técnicos | Verbatim, casos por cuestión, anclajes e índice | Fuente verificable interna |
 | Chat | Comparador A/B accesible por contrato HTTP; producción todavía en `stub` | Respuestas con fuentes, coste y límites | Consulta del abogado |
 
 Los exports JSONL/CSV/XLSX que existen son históricos y no tienen un generador
-LLM activo. El rollout v3 sigue la secuencia 1 → 5 → 106 y permanece detenido
-en cinco hasta superar sus gates de datos, evaluación y revisión.
+LLM activo. El rollout v3 siguió la secuencia 1 → 5 → 106 y completó los gates
+técnicos. La revisión jurídica humana y la promoción al chat siguen separadas.
 
 Tampoco deben mezclarse los árboles:
 
@@ -49,6 +47,9 @@ Tampoco deben mezclarse los árboles:
   al perfil OKF/2 legado;
 - `knowledge/jurisprudencia-v3/` contiene el caso canónico, verbatim e índices
   del chat;
+- `knowledge/jurisprudencia-v3/retrieval/corpus.json` conserva el agregado
+  piloto de cinco y `retrieval/rollout-106.corpus.json` mantiene aislado el
+  agregado completo pendiente de promoción;
 - `output/` contiene ejecuciones y logs locales regenerables; no es una fuente
   canónica ni se versiona.
 
@@ -265,8 +266,9 @@ jurídica humana.
 
 ## 7. Estado comprobado
 
-- La muestra v3 contiene cinco sentencias, 12 unidades recuperables y 62
-  anclajes exactos.
+- El corpus v3 contiene 106 casos, 67 documentos dentro del ámbito y 74 unidades
+  recuperables. Sus 1.620 elementos jurídicos están `AGENT_REVIEWED`; ninguno
+  está `HUMAN_APPROVED`.
 - El banco de 40 preguntas ya sirvió para medir recuperación y conducta del
   router. Esa medición es `RETRIEVAL_ONLY`; no equivale a evaluar la calidad de
   dos respuestas redactadas.
@@ -306,8 +308,9 @@ jurídica humana.
 - La Function Netlify-only, el prototipo FastAPI y la interfaz de dos respuestas
   están implementados detrás del stub. Falta provisionar/validar Database,
   ejecutar el Deploy Preview real y autorizar producción.
-- No existe autorización para listar, compilar o publicar las 106 sentencias
-  como casos v3.
+- Las 106 están compiladas como borrador técnico interno. No existe aprobación
+  para presentarlas como revisadas por una persona ni decisión para promover
+  ese recuperador al chat.
 
 Las cifras, preguntas y límites exactos de F0.2 están en
 [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
@@ -410,7 +413,8 @@ Contrato congelado:
    de integración y completar la revisión del corpus antes de producción.
 13. Reevaluar Edge → FastAPI únicamente si la evidencia exige llamadas de más
    de 60 s o garantías operativas que la Function no pueda ofrecer.
-14. Mantener la ampliación v3 a 106 como una autorización posterior separada.
+14. Mantener revisión jurídica y promoción al chat como decisiones posteriores
+    separadas del rollout técnico ya ejecutado.
 
 ## 11. Reglas de handoff para otros agentes
 
@@ -427,7 +431,8 @@ Antes de cambiar esta área:
    sin la rúbrica neutral;
 6. no realizar llamadas reales sin los flags explícitos de coste;
 7. no cambiar de modelo mediante alias ni de forma silenciosa;
-8. no conectar F0.2 al frontend ni procesar 106 por inferencia.
+8. no conectar el corpus completo al frontend ni atribuirle revisión humana por
+   inferencia.
 
 Si una decisión cambia, deben actualizarse en el mismo cambio este documento,
 el contrato especializado afectado y `docs/project/TASKS.md`. Las mediciones se

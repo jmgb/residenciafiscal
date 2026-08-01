@@ -1,0 +1,113 @@
+{
+  "judgment": {
+    "chamber": null,
+    "countries": [
+      "España"
+    ],
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decision_date": "2020-02-05",
+    "ecli": "ECLI:ES:TS:2020:371",
+    "is_tax_residence_case": false,
+    "judgment_id": "sts-371-2020",
+    "roj": "STS 371/2020",
+    "tax_years": []
+  },
+  "schema_version": "residenciafiscal-retrieval/1",
+  "source": {
+    "case_resource": "../cases/sts-371-2020.case.json",
+    "case_sha256": "c3fcf51719a1dcbec8a83f4fe32f527a989ca1345441da89d2c0fdec42371fec",
+    "source_sha256": "fb15631ef5ba2383751258822191a977458d10b318f05b4470b573255182ffbc"
+  },
+  "units": [
+    {
+      "burden_of_proof_steps": [],
+      "evidence_findings": [],
+      "facets": {
+        "countries": [
+          "España"
+        ],
+        "criterion_ids": [],
+        "evidence_categories": [],
+        "evidence_parties": [],
+        "has_treaty": false,
+        "issue_type": "OTHER",
+        "legal_review": "AGENT_REVIEWED",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "tax_years": [],
+        "technical_review": "VALIDATED"
+      },
+      "facts": [],
+      "holding": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "conclusion": "IRNR: Fondo de inversión (IIC) solicita devolución de retenciones; el litigio versa sobre IRNR y libre circulación de capitales, no sobre residencia de persona física",
+        "consequences": [],
+        "decisive_reasoning": "NO APLICA - fuera de alcance",
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "outcome": "OTROS",
+        "residence_determination": null,
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issue": {
+        "anchor_ids": [
+          "anchor-legacy-decision"
+        ],
+        "criterion_ids": [],
+        "evidence_ids": [],
+        "fact_ids": [],
+        "holding_id": "holding-fuera-de-alcance",
+        "issue_id": "fuera-de-alcance",
+        "issue_type": "OTHER",
+        "legal_rule_ids": [],
+        "question": "¿Está la resolución dentro del corpus residencial?",
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+          "reviewed_at": "2026-08-01",
+          "reviewed_by": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "judgment_id": "sts-371-2020",
+      "legal_rules": [],
+      "presence_events": [],
+      "presence_periods": [],
+      "search_text": "¿Está la resolución dentro del corpus residencial?\nOTHER\nIRNR: Fondo de inversión (IIC) solicita devolución de retenciones; el litigio versa sobre IRNR y libre circulación de capitales, no sobre residencia de persona física\nNO APLICA - fuera de alcance\nJURISPRUDENCIA\nRoj: STS 371/2020 - ECLI:ES:TS:2020:371\nId Cendoj: 28079130022020100046\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 05/02/2020\nNº de Recurso: 4275/2018\nNº de Resolución: 140/2020\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: ISAAC MERINO JARA\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 4424/2018,\nATS 5127/2019,\nSTS 371/2020\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 140/2020\nFecha de sentencia: 05/02/2020\nTipo de procedimiento: R. CAS",
+      "source_anchors": [
+        {
+          "anchor_id": "anchor-legacy-decision",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 600,
+              "page_index": 1,
+              "printed_page": "1",
+              "start_offset": 0,
+              "verbatim_text": "JURISPRUDENCIA\nRoj: STS 371/2020 - ECLI:ES:TS:2020:371\nId Cendoj: 28079130022020100046\nÓrgano: Tribunal Supremo. Sala de lo Contencioso\nSede: Madrid\nSección: 2\nFecha: 05/02/2020\nNº de Recurso: 4275/2018\nNº de Resolución: 140/2020\nProcedimiento: Recurso de Casación Contencioso-Administrativo (L.O. 7/2015)\nPonente: ISAAC MERINO JARA\nTipo de Resolución: Sentencia\nResoluciones del caso: STSJ M 4424/2018,\nATS 5127/2019,\nSTS 371/2020\nT R I B U N A L S U P R E M O\nSala de lo Contencioso-Administrativo\nSección Segunda\nSentencia núm. 140/2020\nFecha de sentencia: 05/02/2020\nTipo de procedimiento: R. CAS"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fb15631ef5ba2383751258822191a977458d10b318f05b4470b573255182ffbc"
+        }
+      ],
+      "treaty_analyses": [],
+      "unit_id": "sts-371-2020-fuera-de-alcance"
+    }
+  ]
+}

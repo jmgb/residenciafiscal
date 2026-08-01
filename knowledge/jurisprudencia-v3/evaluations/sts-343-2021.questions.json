@@ -1,0 +1,20 @@
+{
+  "judgment_id": "sts-343-2021",
+  "questions": [
+    {
+      "expected_behavior": "Usar solo el contenido estructurado y sus anclajes literales.",
+      "limitations": "Borrador AGENT_REVIEWED sin aprobación jurídica humana.",
+      "question": "¿Por qué STS 343/2021 está fuera del alcance residencial?",
+      "question_id": "LEGACY-01",
+      "required_anchor_ids": [
+        "anchor-legacy-decision"
+      ],
+      "required_evidence_ids": [],
+      "required_fact_ids": [],
+      "required_issue_ids": [
+        "fuera-de-alcance"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-case-question-evaluation/1"
+}
