@@ -13,7 +13,7 @@ export function SpainPage() {
        * `CountryPage`: monta el chat. Sin esta línea era la única de las 34 sin
        * datos estructurados, que es justo la que más importa.
        */}
-      <JsonLd data={breadcrumbJsonLd(SPAIN_ROUTE)} />
+      <JsonLd data={breadcrumbJsonLd([SPAIN_ROUTE])} />
       <ChatView
         engine={chatEngine}
         isStub={chatEngineMode === 'stub'}

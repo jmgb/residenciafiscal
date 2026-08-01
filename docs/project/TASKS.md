@@ -504,6 +504,22 @@ comprueban párrafo a párrafo contra la fuente.
 
 ## SEO y contenido
 
+- [ ] **La raíz `/` sirve una página en blanco y no es canónica de nada**
+  (medido el 1 de agosto de 2026). `dist/index.html` conserva `<div id="root">`
+  **vacío**: el prerenderizado escribe una copia por ruta en su subdirectorio,
+  pero no toca la shell, así que quien pide `/` sin ejecutar JavaScript no recibe
+  ni una línea de texto. Además declara `canonical` hacia sí misma y **no está en
+  el sitemap**, de modo que la home del sitio es una URL sin contenido que no
+  apunta a `/espana`. Es la URL que la gente teclea y la que se enlaza desde
+  fuera.
+  - Google renderiza JavaScript y acaba siguiendo el `Navigate` a `/espana`, así
+    que el daño se concentra en los rastreadores que no lo ejecutan —crawlers de
+    LLM, tarjetas sociales— y en no consolidar señales hacia una sola URL.
+  - Dos salidas, y hay que elegir una: un `301` de `/` a `/espana` en Netlify, o
+    prerenderizar `/` con el contenido de España y `canonical` a `/espana`. La
+    segunda conserva la home como URL propia; la primera concentra todo en
+    `/espana`, que es la que ya está en el sitemap con prioridad `1.0`.
+
 - [x] Añadir metadatos, canonical, Open Graph y enlaces internos específicos para cada
   landing de país (1 de agosto de 2026): `title` y `description` propios en
   `countryRoutes.json`, prerenderizados por ruta y con las 29 en el sitemap.

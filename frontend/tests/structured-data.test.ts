@@ -29,8 +29,25 @@ function countryByPath(path: string) {
 }
 
 describe('breadcrumbJsonLd', () => {
+  it('encadena los tramos de una subpágina bajo su país', () => {
+    // `/espana/fuentes` es contenido de país, no de método, y tiene la única
+    // jerarquía de tres niveles del sitio.
+    const breadcrumb = breadcrumbJsonLd([
+      countryByPath('/espana'),
+      { name: 'El corpus de España', path: '/espana/fuentes' },
+    ]);
+
+    expect(breadcrumb.itemListElement.map((item) => [item.position, item.name, item.item])).toEqual(
+      [
+        [1, 'Residencia Fiscal', 'https://residenciafiscal.org/'],
+        [2, 'España', 'https://residenciafiscal.org/espana'],
+        [3, 'El corpus de España', 'https://residenciafiscal.org/espana/fuentes'],
+      ]
+    );
+  });
+
   it('describe la jerarquía del sitio con URLs absolutas', () => {
-    const breadcrumb = breadcrumbJsonLd(countryByPath('/francia'));
+    const breadcrumb = breadcrumbJsonLd([countryByPath('/francia')]);
 
     expect(breadcrumb['@context']).toBe('https://schema.org');
     expect(breadcrumb['@type']).toBe('BreadcrumbList');

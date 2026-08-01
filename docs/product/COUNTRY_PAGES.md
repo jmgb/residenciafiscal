@@ -137,6 +137,8 @@ Cada página de país emite dos bloques JSON-LD, y solo dos:
   `/espana` no usa la plantilla compartida —monta el chat—, así que era la única landing sin
   marcar, justo la de mayor prioridad del sitemap. `tests/entry-server.test.tsx` recorre
   `COUNTRY_ROUTES` entera para que la próxima página con plantilla propia no se caiga igual.
+  `/espana/fuentes` lo lleva también, encadenado bajo España: es contenido de país y la única
+  ruta con tres niveles. `breadcrumbJsonLd` recibe por eso la lista de tramos, no un país.
 - **`Legislation`** con el artículo de residencia del convenio, en `TaxTreaty`, y **solo cuando el
   convenio está resuelto**: se declara el precepto que la página publica, no el identificador que
   esperaba encontrar. Un país sin convenio no emite este bloque.

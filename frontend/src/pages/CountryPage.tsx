@@ -21,7 +21,7 @@ export function CountryPage({ country }: CountryPageProps) {
 
   return (
     <div className='w-full overflow-y-auto'>
-      <JsonLd data={breadcrumbJsonLd(country)} />
+      <JsonLd data={breadcrumbJsonLd([country])} />
       <div className='mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14'>
         <header className='max-w-3xl border-t-4 border-primary pt-6'>
           <p className='mb-3 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary'>

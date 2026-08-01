@@ -11,7 +11,6 @@
  * sabe se omite en lugar de rellenarse por inferencia, igual que en el resto
  * del proyecto.
  */
-import type { CountryRoute } from '@/data/countryRoutes';
 import type { PreceptoEntry } from '@/types/normativa';
 
 const SITE_URL = 'https://residenciafiscal.org';
@@ -44,19 +43,28 @@ export interface Legislation {
   legislationDateVersion?: string;
 }
 
-/** Jerarquía de la ruta: la home del sitio y la página del país. */
-export function breadcrumbJsonLd(country: CountryRoute): BreadcrumbList {
+/**
+ * Un tramo de la jerarquía. `CountryRoute` ya lo cumple, así que una página de
+ * país se describe con `[country]` y su subpágina encadenando el siguiente.
+ */
+export interface BreadcrumbStep {
+  name: string;
+  path: string;
+}
+
+/** Jerarquía de la ruta: la home del sitio y los tramos que cuelgan de ella. */
+export function breadcrumbJsonLd(trail: BreadcrumbStep[]): BreadcrumbList {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: SITE_NAME, item: `${SITE_URL}/` },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: country.name,
-        item: `${SITE_URL}${country.path}`,
-      },
+      ...trail.map((step, index) => ({
+        '@type': 'ListItem' as const,
+        position: index + 2,
+        name: step.name,
+        item: `${SITE_URL}${step.path}`,
+      })),
     ],
   };
 }

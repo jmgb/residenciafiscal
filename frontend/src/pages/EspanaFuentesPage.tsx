@@ -1,10 +1,22 @@
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 import { NormativaAplicada } from '@/components/normativa/NormativaAplicada';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { SPAIN_ROUTE } from '@/data/countryRoutes';
 import { staticRoute } from '@/data/staticRoutes';
+import { breadcrumbJsonLd } from '@/lib/structured-data';
 import { usePageTitle } from '@/lib/usePageTitle';
 
 const META = staticRoute('/espana/fuentes');
+
+/**
+ * Es contenido de país y la única ruta con tres niveles de jerarquía, así que
+ * su migaja cuelga de `/espana` y no de la raíz.
+ */
+const BREADCRUMB = breadcrumbJsonLd([
+  SPAIN_ROUTE,
+  { name: 'El corpus de España', path: META.path },
+]);
 
 function prefersReducedMotion(): boolean {
   if (typeof window.matchMedia !== 'function') return false;
@@ -38,6 +50,7 @@ export function EspanaFuentesPage() {
 
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
+      <JsonLd data={BREADCRUMB} />
       <h1 className='mb-6 font-heading text-2xl font-semibold'>El corpus de España</h1>
 
       <p className='mb-8 text-sm leading-relaxed text-muted-foreground'>
