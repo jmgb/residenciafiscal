@@ -1,0 +1,751 @@
+{
+  "documents": [
+    {
+      "judgment_id": "san-1071-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san10712025pdf-t8bkd6un2ikr",
+      "source_file": "sentencias/SAN_1071_2025.pdf",
+      "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-1136-2016",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san11362016pdf-pidllkmbrql0",
+      "source_file": "sentencias/SAN_1136_2016.pdf",
+      "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-1210-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san12102023pdf-ne8p7pu430z1",
+      "source_file": "sentencias/SAN_1210_2023.pdf",
+      "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-1226-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san12262021pdf-wb929c06m6q4",
+      "source_file": "sentencias/SAN_1226_2021.pdf",
+      "source_sha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-1386-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san13862017pdf-tuyvjklbrytc",
+      "source_file": "sentencias/SAN_1386_2017.pdf",
+      "source_sha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2132-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san21322025pdf-6d3naeu18549",
+      "source_file": "sentencias/SAN_2132_2025.pdf",
+      "source_sha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2229-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san22292022pdf-a8oumi99slrx",
+      "source_file": "sentencias/SAN_2229_2022.pdf",
+      "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2335-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san23352022pdf-randoa4bozc4",
+      "source_file": "sentencias/SAN_2335_2022.pdf",
+      "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2347-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san23472022pdf-wulqd4bewgtu",
+      "source_file": "sentencias/SAN_2347_2022.pdf",
+      "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2602-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san26022020pdf-kr7c3echj1p4",
+      "source_file": "sentencias/SAN_2602_2020.pdf",
+      "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-2602-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san26022022pdf-q0cyp54z75qd",
+      "source_file": "sentencias/SAN_2602_2022.pdf",
+      "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-3169-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san31692024pdf-qfxhszkk8c2l",
+      "source_file": "sentencias/SAN_3169_2024.pdf",
+      "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-3306-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san33062025pdf-voqn3n0vcuko",
+      "source_file": "sentencias/SAN_3306_2025.pdf",
+      "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-3421-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san34212021pdf-reevanqat3wb",
+      "source_file": "sentencias/SAN_3421_2021.pdf",
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-3477-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san34772022pdf-yul51pufmm0j",
+      "source_file": "sentencias/SAN_3477_2022.pdf",
+      "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-3960-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san39602020pdf-b4qmdinljzug",
+      "source_file": "sentencias/SAN_3960_2020.pdf",
+      "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-4187-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san41872023pdf-avc93qvf20b6",
+      "source_file": "sentencias/SAN_4187_2023.pdf",
+      "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-4248-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san42482020pdf-j39la1ervd0c",
+      "source_file": "sentencias/SAN_4248_2020.pdf",
+      "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-4438-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san44382025pdf-hsfciss187jh",
+      "source_file": "sentencias/SAN_4438_2025.pdf",
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-4670-2019",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san46702019pdf-masg4pdgkeqz",
+      "source_file": "sentencias/SAN_4670_2019.pdf",
+      "source_sha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-4992-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san49922021pdf-6rpp64nb4s5i",
+      "source_file": "sentencias/SAN_4992_2021.pdf",
+      "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5096-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san50962021pdf-8rhoi15o4ozq",
+      "source_file": "sentencias/SAN_5096_2021.pdf",
+      "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5151-2019",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san51512019pdf-39aenxg4yu9f",
+      "source_file": "sentencias/SAN_5151_2019.pdf",
+      "source_sha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5217-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san52172022pdf-77yv8eia0j27",
+      "source_file": "sentencias/SAN_5217_2022.pdf",
+      "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5408-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san54082017pdf-r0uytz0q6zy7",
+      "source_file": "sentencias/SAN_5408_2017.pdf",
+      "source_sha256": "6ccf853b53be69c4c1747e9904965380a720e6187f1588453b8b605b0458711c",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5630-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san56302023pdf-i6v3hz364jsr",
+      "source_file": "sentencias/SAN_5630_2023.pdf",
+      "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5640-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san56402023pdf-jd7b4vyecl15",
+      "source_file": "sentencias/SAN_5640_2023.pdf",
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-5983-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san59832024pdf-zlqiwl0wblpw",
+      "source_file": "sentencias/SAN_5983_2024.pdf",
+      "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-6289-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san62892022pdf-axp47mv2o63f",
+      "source_file": "sentencias/SAN_6289_2022.pdf",
+      "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-6981-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san69812024pdf-y60yg52yl6h6",
+      "source_file": "sentencias/SAN_6981_2024.pdf",
+      "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-699-2015",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san6992015pdf-mh3z5ttbfg8v",
+      "source_file": "sentencias/SAN_699_2015.pdf",
+      "source_sha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "san-7135-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/san71352024pdf-hmkesjcmab51",
+      "source_file": "sentencias/SAN_7135_2024.pdf",
+      "source_sha256": "4c1a06e82dfc7ffe9531ce698268d993c01ee681b879b5f84510d5a1b4cc3467",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-107-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1072018pdf-oxjrz9cp1dmx",
+      "source_file": "sentencias/STS_107_2018.pdf",
+      "source_sha256": "ee61608187016b48f492a3f9095ae647c746aef49a3c5046ab958cb3207d105b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-108-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1082018pdf-j6qpzcx3xbor",
+      "source_file": "sentencias/STS_108_2018.pdf",
+      "source_sha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-109-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1092018pdf-9aez9uot07im",
+      "source_file": "sentencias/STS_109_2018.pdf",
+      "source_sha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1102-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts11022020pdf-l07zwvc1vddq",
+      "source_file": "sentencias/STS_1102_2020.pdf",
+      "source_sha256": "86f43b030929f62191d5ac5c23000e1adb3feb175b517bfc544cc7ea023d4b9c",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-110-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1102018pdf-yuhi32rnmpmr",
+      "source_file": "sentencias/STS_110_2018.pdf",
+      "source_sha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-111-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1112021pdf-oby8nql2bmmw",
+      "source_file": "sentencias/STS_111_2021.pdf",
+      "source_sha256": "cd550eec53df3d961314161ef67eeb164ef30e375f2dbb11287a87ba5276bb1d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-112-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1122018pdf-2bhudepdhmo9",
+      "source_file": "sentencias/STS_112_2018.pdf",
+      "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-114-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1142018pdf-jxgctr3sf0sh",
+      "source_file": "sentencias/STS_114_2018.pdf",
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-115-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1152018pdf-w55zfeoppfo0",
+      "source_file": "sentencias/STS_115_2018.pdf",
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-116-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1162021pdf-2yqgvz2dodwq",
+      "source_file": "sentencias/STS_116_2021.pdf",
+      "source_sha256": "c930477bbb11a2fcc5229d2bd1e8535abcd11ff01abbb671fcade0ecb8922a0b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1432-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts14322023pdf-kz47mpjrcyf4",
+      "source_file": "sentencias/STS_1432_2023.pdf",
+      "source_sha256": "2959abe2dd389a64d71f393a7e0968d9a57bfdf1f73533dbc8f3b54473af48a6",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1594-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts15942023pdf-qjsy6b4wie88",
+      "source_file": "sentencias/STS_1594_2023.pdf",
+      "source_sha256": "7576082140af2aa6da2879e58b27b107fae950d111316bf2a4780031cc5b42b2",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1608-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts16082023pdf-er1sy3oxvu41",
+      "source_file": "sentencias/STS_1608_2023.pdf",
+      "source_sha256": "9a84313850eecfeae7243344244376b5fa4516f48792029254fae0865c0ad4b0",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1612-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts16122023pdf-upnd80v7k1of",
+      "source_file": "sentencias/STS_1612_2023.pdf",
+      "source_sha256": "c87d08b01a3627f5bd977c2666da92117c6d849e76c063d0b76c6ff57b07de9d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1682-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts16822022pdf-zlrhllhnfekl",
+      "source_file": "sentencias/STS_1682_2022.pdf",
+      "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1814-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts18142021pdf-zw6aq61pt5pw",
+      "source_file": "sentencias/STS_1814_2021.pdf",
+      "source_sha256": "5ce01a37db7068649845d1d5d23c26e3c66cee2a14815cafa0be859c4806e63d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-183-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1832018pdf-dkyhjbnixcqu",
+      "source_file": "sentencias/STS_183_2018.pdf",
+      "source_sha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-1845-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts18452023pdf-13n4dh92iz57",
+      "source_file": "sentencias/STS_1845_2023.pdf",
+      "source_sha256": "11e3e59a24a1f272fbfd7ebeb39162d69a5c4eca7f07e22525f82246e0e7ca28",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-184-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1842018pdf-txf087h241jd",
+      "source_file": "sentencias/STS_184_2018.pdf",
+      "source_sha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-188-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts1882018pdf-vkda3a285ekf",
+      "source_file": "sentencias/STS_188_2018.pdf",
+      "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2013-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts20132024pdf-mfghcvune9fy",
+      "source_file": "sentencias/STS_2013_2024.pdf",
+      "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2396-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts23962018pdf-2j6n1sdmecbw",
+      "source_file": "sentencias/STS_2396_2018.pdf",
+      "source_sha256": "6ddb11b345e9aa5c06a0a61c4e952334414c54b87e9cca8e614a3b63d117c01e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2485-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts24852022pdf-l9xly2cnzdbg",
+      "source_file": "sentencias/STS_2485_2022.pdf",
+      "source_sha256": "1292ae7133843a8c9021defc7b69d343d0883b9107a39d5e0a6aa3b538f11837",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2637-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts26372022pdf-urfthn9tcupx",
+      "source_file": "sentencias/STS_2637_2022.pdf",
+      "source_sha256": "2c363219e5e84db2b9b669a47d5a3c36cada79032c960436d2ed8cb22d05a3b9",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2652-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts26522023pdf-007pb1tyeosa",
+      "source_file": "sentencias/STS_2652_2023.pdf",
+      "source_sha256": "220cd7ffd248205dff6428499cb857f59003d67e283efeaa8e9d12d27a8d83ba",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2735-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts27352023pdf-67evoi6fgosl",
+      "source_file": "sentencias/STS_2735_2023.pdf",
+      "source_sha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2806-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts28062023pdf-gpq2ybhz46b7",
+      "source_file": "sentencias/STS_2806_2023.pdf",
+      "source_sha256": "f3a49038c7c2c36bd022e2e0d3d7bbe337e837f57c65f6ed2ab206849b2ecbe3",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-2881-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts28812023pdf-2iss7rx97dte",
+      "source_file": "sentencias/STS_2881_2023.pdf",
+      "source_sha256": "c157a5993a206dfa07c4eb99bf83d419284351d92e3cec411980993b6e83731b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-305-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts3052018pdf-amgkqwvfw4pr",
+      "source_file": "sentencias/STS_305_2018.pdf",
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3270-2019",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts32702019pdf-8yobymijmbf0",
+      "source_file": "sentencias/STS_3270_2019.pdf",
+      "source_sha256": "dc7064cd1a6e62b795267f27b4eb501239b5f4eb5d2fbe91ebd463a18741bf93",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-343-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts3432021pdf-k0xo6sl13tg3",
+      "source_file": "sentencias/STS_343_2021.pdf",
+      "source_sha256": "aad113b16ae931285ff4435b4d816469f957c1b882826610e96fa186a3b6684e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3445-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts34452025pdf-04klwntyq9ke",
+      "source_file": "sentencias/STS_3445_2025.pdf",
+      "source_sha256": "7f8a364d977137e5022b3619b58edd412dabf0df2ed573fc1a85b4587c96914e",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3498-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts34982025pdf-082qgxspz7xn",
+      "source_file": "sentencias/STS_3498_2025.pdf",
+      "source_sha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3574-2023",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts35742023pdf-b5w7s2lcvvnn",
+      "source_file": "sentencias/STS_3574_2023.pdf",
+      "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3585-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts35852024pdf-hmcbmpzorgrs",
+      "source_file": "sentencias/STS_3585_2024.pdf",
+      "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-371-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts3712020pdf-c1qua03mgpom",
+      "source_file": "sentencias/STS_371_2020.pdf",
+      "source_sha256": "fb15631ef5ba2383751258822191a977458d10b318f05b4470b573255182ffbc",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3881-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts38812024pdf-pydj7k04ho7y",
+      "source_file": "sentencias/STS_3881_2024.pdf",
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3882-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts38822024pdf-wntl79m0vy94",
+      "source_file": "sentencias/STS_3882_2024.pdf",
+      "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-3942-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts39422021pdf-2do5n14hdh9n",
+      "source_file": "sentencias/STS_3942_2021.pdf",
+      "source_sha256": "610a4a8b0f4c82069385f0ab4f86c04e397c96e55b1ff7314ab5b39051dfa192",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-420-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts4202021pdf-k2upalik9w0s",
+      "source_file": "sentencias/STS_420_2021.pdf",
+      "source_sha256": "1106572953d0ff27d36812b32dc3f45935dd63caf2b1ac4cc6f589616f232221",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4219-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts42192024pdf-lrwo4it85q1j",
+      "source_file": "sentencias/STS_4219_2024.pdf",
+      "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4220-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts42202024pdf-pbrhd6v1iwgo",
+      "source_file": "sentencias/STS_4220_2024.pdf",
+      "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4277-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts42772018pdf-t3kmgwa4rxnl",
+      "source_file": "sentencias/STS_4277_2018.pdf",
+      "source_sha256": "c257e96c6c5d02bf29be2c60fe8800f64b9e810aaff5512f353c5641487146b4",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4305-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43052017pdf-sj90uodtjicx",
+      "source_file": "sentencias/STS_4305_2017.pdf",
+      "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4306-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43062017pdf-61ikvkn137d8",
+      "source_file": "sentencias/STS_4306_2017.pdf",
+      "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4307-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43072017pdf-zaqwa71k2338",
+      "source_file": "sentencias/STS_4307_2017.pdf",
+      "source_sha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4337-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43372020pdf-zse3j4vnk7n2",
+      "source_file": "sentencias/STS_4337_2020.pdf",
+      "source_sha256": "c3b2bc61128b1a4926981224d44cda68131e76846c2460f05d0e487b04043dca",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4361-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43612020pdf-ww73d7ce9mu9",
+      "source_file": "sentencias/STS_4361_2020.pdf",
+      "source_sha256": "4e6f4a65409f7c2ac71be5dfd3cc549cde498213780ba9d9fc0db8ce7319abe7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4362-2020",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts43622020pdf-5w1hs3htsc31",
+      "source_file": "sentencias/STS_4362_2020.pdf",
+      "source_sha256": "34643ef3831cdd2134735c5624d6d478244b17b0010e7ae273efc797423fa0e7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4433-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts44332017pdf-yv5mmyk825s7",
+      "source_file": "sentencias/STS_4433_2017.pdf",
+      "source_sha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4434-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts44342017pdf-z65mhfbbasni",
+      "source_file": "sentencias/STS_4434_2017.pdf",
+      "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4560-2022",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts45602022pdf-gr0ay9ohrnls",
+      "source_file": "sentencias/STS_4560_2022.pdf",
+      "source_sha256": "c32fc66c8db8bbc38ad84d2fb060ec4953e53dc1cb71e0b1080ce2056385a77c",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4619-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts46192025pdf-o7r48t7dlplu",
+      "source_file": "sentencias/STS_4619_2025.pdf",
+      "source_sha256": "aabb9baab90c50a81a560b4a8916cb7c8d50584c85e79582643a3bbeee22c422",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4670-2017",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts46702017pdf-ta8apgyzc4ch",
+      "source_file": "sentencias/STS_4670_2017.pdf",
+      "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4849-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts48492025pdf-ytrehlg80si8",
+      "source_file": "sentencias/STS_4849_2025.pdf",
+      "source_sha256": "d4e7a1198d0f969540f8b34c39260dd680d856094bf464f7cc81c75fff3a7926",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-4869-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts48692024pdf-ka8xyxy2aqkg",
+      "source_file": "sentencias/STS_4869_2024.pdf",
+      "source_sha256": "71af5a8eb806d353f6591b64183a1350ae340561cd389fb7db324adf86debfe6",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5361-2024",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts53612024pdf-jm3ll3lz0y50",
+      "source_file": "sentencias/STS_5361_2024.pdf",
+      "source_sha256": "5ba58d25ff02853ea4275f35cb1ae09d4cd708a57b89e84129314c2a43bf405a",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5385-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts53852025pdf-d1qza98xkhok",
+      "source_file": "sentencias/STS_5385_2025.pdf",
+      "source_sha256": "98196fb0570ced625d8b8f5497e62be6b6794aaa8ff327966a2306894222b8e2",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5555-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts55552025pdf-uetnw59c02a1",
+      "source_file": "sentencias/STS_5555_2025.pdf",
+      "source_sha256": "ebdc9dd7e4e23624ce510a004cf6bb41bb28c7a08ca9f7f767d37e45ada6dcd4",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5559-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts55592025pdf-w8t8yx7zwa4m",
+      "source_file": "sentencias/STS_5559_2025.pdf",
+      "source_sha256": "81c0747c223e9267e520fdaa842320d308c1a43b91509430cbd1b4748e19c795",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5812-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts58122025pdf-9iw7shqw9a5k",
+      "source_file": "sentencias/STS_5812_2025.pdf",
+      "source_sha256": "d23eb1589b23499e03f29b33c958539a9fb56b960f35dcebb3b8401cf5447518",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-5816-2025",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts58162025pdf-psrlfzd7lboi",
+      "source_file": "sentencias/STS_5816_2025.pdf",
+      "source_sha256": "0ae50e1702552e7d0c4ffa5aada9e17a0070f4d35f56beb6b6bc5372cdaac0e8",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-691-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts6912018pdf-g3juxo6v47sp",
+      "source_file": "sentencias/STS_691_2018.pdf",
+      "source_sha256": "c1ff8163792eec2aa89669d1737314471d1af84810d9246599a944e1d5b1051d",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-695-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts6952018pdf-hp8nd5hs87yc",
+      "source_file": "sentencias/STS_695_2018.pdf",
+      "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-697-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts6972018pdf-wksg6p18eykd",
+      "source_file": "sentencias/STS_697_2018.pdf",
+      "source_sha256": "2ace80235e1dae0aba06ac08d300649ccdca38f606756c4bf6ad8dee497143e7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-698-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts6982018pdf-k5c2mzu1mrcs",
+      "source_file": "sentencias/STS_698_2018.pdf",
+      "source_sha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-700-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts7002018pdf-7tw8f12ege2n",
+      "source_file": "sentencias/STS_700_2018.pdf",
+      "source_sha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-701-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts7012018pdf-sm0nkort7zsq",
+      "source_file": "sentencias/STS_701_2018.pdf",
+      "source_sha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-710-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts7102021pdf-zl2y8xm68khc",
+      "source_file": "sentencias/STS_710_2021.pdf",
+      "source_sha256": "81f6b889a8d9ba4d3d0f10bd7174807d0ca70b655bcc610bfe92a3a059f82431",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-712-2021",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts7122021pdf-xdzwrg59uqg7",
+      "source_file": "sentencias/STS_712_2021.pdf",
+      "source_sha256": "b632c8b45c70c5cc0f7a130fc770c7b3ad0228aa1e19234cbd022a1c97538470",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-839-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts8392018pdf-hofdn02cp8fz",
+      "source_file": "sentencias/STS_839_2018.pdf",
+      "source_sha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-840-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts8402018pdf-4oh007ccmqt1",
+      "source_file": "sentencias/STS_840_2018.pdf",
+      "source_sha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-841-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts8412018pdf-u0hfdvsakvgp",
+      "source_file": "sentencias/STS_841_2018.pdf",
+      "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12",
+      "status": "ACTIVE"
+    },
+    {
+      "judgment_id": "sts-842-2018",
+      "remote_document_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw/documents/sts8422018pdf-yjf896rso8gy",
+      "source_file": "sentencias/STS_842_2018.pdf",
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b",
+      "status": "ACTIVE"
+    }
+  ],
+  "expected_documents": 106,
+  "manifest_sha256": "883d5c533989fe1c2ab7e91d3c9171a804982b13de9cd3b17d24f912424b5f3c",
+  "schema_version": "residenciafiscal-file-search-store/2",
+  "status": "ACTIVE",
+  "store_name": "fileSearchStores/residenciafiscalrollout106-u9n62kkv14iw"
+}

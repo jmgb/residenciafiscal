@@ -6,8 +6,10 @@ contra el dominio público después de cada deploy.
 > **Si retomas el backend del chat**, separa dos líneas: el experimento de
 > comparación entre el corpus v3 y Gemini File Search, y la activación
 > productiva. El mecanismo atómico ya está implementado y el chat está activo en
-> producción desde el 31 de julio de 2026. Siguen pendientes privacidad,
-> retención y revisión humana; la activación técnica no satisface esos gates.
+> producción desde el 31 de julio de 2026. El corpus técnico de 106 se conectó
+> el 1 de agosto como `AGENT_REVIEWED_ONLY`; siguen pendientes la mejora de
+> relevancia genérica y la revisión jurídica humana, que esta activación no
+> sustituye.
 > La fase 0 de plataforma ya está ejecutada y medida.
 >
 > **Decisión de runtime V1 (2026-07-31):** el chat se desplegará íntegramente en
@@ -212,8 +214,8 @@ contra el dominio público después de cada deploy.
     >
     > El diseño y la validación con 1, 5 y 106 sentencias ya están completados.
     > Las 106 permanecen como borrador interno `AGENT_REVIEWED_ONLY`; la
-    > aprobación jurídica humana y la decisión de conectarlas al chat siguen
-    > pendientes.
+    > conexión técnica al chat está hecha y la aprobación jurídica humana sigue
+    > pendiente.
   - [ ] **Fase 2 — evaluación.** El banco de 40 preguntas está versionado, pero
     sus etiquetas heredadas evalúan el router y no son todavía una rúbrica
     neutral para comparar respuestas A/B. Bloquean los gates binarios
@@ -285,8 +287,9 @@ contra el dominio público después de cada deploy.
   hashes: 106/106 documentos `BUILD_PASSED` en 11 lotes, 67 casos dentro del
   ámbito recuperable, 39 conservados como fuera de ámbito y 74 unidades de
   recuperación. El resultado es un borrador interno
-  `AGENT_REVIEWED_ONLY`, no un corpus jurídicamente aprobado ni conectado al
-  chat. Estado, métricas y operación:
+  `AGENT_REVIEWED_ONLY`, no un corpus jurídicamente aprobado. Desde el 1 de
+  agosto está conectado al chat con comprobación cerrada de 106 artefactos y
+  rollback al deploy/store piloto. Estado, métricas y operación:
   [`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](../jurisprudence/JURISPRUDENCE_PHASE_E0.md).
   - [x] Diseñar `residenciafiscal-case/3` a partir del caso de uso principal y
     de los doce gaps del piloto de 40 preguntas; probarlo con 1 sentencia y
@@ -330,10 +333,17 @@ contra el dominio público después de cada deploy.
     - [x] Añadir verificación reproducible en CI y política de artefactos: hashes
       de entradas y derivados, regeneración de agregados y límites de 1.000
       ficheros/50 MB.
-  - [ ] **Completar los gaps estructurales detectados antes de promover las
-    106 al chat.** Prioridad: tipar las 36 determinaciones residenciales y crear
-    los 13 análisis CDI ausentes desde anclajes literales; después ampliar un
-    banco de relevancia para consultas genéricas con anotaciones independientes.
+  - [x] **Conectar de forma reversible las 106 al chat.** A usa el agregado
+    completo (67 documentos recuperables y 74 unidades) con BM25 y lookup
+    `SAN/STS número/año`; B usa un File Search Store con los 106 PDF. La Function
+    valida que los 106 IDs tienen artefacto verbatim antes de arrancar y el store
+    piloto se conserva para rollback. Esta decisión operativa no convierte el
+    holdout limitado en un gate aprobado ni cambia el estado jurídico del corpus.
+  - [ ] **Completar los gaps estructurales y mejorar la relevancia genérica.**
+    Prioridad: tipar las 36 determinaciones residenciales y crear los 13 análisis
+    CDI ausentes desde anclajes literales; después ampliar un banco de relevancia
+    para consultas genéricas con anotaciones independientes. No ajustar contra
+    el holdout congelado ni inferir estos campos sin apoyo literal.
   - [ ] **Obtener aprobación jurídica humana del corpus de 106.** No hay revisor
     disponible: los 1.620 elementos jurídicos siguen `AGENT_REVIEWED`, con 0
     `HUMAN_APPROVED`. La revisión automática no debe registrarse como humana.

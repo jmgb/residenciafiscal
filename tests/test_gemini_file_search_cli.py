@@ -49,6 +49,18 @@ def test_modelo_inicial_y_promocion_manual_estan_en_la_allowlist() -> None:
     )
 
 
+def test_defaults_productivos_apuntan_al_rollout_de_106() -> None:
+    from gemini_file_search_cli import (
+        DEFAULT_CORPUS,
+        DEFAULT_MANIFEST,
+        DEFAULT_STORE_STATE,
+    )
+
+    assert DEFAULT_MANIFEST.name == "jurisprudence_v3_rollout_106.json"
+    assert DEFAULT_CORPUS.name == "rollout-106.corpus.json"
+    assert DEFAULT_STORE_STATE.name == "rollout-106-store.json"
+
+
 def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,

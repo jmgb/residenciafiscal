@@ -76,6 +76,9 @@ htmlcov/
 output/*
 !output/.gitkeep
 !output/jurisprudence-v3-rollout-state.json
+!output/file-search/
+output/file-search/*
+!output/file-search/rollout-106-store.json
 results/
 test_output/
 tests/test_outputs/

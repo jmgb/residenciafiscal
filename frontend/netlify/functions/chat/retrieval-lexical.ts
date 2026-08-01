@@ -49,23 +49,49 @@ const count = (values: string[]) => {
   return result;
 };
 
+const judgmentIdentifiers = (text: string): Set<string> => {
+  const identifiers = new Set<string>();
+  for (const match of text.matchAll(/\b(san|sts)\s*[- ]?\s*(\d+)\s*[/_-]\s*(\d{4})\b/gi)) {
+    identifiers.add(`${match[1]?.toLocaleLowerCase('es')}-${match[2]}-${match[3]}`);
+  }
+  return identifiers;
+};
+
 export const rankUnits = (corpus: RetrievalCorpus, query: string) => {
-  const documents = corpus.units.map((unit) => count(tokens(unit.search_text, false)));
+  const documents = corpus.units.map((unit) =>
+    count(tokens(`${unit.judgment_id}\n${unit.search_text}`, false))
+  );
+  if (!documents.length) return [];
   const frequencies = new Map<string, number>();
   for (const document of documents) {
     for (const token of document.keys()) frequencies.set(token, (frequencies.get(token) ?? 0) + 1);
   }
   const queryCounts = count(tokens(query, true));
+  const documentLengths = documents.map((document) =>
+    [...document.values()].reduce((total, frequency) => total + frequency, 0)
+  );
+  const averageDocumentLength =
+    documentLengths.reduce((total, length) => total + length, 0) / documents.length;
+  const queryIdentifiers = judgmentIdentifiers(query);
+  const k1 = 1.2;
+  const b = 0.75;
   return corpus.units
     .map((unit, index) => {
-      const lexical = [...queryCounts].reduce((total, [token, queryFrequency]) => {
-        const inDocument = documents[index]?.get(token) ?? 0;
-        return (
-          total +
-          Math.min(queryFrequency, inDocument) *
-            (Math.log((documents.length + 1) / ((frequencies.get(token) ?? 0) + 1)) + 1)
+      const documentLength = documentLengths[index] ?? 0;
+      let lexical = [...queryCounts].reduce((total, [token, queryFrequency]) => {
+        const termFrequency = documents[index]?.get(token) ?? 0;
+        if (!termFrequency) return total;
+        const documentFrequency = frequencies.get(token) ?? 0;
+        const inverseDocumentFrequency = Math.log(
+          1 + (documents.length - documentFrequency + 0.5) / (documentFrequency + 0.5)
         );
+        const normalizedFrequency =
+          (termFrequency * (k1 + 1)) /
+          (termFrequency +
+            k1 * (1 - b + (b * documentLength) / Math.max(averageDocumentLength, 1)));
+        return total + queryFrequency * inverseDocumentFrequency * normalizedFrequency;
       }, 0);
+      if (queryIdentifiers.has(unit.judgment_id)) lexical += 100;
       return { unit, lexical: Number(lexical.toFixed(8)) };
     })
     .sort(

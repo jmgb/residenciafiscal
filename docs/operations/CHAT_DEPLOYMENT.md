@@ -6,11 +6,12 @@ atómicas y una consulta A/B productiva están verificados. El endpoint conserva
 los cierres independientes `CHAT_COMPARISON_ENABLED` y `VITE_CHAT_MODE`; siguen
 pendientes los requisitos legales indicados en `TASKS.md`. El recorrido Edge →
 FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
-**Fecha de corte:** 2026-07-31.
+**Fecha de corte:** 2026-08-01.
 
 Este runbook explica la V1 Netlify-only y conserva, en una sección separada, el
-comparador Python futuro. No autoriza el rollout a las 106 sentencias ni sustituye los gates de
-presupuesto y revisión jurídica de [`TASKS.md`](../project/TASKS.md).
+comparador Python futuro. El rollout técnico a 106 está autorizado y conectado;
+no sustituye los gates de presupuesto y revisión jurídica de
+[`TASKS.md`](../project/TASKS.md).
 
 ## Decisión de runtime para la V1
 
@@ -126,7 +127,7 @@ convertirlas a secretos Functions y rotarlas.
 | `CHAT_COMPARISON_ENABLED` | Debe ser exactamente `true`; cualquier otro valor cierra el endpoint |
 | `OPENAI_API_KEY` | Redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
 | `GEMINI_API_KEY` | Gemini File Search |
-| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` de la muestra de cinco |
+| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
 | `CHAT_FILE_SEARCH_MODEL` | `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
 | `CHAT_DAILY_BUDGET_USD` | Techo diario global, decimal USD positivo |
@@ -209,13 +210,14 @@ comparación provisional de calidad, latencia y coste están en
 | `GEMINI_API_KEY` | sí | Credencial de File Search B |
 | `CHAT_FILE_SEARCH_MODEL` | no | Por defecto `gemini-3.5-flash-lite`; debe estar en la lista permitida |
 | `CHAT_RETRIEVAL_CORPUS` | no | Corpus v3; usa la ruta versionada por defecto |
-| `CHAT_FILE_SEARCH_STORE_STATE` | no | Recibo local del store; por defecto `output/file-search/f0-store.json` |
+| `CHAT_FILE_SEARCH_STORE_STATE` | no | Recibo local del store; por defecto `output/file-search/rollout-106-store.json` |
 | `CHAT_COMPARISON_OUTPUT_DIR` | no | Informes por `request_id`; conviene un volumen persistente |
 | `CHAT_COMPARISON_LOG` | no | JSONL sin consulta ni respuesta; conviene un volumen persistente |
 
-El servicio necesita además los cinco `*.pages.json` de
+El servicio necesita además los 106 `*.pages.json` de
 `knowledge/jurisprudencia-v3/verbatim/`. Falla cerrado si falta el corpus, el
-recibo del store, una credencial o un verbatim necesario.
+recibo del store, una credencial, un verbatim necesario o si los IDs del corpus
+y del store no coinciden exactamente.
 
 ### Netlify
 
@@ -240,8 +242,9 @@ procedimiento de despliegue de la V1 Netlify-only.
 
 1. Desplegar FastAPI en un runtime Python 3.13 con `CHAT_COMPARISON_ENABLED=false`.
 2. Verificar `/health` y que `POST /chat` devuelve `503`; no se incurre en coste.
-3. Montar los artefactos de la muestra de cinco y un almacenamiento persistente
-   para informes y logs. Confirmar que el File Search Store sigue existiendo.
+3. Montar los 106 artefactos verbatim y un almacenamiento persistente para
+   informes y logs. Confirmar que el File Search Store sigue existiendo y que
+   sus IDs coinciden exactamente con el corpus.
 4. Configurar credenciales y el secreto en el backend; configurar URL y el
    mismo secreto en Netlify con alcance Functions.
 5. Habilitar el backend y desplegar un **Deploy Preview** con

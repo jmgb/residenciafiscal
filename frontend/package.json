@@ -9,7 +9,8 @@
   "description": "residenciafiscal.org - Chatbot sobre jurisprudencia de residencia fiscal (Art. 9 LIRPF)",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/build-corpus.mjs && node scripts/build-normativa.mjs && node scripts/build-sitemap.mjs && node scripts/build-netlify-redirects.mjs",
+    "build:chat-artifacts": "node scripts/build-chat-verbatim-artifacts.mjs",
+    "prebuild": "npm run build:chat-artifacts && node scripts/build-corpus.mjs && node scripts/build-normativa.mjs && node scripts/build-sitemap.mjs && node scripts/build-netlify-redirects.mjs",
     "build": "tsc --noEmit && vite build",
     "postbuild": "node scripts/prerender.mjs && node scripts/build-version.mjs",
     "preview": "vite preview",

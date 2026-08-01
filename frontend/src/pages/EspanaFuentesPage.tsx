@@ -53,14 +53,17 @@ export function EspanaFuentesPage() {
         <h2 className='mb-3 font-heading text-lg font-semibold'>Fuentes y corpus validado</h2>
         <ul className='mb-3 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground'>
           <li>106 resoluciones judiciales españolas conservadas como fuentes.</li>
-          <li>5 sentencias estructuradas y validadas en el corpus v3 actual.</li>
+          <li>
+            106 sentencias estructuradas con validación técnica; 67 aportan unidades recuperables.
+          </li>
           <li>74 del Tribunal Supremo y 32 de la Audiencia Nacional.</li>
           <li>Período 2015-2025.</li>
           <li>Fuente: CENDOJ (Centro de Documentación Judicial).</li>
         </ul>
         <p className='text-sm leading-relaxed text-muted-foreground'>
-          La ampliación sigue el gate 1 → 5 → 106. Una fuente no se presenta como caso estructurado
-          hasta superar la compilación, la verificación literal y la revisión correspondiente.
+          Las 106 superaron la compilación y la verificación literal automatizada. Su revisión
+          jurídica es del agente, no una aprobación humana; el chat excluye de recuperación las 39
+          resoluciones marcadas fuera del ámbito de residencia fiscal.
         </p>
       </section>
 

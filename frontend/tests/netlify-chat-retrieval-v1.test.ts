@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import corpus from '../../knowledge/jurisprudencia-v3/retrieval/corpus.json';
+import rolloutCorpus from '../../knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json';
+import { rankUnits } from '../netlify/functions/chat/retrieval-lexical';
 import { retrieveForChat } from '../netlify/functions/chat/structured-retrieval';
 
 describe('recuperación estructurada Netlify V1', () => {
@@ -12,7 +14,7 @@ describe('recuperación estructurada Netlify V1', () => {
         'san-1226-2021-residencia-fiscal-2011',
         'san-1136-2016-residencia-habitual',
         'san-1071-2025-residencia-fiscal',
-        'san-1386-2017-residencia-fiscal-suiza',
+        'san-1386-2017-exencion-indemnizacion',
       ],
     ],
     [
@@ -20,9 +22,9 @@ describe('recuperación estructurada Netlify V1', () => {
       'parcial',
       [
         'san-1386-2017-residencia-fiscal-suiza',
-        'san-1136-2016-residencia-habitual',
-        'san-1226-2021-residencia-fiscal-2011',
         'san-1210-2023-residencia-fiscal',
+        'san-1226-2021-residencia-fiscal-2011',
+        'san-1136-2016-residencia-habitual',
         'san-1071-2025-residencia-fiscal',
       ],
     ],
@@ -44,6 +46,31 @@ describe('recuperación estructurada Netlify V1', () => {
       behavior: 'abstenerse',
       uncoveredFacets: ['CRIT_AUSENCIAS_ESPORADICAS'],
       hits: [],
+    });
+  });
+
+  it('prioriza un identificador judicial explícito dentro de las 106', () => {
+    expect(
+      rankUnits(rolloutCorpus, '¿Qué resolvió SAN 2132/2025 sobre residencia fiscal?')[0]?.unit
+        .judgment_id
+    ).toBe('san-2132-2025');
+    expect(
+      rankUnits(rolloutCorpus, 'Resume la STS 3882/2024 y sus pruebas.')[0]?.unit.judgment_id
+    ).toBe('sts-3882-2024');
+  });
+
+  it('usa la cobertura nueva para responder sobre ausencias esporádicas', () => {
+    const result = retrieveForChat(
+      rolloutCorpus,
+      '¿Qué son las ausencias esporádicas y cuándo computan?',
+      5
+    );
+
+    expect(result.behavior).toBe('responder');
+    expect(result.uncoveredFacets).toEqual([]);
+    expect(result.hits[0]).toMatchObject({
+      judgmentId: 'sts-107-2018',
+      unitId: 'sts-107-2018-residencia-fiscal',
     });
   });
 });

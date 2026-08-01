@@ -60,7 +60,8 @@ CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
 CASE_EVALUATION ?= ./knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json
 CASE_OUTPUT ?= ./knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json
 CASE_REPORT ?= ./knowledge/jurisprudencia-v3/reports/san-1210-2023.case-validation.json
-FILE_SEARCH_STATE ?= ./output/file-search/f0-store.json
+FILE_SEARCH_STATE ?= ./output/file-search/rollout-106-store.json
+FILE_SEARCH_MANIFEST ?= ./sentencias/jurisprudence_v3_rollout_106.json
 FILE_SEARCH_LOG ?= ./output/logs/chat-strategy-comparison.jsonl
 FILE_SEARCH_MODEL ?= gemini-3.5-flash-lite
 CHAT_QUESTION ?=
@@ -297,6 +298,7 @@ file-search-prepare:
 	@test "$(CONFIRM_PAID)" = "1" || \
 		(echo "CONFIRM_PAID=1 es obligatorio: indexar genera coste" >&2; exit 2)
 	uv run python $(PYTHON_SOURCE)/gemini_file_search_cli.py prepare-store \
+		--manifest $(FILE_SEARCH_MANIFEST) \
 		--state $(FILE_SEARCH_STATE) \
 		--confirm-paid
 

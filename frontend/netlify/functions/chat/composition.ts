@@ -1,24 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
-import corpus from '../../../../knowledge/jurisprudencia-v3/retrieval/corpus.json';
-import san1071 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1071-2025.pages.json';
-import san1136 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1136-2016.pages.json';
-import san1210 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json';
-import san1226 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1226-2021.pages.json';
-import san1386 from '../../../../knowledge/jurisprudencia-v3/verbatim/san-1386-2017.pages.json';
 import type { ChatFunctionDependencies } from './chat';
 import { CurrentStructuredStrategy } from './current-structured-strategy';
 import { GeminiFileSearchStrategy } from './file-search-strategy';
+import { productionCorpus, productionVerbatimArtifacts } from './production-corpus';
 import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters';
 import { compareStrategiesInParallel } from './runtime';
 import { SupabaseChatStore, type SupabaseRpcClient } from './supabase-chat-store';
-
-const artifacts = {
-  'san-1071-2025': san1071,
-  'san-1136-2016': san1136,
-  'san-1210-2023': san1210,
-  'san-1226-2021': san1226,
-  'san-1386-2017': san1386,
-};
 
 const usdToMicrousd = (raw: string | undefined): number | null => {
   if (!raw || !/^\d+(?:\.\d{1,6})?$/.test(raw.trim())) return null;
@@ -84,10 +71,10 @@ export const createProductionDependencies = (
     dailyLimitMicrousd,
     reservationMicrousd,
   });
-  const structured = new CurrentStructuredStrategy(corpus, createOpenAIWriter(openAIKey));
+  const structured = new CurrentStructuredStrategy(productionCorpus, createOpenAIWriter(openAIKey));
   const fileSearch = new GeminiFileSearchStrategy({
     storeName,
-    artifacts,
+    artifacts: productionVerbatimArtifacts,
     interact: createGeminiInteraction(geminiKey),
     model: fileSearchModel,
   });

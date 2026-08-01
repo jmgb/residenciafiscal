@@ -14,6 +14,8 @@ describe('PrivacyPage', () => {
 
     expect(screen.getByText(/OpenAI/i)).toBeInTheDocument();
     expect(screen.getByText(/Google Gemini/i)).toBeInTheDocument();
+    expect(screen.getByText(/fragmentos estructurados de 106 sentencias/i)).toBeInTheDocument();
+    expect(screen.getByText(/File Search Store de esos 106 PDF/i)).toBeInTheDocument();
     expect(
       screen.getByText(/guarda en Supabase la pregunta y las dos respuestas/i)
     ).toBeInTheDocument();

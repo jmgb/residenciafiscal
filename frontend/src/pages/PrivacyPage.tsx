@@ -18,8 +18,8 @@ export function PrivacyPage() {
         <h2 className='mb-2 font-heading text-lg font-semibold'>Qué se envía</h2>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
           En cada consulta se transmite únicamente la última pregunta. La estrategia A la envía a
-          OpenAI junto con fragmentos estructurados de cinco sentencias; la estrategia B la envía a
-          Google Gemini, que busca de forma independiente en el File Search Store de esos cinco PDF.
+          OpenAI junto con fragmentos estructurados de 106 sentencias; la estrategia B la envía a
+          Google Gemini, que busca de forma independiente en el File Search Store de esos 106 PDF.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
           No se reenvía el historial completo. Ambos proveedores reciben la consulta en paralelo y

@@ -23,15 +23,15 @@ from current_structured_strategy import CurrentStructuredStrategy
 from gateway_chat_writer import GatewayChatWriter
 from gateway_setup import get_gateway
 from gemini_file_search_answer import GeminiFileSearchResponder
-from gemini_file_search_store import StoreReceipt, prepare_sample_store
+from gemini_file_search_store import StoreReceipt, prepare_file_search_store
 from google_genai_file_search import create_google_genai_gateway
 from jurisprudence_retrieval_corpus import load_retrieval_corpus
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANIFEST = PROJECT_ROOT / "sentencias/jurisprudence_v3_sample_5.json"
-DEFAULT_STORE_STATE = PROJECT_ROOT / "output/file-search/f0-store.json"
+DEFAULT_MANIFEST = PROJECT_ROOT / "sentencias/jurisprudence_v3_rollout_106.json"
+DEFAULT_STORE_STATE = PROJECT_ROOT / "output/file-search/rollout-106-store.json"
 DEFAULT_LOG = PROJECT_ROOT / "output/logs/chat-strategy-comparison.jsonl"
-DEFAULT_CORPUS = PROJECT_ROOT / "knowledge/jurisprudencia-v3/retrieval/corpus.json"
+DEFAULT_CORPUS = PROJECT_ROOT / "knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -79,10 +79,13 @@ def _require_paid_confirmation(confirmed: bool) -> None:
         raise SystemExit("Se exige --confirm-paid antes de una llamada facturable")
 
 
-def _load_store(path: Path) -> StoreReceipt:
+def _load_store(path: Path, *, require_active: bool = True) -> StoreReceipt:
     if not path.is_file():
         raise SystemExit(f"No existe el estado del store: {path}")
-    return StoreReceipt.model_validate_json(path.read_bytes())
+    receipt = StoreReceipt.model_validate_json(path.read_bytes())
+    if require_active and receipt.status != "ACTIVE":
+        raise SystemExit(f"El store aún no está completo: {len(receipt.documents)} PDF")
+    return receipt
 
 
 def _write_model(path: Path, model: BaseModel) -> None:
@@ -97,12 +100,14 @@ def _write_model(path: Path, model: BaseModel) -> None:
 def _prepare(args: argparse.Namespace) -> int:
     _require_paid_confirmation(args.confirm_paid)
     gateway = create_google_genai_gateway(_api_key())
-    receipt = prepare_sample_store(
+    existing = _load_store(args.state, require_active=False) if args.state.is_file() else None
+    receipt = prepare_file_search_store(
         gateway=gateway,
         manifest_path=args.manifest,
         project_root=PROJECT_ROOT,
+        existing_state=existing,
+        checkpoint=lambda state: _write_model(args.state, state),
     )
-    _write_model(args.state, receipt)
     print(f"Store preparado: {receipt.store_name} ({len(receipt.documents)} PDF)")
     print(f"Estado local: {args.state}")
     return 0
@@ -160,7 +165,7 @@ def _compare(args: argparse.Namespace) -> int:
 def _delete(args: argparse.Namespace) -> int:
     if not args.confirm_delete:
         raise SystemExit("Se exige --confirm-delete para eliminar el store")
-    receipt = _load_store(args.state)
+    receipt = _load_store(args.state, require_active=False)
     gateway = create_google_genai_gateway(_api_key())
     gateway.delete_store(receipt.store_name)
     args.state.unlink()

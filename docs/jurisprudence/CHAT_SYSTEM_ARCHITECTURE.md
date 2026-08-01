@@ -2,7 +2,8 @@
 
 **Estado del corpus:** el rollout v3 técnico contiene 106 casos, 67 dentro del
 ámbito recuperable y 74 unidades. Sigue `AGENT_REVIEWED_ONLY`; no sustituye la
-revisión humana ni está promovido como corpus del chat.
+revisión humana. Está conectado al chat desde el 2026-08-01 con rollback al
+deploy y store piloto.
 **Fecha de corte del corpus:** 2026-08-01.
 
 Este documento es la puerta de entrada canónica para entender el sistema de
@@ -35,11 +36,11 @@ El repositorio contiene dos líneas distintas:
 | Línea | Alcance actual | Resultado | Uso |
 |---|---|---|---|
 | Preparación del corpus | Workflow Python + agente, 106 borradores técnicos | Verbatim, casos por cuestión, anclajes e índice | Fuente verificable interna |
-| Chat | Comparador A/B accesible por contrato HTTP; producción todavía en `stub` | Respuestas con fuentes, coste y límites | Consulta del abogado |
+| Chat | Comparador A/B Netlify-only activo con las 106 | Respuestas con fuentes, coste y límites | Consulta del abogado |
 
 Los exports JSONL/CSV/XLSX que existen son históricos y no tienen un generador
 LLM activo. El rollout v3 siguió la secuencia 1 → 5 → 106 y completó los gates
-técnicos. La revisión jurídica humana y la promoción al chat siguen separadas.
+técnicos. La conexión técnica y la revisión jurídica humana siguen separadas.
 
 Tampoco deben mezclarse los árboles:
 
@@ -48,8 +49,8 @@ Tampoco deben mezclarse los árboles:
 - `knowledge/jurisprudencia-v3/` contiene el caso canónico, verbatim e índices
   del chat;
 - `knowledge/jurisprudencia-v3/retrieval/corpus.json` conserva el agregado
-  piloto de cinco y `retrieval/rollout-106.corpus.json` mantiene aislado el
-  agregado completo pendiente de promoción;
+  piloto de cinco para rollback y `retrieval/rollout-106.corpus.json` es el
+  agregado productivo;
 - `output/` contiene ejecuciones y logs locales regenerables; no es una fuente
   canónica ni se versiona.
 
@@ -123,7 +124,7 @@ pregunta del usuario
         │                                   └── resolución local + gate
         │
         └── B — Gemini File Search
-              File Search Store con los 5 PDF
+              File Search Store con los 106 PDF
                     └── recuperación + redactor LLM
                            └── anotaciones del proveedor
                                   └── verificación local + gate
@@ -305,12 +306,11 @@ jurídica humana.
   cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
   respecto del texto literal que publica. Es simultáneamente un gap de datos de
   A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
-- La Function Netlify-only, el prototipo FastAPI y la interfaz de dos respuestas
-  están implementados detrás del stub. Falta provisionar/validar Database,
-  ejecutar el Deploy Preview real y autorizar producción.
-- Las 106 están compiladas como borrador técnico interno. No existe aprobación
-  para presentarlas como revisadas por una persona ni decisión para promover
-  ese recuperador al chat.
+- La Function Netlify-only y la interfaz de dos respuestas están activas. El
+  prototipo FastAPI se conserva como alternativa futura fuera del runtime V1.
+- Las 106 están conectadas como borrador técnico `AGENT_REVIEWED_ONLY`. No
+  existe aprobación para presentarlas como revisadas por una persona y las
+  métricas del holdout no permiten declarar el recuperador como definitivo.
 
 Las cifras, preguntas y límites exactos de F0.2 están en
 [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
@@ -431,8 +431,8 @@ Antes de cambiar esta área:
    sin la rúbrica neutral;
 6. no realizar llamadas reales sin los flags explícitos de coste;
 7. no cambiar de modelo mediante alias ni de forma silenciosa;
-8. no conectar el corpus completo al frontend ni atribuirle revisión humana por
-   inferencia.
+8. no atribuir revisión humana por inferencia ni ocultar las métricas y el
+   rollback que condicionan la conexión del corpus completo.
 
 Si una decisión cambia, deben actualizarse en el mismo cambio este documento,
 el contrato especializado afectado y `docs/project/TASKS.md`. Las mediciones se

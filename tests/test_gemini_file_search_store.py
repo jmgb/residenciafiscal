@@ -23,12 +23,10 @@ class FakeFileSearchStores:
     def __init__(self) -> None:
         self.uploads: list[dict[str, Any]] = []
         self.deleted: list[tuple[str, dict[str, bool]]] = []
+        self.created: list[dict[str, str]] = []
 
     def create(self, *, config: dict[str, str]) -> Any:
-        assert config == {
-            "display_name": "residenciafiscal-f0-sample-5",
-            "embedding_model": "models/gemini-embedding-2",
-        }
+        self.created.append(config)
         return SimpleNamespace(name="fileSearchStores/f0")
 
     def upload_to_file_search_store(self, **kwargs: Any) -> Any:
@@ -96,6 +94,12 @@ def test_prepara_store_con_exactamente_cinco_pdf_y_metadatos(tmp_path: Path) -> 
     assert receipt.store_name == "fileSearchStores/f0"
     assert len(receipt.documents) == 5
     assert all(document.status == "ACTIVE" for document in receipt.documents)
+    assert client.file_search_stores.created == [
+        {
+            "display_name": "residenciafiscal-f0-sample-5",
+            "embedding_model": "models/gemini-embedding-2",
+        }
+    ]
     assert [item["config"]["display_name"] for item in client.file_search_stores.uploads] == [
         f"SAN_{index}.pdf" for index in range(5)
     ]
@@ -162,3 +166,98 @@ def test_elimina_store_incompleto_si_falla_una_subida(tmp_path: Path) -> None:
         )
 
     assert client.file_search_stores.deleted == [("fileSearchStores/f0", {"force": True})]
+
+
+def test_prepara_store_reanudable_con_las_106_del_rollout() -> None:
+    from gemini_file_search_store import prepare_file_search_store
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    project_root = Path(__file__).resolve().parents[1]
+    manifest = project_root / "sentencias/jurisprudence_v3_rollout_106.json"
+    client = FakeGoogleClient()
+    checkpoints: list[Any] = []
+
+    receipt = prepare_file_search_store(
+        gateway=GoogleGenAIFileSearchGateway(client, poll_interval_seconds=0),
+        manifest_path=manifest,
+        project_root=project_root,
+        checkpoint=checkpoints.append,
+    )
+
+    assert receipt.status == "ACTIVE"
+    assert receipt.expected_documents == 106
+    assert len(receipt.documents) == 106
+    assert len(client.file_search_stores.uploads) == 106
+    assert len(checkpoints) == 108  # store creado + cada PDF + cierre ACTIVE
+    assert client.file_search_stores.created[0]["display_name"] == ("residenciafiscal-rollout-106")
+
+
+def test_reanuda_desde_el_ultimo_pdf_confirmado_sin_borrar_el_store(
+    tmp_path: Path,
+) -> None:
+    from gemini_file_search_store import prepare_file_search_store
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    manifest = _write_manifest(tmp_path)
+    first_client = FakeGoogleClient()
+    first_client.file_search_stores = FailingSecondUploadFileSearchStores()
+    checkpoints: list[Any] = []
+
+    with pytest.raises(RuntimeError, match="upload failed"):
+        prepare_file_search_store(
+            gateway=GoogleGenAIFileSearchGateway(
+                first_client,
+                poll_interval_seconds=0,
+            ),
+            manifest_path=manifest,
+            project_root=tmp_path,
+            checkpoint=checkpoints.append,
+        )
+
+    partial = checkpoints[-1]
+    assert partial.status == "PREPARING"
+    assert len(partial.documents) == 1
+    assert first_client.file_search_stores.deleted == []
+
+    second_client = FakeGoogleClient()
+    completed = prepare_file_search_store(
+        gateway=GoogleGenAIFileSearchGateway(second_client, poll_interval_seconds=0),
+        manifest_path=manifest,
+        project_root=tmp_path,
+        existing_state=partial,
+    )
+
+    assert completed.status == "ACTIVE"
+    assert len(completed.documents) == 5
+    assert len(second_client.file_search_stores.uploads) == 4
+    assert second_client.file_search_stores.created == []
+
+
+def test_rechaza_checkpoint_con_hash_de_documento_alterado(tmp_path: Path) -> None:
+    from gemini_file_search_store import prepare_file_search_store
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    manifest = _write_manifest(tmp_path)
+    first_client = FakeGoogleClient()
+    first_client.file_search_stores = FailingSecondUploadFileSearchStores()
+    checkpoints: list[Any] = []
+
+    with pytest.raises(RuntimeError, match="upload failed"):
+        prepare_file_search_store(
+            gateway=GoogleGenAIFileSearchGateway(first_client, poll_interval_seconds=0),
+            manifest_path=manifest,
+            project_root=tmp_path,
+            checkpoint=checkpoints.append,
+        )
+
+    partial = checkpoints[-1]
+    altered_document = partial.documents[0].model_copy(update={"source_sha256": "0" * 64})
+    altered = partial.model_copy(update={"documents": (altered_document,)})
+
+    with pytest.raises(ValueError, match="documentos del checkpoint"):
+        prepare_file_search_store(
+            gateway=GoogleGenAIFileSearchGateway(FakeGoogleClient(), poll_interval_seconds=0),
+            manifest_path=manifest,
+            project_root=tmp_path,
+            existing_state=altered,
+        )

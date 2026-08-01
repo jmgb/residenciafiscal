@@ -24,8 +24,8 @@ from google_genai_file_search import create_google_genai_gateway
 from jurisprudence_retrieval_corpus import load_retrieval_corpus
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_CORPUS = PROJECT_ROOT / "knowledge/jurisprudencia-v3/retrieval/corpus.json"
-DEFAULT_STORE_STATE = PROJECT_ROOT / "output/file-search/f0-store.json"
+DEFAULT_CORPUS = PROJECT_ROOT / "knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json"
+DEFAULT_STORE_STATE = PROJECT_ROOT / "output/file-search/rollout-106-store.json"
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output/file-search/live"
 DEFAULT_LOG = PROJECT_ROOT / "output/logs/chat-strategy-comparison.jsonl"
 
@@ -89,6 +89,10 @@ def get_production_chat_runner() -> ProductionChatRunner:
 
     receipt = StoreReceipt.model_validate_json(store_state_path.read_bytes())
     corpus = load_retrieval_corpus(corpus_path.read_bytes())
+    receipt_ids = {document.judgment_id for document in receipt.documents}
+    corpus_ids = {source.judgment_id for source in corpus.sources}
+    if receipt.status != "ACTIVE" or receipt_ids != corpus_ids:
+        raise HTTPException(status_code=503, detail="Store y corpus del chat no coinciden")
     google_gateway = create_google_genai_gateway(api_key)
     verbatim_artifacts = {
         document.judgment_id: (

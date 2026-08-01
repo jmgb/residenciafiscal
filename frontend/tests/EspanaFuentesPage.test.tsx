@@ -55,8 +55,11 @@ describe('EspanaFuentesPage', () => {
       screen.getByText('106 resoluciones judiciales españolas conservadas como fuentes.')
     ).toBeInTheDocument();
     expect(
-      screen.getByText('5 sentencias estructuradas y validadas en el corpus v3 actual.')
+      screen.getByText(
+        '106 sentencias estructuradas con validación técnica; 67 aportan unidades recuperables.'
+      )
     ).toBeInTheDocument();
+    expect(screen.getByText(/revisión jurídica es del agente/i)).toBeInTheDocument();
   });
 
   it('publica la normativa aplicada de España', () => {

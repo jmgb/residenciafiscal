@@ -18,7 +18,7 @@
   {
     "path": "/espana/fuentes",
     "title": "Corpus de España — Residencia Fiscal",
-    "description": "Fuentes del corpus español: 106 resoluciones del Tribunal Supremo y la Audiencia Nacional (2015–2025), 5 sentencias validadas en el corpus v3 y la normativa aplicada, del art. 9 LIRPF a los convenios de doble imposición.",
+    "description": "Fuentes del corpus español: 106 resoluciones del Tribunal Supremo y la Audiencia Nacional (2015–2025), 106 sentencias estructuradas con validación técnica, 67 recuperables y la normativa aplicada.",
     "indexable": true,
     "image": null,
     "sitemap": { "changefreq": "monthly", "priority": "0.6" }
