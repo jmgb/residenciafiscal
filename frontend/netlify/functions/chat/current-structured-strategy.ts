@@ -81,6 +81,7 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         limits: retrievalLimits,
         cost: zeroCost(MODEL),
         model: 'deterministic-structured-v3',
+        reasoning_effort: null,
         latency_ms: Math.round(performance.now() - started),
       };
     }
@@ -117,6 +118,7 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         limits: [reason],
         cost,
         model: written.model,
+        reasoning_effort: REASONING_EFFORT,
         latency_ms: Math.round(performance.now() - started),
       };
     }
@@ -137,6 +139,7 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       limits: [...retrievalLimits, ...written.draft.limits],
       cost,
       model: written.model,
+      reasoning_effort: REASONING_EFFORT,
       latency_ms: Math.round(performance.now() - started),
     };
   }

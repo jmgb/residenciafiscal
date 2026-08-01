@@ -90,6 +90,7 @@ describe('composition root de la Function con Supabase', () => {
           sources: [],
           limits: [],
           model: 'gpt-5.6-luna',
+          reasoning_effort: 'high',
           latency_ms: 1_500,
           cost: {
             currency: 'USD',
@@ -111,6 +112,7 @@ describe('composition root de la Function con Supabase', () => {
           sources: [],
           limits: [],
           model: 'gemini-3.5-flash-lite',
+          reasoning_effort: null,
           latency_ms: 900,
           cost: {
             currency: 'USD',

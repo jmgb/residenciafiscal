@@ -45,6 +45,7 @@ export interface StrategyAnswer {
   limits: string[];
   cost: MarginalCost;
   model: string;
+  reasoning_effort: string | null;
   latency_ms: number;
 }
 

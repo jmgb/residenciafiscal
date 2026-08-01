@@ -31,6 +31,7 @@ const report: ComparisonReport = {
         excludes_corpus_preparation: true as const,
       },
       model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       latency_ms: 10,
     },
     {
@@ -52,6 +53,7 @@ const report: ComparisonReport = {
         excludes_corpus_preparation: true as const,
       },
       model: 'gemini-test',
+      reasoning_effort: null,
       latency_ms: 12,
     },
   ],

@@ -144,6 +144,7 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
         ],
         cost,
         model: this.model,
+        reasoning_effort: null,
         latency_ms: Math.round(performance.now() - started),
       };
     }
@@ -155,6 +156,7 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
       limits: draft.limits,
       cost,
       model: this.model,
+      reasoning_effort: null,
       latency_ms: Math.round(performance.now() - started),
     };
   }

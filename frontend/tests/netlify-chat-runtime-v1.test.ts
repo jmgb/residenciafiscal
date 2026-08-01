@@ -26,6 +26,7 @@ const answer = (strategy: StrategyAnswer['strategy'], text: string = strategy): 
   limits: [],
   cost: zeroCost,
   model: 'test-model',
+  reasoning_effort: null,
   latency_ms: 1,
 });
 

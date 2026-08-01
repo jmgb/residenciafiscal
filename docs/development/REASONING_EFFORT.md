@@ -25,6 +25,7 @@ No garantiza por sí sola mayor precisión. Puede aumentar razonamiento, latenci
 y coste, por lo que cada respuesta debe mostrar y registrar:
 
 - modelo efectivo;
+- esfuerzo enviado explícitamente al proveedor, o `NULL` si no se configuró;
 - tokens de entrada y salida;
 - coste marginal en USD;
 - tipo de medición;

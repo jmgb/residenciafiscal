@@ -44,9 +44,11 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 | `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
 Campos de cada respuesta: estrategia, estado, contenido, modelo efectivo,
+`reasoning_effort` enviado al proveedor cuando se configuró explícitamente,
 latencia, coste en microdólares, calidad de la medición (`ACTUAL`, `ESTIMATED`
 o `UNAVAILABLE`), versión de precio, tokens de entrada/salida/documento, citas
-exactas y límites declarados.
+exactas y límites declarados. El esfuerzo queda a `NULL` cuando no hubo llamada
+al modelo o la estrategia no configuró un valor equivalente.
 
 La Function no escribe tablas directamente. Solo puede invocar con
 `SUPABASE_SECRET_KEY` estas RPC de `public`, todas `SECURITY DEFINER`, con
@@ -68,14 +70,15 @@ la Data API:
   completa tras verificar la identidad fuera de la base de datos.
 
 La migración inicial histórica es
-`supabase/migrations/20260731161251_chat_persistence_and_budget.sql`; la
-migración vigente `20260801104446_restore_chat_observability_only.sql` elimina
-la tabla y columnas de presupuesto monetario y deja solo el coste real
-observado. La segunda migración retira un permiso público inseguro de
-`rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de
-vida serializan el borrado. `db lint` no devuelve errores de esquema; los
-advisors mantienen avisos informativos esperables para tablas privadas con RLS
-sin políticas públicas.
+`supabase/migrations/20260731161251_chat_persistence_and_budget.sql`;
+`20260801104446_restore_chat_observability_only.sql` elimina la tabla y columnas
+de presupuesto monetario y deja solo el coste real observado, y la migración
+vigente `20260801111630_chat_messages_reasoning_effort.sql` añade el esfuerzo de
+razonamiento por respuesta. La segunda migración retira un permiso público
+inseguro de `rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de
+ciclo de vida serializan el borrado. `db lint` no devuelve errores de esquema;
+los advisors mantienen avisos informativos esperables para tablas privadas con
+RLS sin políticas públicas.
 
 ## Credenciales y fronteras
 

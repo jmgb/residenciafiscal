@@ -93,6 +93,7 @@ export const createProductionDependencies = (
             strategy: answer.strategy,
             status: answer.status,
             model: answer.model,
+            reasoning_effort: answer.reasoning_effort,
             latency_ms: answer.latency_ms,
             cost_microusd: answer.cost.cost_microusd,
             measurement: answer.cost.measurement,

@@ -44,6 +44,7 @@ const errorAnswer = (
   limits: [timeout ? 'Tiempo de respuesta agotado.' : 'No se ha podido completar esta estrategia.'],
   cost: unknownCost(),
   model: 'unavailable',
+  reasoning_effort: null,
   latency_ms: latencyMs,
 });
 

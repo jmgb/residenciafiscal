@@ -48,6 +48,7 @@ describe('estrategia A estructurada', () => {
       strategy: 'current_structured',
       status: 'completa',
       model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       sources: [{ strategy: 'current_structured', verification: 'EXACT' }],
       cost: {
         measurement: 'ACTUAL',
@@ -91,7 +92,11 @@ describe('estrategia A estructurada', () => {
     );
 
     expect(write).not.toHaveBeenCalled();
-    expect(answer).toMatchObject({ status: 'abstención', cost: { cost_microusd: 0 } });
+    expect(answer).toMatchObject({
+      status: 'abstención',
+      reasoning_effort: null,
+      cost: { cost_microusd: 0 },
+    });
   });
 });
 
@@ -154,6 +159,7 @@ describe('estrategia B Gemini File Search', () => {
     );
     expect(answer).toMatchObject({
       status: 'completa',
+      reasoning_effort: null,
       sources: [
         {
           judgment_id: 'sentencia-1',

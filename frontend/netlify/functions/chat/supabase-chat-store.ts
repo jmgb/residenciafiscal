@@ -48,6 +48,7 @@ const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
   status: answer.status,
   content: answer.text,
   model: answer.model,
+  reasoning_effort: answer.reasoning_effort,
   latency_ms: answer.latency_ms,
   limits: answer.limits,
   sources: answer.sources,
