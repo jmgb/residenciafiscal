@@ -8,7 +8,7 @@ import { resolveRelease } from './scripts/release.mjs';
 
 const repositoryRoot = path.resolve(__dirname, '..');
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   const env = loadEnv(mode, repositoryRoot, '');
   // Mismo cálculo que `scripts/build-version.mjs`: el bundle y /version.json
   // tienen que declarar el mismo despliegue o la comprobación de versión miente.
@@ -20,7 +20,10 @@ export default defineConfig(({ mode }) => {
     env.SENTRY_FRONTEND_PROJECT_SLUG ||
     process.env.SENTRY_FRONTEND_PROJECT_SLUG ||
     'residencia-fiscal-frontend';
-  const uploadSourceMaps = mode === 'production' && Boolean(authToken && sentryOrg);
+  // El bundle de servidor solo vive durante el build (lo consume
+  // `scripts/prerender.mjs`): no se despliega, así que subir sus sourcemaps a
+  // Sentry sería publicar un artefacto que ningún error puede mencionar.
+  const uploadSourceMaps = mode === 'production' && !isSsrBuild && Boolean(authToken && sentryOrg);
 
   return {
     envDir: repositoryRoot,

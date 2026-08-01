@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
 import { CONTACT_EMAIL, EXPERT_PROFILES } from '@/lib/contribution';
 import { loadNormativa } from '@/lib/normativa';
+import { TreatyPreloadContext } from '@/lib/treaty-preload';
 import { CountryPage } from '@/pages/CountryPage';
 
 /**
@@ -11,33 +12,40 @@ import { CountryPage } from '@/pages/CountryPage';
  * existe. Se sustituye por el precepto real del convenio España-Uruguay: basta
  * con uno para comprobar que la ficha se compone con lo que devuelve el índice.
  */
-vi.mock('@/lib/normativa', () => ({
-  loadNormativa: vi.fn(async () => [
-    {
-      slug: 'cdi-boe-a-2011-6551-a4',
-      jurisdiccion: 'es',
-      titulo: 'Artículo 4 — Residente',
-      norma: 'Convenio entre el Reino de España y la República Oriental del Uruguay…',
-      designacion: 'Artículo 4',
-      epigrafe: 'Residente',
-      grupo: 'cdi',
-      boeId: 'BOE-A-2011-6551',
-      urlBoe: 'https://www.boe.es/buscar/act.php?id=BOE-A-2011-6551#a4',
-      derogada: false,
-      notaDerogacion: null,
-      vigenteDesde: '2011-04-24',
-      redacciones: 1,
-      parrafos: 4,
-      sentencias: [],
-      totalSentencias: 0,
-    },
-  ]),
-  loadPrecepto: vi.fn(async () => ({
+const URUGUAY = vi.hoisted(() => ({
+  entry: {
     slug: 'cdi-boe-a-2011-6551-a4',
-    articulado: ['1. A los efectos de este Convenio, la expresión «residente de un Estado»…'],
-    redaccionesAnteriores: [],
-    notasBoe: [],
-  })),
+    jurisdiccion: 'es',
+    titulo: 'Artículo 4 — Residente',
+    norma: 'Convenio entre el Reino de España y la República Oriental del Uruguay…',
+    designacion: 'Artículo 4',
+    epigrafe: 'Residente',
+    grupo: 'cdi' as const,
+    boeId: 'BOE-A-2011-6551',
+    urlBoe: 'https://www.boe.es/buscar/act.php?id=BOE-A-2011-6551#a4',
+    derogada: false,
+    notaDerogacion: null,
+    vigenteDesde: '2011-04-24',
+    redacciones: 1,
+    parrafos: 4,
+    sentencias: [],
+    totalSentencias: 0,
+  },
+  get texto() {
+    // `PreceptoTexto` extiende la entrada del índice: el articulado viaja con
+    // los mismos metadatos, no sueltos.
+    return {
+      ...this.entry,
+      articulado: ['1. A los efectos de este Convenio, la expresión «residente de un Estado»…'],
+      redaccionesAnteriores: [],
+      notasBoe: [],
+    };
+  },
+}));
+
+vi.mock('@/lib/normativa', () => ({
+  loadNormativa: vi.fn(async () => [URUGUAY.entry]),
+  loadPrecepto: vi.fn(async () => URUGUAY.texto),
   sentenciasDe: () => [],
 }));
 
@@ -160,6 +168,51 @@ describe('CountryPage', () => {
     expect(
       screen.getByRole('heading', { name: /Convenio de doble imposición España–Chile/ })
     ).toBeInTheDocument();
+  });
+
+  it('recupera el convenio precargado al volver a su página', async () => {
+    // El HTML prerenderizado trae el convenio de esa página embebido. Al
+    // navegar a otro país y volver, el estado del componente ya es el del
+    // segundo: hay que resembrarlo desde la precarga o `/uruguay` acabaría
+    // publicando el articulado de `/chile`.
+    const preload = {
+      [URUGUAY.entry.boeId]: URUGUAY,
+    };
+    const renderConPreload = (path: string) =>
+      render(
+        <TreatyPreloadContext.Provider value={preload}>
+          <MemoryRouter initialEntries={[path]}>
+            <CountryPage country={countryByPath(path)} />
+          </MemoryRouter>
+        </TreatyPreloadContext.Provider>
+      );
+
+    const { rerender } = renderConPreload('/uruguay');
+    expect(await screen.findByText(/residente de un Estado/)).toBeInTheDocument();
+
+    rerender(
+      <TreatyPreloadContext.Provider value={preload}>
+        <MemoryRouter initialEntries={['/chile']}>
+          <CountryPage country={countryByPath('/chile')} />
+        </MemoryRouter>
+      </TreatyPreloadContext.Provider>
+    );
+    expect(
+      await screen.findByRole('heading', { name: /Convenio de doble imposición España–Chile/ })
+    ).toBeInTheDocument();
+
+    rerender(
+      <TreatyPreloadContext.Provider value={preload}>
+        <MemoryRouter initialEntries={['/uruguay']}>
+          <CountryPage country={countryByPath('/uruguay')} />
+        </MemoryRouter>
+      </TreatyPreloadContext.Provider>
+    );
+
+    expect(
+      await screen.findByRole('heading', { name: /Convenio de doble imposición España–Uruguay/ })
+    ).toBeInTheDocument();
+    expect(screen.getByText(URUGUAY.entry.norma)).toBeInTheDocument();
   });
 
   it('avisa en vez de quedarse cargando si el corpus normativo no responde', async () => {

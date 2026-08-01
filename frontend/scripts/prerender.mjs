@@ -1,22 +1,32 @@
 #!/usr/bin/env node
 /**
- * Prerenderiza las rutas públicas estáticas de la SPA a partir de `dist/index.html`.
+ * Prerenderiza las rutas públicas de la SPA a partir de `dist/index.html`.
  *
- * Los bots sociales no ejecutan JavaScript: al compartir `/manifiesto` o
- * `/metodologia` leen los metadatos de la shell, que son los de la home. Aquí se
- * escribe una copia de la shell por ruta (`dist/<ruta>/index.html`) con su título,
- * descripción, canonical e imagen OG propios. El rewrite `/* → /index.html` de
- * Netlify no está forzado, así que el archivo físico gana y esas URLs sirven la
- * copia correcta; la SPA se hidrata igual porque el bundle es el mismo.
+ * Dos cosas, y las dos porque los bots no ejecutan JavaScript:
  *
- * Se ejecuta en `postbuild`, después de `vite build`.
+ * 1. **Metadatos por ruta.** Al compartir `/manifiesto` o `/francia`, un bot
+ *    social leía los de la shell, que son los de la home. Aquí se escribe una
+ *    copia por ruta (`dist/<ruta>/index.html`) con su título, descripción,
+ *    canonical e imagen OG propios.
+ * 2. **Contenido.** El HTML servido era `<div id="root"></div>`: sin JavaScript
+ *    no había una sola línea de texto, así que un buscador que no ejecute el
+ *    bundle —o que lo posponga— indexaba páginas vacías. Ahora cada copia lleva
+ *    la página ya renderizada por `dist-ssr/entry-server.js`.
  *
- * Falla ruidosamente si algún patrón no encuentra exactamente una coincidencia:
- * un metadato que deja de sustituirse en silencio es peor que un build roto.
+ * El rewrite `/* → /index.html` de Netlify no está forzado, así que el archivo
+ * físico gana y esas URLs sirven la copia correcta; en el navegador se monta la
+ * misma aplicación de siempre sobre ese HTML.
+ *
+ * Se ejecuta en `postbuild`, después de `vite build` y del build SSR.
+ *
+ * Falla ruidosamente si algún patrón no encuentra exactamente una coincidencia
+ * o si una ruta no renderiza: una página que deja de tener contenido en
+ * silencio es peor que un build roto.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { render, TREATY_PRELOAD_ELEMENT_ID } from '../dist-ssr/entry-server.js';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
 import staticRoutes from '../src/data/staticRoutes.json' with { type: 'json' };
 
@@ -28,8 +38,13 @@ const publicDir = join(frontendDir, 'public');
 
 const SITE_URL = 'https://residenciafiscal.org';
 
+/** Índice normativo ya generado por `build-normativa.mjs` en el `prebuild`. */
+const NORMATIVA = JSON.parse(readFileSync(join(publicDir, 'data', 'normativa.json'), 'utf8'));
+
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
 const COUNTRY_ROUTES = countryRoutes.map((route) => ({
+  path: route.path,
+  treatyBoeId: route.treatyBoeId,
   dir: route.path.slice(1),
   // El título sale del JSON y no se compone aquí, por el mismo motivo que en las
   // rutas estáticas: la página lo fija también en runtime y dos copias divergen.
@@ -46,6 +61,8 @@ const COUNTRY_ROUTES = countryRoutes.map((route) => ({
  * el bot podían leer descripciones distintas sin que nada lo detectara.
  */
 const STATIC_ROUTES = staticRoutes.map((route) => ({
+  path: route.path,
+  treatyBoeId: null,
   dir: route.path.slice(1),
   title: route.title,
   description: route.description,
@@ -61,6 +78,7 @@ const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES];
  * Prettier parte los `<meta>` largos en varias líneas y vite los respeta.
  */
 const PATTERNS = {
+  root: /<div id="root"><\/div>/g,
   title: /<title>[\s\S]*?<\/title>/g,
   description: /<meta\s+name="description"\s+content="[\s\S]*?"\s*\/>/g,
   robots: /<meta\s+name="robots"\s+content="[\s\S]*?"\s*\/>/g,
@@ -95,12 +113,53 @@ function replaceOnce(html, label, pattern, replacement) {
   return html.replace(pattern, () => replacement);
 }
 
+/**
+ * Convenios que la página necesita resueltos antes de renderizarse.
+ *
+ * `TaxTreaty` los pide por `fetch` en un efecto, y en el build no hay efectos:
+ * sin sembrarlos, el HTML estático diría «Cargando el convenio…», que es
+ * justamente lo que este script existe para evitar.
+ */
+function preloadTreaties(route) {
+  if (!route.treatyBoeId) return {};
+  const entry = NORMATIVA.find((precepto) => precepto.boeId === route.treatyBoeId);
+  if (!entry) {
+    throw new Error(
+      `${route.path}: el convenio ${route.treatyBoeId} no está en public/data/normativa.json. ` +
+        'Regenera el corpus con `make export-normativa` y `node scripts/build-normativa.mjs`.'
+    );
+  }
+  const preceptoFile = join(publicDir, 'data', 'preceptos', `${entry.slug}.json`);
+  const texto = existsSync(preceptoFile) ? JSON.parse(readFileSync(preceptoFile, 'utf8')) : null;
+  return { [entry.boeId]: { entry, texto } };
+}
+
+/**
+ * JSON embebible en la página. `<` escapado porque un `</script>` dentro del
+ * texto legal cerraría la etiqueta y rompería el documento.
+ */
+function embedJson(value) {
+  return JSON.stringify(value).replace(/</g, '\\u003c');
+}
+
 function renderRoute(shell, route) {
   const title = escapeAttr(route.title);
   const description = escapeAttr(route.description);
   const url = escapeAttr(route.url);
+  const treaties = preloadTreaties(route);
 
   let html = shell;
+  // El contenido va dentro de `#root`, no en un `<noscript>`: es la misma
+  // página que verá quien sí ejecute JavaScript, no una versión aparte.
+  html = replaceOnce(
+    html,
+    'div#root',
+    PATTERNS.root,
+    `<div id="root">${render(route.path, treaties)}</div>` +
+      (Object.keys(treaties).length > 0
+        ? `<script id="${TREATY_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(treaties)}</script>`
+        : '')
+  );
   html = replaceOnce(html, 'title', PATTERNS.title, `<title>${title}</title>`);
   html = replaceOnce(
     html,

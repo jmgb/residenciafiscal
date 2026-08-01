@@ -144,6 +144,37 @@ y sus adaptadores viven en `netlify/functions/chat/`; devuelve el protocolo SSE
 `netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
 del repositorio.
 
+## Prerenderizado: el HTML se sirve con contenido
+
+`npm run build` genera **dos** bundles. El de siempre para el navegador y uno de
+servidor (`npm run build:ssr` → `dist-ssr/entry-server.js`, no versionado) que
+`scripts/prerender.mjs` usa en el `postbuild` para renderizar cada ruta pública
+a HTML y escribirla dentro de `<div id="root">`.
+
+Antes el HTML era la shell vacía: sin JavaScript no había una sola línea de
+texto, así que un buscador que no ejecute el bundle indexaba páginas en blanco.
+Ahora `/francia` se sirve con su `h1`, el convenio, el artículo literal y el
+enlace al BOE —unos 8 KB de texto— y en el navegador se monta encima la misma
+aplicación de siempre.
+
+Cuatro cosas que conviene saber antes de tocarlo:
+
+- **No hay hidratación.** `main.tsx` sigue usando `createRoot`, que descarta el
+  markup y vuelve a pintar. Es deliberado: `hydrateRoot` exigiría que el primer
+  render del cliente coincidiera con el del build, y los datos que llegan por
+  `fetch` no coinciden nunca.
+- **Los efectos no corren en el build.** Cualquier contenido que dependa de un
+  `useEffect` sale como su estado de carga. Por eso el convenio se pasa resuelto
+  vía `TreatyPreloadContext` (`src/lib/treaty-preload.ts`), y viaja embebido en
+  un `<script type="application/json">` para que el navegador no lo repida ni el
+  visitante lo vea desaparecer al montar.
+- **Un módulo que toque `window` al importarse rompe el build**, no la página:
+  el árbol entero se ejecuta en Node. `tests/entry-server.test.tsx` lo detecta
+  sin necesidad de build.
+- **`vite.config.ts` desactiva el plugin de Sentry en el build SSR**
+  (`isSsrBuild`): ese bundle no se despliega, así que subir sus sourcemaps sería
+  publicar un artefacto que ningún error puede mencionar.
+
 ## Caché y versión desplegada
 
 Una SPA no vuelve a pedir el HTML mientras la pestaña viva, y un móvil conserva
@@ -166,6 +197,13 @@ con Cloudflare por delante del dominio. Configuración de DNS, TLS, WAF y
 verificación en [`docs/operations/NETLIFY.md`](../docs/operations/NETLIFY.md) y
 [`docs/operations/CLOUDFLARE.md`](../docs/operations/CLOUDFLARE.md). Integración
 de Google Analytics 4 documentada en [`docs/product/ANALYTICS.md`](../docs/product/ANALYTICS.md).
+
+GA4 y PostHog comparten **una sola puerta**, `isGoogleAnalyticsEnabled`: hosts
+canónicos, sin `?synthetic_monitor` y sin la marca de exclusión que deja
+`?no_analytics=1` (`src/lib/analytics-optout.ts`). Al tocar cualquiera de las
+dos analíticas, cambiar esa función y no duplicar la condición, o divergirán sin
+que nadie se entere. El informe semanal que las lee está en
+[`docs/operations/WEEKLY_TRAFFIC_REPORT.md`](../docs/operations/WEEKLY_TRAFFIC_REPORT.md).
 
 El navegador llama al endpoint same-origin `/api/chat`. La V1 no necesita añadir
 otro origen a `connect-src`; la alternativa futura Edge → FastAPI tampoco lo

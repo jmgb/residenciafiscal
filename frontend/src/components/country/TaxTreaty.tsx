@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CountryRoute } from '@/data/countryRoutes';
 import { loadNormativa, loadPrecepto, sentenciasDe } from '@/lib/normativa';
+import { useTreatyPreload } from '@/lib/treaty-preload';
 import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
 
 /** Relación oficial de convenios, que es lo que decide si un país tiene o no. */
@@ -32,12 +33,26 @@ type EstadoConvenio =
  * queda la ficha con su enlace al BOE: nunca un texto legal a medias.
  */
 export function TaxTreaty({ country }: { country: CountryRoute }) {
-  const [estado, setEstado] = useState<EstadoConvenio>({ fase: 'cargando' });
-  const [texto, setTexto] = useState<PreceptoTexto | null>(null);
   const boeId = country.treatyBoeId;
+  // Si el convenio viene resuelto con la página, se pinta en el primer render:
+  // es lo que hace que el HTML servido ya lo contenga, sin JavaScript.
+  const preload = useTreatyPreload(boeId);
+  const [estado, setEstado] = useState<EstadoConvenio>(() =>
+    preload ? { fase: 'listo', entry: preload.entry } : { fase: 'cargando' }
+  );
+  const [texto, setTexto] = useState<PreceptoTexto | null>(preload?.texto ?? null);
 
   useEffect(() => {
     if (!boeId) return;
+    // Con precarga no hace falta red, pero sí volver a fijar el estado: quien
+    // llega a `/francia`, navega a `/chile` y vuelve encuentra el mismo
+    // `preload` de Francia y un estado que ya es el de Chile. Sin esta
+    // sincronización, el artículo chileno se publicaría bajo el título francés.
+    if (preload) {
+      setEstado({ fase: 'listo', entry: preload.entry });
+      setTexto(preload.texto);
+      return;
+    }
     let vigente = true;
     // Al navegar entre países la SPA reutiliza este componente: sin reiniciar,
     // `/chile` mostraría durante un instante el articulado de `/francia`. Un
@@ -60,7 +75,7 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
     return () => {
       vigente = false;
     };
-  }, [boeId]);
+  }, [boeId, preload]);
 
   if (!boeId) {
     return (

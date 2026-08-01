@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router';
 import { App } from './App';
 import { installModulePreloadRecovery } from './lib/module-preload-recovery';
 import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
+import { readEmbeddedTreatyPreload, TreatyPreloadContext } from './lib/treaty-preload';
 import './index.css';
 
 // Antes de montar nada: si el HTML es de un deploy anterior, el primer chunk que
@@ -20,6 +21,12 @@ void initializeSentry({
 
 const container = document.getElementById('root');
 if (!container) throw new Error('No se encontró el elemento #root');
+
+// El HTML llega con la página ya renderizada por el build. React la sustituye
+// al montar —`createRoot` limpia el contenedor—, y para que el visitante no vea
+// desaparecer el convenio mientras se pide por red, el convenio de esta página
+// viaja embebido en el propio HTML.
+const treaties = readEmbeddedTreatyPreload(document);
 
 createRoot(container).render(
   <StrictMode>
@@ -38,9 +45,11 @@ createRoot(container).render(
         </main>
       }
     >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <TreatyPreloadContext.Provider value={treaties}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </TreatyPreloadContext.Provider>
     </SentryErrorBoundary>
   </StrictMode>
 );

@@ -1,5 +1,8 @@
 node_modules/
 dist/
+# Bundle de servidor del prerenderizado: solo existe durante el build, para que
+# `scripts/prerender.mjs` pueda renderizar cada ruta a HTML.
+dist-ssr/
 coverage/
 .vite/
 .netlify/

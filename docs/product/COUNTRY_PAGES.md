@@ -79,8 +79,10 @@ Las rutas reservadas actualmente son:
   país seleccionado.
 - `frontend/src/lib/chat-engine.ts` bloquea el uso del corpus español cuando recibe un país sin
   corpus registrado.
-- `frontend/scripts/prerender.mjs` prerenderiza todas las rutas de país con título, descripción y
-  canonical propios.
+- `frontend/scripts/prerender.mjs` escribe cada ruta de país como HTML estático: sus metadatos
+  propios y **la página ya renderizada**, convenio incluido. Sin esto el HTML servido era
+  `<div id="root"></div>` y un buscador que no ejecutara el bundle indexaba una página vacía; el
+  contrato está en [`frontend/CLAUDE.md`](../../frontend/CLAUDE.md).
 - `frontend/scripts/build-sitemap.mjs` genera el sitemap usando solo las rutas con
   `indexable: true`. `indexable` solo gobierna SEO; no debe usarse para inferir si existe corpus.
 - `frontend/scripts/build-netlify-redirects.mjs` genera `frontend/public/_redirects` desde la
