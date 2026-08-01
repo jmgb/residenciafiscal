@@ -34,7 +34,7 @@
   {
     "path": "/privacidad",
     "title": "Privacidad del chat — Residencia Fiscal",
-    "description": "Qué datos procesa el chat comparativo, qué proveedores intervienen y qué información conserva la aplicación.",
+    "description": "Responsable, base jurídica, proveedores, transferencias, plazos de conservación y derechos: qué datos procesa el chat comparativo y qué conserva la aplicación.",
     "indexable": false,
     "image": null,
     "sitemap": { "changefreq": "yearly", "priority": "0.1" }

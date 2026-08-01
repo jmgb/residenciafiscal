@@ -663,14 +663,31 @@ sola URL para poder encontrarse.
     otro.
     - [x] Publicar `/privacidad` con el flujo técnico real, minimización,
       almacenamiento local, persistencia Supabase, ambos proveedores y contacto.
-    - [ ] Completar con identidad legal del responsable, base jurídica,
-      transferencias, retención efectiva y contratos verificados. El chat ya
-      está activo para pruebas productivas, por lo que esta deuda debe cerrarse
-      antes de difundirlo a terceros como servicio disponible.
-      > Antes de abrir el chat a terceros debe completarse y validarse la
-      > identidad legal del responsable, la base jurídica, los plazos de
-      > conservación/borrado de mensajes en Supabase y los acuerdos con Supabase,
-      > OpenAI y Google. No prometer un plazo hasta automatizarlo y probarlo.
+    - [x] Completar con identidad legal del responsable (Intangible Land LLC,
+      EIN 92-2584862, Miami FL), base jurídica por finalidad, tabla de
+      encargados con su ubicación, transferencias fuera del EEE, plazos de
+      conservación —15 días de chat y la retención propia de las copias—,
+      derechos, AEPD y cookies. `/privacidad` es además la identificación del
+      art. 10 LSSI-CE, porque no hay página de aviso legal separada.
+    - [ ] Verificar y archivar los contratos de encargo con Supabase, OpenAI,
+      Google, Netlify, Cloudflare, Sentry y PostHog, y la validación jurídica
+      del texto publicado. La página ya declara lo que hace el sistema; falta el
+      respaldo contractual y la aprobación formal.
+      > Antes de difundir el chat a terceros como servicio disponible debe
+      > validarse jurídicamente el texto y estar verificados los acuerdos con
+      > Supabase, OpenAI y Google. No prometer un plazo hasta automatizarlo y
+      > probarlo.
+    - [ ] **Consentimiento previo para GA4 y PostHog.** Ambas se instalan hoy
+      sin recabar consentimiento; la exclusión de `?no_analytics=1` es opt-out,
+      no el consentimiento previo que exige el art. 22.2 LSSI para cookies e
+      identificadores no exentos. Opciones: banner de consentimiento con la
+      analítica bloqueada por defecto, o configuración sin identificadores.
+      Hasta cerrarlo, la política declara la medición bajo interés legítimo, que
+      es lo que ocurre de hecho, no lo que la AEPD acepta para cookies.
+    - [ ] **Representante en la UE (art. 27 RGPD).** El responsable no tiene
+      establecimiento en la Unión y ofrece el servicio a personas que están en
+      ella. Decidir si aplica alguna excepción o designar representante y
+      publicarlo en `/privacidad`.
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última

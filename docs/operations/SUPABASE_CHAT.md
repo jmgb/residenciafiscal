@@ -181,5 +181,9 @@ individualmente; el backup que contenga el registro desaparece al aplicar
 al solicitante debe informar de ese límite y no afirmar borrado inmediato de los
 backups.
 
-Siguen pendientes fuera del código: identidad legal del responsable, base
-jurídica, transferencias y contratos verificados con Supabase, OpenAI y Google.
+`/privacidad` ya publica el responsable (Intangible Land LLC), la base jurídica
+por finalidad, la tabla de encargados con su ubicación, las transferencias fuera
+del EEE, el plazo de 15 días y el límite de las copias. Siguen pendientes fuera
+del código: los contratos de encargo verificados con Supabase, OpenAI y Google,
+la validación jurídica formal del texto, el consentimiento previo de la analítica
+y la decisión sobre el representante del art. 27 RGPD.
