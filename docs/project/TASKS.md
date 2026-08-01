@@ -565,19 +565,61 @@ sola URL para poder encontrarse.
   - [ ] Sigue pendiente un nivel más abajo: el schema de extracción también está
     en español, y un corpus no hispano necesita traductor jurídico antes que
     desarrollador.
-- [ ] **Hacer público el repositorio, o la invitación no existe.**
-  `jmgb/residenciafiscal` es **privado** (comprobado el 1 de agosto de 2026): la
-  URL que construye `contribution.ts` devuelve `404` a cualquier visitante
-  anónimo, igual que los enlaces de `CONTRIBUTING.md`, `SECURITY.md` y
-  `sentencias/AVISO_LEGAL.md` que publica la web. Toda la ruta de contribución
-  está rota de extremo a extremo hasta que se abra. Es el bloqueo real de las
-  tareas que siguen, no una tarea más de la lista.
+- [x] **Hacer público el repositorio** (1 de agosto de 2026). `jmgb/residenciafiscal`
+  es **público**; las URLs que publica la web responden `200` sin sesión,
+  comprobado de forma anónima: la raíz del repo, `CONTRIBUTING.md`, `SECURITY.md`,
+  `CODE_OF_CONDUCT.md`, `sentencias/AVISO_LEGAL.md`, `normativa/es/AVISO_LEGAL.md`
+  y la plantilla `aportar_pais.yml`.
+
+  **Escaneo previo de secretos** (gitleaks 8.30.0 con `--log-opts="--all
+  --remotes"`: 217 commits con diff propio de los 220 alcanzables, 54 MB, más un
+  barrido de entropía independiente sobre los ficheros versionados):
+
+  - Un único secreto real en toda la historia, el `SENTRY_AUTH_TOKEN` de
+    `.mcp.json` en `13dc89c`, **ya revocado** el 2026-07-29. Se publicó a
+    sabiendas: purgar la historia habría cambiado todos los SHA y roto las
+    referencias a `13dc89c`/`098e492` de este mismo backlog sin cerrar ningún
+    riesgo, porque el token no abre nada. GitHub lo detectó como
+    `sentry_personal_token` (alerta 1) y queda cerrado como `revoked`.
+  - `.env` y `credentials/ga4.json` concentran 22 credenciales vivas y **nunca
+    estuvieron versionados**: verificado contra los 2007 paths que han existido
+    en la historia, no solo contra `.gitignore`. El único fichero sensible que
+    llegó a estarlo fue `.mcp.json`.
+  - El hallazgo de `generic-api-key` en `CHAT_SYSTEM_ARCHITECTURE.md` es un falso
+    positivo por entropía sobre prosa española («tokens de entrada,
+    salida/razonamiento»). No se añade al allowlist: silenciarlo exigiría una
+    regex sobre lenguaje natural que taparía secretos reales en la misma línea.
+
+  **Protecciones activadas al abrir**, todas gratuitas por ser público:
+  `secret_scanning`, `secret_scanning_push_protection`, alertas de Dependabot y
+  `dependabot_security_updates`. Push protection es la que cambia el resultado
+  la próxima vez: rechaza el push **antes** de que el objeto llegue al servidor,
+  mientras que `gitleaks.yml` corre después y solo avisa cuando el secreto ya
+  está en GitHub y ya hay que rotarlo. `secret_scanning_validity_checks` **no se
+  pudo activar**: la API acepta el `PATCH` pero el campo sigue en `disabled`,
+  así que la validez de un token detectado seguirá saliendo como `unknown`.
+
+  Quedan públicos, a propósito, tres identificadores que no son credenciales:
+  `GA4_PROPERTY_ID` en [`WEEKLY_TRAFFIC_REPORT.md`](../operations/WEEKLY_TRAFFIC_REPORT.md)
+  y los dos ruleset IDs de Cloudflare en
+  [`CLOUDFLARE.md`](../operations/CLOUDFLARE.md), que no sirven de nada sin un
+  token. Ese mismo documento describe qué reglas WAF están activas: es la única
+  información de postura de seguridad que la apertura hace pública, y se mantuvo
+  por su valor operativo para un colaborador.
+
+  **La licencia no se detectaba.** GitHub clasificaba el repositorio como
+  `Other` porque `LICENSE` llevaba una nota en español tras el texto MIT, así
+  que un colaborador no veía licencia alguna en la barra lateral. `LICENSE`
+  vuelve a ser el MIT canónico byte a byte y la salvedad pasa a
+  [`NOTICE.md`](../../NOTICE.md), que además cubre `normativa/es/`: la nota
+  anterior solo excluía `sentencias/`, dejando el corpus del BOE sin declarar.
 - [ ] **Verificar en GitHub el prerrellenado de la issue.** `contribution.ts`
   construye `?template=aportar_pais.yml&title=…&pais=<País>`; el formato de query
-  y el YAML están validados por test, pero **no se ha comprobado contra GitHub en
-  vivo** que rellene el campo `pais`. No se pudo verificar el 1 de agosto de 2026:
-  con el repositorio privado la URL responde `404` sin sesión. Abrirla una vez
-  después de hacerlo público.
+  y el YAML están validados por test. Con el repositorio ya público la URL deja
+  de dar `404`, pero **sigue sin comprobarse el prerrellenado en vivo**: GitHub
+  redirige a `/login` a quien no tiene sesión, conservando íntegra la query
+  —incluido `pais`— en el `return_to`. Falta abrirla **con sesión iniciada** y
+  confirmar que el campo `pais` llega relleno al formulario.
 - [ ] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
   `labels:` de la plantilla. Hoy usa `help wanted` porque GitHub solo aplica
   etiquetas que ya existen. Con varias propuestas de país a la vez, una etiqueta
@@ -585,8 +627,8 @@ sola URL para poder encontrarse.
 - [ ] **Difundir `/colaborar` fuera de GitHub.** Desde que las landings de país son
   indexables, el descubrimiento ya no depende de una sola URL, pero sigue
   necesitando canales externos (colegios de abogados, asociaciones de fiscalistas,
-  LinkedIn) además de `/colaborar` y `llms.txt`. Difundir antes de abrir el
-  repositorio manda al visitante a un `404`.
+  LinkedIn) además de `/colaborar` y `llms.txt`. El bloqueo que impedía difundir
+  —el `404` del repositorio privado— ya no existe.
 - [ ] **Decidir si activar GitHub Discussions.** Una propuesta de país es una
   conversación antes que una tarea; hoy todo entra como issue. Requiere activarlo
   en la web del repositorio.
@@ -684,10 +726,13 @@ sola URL para poder encontrarse.
       analítica bloqueada por defecto, o configuración sin identificadores.
       Hasta cerrarlo, la política declara la medición bajo interés legítimo, que
       es lo que ocurre de hecho, no lo que la AEPD acepta para cookies.
-    - [ ] **Representante en la UE (art. 27 RGPD).** El responsable no tiene
-      establecimiento en la Unión y ofrece el servicio a personas que están en
-      ella. Decidir si aplica alguna excepción o designar representante y
-      publicarlo en `/privacidad`.
+    - [x] **Representante en la UE (art. 27 RGPD): decidido no designarlo**
+      (1 de agosto de 2026). La titularidad es estadounidense y no habrá
+      representante. No es un pendiente: no volver a abrirlo como tarea ni
+      publicar uno inexistente en `/privacidad`, que guarda silencio sobre el
+      art. 27 sin negar la obligación. Razonamiento, riesgo asumido y reglas de
+      edición en
+      [`PRIVACY_AND_LEGAL.md`](../operations/PRIVACY_AND_LEGAL.md).
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última

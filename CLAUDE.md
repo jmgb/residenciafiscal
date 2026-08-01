@@ -323,6 +323,27 @@ conserva el stub hasta completar configuración, privacidad y Deploy Preview;
 decisión, despliegue y rollback:
 [`docs/operations/CHAT_DEPLOYMENT.md`](docs/operations/CHAT_DEPLOYMENT.md).
 
+## Privacidad y marco legal
+
+`/privacidad` es la única página legal del sitio: declara el responsable
+—Intangible Land LLC, titularidad estadounidense—, la base jurídica por
+finalidad, los ocho encargados con su ubicación, las transferencias fuera del
+EEE, los 15 días de conservación del chat, los derechos y las cookies. Cumple
+además la identificación del art. 10 LSSI-CE, así que **no hay ni debe crearse
+una página de aviso legal separada**.
+
+Cada afirmación de esa página corresponde a algo verificable en el código; si
+cambias el `store: false` de la estrategia A, el rate limit, la región de
+Supabase, el plazo de retención o un proveedor, la página deja de ser cierta y
+hay que actualizarla en el mismo cambio.
+
+**No se designa representante en la UE (art. 27 RGPD) y no es un pendiente**: es
+una decisión tomada el 1 de agosto de 2026. No publiques uno inexistente ni
+afirmes en la página que no hace falta; el silencio actual es deliberado. Mapa
+afirmación→código, riesgo asumido y lo que sigue abierto —consentimiento previo
+de la analítica, contratos de encargo y validación jurídica del texto— en
+[`docs/operations/PRIVACY_AND_LEGAL.md`](docs/operations/PRIVACY_AND_LEGAL.md).
+
 ## Backups de la base de datos
 
 `scripts/backup/` respalda a diario el proyecto Supabase en el bucket R2
@@ -410,17 +431,21 @@ no realiza llamadas LLM. Los experimentos conversacionales de pago exigen
 
 Gate antes de commitear: `make fast-check`.
 
-En CI hay dos workflows, uno por área, ambos en push y PR contra `main`:
+En CI hay tres workflows, todos en push y PR contra `main`:
 
 | Workflow | Cubre | Pasos |
 |----------|-------|-------|
 | `.github/workflows/ci.yml` | Python (todo salvo `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
 | `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest → build |
+| `.github/workflows/gitleaks.yml` | todo el repo, con historia completa | gitleaks |
 
-**Ninguno usa secrets, a propósito**: la suite Python por defecto no llama a ningún
-LLM. Si algún día hace falta un job con API real, va en un workflow aparte con
-`workflow_dispatch`, nunca en estos. `uv sync --locked` además falla si `uv.lock` se
-queda desincronizado de `pyproject.toml`.
+**Ninguno usa secrets configurados, a propósito**: la suite Python por defecto no
+llama a ningún LLM. La única credencial que aparece es el `secrets.GITHUB_TOKEN`
+que GitHub inyecta solo en `gitleaks.yml` para comentar en el PR; no se declara
+en la configuración del repositorio ni sale de él. Si algún día hace falta un job
+con API real, va en un workflow aparte con `workflow_dispatch`, nunca en estos.
+`uv sync --locked` además falla si `uv.lock` se queda desincronizado de
+`pyproject.toml`.
 
 `ci.yml` **no ignora `frontend/**`** aunque el frontend tenga su propio workflow: hay
 tests de pytest que leen ficheros del frontend (`test_frontend_seo_assets.py` valida
@@ -455,7 +480,8 @@ La configuración de biome tiene sus propias trampas: ver
 
 ## Ficheros públicos del repositorio
 
-El repo está preparado para ser público. Al tocar estas piezas, ten en cuenta:
+El repo **es público** desde el 1 de agosto de 2026. Al tocar estas piezas, ten
+en cuenta:
 
 - **`LICENSE` (MIT) cubre código y documentación, no los documentos jurídicos.**
   Hay dos corpus de fuente con condiciones propias, cada uno con su aviso legal
@@ -463,10 +489,21 @@ El repo está preparado para ser público. Al tocar estas piezas, ten en cuenta:
   textos del BOE en `normativa/`. Si añades ficheros a cualquiera de los dos,
   actualiza su inventario y comprueba su `AVISO_LEGAL.md`. El del BOE recuerda
   además que la única versión con valor jurídico es la edición oficial.
+  - **`LICENSE` contiene el texto MIT y nada más**, byte a byte igual a la
+    plantilla canónica: cualquier nota añadida hace que GitHub clasifique el
+    repositorio como `Other` y deje de mostrar la licencia. La salvedad sobre
+    los corpus vive en [`NOTICE.md`](NOTICE.md), que es donde se amplía.
 - **Nada de rutas absolutas** (`/home/ubuntu/...`) en código ni en documentación
-  pública: usa rutas relativas a la raíz del repositorio.
-- **Ningún workflow de CI usa secrets**, y debe seguir así. Ver la sección de
-  calidad de código.
+  pública: usa rutas relativas a la raíz del repositorio. La única excepción son
+  las units de systemd de `scripts/backup/` y `scripts/agentic/`, donde
+  `WorkingDirectory` y `ExecStart` **exigen** una ruta absoluta; ahí la ruta
+  describe el checkout operativo del VPS, no el de nadie más.
+- **Ningún workflow de CI usa secrets configurados**, y debe seguir así. Ver la
+  sección de calidad de código.
+- **Antes de tocar la visibilidad o de purgar historia**, el escaneo de
+  referencia es `gitleaks git --log-opts="--all --remotes"` sobre todas las refs,
+  no solo sobre `main`. Las excepciones se declaran en `.gitleaks.toml` con el
+  valor exacto, nunca excluyendo un directorio.
 - El correo personal no aparece en ningún fichero versionado: los canales de
   contacto de `SECURITY.md` y `CODE_OF_CONDUCT.md` son los avisos privados de
   GitHub.
