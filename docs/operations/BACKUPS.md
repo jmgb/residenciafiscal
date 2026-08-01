@@ -94,6 +94,9 @@ faltan.
 | `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ACCOUNT_ID` | Credenciales y endpoint de R2 |
 | `TELEGRAM_TOKEN`, `TELEGRAM_CHAT_ID` | Alertas de fallo (opcionales: sin ellas el script avisa por journal y sigue) |
 | `CHAT_RETENTION_DAYS` | Plazo aprobado para el purgado del chat; obligatorio para instalar el timer |
+| `CHAT_RETENTION_PURGE_ENABLED` | Activa el job de retención; por defecto `false` |
+| `CHAT_RETENTION_DRY_RUN` | Simula el purgado y audita candidatos; por defecto `true` |
+| `CHAT_RETENTION_BATCH_LIMIT` | Máximo de filas candidatas por familia y ejecución; por defecto `500` |
 | `BACKUP_RETENTION_DAYS` | Retención de snapshots R2; si se omite, usa `CHAT_RETENTION_DAYS` y, sin ambos, el fallback histórico de 30 días |
 
 El `.env` del VPS **contiene solo las claves operativas de backup y retención**,
@@ -218,8 +221,9 @@ Los tres servicios se lanzaron a mano tras instalar los timers, con
 - **Frescura**: `Backup freshness OK … (0h old, gzip ok)`.
 - **Simulacro**: `Backup restore drill OK … (3074 lines decompressed)`.
 
-Contenido real del dump, descargado de R2 y descomprimido: 4 tablas `private`
-(`chat_conversations`, `chat_daily_budgets`, `chat_messages`, `chat_requests`),
+Contenido real del dump, descargado de R2 y descomprimido: 5 tablas `private`
+(`chat_conversations`, `chat_daily_budgets`, `chat_messages`, `chat_requests`,
+`chat_retention_purge_audit`),
 23 tablas `auth`, el registro de `supabase_migrations`, 7 funciones —incluidas
 las RPC que usa la Function— y 28 bloques `COPY`. Es la comprobación que
 distingue un backup correcto de uno verde y vacío.

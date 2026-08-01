@@ -42,6 +42,7 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 | `private.chat_daily_budgets` | Contador diario bloqueado durante cada reserva |
 | `private.chat_requests` | Reserva, coste reconciliado, estado e idempotencia del mensaje |
 | `private.chat_messages` | Pregunta y respuestas A/B con contenido, fuentes, límites y uso |
+| `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
 Campos de cada respuesta: estrategia, estado, contenido, modelo efectivo,
 latencia, coste en microdólares, calidad de la medición (`ACTUAL`, `ESTIMATED`
@@ -128,12 +129,32 @@ La página `/privacidad` declara pregunta, respuestas, citas y costes. El plazo
 real se configura mediante `CHAT_RETENTION_DAYS`; el timer falla cerrado si falta
 esa variable. No se publica ni se promete un plazo hasta aprobarlo jurídicamente.
 
+El job sigue el patrón operativo de Presupuestor:
+
+- `CHAT_RETENTION_PURGE_ENABLED=false` por defecto: el timer no hace nada hasta
+  activar explícitamente la política aprobada.
+- `CHAT_RETENTION_DRY_RUN=true` por defecto: primero cuenta candidatos y registra
+  la ejecución, sin borrar.
+- `CHAT_RETENTION_BATCH_LIMIT=500` por defecto: si cualquiera de las tres
+  familias supera el límite, la ejecución se rechaza completa y queda auditada
+  como `batch_overflow`.
+
+Cada ejecución escribe solo contadores, cutoff, modo y estado en
+`private.chat_retention_purge_audit`; nunca guarda ni imprime preguntas,
+respuestas o diagnósticos de proveedores. La tabla es backend-only y se incluye
+en el dump del schema `private`.
+
 Instalación del purgado diario en el VPS:
 
 ```bash
 sudo bash scripts/privacy/install-chat-retention-timer.sh
 sudo systemctl start residenciafiscal-chat-retention.service
 ```
+
+La instalación del timer no activa el borrado. La secuencia segura es: instalar,
+observar dry-run durante el periodo acordado, revisar la auditoría con compliance
+y solo entonces configurar `CHAT_RETENTION_PURGE_ENABLED=true` y, cuando proceda,
+`CHAT_RETENTION_DRY_RUN=false`.
 
 El procedimiento de supresión requiere verificación de identidad fuera de la
 base de datos y un ticket operativo. El UUID visible de la URL no es una prueba

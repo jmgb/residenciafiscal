@@ -27,7 +27,7 @@ def test_la_migracion_separa_fallos_de_peticiones_completadas() -> None:
 def test_la_migracion_expone_las_operaciones_privadas_de_ciclo_de_vida() -> None:
     sql = "\n".join(
         path.read_text("utf-8")
-        for path in sorted(PROJECT_ROOT.glob("supabase/migrations/*_chat_privacy*.sql"))
+        for path in sorted(PROJECT_ROOT.glob("supabase/migrations/*_chat_*.sql"))
     )
 
     assert "purge_expired_chat_data" in sql
@@ -35,6 +35,19 @@ def test_la_migracion_expone_las_operaciones_privadas_de_ciclo_de_vida() -> None
     assert "p_cutoff timestamptz" in sql
     assert "DELETE FROM private.chat_requests" in sql
     assert "REVOKE ALL ON FUNCTION private.delete_chat_conversation" in sql
+
+
+def test_el_purgado_tiene_dry_run_limite_y_auditoria() -> None:
+    sql = "\n".join(
+        path.read_text("utf-8")
+        for path in sorted(PROJECT_ROOT.glob("supabase/migrations/*_chat_*.sql"))
+    )
+
+    assert "chat_retention_purge_audit" in sql
+    assert "p_dry_run boolean" in sql
+    assert "p_batch_limit integer" in sql
+    assert "batch_overflow" in sql
+    assert "dry_run" in sql
 
 
 def test_la_supresion_bloquea_la_conversacion_y_la_fk_del_presupuesto_tiene_indice() -> None:
@@ -51,6 +64,11 @@ def test_la_automatizacion_exige_retencion_explicita_y_no_muestra_contenido() ->
     purge = (PRIVACY_DIR / "purge-chat-data.sh").read_text("utf-8")
 
     assert "CHAT_RETENTION_DAYS" in purge
+    assert "CHAT_RETENTION_PURGE_ENABLED" in purge
+    assert "CHAT_RETENTION_DRY_RUN" in purge
+    assert "CHAT_RETENTION_BATCH_LIMIT" in purge
+    assert ':-false' in purge
+    assert ':-true' in purge
     assert "Falta CHAT_RETENTION_DAYS" in purge
     assert "content" not in purge.lower()
 
