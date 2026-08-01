@@ -1,0 +1,32 @@
+# Configuración de gitleaks para residenciafiscal.
+#
+# Extiende el conjunto de reglas por defecto: aquí solo se declaran excepciones,
+# nunca se relajan las reglas. Una excepción se escribe con el valor exacto que
+# gitleaks señala, no con el fichero o el directorio donde aparece: excluir
+# `tests/` entero dejaría de vigilar el sitio donde es más fácil pegar por
+# descuido una credencial real.
+
+title = "residenciafiscal"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = """
+Identificadores públicos y nombres de variables, que `generic-api-key` detecta
+por entropía sin distinguir un secreto de una etiqueta:
+
+- `GA4_PROPERTY_ID` es el **nombre** de una variable de entorno, no su valor.
+- La clave de proyecto de PostHog (`phc_…`) es pública por diseño: viaja en el
+  bundle del navegador porque es lo que identifica al proyecto al enviar
+  eventos. La que sí es secreta es la personal API key, que no está en el repo.
+- `rf.conversations.v1` es la clave del `localStorage` del historial del chat.
+
+Ninguna abre ninguna puerta. Los valores reales siguen viniendo del entorno y
+siguen vigilados por el resto de reglas.
+"""
+regexes = [
+  '''^GA4_PROPERTY_ID$''',
+  '''^phc_[A-Za-z0-9]{40,}$''',
+  '''^rf\.conversations\.v1$''',
+]

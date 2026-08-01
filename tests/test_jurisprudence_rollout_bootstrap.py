@@ -7,13 +7,28 @@ import shutil
 from datetime import UTC, datetime
 from pathlib import Path
 
+import pytest
+
 from okf_provenance import sha256_file
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
+# El bootstrap parte del JSONL del analizador retirado, que vive en `output/` y
+# no se versiona: en un clon limpio —y en CI— estos casos se saltan en vez de
+# fallar. Donde el artefacto está, se ejecutan enteros.
+LEGACY_ANALYSIS = PROJECT_ROOT / "output/analisis_02012026_155032.jsonl"
+
+pytestmark = pytest.mark.skipif(
+    not LEGACY_ANALYSIS.exists(),
+    reason=(
+        f"falta {LEGACY_ANALYSIS.relative_to(PROJECT_ROOT)}, el artefacto histórico del "
+        "analizador retirado; `output/` no se versiona"
+    ),
+)
+
 
 def _legacy_record(source_file: str) -> dict[str, object]:
-    with (PROJECT_ROOT / "output/analisis_02012026_155032.jsonl").open(encoding="utf-8") as stream:
+    with LEGACY_ANALYSIS.open(encoding="utf-8") as stream:
         return next(
             record for line in stream if (record := json.loads(line))["archivo"] == source_file
         )

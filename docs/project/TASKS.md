@@ -45,6 +45,41 @@ contra el dominio público después de cada deploy.
   sentencias y sus limitaciones.
 - [x] Añadir `/metodologia` a `frontend/public/sitemap.xml`
   y enlazarla desde `frontend/public/llms.txt`.
+- [ ] **P1 — Ampliar las rutas de país.** Hay 29 rutas y el corpus normativo ya
+  tiene **98 convenios de doble imposición** publicados artículo a artículo, así
+  que cada país nuevo es una entrada en `countryRoutes.json` (`name`, `path`,
+  `treatyBoeId`, `title`, `description`, `sitemap`) y nada más: el bloque del
+  convenio, el prerenderizado y el sitemap salen solos. Contrato en
+  [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
+
+  **El orden no es «todos los que tienen CDI».** Una página por convenio son ~98
+  URLs con el mismo esqueleto y un articulado que además es casi idéntico entre
+  convenios —todos siguen el Modelo OCDE—, y eso es exactamente el contenido
+  fino que dejó las 28 anteriores en `noindex` hasta ahora. Dos criterios, en
+  este orden:
+
+  1. **Aparece en el corpus de sentencias.** Es el único contenido que este
+     proyecto tiene y nadie más: jurisprudencia española real sobre esa
+     jurisdicción. Medido sobre `knowledge/jurisprudencia-v3/cases/`, los
+     nombrados en las resoluciones que **todavía no tienen ruta** son Mónaco
+     (65 menciones), Marruecos (30), Rusia (24), Guinea (11), Japón (10),
+     Dinamarca (10) y Emiratos Árabes Unidos (9). Ojo: Mónaco y Guinea no
+     tienen convenio con España, y su página sería igual de válida —dice que no
+     lo hay, que es justo lo que busca quien pregunta por Mónaco—.
+  2. **Demanda real de expatriación española**: Emiratos, Irlanda, Países Bajos,
+     Bélgica, Luxemburgo, Malta, Chipre, Tailandia, Singapur, Canadá.
+
+  **Antes de la segunda tanda, medir la primera.** Las 29 actuales se publicaron
+  el 1 de agosto de 2026 y todavía no hay ni un dato de Search Console. Si a las
+  4-6 semanas no se indexan o no reciben impresiones, ampliar a 98 multiplica un
+  formato que no funciona; si funcionan, el criterio de arriba prioriza solo.
+- [ ] **P1 — Cruzar cada página de país con las sentencias del corpus que lo
+  mencionan.** Vale más que setenta rutas nuevas: es contenido único y
+  verificable —Reino Unido aparece en 115 pasajes, Suiza en 111, Argentina en
+  57, Francia en 39— frente al articulado de un convenio, que está también en el
+  BOE y en cualquier despacho. Requiere decidir cómo se extrae la mención
+  (el nombre del país en los hechos probados no siempre es la jurisdicción en
+  disputa) y respetar el invariante de literalidad.
 
 ## Producto y arquitectura
 
@@ -448,18 +483,28 @@ comprueban párrafo a párrafo contra la fuente.
 
 ## SEO y contenido
 
-- [ ] Añadir metadatos, canonical, Open Graph, schema.org y enlaces internos específicos
-  para cada landing de país.
-- [ ] Mostrar en cada landing las fuentes legales, fecha de revisión, alcance y limitaciones
-  del contenido, con un proceso editorial para mantenerlo actualizado.
+- [x] Añadir metadatos, canonical, Open Graph y enlaces internos específicos para cada
+  landing de país (1 de agosto de 2026): `title` y `description` propios en
+  `countryRoutes.json`, prerenderizados por ruta y con las 29 en el sitemap.
+  **Falta `schema.org`**, que era la otra mitad de esta tarea.
+- [ ] Marcar cada landing de país con datos estructurados (`schema.org`). Candidatos:
+  `Legislation` para el convenio y `BreadcrumbList` para la jerarquía; sin inventar
+  `FAQPage` ni `Article` donde no hay ni preguntas ni autor humano.
+- [x] Mostrar en cada landing las fuentes legales del convenio con España: título oficial,
+  artículo de residencia, redacción vigente, texto literal y enlace al BOE, o la
+  declaración explícita de que no hay convenio en vigor. Todo sale del corpus normativo
+  versionado, así que el «proceso editorial» es regenerarlo (`make export-normativa`).
+  Alcance y limitaciones siguen en la propia página: no hay jurisprudencia de ese país.
 
 ## Colaboración internacional
 
 El proyecto invita a expertos de cualquier jurisdicción a aportar la jurisprudencia
 de su país. Contrato y perfiles en
 [`CONTRIBUTING.md`](../../CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país);
-página pública en `/colaborar`, la **única ruta indexable** de la invitación
-(las landings de país son `noindex`).
+página pública en `/colaborar`. Desde el 1 de agosto de 2026 las landings de país
+**también son indexables**: publican el convenio de doble imposición con España,
+que es contenido propio y verificable, así que la invitación ya no depende de una
+sola URL para poder encontrarse.
 
 - [ ] **Traducir la plantilla `aportar_pais.yml` al inglés.** La invitación es
   mundial pero el formulario está solo en español, así que Brasil, Haití y toda
