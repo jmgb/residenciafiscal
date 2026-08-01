@@ -169,9 +169,13 @@ describe('ChatView', () => {
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
+    // La comparación sigue siendo exacta y no `objectContaining`: un campo nuevo
+    // en el contexto viaja al backend y debe declararse aquí a propósito. El
+    // `conversationId` lo genera el envío, así que solo se comprueba su tipo.
     expect(askQuestion).toHaveBeenCalledWith(expect.any(Array), expect.any(AbortSignal), {
       countryPath: '/mexico',
       countryName: 'México',
+      conversationId: expect.any(String),
     });
   });
 
