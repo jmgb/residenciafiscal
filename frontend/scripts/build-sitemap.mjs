@@ -11,10 +11,14 @@ const staticRoutes = JSON.parse(
   readFileSync(join(frontendDir, 'src/data/staticRoutes.json'), 'utf8')
 );
 
+const normativa = JSON.parse(readFileSync(join(publicDir, 'data/normativa.json'), 'utf8'));
+
 const SITE_URL = 'https://residenciafiscal.org';
 // Solo entra lo indexable. Cada país declara su propia frecuencia y prioridad:
 // `/espana` tiene corpus y cambia; una jurisdicción sin corpus publica el
 // convenio de doble imposición con España, que se mueve muy de tarde en tarde.
+// Las fichas de precepto publican texto legal consolidado, que cambia aún
+// menos: `yearly` y prioridad baja, el valor está en el long-tail.
 const publicRoutes = [
   ...routes
     .filter((route) => route.indexable)
@@ -22,6 +26,11 @@ const publicRoutes = [
   ...staticRoutes
     .filter((route) => route.indexable)
     .map((route) => ({ path: route.path, ...route.sitemap })),
+  ...normativa.map((entry) => ({
+    path: `/espana/normativa/${entry.slug}`,
+    changefreq: 'yearly',
+    priority: '0.4',
+  })),
 ];
 
 const escapeXml = (value) =>

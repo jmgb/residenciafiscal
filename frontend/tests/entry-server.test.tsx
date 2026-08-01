@@ -77,6 +77,45 @@ describe('entry-server', () => {
     expect(html).toContain('no una aprobación humana');
   });
 
+  it('publica la ficha de un precepto con su articulado literal', () => {
+    const html = render(
+      '/espana/normativa/cdi-boe-a-1997-12729-a4',
+      {},
+      { [ENTRY.slug]: { entry: ENTRY, texto: TEXTO } }
+    );
+
+    expect(html).toContain('Artículo 4 del convenio España-Francia');
+    expect(html).toContain('residente de un Estado');
+    expect(html).toContain('https://www.boe.es/buscar/act.php?id=BOE-A-1997-12729#a4');
+    expect(html).not.toContain('Cargando el precepto');
+  });
+
+  it('publica el índice de normativa con enlaces a las fichas', () => {
+    // Dos entradas como mínimo: el índice descarta a propósito una precarga de
+    // una sola (sería la de una ficha, no el corpus completo).
+    const SEGUNDO: PreceptoEntry = {
+      ...ENTRY,
+      slug: 'lirpf-a9',
+      boeId: 'BOE-A-2006-20764',
+      grupo: 'nucleo',
+      titulo: 'Artículo 9 — Contribuyentes con residencia habitual',
+      designacion: 'Artículo 9',
+      epigrafe: null,
+    };
+    const html = render(
+      '/espana/normativa',
+      {},
+      {
+        [ENTRY.slug]: { entry: ENTRY, texto: null },
+        [SEGUNDO.slug]: { entry: SEGUNDO, texto: null },
+      }
+    );
+
+    expect(html).toContain('Normativa de la residencia fiscal en España');
+    expect(html).toContain('href="/espana/normativa/cdi-boe-a-1997-12729-a4"');
+    expect(html).toContain('href="/espana/normativa/lirpf-a9"');
+  });
+
   it('sirve los datos estructurados en el HTML, que es donde los lee el bot', () => {
     const html = render('/francia', { [ENTRY.boeId]: { entry: ENTRY, texto: TEXTO } });
 

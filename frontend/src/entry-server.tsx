@@ -14,19 +14,35 @@ import { StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { App } from './App';
+import { PreceptoPreloadContext, type PreceptoPreloadMap } from './lib/precepto-preload';
 import { TreatyPreloadContext, type TreatyPreloadMap } from './lib/treaty-preload';
 
+// Metadatos de las fichas de precepto: el prerender escribe exactamente los
+// mismos títulos y descripciones que fija la página en runtime.
+export {
+  fichaDescription,
+  fichaPath,
+  fichaTitle,
+  NORMATIVA_INDEX_PATH,
+} from './lib/normativa-fichas';
+export { PRECEPTO_PRELOAD_ELEMENT_ID } from './lib/precepto-preload';
 // El prerender necesita el mismo identificador que leerá el navegador, y este
 // módulo es su única puerta de entrada al código de la aplicación.
 export { TREATY_PRELOAD_ELEMENT_ID } from './lib/treaty-preload';
 
-export function render(url: string, treaties: TreatyPreloadMap = {}): string {
+export function render(
+  url: string,
+  treaties: TreatyPreloadMap = {},
+  preceptos: PreceptoPreloadMap = {}
+): string {
   return renderToString(
     <StrictMode>
       <TreatyPreloadContext.Provider value={treaties}>
-        <StaticRouter location={url}>
-          <App />
-        </StaticRouter>
+        <PreceptoPreloadContext.Provider value={preceptos}>
+          <StaticRouter location={url}>
+            <App />
+          </StaticRouter>
+        </PreceptoPreloadContext.Provider>
       </TreatyPreloadContext.Provider>
     </StrictMode>
   );

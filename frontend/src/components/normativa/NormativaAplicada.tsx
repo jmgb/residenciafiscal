@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { loadNormativa, normativaLoadFailed, preceptosCitados } from '@/lib/normativa';
+import { fichaPath } from '@/lib/normativa-fichas';
 import type { PreceptoEntry } from '@/types/normativa';
 
 /**
@@ -53,7 +55,12 @@ export function NormativaAplicada() {
     <ul className='space-y-3'>
       {preceptos.map((precepto) => (
         <li key={precepto.slug} className='text-sm leading-relaxed'>
-          <span className='font-medium'>{precepto.titulo}</span>
+          <Link
+            className='font-medium text-primary underline-offset-4 hover:underline'
+            to={fichaPath(precepto)}
+          >
+            {precepto.titulo}
+          </Link>
           {precepto.derogada && (
             // `text-secondary-foreground` y no `text-muted-foreground`: sobre un
             // fondo teñido el segundo no llega a AA (regla 1 del brandbook).

@@ -24,6 +24,14 @@
     "sitemap": { "changefreq": "monthly", "priority": "0.6" }
   },
   {
+    "path": "/espana/normativa",
+    "title": "Normativa de residencia fiscal en España: LIRPF y convenios",
+    "description": "Los preceptos que deciden la residencia fiscal en España, con su texto literal del BOE: el art. 9 LIRPF y su entorno, y el artículo de residencia de cada convenio de doble imposición.",
+    "indexable": true,
+    "image": null,
+    "sitemap": { "changefreq": "monthly", "priority": "0.7" }
+  },
+  {
     "path": "/colaborar",
     "title": "Colaborar — Residencia Fiscal",
     "description": "El corpus de jurisprudencia sobre residencia fiscal crece con la contribución de expertos en fiscalidad y tributación internacional: abogados, asesores fiscales, académicos y documentalistas jurídicos que aportan la jurisprudencia de su jurisdicción.",

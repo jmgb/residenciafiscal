@@ -28,7 +28,15 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { render, TREATY_PRELOAD_ELEMENT_ID } from '../dist-ssr/entry-server.js';
+import {
+  fichaDescription,
+  fichaPath,
+  fichaTitle,
+  NORMATIVA_INDEX_PATH,
+  PRECEPTO_PRELOAD_ELEMENT_ID,
+  render,
+  TREATY_PRELOAD_ELEMENT_ID,
+} from '../dist-ssr/entry-server.js';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
 import staticRoutes from '../src/data/staticRoutes.json' with { type: 'json' };
 
@@ -73,7 +81,24 @@ const STATIC_ROUTES = staticRoutes.map((route) => ({
   image: route.image ? `${SITE_URL}${route.image}` : null,
 }));
 
-const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES];
+/**
+ * Fichas de precepto: una por artículo del corpus normativo. El título y la
+ * descripción salen de `normativa-fichas.ts` a través del bundle SSR, que es
+ * exactamente lo que fija la página en runtime.
+ */
+const PRECEPTO_ROUTES = NORMATIVA.map((entry) => ({
+  path: fichaPath(entry),
+  treatyBoeId: null,
+  preceptoSlug: entry.slug,
+  dir: fichaPath(entry).slice(1),
+  title: fichaTitle(entry),
+  description: fichaDescription(entry),
+  robots: 'index, follow',
+  url: `${SITE_URL}${fichaPath(entry)}`,
+  image: null,
+}));
+
+const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES, ...PRECEPTO_ROUTES];
 
 /**
  * Patrones de los metadatos de la shell. Tolerantes al salto de línea porque
@@ -144,11 +169,46 @@ function embedJson(value) {
   return JSON.stringify(value).replace(/</g, '\\u003c');
 }
 
+/**
+ * Preceptos que la ruta necesita resueltos antes de renderizarse, por el mismo
+ * motivo que los convenios: la página los pide por `fetch` en un efecto y en el
+ * build no hay efectos.
+ *
+ * - La ficha (`preceptoSlug`) lleva su entrada y su articulado literal.
+ * - El índice (`NORMATIVA_INDEX_PATH`) lleva las 110 entradas sin las citas de
+ *   sentencias: la lista solo pinta título y estado, y embeber también las
+ *   citas doblaría el peso de ese HTML sin cambiar un píxel.
+ */
+function preloadPreceptos(route) {
+  if (route.preceptoSlug) {
+    const entry = NORMATIVA.find((precepto) => precepto.slug === route.preceptoSlug);
+    if (!entry) {
+      throw new Error(`${route.path}: el precepto no está en public/data/normativa.json.`);
+    }
+    const preceptoFile = join(publicDir, 'data', 'preceptos', `${entry.slug}.json`);
+    if (!existsSync(preceptoFile)) {
+      throw new Error(
+        `${route.path}: falta public/data/preceptos/${entry.slug}.json. ` +
+          'Regenera el corpus con `node scripts/build-normativa.mjs`.'
+      );
+    }
+    const texto = JSON.parse(readFileSync(preceptoFile, 'utf8'));
+    return { [entry.slug]: { entry, texto } };
+  }
+  if (route.path === NORMATIVA_INDEX_PATH) {
+    return Object.fromEntries(
+      NORMATIVA.map((entry) => [entry.slug, { entry: { ...entry, sentencias: [] }, texto: null }])
+    );
+  }
+  return {};
+}
+
 function renderRoute(shell, route) {
   const title = escapeAttr(route.title);
   const description = escapeAttr(route.description);
   const url = escapeAttr(route.url);
   const treaties = preloadTreaties(route);
+  const preceptos = preloadPreceptos(route);
 
   let html = shell;
   // El contenido va dentro de `#root`, no en un `<noscript>`: es la misma
@@ -157,9 +217,12 @@ function renderRoute(shell, route) {
     html,
     'div#root',
     PATTERNS.root,
-    `<div id="root">${render(route.path, treaties)}</div>` +
+    `<div id="root">${render(route.path, treaties, preceptos)}</div>` +
       (Object.keys(treaties).length > 0
         ? `<script id="${TREATY_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(treaties)}</script>`
+        : '') +
+      (Object.keys(preceptos).length > 0
+        ? `<script id="${PRECEPTO_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(preceptos)}</script>`
         : '')
   );
   html = replaceOnce(html, 'title', PATTERNS.title, `<title>${title}</title>`);

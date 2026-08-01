@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import { JsonLd } from '@/components/seo/JsonLd';
 import type { CountryRoute } from '@/data/countryRoutes';
 import { loadNormativa, loadPrecepto, sentenciasDe } from '@/lib/normativa';
+import { fichaPath } from '@/lib/normativa-fichas';
 import { treatyJsonLd } from '@/lib/structured-data';
 import { useTreatyPreload } from '@/lib/treaty-preload';
 import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
@@ -207,6 +209,13 @@ export function TaxTreaty({ country }: { country: CountryRoute }) {
               </p>
             </div>
           )}
+
+          <p className='mt-5 text-sm leading-relaxed'>
+            <Link className='text-primary underline underline-offset-4' to={fichaPath(convenio)}>
+              Ficha del {convenio.designacion.toLowerCase()}: redacciones y sentencias que lo
+              aplican
+            </Link>
+          </p>
 
           <p className='mt-4 max-w-2xl text-xs leading-relaxed text-muted-foreground'>
             El convenio es norma española y solo resuelve de qué Estado es residente quien podría

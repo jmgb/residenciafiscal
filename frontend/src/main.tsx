@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 import { App } from './App';
 import { installModulePreloadRecovery } from './lib/module-preload-recovery';
+import { PreceptoPreloadContext, readEmbeddedPreceptoPreload } from './lib/precepto-preload';
 import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
 import { readEmbeddedTreatyPreload, TreatyPreloadContext } from './lib/treaty-preload';
 import './index.css';
@@ -27,6 +28,8 @@ if (!container) throw new Error('No se encontró el elemento #root');
 // desaparecer el convenio mientras se pide por red, el convenio de esta página
 // viaja embebido en el propio HTML.
 const treaties = readEmbeddedTreatyPreload(document);
+// Mismo mecanismo para las fichas de precepto de /espana/normativa.
+const preceptos = readEmbeddedPreceptoPreload(document);
 
 createRoot(container).render(
   <StrictMode>
@@ -46,9 +49,11 @@ createRoot(container).render(
       }
     >
       <TreatyPreloadContext.Provider value={treaties}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PreceptoPreloadContext.Provider value={preceptos}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PreceptoPreloadContext.Provider>
       </TreatyPreloadContext.Provider>
     </SentryErrorBoundary>
   </StrictMode>

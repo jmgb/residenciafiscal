@@ -8,6 +8,8 @@ import { CountryPage } from '@/pages/CountryPage';
 import { EspanaFuentesPage } from '@/pages/EspanaFuentesPage';
 import { ManifiestoPage } from '@/pages/ManifiestoPage';
 import { MetodologiaPage } from '@/pages/MetodologiaPage';
+import { NormativaIndexPage } from '@/pages/NormativaIndexPage';
+import { PreceptoPage } from '@/pages/PreceptoPage';
 import { PrivacyPage } from '@/pages/PrivacyPage';
 import { SpainPage } from '@/pages/SpainPage';
 
@@ -20,6 +22,8 @@ export function App() {
         <Route path='/' element={<Navigate to={SPAIN_ROUTE.path} replace />} />
         <Route path={SPAIN_ROUTE.path} element={<SpainPage />} />
         <Route path='/espana/fuentes' element={<EspanaFuentesPage />} />
+        <Route path='/espana/normativa' element={<NormativaIndexPage />} />
+        <Route path='/espana/normativa/:slug' element={<PreceptoPage />} />
         {/*
          * `/consulta` y `/c/:id` sirven exactamente el mismo chat que `/espana`,
          * así que canonicalizan allí: es la URL del sitemap. Autocanonicalizarse

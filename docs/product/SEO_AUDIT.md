@@ -16,9 +16,16 @@
 >   y reglas 200 explícitas para `/consulta`, `/c/*` y `/privacidad`; en
 >   runtime solo la ruta canónica vuelve a `index`.
 >
+> - **Fichas por precepto publicadas** (también el 1 de agosto de 2026): 110
+>   fichas (`/espana/normativa/<slug>`) más su índice (`/espana/normativa`),
+>   prerenderizadas con el texto literal del BOE, título por país
+>   (`normativaFichas.json`, curado y cruzado con `countryRoutes.json`),
+>   JSON-LD `Legislation` + `BreadcrumbList`, y enlazadas desde las páginas de
+>   país y `/espana/fuentes`. El sitemap pasa de 38 a 149 URLs.
+>
 > Pendientes: Bing Webmaster Tools y enlace GSC ↔ GA4 (ambos manuales, UI),
 > `lastmod`, JSON-LD de sitio, fuentes self-host, países sin convenio y fichas
-> por sentencia/precepto (tras el gate de GSC).
+> por sentencia (tras el gate de GSC).
 
 Revisión profunda del SEO de [residenciafiscal.org](https://residenciafiscal.org):
 repositorio (`frontend/`), HTML servido en producción, redirecciones, Cloudflare,
