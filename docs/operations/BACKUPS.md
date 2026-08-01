@@ -1,14 +1,14 @@
 # Backups de la base de datos
 
-> **Estado**: instalado y verificado el 2026-07-31.
+> **Estado**: instalado y verificado el 2026-08-01.
 > **Método**: tres `systemd timer` de backup y un timer de retención del chat preparado para el VPS `alfredo`.
 > **Destino**: bucket `residenciafiscal-backup` de Cloudflare R2.
 > **Proyecto Supabase**: `qqrwirtdnomapahglvlv` (`eu-west-1`, PostgreSQL 17).
 
 Supabase respalda la base de datos en su plataforma, pero eso no cubre tener una
 copia propia, verificable y fuera de su consola. Este subsistema mantiene un dump
-diario en R2, comprueba a diario que ese dump existe y se puede leer, y ensaya
-una vez al mes que se puede recuperar.
+diario en R2, comprueba a diario que ese dump existe, se puede leer y cumple su
+contrato estructural, y una vez al mes compara su inventario con el Supabase vivo.
 
 Es el mismo diseño que corre desde febrero de 2026 en Presupuestor y desde julio
 en Comunicador, sobre el mismo VPS y la misma cuenta de R2. Las diferencias con
@@ -22,8 +22,8 @@ backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto.
 | Pregunta | Pieza | Cuándo |
 |---|---|---|
 | ¿Se ha ejecutado el backup? | `residenciafiscal-backup.timer` → `vps-backup.sh` | Diario, 02:30 local del VPS |
-| ¿Hay en R2 un backup reciente y legible? | `residenciafiscal-backup-freshness.timer` → `check-backup-freshness.sh` | Diario, 03:05 |
-| ¿Podemos recuperarlo? | `residenciafiscal-backup-restore-drill.timer` → `check-backup-restore-drill.sh` | Día 1 de cada mes, 06:35 |
+| ¿Hay en R2 un backup reciente, legible y estructuralmente íntegro? | `residenciafiscal-backup-freshness.timer` → `check-backup-freshness.sh` | Diario, 03:05 |
+| ¿Coincide el backup con el contrato vivo de Supabase? | `residenciafiscal-backup-restore-drill.timer` → `check-backup-restore-drill.sh` | Día 1 de cada mes, 06:35 |
 | ¿Se ha aplicado la retención de Supabase? | `residenciafiscal-chat-retention.timer` → `scripts/privacy/purge-chat-data.sh` | Diario, 03:20 |
 
 Los timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
@@ -38,12 +38,13 @@ residenciafiscal-backup.timer (02:30 local)
         │
         ▼
 vps-backup.sh
-  1. pg_dump de public + private + auth + supabase_migrations contra el pooler
-  2. cabecera de metadatos + gzip
-  3. aws s3 cp  →  s3://residenciafiscal-backup/YYYY-MM-DD_HHMMSS_full.sql.gz
-  4. aws s3 ls  →  verifica que el objeto existe en destino
-  5. borra los objetos de más de `${RETENTION_DAYS}` días
-  6. guardián de cobertura: ¿hay algún schema con tablas fuera del dump?
+  1. lee el inventario vivo y rechaza schemas no cubiertos
+  2. pg_dump de public + private + auth + supabase_migrations contra el pooler
+  3. añade un manifiesto de tablas y RPC; valida CREATE TABLE + COPY + FUNCTION
+  4. gzip
+  5. aws s3 cp  →  s3://residenciafiscal-backup/YYYY-MM-DD_HHMMSS_full.sql.gz
+  6. aws s3 ls  →  verifica que el objeto existe en destino
+  7. borra los objetos de más de `${RETENTION_DAYS}` días
         │
         ▼ (si algo falla)
 OnFailure → residenciafiscal-backup-failure@.service → Telegram
@@ -59,17 +60,25 @@ hora local del VPS. Con el VPS en CEST, el backup de las 02:30 aparece en R2 com
 
 | Schema | Por qué entra |
 |---|---|
-| `private` | **Todo el dato del chat**: conversaciones, mensajes, peticiones y presupuesto diario ([contrato](SUPABASE_CHAT.md)) |
+| `private` | **Todo el dato del chat**: conversaciones, mensajes, peticiones y auditoría de retención ([contrato](SUPABASE_CHAT.md)) |
 | `public` | Vacío hoy; es el destino natural de cualquier tabla futura |
 | `auth` | Usuarios de Supabase Auth |
 | `supabase_migrations` | Registro de migraciones aplicadas; sin él, un proyecto restaurado cree que no tiene ninguna |
 
 **El chat no vive en `public`.** Copiar tal cual el `--schema=public --schema=auth`
 de Presupuestor habría producido backups verdes y vacíos de contenido. Por eso el
-paso 6 del script es un guardián: consulta qué schemas tienen tablas y falla —con
-aviso de Telegram— si aparece alguno que no esté ni en `BACKUP_SCHEMAS` ni
-justificado en `IGNORED_SCHEMAS`. Corre **después** de subir el objeto, para que
-un schema nuevo genere una alerta sin dejar la noche sin backup.
+primer paso del script es un guardián: consulta qué schemas tienen tablas y falla
+—con aviso de Telegram— si aparece alguno que no esté ni en `BACKUP_SCHEMAS` ni
+justificado en `IGNORED_SCHEMAS`. El fallo ocurre **antes** de subir: un snapshot
+parcial nunca se publica como si fuera un backup válido y el snapshot anterior
+permanece disponible.
+
+Cada dump lleva además un manifiesto con las tablas actuales de `public` y
+`private` y las RPC públicas requeridas: `create_chat_request`,
+`complete_chat_request` y `fail_chat_request`. `verify-backup-contract.sh`
+comprueba que el SQL contiene exactamente esas tablas, un bloque `COPY` para
+cada una y la definición de las tres funciones. Las RPC económicas históricas
+no forman parte del contrato.
 
 Quedan fuera a propósito, con su motivo en el propio script: `storage` (Supabase
 Storage no se usa: los PDF son estáticos del build), `realtime` (efímero), `vault`
@@ -112,19 +121,19 @@ Ajustables por entorno sin tocar código: `BACKUP_R2_BUCKET`,
 ```bash
 # 1. Checkout del repo en el VPS
 ssh -o RemoteCommand=none alfredo
-git clone https://github.com/jmgb/residenciafiscal.git /home/ubuntu/residenciafiscal
+git clone https://github.com/jmgb/residenciafiscal.git ~/residenciafiscal
 
 # 2. .env mínimo con las claves de backup de la tabla anterior y, si se instala
 #    el purgado, CHAT_RETENTION_DAYS con el plazo aprobado
 #    (copiar los valores desde el .env local; nunca versionarlo)
-vi /home/ubuntu/residenciafiscal/.env
-chmod 600 /home/ubuntu/residenciafiscal/.env
+vi ~/residenciafiscal/.env
+chmod 600 ~/residenciafiscal/.env
 
 # 3. Instalar units y timers (idempotente: repetible tras cada git pull)
-sudo bash /home/ubuntu/residenciafiscal/scripts/backup/install-backup-timer.sh
+sudo bash "$HOME/residenciafiscal/scripts/backup/install-backup-timer.sh"
 
 # Después de aprobar y configurar CHAT_RETENTION_DAYS:
-sudo bash /home/ubuntu/residenciafiscal/scripts/privacy/install-chat-retention-timer.sh
+sudo bash "$HOME/residenciafiscal/scripts/privacy/install-chat-retention-timer.sh"
 ```
 
 El instalador comprueba las claves del `.env`, instala `postgresql-client-17`
@@ -142,20 +151,20 @@ aws s3 mb s3://residenciafiscal-backup \
 ```
 
 **El checkout del VPS no se actualiza solo.** Tras cambiar cualquier script o
-unit hay que hacer `git pull` allí y volver a lanzar el instalador; si no, el VPS
-sigue ejecutando la versión anterior sin decir nada.
+unit hay que sincronizar las rutas operativas indicadas abajo y volver a lanzar
+el instalador; si no, el VPS sigue ejecutando la versión anterior sin decir nada.
 
 > **Deuda del arranque (2026-07-31).** El sistema se instaló antes de que
-> `scripts/backup/` estuviera commiteado, así que el checkout del VPS tiene esos
-> ficheros copiados por `rsync` y sin seguimiento de git. El primer `git pull`
-> que traiga el commit fallará con *«untracked working tree files would be
-> overwritten»*. Se resuelve una sola vez borrando las copias antes de tirar:
+> `scripts/backup/` estuviera commiteado, así que el checkout del VPS conserva
+> copias operativas sin seguimiento de git. No se debe hacer un `git pull` ni
+> borrar esas copias a ciegas. Hasta reconciliar el checkout, los despliegues se
+> hacen copiando únicamente `scripts/backup/` y reinstalando las units:
 >
 > ```bash
-> cd /home/ubuntu/residenciafiscal
-> rm -rf scripts docs/operations/BACKUPS.md
-> git pull --ff-only
-> sudo bash scripts/backup/install-backup-timer.sh
+> rsync -av --itemize-changes scripts/backup/ \
+>   alfredo:residenciafiscal/scripts/backup/
+> ssh -o RemoteCommand=none alfredo \
+>   'sudo bash "$HOME/residenciafiscal/scripts/backup/install-backup-timer.sh"'
 > ```
 
 ## Operativa
@@ -200,35 +209,36 @@ backup elegido es el que quieres y que nadie está escribiendo en producción.
 ### Simulacro mensual
 
 El timer ejecuta `restore-from-r2.sh --verify-only` sobre el último backup:
-descarga, descomprime y cuenta líneas. **No** restaura en ninguna base, así que
-no demuestra que el SQL se aplique sin error. Para eso, una vez por trimestre,
-restaurar a mano en una base local y comprobar que las tablas de `private`
-tienen filas.
+descarga, descomprime, valida `CREATE TABLE`/`COPY`/RPC y compara el manifiesto
+con el inventario actual de Supabase. **No** ejecuta el SQL en ninguna base, así
+que todavía no demuestra que todas las sentencias se apliquen sin error. Para
+eso se mantiene un restore trimestral manual en una base aislada.
 
 Registro de simulacros:
 
 | Fecha | Backup verificado | Resultado |
 |---|---|---|
 | 2026-07-31 | `2026-07-31_163321_full.sql.gz` | OK — 3.074 líneas descomprimidas |
+| 2026-08-01 | `2026-08-01_112422_full.sql.gz` | OK — 3.492 líneas; contrato coincide con Supabase y sin DDL económico prohibido |
 
-## Verificación de la instalación (2026-07-31)
+## Verificación de la instalación (2026-08-01)
 
-Los tres servicios se lanzaron a mano tras instalar los timers, con
+Los tres servicios se lanzaron a mano tras desplegar el verificador, con
 `Result=success` en los tres:
 
-- **Backup**: objeto `2026-07-31_163321_full.sql.gz` (16 KB) subido y verificado
-  en R2; retención aplicada; guardián de cobertura sin schemas huérfanos.
-- **Frescura**: `Backup freshness OK … (0h old, gzip ok)`.
-- **Simulacro**: `Backup restore drill OK … (3074 lines decompressed)`.
+- **Backup**: objeto `2026-08-01_112422_full.sql.gz` (32 KB) subido y verificado
+  en R2; retención de 15 días aplicada; guardián sin schemas huérfanos.
+- **Frescura**: `Backup freshness OK … (0h old, gzip and SQL contract ok)`.
+- **Simulacro**: `Backup restore drill OK … (3492 lines, contract matches live Supabase)`.
 
-Contenido real del dump del 31 de julio, descargado de R2 y descomprimido: 5
-tablas `private` (`chat_conversations`, `chat_daily_budgets`, `chat_messages`,
-`chat_requests`, `chat_retention_purge_audit`). Los dumps posteriores a la
-migración `20260801104446` deben contener 4 tablas `private`: se elimina
-`chat_daily_budgets` porque no existe presupuesto monetario global,
-23 tablas `auth`, el registro de `supabase_migrations`, 7 funciones —incluidas
-las RPC que usa la Function— y 28 bloques `COPY`. Es la comprobación que
-distingue un backup correcto de uno verde y vacío.
+Contenido real del nuevo objeto, descargado desde R2: 4 tablas `private`
+(`chat_conversations`, `chat_messages`, `chat_requests` y
+`chat_retention_purge_audit`), ninguna tabla `public` y las tres RPC válidas.
+No contiene DDL ejecutable para `chat_daily_budgets`, `reserve_chat_request` ni
+campos de reserva monetaria. El schema `supabase_migrations` conserva, como dato
+de auditoría dentro de un bloque `COPY`, el texto de migraciones históricas que
+sí mencionaban esos nombres; esas cadenas no se ejecutan al restaurar y el
+verificador las distingue expresamente de una definición SQL vigente.
 
 Próximas ejecuciones automáticas de los tres timers de backup: 02:31, 03:09 y el
 día 1 a las 06:39 (hora local del VPS, con el desfase aleatorio ya aplicado). El
@@ -257,7 +267,7 @@ contenido.
 1. **Sin recuperación a un punto en el tiempo.** Son snapshots diarios: se pierde
    lo escrito entre el último backup y el incidente.
 2. **Restauración manual.** No hay automatismo; requiere una persona.
-3. **El simulacro mensual no aplica el SQL.** Verifica descarga y descompresión.
+3. **El simulacro mensual no aplica el SQL.** Verifica descarga, estructura y paridad con el contrato vivo; el restore ejecutable sigue siendo trimestral y aislado.
 4. **Retención plana**: snapshots diarios hasta `BACKUP_RETENTION_DAYS`. Sin retención semanal ni mensual.
 5. **Depende del VPS.** Si `alfredo` está caído, no hay backup esa noche; el
    check de frescura del día siguiente lo delata.
@@ -291,5 +301,7 @@ servidor. Relanza el instalador, que trae `postgresql-client-17` desde PGDG.
 cada `ExecStart` apunta a un script existente, que el instalador copia y activa
 todas las units, que ningún script ejecuta el `.env`, que todos fijan la región
 `auto`, que cada servicio declara su `OnFailure` y que el dump incluye los
-schemas que `SUPABASE_CHAT.md` declara. Es un gate estructural: no prueba que el
-backup funcione, sino que las piezas siguen apuntándose entre sí.
+schemas que `SUPABASE_CHAT.md` declara. También ejecuta el verificador contra
+dumps sintéticos y demuestra que detecta tablas sin bloque `COPY` y divergencias
+frente al inventario esperado. La prueba operativa final sigue siendo el objeto
+real generado y leído desde R2.

@@ -24,7 +24,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 R2_BUCKET="${BACKUP_R2_BUCKET:-residenciafiscal-backup}"
 POOLER_HOST="${BACKUP_POOLER_HOST:-aws-0-eu-west-1.pooler.supabase.com}"
-TEMP_DIR="/tmp/residenciafiscal-restore"
+TEMP_DIR="/tmp/residenciafiscal-restore-$$"
+VERIFY_SCRIPT="$SCRIPT_DIR/verify-backup-contract.sh"
+REQUIRED_PUBLIC_FUNCTIONS=(public.create_chat_request public.complete_chat_request public.fail_chat_request)
 
 # NO usar `source` sobre el .env (ver lib-read-env.sh).
 ENV_FILE="${BACKUP_ENV_FILE:-$PROJECT_ROOT/.env}"
@@ -57,6 +59,19 @@ check_env() {
 check_restore_env() {
     if [[ -z "${SUPABASE_REF:-}" ]]; then
         echo -e "${RED}❌ Falta SUPABASE_REF: no se puede construir la URL de la base de datos.${NC}"
+        exit 1
+    fi
+}
+
+check_live_verify_env() {
+    local missing=()
+
+    [[ -z "${SUPABASE_REF:-}" ]] && missing+=("SUPABASE_REF")
+    [[ -z "${SUPABASE_DB_PASSWORD:-}" ]] && missing+=("SUPABASE_DB_PASSWORD")
+    command -v psql >/dev/null 2>&1 || missing+=("psql")
+
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        echo -e "${RED}❌ No se puede comparar el backup con Supabase; falta: ${missing[*]}${NC}"
         exit 1
     fi
 }
@@ -128,6 +143,43 @@ decompress_backup() {
     echo -e "${GREEN}✅ Descomprimido: ${sql_file} (${lines} lines)${NC}"
 }
 
+verify_backup_contract() {
+    local backup_name="$1"
+    local sql_file="${TEMP_DIR}/${backup_name}_full.sql"
+
+    if [[ ! -f "$VERIFY_SCRIPT" ]]; then
+        echo -e "${RED}❌ Verificador de backup no encontrado: ${VERIFY_SCRIPT}${NC}"
+        exit 1
+    fi
+
+    if [[ "${BACKUP_VERIFY_LIVE_CONTRACT:-0}" == "1" ]]; then
+        check_live_verify_env
+        local db_url="postgresql://postgres.${SUPABASE_REF}:${SUPABASE_DB_PASSWORD}@${POOLER_HOST}:5432/postgres"
+        local application_tables
+        local required_functions
+
+        application_tables="$({
+            PGPASSWORD="$SUPABASE_DB_PASSWORD" psql "$db_url" -At --no-password -c "
+                SELECT format('%I.%I', table_schema, table_name)
+                FROM information_schema.tables
+                WHERE table_schema IN ('public', 'private')
+                  AND table_type = 'BASE TABLE'
+                ORDER BY table_schema, table_name
+            "
+        } | paste -sd' ' -)"
+        required_functions="$(printf '%s\n' "${REQUIRED_PUBLIC_FUNCTIONS[@]}" | LC_ALL=C sort | paste -sd' ' -)"
+
+        BACKUP_EXPECTED_PROJECT="$SUPABASE_REF" \
+        BACKUP_EXPECTED_SCHEMAS="public private auth supabase_migrations" \
+        BACKUP_EXPECTED_APPLICATION_TABLES="$application_tables" \
+        BACKUP_EXPECTED_PUBLIC_FUNCTIONS="$required_functions" \
+            /bin/bash "$VERIFY_SCRIPT" "$sql_file"
+        return
+    fi
+
+    /bin/bash "$VERIFY_SCRIPT" "$sql_file"
+}
+
 confirm_restore() {
     echo ""
     echo -e "${YELLOW}⚠️  AVISO: esto SOBRESCRIBE la base de datos actual.${NC}"
@@ -160,7 +212,7 @@ restore_backup() {
         exit 1
     fi
 
-    PGPASSWORD="$SUPABASE_DB_PASSWORD" psql "$DB_URL" -f "$sql_file"
+    PGPASSWORD="$SUPABASE_DB_PASSWORD" psql "$DB_URL" --set ON_ERROR_STOP=1 -f "$sql_file"
 
     echo -e "${GREEN}✅ Restauración completada${NC}"
 }
@@ -201,8 +253,9 @@ main() {
 
     download_backup "$backup_name"
     decompress_backup "$backup_name"
+    verify_backup_contract "$backup_name"
     if [[ "$verify_only" == "true" ]]; then
-        echo -e "${GREEN}✅ Verificación completada. No se ejecutó ninguna restauración.${NC}"
+        echo -e "${GREEN}✅ Descarga, descompresión y contrato SQL verificados. No se ejecutó ninguna restauración.${NC}"
         exit 0
     fi
     check_restore_env

@@ -9,6 +9,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ENV_FILE="${BACKUP_FRESHNESS_ENV_FILE:-$PROJECT_ROOT/.env}"
 NOTIFY_SCRIPT="${BACKUP_FRESHNESS_NOTIFY_SCRIPT:-$SCRIPT_DIR/notify-backup-failure.sh}"
+VERIFY_SCRIPT="$SCRIPT_DIR/verify-backup-contract.sh"
 
 R2_BUCKET="${BACKUP_R2_BUCKET:-residenciafiscal-backup}"
 MAX_AGE_HOURS="${BACKUP_FRESHNESS_MAX_AGE_HOURS:-30}"
@@ -109,5 +110,18 @@ if ! gzip -t "$LOCAL_BACKUP"; then
     fail_with_alert "El backup ${LATEST_BACKUP} no pasa gzip -t (corrupto o incompleto)"
 fi
 
+if [[ ! -f "$VERIFY_SCRIPT" ]]; then
+    fail_with_alert "No existe el verificador de contrato: $VERIFY_SCRIPT"
+fi
+
+LOCAL_SQL="${TEMP_DIR}/${LATEST_BACKUP%.gz}"
+if ! gunzip -c "$LOCAL_BACKUP" > "$LOCAL_SQL"; then
+    fail_with_alert "No se pudo descomprimir ${LATEST_BACKUP} para validar su contrato"
+fi
+
+if ! VERIFY_OUTPUT="$(/bin/bash "$VERIFY_SCRIPT" "$LOCAL_SQL" 2>&1)"; then
+    fail_with_alert "El backup ${LATEST_BACKUP} no cumple el contrato: ${VERIFY_OUTPUT}"
+fi
+
 AGE_HOURS=$((AGE_SECONDS / 3600))
-echo "[$(timestamp)] Backup freshness OK: ${LATEST_BACKUP} (${AGE_HOURS}h old, gzip ok)"
+echo "[$(timestamp)] Backup freshness OK: ${LATEST_BACKUP} (${AGE_HOURS}h old, gzip and SQL contract ok)"

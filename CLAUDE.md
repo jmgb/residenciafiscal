@@ -306,10 +306,10 @@ catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
 falla cerrado salvo activación y autenticación explícitas. Es el prototipo local
 y se conserva como posible arquitectura futura para peticiones de más de 60 s;
 no es el target de la V1. El runtime conversacional ya está portado a una
-Netlify Function TypeScript: ejecuta A y B en paralelo, usa un deadline global,
-reserva presupuesto y persiste mensajes/costes mediante RPC atómicas en
-Supabase, y mantiene Luna `high`. El schema es privado y el navegador no accede
-directamente; contrato y operación:
+Netlify Function TypeScript: ejecuta A y B en paralelo, usa un deadline global
+y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
+en Supabase, y mantiene Luna `high`. El coste nunca decide la admisión; el schema
+es privado y el navegador no accede directamente. Contrato y operación:
 [`docs/operations/SUPABASE_CHAT.md`](docs/operations/SUPABASE_CHAT.md). Producción
 conserva el stub hasta completar configuración, privacidad y Deploy Preview;
 decisión, despliegue y rollback:
@@ -327,10 +327,13 @@ depender del bit executable del checkout.
 El dump cubre `private`, `public`, `auth` y `supabase_migrations`: **el dato del
 chat vive en `private`**, así que un dump de `public` saldría verde y vacío. Al
 crear un schema nuevo hay que añadirlo a `BACKUP_SCHEMAS` en `vps-backup.sh`; el
-guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan si
-alguien lo olvida. El checkout del VPS no se actualiza solo: tras tocar un script
-o una unit, `git pull` allí y relanzar `install-backup-timer.sh`. Arquitectura,
-operativa, límites y consecuencias de privacidad:
+guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan
+si alguien lo olvida. Cada snapshot valida tablas, bloques `COPY` y las tres RPC
+vigentes antes de subirlo; el simulacro mensual compara ese contrato con
+Supabase. El checkout operativo del VPS no se actualiza solo y conserva copias
+no versionadas: hasta reconciliarlo, se sincroniza únicamente
+`scripts/backup/` y se relanza `install-backup-timer.sh` según el runbook.
+Arquitectura, operativa, límites y consecuencias de privacidad:
 [`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
 
 ## Costes del chat

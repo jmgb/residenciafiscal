@@ -47,11 +47,15 @@ source "$SCRIPT_DIR/lib-read-env.sh"
 R2_ACCESS_KEY_ID="$(read_env_var_or_current "$ENV_FILE" R2_ACCESS_KEY_ID)"
 R2_SECRET_ACCESS_KEY="$(read_env_var_or_current "$ENV_FILE" R2_SECRET_ACCESS_KEY)"
 R2_ACCOUNT_ID="$(read_env_var_or_current "$ENV_FILE" R2_ACCOUNT_ID)"
+SUPABASE_DB_PASSWORD="$(read_env_var_or_current "$ENV_FILE" SUPABASE_DB_PASSWORD)"
+SUPABASE_REF="$(read_env_var_or_current "$ENV_FILE" SUPABASE_REF)"
 
 missing=()
 [[ -z "${R2_ACCESS_KEY_ID:-}" ]] && missing+=("R2_ACCESS_KEY_ID")
 [[ -z "${R2_SECRET_ACCESS_KEY:-}" ]] && missing+=("R2_SECRET_ACCESS_KEY")
 [[ -z "${R2_ACCOUNT_ID:-}" ]] && missing+=("R2_ACCOUNT_ID")
+[[ -z "${SUPABASE_DB_PASSWORD:-}" ]] && missing+=("SUPABASE_DB_PASSWORD")
+[[ -z "${SUPABASE_REF:-}" ]] && missing+=("SUPABASE_REF")
 
 if [[ ${#missing[@]} -gt 0 ]]; then
     fail_with_alert "Faltan variables R2 en ${ENV_FILE}: ${missing[*]}"
@@ -88,13 +92,15 @@ BACKUP_NAME="${LATEST_BACKUP%_full.sql.gz}"
 DRILL_LOG="$TEMP_DIR/restore-drill.log"
 
 echo "[$(timestamp)] Ejecutando verify-only sobre ${BACKUP_NAME}..."
-if ! /bin/bash "$RESTORE_SCRIPT" --verify-only "$BACKUP_NAME" > "$DRILL_LOG" 2>&1; then
+if ! BACKUP_ENV_FILE="$ENV_FILE" \
+    BACKUP_VERIFY_LIVE_CONTRACT=1 \
+    /bin/bash "$RESTORE_SCRIPT" --verify-only "$BACKUP_NAME" > "$DRILL_LOG" 2>&1; then
     fail_with_alert "El verify-only falló para ${BACKUP_NAME}: $(tail -20 "$DRILL_LOG")"
 fi
 
 LINES="$(grep -Eo '\([0-9]+ lines\)' "$DRILL_LOG" | tail -1 | tr -cd '0-9' || true)"
 if [[ -n "$LINES" ]]; then
-    echo "[$(timestamp)] Backup restore drill OK: ${LATEST_BACKUP} (${LINES} lines decompressed)"
+    echo "[$(timestamp)] Backup restore drill OK: ${LATEST_BACKUP} (${LINES} lines, contract matches live Supabase)"
 else
-    echo "[$(timestamp)] Backup restore drill OK: ${LATEST_BACKUP}"
+    echo "[$(timestamp)] Backup restore drill OK: ${LATEST_BACKUP} (contract matches live Supabase)"
 fi

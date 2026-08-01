@@ -13,7 +13,9 @@ y el simulacro mensual documentados en `docs/operations/BACKUPS.md`.
 
 from __future__ import annotations
 
+import os
 import re
+import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parents[1]
@@ -186,3 +188,138 @@ def test_el_dump_cubre_todos_los_schemas_del_contrato_de_persistencia() -> None:
         assert schema in declarados, (
             f"SUPABASE_CHAT.md usa el schema `{schema}` y vps-backup.sh no lo dumpea"
         )
+
+
+def _dump_sql_de_prueba() -> str:
+    return """\
+-- Residencia Fiscal Full Backup
+-- Timestamp: 2026-08-01_120000
+-- Project: proyecto-de-prueba
+-- Schemas: public private auth supabase_migrations
+-- Application tables: private.chat_conversations private.chat_messages
+-- Required public functions: public.complete_chat_request public.create_chat_request public.fail_chat_request
+
+CREATE TABLE private.chat_conversations (
+    id uuid NOT NULL
+);
+CREATE TABLE private.chat_messages (
+    id uuid NOT NULL
+);
+CREATE FUNCTION public.complete_chat_request() RETURNS void
+    LANGUAGE sql AS $$ SELECT; $$;
+CREATE FUNCTION public.create_chat_request() RETURNS void
+    LANGUAGE sql AS $$ SELECT; $$;
+CREATE FUNCTION public.fail_chat_request() RETURNS void
+    LANGUAGE sql AS $$ SELECT; $$;
+COPY private.chat_conversations (id) FROM stdin;
+\\.
+COPY private.chat_messages (id) FROM stdin;
+\\.
+"""
+
+
+def _ejecutar_verificador(sql_file: Path, **env: str) -> subprocess.CompletedProcess[str]:
+    verifier = BACKUP_DIR / "verify-backup-contract.sh"
+    return subprocess.run(
+        ["/bin/bash", str(verifier), str(sql_file)],
+        cwd=PROJECT_ROOT,
+        env={**os.environ, **env},
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+
+def test_el_verificador_acepta_un_dump_coherente(tmp_path: Path) -> None:
+    sql_file = tmp_path / "backup.sql"
+    sql_file.write_text(_dump_sql_de_prueba(), "utf-8")
+
+    resultado = _ejecutar_verificador(
+        sql_file,
+        BACKUP_EXPECTED_PROJECT="proyecto-de-prueba",
+        BACKUP_EXPECTED_SCHEMAS="public private auth supabase_migrations",
+        BACKUP_EXPECTED_APPLICATION_TABLES=("private.chat_conversations private.chat_messages"),
+        BACKUP_EXPECTED_PUBLIC_FUNCTIONS=(
+            "public.complete_chat_request public.create_chat_request public.fail_chat_request"
+        ),
+    )
+
+    assert resultado.returncode == 0, resultado.stderr
+    assert "Backup contract OK" in resultado.stdout
+
+
+def test_el_verificador_detecta_una_tabla_sin_datos_restaurables(tmp_path: Path) -> None:
+    sql_file = tmp_path / "backup.sql"
+    sql_file.write_text(
+        _dump_sql_de_prueba().replace("COPY private.chat_messages (id) FROM stdin;\n\\.\n", ""),
+        "utf-8",
+    )
+
+    resultado = _ejecutar_verificador(sql_file)
+
+    assert resultado.returncode != 0
+    assert "COPY private.chat_messages" in resultado.stderr
+
+
+def test_el_verificador_compara_el_inventario_con_supabase(tmp_path: Path) -> None:
+    sql_file = tmp_path / "backup.sql"
+    sql_file.write_text(_dump_sql_de_prueba(), "utf-8")
+
+    resultado = _ejecutar_verificador(
+        sql_file,
+        BACKUP_EXPECTED_APPLICATION_TABLES=(
+            "private.chat_conversations private.chat_messages private.chat_requests"
+        ),
+    )
+
+    assert resultado.returncode != 0
+    assert "Application tables" in resultado.stderr
+
+
+def test_el_verificador_rechaza_ddl_ejecutable_del_presupuesto_antiguo(
+    tmp_path: Path,
+) -> None:
+    sql_file = tmp_path / "backup.sql"
+    sql_file.write_text(
+        _dump_sql_de_prueba()
+        + "\nCREATE FUNCTION public.reserve_chat_request() RETURNS void LANGUAGE sql AS $$ SELECT; $$;\n",
+        "utf-8",
+    )
+
+    resultado = _ejecutar_verificador(sql_file)
+
+    assert resultado.returncode != 0
+    assert "objeto económico prohibido" in resultado.stderr
+
+
+def test_el_verificador_tolera_el_historial_literal_de_migraciones(tmp_path: Path) -> None:
+    sql_file = tmp_path / "backup.sql"
+    sql_file.write_text(
+        _dump_sql_de_prueba()
+        + "\nCOPY supabase_migrations.schema_migrations (version, statements) FROM stdin;\n"
+        + '20260731\t{"CREATE TABLE private.chat_daily_budgets"}\n'
+        + "\\.\n",
+        "utf-8",
+    )
+
+    resultado = _ejecutar_verificador(sql_file)
+
+    assert resultado.returncode == 0, resultado.stderr
+
+
+def test_backup_y_checks_reutilizan_el_verificador_de_contrato() -> None:
+    for nombre in (
+        "vps-backup.sh",
+        "check-backup-freshness.sh",
+        "restore-from-r2.sh",
+    ):
+        contenido = (BACKUP_DIR / nombre).read_text("utf-8")
+        assert "verify-backup-contract.sh" in contenido, nombre
+
+
+def test_el_simulacro_compara_con_el_inventario_vivo_de_supabase() -> None:
+    contenido = (BACKUP_DIR / "check-backup-restore-drill.sh").read_text("utf-8")
+
+    assert "SUPABASE_DB_PASSWORD" in contenido
+    assert "SUPABASE_REF" in contenido
+    assert "BACKUP_VERIFY_LIVE_CONTRACT=1" in contenido
