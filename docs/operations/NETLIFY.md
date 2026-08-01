@@ -34,8 +34,9 @@ versionado cuando Netlify construye desde un clon limpio.
 
 La V1 expone `/api/chat` mediante una Function estándar autosuficiente. Ejecuta
 en paralelo la estrategia A estructurada y Gemini File Search B, aplica rate
-limit, reserva presupuesto atómico en Supabase y devuelve el protocolo
-SSE 2 como cuerpo bufferizado. Por la limitación del plan Legacy, las claves de
+limit, registra la consulta y el coste real en Supabase y devuelve el protocolo
+SSE 2 como cuerpo bufferizado. El navegador aplica además un límite blando
+configurable de mensajes por ventana móvil de 24 horas. Por la limitación del plan Legacy, las claves de
 proveedor y Supabase están configuradas como variables ordinarias de todos los
 scopes, limitadas al contexto `production`; ninguna lleva prefijo `VITE_` ni se
 incluye en el cliente. `VITE_CHAT_MODE` es únicamente el selector público de
@@ -90,7 +91,7 @@ En producción comprobar:
 2. La navegación directa a una ruta SPA no devuelve `404`.
 3. `/data/corpus.json` contiene sentencias y no `[]`.
 4. DevTools → Network muestra `gtag/js` y peticiones de GA4.
-5. Con el chat cerrado, `POST /api/chat` responde `503` sin consumir presupuesto.
+5. Con el chat cerrado, `POST /api/chat` responde `503` sin llamar a proveedores.
 6. En Deploy Preview live, una consulta devuelve A y B antes de 60 s y crea un
    registro de coste sin pregunta, respuesta ni citas.
 

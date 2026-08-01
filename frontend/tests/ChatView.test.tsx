@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatView } from '@/components/chat/ChatView';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { useConversations } from '@/stores/useConversations';
@@ -102,6 +102,10 @@ describe('ChatView', () => {
     useConversations.setState({ conversations: [] });
   });
 
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it('muestra la bienvenida y los prompts sugeridos cuando no hay mensajes', () => {
     renderChat();
     expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
@@ -150,6 +154,25 @@ describe('ChatView', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
     expect(await screen.findByText('¿Y los 183 días?')).toBeInTheDocument();
+  });
+
+  it('bloquea el chat al alcanzar el límite configurable de la sesión', async () => {
+    vi.stubEnv('VITE_CHAT_SESSION_MESSAGE_LIMIT', '1');
+    const user = userEvent.setup();
+    const askQuestion = vi.fn(async function* () {
+      yield { type: 'done' as const };
+    });
+    renderChat({ askQuestion });
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'primera consulta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(await screen.findByText('primera consulta')).toBeInTheDocument();
+    expect(askQuestion).toHaveBeenCalledOnce();
+    expect(screen.getByRole('status', { name: /límite de mensajes de sesión/i })).toHaveTextContent(
+      /1 mensaje/i
+    );
+    expect(screen.getByRole('textbox', { name: 'Consulta' })).toBeDisabled();
   });
 
   it('pasa el país seleccionado al motor de consulta', async () => {

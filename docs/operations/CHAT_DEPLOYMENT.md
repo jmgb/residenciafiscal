@@ -2,7 +2,7 @@
 
 **Estado:** la V1 Netlify-only y su persistencia Supabase están implementadas y
 desplegadas en producción. El proyecto remoto, las migraciones, RLS, RPC
-atómicas y una consulta A/B productiva están verificados. El endpoint conserva
+transaccionales y una consulta A/B productiva están verificados. El endpoint conserva
 los cierres independientes `CHAT_COMPARISON_ENABLED` y `VITE_CHAT_MODE`; siguen
 pendientes los requisitos legales indicados en `TASKS.md`. El recorrido Edge →
 FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
@@ -10,7 +10,7 @@ FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
 
 Este runbook explica la V1 Netlify-only y conserva, en una sección separada, el
 comparador Python futuro. El rollout técnico a 106 está autorizado y conectado;
-no sustituye los gates de presupuesto y revisión jurídica de
+no sustituye los gates de revisión jurídica de
 [`TASKS.md`](../project/TASKS.md).
 
 ## Decisión de runtime para la V1
@@ -104,10 +104,10 @@ no token a token desde el proveedor.
 | Cliente | `frontend/src/lib/chat-engine.live.ts` | POST same-origin, validación HTTP y protocolo |
 | Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto |
 | UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos bloques separados, fuentes, límites y coste |
-| Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, presupuesto y protocolo bufferizado |
+| Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, registro y protocolo bufferizado |
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
-| Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Reserva/reconciliación y serialización de mensajes A/B |
-| Migraciones | `supabase/migrations/` | Tablas privadas de conversaciones, peticiones, mensajes y presupuesto; RPC atómicas |
+| Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro de consulta, coste y serialización de mensajes A/B |
+| Migraciones | `supabase/migrations/` | Tablas privadas de conversaciones, peticiones y mensajes; RPC atómicas |
 | Proxy futuro | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Prototipo FastAPI fuera del camino productivo |
 | HTTP Python | `src/api/chat.py` | Entrada acotada, autenticación y serialización SSE |
 | Runtime | `src/api/chat_runtime.py` | Construcción perezosa de A, B, corpus, store y logs |
@@ -130,11 +130,10 @@ convertirlas a secretos Functions y rotarlas.
 | `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
 | `CHAT_FILE_SEARCH_MODEL` | `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
-| `CHAT_DAILY_BUDGET_USD` | Techo diario global, decimal USD positivo |
-| `CHAT_REQUEST_RESERVATION_USD` | Cota superior prudente por comparación, no mayor que el techo diario |
 | `SUPABASE_URL` | URL del proyecto Supabase; solo backend |
 | `SUPABASE_SECRET_KEY` | Clave secreta de servidor; sin ella el endpoint falla cerrado |
 | `VITE_CHAT_MODE` | Alcance Builds: `live` conecta el cliente; cualquier otro valor usa el stub |
+| `VITE_CHAT_SESSION_MESSAGE_LIMIT` | Límite blando del navegador por ventana móvil de 24 h; `10` por defecto |
 
 La clave publicable, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_REF` y
 `SUPABASE_DB_PASSWORD` no pertenecen al runtime. El contrato de almacenamiento,
@@ -148,13 +147,13 @@ PYTHONPATH=src uv run python -m netlify_chat_pricing_catalog
 PYTHONPATH=src uv run pytest -q tests/test_netlify_chat_pricing_catalog.py
 ```
 
-La reserva debe superar holgadamente el peor coste posible bajo los límites de
-salida. Si algún proveedor no informa uso completo, la reconciliación conserva
-la reserva entera como cargo prudente; un cero desconocido nunca libera gasto.
-Si el coste medido supera por error la reserva, el contador diario se satura en
-el techo y bloquea nuevas llamadas, mientras el coste real permanece en el
-registro por petición. Ese evento invalida la cota configurada y obliga a subirla
-antes de reactivar el chat.
+El límite de mensajes es deliberadamente blando y se aplica en el navegador con
+`localStorage`: permite diez mensajes por defecto en una ventana móvil de 24
+horas. Es una barrera de abuso y experiencia, no una garantía económica ni una
+cuota fuerte por identidad. El rate limit server-side de cinco peticiones por IP
+y minuto sigue siendo la protección técnica inmediata del endpoint. El coste
+real observado se guarda por petición para control operativo, sin bloquear por
+un presupuesto monetario global.
 
 La entrada de A está acotada antes de llamar al proveedor: 500 caracteres de
 pregunta, 4 KiB como máximo por sentencia y 48 KiB para instrucciones, pregunta
@@ -177,13 +176,13 @@ con ambos límites y el máximo observado de recuperación documental.
    `VITE_CHAT_MODE=stub`.
 3. Desplegar y comprobar que `POST /api/chat` responde `503` y que no se realiza
    ninguna llamada de proveedor.
-4. En **Deploy Preview**, configurar `VITE_CHAT_MODE=live`, un presupuesto muy
-   bajo y `CHAT_COMPARISON_ENABLED=true`.
+4. En **Deploy Preview**, configurar `VITE_CHAT_MODE=live`,
+   `VITE_CHAT_SESSION_MESSAGE_LIMIT=10` y `CHAT_COMPARISON_ENABLED=true`.
 5. Hacer una sola consulta del banco con autorización de coste. Comprobar dos
    respuestas A → B, citas verificadas, tokens/coste visibles, duración menor de
-   60 s, tres filas en `private.chat_messages` y una petición reconciliada.
+   60 s, tres filas en `private.chat_messages` y una petición registrada.
 6. Cuadrar tokens y coste con los paneles de OpenAI y Gemini; probar después
-   timeout, fallo aislado, límite por IP y agotamiento del presupuesto.
+   timeout, fallo aislado, límite por IP y límite blando de sesión.
 7. Volver a ambos cierres. Activar Production exige completar privacidad,
    observar Luna `high` durante varios días y una autorización explícita.
 
@@ -259,9 +258,12 @@ procedimiento de despliegue de la V1 Netlify-only.
 
 ## Seguridad, privacidad y coste
 
-- La Function limita a cinco peticiones por IP y minuto y reserva presupuesto
-  global mediante una transacción con bloqueo de fila. Si Supabase no está
-  disponible, no se llama a ningún proveedor.
+- La Function limita a cinco peticiones por IP y minuto y registra la consulta
+  antes de llamar a los proveedores. Si Supabase no está disponible, no se llama
+  a ningún proveedor.
+- El navegador aplica un límite blando configurable mediante
+  `VITE_CHAT_SESSION_MESSAGE_LIMIT`: diez mensajes por ventana móvil de 24 horas
+  por defecto. No sustituye una futura cuota fuerte por usuario autenticado.
 - El navegador envía un identificador aleatorio de conversación, la
   jurisdicción y solo `id`, `role` y `content` de la última pregunta. El backend
   no recibe el resto del historial local.
@@ -278,8 +280,8 @@ procedimiento de despliegue de la V1 Netlify-only.
   expone excepciones al navegador.
 - El coste visible es marginal por estrategia y no incluye preparar el corpus.
 - El modo live no debe activarse en Production hasta validar la migración y la
-  concurrencia en Deploy Preview. Rate limit, bandera y presupuesto atómico son
-  capas independientes.
+  concurrencia en Deploy Preview. Rate limit, bandera y límite blando de sesión
+  son capas independientes.
 
 ## Rollback de la arquitectura futura
 

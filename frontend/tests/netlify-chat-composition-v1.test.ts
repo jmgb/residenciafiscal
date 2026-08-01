@@ -27,8 +27,6 @@ const environment = {
   CHAT_FILE_SEARCH_STORE_NAME: 'fileSearchStores/test',
   CHAT_FILE_SEARCH_MODEL: 'gemini-3.5-flash-lite',
   CHAT_DEADLINE_MS: '52000',
-  CHAT_DAILY_BUDGET_USD: '1.000000',
-  CHAT_REQUEST_RESERVATION_USD: '0.050000',
   SUPABASE_URL: 'https://project.supabase.co',
   SUPABASE_SECRET_KEY: 'sb_secret_test',
 } as NodeJS.ProcessEnv;
@@ -50,9 +48,9 @@ describe('composition root de la Function con Supabase', () => {
     expect(createClient).not.toHaveBeenCalled();
   });
 
-  it('crea un cliente exclusivamente server-side y conecta la reserva atómica', async () => {
+  it('crea un cliente exclusivamente server-side y conecta el registro privado', async () => {
     rpc.mockResolvedValueOnce({
-      data: { allowed: true, reservation_microusd: 50_000 },
+      data: { request_id: 'chat-request-1', created: true },
       error: null,
     });
     const dependencies = createProductionDependencies(environment);
@@ -66,14 +64,14 @@ describe('composition root de la Function con Supabase', () => {
       })
     );
     await expect(
-      dependencies.reserveBudget({
+      dependencies.recordRequest({
         requestId: 'chat-request-1',
         conversationId: 'conversation-1',
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: 'Pregunta',
       })
-    ).resolves.toEqual({ allowed: true, reservationMicrousd: 50_000 });
+    ).resolves.toEqual({ requestId: 'chat-request-1' });
   });
 
   it('registra coste y tokens de A/B sin registrar el contenido fiscal', async () => {
@@ -130,9 +128,8 @@ describe('composition root de la Function con Supabase', () => {
       ],
     };
 
-    await dependencies.reconcileBudget({
+    await dependencies.completeRequest({
       requestId: 'chat-request-1',
-      reservationMicrousd: 50_000,
       actualMicrousd: 2_000,
       actualComplete: false,
       report,

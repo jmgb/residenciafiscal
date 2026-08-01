@@ -5,8 +5,8 @@ aplicadas y verificadas, y persistencia conectada a producción el 31 de julio
 de 2026.
 
 Supabase es la persistencia privada de la V1 Netlify-only. No participa en la
-recuperación jurisprudencial ni sustituye al corpus: se usa para reservar el
-presupuesto de forma atómica y guardar los mensajes y costes del comparador A/B.
+recuperación jurisprudencial ni sustituye al corpus: se usa para registrar las
+consultas y guardar los mensajes y costes del comparador A/B.
 
 ## Decisión de datos
 
@@ -39,8 +39,7 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 | Tabla | Responsabilidad |
 |---|---|
 | `private.chat_conversations` | Agrupa turnos mediante un UUID aleatorio local y jurisdicción |
-| `private.chat_daily_budgets` | Contador diario bloqueado durante cada reserva |
-| `private.chat_requests` | Reserva, coste reconciliado, estado e idempotencia del mensaje |
+| `private.chat_requests` | Registro idempotente de consulta, coste observado y estado |
 | `private.chat_messages` | Pregunta y respuestas A/B con contenido, fuentes, límites y uso |
 | `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
@@ -50,16 +49,15 @@ o `UNAVAILABLE`), versión de precio, tokens de entrada/salida/documento, citas
 exactas y límites declarados.
 
 La Function no escribe tablas directamente. Solo puede invocar con
-`SUPABASE_SECRET_KEY` estas RPC de `public`, ambas `SECURITY DEFINER`, con
+`SUPABASE_SECRET_KEY` estas RPC de `public`, todas `SECURITY DEFINER`, con
 `search_path` fijo y `EXECUTE` revocado a `PUBLIC`, `anon` y `authenticated`:
 
-- `reserve_chat_request`: bloquea la fila diaria, comprueba el techo, reserva y
-  guarda la pregunta en una sola transacción;
-- `complete_chat_request`: guarda A/B, reconcilia el coste real y completa la
-  petición en una sola transacción.
-- `fail_chat_request`: marca una reserva como `failed` o `timed_out` con un
-  código técnico acotado, sin guardar el diagnóstico del proveedor ni liberar
-  la reserva potencialmente consumida.
+- `create_chat_request`: registra de forma idempotente la consulta y la pregunta
+  en una sola transacción;
+- `complete_chat_request`: guarda A/B, el coste real y completa la petición en
+  una sola transacción;
+- `fail_chat_request`: marca una consulta como `failed` o `timed_out` con un
+  código técnico acotado, sin guardar el diagnóstico del proveedor.
 
 Las operaciones de ciclo de vida viven en el schema privado y no se exponen por
 la Data API:
@@ -69,14 +67,16 @@ la Data API:
 - `private.delete_chat_conversation(conversation_id)`: suprime una conversación
   completa tras verificar la identidad fuera de la base de datos.
 
-La migración canónica es
-`supabase/migrations/20260731161251_chat_persistence_and_budget.sql`. La segunda
-migración retira un permiso público inseguro de `rls_auto_enable()` que traía el
-proyecto nuevo. Las migraciones de ciclo de vida añaden el índice de la FK de
-presupuesto y serializan el borrado. `db lint` no devuelve errores de esquema;
+La migración inicial histórica es
+`supabase/migrations/20260731161251_chat_persistence_and_budget.sql`; la
+migración vigente
+`supabase/migrations/20260801094912_chat_message_limit_without_budget.sql`
+elimina la tabla y columnas de presupuesto monetario y deja solo el coste real
+observado. La segunda migración retira un permiso público inseguro de
+`rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de
+vida serializan el borrado. `db lint` no devuelve errores de esquema;
 los advisors mantienen avisos informativos esperables para tablas privadas con
-RLS sin políticas públicas y, mientras el índice recién creado no acumula uso,
-su posible infrautilización.
+RLS sin políticas públicas.
 
 ## Credenciales y fronteras
 
@@ -108,12 +108,12 @@ supabase db advisors --linked --type security
 supabase db advisors --linked --type performance
 ```
 
-Una comprobación real ejecutada mediante la API guardó una reserva, tres
-mensajes y dos respuestas, reconcilió 2.000 microdólares y eliminó después los
-registros sintéticos. Una segunda prueba lanzó doce reservas simultáneas contra
-un techo de cinco: pasaron exactamente cinco y las otras siete fueron rechazadas;
-el contador terminó en el techo. Sus datos sintéticos también se eliminaron. No
-imprimir claves ni cuerpos reales al validar producción.
+Una comprobación real ejecutada mediante la API guardó una consulta, tres
+mensajes y dos respuestas, registró 2.000 microdólares de coste observado y
+eliminó después los registros sintéticos. La idempotencia de la consulta se
+prueba reutilizando el mismo par `conversation_id`/`user_message_id`; no se
+crean filas duplicadas ni se reserva dinero. No imprimir claves ni cuerpos reales
+al validar producción.
 
 El smoke productivo del 31 de julio devolvió protocolo 2 y HTTP 200 en 20,23 s;
 por contrato, el handler solo responde 200 después de completar las dos RPC. A

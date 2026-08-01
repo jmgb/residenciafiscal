@@ -3,6 +3,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import { type CountryRoute, SPAIN_ROUTE } from '@/data/countryRoutes';
+import {
+  type ChatSessionMessageUsage,
+  consumeChatSessionMessage,
+} from '@/lib/chat-session-message-limit';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
 import type {
@@ -104,6 +108,9 @@ export function ChatView({
   const messages = conversation?.messages ?? [];
 
   const [isStreaming, setIsStreaming] = useState(false);
+  const [sessionMessageLimit, setSessionMessageLimit] = useState<ChatSessionMessageUsage | null>(
+    null
+  );
   const abortRef = useRef<AbortController | null>(null);
   /**
    * Conversación DUEÑA del streaming en curso (`null` si no hay ninguno).
@@ -180,6 +187,13 @@ export function ChatView({
 
   const handleSend = useCallback(
     async (content: string) => {
+      const sessionUsage = consumeChatSessionMessage();
+      if (!sessionUsage.allowed) {
+        setSessionMessageLimit(sessionUsage);
+        return;
+      }
+      setSessionMessageLimit(sessionUsage.count >= sessionUsage.limit ? sessionUsage : null);
+
       // Si la URL apunta a una conversación inexistente se crea una nueva en vez de
       // escribir en el vacío (el efecto de arriba ya habrá redirigido en la práctica).
       const existing = conversationId
@@ -376,7 +390,23 @@ export function ChatView({
         )}
       </div>
 
-      <ChatComposer onSend={handleSend} onStop={handleStop} isStreaming={isStreaming} />
+      {sessionMessageLimit && (
+        <p
+          role='status'
+          aria-label='Límite de mensajes de sesión'
+          className='mx-auto w-full max-w-3xl px-4 pb-2 text-center text-xs text-muted-foreground'
+        >
+          Has alcanzado el límite de {sessionMessageLimit.limit}{' '}
+          {sessionMessageLimit.limit === 1 ? 'mensaje' : 'mensajes'} de esta sesión. Podrás volver a
+          consultar cuando se renueve la ventana de 24 horas.
+        </p>
+      )}
+      <ChatComposer
+        onSend={handleSend}
+        onStop={handleStop}
+        isStreaming={isStreaming}
+        disabled={sessionMessageLimit !== null}
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ interface ChatComposerProps {
   onSend: (content: string) => void;
   onStop: () => void;
   isStreaming: boolean;
+  disabled?: boolean;
   placeholder?: string;
 }
 
@@ -16,6 +17,7 @@ export function ChatComposer({
   onSend,
   onStop,
   isStreaming,
+  disabled = false,
   placeholder = 'Escribe tu consulta sobre residencia fiscal…',
 }: ChatComposerProps) {
   const [text, setText] = useState('');
@@ -23,7 +25,7 @@ export function ChatComposer({
   const trimmedLength = text.trim().length;
   const isOverMaxLength = trimmedLength > MAX_LENGTH;
   const showCharCount = trimmedLength > MAX_LENGTH * 0.8;
-  const canSend = trimmedLength > 0 && !isStreaming && !isOverMaxLength;
+  const canSend = trimmedLength > 0 && !isStreaming && !isOverMaxLength && !disabled;
 
   const resetHeight = () => {
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
@@ -54,6 +56,7 @@ export function ChatComposer({
         <textarea
           ref={textareaRef}
           value={text}
+          disabled={disabled}
           onChange={(event) => {
             setText(event.target.value);
             const el = event.target;

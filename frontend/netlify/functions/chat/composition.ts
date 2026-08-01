@@ -7,13 +7,6 @@ import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters
 import { compareStrategiesInParallel } from './runtime';
 import { SupabaseChatStore, type SupabaseRpcClient } from './supabase-chat-store';
 
-const usdToMicrousd = (raw: string | undefined): number | null => {
-  if (!raw || !/^\d+(?:\.\d{1,6})?$/.test(raw.trim())) return null;
-  const [whole, fraction = ''] = raw.trim().split('.');
-  const amount = Number(whole) * 1_000_000 + Number(fraction.padEnd(6, '0'));
-  return Number.isSafeInteger(amount) && amount > 0 ? amount : null;
-};
-
 const deadline = (raw: string | undefined) => {
   const value = Number(raw ?? 52_000);
   return Number.isInteger(value) && value >= 1_000 && value <= 55_000 ? value : null;
@@ -27,8 +20,6 @@ export const createProductionDependencies = (
   const storeName = environment.CHAT_FILE_SEARCH_STORE_NAME?.trim();
   const supabaseUrl = environment.SUPABASE_URL?.trim();
   const supabaseSecretKey = environment.SUPABASE_SECRET_KEY?.trim();
-  const dailyLimitMicrousd = usdToMicrousd(environment.CHAT_DAILY_BUDGET_USD);
-  const reservationMicrousd = usdToMicrousd(environment.CHAT_REQUEST_RESERVATION_USD);
   const deadlineMs = deadline(environment.CHAT_DEADLINE_MS);
   const fileSearchModel = environment.CHAT_FILE_SEARCH_MODEL?.trim() || 'gemini-3.5-flash-lite';
   const enabled = environment.CHAT_COMPARISON_ENABLED === 'true';
@@ -39,22 +30,19 @@ export const createProductionDependencies = (
     !supabaseUrl?.startsWith('https://') ||
     !supabaseSecretKey ||
     !storeName?.startsWith('fileSearchStores/') ||
-    !dailyLimitMicrousd ||
-    !reservationMicrousd ||
-    reservationMicrousd > dailyLimitMicrousd ||
     !deadlineMs ||
     !['gemini-3.5-flash-lite', 'gemini-3.6-flash'].includes(fileSearchModel)
   ) {
     return {
       enabled: false,
-      async reserveBudget() {
-        return { allowed: false, reservationMicrousd: 0 };
+      async recordRequest() {
+        throw new Error('Chat no configurado');
       },
       async compare() {
         throw new Error('Chat no configurado');
       },
-      async failBudget() {},
-      async reconcileBudget() {},
+      async failRequest() {},
+      async completeRequest() {},
     };
   }
 
@@ -67,10 +55,7 @@ export const createProductionDependencies = (
       return { data, error: error ? { message: error.message } : null };
     },
   };
-  const store = new SupabaseChatStore(rpcClient, {
-    dailyLimitMicrousd,
-    reservationMicrousd,
-  });
+  const store = new SupabaseChatStore(rpcClient);
   const structured = new CurrentStructuredStrategy(productionCorpus, createOpenAIWriter(openAIKey));
   const fileSearch = new GeminiFileSearchStrategy({
     storeName,
@@ -81,7 +66,7 @@ export const createProductionDependencies = (
 
   return {
     enabled: true,
-    reserveBudget: (input) => store.reserve(input),
+    recordRequest: (input) => store.record(input),
     compare: (question, requestId, signal) =>
       compareStrategiesInParallel({
         question,
@@ -90,9 +75,9 @@ export const createProductionDependencies = (
         deadlineMs,
         strategies: [structured, fileSearch],
       }),
-    failBudget: (input) => store.fail(input),
-    reconcileBudget: async ({ requestId, actualMicrousd, actualComplete, report }) => {
-      await store.reconcile({
+    failRequest: (input) => store.fail(input),
+    completeRequest: async ({ requestId, actualMicrousd, actualComplete, report }) => {
+      await store.complete({
         requestId,
         actualMicrousd,
         actualComplete,

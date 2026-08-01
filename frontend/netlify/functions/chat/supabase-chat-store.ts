@@ -11,7 +11,7 @@ export interface SupabaseRpcClient {
   ): PromiseLike<{ data: unknown; error: RpcError | null }>;
 }
 
-export interface ChatReservationInput {
+export interface ChatRequestInput {
   requestId: string;
   conversationId: string;
   userMessageId: string;
@@ -19,7 +19,7 @@ export interface ChatReservationInput {
   question: string;
 }
 
-interface ChatReconciliationInput {
+interface ChatCompletionInput {
   requestId: string;
   actualMicrousd: number;
   actualComplete: boolean;
@@ -32,19 +32,15 @@ interface ChatFailureInput {
   failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
 }
 
-interface ReservationResult {
-  allowed: boolean;
-  reservation_microusd: number;
+interface RequestRecordResult {
+  request_id: string;
+  created: boolean;
 }
 
-function isReservationResult(value: unknown): value is ReservationResult {
+function isRequestRecordResult(value: unknown): value is RequestRecordResult {
   if (!value || typeof value !== 'object') return false;
-  const candidate = value as Partial<ReservationResult>;
-  return (
-    typeof candidate.allowed === 'boolean' &&
-    Number.isSafeInteger(candidate.reservation_microusd) &&
-    Number(candidate.reservation_microusd) >= 0
-  );
+  const candidate = value as Partial<RequestRecordResult>;
+  return typeof candidate.request_id === 'string' && candidate.request_id.length > 0;
 }
 
 const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
@@ -64,39 +60,21 @@ const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
 });
 
 export class SupabaseChatStore {
-  constructor(
-    private readonly client: SupabaseRpcClient,
-    private readonly limits: { dailyLimitMicrousd: number; reservationMicrousd: number }
-  ) {
-    if (
-      !Number.isSafeInteger(limits.dailyLimitMicrousd) ||
-      !Number.isSafeInteger(limits.reservationMicrousd) ||
-      limits.dailyLimitMicrousd < 1 ||
-      limits.reservationMicrousd < 1 ||
-      limits.reservationMicrousd > limits.dailyLimitMicrousd
-    ) {
-      throw new Error('Los límites del presupuesto deben ser válidos');
-    }
-  }
+  constructor(private readonly client: SupabaseRpcClient) {}
 
-  async reserve(input: ChatReservationInput) {
-    const { data, error } = await this.client.rpc('reserve_chat_request', {
+  async record(input: ChatRequestInput): Promise<{ requestId: string }> {
+    const { data, error } = await this.client.rpc('create_chat_request', {
       p_request_id: input.requestId,
       p_conversation_id: input.conversationId,
       p_user_message_id: input.userMessageId,
       p_country_path: input.countryPath,
       p_question: input.question,
-      p_daily_limit_microusd: this.limits.dailyLimitMicrousd,
-      p_reservation_microusd: this.limits.reservationMicrousd,
     });
-    if (error || !isReservationResult(data)) throw new Error('Supabase no disponible');
-    return {
-      allowed: data.allowed,
-      reservationMicrousd: data.reservation_microusd,
-    };
+    if (error || !isRequestRecordResult(data)) throw new Error('Supabase no disponible');
+    return { requestId: data.request_id };
   }
 
-  async reconcile(input: ChatReconciliationInput): Promise<void> {
+  async complete(input: ChatCompletionInput): Promise<void> {
     const { error } = await this.client.rpc('complete_chat_request', {
       p_request_id: input.requestId,
       p_actual_microusd: input.actualMicrousd,

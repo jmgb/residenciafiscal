@@ -2,29 +2,23 @@
 
 import { createProductionDependencies } from './composition';
 import type { ComparisonReport } from './contracts';
-import type { ChatReservationInput } from './supabase-chat-store';
+import type { ChatRequestInput } from './supabase-chat-store';
 
 const MAX_REQUEST_BYTES = 200_000;
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 500;
 
-export interface BudgetReservation {
-  allowed: boolean;
-  reservationMicrousd: number;
-}
-
 export interface ChatFunctionDependencies {
   enabled: boolean;
-  reserveBudget(input: ChatReservationInput): Promise<BudgetReservation>;
+  recordRequest(input: ChatRequestInput): Promise<{ requestId: string }>;
   compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
-  failBudget(input: {
+  failRequest(input: {
     requestId: string;
     status: 'failed' | 'timed_out';
     failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
   }): Promise<void>;
-  reconcileBudget(input: {
+  completeRequest(input: {
     requestId: string;
-    reservationMicrousd: number;
     actualMicrousd: number;
     actualComplete: boolean;
     report: ComparisonReport;
@@ -138,9 +132,9 @@ export const createChatHandler =
     if (!parsed) return jsonError(400, 'Petición inválida');
 
     const requestId = `chat-${crypto.randomUUID()}`;
-    let reservation: BudgetReservation;
+    let recordedRequest: { requestId: string };
     try {
-      reservation = await dependencies.reserveBudget({
+      recordedRequest = await dependencies.recordRequest({
         requestId,
         conversationId: parsed.conversationId,
         userMessageId: parsed.userMessageId,
@@ -148,19 +142,18 @@ export const createChatHandler =
         question: parsed.question,
       });
     } catch {
-      return jsonError(503, 'Control de presupuesto no disponible');
+      return jsonError(503, 'Registro de conversación no disponible');
     }
-    if (!reservation.allowed) return jsonError(429, 'Presupuesto diario agotado');
+    const effectiveRequestId = recordedRequest.requestId;
 
     let report: ComparisonReport;
     try {
-      report = await dependencies.compare(parsed.question, requestId, request.signal);
+      report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
     } catch {
-      // La reserva se conserva: ante uso de proveedor desconocido es más seguro
-      // agotar antes el techo que liberar gasto que quizá ya se haya producido.
+      // El fallo se registra sin exponer el diagnóstico del proveedor.
       try {
-        await dependencies.failBudget({
-          requestId,
+        await dependencies.failRequest({
+          requestId: effectiveRequestId,
           status: request.signal.aborted ? 'timed_out' : 'failed',
           failureCode: request.signal.aborted ? 'aborted' : 'comparison_error',
         });
@@ -175,9 +168,8 @@ export const createChatHandler =
     );
     const actualComplete = report.answers.every((answer) => answer.cost.measurement === 'ACTUAL');
     try {
-      await dependencies.reconcileBudget({
-        requestId,
-        reservationMicrousd: reservation.reservationMicrousd,
+      await dependencies.completeRequest({
+        requestId: effectiveRequestId,
         actualMicrousd,
         actualComplete,
         report,

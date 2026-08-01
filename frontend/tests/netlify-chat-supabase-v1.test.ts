@@ -62,51 +62,37 @@ const report: ComparisonReport = {
 };
 
 describe('persistencia privada del chat en Supabase', () => {
-  it('reserva presupuesto y guarda la pregunta con identificadores pseudónimos', async () => {
+  it('registra la pregunta con identificadores pseudónimos sin reservar dinero', async () => {
     const rpc = vi.fn(async () => ({
-      data: { allowed: true, reservation_microusd: 50_000 },
+      data: { request_id: 'chat-request-1', created: true },
       error: null,
     }));
-    const store = new SupabaseChatStore(
-      { rpc },
-      {
-        dailyLimitMicrousd: 1_000_000,
-        reservationMicrousd: 50_000,
-      }
-    );
+    const store = new SupabaseChatStore({ rpc });
 
     await expect(
-      store.reserve({
+      store.record({
         requestId: 'chat-request-1',
         conversationId: 'conversation-1',
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: '¿Qué pruebas tiene en cuenta Hacienda?',
       })
-    ).resolves.toEqual({ allowed: true, reservationMicrousd: 50_000 });
+    ).resolves.toEqual({ requestId: 'chat-request-1' });
 
-    expect(rpc).toHaveBeenCalledWith('reserve_chat_request', {
+    expect(rpc).toHaveBeenCalledWith('create_chat_request', {
       p_request_id: 'chat-request-1',
       p_conversation_id: 'conversation-1',
       p_user_message_id: 'message-1',
       p_country_path: '/espana',
       p_question: '¿Qué pruebas tiene en cuenta Hacienda?',
-      p_daily_limit_microusd: 1_000_000,
-      p_reservation_microusd: 50_000,
     });
   });
 
-  it('reconcilia el presupuesto y persiste separadamente las respuestas A y B', async () => {
+  it('registra el coste y persiste separadamente las respuestas A y B', async () => {
     const rpc = vi.fn(async () => ({ data: true, error: null }));
-    const store = new SupabaseChatStore(
-      { rpc },
-      {
-        dailyLimitMicrousd: 1_000_000,
-        reservationMicrousd: 50_000,
-      }
-    );
+    const store = new SupabaseChatStore({ rpc });
 
-    await store.reconcile({
+    await store.complete({
       requestId: 'chat-request-1',
       actualMicrousd: 2_000,
       actualComplete: false,
@@ -139,16 +125,10 @@ describe('persistencia privada del chat en Supabase', () => {
       data: null,
       error: { message: 'Authorization sb_secret_no_debe_salir' },
     }));
-    const store = new SupabaseChatStore(
-      { rpc },
-      {
-        dailyLimitMicrousd: 1_000_000,
-        reservationMicrousd: 50_000,
-      }
-    );
+    const store = new SupabaseChatStore({ rpc });
 
     await expect(
-      store.reserve({
+      store.record({
         requestId: 'chat-request-1',
         conversationId: 'conversation-1',
         userMessageId: 'message-1',
@@ -158,15 +138,9 @@ describe('persistencia privada del chat en Supabase', () => {
     ).rejects.toThrow('Supabase no disponible');
   });
 
-  it('registra un fallo técnico sin liberar la reserva', async () => {
+  it('registra un fallo técnico de la consulta', async () => {
     const rpc = vi.fn(async () => ({ data: true, error: null }));
-    const store = new SupabaseChatStore(
-      { rpc },
-      {
-        dailyLimitMicrousd: 1_000_000,
-        reservationMicrousd: 50_000,
-      }
-    );
+    const store = new SupabaseChatStore({ rpc });
 
     await store.fail({
       requestId: 'chat-request-1',

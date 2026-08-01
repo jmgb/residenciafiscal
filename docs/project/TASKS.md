@@ -173,32 +173,31 @@ contra el dominio público después de cada deploy.
     incrementos en dos, y todas creyeron haber escrito. Se eligió la opción del
     diseño con atomicidad real: Postgres.
 
-    > **Decisión actualizada 2026-07-31:** Netlify Database resultó incompatible
-    > con el plan heredado del sitio. Se trasladó el mismo contrato atómico a
-    > Supabase/Postgres: `reserve_chat_request` y `complete_chat_request` usan
-    > transacción y `SELECT ... FOR UPDATE`; si Supabase falla, el endpoint falla
-    > cerrado. El proyecto remoto, migraciones, acceso con secret key, escritura
-    > A/B, advisors y doce reservas concurrentes están validados: el techo de
-    > cinco admitió exactamente cinco. La consulta productiva posterior confirmó
-    > reserva, respuestas A/B y reconciliación; no sustituye los gates legales.
+    > **Decisión actualizada 2026-08-01:** no se mantiene un presupuesto monetario
+    > global ni una reserva por petición. Supabase/Postgres conserva un ledger
+    > privado de consultas, coste real y estado mediante `create_chat_request`,
+    > `complete_chat_request` y `fail_chat_request`; si Supabase falla, el endpoint
+    > falla cerrado. El navegador aplica `VITE_CHAT_SESSION_MESSAGE_LIMIT=10` como
+    > límite blando por ventana móvil de 24 horas y Netlify mantiene cinco
+    > peticiones por IP y minuto.
     >
     > Evidencia histórica: lee en este orden la sección 5 de
     > [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) (la evidencia del
     > fallo y la alternativa medida) y la sección 4 del diseño (las tres opciones con
-    > sus contrapartidas). La decisión prioriza una garantía dura aunque añada
-    > Database al stack.
+    > sus contrapartidas). La decisión prioriza un ledger privado y una protección
+    > de abuso configurable, sin convertir el coste observado en una cuota de
+    > producto.
     >
-    > La API pública del diseño
-    > (`consumirCuota`, `reservar`, `reconciliar`, microdólares enteros, fallo
-    > cerrado) sigue siendo válida y sus tests de concurrencia también: solo cambia
-    > el mecanismo de escritura por debajo.
+    > El límite fuerte por usuario queda aplazado hasta que existan cuentas y una
+    > identidad estable; el límite de navegador no se presenta como garantía
+    > antifraude ni como control económico.
     >
     > El trabajo vive en la rama `spike/chat-edge-platform`, **sin push**. El código
     > del spike se borró a propósito; `NETLIFY_EDGE.md` explica cómo reconstruirlo si
     > hace falta volver a medir.
   - [x] **Fase 1 — implementación detrás del stub.** La Function, sus módulos
-    puros, presupuesto y adaptadores están implementados con TDD. Producción
-    sigue simulada.
+    puros, ledger privado, límite de sesión y adaptadores están implementados con
+    TDD. Producción sigue simulada.
 
     > **La fuente del chat ya está decidida e implementada tanto en el comparador
     > local como en la Function cerrada.** Debe ser
@@ -504,16 +503,19 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
   - [x] Añadir estados `failed`/`timed_out` y una RPC idempotente de fallo sin
     guardar diagnósticos brutos del proveedor. Los fallos de proveedor y del
     deadline ya quedan distinguidos de las respuestas completadas.
-  - [ ] Añadir un barrido explícito de reservas `reserved` abandonadas: si falla
-    la RPC de reconciliación o muere la Function antes de llamarla, la reserva
-    puede seguir consumiendo el techo hasta el cambio de fecha.
-  - [ ] Hacer idempotente `reserve_chat_request`: reintentar el mismo mensaje
-    hoy choca con `UNIQUE (conversation_id, user_message_id)` y se traduce a un
-    503 indistinguible de una caída real.
+  - [x] Retirar la reserva monetaria global y sustituirla por un registro privado
+    idempotente de consulta. `create_chat_request` reutiliza el mismo registro
+    para el par `conversation_id`/`user_message_id`; `actual_microusd` queda solo
+    como coste observado y ya no existe `chat_daily_budgets`.
+  - [x] Aplicar un límite blando de `10` mensajes por ventana móvil de 24 horas
+    en el navegador, configurable mediante `VITE_CHAT_SESSION_MESSAGE_LIMIT`.
+    El rate limit server-side de cinco peticiones por IP y minuto permanece.
+  - [ ] Implementar un límite fuerte por usuario autenticado cuando existan
+    cuentas y una identidad estable; no convertir el almacenamiento local en
+    prueba de identidad.
   - [ ] Instrumentar errores y gasto. `chat_cost_reconciled`
     (`frontend/netlify/functions/chat/composition.ts:112`) solo se emite en el
-    camino feliz; las tres respuestas 503 y el 429 de presupuesto agotado de
-    `chat.ts` no emiten ningún evento con `request_id`, así que hoy no hay sobre
+    camino feliz; las respuestas 503 no emiten ningún evento con `request_id`, así que hoy no hay sobre
     qué alertar cuando algo falla. Emitir un evento de fallo equivalente, elegir
     canal (drenaje de logs de Netlify o Sentry, que aún no cubre la Function) y
     solo entonces configurar alertas por gasto y por tasa de error. Queda además
@@ -521,29 +523,24 @@ página pública en `/colaborar`, la **única ruta indexable** de la invitación
     tokens de A/B y sin pregunta ni respuesta: el contrato está cubierto por
     test, pero la consulta inmediata del log solo mostró la duración de la
     Function.
-  - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la reserva. B sale
+  - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la medición. B sale
     `ESTIMATED` cuando la Interactions API cita documentos pero devuelve cero
     tokens de documento
     (`frontend/netlify/functions/chat/file-search-strategy.ts:79`), lo que fija
-    `actual_complete=false` en todos los turnos; con ese valor
-    `complete_chat_request` carga `greatest(reserva, real)`, es decir **siempre
-    la reserva completa**. Consecuencia práctica: el techo diario no limita
-    gasto sino número de consultas —con los 1,00 y 0,05 USD de `.env.example`,
-    20 turnos al día— aunque un turno real cueste 0,004542 USD. Cuadrar primero
-    el importe con el panel de Google y ajustar después
-    `CHAT_REQUEST_RESERVATION_USD` y `CHAT_DAILY_BUDGET_USD`.
+    `actual_complete=false` en todos los turnos. El coste real sigue guardándose
+    para reconciliarlo con el panel de Google, pero ya no afecta a una reserva ni
+    a un techo diario.
   - [ ] Ejecutar al menos trimestralmente un restore real del último dump en una
-    base aislada y comprobar las cinco tablas `private`; el simulacro mensual
+    base aislada y comprobar las cuatro tablas `private`; el simulacro mensual
     vigente solo descarga, descomprime y cuenta líneas.
   - [ ] Rotar `SUPABASE_SECRET_KEY`, `OPENAI_API_KEY` y `GEMINI_API_KEY` si cambia
     el acceso al equipo o se sospecha exposición. Si Netlify pasa a Pro,
     convertirlas de variables ordinarias de todos los scopes a secretos de
     scope Functions y rotarlas durante el cambio.
-- [ ] **Completar la protección económica del endpoint live.** La V1 ya tiene
-  rate limit, cierre por bandera y reserva/reconciliación atómica en Supabase.
-  El schema privado, migraciones, RPC real, advisors, concurrencia/agotamiento y
-  un smoke productivo están verificados. Falta cerrar observabilidad, estados de
-  fallo y coste contable de Gemini en la tarea anterior.
+- [ ] **Completar la protección operativa del endpoint live.** La V1 ya tiene
+  rate limit, cierre por bandera, límite blando configurable de sesión y ledger
+  privado en Supabase. Falta cerrar observabilidad y coste contable de Gemini;
+  el límite fuerte por usuario queda condicionado a disponer de cuentas.
 - [ ] **Requisitos legales pendientes con el chat real activo.** La última
   pregunta autosuficiente viaja a OpenAI para A y a Google/Gemini para B; la
   activación técnica del 31 de julio no sustituye estos requisitos.

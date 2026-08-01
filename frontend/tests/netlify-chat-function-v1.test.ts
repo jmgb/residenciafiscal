@@ -68,10 +68,10 @@ const dependencies = (
   overrides: Partial<ChatFunctionDependencies> = {}
 ): ChatFunctionDependencies => ({
   enabled: true,
-  reserveBudget: vi.fn(async () => ({ allowed: true, reservationMicrousd: 10_000 })),
+  recordRequest: vi.fn(async ({ requestId }) => ({ requestId })),
   compare: vi.fn(async () => report),
-  reconcileBudget: vi.fn(async () => undefined),
-  failBudget: vi.fn(async () => undefined),
+  completeRequest: vi.fn(async () => undefined),
+  failRequest: vi.fn(async () => undefined),
   ...overrides,
 });
 
@@ -96,21 +96,23 @@ describe('Netlify Function /api/chat V1', () => {
     expect(deps.compare).not.toHaveBeenCalled();
   });
 
-  it('falla cerrado si no puede reservar presupuesto', async () => {
+  it('falla cerrado si no puede registrar la consulta', async () => {
     const deps = dependencies({
-      reserveBudget: vi.fn(async () => ({ allowed: false, reservationMicrousd: 0 })),
+      recordRequest: vi.fn(async () => {
+        throw new Error('ledger unavailable');
+      }),
     });
     const response = await createChatHandler(deps)(
       request({ messages: [{ role: 'user', content: 'pregunta' }] })
     );
 
-    expect(response.status).toBe(429);
+    expect(response.status).toBe(503);
     expect(deps.compare).not.toHaveBeenCalled();
   });
 
   it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
     const deps = dependencies({
-      reserveBudget: vi.fn(async () => {
+      recordRequest: vi.fn(async () => {
         throw new Error('postgresql://usuario:secreto@host/base');
       }),
     });
@@ -123,13 +125,13 @@ describe('Netlify Function /api/chat V1', () => {
     expect(deps.compare).not.toHaveBeenCalled();
   });
 
-  it('aísla un fallo inesperado del comparador sin liberar una reserva potencialmente gastada', async () => {
-    const failBudget = vi.fn(async () => undefined);
+  it('aísla un fallo inesperado del comparador y registra el fallo técnico', async () => {
+    const failRequest = vi.fn(async () => undefined);
     const deps = dependencies({
       compare: vi.fn(async () => {
         throw new Error('Authorization: Bearer secreto');
       }),
-      failBudget,
+      failRequest,
     });
 
     const response = await createChatHandler(deps)(
@@ -138,13 +140,13 @@ describe('Netlify Function /api/chat V1', () => {
 
     expect(response.status).toBe(503);
     expect(await response.text()).not.toContain('secreto');
-    expect(deps.reconcileBudget).not.toHaveBeenCalled();
-    expect(failBudget).toHaveBeenCalledWith(
+    expect(deps.completeRequest).not.toHaveBeenCalled();
+    expect(failRequest).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'failed', failureCode: 'comparison_error' })
     );
   });
 
-  it('devuelve el protocolo comparativo bufferizado y reconcilia el coste', async () => {
+  it('devuelve el protocolo comparativo bufferizado y registra el coste', async () => {
     const deps = dependencies();
     const response = await createChatHandler(deps)(
       request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
@@ -158,7 +160,7 @@ describe('Netlify Function /api/chat V1', () => {
       body.indexOf('"strategy":"gemini_file_search"')
     );
     expect(body).toContain('event: done');
-    expect(deps.reconcileBudget).toHaveBeenCalledWith(
+    expect(deps.completeRequest).toHaveBeenCalledWith(
       expect.objectContaining({ actualMicrousd: 3, actualComplete: true })
     );
   });
@@ -181,7 +183,7 @@ describe('Netlify Function /api/chat V1', () => {
     );
 
     expect(response.status).toBe(200);
-    expect(deps.reserveBudget).toHaveBeenCalledWith({
+    expect(deps.recordRequest).toHaveBeenCalledWith({
       requestId: expect.stringMatching(/^chat-/),
       conversationId: 'conversation-1',
       userMessageId: 'message-1',
@@ -212,21 +214,21 @@ describe('Netlify Function /api/chat V1', () => {
     ]);
   });
 
-  it('rechaza entradas inválidas antes de reservar presupuesto', async () => {
+  it('rechaza entradas inválidas antes de registrar la consulta', async () => {
     const deps = dependencies();
     const response = await createChatHandler(deps)(request({ messages: [] }));
 
     expect(response.status).toBe(400);
-    expect(deps.reserveBudget).not.toHaveBeenCalled();
+    expect(deps.recordRequest).not.toHaveBeenCalled();
   });
 
-  it('rechaza preguntas de más de 500 caracteres antes de reservar presupuesto', async () => {
+  it('rechaza preguntas de más de 500 caracteres antes de registrar la consulta', async () => {
     const deps = dependencies();
     const response = await createChatHandler(deps)(
       request({ messages: [{ role: 'user', content: 'a'.repeat(501) }] })
     );
 
     expect(response.status).toBe(400);
-    expect(deps.reserveBudget).not.toHaveBeenCalled();
+    expect(deps.recordRequest).not.toHaveBeenCalled();
   });
 });
