@@ -253,8 +253,8 @@ Nombres y valores de ejemplo, en [`.env.example`](.env.example).
 Código y documentación bajo licencia [MIT](LICENSE).
 
 Los documentos jurídicos que el repositorio incluye **no** están cubiertos por
-esa licencia. Cada corpus se rige por las condiciones de reutilización de su
-fuente:
+esa licencia; la salvedad completa está en [`NOTICE.md`](NOTICE.md). Cada corpus
+se rige por las condiciones de reutilización de su fuente:
 
 - Las resoluciones judiciales de `sentencias/` son documentos públicos del
   CENDOJ, publicados ya pseudonimizados —

@@ -77,7 +77,7 @@ con esos archivos.
 
 ## Archivos que deben permanecer en la raíz
 
-`README.md`, `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`,
+`README.md`, `LICENSE`, `NOTICE.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`,
 `CLAUDE.md`, `.gitignore`, `.env.example`, `.python-version`, `pyproject.toml`,
 `uv.lock`, `Makefile`, `package.json`, `netlify.toml` y la configuración de
 automatización son puntos de entrada reconocibles por personas o herramientas.
