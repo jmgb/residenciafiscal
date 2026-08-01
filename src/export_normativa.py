@@ -149,6 +149,9 @@ class PreceptoSeleccionado:
     fichero_fuente: str
     nota_derogacion: str | None = None
     jurisdiccion: str = JURISDICCION_POR_DEFECTO
+    # Origen del XML, que no coincide con la vigencia: un convenio en vigor sale
+    # del diario cuando el BOE aún no lo ha incorporado a la base consolidada.
+    del_diario: bool = False
 
     @property
     def ruta_fuente(self) -> str:
@@ -213,13 +216,17 @@ def seleccionar(
             )
             continue
 
-        # Una norma derogada ya no está en la base consolidada: su fuente es el
-        # XML del diario, con otra estructura.
+        # Estar fuera de la base consolidada y estar derogada son cosas
+        # distintas: toda norma derogada sale del diario, pero también sale de
+        # ahí un convenio en vigor que el BOE todavía no ha consolidado. Lo
+        # declara el manifiesto; los generados antes de que existiera el campo
+        # solo tenían el primer caso.
         derogada = grupo in GRUPOS_DEROGADOS
-        sufijo = "diario" if derogada else "texto"
+        del_diario = registro["fuente"] == "diario" if "fuente" in registro else derogada
+        sufijo = "diario" if del_diario else "texto"
         norma = (
             cargar_norma_diario(sources_dir, boe_id)
-            if derogada
+            if del_diario
             else cargar_norma(sources_dir, boe_id)
         )
         source_sha256 = hashlib.sha256(
@@ -248,6 +255,7 @@ def seleccionar(
                     f"{boe_id}.{sufijo}.xml",
                     nota_derogacion,
                     jurisdiccion,
+                    del_diario,
                 )
             )
             continue
@@ -273,6 +281,7 @@ def seleccionar(
                     f"{boe_id}.{sufijo}.xml",
                     nota_derogacion,
                     jurisdiccion,
+                    del_diario,
                 )
             )
 
@@ -326,8 +335,10 @@ def _frontmatter(seleccion: PreceptoSeleccionado, precepto_sha256: str) -> dict:
         "vigente_desde": formatear_fecha(vigente.fecha_vigencia) if vigente else None,
         "versiones": versiones,
         "url_eli": norma.url_eli,
+        # El ancla `#a4` solo existe en el texto consolidado; en la ficha del
+        # diario sobra y deja un enlace que promete algo que la página no tiene.
         "url_boe": (
-            f"{norma.url_html_consolidada}#{bloque.bloque_id}"
+            f"{norma.url_html_consolidada}{'' if seleccion.del_diario else f'#{bloque.bloque_id}'}"
             if norma.url_html_consolidada
             else None
         ),
@@ -337,7 +348,7 @@ def _frontmatter(seleccion: PreceptoSeleccionado, precepto_sha256: str) -> dict:
         "schema_version": SCHEMA_VERSION,
         "sources": [
             {
-                "id": "texto-publicado" if seleccion.derogada else "texto-consolidado",
+                "id": "texto-publicado" if seleccion.del_diario else "texto-consolidado",
                 "resource": seleccion.ruta_fuente,
                 "title": f"{norma.boe_id} — texto del BOE",
                 "author": "Agencia Estatal Boletín Oficial del Estado",
@@ -351,12 +362,21 @@ def _cuerpo(seleccion: PreceptoSeleccionado) -> Iterator[str]:
     bloque = seleccion.bloque
     vigente = bloque.version_vigente
 
-    fuente = "el texto publicado en el diario" if seleccion.derogada else "el texto consolidado"
+    fuente = "el texto publicado en el diario" if seleccion.del_diario else "el texto consolidado"
     yield (
         f"**Regla de lectura:** el articulado reproduce literalmente {fuente} del BOE. Las notas "
         "del BOE son anotación editorial y van en su propia sección; no forman parte del precepto."
     )
     yield ""
+
+    if seleccion.del_diario and not seleccion.derogada:
+        yield (
+            "> ℹ️ **Texto de la publicación original.** El BOE no ofrece este convenio en su base "
+            "de legislación consolidada, así que el articulado procede del diario oficial. No "
+            "está derogado; su vigencia se comprueba en la ficha del BOE enlazada en "
+            "«Procedencia»."
+        )
+        yield ""
 
     if seleccion.derogada:
         yield (
@@ -413,10 +433,14 @@ def _cuerpo(seleccion: PreceptoSeleccionado) -> Iterator[str]:
     if norma.url_eli:
         yield f"- **ELI:** {norma.url_eli}"
     if norma.url_html_consolidada:
-        yield f"- **Texto consolidado:** {norma.url_html_consolidada}#{bloque.bloque_id}"
+        # El diario no tiene anclas por bloque: el enlace lleva al documento.
+        etiqueta = "Publicación en el BOE" if seleccion.del_diario else "Texto consolidado"
+        ancla = "" if seleccion.del_diario else f"#{bloque.bloque_id}"
+        yield f"- **{etiqueta}:** {norma.url_html_consolidada}{ancla}"
     yield f"- **Actualización del BOE:** {norma.fecha_actualizacion_boe}"
+    origen = "el texto publicado en el diario" if seleccion.del_diario else "el texto consolidado"
     yield (
-        "- **Autoridad:** el texto consolidado del BOE es la fuente. Este fichero se regenera "
+        f"- **Autoridad:** {origen} del BOE es la fuente. Este fichero se regenera "
         "con `make export-normativa`; no se edita a mano."
     )
 

@@ -64,7 +64,7 @@ describe('ColaborarPage', () => {
     expect(screen.getByText(/validación de un especialista/i)).toBeInTheDocument();
   });
 
-  it('es indexable, al contrario que las páginas de país sin corpus', async () => {
+  it('publica sus propios metadatos y se declara indexable', async () => {
     // El `afterEach` global vacía el head, así que las etiquetas se siembran aquí.
     const robots = document.createElement('meta');
     robots.setAttribute('name', 'robots');

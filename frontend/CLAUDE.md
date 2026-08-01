@@ -27,15 +27,21 @@ de sentencias en lenguaje natural.
 | `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
 | `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
 | `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `tests/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
-| `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. La fecha refleja una comprobación editorial real, nunca la fecha del build |
+| `src/data/countryRoutes.json` | Fuente única de jurisdicciones: `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO, `title`/`description`/`sitemap` son la metadata que compite en el buscador y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. `treatyBoeId` apunta al convenio con España dentro del corpus normativo (`null` = no hay convenio en vigor). La fecha refleja una comprobación editorial real, nunca la fecha del build |
 | `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas de contenido estático (`/manifiesto`, `/metodologia`, `/espana/fuentes`, `/colaborar`, `/privacidad`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar. `/espana/fuentes` es contenido de país (fuentes + normativa de España); la metodología es común a todas las jurisdicciones |
 
 ## Corpus normativo
 
 El frontend sirve también el texto de la ley, no solo las sentencias. Dos
-niveles a propósito: `normativa.json` es el índice de los 108 preceptos (~100 KB)
-y `preceptos/<slug>.json` el articulado literal de uno solo. Cargar los 108
+niveles a propósito: `normativa.json` es el índice de los 110 preceptos (~100 KB)
+y `preceptos/<slug>.json` el articulado literal de uno solo. Cargar los 110
 juntos serían ~480 KB para que alguien lea el artículo 9 LIRPF.
+
+La página de cada país usa esos dos niveles para publicar el **convenio de doble
+imposición entre España y esa jurisdicción**: `countryRoutes.json` declara el
+`treatyBoeId`, `TaxTreaty.tsx` lo cruza con el índice y pide el articulado. El
+convenio es norma española y no describe la ley interna del otro país; el copy
+lo dice y `tests/CountryPage.test.tsx` lo fija.
 
 **El articulado es texto legal literal.** No se recorta, une ni reformatea en
 ninguna capa del frontend: `tests/normativa.test.ts` comprueba que cada párrafo

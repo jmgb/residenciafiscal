@@ -1,0 +1,91 @@
+"""Contrato del descargador: qué normas se piden y qué le pasa al manifiesto.
+
+Nada aquí toca la red. Lo que se comprueba es la parte que decide, que es donde
+se puede perder una norma sin que nadie lo note: la tabla de convenios que el
+índice del BOE no devuelve y la fusión del manifiesto cuando se descarga una
+sola norma.
+"""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from descargar_normativa import (
+    CDI_DEROGADO,
+    CDI_NO_CONSOLIDADO,
+    NUCLEO,
+    cdis_del_indice,
+    fusionar_manifiesto,
+    grupo_declarado,
+    normas_del_diario,
+)
+
+MANIFIESTO = Path(__file__).parents[1] / "normativa" / "es" / "manifest.json"
+
+
+def test_los_convenios_no_consolidados_son_vigentes_y_salen_del_diario() -> None:
+    del_diario = normas_del_diario()
+
+    for boe_id in CDI_NO_CONSOLIDADO:
+        grupo, motivo = del_diario[boe_id]
+        # `cdi`, no `cdi_derogado`: están en vigor. Confundirlos publicaría el
+        # convenio con el rótulo de norma derogada.
+        assert grupo == "cdi", boe_id
+        assert motivo, f"{boe_id} no explica por qué no está en el índice"
+
+    # Y no se solapan con los convenios sustituidos, que sí están derogados.
+    assert not set(CDI_NO_CONSOLIDADO) & set(CDI_DEROGADO)
+
+
+def test_el_grupo_se_deduce_de_las_tablas_declaradas() -> None:
+    assert grupo_declarado(NUCLEO[0]) == ("nucleo", "")
+    assert grupo_declarado("BOE-A-2004-11070") == ("cdi", CDI_NO_CONSOLIDADO["BOE-A-2004-11070"])
+    assert grupo_declarado("BOE-A-1976-23347") == (
+        "cdi_derogado",
+        CDI_DEROGADO["BOE-A-1976-23347"],
+    )
+    # Un convenio cualquiera del índice no está declarado en ninguna tabla: se
+    # pide a la base consolidada.
+    assert grupo_declarado("BOE-A-1997-12729") is None
+
+
+def test_un_convenio_declarado_a_mano_no_se_descarga_dos_veces() -> None:
+    """El BOE puede acabar consolidando lo que hoy solo está en el diario."""
+    paraguay = "BOE-A-2024-15573"
+    indice = [
+        ("BOE-A-1997-12729", "Convenio … para evitar la doble imposición … República Francesa"),
+        (paraguay, "Convenio … para evitar la doble imposición … República del Paraguay"),
+        ("BOE-A-2000-0000", "Ley de cualquier otra cosa"),
+    ]
+
+    consolidadas, ya_consolidados = cdis_del_indice(indice)
+
+    # Sigue bajándose del diario mientras esté declarado, y no por duplicado.
+    assert consolidadas == ["BOE-A-1997-12729"]
+    # Pero el aviso pide retirarlo de la tabla, que es la acción correcta.
+    assert ya_consolidados == [paraguay]
+
+
+def test_descargar_una_norma_no_borra_el_inventario_de_las_demas() -> None:
+    previo = {"normas": [{"id": "BOE-A-1", "grupo": "cdi"}, {"id": "BOE-A-2", "grupo": "cdi"}]}
+    nuevos: list[dict[str, object]] = [
+        {"id": "BOE-A-2", "grupo": "cdi", "texto_sha256": "nuevo"},
+        {"id": "BOE-A-3"},
+    ]
+
+    fusionado = fusionar_manifiesto(previo, nuevos)
+
+    assert [registro["id"] for registro in fusionado] == ["BOE-A-1", "BOE-A-2", "BOE-A-3"]
+    # El registro repetido se sustituye por el recién descargado, no se duplica.
+    assert fusionado[1]["texto_sha256"] == "nuevo"
+
+
+def test_el_manifiesto_publicado_incluye_los_dos_convenios_no_consolidados() -> None:
+    manifiesto = json.loads(MANIFIESTO.read_text(encoding="utf-8"))
+    registros = {registro["id"]: registro for registro in manifiesto["normas"]}
+
+    for boe_id in CDI_NO_CONSOLIDADO:
+        assert boe_id in registros, f"{boe_id} no se ha descargado"
+        assert registros[boe_id]["grupo"] == "cdi"
+        assert registros[boe_id]["fuente"] == "diario"

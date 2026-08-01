@@ -15,8 +15,24 @@ const countryRouteSchema = z.object({
   path: z.string().startsWith('/'),
   corpusStatus: z.enum(['published', 'pending']),
   legalReferences: z.array(legalReferenceSchema),
+  /**
+   * Convenio de doble imposición entre España y este país, por su identificador
+   * del BOE. Es **norma española**, no el marco nacional de la jurisdicción: por
+   * eso no vive en `legalReferences`, que describe el derecho del propio país y
+   * exige validación de un especialista de allí. Aquí basta con que el
+   * identificador exista en el corpus normativo, y hay un test que lo comprueba.
+   * `null` significa que no hay convenio en vigor según la relación oficial de
+   * la AEAT, no que no se haya buscado.
+   */
+  treatyBoeId: z.string().startsWith('BOE-A-').nullable(),
+  /** Título completo de la página, tal cual sale en la pestaña y en el buscador. */
+  title: z.string().min(1),
   description: z.string().min(1),
   indexable: z.boolean(),
+  sitemap: z.object({
+    changefreq: z.enum(['weekly', 'monthly', 'yearly']),
+    priority: z.string().regex(/^[01]\.\d$/),
+  }),
 });
 
 export type CorpusStatus = z.infer<typeof countryRouteSchema>['corpusStatus'];

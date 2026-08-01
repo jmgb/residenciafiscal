@@ -54,6 +54,19 @@ NUCLEO_DEROGADO: dict[str, str] = {
 # BOE.
 FILTRO_CDI = "doble imposici"
 
+# Convenios **en vigor** que ese índice no devuelve. No son un fallo del filtro
+# que se pueda arreglar ampliándolo: el motivo es distinto en cada uno y está
+# comprobado contra el BOE, así que se declaran a mano y se bajan del diario.
+# Sin ellos, la página de esos países no podría enlazar su convenio.
+CDI_NO_CONSOLIDADO: dict[str, str] = {
+    # El título dice «doble tributación», no «doble imposición», así que el
+    # filtro por título no lo encuentra. Sigue en vigor desde el 29-4-2003.
+    "BOE-A-2004-11070": "CDI España-Venezuela de 2003; su título dice «doble tributación»",
+    # Publicado en 2024 y todavía fuera de la base de legislación consolidada:
+    # `act.php` redirige y la API consolidada no lo sirve.
+    "BOE-A-2024-15573": "CDI España-Paraguay de 2023, aún no incorporado a la base consolidada",
+}
+
 # Convenios sustituidos, que por eso ya no aparecen en ese índice. Se citan en
 # sentencias del corpus porque regían el ejercicio enjuiciado, así que hay que
 # bajarlos del diario igual que las normas estatales derogadas.
@@ -121,6 +134,7 @@ def descargar_consolidada(destino: Path, boe_id: str, grupo: str) -> dict[str, o
     return {
         "id": boe_id,
         "grupo": grupo,
+        "fuente": "consolidada",
         "titulo": _campo(metadatos, "titulo"),
         "rango": _campo(metadatos, "rango"),
         "fecha_disposicion": _campo(metadatos, "fecha_disposicion"),
@@ -143,6 +157,7 @@ def descargar_diario(destino: Path, boe_id: str, grupo: str, nota: str) -> dict[
     return {
         "id": boe_id,
         "grupo": grupo,
+        "fuente": "diario",
         "titulo": _campo(texto, "titulo"),
         "rango": _campo(texto, "rango"),
         "fecha_disposicion": _campo(texto, "fecha_disposicion"),
@@ -154,31 +169,109 @@ def descargar_diario(destino: Path, boe_id: str, grupo: str, nota: str) -> dict[
     }
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output-dir", type=Path, default=Path("normativa/es"))
-    args = parser.parse_args()
-    args.output_dir.mkdir(parents=True, exist_ok=True)
+def normas_del_diario() -> dict[str, tuple[str, str]]:
+    """Normas cuya fuente es el diario, con su grupo y el motivo de estarlo.
 
-    print("Descargando el índice de legislación consolidada…")
-    indice = descargar_indice()
-    cdis = [
+    Dos razones distintas para el mismo formato de origen: unas están derogadas
+    y el BOE las ha sacado de la base consolidada, y otras están **en vigor**
+    pero esa base no las sirve. El grupo distingue una cosa de la otra; el
+    fichero descargado es el mismo `<id>.diario.xml`.
+    """
+    return {
+        **{boe_id: ("nucleo_derogado", nota) for boe_id, nota in NUCLEO_DEROGADO.items()},
+        **{boe_id: ("cdi_derogado", nota) for boe_id, nota in CDI_DEROGADO.items()},
+        **{boe_id: ("cdi", nota) for boe_id, nota in CDI_NO_CONSOLIDADO.items()},
+    }
+
+
+def cdis_del_indice(indice: list[tuple[str, str]]) -> tuple[list[str], list[str]]:
+    """Convenios a pedir consolidados, y los declarados a mano que ya sobran.
+
+    Un convenio de `CDI_NO_CONSOLIDADO` que el BOE acabe consolidando aparecería
+    a la vez en el índice y en la tabla, y se descargaría dos veces: dos
+    registros con el mismo identificador en el manifiesto y dos fuentes
+    compitiendo por el mismo precepto. Mientras siga declarado gana la tabla, y
+    el segundo valor devuelto es el aviso para retirarlo.
+    """
+    del_diario = normas_del_diario()
+    candidatos = [
         identificador
         for identificador, titulo in indice
         if FILTRO_CDI in titulo.lower() and identificador not in NUCLEO
     ]
-    derogadas = {
-        **{boe_id: ("nucleo_derogado", nota) for boe_id, nota in NUCLEO_DEROGADO.items()},
-        **{boe_id: ("cdi_derogado", nota) for boe_id, nota in CDI_DEROGADO.items()},
-    }
-    print(f"Núcleo: {len(NUCLEO)} | CDI vigentes: {len(cdis)} | derogadas: {len(derogadas)}")
+    return (
+        [identificador for identificador in candidatos if identificador not in del_diario],
+        sorted(set(candidatos) & set(CDI_NO_CONSOLIDADO)),
+    )
+
+
+def grupo_declarado(boe_id: str) -> tuple[str, str] | None:
+    """Grupo y motivo de una norma listada a mano, o `None` si sale del índice."""
+    if boe_id in NUCLEO:
+        return ("nucleo", "")
+    return normas_del_diario().get(boe_id)
+
+
+def fusionar_manifiesto(
+    previo: dict, registros: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    """Sustituye en el manifiesto previo los registros recién descargados.
+
+    Descargar solo una norma no puede borrar el inventario de las otras 103: sin
+    esta fusión, `--solo` dejaría un manifiesto que `export_normativa.py` leería
+    como «el corpus tiene una norma».
+    """
+    nuevos = {str(registro["id"]): registro for registro in registros}
+    fusionados = [nuevos.pop(str(r["id"]), r) for r in previo.get("normas", [])]
+    return fusionados + list(nuevos.values())
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=Path("normativa/es"))
+    parser.add_argument(
+        "--solo",
+        nargs="+",
+        metavar="BOE-ID",
+        help=(
+            "Descarga únicamente estas normas y las fusiona con el manifiesto existente, "
+            "sin pedir el índice completo. Para incorporar una norma nueva sin volver a "
+            "bajar las 104."
+        ),
+    )
+    args = parser.parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    manifiesto_path = args.output_dir / "manifest.json"
+
+    del_diario = normas_del_diario()
+    if args.solo:
+        # Un CDI que sale del índice no está declarado en ninguna tabla: si no
+        # lo conocemos, es uno de esos y se pide a la base consolidada.
+        objetivos = [(boe_id, grupo_declarado(boe_id) or ("cdi", "")) for boe_id in args.solo]
+        consolidadas = [
+            (boe_id, grupo) for boe_id, (grupo, _) in objetivos if boe_id not in del_diario
+        ]
+        diario = {boe_id: par for boe_id, par in objetivos if boe_id in del_diario}
+        print(f"Descarga selectiva: {len(consolidadas)} consolidadas | {len(diario)} del diario")
+    else:
+        print("Descargando el índice de legislación consolidada…")
+        indice = descargar_indice()
+        cdis, ya_consolidados = cdis_del_indice(indice)
+        for boe_id in ya_consolidados:
+            print(
+                f"  ⚠️ {boe_id} ya está en el índice consolidado: quítalo de "
+                "CDI_NO_CONSOLIDADO para bajarlo consolidado.",
+                flush=True,
+            )
+        consolidadas = [(boe_id, "nucleo") for boe_id in NUCLEO]
+        consolidadas += [(boe_id, "cdi") for boe_id in cdis]
+        diario = del_diario
+        print(f"Núcleo: {len(NUCLEO)} | CDI vigentes: {len(cdis)} | del diario: {len(diario)}")
 
     registros: list[dict[str, object]] = []
     fallos: list[dict[str, str]] = []
 
-    objetivos = [(boe_id, "nucleo") for boe_id in NUCLEO]
-    objetivos += [(boe_id, "cdi") for boe_id in cdis]
-    for boe_id, grupo in objetivos:
+    for boe_id, grupo in consolidadas:
         print(f"  {boe_id} [{grupo}]", flush=True)
         try:
             registros.append(descargar_consolidada(args.output_dir, boe_id, grupo))
@@ -186,7 +279,7 @@ def main() -> int:
             print(f"    FALLO: {error}", flush=True)
             fallos.append({"id": boe_id, "error": str(error)})
 
-    for boe_id, (grupo, nota) in derogadas.items():
+    for boe_id, (grupo, nota) in diario.items():
         print(f"  {boe_id} [{grupo}]", flush=True)
         try:
             registros.append(descargar_diario(args.output_dir, boe_id, grupo, nota))
@@ -194,7 +287,11 @@ def main() -> int:
             print(f"    FALLO: {error}", flush=True)
             fallos.append({"id": boe_id, "error": str(error)})
 
-    (args.output_dir / "manifest.json").write_text(
+    if args.solo and manifiesto_path.exists():
+        previo = json.loads(manifiesto_path.read_text(encoding="utf-8"))
+        registros = fusionar_manifiesto(previo, registros)
+
+    manifiesto_path.write_text(
         json.dumps(
             {
                 "fuente": "API de datos abiertos del BOE",

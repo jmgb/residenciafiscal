@@ -87,13 +87,17 @@ reescribe en ningún punto del pipeline.
 | Fuente | Derivado | Cómo se genera |
 |--------|----------|----------------|
 | `sentencias/` — 106 PDF del CENDOJ | `knowledge/jurisprudencia-v3/` | Python + agente + gates literales |
-| `normativa/es/` — 104 normas en XML del BOE | `knowledge/normativa/es/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
+| `normativa/es/` — 106 normas en XML del BOE | `knowledge/normativa/es/preceptos/` | Determinista, sin LLM (`make export-normativa`) |
 
 Del corpus normativo se publica **un Markdown por artículo**, no por ley: los
 preceptos que deciden o prueban la residencia fiscal, más el artículo de
-residencia de cada uno de los 96 convenios de doble imposición firmados por
-España. Un tercer artefacto, `knowledge/normativa/es/enlaces/`, resuelve qué
-preceptos cita cada sentencia y con qué redacción del ejercicio enjuiciado.
+residencia de cada uno de los **98 convenios de doble imposición** firmados por
+España, que se guardan enteros en [`normativa/es/`](normativa/es/) tal como los
+sirve el BOE ([inventario](normativa/es/readme.txt)). De ahí sale el convenio
+que publica la página de cada país: `/francia` enlaza el convenio
+España-Francia, su artículo de residencia y el texto oficial en el BOE. Un
+tercer artefacto, `knowledge/normativa/es/enlaces/`, resuelve qué preceptos cita
+cada sentencia y con qué redacción del ejercicio enjuiciado.
 Ver [`docs/normativa/NORMATIVA.md`](docs/normativa/NORMATIVA.md).
 
 ## Un país, un corpus

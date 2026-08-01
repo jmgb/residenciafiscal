@@ -234,9 +234,12 @@ make evaluate-holdout-e0  # observación congelada; nunca ajusta el router
 
 ### Corpus normativo
 
-`normativa/es/` guarda el XML del BOE de las 104 normas que deciden la
-residencia fiscal (LIRPF, LGT, reglamentos y los 96 CDI de España), versionado
-igual que los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`.
+`normativa/es/` guarda el XML del BOE de las 106 normas que deciden la
+residencia fiscal (LIRPF, LGT, reglamentos y los 98 CDI de España), versionado
+igual que los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`. Dos
+convenios en vigor —Venezuela y Paraguay— no salen del índice consolidado del
+BOE y están declarados a mano en `CDI_NO_CONSOLIDADO`; se bajan del diario, pero
+**no están derogados**, y el manifiesto separa por eso la `fuente` del grupo.
 `knowledge/normativa/es/preceptos/` contiene un Markdown **por artículo**, no por
 ley: se publica el precepto que decide o prueba la residencia, no las 270
 secciones de la LIRPF.
@@ -258,13 +261,18 @@ precepto, declarando la certeza y la redacción aplicable al ejercicio. El
 directorio lleva el **código de jurisdicción** (ISO 3166-1 alfa-2) para que un
 segundo país no exija migrar nada.
 
+El artículo de residencia de cada CDI es además el contenido público de las
+páginas de país: `/francia` publica el convenio España-Francia con su enlace
+oficial al BOE. Por eso esas rutas ya no son `noindex` y entran en el sitemap;
+el contrato está en [`docs/product/COUNTRY_PAGES.md`](docs/product/COUNTRY_PAGES.md).
+
 Selección de preceptos, detección del artículo de residencia de cada CDI,
 vigencia por ejercicio, normas derogadas, enlace con la jurisprudencia y el
 contrato para añadir un país están en [`docs/normativa/NORMATIVA.md`](docs/normativa/NORMATIVA.md).
 
 ```bash
 make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
-make export-normativa     # regenera los 108 preceptos (sin red, sin LLM)
+make export-normativa     # regenera los 110 preceptos (sin red, sin LLM)
 make enlazar-normativa    # resuelve las citas de las sentencias a los preceptos
 ```
 
@@ -335,6 +343,21 @@ no versionadas: hasta reconciliarlo, se sincroniza únicamente
 `scripts/backup/` y se relanza `install-backup-timer.sh` según el runbook.
 Arquitectura, operativa, límites y consecuencias de privacidad:
 [`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
+
+## Informe semanal de tráfico
+
+Cada lunes a las 09:00 (Europe/Madrid) un `systemd --user` timer manda a Telegram
+las visitas, los usuarios únicos y los recurrentes de `residenciafiscal.org`,
+igual que hacen Presupuestor, Doctor y Comunicador con su propio timer. Lo
+ejecuta `scripts/weekly_ga4_telegram.py` a través de `scripts/agentic/`.
+
+Publica **una línea por analítica** —GA4 y PostHog— y no las promedia: en la
+primera semana GA4 vio 81 usuarios y PostHog 1, porque GA4 registra bots que
+ejecutan JavaScript y PostHog apenas los ve. Presentarlas juntas es lo que hace
+visible ese sesgo; no se debe sustituir por una cifra única. El histórico se
+escribe en `reports/`, que está en `.gitignore` porque el repositorio es público.
+Métricas, trampas de la API y por qué divergen:
+[`docs/operations/WEEKLY_TRAFFIC_REPORT.md`](docs/operations/WEEKLY_TRAFFIC_REPORT.md).
 
 ## Costes del chat
 

@@ -100,8 +100,48 @@ Cada entrada de `countryRoutes.json` mantiene dos estados independientes:
 - `indexable`: decisión editorial de SEO. Controla robots y sitemap, no la disponibilidad del
   corpus.
 
-`legalReferences` es una lista porque no todas las jurisdicciones concentran la residencia en un
-único artículo. Cada referencia conserva:
+Y su propia metadata de buscador, que ya no se compone en el código:
+
+- `title`: el título completo, tal cual sale en la pestaña y en el resultado de búsqueda. Lo leen
+  `CountryPage` (con `exactTitle`) y `scripts/prerender.mjs`, para que el bot y la SPA no puedan
+  discrepar.
+- `description`: la meta description, distinta en cada país.
+- `sitemap`: `changefreq` y `priority` propios. `/espana` cambia con el corpus; una jurisdicción
+  sin corpus publica un convenio que se mueve muy de tarde en tarde.
+- `treatyBoeId`: identificador del BOE del convenio de doble imposición entre España y ese país,
+  o `null` si no hay convenio en vigor. Ver la sección siguiente.
+
+## El convenio de doble imposición con España
+
+Una página de país sin corpus tenía hasta ahora un solo contenido: la invitación a contribuir.
+Eso la hacía inútil para quien llega buscando su situación entre dos países, y por eso estaban
+en `noindex`. Lo que sí puede publicar hoy, verificado y sin criterio jurídico propio, es el
+**convenio de doble imposición entre España y esa jurisdicción**: es norma española del BOE, ya
+versionada en `normativa/es/` y publicada artículo a artículo en
+`knowledge/normativa/es/preceptos/`.
+
+`treatyBoeId` es esa declaración, y solo eso: un identificador del BOE. Todo lo demás —título
+oficial de la norma, artículo de residencia, redacción vigente, sentencias del corpus que lo
+aplican, texto literal y enlace oficial— lo resuelve `TaxTreaty.tsx` contra el corpus normativo,
+así que no hay una segunda copia del dato que pueda desincronizarse.
+
+Tres límites, todos en el copy de la página:
+
+- El convenio resuelve **de qué Estado es residente** quien podría serlo de los dos. No describe
+  la ley interna del otro país, y la página no debe insinuar que sí.
+- No sustituye al corpus: la página sigue diciendo que no hay jurisprudencia de ese país.
+- `null` significa **no hay convenio en vigor**, comprobado contra la
+  [relación oficial de la AEAT](https://sede.agenciatributaria.gob.es/Sede/normativa-criterios-interpretativos/fiscalidad-internacional/convenios-doble-imposicion-firmados-espana.html),
+  y la página lo dice explícitamente. Hoy son Guatemala, Haití, Honduras, Nicaragua y Perú.
+
+`tests/test_country_tax_treaties.py` ata cada `treatyBoeId` al corpus: comprueba que existe, que
+el título oficial de la norma nombra a ese país —un identificador equivocado publicaría el
+convenio de otra jurisdicción con el nombre correcto encima—, que no está derogado y que el
+artículo publicado es el que resuelve la doble residencia.
+
+`legalReferences` es distinto y no se mezcla con esto: describe el **derecho del propio país** y
+exige validación de un especialista de allí. Es una lista porque no todas las jurisdicciones
+concentran la residencia en un único artículo. Cada referencia conserva:
 
 - `kind`: `domestic-residence` o `tax-treaty`;
 - `shortCitation`: texto compacto y verificable para la interfaz;
@@ -136,8 +176,7 @@ Cuando exista la documentación nacional revisada y trazable:
 5. Cambiar `corpusStatus` a `published`.
 6. Sustituir la plantilla de preparación por contenido y CTA propios del país, manteniendo la
    ruta de `CountryRoute`.
-7. Decidir `indexable` de forma independiente y añadir la ruta al sitemap solo cuando tenga
-   contenido público real.
+7. Revisar `title` y `description`: dejan de hablar del convenio y pasan a hablar del corpus.
 8. Actualizar el estado de esta documentación y ejecutar `npm run fast-check` dentro de
    `frontend/`.
 
@@ -165,15 +204,19 @@ humana, y el sitio advierte de que el análisis lo genera un modelo y puede cont
 Escribir «revisado por expertos» sería falso y contradiría ese aviso. La validación se enuncia como
 **requisito para publicar**, no como hecho consumado.
 
-`/colaborar` (`frontend/src/pages/ColaborarPage.tsx`) centraliza la invitación y es su **única
-ruta indexable**. Esto es deliberado: actualmente **todas** las páginas de país sin corpus son
-`noindex, follow` para no publicar una veintena de placeholders casi idénticos —`/espana`, que sí
-tiene corpus, es indexable y está en el sitemap—, pero la implementación mantiene ambas
-decisiones separadas para no convertir esa política actual en un invariante falso. Los
-placeholders también son invisibles en búsquedas, así que sin una URL indexable nadie llegaría a
-la invitación desde Google.
-`/colaborar` tiene contenido propio (perfiles, invariantes, criterio de arranque), está en el
-sitemap y `tests/test_frontend_seo_assets.py` fija ambas cosas.
+`/colaborar` (`frontend/src/pages/ColaborarPage.tsx`) centraliza la invitación, tiene contenido
+propio (perfiles, invariantes, criterio de arranque) y está en el sitemap.
+
+**Las páginas de país ya no son `noindex`.** Lo fueron mientras su único contenido era la
+invitación: veintiocho placeholders casi idénticos no le sirven a nadie en un buscador. Dejaron
+de serlo cuando cada una pasó a publicar el convenio de doble imposición con España, con su
+artículo de residencia, su texto literal y su enlace al BOE: contenido distinto en cada ruta,
+verificable y útil para quien busca su situación entre dos países. `corpusStatus` e `indexable`
+siguen siendo decisiones separadas, y hoy las 29 rutas están en el sitemap.
+
+Lo que **no** cambia con la indexación: la página sigue diciendo que no hay jurisprudencia de ese
+país, y el convenio se presenta como norma española que resuelve la doble residencia, no como el
+derecho interno de esa jurisdicción.
 
 El recuento exacto no se escribe en prosa a propósito: la lista de rutas reservadas crece, y un
 número a mano en varios documentos se queda desfasado en la primera ampliación. La fuente es
@@ -192,9 +235,8 @@ suficiente para perderlos. `frontend/src/lib/contribution.ts` es la fuente únic
 - El segundo CTA apunta a `CONTRIBUTING.md`, donde está el detalle operativo y los invariantes
   (no reescribir el texto de una resolución, no subir documentos antes de resolver su
   reutilización, aislamiento entre corpus).
-- La `description` de cada ruta pendiente dice lo mismo que la página. Son `indexable: false`, así
-  que no entran en el sitemap ni permiten indexación (`noindex, follow`), pero sí se prerenderizan:
-  la tarjeta social de `/peru` compartida en redes tiene que invitar a contribuir, no anunciar
-  contenido que no existe.
+- La `description` de cada ruta pendiente dice lo mismo que la página: el convenio con España y
+  que su jurisprudencia todavía no existe. Todas se prerenderizan, así que la tarjeta social de
+  `/peru` compartida en redes anuncia eso y no contenido que no tenemos.
 
 Al publicar un país, esta sección de su página desaparece junto con la plantilla.

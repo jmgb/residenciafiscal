@@ -2,10 +2,10 @@
   "schema_version": "residenciafiscal-normativa/1",
   "generated_by": "residenciafiscal-normativa/0.1.0",
   "jurisdiccion": "es",
-  "normas_en_manifiesto": 104,
-  "preceptos_generados": 108,
+  "normas_en_manifiesto": 106,
+  "preceptos_generados": 110,
   "por_grupo": {
-    "cdi": 93,
+    "cdi": 95,
     "cdi_derogado": 2,
     "nucleo": 11,
     "nucleo_derogado": 2

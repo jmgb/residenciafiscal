@@ -1654,6 +1654,32 @@
       "fuente_endpoint": "https://www.boe.es/diario_boe/xml.php",
       "texto_bytes": 65744,
       "texto_sha256": "9c490758ab22a9372fc00d1276df97ced2adee2ea25345126b007f81a0df400b"
+    },
+    {
+      "id": "BOE-A-2004-11070",
+      "grupo": "cdi",
+      "fuente": "diario",
+      "titulo": "Convenio entre el Reino de España y la República Bolivariana de Venezuela para evitar la doble tributación y prevenir la evasión y el fraude fiscal en materia de Impuestos sobre la Renta y sobre el Patrimonio, hecho en Madrid el 8 de abril de 2003.",
+      "rango": "Acuerdo Internacional",
+      "fecha_disposicion": "20030408",
+      "fecha_publicacion": "20040615",
+      "nota": "CDI España-Venezuela de 2003; su título dice «doble tributación»",
+      "fuente_endpoint": "https://www.boe.es/diario_boe/xml.php",
+      "texto_bytes": 75640,
+      "texto_sha256": "1d2d8d8e83f779b516f2812661ddf8308bdf8890e96711e877508b46bbdf1a5c"
+    },
+    {
+      "id": "BOE-A-2024-15573",
+      "grupo": "cdi",
+      "fuente": "diario",
+      "titulo": "Convenio entre el Reino de España y la República del Paraguay para evitar la doble imposición y para prevenir la evasión o elusión fiscal en materia de impuestos sobre la renta y su Protocolo, hecho en Santo Domingo el 25 de marzo de 2023.",
+      "rango": "Acuerdo Internacional",
+      "fecha_disposicion": "20230325",
+      "fecha_publicacion": "20240729",
+      "nota": "CDI España-Paraguay de 2023, aún no incorporado a la base consolidada",
+      "fuente_endpoint": "https://www.boe.es/diario_boe/xml.php",
+      "texto_bytes": 82031,
+      "texto_sha256": "1597fc179655b190e1052e7a76e65e4a8720582945b0600b4b270b71c9fbcd16"
     }
   ],
   "fallos": []

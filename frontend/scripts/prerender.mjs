@@ -31,10 +31,9 @@ const SITE_URL = 'https://residenciafiscal.org';
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
 const COUNTRY_ROUTES = countryRoutes.map((route) => ({
   dir: route.path.slice(1),
-  title:
-    route.path === '/espana'
-      ? 'Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF'
-      : `Residencia fiscal en ${route.name} — Residencia Fiscal`,
+  // El título sale del JSON y no se compone aquí, por el mismo motivo que en las
+  // rutas estáticas: la página lo fija también en runtime y dos copias divergen.
+  title: route.title,
   description: route.description,
   robots: route.indexable ? 'index, follow' : 'noindex, follow',
   url: `${SITE_URL}${route.path}`,

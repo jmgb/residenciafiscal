@@ -5,10 +5,10 @@ import type { PreceptoEntry, PreceptoTexto } from '@/types/normativa';
  *
  * Dos niveles a propósito:
  *
- * - `loadNormativa()` trae el índice de los 108 preceptos (~99 KB): metadatos y
+ * - `loadNormativa()` trae el índice de los 110 preceptos (~99 KB): metadatos y
  *   qué sentencias citan cada uno.
  * - `loadPrecepto(slug)` trae el articulado literal de uno solo. Los 108 juntos
- *   son ~600 KB y nadie necesita los 93 convenios para leer el artículo 9 LIRPF.
+ *   son ~600 KB y nadie necesita los 95 convenios para leer el artículo 9 LIRPF.
  *
  * La validación es igual de desconfiada que en `corpus.ts`, y por el mismo
  * motivo: el `/* -> /index.html` con status 200 de `netlify.toml` hace que un

@@ -5,7 +5,7 @@ import type { PreceptoEntry } from '@/types/normativa';
 /**
  * Preceptos que las sentencias del corpus citan, de más citado a menos.
  *
- * Solo se listan los citados: los 108 preceptos completos incluyen 93 convenios
+ * Solo se listan los citados: los 110 preceptos completos incluyen 95 convenios
  * de doble imposición, y enumerarlos aquí sería ruido. El índice completo vive en
  * `knowledge/normativa/es/preceptos/index.md`.
  *

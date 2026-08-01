@@ -44,7 +44,7 @@ publica su artículo de residencia, localizado automáticamente.
 
 ## Cómo se localiza el artículo de residencia de un CDI
 
-La rúbrica no sirve. Los 96 convenios titulan ese precepto «Residente»,
+La rúbrica no sirve. Los 98 convenios titulan ese precepto «Residente»,
 «Residentes», «Residencia», «Residencia fiscal» o «Domicilio fiscal» según la
 época: el CDI con Suiza de 1966 lo llama «Domicilio fiscal» y es el que aplican
 cuatro sentencias del corpus.
@@ -52,7 +52,7 @@ cuatro sentencias del corpus.
 Lo que sí es estable en todos los que siguen el Modelo OCDE es la **firma
 sustantiva**: el artículo que plantea la doble residencia (`residente de ambos
 Estados`) y la resuelve con la `vivienda permanente`. Esa conjunción identifica
-un único bloque en 93 de los 96 convenios.
+un único bloque en 95 de los 98 convenios.
 
 Los tres restantes están fijados a mano en `OVERRIDES_CDI`, cada uno con su
 motivo:
@@ -122,13 +122,13 @@ Tres tests sostienen el invariante, y los tres están verificados por mutación
 |---|---|
 | `test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen` | Cada párrafo publicado es idéntico a uno **de ese bloque** |
 | `test_las_notas_editoriales_del_boe_no_se_publican_como_articulado` | Ninguna nota del BOE se presenta como texto de la norma |
-| `test_el_corpus_generado_esta_al_dia` | Los 109 ficheros coinciden byte a byte con lo que produce el renderizador |
+| `test_el_corpus_generado_esta_al_dia` | Los 111 ficheros coinciden byte a byte con lo que produce el renderizador |
 
 Las dos precisiones importan más de lo que parece. Contrastar contra **el
 bloque** y no contra el XML entero: si se compara con todos los párrafos del
 fichero, cualquier texto del BOE pasa la prueba aunque pertenezca a otro
 artículo. Y comparar **todos** los ficheros y no una muestra: validar solo
-`lirpf-a9.md` dejaba sin gate el renderizado de los 93 convenios.
+`lirpf-a9.md` dejaba sin gate el renderizado de los 95 convenios.
 
 ## Normas derogadas
 
@@ -183,7 +183,7 @@ knowledge/normativa/es/           # derivado, regenerable
   reports/extraccion.json         # recuento e incidencias
 
 frontend/public/data/             # lo que consume la web
-  normativa.json                  # índice ligero de los 108 preceptos
+  normativa.json                  # índice ligero de los 110 preceptos
   preceptos/lirpf-a9.json         # articulado literal, uno por precepto
 ```
 
@@ -283,8 +283,8 @@ refundido de 2004. Se reportan, no se corrigen: el dato es del análisis.
 ## Comandos
 
 ```bash
-make descargar-normativa   # vuelve a bajar las 104 normas del BOE (~3 min)
-make export-normativa      # genera los 108 preceptos (sin red, sin LLM)
+make descargar-normativa   # vuelve a bajar las 106 normas del BOE (~3 min)
+make export-normativa      # genera los 110 preceptos (sin red, sin LLM)
 make enlazar-normativa     # resuelve las citas de las sentencias a los preceptos
 ```
 
@@ -293,6 +293,35 @@ firma un convenio nuevo: el XML está versionado, así que el export funciona si
 red. Los convenios vigentes no se listan a mano, se localizan filtrando por
 título el índice de legislación consolidada, que es la lista viva del BOE; los
 sustituidos sí van declarados, porque ya no aparecen en ese índice.
+
+Para incorporar una norma suelta sin repetir las 106 descargas —y sin ensuciar
+el diff con los hashes de todas las demás— el descargador acepta identificadores
+y fusiona el manifiesto existente:
+
+```bash
+uv run python src/descargar_normativa.py --solo BOE-A-2024-15573
+```
+
+### Dos convenios en vigor que el índice no devuelve
+
+El filtro por título tiene dos falsos negativos comprobados, declarados en
+`CDI_NO_CONSOLIDADO` con su motivo:
+
+| Convenio | Por qué no aparece |
+|---|---|
+| España-Venezuela (`BOE-A-2004-11070`) | Su título dice «doble **tributación**», no «doble imposición» |
+| España-Paraguay (`BOE-A-2024-15573`) | Publicado en 2024 y todavía fuera de la base consolidada |
+
+Ampliar el filtro no es la solución: «tributación» arrastraría normas que no son
+convenios, y una base consolidada incompleta no se arregla desde aquí. Se bajan
+del diario, igual que las derogadas, **pero no lo están**. Por eso el manifiesto
+declara ahora la `fuente` (`consolidada` o `diario`) al margen del grupo: el
+origen del fichero y la vigencia de la norma son cosas distintas, y confundirlas
+publicaría derecho aplicable bajo el rótulo «Texto derogado». El precepto lleva
+en su lugar un aviso de que el texto procede de la publicación original.
+
+Sin estos dos, las páginas de `/venezuela` y `/paraguay` no podrían enlazar su
+convenio; ver [`docs/product/COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
 
 El frontend regenera sus datos en el `prebuild`
 (`frontend/scripts/build-normativa.mjs`), leyendo `knowledge/normativa/es/`.
@@ -311,6 +340,6 @@ El frontend regenera sus datos en el `prebuild`
   está separado por jurisdicción. La asimetría es deliberada —ese directorio lo
   está tocando otra línea de trabajo— pero hay que resolverla antes de que entre
   el primer país.
-- **Los 93 convenios publican solo su artículo de residencia.** Las citas al
+- **Los 95 convenios publican solo su artículo de residencia.** Las citas al
   art. 19 (pensiones), 13 (ganancias) o 20 aparecen en el corpus y quedan sin
   resolver. Ampliar la selección es una decisión jurídica, no técnica.

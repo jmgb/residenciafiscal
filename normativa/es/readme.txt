@@ -5,14 +5,26 @@ XML de las normas espanolas que deciden la residencia fiscal de una persona
 fisica (Art. 9 LIRPF) y de los convenios de doble imposicion firmados por
 Espana, descargado de la API de datos abiertos del BOE.
 
-TOTAL: 104 normas (14,7 MB de texto)
+TOTAL: 106 normas (14,2 MB de texto)
 
 DESGLOSE
 --------
 - Nucleo estatal vigente:     5 normas
 - Nucleo estatal derogado:    1 norma
-- Convenios de doble imp.:   96 convenios vigentes (1967-2021)
+- Convenios de doble imp.:   98 convenios vigentes (1967-2024)
 - Convenios sustituidos:      2 convenios (Argentina 1992, Reino Unido 1975)
+
+Dos de los 98 convenios vigentes no salen del indice de legislacion consolidada
+y estan declarados a mano en src/descargar_normativa.py (CDI_NO_CONSOLIDADO):
+
+- BOE-A-2004-11070  CDI Espana-Venezuela 2003: su titulo dice "doble
+                    tributacion", asi que el filtro por "doble imposicion" del
+                    indice del BOE no lo encuentra.
+- BOE-A-2024-15573  CDI Espana-Paraguay 2023: el BOE todavia no lo ha
+                    incorporado a la base consolidada.
+
+Ambos se descargan del diario, igual que las normas derogadas, pero estan en
+vigor: el grupo del manifiesto los distingue (cdi, no cdi_derogado).
 
 NUCLEO ESTATAL
 --------------
@@ -30,8 +42,9 @@ NOMENCLATURA DE ARCHIVOS
 ------------------------
 {BOE-ID}.meta.xml    Metadatos de la norma (titulo, rango, vigencia, ELI)
 {BOE-ID}.texto.xml   Texto consolidado completo, con todas sus redacciones
-{BOE-ID}.diario.xml  Publicacion original (solo para normas derogadas)
-manifest.json        Inventario generado: hash, fechas y URL de cada norma
+{BOE-ID}.diario.xml  Publicacion original (normas derogadas y convenios que el
+                     BOE no sirve consolidados)
+manifest.json        Inventario generado: hash, fechas, fuente y URL de cada norma
 
 FUENTE
 ------
@@ -46,6 +59,11 @@ COMO SE REGENERA
   make descargar-normativa   Vuelve a bajar todo del BOE (unos 3 minutos)
   make export-normativa      Genera knowledge/normativa/es/preceptos/ (sin red)
   make enlazar-normativa     Resuelve las citas de las sentencias a los preceptos
+
+Para incorporar una norma suelta sin volver a bajar las 106, el descargador
+admite una lista de identificadores y fusiona el manifiesto existente:
+
+  uv run python src/descargar_normativa.py --solo BOE-A-2024-15573
 
 Solo la primera necesita red: las otras dos trabajan sobre el XML versionado en
 este directorio.

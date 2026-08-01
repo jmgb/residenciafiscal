@@ -28,6 +28,7 @@ from export_normativa import (
     slug_precepto,
 )
 from normativa_boe import (
+    NormaBOE,
     cargar_norma,
     cargar_norma_diario,
     formatear_fecha,
@@ -154,13 +155,28 @@ def test_el_cdi_con_rubrica_atipica_se_detecta_por_su_contenido() -> None:
     assert "centro de intereses vitales" in articulo.texto_completo
 
 
+def _cargar_del_manifiesto(registro: dict) -> NormaBOE:
+    """Carga una norma por el origen que declara el manifiesto, no por su grupo.
+
+    Dos convenios **en vigor** salen del diario porque el BOE no los sirve
+    consolidados. Deducir la fuente de la vigencia los buscaba en un
+    `.meta.xml` que no existe.
+    """
+    boe_id = str(registro["id"])
+    del_diario = (
+        registro["fuente"] == "diario"
+        if "fuente" in registro
+        else str(registro["grupo"]) in GRUPOS_DEROGADOS
+    )
+    return cargar_norma_diario(FUENTES, boe_id) if del_diario else cargar_norma(FUENTES, boe_id)
+
+
 def test_todos_los_convenios_generales_tienen_su_articulo_de_residencia(manifiesto: dict) -> None:
     sin_resolver = []
     for registro in manifiesto["normas"]:
         if registro["grupo"] != "cdi" or registro["id"] in SIN_PRECEPTO_RESIDENCIA:
             continue
-        norma = cargar_norma(FUENTES, str(registro["id"]))
-        if localizar_precepto_residencia(norma) is None:
+        if localizar_precepto_residencia(_cargar_del_manifiesto(registro)) is None:
             sin_resolver.append(registro["id"])
     assert sin_resolver == []
 
@@ -170,6 +186,19 @@ def test_todos_los_convenios_generales_tienen_su_articulo_de_residencia(manifies
 
 def _frontmatter_publicado(contenido: str) -> dict:
     return dict(yaml.safe_load(contenido.split("---", 2)[1]))
+
+
+def _cargar_norma_publicada(frontmatter: dict) -> NormaBOE:
+    """Carga el XML del que salió un precepto ya publicado.
+
+    El propio fichero declara su origen en `sources[0].id`, y es lo que hay que
+    mirar: el grupo dice si la norma está derogada, no de qué fichero se copió
+    su texto, y hay convenios en vigor que vienen del diario.
+    """
+    boe_id = str(frontmatter["boe_id"])
+    if frontmatter["sources"][0]["id"] == "texto-publicado":
+        return cargar_norma_diario(FUENTES, boe_id)
+    return cargar_norma(FUENTES, boe_id)
 
 
 def _articulado_publicado(contenido: str) -> list[str]:
@@ -192,7 +221,7 @@ def test_el_corpus_generado_esta_al_dia(manifiesto: dict) -> None:
     """`make export-normativa` no debe dejar el repositorio con cambios.
 
     Se comparan **todos** los ficheros, no una muestra: comprobar solo
-    `lirpf-a9.md` dejaba sin gate el renderizado de los 93 convenios.
+    `lirpf-a9.md` dejaba sin gate el renderizado de los 95 convenios.
     """
     seleccionados, incidencias = seleccionar(FUENTES, manifiesto)
     assert [i for i in incidencias if not i["esperado"]] == []
@@ -224,13 +253,8 @@ def test_cada_precepto_publicado_es_subcadena_literal_del_xml_de_origen() -> Non
             continue
         contenido = fichero.read_text(encoding="utf-8")
         frontmatter = _frontmatter_publicado(contenido)
-        boe_id = frontmatter["boe_id"]
 
-        norma = (
-            cargar_norma_diario(FUENTES, boe_id)
-            if str(frontmatter["grupo"]) in GRUPOS_DEROGADOS
-            else cargar_norma(FUENTES, boe_id)
-        )
+        norma = _cargar_norma_publicada(frontmatter)
         bloque = norma.bloque(str(frontmatter["bloque_id"]))
         assert bloque is not None, fichero.name
 
@@ -254,11 +278,7 @@ def test_las_notas_editoriales_del_boe_no_se_publican_como_articulado() -> None:
             continue
         contenido = fichero.read_text(encoding="utf-8")
         frontmatter = _frontmatter_publicado(contenido)
-        norma = (
-            cargar_norma_diario(FUENTES, str(frontmatter["boe_id"]))
-            if str(frontmatter["grupo"]) in GRUPOS_DEROGADOS
-            else cargar_norma(FUENTES, str(frontmatter["boe_id"]))
-        )
+        norma = _cargar_norma_publicada(frontmatter)
         bloque = norma.bloque(str(frontmatter["bloque_id"]))
         assert bloque is not None, fichero.name
 

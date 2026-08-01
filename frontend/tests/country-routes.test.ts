@@ -37,15 +37,53 @@ describe('country routes', () => {
     expect(COUNTRY_ROUTES.find((route) => route.path === '/mexico')).toMatchObject({
       name: 'México',
       corpusStatus: 'pending',
-      indexable: false,
+      indexable: true,
+      title: expect.stringContaining('México'),
       description: expect.stringContaining('México'),
+      treatyBoeId: 'BOE-A-1994-23743',
       legalReferences: [],
+      sitemap: { changefreq: 'monthly', priority: '0.5' },
     });
     expect(COUNTRY_ROUTES.find((route) => route.path === '/estados-unidos')).toMatchObject({
       name: 'Estados Unidos',
-      indexable: false,
+      indexable: true,
       description: expect.stringContaining('Estados Unidos'),
+      treatyBoeId: 'BOE-A-1990-30940',
     });
+  });
+
+  it('da a cada país un título y una descripción propios', () => {
+    // Veintinueve páginas con la misma metadata compiten entre sí y no
+    // posicionan ninguna: el título y la descripción son lo que las distingue
+    // en el buscador, así que ninguno puede repetirse ni quedarse en plantilla.
+    const titles = COUNTRY_ROUTES.map((route) => route.title);
+    const descriptions = COUNTRY_ROUTES.map((route) => route.description);
+    expect(new Set(titles).size).toBe(COUNTRY_ROUTES.length);
+    expect(new Set(descriptions).size).toBe(COUNTRY_ROUTES.length);
+
+    for (const route of COUNTRY_ROUTES) {
+      expect(route.title.length).toBeLessThanOrEqual(70);
+      expect(route.description.length).toBeGreaterThanOrEqual(80);
+      expect(route.description.length).toBeLessThanOrEqual(170);
+    }
+  });
+
+  it('declara el convenio de doble imposición con España de cada país', () => {
+    // `null` es una declaración, no un hueco: significa que no hay convenio en
+    // vigor. Estos cinco están comprobados contra la relación oficial de la
+    // AEAT, así que la página puede decirlo en vez de callarse.
+    const sinConvenio = COUNTRY_ROUTES.filter(
+      (route) => route.corpusStatus === 'pending' && route.treatyBoeId === null
+    ).map((route) => route.path);
+    expect(sinConvenio).toEqual(['/guatemala', '/haiti', '/honduras', '/nicaragua', '/peru']);
+    // España no tiene convenio consigo misma; su marco es el art. 9 LIRPF.
+    expect(SPAIN_ROUTE.treatyBoeId).toBeNull();
+
+    const convenios = COUNTRY_ROUTES.map((route) => route.treatyBoeId).filter(
+      (boeId): boeId is string => boeId !== null
+    );
+    // Un mismo convenio en dos países señalaría un copiar y pegar.
+    expect(new Set(convenios).size).toBe(convenios.length);
   });
 
   it('separa la publicación del corpus de la indexación SEO', () => {

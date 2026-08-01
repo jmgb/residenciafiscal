@@ -88,11 +88,19 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     assert all(location is not None for location in raw_locations)
     locations = [location for location in raw_locations if location is not None]
 
-    # `/colaborar` es la única puerta indexable de la invitación a contribuir: las
-    # páginas de país sin corpus son `noindex`, así que sin esta URL la invitación
-    # no se puede encontrar desde una búsqueda.
+    # Todas las rutas de país entran: cada una publica el convenio de doble
+    # imposición entre España y esa jurisdicción, con su enlace al BOE, así que
+    # tienen contenido propio que indexar. `/privacidad` sigue fuera.
+    rutas_pais = [
+        ruta["path"]
+        for ruta in json.loads(
+            (PROJECT_ROOT / "frontend" / "src" / "data" / "countryRoutes.json").read_text(
+                encoding="utf-8"
+            )
+        )
+    ]
     assert locations == [
-        "https://residenciafiscal.org/espana",
+        *[f"https://residenciafiscal.org{path}" for path in rutas_pais],
         "https://residenciafiscal.org/manifiesto",
         "https://residenciafiscal.org/metodologia",
         "https://residenciafiscal.org/espana/fuentes",
@@ -110,11 +118,13 @@ def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:
     assert "106 sentencias" in llms
     assert "https://residenciafiscal.org/" in llms
     assert "/c/" not in llms
-    # Con las páginas de país en `noindex`, llms.txt es la vía por la que un
-    # asistente puede decir que el corpus de otro país todavía no existe y que se
-    # puede contribuir, en vez de inventarse jurisprudencia que no tenemos.
+    # llms.txt es donde un asistente lee que el corpus de otro país todavía no
+    # existe y que se puede contribuir, en vez de inventarse jurisprudencia que
+    # no tenemos. Ahora esas páginas se indexan, así que también tiene que decir
+    # qué sí publican: el convenio de doble imposición con España.
     assert "https://residenciafiscal.org/colaborar" in llms
     assert "contribución de expertos" in llms
+    assert "convenio de doble imposición" in llms.lower()
 
 
 def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:

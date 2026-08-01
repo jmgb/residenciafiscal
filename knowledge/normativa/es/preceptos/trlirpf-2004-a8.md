@@ -28,7 +28,7 @@ versiones:
   id_norma_modificadora: BOE-A-2004-4347
   vigente: true
 url_eli: null
-url_boe: https://www.boe.es/buscar/doc.php?id=BOE-A-2004-4347#a8
+url_boe: https://www.boe.es/buscar/doc.php?id=BOE-A-2004-4347
 fecha_actualizacion_boe: '20251218215602'
 source_sha256: e5618f8adb3d244689e4359bb2faca764a1b23b5fe7d7fbf5e3d2ecd7c936e92
 precepto_sha256: 946572bcfb0590739b4d5bd2bc1c4613450364a8698b20d227a012b2fc514cc4
@@ -68,6 +68,6 @@ _Sin notas._
 
 - **Norma:** Real Decreto Legislativo 3/2004, de 5 de marzo, por el que se aprueba el texto refundido de la Ley del Impuesto sobre la Renta de las Personas Físicas.
 - **Identificador BOE:** `BOE-A-2004-4347`, bloque `a8`
-- **Texto consolidado:** https://www.boe.es/buscar/doc.php?id=BOE-A-2004-4347#a8
+- **Publicación en el BOE:** https://www.boe.es/buscar/doc.php?id=BOE-A-2004-4347
 - **Actualización del BOE:** 20251218215602
-- **Autoridad:** el texto consolidado del BOE es la fuente. Este fichero se regenera con `make export-normativa`; no se edita a mano.
+- **Autoridad:** el texto publicado en el diario del BOE es la fuente. Este fichero se regenera con `make export-normativa`; no se edita a mano.

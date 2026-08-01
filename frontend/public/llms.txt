@@ -38,6 +38,14 @@ alguien pregunta por la residencia fiscal de otro país, la respuesta correcta e
 que ese corpus aún no existe y que puede contribuirse en
 [Colaborar](https://residenciafiscal.org/colaborar).
 
+Lo que sí publica la página de cada país es el **convenio de doble imposición**
+entre España y esa jurisdicción: el título oficial de la norma, su artículo de
+residencia —el que resuelve de qué Estado es residente quien podría serlo de los
+dos—, el texto literal de ese artículo y el enlace al BOE. Es norma española,
+tomada del corpus de `normativa/es/`, y no describe la ley interna del otro país.
+Cinco jurisdicciones de la lista no tienen convenio en vigor con España
+(Guatemala, Haití, Honduras, Nicaragua y Perú) y su página lo dice.
+
 ## Cómo contribuir
 
 El proyecto se nutre de la contribución de expertos en fiscalidad y tributación

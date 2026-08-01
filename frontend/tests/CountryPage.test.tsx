@@ -1,9 +1,45 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
 import { CONTACT_EMAIL, EXPERT_PROFILES } from '@/lib/contribution';
+import { loadNormativa } from '@/lib/normativa';
 import { CountryPage } from '@/pages/CountryPage';
+
+/**
+ * El corpus normativo se sirve por `fetch` desde `public/data/`, que en jsdom no
+ * existe. Se sustituye por el precepto real del convenio España-Uruguay: basta
+ * con uno para comprobar que la ficha se compone con lo que devuelve el índice.
+ */
+vi.mock('@/lib/normativa', () => ({
+  loadNormativa: vi.fn(async () => [
+    {
+      slug: 'cdi-boe-a-2011-6551-a4',
+      jurisdiccion: 'es',
+      titulo: 'Artículo 4 — Residente',
+      norma: 'Convenio entre el Reino de España y la República Oriental del Uruguay…',
+      designacion: 'Artículo 4',
+      epigrafe: 'Residente',
+      grupo: 'cdi',
+      boeId: 'BOE-A-2011-6551',
+      urlBoe: 'https://www.boe.es/buscar/act.php?id=BOE-A-2011-6551#a4',
+      derogada: false,
+      notaDerogacion: null,
+      vigenteDesde: '2011-04-24',
+      redacciones: 1,
+      parrafos: 4,
+      sentencias: [],
+      totalSentencias: 0,
+    },
+  ]),
+  loadPrecepto: vi.fn(async () => ({
+    slug: 'cdi-boe-a-2011-6551-a4',
+    articulado: ['1. A los efectos de este Convenio, la expresión «residente de un Estado»…'],
+    redaccionesAnteriores: [],
+    notasBoe: [],
+  })),
+  sentenciasDe: () => [],
+}));
 
 function countryByPath(path: string): CountryRoute {
   const route = COUNTRY_ROUTES.find((candidate) => candidate.path === path);
@@ -85,6 +121,67 @@ describe('CountryPage', () => {
 
     expect(screen.getByText(/todavía no hay jurisprudencia de Brasil en el corpus/i)).toBeVisible();
     expect(screen.queryByTestId('chat-welcome')).not.toBeInTheDocument();
+  });
+
+  it('publica el convenio de doble imposición con España y su enlace oficial', async () => {
+    renderCountry('/uruguay');
+
+    expect(
+      screen.getByRole('heading', { name: /Convenio de doble imposición España–Uruguay/ })
+    ).toBeInTheDocument();
+    // El enlace al BOE es lo que hace verificable la página: sin él, el dato
+    // sería una afirmación nuestra sobre derecho vigente.
+    const oficial = await screen.findByRole('link', {
+      name: /Texto oficial del convenio en el BOE/,
+    });
+    expect(oficial).toHaveAttribute(
+      'href',
+      'https://www.boe.es/buscar/act.php?id=BOE-A-2011-6551#a4'
+    );
+    expect(await screen.findByText(/residente de un Estado/)).toBeInTheDocument();
+    // Lo que el convenio no resuelve tampoco se insinúa.
+    expect(screen.getByText(/No sustituye a la ley interna de Uruguay/)).toBeInTheDocument();
+  });
+
+  it('no arrastra el convenio del país anterior al navegar', async () => {
+    // La SPA reutiliza el componente entre rutas de país. Publicar el
+    // articulado de un convenio bajo el nombre de otra jurisdicción es un error
+    // jurídico, no un parpadeo: al cambiar de país se reinicia la ficha.
+    const { rerender } = renderCountry('/uruguay');
+    expect(await screen.findByText(/residente de un Estado/)).toBeInTheDocument();
+
+    rerender(
+      <MemoryRouter initialEntries={['/chile']}>
+        <CountryPage country={countryByPath('/chile')} />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByText(/residente de un Estado/)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: /Convenio de doble imposición España–Chile/ })
+    ).toBeInTheDocument();
+  });
+
+  it('avisa en vez de quedarse cargando si el corpus normativo no responde', async () => {
+    // `loadNormativa()` degrada a lista vacía a propósito, así que «no está» y
+    // «todavía no ha llegado» tienen que ser estados distintos.
+    vi.mocked(loadNormativa).mockResolvedValueOnce([]);
+    renderCountry('/uruguay');
+
+    expect(await screen.findByText(/No se ha podido cargar el convenio/)).toBeInTheDocument();
+    expect(screen.queryByText('Cargando el convenio…')).not.toBeInTheDocument();
+  });
+
+  it('dice que no hay convenio cuando España no lo tiene con ese país', () => {
+    renderCountry('/peru');
+
+    expect(screen.getByText(/no tienen convenio/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /relación oficial de convenios firmados por España/ })
+    ).toHaveAttribute('href', expect.stringContaining('agenciatributaria.gob.es'));
+    expect(
+      screen.queryByRole('link', { name: /Texto oficial del convenio en el BOE/ })
+    ).not.toBeInTheDocument();
   });
 
   it('marca por falta de corpus, no por una fecha prometida', () => {

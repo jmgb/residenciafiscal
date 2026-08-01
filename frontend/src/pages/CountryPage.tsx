@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { TaxTreaty } from '@/components/country/TaxTreaty';
 import { COUNTRY_ROUTES, type CountryRoute } from '@/data/countryRoutes';
 import {
   COLLABORATE_PATH,
@@ -14,12 +15,7 @@ interface CountryPageProps {
 }
 
 export function CountryPage({ country }: CountryPageProps) {
-  usePageTitle(
-    `Residencia fiscal en ${country.name}`,
-    country.path,
-    country.description,
-    country.indexable
-  );
+  usePageTitle(country.title, country.path, country.description, country.indexable, true);
 
   return (
     <div className='w-full overflow-y-auto'>
@@ -38,8 +34,15 @@ export function CountryPage({ country }: CountryPageProps) {
           </p>
         </header>
 
+        {/*
+         * El convenio va antes de la invitación a contribuir: es lo único
+         * verificable que la página puede dar hoy a quien busca su situación
+         * entre los dos países, y sin él la ruta sería un placeholder más.
+         */}
+        <TaxTreaty country={country} />
+
         <section
-          className='mt-10 rounded-lg border border-border bg-muted p-6'
+          className='mt-12 rounded-lg border border-border bg-muted p-6'
           aria-labelledby='country-contribute'
         >
           <h2

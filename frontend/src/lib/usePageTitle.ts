@@ -20,10 +20,17 @@ export function usePageTitle(
   title?: string,
   canonicalPath = '/',
   description = BASE_DESCRIPTION,
-  indexable = true
+  indexable = true,
+  /**
+   * `true` cuando `title` ya es el título completo y no debe recomponerse. Las
+   * rutas de país lo traen escrito en `countryRoutes.json` porque es el texto
+   * que compite en el buscador, y añadirle la marca lo pasaría de largo y lo
+   * separaría del que escribe el prerender.
+   */
+  exactTitle = false
 ) {
   useEffect(() => {
-    document.title = title ? `${title} — Residencia Fiscal` : BASE_TITLE;
+    document.title = title ? (exactTitle ? title : `${title} — Residencia Fiscal`) : BASE_TITLE;
     document
       .querySelector('link[rel="canonical"]')
       ?.setAttribute('href', `${ORIGIN}${canonicalPath}`);
@@ -40,5 +47,5 @@ export function usePageTitle(
     document
       .querySelector('meta[name="twitter:description"]')
       ?.setAttribute('content', description);
-  }, [title, canonicalPath, description, indexable]);
+  }, [title, canonicalPath, description, indexable, exactTitle]);
 }

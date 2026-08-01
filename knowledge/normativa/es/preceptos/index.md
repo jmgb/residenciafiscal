@@ -26,7 +26,7 @@ Rigen ejercicios enjuiciados por sentencias del corpus. **No son derecho aplicab
 - [Real Decreto Legislativo 3/2004, de 5 de marzo, por el que se aprueba el texto refundido de la Ley del Impuesto sobre la Renta de las Personas Físicas.](trlirpf-2004-a8.md) — Artículo 8 · RDLeg 3/2004, TR del IRPF, derogado por la Ley 35/2006
 - [Real Decreto Legislativo 3/2004, de 5 de marzo, por el que se aprueba el texto refundido de la Ley del Impuesto sobre la Renta de las Personas Físicas.](trlirpf-2004-a9.md) — Artículo 9 · RDLeg 3/2004, TR del IRPF, derogado por la Ley 35/2006
 
-## Convenios de doble imposición vigentes (93)
+## Convenios de doble imposición vigentes (95)
 
 Artículo que fija la residencia y resuelve la doble residencia de cada convenio.
 
@@ -53,6 +53,7 @@ Artículo que fija la residencia y resuelve la doble residencia de cada convenio
 - [Convenio entre el Reino de España y el Sultanato de Omán para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y su Protocolo, hecho "ad referéndum" en Mascate el 30 de abril de 2014.](cdi-boe-a-2015-9673-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la Región Administrativa Especial de Hong Kong de la República Popular China para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y su Protocolo, hecho en Hong Kong el 1 de abril de 2011.](cdi-boe-a-2012-5039-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República Argelina Democrática y Popular para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio, hecho «ad referendum» en Madrid el 7 de octubre de 2002.](cdi-boe-a-2005-12618-a4.md) — Artículo 4
+- [Convenio entre el Reino de España y la República Bolivariana de Venezuela para evitar la doble tributación y prevenir la evasión y el fraude fiscal en materia de Impuestos sobre la Renta y sobre el Patrimonio, hecho en Madrid el 8 de abril de 2003.](cdi-boe-a-2004-11070-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República Dominicana para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta, y su Protocolo, hechos en Madrid el 16 de noviembre de 2011.](cdi-boe-a-2014-6918-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República Federal de Nigeria para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio, hecho en Abuja el 23 de junio de 2009.](cdi-boe-a-2015-3936-ar-4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República Francesa a fin de evitar la doble imposición y de prevenir la evasión y el fraude fiscal en materia de impuestos sobre la renta y sobre el patrimonio, firmado en Madrid el 10 de octubre de 1995.](cdi-boe-a-1997-12729-a4.md) — Artículo 4
@@ -87,6 +88,7 @@ Artículo que fija la residencia y resuelve la doble residencia de cada convenio
 - [Convenio entre el Reino de España y la República de Trinidad y Tobago para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta, y Protocolo, hecho en Puerto España el 17 de febrero de 2009.](cdi-boe-a-2009-19767-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República de Turquía para evitar la doble imposición y prevenir la evasión fiscal de impuestos sobre la renta, hecho en Madrid el 5 de julio de 2002.](cdi-boe-a-2004-1013-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República de Uzbekistán para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el patrimonio y su Protocolo, hecho en Madrid el 8 de julio de 2013.](cdi-boe-a-2015-9736-ar-4.md) — Artículo 4
+- [Convenio entre el Reino de España y la República del Paraguay para evitar la doble imposición y para prevenir la evasión o elusión fiscal en materia de impuestos sobre la renta y su Protocolo, hecho en Santo Domingo el 25 de marzo de 2023.](cdi-boe-a-2024-15573-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República del Senegal para evitar la doble imposición y prevenir la evasión fiscal en materia del impuesto sobre la renta, hecho "ad referéndum" en Dakar el 5 de diciembre de 2006.](cdi-boe-a-2014-13569-a4.md) — Artículo 4
 - [Convenio entre el Reino de España y la República Árabe de Egipto para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y el patrimonio, hecho en Madrid el 10 de junio de 2005.](cdi-boe-a-2006-12440-ar-4.md) — Artículo 4
 - [Convenio entre el Reino de España y los Emiratos Árabes Unidos para evitar la doble imposición y prevenir la evasión fiscal en materia de impuestos sobre la renta y sobre el Patrimonio, hecho en Abu Dhabi el 5 de marzo de 2006.](cdi-boe-a-2007-1343-a4.md) — Artículo 4

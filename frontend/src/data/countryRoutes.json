@@ -12,231 +12,405 @@
         "reviewedAt": "2026-07-30"
       }
     ],
+    "treatyBoeId": null,
+    "title": "Residencia Fiscal — Consulta la jurisprudencia del art. 9 LIRPF",
     "description": "Consulta en lenguaje natural 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia fiscal de personas físicas en España.",
-    "indexable": true
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "weekly",
+      "priority": "1.0"
+    }
   },
   {
     "name": "Estados Unidos",
     "path": "/estados-unidos",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Estados Unidos en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1990-30940",
+    "title": "Residencia fiscal Estados Unidos–España: convenio y sentencias",
+    "description": "El convenio entre España y Estados Unidos resuelve la doble residencia en su artículo 4. Texto oficial del BOE y la sentencia española del corpus que lo aplica.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Portugal",
     "path": "/portugal",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Portugal en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1995-24001",
+    "title": "Residencia fiscal Portugal–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Portugal decide en su artículo 4 de qué Estado es residente quien vive entre los dos países. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Francia",
     "path": "/francia",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Francia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1997-12729",
+    "title": "Residencia fiscal Francia–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Francia resuelve la doble residencia por vivienda permanente, centro de intereses vitales y nacionalidad. Texto oficial del BOE.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Reino Unido",
     "path": "/reino-unido",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal del Reino Unido en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2014-5171",
+    "title": "Residencia fiscal Reino Unido–España: convenio y sentencias",
+    "description": "El convenio entre España y el Reino Unido decide la residencia en su artículo 4. Texto oficial del BOE y las cuatro sentencias del corpus español que lo aplican.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Alemania",
     "path": "/alemania",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Alemania en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2012-10212",
+    "title": "Residencia fiscal Alemania–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Alemania resuelve en su artículo 4 de qué Estado es residente una persona física. Texto oficial del BOE y jurisprudencia del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Suiza",
     "path": "/suiza",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Suiza en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1967-3470",
+    "title": "Residencia fiscal Suiza–España: convenio y sentencias",
+    "description": "El convenio entre España y Suiza fija el domicilio fiscal en su artículo 4. Texto oficial del BOE y las dos sentencias del corpus español que lo aplican.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Andorra",
     "path": "/andorra",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Andorra en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2015-13248",
+    "title": "Residencia fiscal Andorra–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Andorra decide la residencia en su artículo 4, con las reglas de desempate del Modelo OCDE. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Italia",
     "path": "/italia",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Italia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1980-27501",
+    "title": "Residencia fiscal Italia–España: convenio y jurisprudencia",
+    "description": "El convenio entre España e Italia resuelve la doble residencia en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "México",
     "path": "/mexico",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de México en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1994-23743",
+    "title": "Residencia fiscal México–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y México decide en su artículo 4 de qué Estado es residente el contribuyente. Texto oficial del BOE y jurisprudencia del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Argentina",
     "path": "/argentina",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Argentina en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2014-373",
+    "title": "Residencia fiscal Argentina–España: convenio y jurisprudencia",
+    "description": "El convenio vigente entre España y Argentina resuelve la doble residencia en su artículo 4; el corpus conserva además el convenio de 1992 que rigió hasta 2012.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Bolivia",
     "path": "/bolivia",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Bolivia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1998-28474",
+    "title": "Residencia fiscal Bolivia–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Bolivia decide la residencia fiscal en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Brasil",
     "path": "/brasil",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Brasil en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1975-26928",
+    "title": "Residencia fiscal Brasil–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Brasil resuelve en su artículo 4 de qué Estado es residente una persona física. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Chile",
     "path": "/chile",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Chile en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2004-1897",
+    "title": "Residencia fiscal Chile–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Chile decide la residencia en su artículo 4, con las reglas de desempate del Modelo OCDE. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Colombia",
     "path": "/colombia",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Colombia en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2008-17209",
+    "title": "Residencia fiscal Colombia–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Colombia resuelve la doble residencia en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Costa Rica",
     "path": "/costa-rica",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Costa Rica en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2011-1",
+    "title": "Residencia fiscal Costa Rica–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Costa Rica decide la residencia fiscal en su artículo 4. Texto oficial del BOE y la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Cuba",
     "path": "/cuba",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Cuba en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2001-682",
+    "title": "Residencia fiscal Cuba–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Cuba resuelve en su artículo 4 de qué Estado es residente el contribuyente. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Ecuador",
     "path": "/ecuador",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Ecuador en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-1993-11362",
+    "title": "Residencia fiscal Ecuador–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Ecuador decide la residencia fiscal en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "El Salvador",
     "path": "/el-salvador",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de El Salvador en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2009-9325",
+    "title": "Residencia fiscal El Salvador–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y El Salvador resuelve la doble residencia en su artículo 4. Texto oficial del BOE y la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Guatemala",
     "path": "/guatemala",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Guatemala en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": null,
+    "title": "Residencia fiscal Guatemala–España: sin convenio, qué se aplica",
+    "description": "España y Guatemala no tienen convenio de doble imposición en vigor, así que cada país aplica su ley interna. Consulta la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Haití",
     "path": "/haiti",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Haití en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": null,
+    "title": "Residencia fiscal Haití–España: sin convenio, qué se aplica",
+    "description": "España y Haití no tienen convenio de doble imposición en vigor, así que cada país aplica su ley interna. Consulta la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Honduras",
     "path": "/honduras",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Honduras en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": null,
+    "title": "Residencia fiscal Honduras–España: sin convenio, qué se aplica",
+    "description": "España y Honduras no tienen convenio de doble imposición en vigor, así que cada país aplica su ley interna. Consulta la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Nicaragua",
     "path": "/nicaragua",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Nicaragua en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": null,
+    "title": "Residencia fiscal Nicaragua–España: sin convenio, qué se aplica",
+    "description": "España y Nicaragua no tienen convenio de doble imposición en vigor, así que cada país aplica su ley interna. Consulta la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Panamá",
     "path": "/panama",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Panamá en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2011-11425",
+    "title": "Residencia fiscal Panamá–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Panamá decide la residencia fiscal en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Paraguay",
     "path": "/paraguay",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Paraguay en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2024-15573",
+    "title": "Residencia fiscal Paraguay–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Paraguay, en vigor desde octubre de 2024, resuelve la doble residencia en su artículo 4. Texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Perú",
     "path": "/peru",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Perú en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": null,
+    "title": "Residencia fiscal Perú–España: sin convenio, qué se aplica",
+    "description": "España y Perú no tienen convenio de doble imposición en vigor, así que cada país aplica su ley interna. Consulta la jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "República Dominicana",
     "path": "/republica-dominicana",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de República Dominicana en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2014-6918",
+    "title": "Residencia fiscal República Dominicana–España: convenio",
+    "description": "El convenio entre España y la República Dominicana decide la residencia en su artículo 4. Texto oficial del BOE y jurisprudencia española del art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Uruguay",
     "path": "/uruguay",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Uruguay en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2011-6551",
+    "title": "Residencia fiscal Uruguay–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Uruguay resuelve la doble residencia en su artículo 4. Texto oficial del BOE y la jurisprudencia española sobre el art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   },
   {
     "name": "Venezuela",
     "path": "/venezuela",
     "corpusStatus": "pending",
     "legalReferences": [],
-    "description": "Todavía no hay jurisprudencia fiscal de Venezuela en el corpus. El proyecto se nutre de expertos en fiscalidad y tributación internacional que aportan la jurisprudencia de su jurisdicción.",
-    "indexable": false
+    "treatyBoeId": "BOE-A-2004-11070",
+    "title": "Residencia fiscal Venezuela–España: convenio y jurisprudencia",
+    "description": "El convenio entre España y Venezuela decide la residencia en su artículo 4. Su título habla de «doble tributación»; texto oficial del BOE y art. 9 LIRPF.",
+    "indexable": true,
+    "sitemap": {
+      "changefreq": "monthly",
+      "priority": "0.5"
+    }
   }
 ]

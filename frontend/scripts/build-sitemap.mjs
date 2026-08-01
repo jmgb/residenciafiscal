@@ -12,13 +12,13 @@ const staticRoutes = JSON.parse(
 );
 
 const SITE_URL = 'https://residenciafiscal.org';
-// Solo entra lo indexable. Las páginas de país sin corpus son `noindex`, y por eso
-// `/colaborar` —que sí está aquí— es la única puerta a la invitación a contribuir
-// que alguien puede encontrar desde una búsqueda.
+// Solo entra lo indexable. Cada país declara su propia frecuencia y prioridad:
+// `/espana` tiene corpus y cambia; una jurisdicción sin corpus publica el
+// convenio de doble imposición con España, que se mueve muy de tarde en tarde.
 const publicRoutes = [
   ...routes
     .filter((route) => route.indexable)
-    .map((route) => ({ path: route.path, changefreq: 'weekly', priority: '1.0' })),
+    .map((route) => ({ path: route.path, ...route.sitemap })),
   ...staticRoutes
     .filter((route) => route.indexable)
     .map((route) => ({ path: route.path, ...route.sitemap })),
