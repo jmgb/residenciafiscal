@@ -1,0 +1,598 @@
+{
+  "agent_reviewed_cases": 42,
+  "audit_method": "DETERMINISTIC_INDEPENDENT_PASS",
+  "case_count": 42,
+  "cases": [
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [],
+      "focus_flags": [
+        "TREATY"
+      ],
+      "judgment_id": "san-1071-2025",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 9,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [],
+      "focus_flags": [
+        "TREATY"
+      ],
+      "judgment_id": "san-1226-2021",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 13,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [],
+      "focus_flags": [
+        "TREATY"
+      ],
+      "judgment_id": "san-1386-2017",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 4,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "ANCHOR_COVERAGE_LOW"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "LOW_ANCHOR_COVERAGE",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-2132-2025",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 7,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-2229-2022",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-3169-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-3306-2025",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 11,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-3421-2021",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-3477-2022",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 8,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "COMPLEX_OUTCOME_REQUIRES_REVIEW"
+      ],
+      "focus_flags": [
+        "PARTIAL_OR_RETROACTION",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-4187-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 13,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-4248-2020",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-4438-2025",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 4,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "ANCHOR_COVERAGE_LOW"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "LOW_ANCHOR_COVERAGE",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-4670-2019",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 11,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "COMPLEX_OUTCOME_REQUIRES_REVIEW"
+      ],
+      "focus_flags": [
+        "PARTIAL_OR_RETROACTION",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-4992-2021",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-5096-2021",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 10,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-5630-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 8,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-5640-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 9,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-6981-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 17,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "san-699-2015",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 8,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-107-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 8,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-109-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-112-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-114-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-115-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 1,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "ANCHOR_COVERAGE_LOW"
+      ],
+      "focus_flags": [
+        "LOW_ANCHOR_COVERAGE"
+      ],
+      "judgment_id": "sts-1608-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-1682-2022",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-183-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 1,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "ANCHOR_COVERAGE_LOW"
+      ],
+      "focus_flags": [
+        "LOW_ANCHOR_COVERAGE"
+      ],
+      "judgment_id": "sts-1845-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 4,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "ANCHOR_COVERAGE_LOW",
+        "COMPLEX_OUTCOME_REQUIRES_REVIEW"
+      ],
+      "focus_flags": [
+        "PARTIAL_OR_RETROACTION",
+        "LOW_ANCHOR_COVERAGE",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-2013-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 21,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "COMPLEX_OUTCOME_REQUIRES_REVIEW"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "PARTIAL_OR_RETROACTION",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-2735-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-3498-2025",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 12,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-3574-2023",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 5,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED",
+        "COMPLEX_OUTCOME_REQUIRES_REVIEW"
+      ],
+      "focus_flags": [
+        "PARTIAL_OR_RETROACTION",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-3585-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 17,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-3881-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 17,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-3882-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 9,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-4219-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 8,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "TREATY_ANALYSIS_MISSING",
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "TREATY",
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-4220-2024",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 10,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-4305-2017",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 6,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-4307-2017",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 1,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "ANCHOR_COVERAGE_LOW"
+      ],
+      "focus_flags": [
+        "LOW_ANCHOR_COVERAGE"
+      ],
+      "judgment_id": "sts-4361-2020",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 7,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-691-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    },
+    {
+      "anchor_count": 7,
+      "audit_status": "NEEDS_HUMAN_REVIEW",
+      "finding_codes": [
+        "RESIDENCE_DETERMINATION_NOT_TYPED"
+      ],
+      "focus_flags": [
+        "UNTYPED_RESIDENCE_DETERMINATION"
+      ],
+      "judgment_id": "sts-695-2018",
+      "literal_error": null,
+      "literal_validation": "PASSED"
+    }
+  ],
+  "finding_counts": {
+    "ANCHOR_COVERAGE_LOW": 6,
+    "COMPLEX_OUTCOME_REQUIRES_REVIEW": 5,
+    "RESIDENCE_DETERMINATION_NOT_TYPED": 36,
+    "TREATY_ANALYSIS_MISSING": 13
+  },
+  "human_approved_cases": 0,
+  "literal_validation_failures": 0,
+  "schema_version": "residenciafiscal-rollout-audit/1"
+}

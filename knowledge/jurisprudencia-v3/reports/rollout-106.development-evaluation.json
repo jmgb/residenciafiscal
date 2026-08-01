@@ -1,0 +1,11 @@
+{
+  "baseline_expected_recall_at_3": 0.3419,
+  "baseline_top_1_accuracy": 0.2051,
+  "candidate_expected_recall_at_3": 1.0,
+  "candidate_top_1_accuracy": 1.0,
+  "evaluation_policy": "DEVELOPMENT_ONLY_HOLDOUT_EXCLUDED",
+  "evaluation_scope": "EXPLICIT_JUDGMENT_LOOKUP",
+  "gate_status": "PASSED",
+  "question_count": 117,
+  "schema_version": "residenciafiscal-rollout-development/1"
+}

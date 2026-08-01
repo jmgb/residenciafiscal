@@ -66,8 +66,72 @@ def test_serializacion_y_ranking_son_deterministas() -> None:
         "¿Influyen las sociedades y el centro de intereses económicos en España?",
         limit=5,
     )
-    assert hits[0].judgment_id in {"san-1071-2025", "san-1210-2023"}
+    assert hits[0].judgment_id in {
+        "san-1071-2025",
+        "san-1210-2023",
+        "san-1386-2017",
+    }
     assert all(hit.score >= 0 for hit in hits)
+
+
+def test_prioriza_el_identificador_judicial_explicito_en_el_corpus_completo() -> None:
+    from jurisprudence_retrieval_corpus import (
+        load_retrieval_corpus,
+        rank_retrieval_units,
+    )
+
+    corpus = load_retrieval_corpus((RETRIEVAL_ROOT / "rollout-106.corpus.json").read_bytes())
+
+    san = rank_retrieval_units(
+        corpus,
+        "¿Qué resolvió SAN 2132/2025 sobre residencia fiscal?",
+        limit=1,
+    )
+    sts = rank_retrieval_units(
+        corpus,
+        "Resume la STS 3882/2024 y sus pruebas.",
+        limit=1,
+    )
+
+    assert san[0].judgment_id == "san-2132-2025"
+    assert sts[0].judgment_id == "sts-3882-2024"
+
+
+def test_normaliza_la_longitud_para_que_repetir_terminos_no_mejore_el_ranking() -> None:
+    from jurisprudence_retrieval_corpus import (
+        build_retrieval_corpus,
+        rank_retrieval_units,
+    )
+
+    corpus = build_retrieval_corpus(
+        _index_paths(),
+        sample_id="jurisprudencia-v3-piloto-5",
+        project_root=PROJECT_ROOT,
+    )
+    template = corpus.units[0]
+    concise = template.model_copy(
+        update={
+            "unit_id": "z-conciso",
+            "judgment_id": "z-conciso",
+            "search_text": "certificado fiscal extranjero",
+        }
+    )
+    stuffed = template.model_copy(
+        update={
+            "unit_id": "a-repetitivo",
+            "judgment_id": "a-repetitivo",
+            "search_text": "certificado " * 500 + "fiscal extranjero",
+        }
+    )
+    synthetic = corpus.model_copy(update={"units": (stuffed, concise)})
+
+    hits = rank_retrieval_units(
+        synthetic,
+        "certificado fiscal extranjero",
+        limit=2,
+    )
+
+    assert hits[0].judgment_id == "z-conciso"
 
 
 def test_schema_del_corpus_esta_versionado_y_sincronizado() -> None:

@@ -15,7 +15,8 @@ SHELL := /bin/bash
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 evaluate-rollout-e rollout-init rollout-status rollout-next \
-	rollout-bootstrap rollout-finalize \
+	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
+	rollout-bootstrap rollout-finalize rollout-verify rollout-reproducibility \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
 	validate-chat-absences-candidate compile-chat-f03-results \
@@ -93,6 +94,11 @@ CASE_ROLLOUT_BATCH_SIZE ?= 10
 CASE_ROLLOUT_BANK ?= ./knowledge/jurisprudencia-v3/evaluations/rollout-106.bank.json
 CASE_ROLLOUT_EVALUATION ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.retrieval-evaluation.json
 CASE_ROLLOUT_HOLDOUT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.holdout-evaluation.json
+CASE_ROLLOUT_DEVELOPMENT_BANK ?= ./knowledge/jurisprudencia-v3/evaluations/rollout-106.development.bank.json
+CASE_ROLLOUT_DEVELOPMENT_REPORT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.development-evaluation.json
+CASE_ROLLOUT_AUDIT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.json
+CASE_ROLLOUT_AUDIT_MD ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.md
+CASE_ROLLOUT_HOLDOUT_COVERAGE ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.holdout-coverage.json
 ROLLOUT_RETRY ?=
 
 # =============================================================================
@@ -130,7 +136,11 @@ help:
 	@echo "  make rollout-next         Ejecuta/reanuda un lote explícito"
 	@echo "  make rollout-bootstrap    Prepara verbatim, borradores faltantes y manifiesto"
 	@echo "  make rollout-finalize     Agrega corpus e informe tras completar todos los lotes"
-	@echo "  make evaluate-rollout-e   Mide cobertura técnica del corpus ampliado"
+	@echo "  make evaluate-rollout-development  Ajusta solo contra el banco de desarrollo"
+	@echo "  make evaluate-rollout-holdout  Observa una vez el holdout congelado"
+	@echo "  make rollout-holdout-coverage  Diagnostica si la precisión del holdout es válida"
+	@echo "  make rollout-audit        Segunda pasada automática sobre los 42 casos HIGH"
+	@echo "  make rollout-verify       Verifica hashes, agregados y presupuesto de artefactos"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -383,6 +393,48 @@ rollout-finalize:
 		--output-root $(CASE_ROLLOUT_OUTPUT) \
 		--project-root .
 
+evaluate-rollout-development:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_development.py \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--corpus $(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
+		--bank $(CASE_ROLLOUT_DEVELOPMENT_BANK) \
+		--report $(CASE_ROLLOUT_DEVELOPMENT_REPORT) \
+		--project-root .
+
+rollout-audit:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_audit.py \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--project-root . \
+		--report $(CASE_ROLLOUT_AUDIT) \
+		--markdown $(CASE_ROLLOUT_AUDIT_MD)
+
+rollout-holdout-coverage:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_coverage.py \
+		--bank docs/experiments/CHAT_QUESTION_HOLDOUT_E.json \
+		--corpus $(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
+		--output $(CASE_ROLLOUT_HOLDOUT_COVERAGE)
+
+rollout-verify:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_release.py \
+		--manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output-root $(CASE_ROLLOUT_OUTPUT) \
+		--project-root .
+
+rollout-reproducibility: rollout-finalize
+	git diff --exit-code -- \
+		$(CASE_ROLLOUT_OUTPUT)/rollout-build.json \
+		$(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
+		$(CASE_ROLLOUT_OUTPUT)/reports/rollout-106.quality.json
+
+evaluate-rollout-holdout:
+	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \
+		--corpus $(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
+		--lock $(CASE_HOLDOUT_LOCK) \
+		--output $(CASE_ROLLOUT_HOLDOUT) \
+		--project-root .
+
 evaluate-rollout-e:
 	uv run python $(PYTHON_SOURCE)/jurisprudence_rollout_evaluation.py \
 		--manifest $(CASE_ROLLOUT_MANIFEST) \
@@ -390,11 +442,7 @@ evaluate-rollout-e:
 		--bank $(CASE_ROLLOUT_BANK) \
 		--report $(CASE_ROLLOUT_EVALUATION) \
 		--project-root .
-	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \
-		--corpus $(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
-		--lock $(CASE_HOLDOUT_LOCK) \
-		--output $(CASE_ROLLOUT_HOLDOUT) \
-		--project-root .
+	$(MAKE) evaluate-rollout-holdout
 
 # Solo hay que relanzarlo cuando el BOE actualice una norma: el XML descargado
 # está versionado, así que `make export-normativa` funciona sin red.

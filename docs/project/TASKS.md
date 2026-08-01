@@ -314,9 +314,26 @@ contra el dominio público después de cada deploy.
       11 lotes hasta obtener 106/106 builds válidos.
     - [x] Generar el corpus agregado, el informe de calidad y un banco técnico de
       117 preguntas. La línea base obtiene recall esperado de 52,14 % @5 y
-      77,78 % @12; el holdout congelado cae a 47,86 % @3, precisión 33,33 % y
-      recall de contraste 12,50 %, por lo que no se promueve este retriever al
-      chat como estrategia definitiva.
+      77,78 % @12; tras el ranker v2, el holdout congelado queda en 47,86 % @3,
+      precisión aparente 36,11 % y recall de contraste 20,83 %, por lo que no se
+      promueve este retriever al chat como estrategia definitiva. La precisión
+      no es interpretable para el corpus completo: el holdout solo etiqueta 5 de
+      las 106 sentencias.
+    - [x] Separar desarrollo y holdout. El banco de lookup por identificador
+      contiene 117 consultas y mejora de 20,51 % a 100 % top-1 y de 34,19 % a
+      100 % recall @3 con BM25 y reconocimiento de `SAN/STS número/año`, sin
+      ajustar contra el holdout congelado.
+    - [x] Ejecutar una segunda pasada automática de los 42 casos HIGH: 0 fallos
+      de literalidad, 13 análisis CDI ausentes, 36 determinaciones residenciales
+      sin tipar, 6 coberturas de anclajes bajas y 5 resultados parciales o de
+      retroacción. Todos conservan `NEEDS_HUMAN_REVIEW`.
+    - [x] Añadir verificación reproducible en CI y política de artefactos: hashes
+      de entradas y derivados, regeneración de agregados y límites de 1.000
+      ficheros/50 MB.
+  - [ ] **Completar los gaps estructurales detectados antes de promover las
+    106 al chat.** Prioridad: tipar las 36 determinaciones residenciales y crear
+    los 13 análisis CDI ausentes desde anclajes literales; después ampliar un
+    banco de relevancia para consultas genéricas con anotaciones independientes.
   - [ ] **Obtener aprobación jurídica humana del corpus de 106.** No hay revisor
     disponible: los 1.620 elementos jurídicos siguen `AGENT_REVIEWED`, con 0
     `HUMAN_APPROVED`. La revisión automática no debe registrarse como humana.

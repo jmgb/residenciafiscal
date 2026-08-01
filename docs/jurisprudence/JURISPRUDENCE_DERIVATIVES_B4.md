@@ -109,10 +109,11 @@ Los perfiles de la muestra se escriben en `perfiles/`. El árbol v3 completo es
 hermano de `knowledge/jurisprudencia/`, que pertenece al bundle OKF/2 legado;
 mezclarlos rompería sus contratos y manifiestos.
 
-El baseline normaliza acentos, elimina palabras vacías, aplica un vocabulario
-jurídico pequeño y ordena por TF-IDF. Es deliberadamente sencillo y auditable:
-sirve como línea base, no como decisión definitiva de RAG. El resultado de las
-40 preguntas y sus límites se documenta en
+El ranker normaliza acentos, elimina palabras vacías, aplica un vocabulario
+jurídico pequeño y ordena con BM25 normalizado por longitud. Una referencia
+explícita `SAN/STS número/año` recibe prioridad determinista. El TF-IDF anterior
+se conserva solo como comparación de desarrollo. El resultado de las 40
+preguntas y sus límites se documenta en
 [`JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).
 
 ## Gates

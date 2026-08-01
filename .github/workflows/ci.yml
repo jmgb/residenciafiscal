@@ -33,13 +33,11 @@ on:
     branches: [main]
     paths-ignore:
       - 'docs/**'
-      - 'sentencias/**'
       - '*.md'
   pull_request:
     branches: [main]
     paths-ignore:
       - 'docs/**'
-      - 'sentencias/**'
       - '*.md'
   workflow_dispatch:
 
@@ -94,3 +92,9 @@ jobs:
 
       - name: Pytest
         run: uv run pytest -q
+
+      - name: Verify jurisprudence rollout integrity
+        run: make rollout-verify
+
+      - name: Rebuild deterministic rollout aggregates
+        run: make rollout-reproducibility

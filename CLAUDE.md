@@ -181,7 +181,10 @@ La fase E autorizada se ejecutó el 1 de agosto de 2026: 106/106 builds pasan,
 67 casos entran en recuperación, 39 quedan marcados fuera de ámbito y el corpus
 agregado contiene 74 unidades. Todo el contenido nuevo sigue
 `AGENT_REVIEWED_ONLY`; el holdout obtiene 75 % de conducta y no puede usarse
-para ajustar el retriever. Contrato operativo, resultados y política de revisión:
+para ajustar el retriever. Solo etiqueta 5 de 106 fuentes, por lo que su
+precisión sobre el corpus completo no es válida. El banco de desarrollo de
+lookup, la auditoría de los 42 casos HIGH y la verificación reproducible están
+separados del holdout. Contrato operativo, resultados y política de revisión:
 [`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md).
 El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
 cada caso canónico. Su contrato está en
@@ -190,6 +193,8 @@ El manifiesto real, los borradores, los 11 lotes y los informes de fase E ya
 están materializados. El siguiente gate es jurídico y de producto: no registrar
 aprobación humana inexistente ni conectar el corpus completo directamente al
 chat, porque su holdout de recuperación no justifica esa promoción.
+La retención de derivados y sus límites se rige por
+[`docs/jurisprudence/JURISPRUDENCE_ARTIFACT_POLICY.md`](docs/jurisprudence/JURISPRUDENCE_ARTIFACT_POLICY.md).
 
 El baseline histórico F0.2 redactó A sobre el corpus v3 y B con Gemini File
 Search sobre los PDF usando el mismo modelo y fuentes independientes. La

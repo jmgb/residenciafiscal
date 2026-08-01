@@ -256,10 +256,12 @@ esporádicas. Resultados:
 E0 añadió una comprobación independiente: en el holdout congelado la conducta
 correcta baja al 75 % y la seguridad de no devolver fuentes cuando debe
 preguntar o abstenerse queda en 83,33 %. Repetido sobre las 106, el recall
-esperado @3 queda en 47,86 %, la precisión relevante en 33,33 % y el recall de
-contraste en 12,50 %. Ese banco es exclusivamente de observación y no puede
-utilizarse para ajustar el router. Por ello el corpus completo sirve como
-borrador de investigación y evaluación interna, pero no se promueve al chat.
+esperado @3 queda en 47,86 %, la precisión aparente en 36,11 % y el recall de
+contraste en 20,83 %. La precisión no es válida para todo el corpus porque solo
+hay etiquetas para 5 de las 106 fuentes. Ese banco es exclusivamente de
+observación y no puede utilizarse para ajustar el router. Por ello el corpus
+completo sirve como borrador de investigación y evaluación interna, pero no se
+promueve al chat.
 
 El contrato, las mediciones y el resultado del rollout reanudable están en
 [`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).

@@ -18,7 +18,7 @@ consulta
   → análisis determinista de facetas y hechos ausentes
   → conducta: responder | parcial | preguntar | abstenerse
   → si se puede responder:
-       TF-IDF + expansión léxica
+       BM25 + expansión léxica + identificador judicial explícito
        + coincidencia de criterio, prueba, país y periodo
        + cobertura temporal estructurada
        → una unidad como máximo por sentencia

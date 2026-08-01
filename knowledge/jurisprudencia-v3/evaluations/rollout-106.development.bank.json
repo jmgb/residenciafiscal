@@ -1,0 +1,1059 @@
+{
+  "questions": [
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "question_id": "san-1071-2025-gen-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, digo que pasé menos de 183 días en España, ¿qué usaría Hacienda?",
+      "question_id": "san-1071-2025-day-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Influyen sociedades o consejos españoles?",
+      "question_id": "san-1071-2025-eco-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Qué valor tienen electricidad, agua, gas o gasóleo?",
+      "question_id": "san-1071-2025-hom-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Basta un certificado fiscal extranjero?",
+      "question_id": "san-1071-2025-for-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, si pierdo residencia, ¿la sanción se mantiene automáticamente?",
+      "question_id": "san-1071-2025-san-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Hay casos con liquidación confirmada y sanción anulada?",
+      "question_id": "san-1071-2025-san-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1071-2025"
+      ],
+      "question": "En relación con SAN 1071/2025, ¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "san-1071-2025-src-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "question_id": "san-1136-2016-gen-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Qué pruebas consideró importantes el tribunal?",
+      "question_id": "san-1136-2016-gen-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Qué pruebas de Hacienda han rechazado los tribunales?",
+      "question_id": "san-1136-2016-gen-09"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Qué valor tienen pasaportes, billetes y reservas?",
+      "question_id": "san-1136-2016-day-03"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Quién debe probar el número de días?",
+      "question_id": "san-1136-2016-day-10"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿La familia en España me convierte automáticamente en residente?",
+      "question_id": "san-1136-2016-fam-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Quién tiene la carga de probar la residencia?",
+      "question_id": "san-1136-2016-pru-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Cuándo se desplaza la carga al contribuyente?",
+      "question_id": "san-1136-2016-pru-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Cómo se valora un conjunto de indicios?",
+      "question_id": "san-1136-2016-pru-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1136-2016"
+      ],
+      "question": "En relación con SAN 1136/2016, ¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "san-1136-2016-src-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?",
+      "question_id": "san-1210-2023-gen-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué pruebas consideró importantes el tribunal?",
+      "question_id": "san-1210-2023-gen-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, si sostengo que pasé menos de 183 días en España, ¿qué indicios utilizó Hacienda en este caso?",
+      "question_id": "san-1210-2023-day-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Bastaron consumos y movimientos sin un calendario completo?",
+      "question_id": "san-1210-2023-day-08"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Quién debía probar la residencia y cuándo se desplazó la carga?",
+      "question_id": "san-1210-2023-day-10"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Influyen sociedades o consejos de administración españoles?",
+      "question_id": "san-1210-2023-eco-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué relevancia tuvo que la familia residiera en España?",
+      "question_id": "san-1210-2023-fam-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Cómo probó Hacienda el uso de viviendas disponibles en España?",
+      "question_id": "san-1210-2023-hom-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué valor tuvieron electricidad, gasóleo y otros suministros?",
+      "question_id": "san-1210-2023-hom-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué se dedujo de paquetería, café, vino o combustible?",
+      "question_id": "san-1210-2023-hom-04"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Cómo se valoraron retiradas de efectivo y pagos en España?",
+      "question_id": "san-1210-2023-hom-08"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Bastó la documentación extranjera para acreditar residencia fuera?",
+      "question_id": "san-1210-2023-for-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué defecto encontró la Sala en los certificados consulares?",
+      "question_id": "san-1210-2023-for-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Un contrato de alquiler extranjero demostró residencia efectiva?",
+      "question_id": "san-1210-2023-for-04"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Qué debía probar inicialmente Hacienda?",
+      "question_id": "san-1210-2023-pru-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Cuándo correspondió al contribuyente desvirtuar los indicios?",
+      "question_id": "san-1210-2023-pru-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, si se confirma la residencia, ¿se mantiene automáticamente la sanción?",
+      "question_id": "san-1210-2023-san-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1210-2023"
+      ],
+      "question": "En relación con SAN 1210/2023, ¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "san-1210-2023-src-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Qué permitió probar que el contribuyente no residía en España?",
+      "question_id": "san-1226-2021-gen-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Cómo calcularon los días las sentencias de la muestra?",
+      "question_id": "san-1226-2021-day-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, mi familia vive en España, pero trabajo fuera.",
+      "question_id": "san-1226-2021-fam-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Cómo se desvirtúa la presunción familiar?",
+      "question_id": "san-1226-2021-fam-03"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Basta un certificado fiscal extranjero?",
+      "question_id": "san-1226-2021-for-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Qué reforzó la documentación extranjera?",
+      "question_id": "san-1226-2021-for-07"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, dos países me consideran residente, ¿cómo se resuelve?",
+      "question_id": "san-1226-2021-cdi-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Cómo se valora un conjunto de indicios?",
+      "question_id": "san-1226-2021-pru-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1226-2021"
+      ],
+      "question": "En relación con SAN 1226/2021, ¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "san-1226-2021-src-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Qué permitió probar que el contribuyente no residía en España?",
+      "question_id": "san-1386-2017-gen-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, empleo extranjero e inversiones en España: ¿qué fue decisivo?",
+      "question_id": "san-1386-2017-eco-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, mi familia vive en España, pero trabajo fuera.",
+      "question_id": "san-1386-2017-fam-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Se aceptó que la familia quedara por salud o discapacidad?",
+      "question_id": "san-1386-2017-fam-05"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Cómo se valoran tarjetas y retiradas de efectivo?",
+      "question_id": "san-1386-2017-hom-08"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Qué requisitos se exigieron a los certificados?",
+      "question_id": "san-1386-2017-for-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Un alquiler extranjero prueba residencia efectiva?",
+      "question_id": "san-1386-2017-for-04"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, tengo vivienda permanente en ambos países, ¿qué sigue?",
+      "question_id": "san-1386-2017-cdi-03"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Quién tiene la carga de probar la residencia?",
+      "question_id": "san-1386-2017-pru-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-1386-2017"
+      ],
+      "question": "En relación con SAN 1386/2017, ¿Puedes mostrar el fragmento exacto y la página?",
+      "question_id": "san-1386-2017-src-02"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2132-2025"
+      ],
+      "question": "En relación con SAN 2132/2025, ¿Cómo resolvió SAN 2132/2025 este supuesto de residencia: El Tribunal acepta que el trabajo se prestó íntegramente en el extranjero y que la situación se rige por el Convenio España-Emiratos (art.19 CDI), por lo que la beca se califica conforme al TRLIRNR. Se referencian asimismo criterios sobre l?",
+      "question_id": "san-2132-2025-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2229-2022"
+      ],
+      "question": "En relación con SAN 2229/2022, ¿Cómo resolvió SAN 2229/2022 este supuesto de residencia: El tribunal analiza la cuestión principal como tributación de la beca conforme al TRLIRNR y al CDI España-Colombia, y acepta la condición de residencia en Colombia en 2014. Aunque el auto y doctrina citada abordan criterios de permanencia (?",
+      "question_id": "san-2229-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2335-2022"
+      ],
+      "question": "En relación con SAN 2335/2022, ¿Cómo resolvió SAN 2335/2022 este supuesto de residencia: El tribunal valora principalmente indicios de permanencia efectiva en España (más de 183 días) y la existencia de un importante patrimonio e intereses económicos en España. Además se aplica la presunción por convivencia familiar (cónyuge en?",
+      "question_id": "san-2335-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2347-2022"
+      ],
+      "question": "En relación con SAN 2347/2022, ¿Cómo resolvió SAN 2347/2022 este supuesto de residencia: La Sala aplica prioritariamente el criterio objetivo de permanencia (>183 días) apoyado en indicios materiales (consumos, reservas, participación societaria) aportados por la Inspección; una vez acreditados indicios suficientes, corresponde?",
+      "question_id": "san-2347-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2602-2020"
+      ],
+      "question": "En relación con SAN 2602/2020, ¿Cómo resolvió SAN 2602/2020 este supuesto de residencia: La Sala considera decisivo que el recurrente mantenía vínculo contractual y percibía nómina del FC Barcelona hasta 4-8-2011 (centro de intereses económicos) y aplica la regla de las ausencias esporádicas computables para el cómputo de los 1?",
+      "question_id": "san-2602-2020-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-2602-2022"
+      ],
+      "question": "En relación con SAN 2602/2022, ¿Cómo resolvió SAN 2602/2022 este supuesto de residencia: El tribunal aplica principalmente el criterio objetivo de permanencia (>183 días) apoyado en indicios de presencia y uso efectivo de viviendas, consumos y movimientos bancarios en España. Complementariamente valora el centro de intereses ec?",
+      "question_id": "san-2602-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-3169-2024"
+      ],
+      "question": "En relación con SAN 3169/2024, ¿Cómo resolvió SAN 3169/2024 este supuesto de residencia: La Sala aplica el criterio objetivo de permanencia (>183 días) como decisivo; las alegaciones del recurrente sobre ausencias por motivos de salud y certificados extranjeros no acreditaron residencia fiscal en Ecuador para los ejercicios. La?",
+      "question_id": "san-3169-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-3306-2025"
+      ],
+      "question": "En relación con SAN 3306/2025, ¿Cómo resolvió SAN 3306/2025 este supuesto de residencia: La Sala interpreta los arts. 8.1.a) y 9.1.a) LIRPF (183 días y ausencias esporádicas), afirmando que la permanencia fuera >183 días por disfrute de una beca no constituye ausencia esporádica y que la valoración debe ser objetiva sobre la du?",
+      "question_id": "san-3306-2025-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-3421-2021"
+      ],
+      "question": "En relación con SAN 3421/2021, ¿Cómo resolvió SAN 3421/2021 este supuesto de residencia: La Sala valora tanto la presencia física (183 días) como el centro de intereses económicos. No se acreditó permanencia en España >183 días; en cambio constan certificados y pruebas que sitúan en Suiza el centro económico y la residencia fis?",
+      "question_id": "san-3421-2021-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-3477-2022"
+      ],
+      "question": "En relación con SAN 3477/2022, ¿Cómo resolvió SAN 3477/2022 este supuesto de residencia: La Administración aplicó el art.9.1.b) LIRPF (centro de intereses económicos) y aportó información que situaba el núcleo económico en España (domicilio en BDC, cargos y rentas españolas). El demandante aportó indicios de residencia en Franc?",
+      "question_id": "san-3477-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-3960-2020"
+      ],
+      "question": "En relación con SAN 3960/2020, ¿Cómo resolvió SAN 3960/2020 este supuesto de residencia: La Sala reconoce acreditada la residencia de la recurrente en Kuwait desde abril de 2011 (por permanencia inferior a 183 días en España). No obstante, el decisivo es el régimen del IRNR (RDL 5/2004): las rentas satisfechas por entidad resid?",
+      "question_id": "san-3960-2020-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-4187-2023"
+      ],
+      "question": "En relación con SAN 4187/2023, ¿Cómo resolvió SAN 4187/2023 este supuesto de residencia: El Tribunal analiza la alegación del contribuyente de permanencia >183 días en Guinea (Art.9 LIRPF) pero concluye que la documentación aportada no prueba tal permanencia; aplica la presunción legal por residencia del cónyuge e hijos en Espa?",
+      "question_id": "san-4187-2023-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-4248-2020"
+      ],
+      "question": "En relación con SAN 4248/2020, ¿Cómo resolvió SAN 4248/2020 este supuesto de residencia: El tribunal aplica el art.9 LIRPF (183 días y, sobre todo, centro de intereses económicos/vitales) y, ante posible doble residencia, las reglas del art.4 del Convenio (vivienda permanente y centro de intereses). Concluye que los vínculos ec?",
+      "question_id": "san-4248-2020-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-4438-2025"
+      ],
+      "question": "En relación con SAN 4438/2025, ¿Cómo resolvió SAN 4438/2025 este supuesto de residencia: La sentencia analiza los arts. 8.1.a) y 9.1.a) LIRPF, afirmando que la permanencia fuera de España por beca (más de 183 días) no constituye ausencia esporádica; sin embargo, en este expediente concreto se admite la residencia en Colombia y ?",
+      "question_id": "san-4438-2025-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-4670-2019"
+      ],
+      "question": "En relación con SAN 4670/2019, ¿Cómo resolvió SAN 4670/2019 este supuesto de residencia: El tribunal aplica el art.9 LIRPF: considera acreditada la permanencia superior a 183 días (admisión del recurrente y diligencias inspectoras) y la residencia habitual de cónyuge e hija en España (presunción legal). No se acepta la prueba a?",
+      "question_id": "san-4670-2019-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-4992-2021"
+      ],
+      "question": "En relación con SAN 4992/2021, ¿Cómo resolvió SAN 4992/2021 este supuesto de residencia: El tribunal valora de forma conjunta indicios de presencia, vinculación familiar y, sobre todo, la existencia de un núcleo principal de intereses económicos en España (volúmenes de negocio y cargos en sociedades españolas), y concluye que n?",
+      "question_id": "san-4992-2021-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5096-2021"
+      ],
+      "question": "En relación con SAN 5096/2021, ¿Cómo resolvió SAN 5096/2021 este supuesto de residencia: La Sala analiza los criterios del art.9 LIRPF (183 días, núcleo de intereses económicos y presunción por familia). Constata que no concurre el criterio de estancia (>183 días) y, aplicando el criterio de núcleo o base de intereses económico?",
+      "question_id": "san-5096-2021-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5151-2019"
+      ],
+      "question": "En relación con SAN 5151/2019, ¿Cómo resolvió SAN 5151/2019 este supuesto de residencia: El tribunal estima que el contribuyente estuvo vinculado contractualmente al FC Barcelona hasta el 4-8-2011 (centro de intereses económicos en España) y que la ausencia por la Copa América es esporádica, por lo que computa días y supera 183?",
+      "question_id": "san-5151-2019-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5217-2022"
+      ],
+      "question": "En relación con SAN 5217/2022, ¿Cómo resolvió SAN 5217/2022 este supuesto de residencia: El tribunal analiza el criterio de permanencia (>183 días) y la figura de las ausencias esporádicas (art.9.1.a LIRPF). Declara probado un traslado laboral prolongado fuera de España para los jugadores, considera que dichas ausencias no son ?",
+      "question_id": "san-5217-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5630-2023"
+      ],
+      "question": "En relación con SAN 5630/2023, ¿Cómo resolvió SAN 5630/2023 este supuesto de residencia: La Sala examina la residencia habitual según art.9 LIRPF (183 días y tratamiento de ausencias). Aunque la Administración acreditó intereses económicos y vínculos familiares en España, el recurrente aportó certificado de residencia fiscal en?",
+      "question_id": "san-5630-2023-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5640-2023"
+      ],
+      "question": "En relación con SAN 5640/2023, ¿Cómo resolvió SAN 5640/2023 este supuesto de residencia: La Sala aplica el art.9.1 LIRPF (periodo de permanencia/ausencias) y valora la documentación administrativa (permiso de residencia, renovaciones, contratos y escrituras) que acredita la residencia legal y la permanencia en España, rechazand?",
+      "question_id": "san-5640-2023-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-5983-2024"
+      ],
+      "question": "En relación con SAN 5983/2024, ¿Cómo resolvió SAN 5983/2024 este supuesto de residencia: El tribunal aplica prioritariamente el art.9.1 LIRPF (más de 183 días) corroborado por consumos financieros y de suministros y por la gestión de intereses económicos en España. Además valora la presunción derivada de la convivencia con pers?",
+      "question_id": "san-5983-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-6289-2022"
+      ],
+      "question": "En relación con SAN 6289/2022, ¿Cómo resolvió SAN 6289/2022 este supuesto de residencia: El tribunal centra su análisis en el criterio objetivo de los 183 días; examina las pruebas aportadas por la Administración (certificados de presencia en EEUU/Perú, padrón, contratos y consumos) y concluye que no son suficientes para acredi?",
+      "question_id": "san-6289-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-6981-2024"
+      ],
+      "question": "En relación con SAN 6981/2024, ¿Cómo resolvió SAN 6981/2024 este supuesto de residencia: El tribunal aplica el art.9 LIRPF enfatizando el cómputo de permanencia (183 días) y la necesidad de acreditar residencia fiscal en el extranjero. La resolución valora las pruebas de presencia (vuelos, sellos, consumos, reservas) como sufic?",
+      "question_id": "san-6981-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "san-699-2015"
+      ],
+      "question": "En relación con SAN 699/2015, ¿Cómo resolvió SAN 699/2015 este supuesto de residencia: Para 2005 el tribunal aplica principalmente el criterio objetivo de permanencia (>183 días) y el del núcleo principal de intereses económicos (actividades y movimientos económicos en España) para declarar residencia. Para 2006 admite la res?",
+      "question_id": "san-699-2015-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-107-2018"
+      ],
+      "question": "En relación con STS 107/2018, ¿Cómo resolvió STS 107/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF sobre permanencia y “ausencias esporádicas”. Concluye que una permanencia fuera de España superior a 183 días por una beca ICEX no puede calificarse como ausencia esporádica. Por tanto, no procede comput?",
+      "question_id": "sts-107-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-108-2018"
+      ],
+      "question": "En relación con STS 108/2018, ¿Cómo resolvió STS 108/2018 este supuesto de residencia: El Tribunal considera probado que la interesada permaneció fuera de España más de 183 días (2011 y 2012) por disfrute de beca ICEX; por ello la ausencia no es 'esporádica' y el criterio objetivo de permanencia (>183 días) decide la residenc?",
+      "question_id": "sts-108-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-109-2018"
+      ],
+      "question": "En relación con STS 109/2018, ¿Cómo resolvió STS 109/2018 este supuesto de residencia: El litigio gira sobre si, por estar fuera de España más de 183 días en 2011 por beca ICEX, el contribuyente deja de ser residente IRPF. El TS interpreta el art. 9.1.a LIRPF: una ausencia prolongada (>183 días) no puede calificarse como “aus?",
+      "question_id": "sts-109-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-110-2018"
+      ],
+      "question": "En relación con STS 110/2018, ¿Cómo resolvió STS 110/2018 este supuesto de residencia: El Tribunal se apoya primordialmente en el criterio objetivo de permanencia (>183 días) y declara que una estancia superior a 183 días vinculada a una beca continuada no puede ser calificada como ausencia esporádica. No hace necesaria la ac?",
+      "question_id": "sts-110-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-112-2018"
+      ],
+      "question": "En relación con STS 112/2018, ¿Cómo resolvió STS 112/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF: la residencia habitual se anuda a permanencia en España >183 días. Las “ausencias esporádicas” son accesorias y solo cubren salidas ocasionales/breves; una estancia fuera >183 días por beca no puede cal?",
+      "question_id": "sts-112-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-114-2018"
+      ],
+      "question": "En relación con STS 114/2018, ¿Cómo resolvió STS 114/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF: la residencia habitual se basa en la permanencia física en España (>183 días). Las “ausencias esporádicas” son accesorias y solo cubren salidas ocasionales/breves; no pueden abarcar ausencias prolongada?",
+      "question_id": "sts-114-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-115-2018"
+      ],
+      "question": "En relación con STS 115/2018, ¿Cómo resolvió STS 115/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF: la residencia depende de la permanencia física >183 días en España, computando “ausencias esporádicas” solo como complemento. Una estancia en el extranjero >183 días por beca ICEX no es “ausencia esporá?",
+      "question_id": "sts-115-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-1682-2022"
+      ],
+      "question": "En relación con STS 1682/2022, ¿Cómo resolvió STS 1682/2022 este supuesto de residencia: El litigio versa sobre residencia habitual dentro de España (CCAA) a efectos de ISD (Ley 22/2009, arts. 28 y 32), usando como criterio principal el “mayor número de días” en los 5 años previos al devengo, computando “ausencias temporales”. ?",
+      "question_id": "sts-1682-2022-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-183-2018"
+      ],
+      "question": "En relación con STS 183/2018, ¿Cómo resolvió STS 183/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a) LIRPF: residencia por permanencia >183 días en España, computando ausencias esporádicas.\nConcluye que una permanencia fuera de España superior a 183 días por beca ICEX no puede calificarse de “ausencia esporá?",
+      "question_id": "sts-183-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-184-2018"
+      ],
+      "question": "En relación con STS 184/2018, ¿Cómo resolvió STS 184/2018 este supuesto de residencia: El litigio versa sobre si un becario ICEX debe tributar por IRPF en España cuando permanece fuera más de 183 días (art. 9.1.a LIRPF).\nLa AEAT pretendía computar como permanencia en España las ausencias por entenderlas “esporádicas” y exigir?",
+      "question_id": "sts-184-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-188-2018"
+      ],
+      "question": "En relación con STS 188/2018, ¿Cómo resolvió STS 188/2018 este supuesto de residencia: El Tribunal aplica principalmente el criterio objetivo del artículo 9.1.a) LIRPF (presencia efectiva >183 días). Declara que la estancia por beca no es ausencia esporádica cuando supera 183 días, por lo que no precisa acreditación de reside?",
+      "question_id": "sts-188-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-2013-2024"
+      ],
+      "question": "En relación con STS 2013/2024, ¿Cómo resolvió STS 2013/2024 este supuesto de residencia: El Tribunal interpreta que el punto de conexión del Impuesto (residencia habitual) es criterio decisivo; la residencia habitual se valora por factores fácticos (permanencia, vínculos) y no exige previa modificación formal del domicilio fisc?",
+      "question_id": "sts-2013-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-2735-2023"
+      ],
+      "question": "En relación con STS 2735/2023, ¿Cómo resolvió STS 2735/2023 este supuesto de residencia: La Inspección calificó residente en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos). El TS declara que, aportado certificado de residencia fiscal en EEUU “a efectos del CDI”, debe presumirse válido y determina con?",
+      "question_id": "sts-2735-2023-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-305-2018"
+      ],
+      "question": "En relación con STS 305/2018, ¿Cómo resolvió STS 305/2018 este supuesto de residencia: El tribunal aplica primariamente el criterio objetivo de permanencia (>183 días) y declara que estancias continuadas por beca no son \"ausencias esporádicas\"; no es preciso acreditar residencia fiscal en el extranjero cuando la ausencia supe?",
+      "question_id": "sts-305-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-3498-2025"
+      ],
+      "question": "En relación con STS 3498/2025, ¿Cómo resolvió STS 3498/2025 este supuesto de residencia: El litigio se centra en un conflicto de doble residencia España/Reino Unido y la aplicación del art. 4 CDI España-UK. El tribunal considera decisiva la primera regla de desempate (vivienda permanente a disposición): existe vivienda en Españ?",
+      "question_id": "sts-3498-2025-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-3574-2023"
+      ],
+      "question": "En relación con STS 3574/2023, ¿Cómo resolvió STS 3574/2023 este supuesto de residencia: El TSJ Cataluña aplicó art. 9 LIRPF por (i) permanencia >183 días y (ii) centro de intereses económicos para afirmar residencia en España en 2005.\nEl TS (casación) no entra a reponderar esos indicios como cuestión principal, sino que estima?",
+      "question_id": "sts-3574-2023-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-3585-2024"
+      ],
+      "question": "En relación con STS 3585/2024, ¿Cómo resolvió STS 3585/2024 este supuesto de residencia: La instancia consideró que no se acreditó la permanencia en España (no constan 183 días) y apreció que parte de las rentas/inversiones se obtuvieron en Andorra; esas conclusiones se fundaban en datos obtenidos en la entrada y registro (extr?",
+      "question_id": "sts-3585-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-3881-2024"
+      ],
+      "question": "En relación con STS 3881/2024, ¿Cómo resolvió STS 3881/2024 este supuesto de residencia: No se acredita permanencia >183 días (art. 9.1.a LIRPF), por lo que se acude al art. 9.1.b LIRPF (núcleo principal/base de intereses económicos) ponderando rentas y patrimonio. Admitida una situación de doble residencia (España y RU), se ap?",
+      "question_id": "sts-3881-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-3882-2024"
+      ],
+      "question": "En relación con STS 3882/2024, ¿Cómo resolvió STS 3882/2024 este supuesto de residencia: No se acreditó permanencia >183 días (se computaron 172 días en España y 32 días no acreditados). La residencia se fija por el art. 9.1.b LIRPF (núcleo de intereses económicos) mediante ponderación conjunta de rentas y patrimonio. Admitida ?",
+      "question_id": "sts-3882-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4219-2024"
+      ],
+      "question": "En relación con STS 4219/2024, ¿Cómo resolvió STS 4219/2024 este supuesto de residencia: La Inspección y la instancia consideran residente en España a la contribuyente por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos en España).\nLa contribuyente invoca doble residencia y pide aplicar art. 4.2 CDI España–Reino ?",
+      "question_id": "sts-4219-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4220-2024"
+      ],
+      "question": "En relación con STS 4220/2024, ¿Cómo resolvió STS 4220/2024 este supuesto de residencia: El litigio versa sobre la residencia fiscal IRPF 2014 y el valor del certificado de residencia UK a efectos del CDI. La AEAT/TEAR aprecian doble residencia (vivienda disponible en España y UK) y aplican el art. 4.2 CDI, resolviendo por cent?",
+      "question_id": "sts-4220-2024-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4305-2017"
+      ],
+      "question": "En relación con STS 4305/2017, ¿Cómo resolvió STS 4305/2017 este supuesto de residencia: El litigio versa sobre si la estancia en Panamá por una beca ICEX (más de 183 días fuera de España en 2011) puede calificarse como “ausencia esporádica” (art. 9.1.a LIRPF) y, por tanto, computarse como permanencia en España. El TS fija que ?",
+      "question_id": "sts-4305-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4306-2017"
+      ],
+      "question": "En relación con STS 4306/2017, ¿Cómo resolvió STS 4306/2017 este supuesto de residencia: La Sala entiende probado que el recurrente permaneció fuera de España más de 183 días (hecho objetivo) y que esa estancia por beca no constituye ausencia esporádica. Por ello aplica el criterio objetivo de permanencia (>183 días) para exclu?",
+      "question_id": "sts-4306-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4307-2017"
+      ],
+      "question": "En relación con STS 4307/2017, ¿Cómo resolvió STS 4307/2017 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF: la permanencia en España >183 días es la regla principal y las ausencias esporádicas son accesorias. Una ausencia prolongada (>183 días) por beca en el extranjero no puede calificarse de esporádica. Por?",
+      "question_id": "sts-4307-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4433-2017"
+      ],
+      "question": "En relación con STS 4433/2017, ¿Cómo resolvió STS 4433/2017 este supuesto de residencia: Se analiza el art. 9.1.a) LIRPF: permanencia >183 días y cómputo de ausencias esporádicas.\nEl TS fija que una permanencia fuera de España >183 días por beca ICEX no puede calificarse de «ausencia esporádica».\nConsecuencia: no procede comput?",
+      "question_id": "sts-4433-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4434-2017"
+      ],
+      "question": "En relación con STS 4434/2017, ¿Cómo resolvió STS 4434/2017 este supuesto de residencia: El Tribunal estima probado que el recurrente permaneció fuera de España más de 183 días (2011) y que esa estancia obedeció a una beca ICEX, por lo que no puede reputarse como ausencia esporádica. Predomina el criterio objetivo de permanenci?",
+      "question_id": "sts-4434-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-4670-2017"
+      ],
+      "question": "En relación con STS 4670/2017, ¿Cómo resolvió STS 4670/2017 este supuesto de residencia: El Tribunal aplica primordialmente el criterio objetivo de permanencia (>183 días) y concluye que la estancia por beca ICEX no puede reputarse ausencias esporádicas. Rechaza someter la decisión al requisito probatorio de certificado de resi?",
+      "question_id": "sts-4670-2017-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-691-2018"
+      ],
+      "question": "En relación con STS 691/2018, ¿Cómo resolvió STS 691/2018 este supuesto de residencia: El litigio gira en torno al art. 9.1.a LIRPF: si la permanencia fuera de España >183 días por una beca ICEX puede calificarse como “ausencia esporádica” (y por tanto computar como permanencia en España). El TS fija que no es ausencia esporá?",
+      "question_id": "sts-691-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-695-2018"
+      ],
+      "question": "En relación con STS 695/2018, ¿Cómo resolvió STS 695/2018 este supuesto de residencia: El pleito se centra en el art. 9.1.a LIRPF: si la estancia en el extranjero >183 días por beca ICEX es «ausencia esporádica» (y por tanto computable como permanencia en España). El TS fija que no es ausencia esporádica y que el concepto ati?",
+      "question_id": "sts-695-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-697-2018"
+      ],
+      "question": "En relación con STS 697/2018, ¿Cómo resolvió STS 697/2018 este supuesto de residencia: El Tribunal considera decisivo el criterio objetivo de permanencia efectiva fuera de España más de 183 días (art.9 LIRPF). Declara que la estancia por beca ICEX no constituye 'ausencia esporádica' y rechaza imponer al beneficiario la carga ?",
+      "question_id": "sts-697-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-698-2018"
+      ],
+      "question": "En relación con STS 698/2018, ¿Cómo resolvió STS 698/2018 este supuesto de residencia: El tribunal aplica primariamente el criterio objetivo de permanencia: la estancia fuera de España superior a 183 días durante el año natural es determinante. Declara que las estancias derivadas de una beca no son \"ausencias esporádicas\" y, ?",
+      "question_id": "sts-698-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-700-2018"
+      ],
+      "question": "En relación con STS 700/2018, ¿Cómo resolvió STS 700/2018 este supuesto de residencia: El Tribunal aplica prioritariamente el criterio objetivo de permanencia (>183 días) para declarar no residente; entiende que la estancia por beca no es 'ausencia esporádica' y no exige acreditar residencia fiscal en otro Estado salvo paraís?",
+      "question_id": "sts-700-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-701-2018"
+      ],
+      "question": "En relación con STS 701/2018, ¿Cómo resolvió STS 701/2018 este supuesto de residencia: El Tribunal aplica de forma prioritaria el criterio objetivo de permanencia (>183 días) y declara que la estancia por beca ICEX no constituye ausencia esporádica. Rechaza la exigencia general de acreditar residencia fiscal en el extranjero ?",
+      "question_id": "sts-701-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-839-2018"
+      ],
+      "question": "En relación con STS 839/2018, ¿Cómo resolvió STS 839/2018 este supuesto de residencia: El Tribunal aplica el criterio objetivo de permanencia (>183 días) y declara que una estancia continuada por beca ICEX no constituye 'ausencia esporádica'. No exige acreditación de residencia fiscal en otro Estado en este supuesto concreto.?",
+      "question_id": "sts-839-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-840-2018"
+      ],
+      "question": "En relación con STS 840/2018, ¿Cómo resolvió STS 840/2018 este supuesto de residencia: El Tribunal aplica primariamente el criterio objetivo de permanencia (>183 días) como decisivo; rechaza que las ausencias por disfrute de beca deban calificarse sistemáticamente como esporádicas y obliga a centrarse en la realidad objetiva ?",
+      "question_id": "sts-840-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-841-2018"
+      ],
+      "question": "En relación con STS 841/2018, ¿Cómo resolvió STS 841/2018 este supuesto de residencia: El tribunal aplica primordialmente el criterio objetivo de permanencia (>183 días) y considera que la estancia por beca no es 'ausencia esporádica'. Rechaza ligar la calificación a un elemento volitivo ni exigir certificado fiscal extranjer?",
+      "question_id": "sts-841-2018-legacy-01"
+    },
+    {
+      "behavior": "responder",
+      "contrast_judgment_ids": [],
+      "expected_judgment_ids": [
+        "sts-842-2018"
+      ],
+      "question": "En relación con STS 842/2018, ¿Cómo resolvió STS 842/2018 este supuesto de residencia: El Tribunal aplica un criterio objetivo: la permanencia fuera de España superior a 183 días (año 2011) determina la no residencia. Declara que la estancia por beca no es ausencia esporádica y que no procede exigir certificado de residencia ?",
+      "question_id": "sts-842-2018-legacy-01"
+    }
+  ],
+  "schema_version": "residenciafiscal-retrieval-evaluation-bank/1",
+  "source_resource": "sentencias/jurisprudence_v3_rollout_106.json"
+}

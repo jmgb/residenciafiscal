@@ -210,13 +210,23 @@ Cerrar el agregado y ejecutar la evaluación técnica completa:
 
 ```bash
 make rollout-finalize
-make evaluate-rollout-e
+make evaluate-rollout-development
+make rollout-audit
+make rollout-holdout-coverage
+make rollout-verify
 ```
 
 `rollout-finalize` comprueba de nuevo los hashes de cada caso y derivado antes
 de agregar. No concede aprobación humana.
 
 ## Evaluación del corpus completo
+
+El ajuste del recuperador se hace únicamente contra
+`rollout-106.development.bank.json`. Este banco sintético mide lookup explícito
+por identificador judicial; no pretende medir relevancia para consultas
+genéricas. En 117 consultas, la línea base obtiene 20,51 % top-1 y 34,19 % de
+recall @3, mientras que BM25 con reconocimiento de `SAN/STS número/año` obtiene
+100 % en ambas métricas. La regresión de fase D continúa en `PASSED`.
 
 El banco técnico de fase E contiene 117 preguntas. Su recall esperado es
 52,14 % @5 y 77,78 % @12. No evalúa por sí solo la conducta conversacional.
@@ -228,11 +238,21 @@ El holdout E0 se volvió a ejecutar sin modificarlo ni ajustar el retriever:
 | Exactitud de conducta | 75,00 % |
 | Seguridad sin fuentes | 83,33 % |
 | Recall esperado @3 | 47,86 % |
-| Precisión relevante @3 | 33,33 % |
-| Recall de contraste @3 | 12,50 % |
+| Precisión relevante @3 | 36,11 % (no válida para el corpus completo) |
+| Recall de contraste @3 | 20,83 % |
 
-Los resultados no justifican conectar este retriever al chat como estrategia
-definitiva. El holdout conserva la política `OBSERVE_ONLY_NO_TUNING`.
+El holdout solo etiqueta cinco sentencias. Las otras 101 aparecen como no
+relevantes aunque nunca fueron anotadas; por eso su “precisión” no es una
+medición válida del corpus completo. El recall y el contraste se conservan como
+regresión histórica, no como objetivo de ajuste. El diagnóstico reproducible
+queda en `rollout-106.holdout-coverage.json` y el holdout conserva la política
+`OBSERVE_ONLY_NO_TUNING`.
+
+La segunda pasada automática de los 42 casos HIGH no encontró fallos de
+literalidad, pero sí 13 análisis CDI ausentes, 36 determinaciones residenciales
+sin tipar, 6 casos con cobertura de anclajes baja y 5 resultados parciales o de
+retroacción. Todos permanecen `NEEDS_HUMAN_REVIEW`; la revisión automática no
+equivale a aprobación jurídica.
 
 Artefactos principales:
 
@@ -244,6 +264,12 @@ Artefactos principales:
   `knowledge/jurisprudencia-v3/reports/rollout-106.retrieval-evaluation.json`;
 - holdout:
   `knowledge/jurisprudencia-v3/reports/rollout-106.holdout-evaluation.json`.
+- desarrollo:
+  `knowledge/jurisprudencia-v3/reports/rollout-106.development-evaluation.json`;
+- auditoría HIGH:
+  `knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.json`;
+- cobertura de etiquetas:
+  `knowledge/jurisprudencia-v3/reports/rollout-106.holdout-coverage.json`.
 
 `knowledge/jurisprudencia-v3/retrieval/corpus.json` conserva la muestra
 congelada de cinco usada por Fase D y el chat. El cierre del rollout no la
@@ -255,3 +281,5 @@ Falta revisión jurídica humana. No existe revisor disponible y el agente no
 suplanta esa identidad, por lo que los 1.620 elementos siguen pendientes. En
 paralelo, cualquier promoción al chat requiere mejorar y validar recuperación
 con un banco de desarrollo separado; el holdout no se usa para afinarla.
+La política de retención y sus límites está en
+[`JURISPRUDENCE_ARTIFACT_POLICY.md`](JURISPRUDENCE_ARTIFACT_POLICY.md).

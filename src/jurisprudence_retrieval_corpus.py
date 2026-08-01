@@ -19,6 +19,7 @@ from jurisprudence_retrieval_corpus_models import (
 from okf_provenance import sha256_file
 
 _TOKEN = re.compile(r"[a-z0-9]+")
+_JUDGMENT_IDENTIFIER = re.compile(r"\b(san|sts)\s*[- ]?\s*(\d+)\s*[/_-]\s*(\d{4})\b", re.I)
 _STOPWORDS = {
     "a",
     "al",
@@ -128,27 +129,62 @@ def _tokens(text: str, *, expand: bool = False) -> tuple[str, ...]:
     return tuple(tokens)
 
 
+def _judgment_identifiers(text: str) -> frozenset[str]:
+    """Normaliza referencias como ``SAN 2132/2025`` al identificador interno."""
+
+    return frozenset(
+        f"{court.lower()}-{number}-{year}"
+        for court, number, year in _JUDGMENT_IDENTIFIER.findall(text)
+    )
+
+
 def rank_retrieval_units(
     corpus: RetrievalCorpus,
     query: str,
     *,
     limit: int = 12,
 ) -> tuple[RetrievalHit, ...]:
-    """Ordena unidades con TF-IDF sencillo, auditable y sin estado externo."""
+    """Ordena unidades con BM25 y coincidencia explícita de identificador."""
 
     if limit < 1:
         raise ValueError("limit debe ser positivo")
-    documents = tuple(Counter(_tokens(unit.search_text)) for unit in corpus.units)
+    documents = tuple(
+        Counter(_tokens(f"{unit.judgment_id}\n{unit.search_text}")) for unit in corpus.units
+    )
     document_frequency = Counter(token for document in documents for token in document.keys())
     query_counts = Counter(_tokens(query, expand=True))
     total = len(documents)
+    if total == 0:
+        return ()
+    document_lengths = tuple(sum(document.values()) for document in documents)
+    average_document_length = sum(document_lengths) / total
+    query_identifiers = _judgment_identifiers(query)
+    k1 = 1.2
+    b = 0.75
     hits = []
-    for unit, document in zip(corpus.units, documents, strict=True):
+    for unit, document, document_length in zip(
+        corpus.units, documents, document_lengths, strict=True
+    ):
         score = sum(
-            min(query_frequency, document.get(token, 0))
-            * (math.log((total + 1) / (document_frequency.get(token, 0) + 1)) + 1)
+            query_frequency
+            * math.log(
+                1
+                + (total - document_frequency.get(token, 0) + 0.5)
+                / (document_frequency.get(token, 0) + 0.5)
+            )
+            * (
+                document.get(token, 0)
+                * (k1 + 1)
+                / (
+                    document.get(token, 0)
+                    + k1 * (1 - b + b * document_length / max(average_document_length, 1))
+                )
+            )
             for token, query_frequency in query_counts.items()
+            if document.get(token, 0)
         )
+        if unit.judgment_id in query_identifiers:
+            score += 100.0
         hits.append(
             RetrievalHit(
                 unit_id=unit.unit_id,

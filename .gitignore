@@ -75,6 +75,7 @@ htmlcov/
 # Output directories (generated files)
 output/*
 !output/.gitkeep
+!output/jurisprudence-v3-rollout-state.json
 results/
 test_output/
 tests/test_outputs/

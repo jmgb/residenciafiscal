@@ -428,9 +428,10 @@ el manifiesto y se procesaron 106/106 sentencias en 11 lotes. El agregado conser
 los 106 casos y excluye de recuperación 39 fuera de ámbito: quedan 67 documentos
 y 74 unidades recuperables. La primera medición independiente sobre el corpus
 completo mantiene la exactitud de conducta en 75 % y la seguridad de
-abstención/pregunta en 83,33 %, pero reduce recall esperado @3 a 47,86 %,
-precisión relevante a 33,33 % y recall de contraste a 12,50 %. Queda registrada
-sin ajustar el router ni promoverlo al chat. Detalle:
+abstención/pregunta en 83,33 %, pero deja recall esperado @3 en 47,86 %,
+precisión aparente en 36,11 % y recall de contraste en 20,83 %. La precisión no
+es válida para el corpus completo porque el holdout solo etiqueta 5 fuentes.
+Queda registrada sin ajustar el router ni promoverlo al chat. Detalle:
 [`JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).
 
 Requisitos previos:
