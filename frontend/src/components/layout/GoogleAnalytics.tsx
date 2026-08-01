@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
+import { hasAnalyticsOptOut, syncAnalyticsOptOut } from '@/lib/analytics-optout';
 
 export const GOOGLE_ANALYTICS_ID = 'G-XKX3N9KVJH';
 
@@ -20,14 +21,23 @@ declare global {
   }
 }
 
-export const isGoogleAnalyticsEnabled = ({
-  hostname,
-  search,
-}: Pick<Location, 'hostname' | 'search'>): boolean =>
+/**
+ * `optedOut` se inyecta para poder probar la puerta sin tocar `localStorage`;
+ * en producción se resuelve solo. La marca la deja `?no_analytics=1` y excluye
+ * este navegador de GA4 y de PostHog a la vez.
+ */
+export const isGoogleAnalyticsEnabled = (
+  { hostname, search }: Pick<Location, 'hostname' | 'search'>,
+  optedOut: boolean = hasAnalyticsOptOut()
+): boolean =>
   GOOGLE_ANALYTICS_HOSTNAMES.has(hostname.toLowerCase()) &&
-  !new URLSearchParams(search).has('synthetic_monitor');
+  !new URLSearchParams(search).has('synthetic_monitor') &&
+  !optedOut;
 
 const installGoogleAnalytics = () => {
+  // Antes de la puerta: quien llega con `?no_analytics=1` no debe quedar
+  // registrado ni en esa primera carga.
+  syncAnalyticsOptOut();
   if (!isGoogleAnalyticsEnabled(window.location)) return;
 
   window.dataLayer = window.dataLayer ?? [];

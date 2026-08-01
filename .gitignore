@@ -84,6 +84,13 @@ test_output/
 tests/test_outputs/
 test_results/
 
+# Histórico del informe semanal de tráfico: son cifras de negocio y el repo es
+# público. Se conserva en la máquina que ejecuta el timer, no en git.
+reports/
+
+# Credenciales de servicio (GA4 y cualquier futura cuenta de Google).
+credentials/
+
 # PDFs (keep sentencias/ but ignore generated output)
 pdfs/
 

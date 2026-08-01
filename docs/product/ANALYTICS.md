@@ -53,3 +53,11 @@ Si se incorpora un banner de consentimiento, `installGoogleAnalytics()` debe
 llamarse únicamente después del consentimiento para analítica. La propiedad y
 el componente están aislados para poder añadir ese gate sin modificar las
 páginas.
+
+## Explotación de los datos
+
+Este documento cubre la **captura** en el navegador. El informe semanal que lee
+esos datos y los manda por Telegram cada lunes está en
+[`operations/WEEKLY_TRAFFIC_REPORT.md`](../operations/WEEKLY_TRAFFIC_REPORT.md).
+Hoy consulta PostHog, no GA4, porque ninguna cuenta de servicio tiene lectura
+sobre esta propiedad de GA4 todavía.

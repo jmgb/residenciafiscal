@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { syncAnalyticsOptOut } from '@/lib/analytics-optout';
 import { isGoogleAnalyticsEnabled } from './GoogleAnalytics';
 
 /** Proyecto «Residencia Fiscal» (237205) en la organización europea de PostHog. */
@@ -44,6 +45,8 @@ const createPostHogStub = () => {
 };
 
 const installPostHog = () => {
+  // Misma puerta que GA4, incluida la marca de `?no_analytics=1`.
+  syncAnalyticsOptOut();
   if (!isPostHogEnabled(window.location)) return;
   if (document.getElementById(POSTHOG_SCRIPT_ID)) return;
 

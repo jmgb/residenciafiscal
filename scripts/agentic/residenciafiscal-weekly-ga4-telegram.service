@@ -1,0 +1,12 @@
+[Unit]
+Description=Residencia Fiscal weekly traffic Telegram digest
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/ai_projects/residenciafiscal
+ExecStart=/bin/bash /home/ubuntu/ai_projects/residenciafiscal/scripts/agentic/weekly_ga4_telegram_runner.sh
+TimeoutStartSec=300
+StandardOutput=journal
+StandardError=journal
