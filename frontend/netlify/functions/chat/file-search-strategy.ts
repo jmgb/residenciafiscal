@@ -5,6 +5,7 @@ import {
 } from './citation-verification';
 import type { StrategyAnswer, StrategySource } from './contracts';
 import { marginalCost } from './pricing';
+import { extractJudgmentIdentifiers } from './retrieval-lexical';
 import type { NetlifyChatStrategy, StrategyContext } from './runtime';
 
 const DEFAULT_MODEL = 'gemini-3.5-flash-lite';
@@ -28,6 +29,7 @@ export interface GeminiInteractionInput {
   storeName: string;
   prompt: string;
   requestId: string;
+  metadataFilter?: string;
 }
 
 export interface GeminiFileSearchOptions {
@@ -94,11 +96,13 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
 
   async answer(question: string, context: StrategyContext): Promise<StrategyAnswer> {
     const started = performance.now();
+    const judgmentIds = [...extractJudgmentIdentifiers(question)];
     const interaction = await this.options.interact(
       {
         model: this.model,
         storeName: this.options.storeName,
         requestId: context.requestId,
+        metadataFilter: judgmentIds.length === 1 ? `judgment_id="${judgmentIds[0]}"` : undefined,
         prompt:
           'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Distingue hechos, valoración y resultado; no predigas el caso del usuario ni uses conocimiento externo. Si falta cobertura, responde parcial, pregunta o abstención.\n\nPregunta del usuario:\n' +
           question,

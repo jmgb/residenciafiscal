@@ -49,7 +49,7 @@ const count = (values: string[]) => {
   return result;
 };
 
-const judgmentIdentifiers = (text: string): Set<string> => {
+export const extractJudgmentIdentifiers = (text: string): Set<string> => {
   const identifiers = new Set<string>();
   for (const match of text.matchAll(/\b(san|sts)\s*[- ]?\s*(\d+)\s*[/_-]\s*(\d{4})\b/gi)) {
     identifiers.add(`${match[1]?.toLocaleLowerCase('es')}-${match[2]}-${match[3]}`);
@@ -72,7 +72,7 @@ export const rankUnits = (corpus: RetrievalCorpus, query: string) => {
   );
   const averageDocumentLength =
     documentLengths.reduce((total, length) => total + length, 0) / documents.length;
-  const queryIdentifiers = judgmentIdentifiers(query);
+  const queryIdentifiers = extractJudgmentIdentifiers(query);
   const k1 = 1.2;
   const b = 0.75;
   return corpus.units

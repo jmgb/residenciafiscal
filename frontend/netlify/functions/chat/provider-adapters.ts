@@ -88,17 +88,17 @@ export const createOpenAIWriter = (apiKey: string): StructuredWriter => {
 
 export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions['interact'] => {
   const client = new GoogleGenAI({ apiKey });
-  return async (input: GeminiInteractionInput, signal: AbortSignal): Promise<Interaction> =>
-    (await client.interactions.create(
+  return async (input: GeminiInteractionInput, signal: AbortSignal): Promise<Interaction> => {
+    const fileSearchTool = {
+      type: 'file_search' as const,
+      file_search_store_names: [input.storeName],
+      ...(input.metadataFilter ? { metadata_filter: input.metadataFilter } : {}),
+    };
+    return (await client.interactions.create(
       {
         model: input.model,
         input: input.prompt,
-        tools: [
-          {
-            type: 'file_search',
-            file_search_store_names: [input.storeName],
-          },
-        ],
+        tools: [fileSearchTool],
         response_format: {
           type: 'text',
           mime_type: 'application/json',
@@ -113,4 +113,5 @@ export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions
         fetchOptions: { signal },
       }
     )) as unknown as Interaction;
+  };
 };

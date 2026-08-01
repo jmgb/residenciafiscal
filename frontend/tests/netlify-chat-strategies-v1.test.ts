@@ -192,4 +192,29 @@ describe('estrategia B Gemini File Search', () => {
     expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
     expect(answer.limits.join(' ')).toContain('no devolvió citas verificables');
   });
+
+  it('filtra por metadata cuando la pregunta identifica una única sentencia', async () => {
+    const interact = vi.fn(async () => ({
+      output_text: JSON.stringify({ status: 'abstención', answer: '', limits: [] }),
+      steps: [],
+      usage: {
+        total_input_tokens: 5,
+        total_output_tokens: 5,
+        total_thought_tokens: 0,
+        input_tokens_by_modality: [],
+      },
+    }));
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    await strategy.answer('¿Qué resolvió la SAN 2132/2025?', context);
+
+    expect(interact).toHaveBeenCalledWith(
+      expect.objectContaining({ metadataFilter: 'judgment_id="san-2132-2025"' }),
+      context.signal
+    );
+  });
 });

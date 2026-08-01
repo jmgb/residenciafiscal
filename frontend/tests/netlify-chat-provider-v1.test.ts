@@ -60,6 +60,7 @@ describe('adaptador Gemini de la Function', () => {
         storeName: 'fileSearchStores/test',
         prompt: 'pregunta',
         requestId: 'chat-test',
+        metadataFilter: 'judgment_id="san-2132-2025"',
       },
       new AbortController().signal
     );
@@ -67,6 +68,7 @@ describe('adaptador Gemini de la Function', () => {
     expect(createInteraction.mock.calls[0]?.[0]).not.toHaveProperty('labels');
     expect(createInteraction.mock.calls[0]?.[0]).toMatchObject({
       generation_config: { max_output_tokens: 2_000 },
+      tools: [expect.objectContaining({ metadata_filter: 'judgment_id="san-2132-2025"' })],
     });
   });
 });
