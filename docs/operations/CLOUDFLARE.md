@@ -37,6 +37,28 @@ y `www.residenciafiscal.org`, vigente hasta el 2026-10-26. Netlify debe seguir r
 Las reglas de cache del sitemap y rate-limit de análisis de Presupuestor tampoco se
 copian porque este dominio es un frontend estático y no expone esos endpoints.
 
+## Agentes de LLM
+
+El proyecto quiere aparecer en las respuestas de los asistentes, así que **todas
+las protecciones antibot de Cloudflare que los afectan están desactivadas a
+propósito**: `ai_bots_protection`, `crawler_protection`, `content_bots_protection`
+y `fight_mode`. `is_robots_txt_managed` está en `false`, de modo que Cloudflare no
+inyecta su propio bloque en `robots.txt` y lo servido es exactamente
+`frontend/public/robots.txt`. Activar cualquiera de esas opciones desde el panel
+anula la política declarada allí, sin que ningún test del repositorio lo detecte:
+
+```bash
+curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  https://api.cloudflare.com/client/v4/zones/$ZONE_ID/bot_management
+```
+
+La regla custom sí bloquea `curl`, `wget`, `python-requests`, `axios`, `okhttp`,
+`go-http-client` y `headlesschrome`, pero lleva `not cf.client.bot`: los bots
+verificados por Cloudflare —GPTBot, ClaudeBot, PerplexityBot, Googlebot y
+compañía— quedan fuera del bloqueo. Lo que sí recibe `403` es un script propio o
+un agente casero que se anuncie con uno de esos User-Agents genéricos; por eso el
+`curl` de verificación de este documento lleva un User-Agent propio.
+
 ## Verificación
 
 ```bash

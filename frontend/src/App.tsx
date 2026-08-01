@@ -20,13 +20,19 @@ export function App() {
         <Route path='/' element={<Navigate to={SPAIN_ROUTE.path} replace />} />
         <Route path={SPAIN_ROUTE.path} element={<SpainPage />} />
         <Route path='/espana/fuentes' element={<EspanaFuentesPage />} />
+        {/*
+         * `/consulta` y `/c/:id` sirven exactamente el mismo chat que `/espana`,
+         * así que canonicalizan allí: es la URL del sitemap. Autocanonicalizarse
+         * las publicaba como contenido duplicado indexable, y `/consulta` está
+         * enlazada desde `/manifiesto`, que sí se indexa.
+         */}
         <Route
           path='/consulta'
           element={
             <ChatView
               engine={chatEngine}
               isStub={isStub}
-              canonicalPath='/consulta'
+              canonicalPath={SPAIN_ROUTE.path}
               country={SPAIN_ROUTE}
             />
           }
@@ -37,7 +43,7 @@ export function App() {
             <ChatView
               engine={chatEngine}
               isStub={isStub}
-              canonicalPath='/consulta'
+              canonicalPath={SPAIN_ROUTE.path}
               country={SPAIN_ROUTE}
             />
           }

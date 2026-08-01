@@ -10,6 +10,12 @@ Disallow: /c/
 
 # Crawlers de buscadores y respuestas generativas: acceso al contenido público.
 # Se repite /c/ porque los grupos específicos no heredan el grupo *.
+#
+# El grupo * de arriba ya les daría acceso; estos bloques existen para que la
+# política sea explícita y para que ninguno pierda el Disallow de /c/ el día que
+# el grupo * deje de ser un Allow general. Dos familias distintas: los que
+# rastrean para indexar o entrenar y los que descargan una página concreta
+# porque alguien la ha pedido en el asistente (`*-User`).
 User-agent: GPTBot
 Allow: /
 Disallow: /c/
@@ -26,6 +32,16 @@ User-agent: ClaudeBot
 Allow: /
 Disallow: /c/
 
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /c/
+
+User-agent: Claude-User
+Allow: /
+Disallow: /c/
+
+# `anthropic-ai` y `Claude-Web` están retirados; se conservan por si algún
+# cliente antiguo sigue anunciándose así.
 User-agent: anthropic-ai
 Allow: /
 Disallow: /c/
@@ -38,7 +54,39 @@ User-agent: PerplexityBot
 Allow: /
 Disallow: /c/
 
+User-agent: Perplexity-User
+Allow: /
+Disallow: /c/
+
 User-agent: Google-Extended
+Allow: /
+Disallow: /c/
+
+User-agent: Google-CloudVertexBot
+Allow: /
+Disallow: /c/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /c/
+
+User-agent: meta-externalagent
+Allow: /
+Disallow: /c/
+
+User-agent: MistralAI-User
+Allow: /
+Disallow: /c/
+
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /c/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /c/
+
+User-agent: Amazonbot
 Allow: /
 Disallow: /c/
 
@@ -47,3 +95,8 @@ Allow: /
 Disallow: /c/
 
 Sitemap: https://residenciafiscal.org/sitemap.xml
+
+# Resumen del sitio en texto plano para agentes (estándar llmstxt.org). Dice qué
+# países tienen corpus y cuáles no, para que un asistente no invente
+# jurisprudencia de una jurisdicción que todavía no existe aquí.
+# https://residenciafiscal.org/llms.txt

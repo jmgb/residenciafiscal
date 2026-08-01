@@ -12,17 +12,74 @@ PROJECT_ROOT = Path(__file__).parents[1]
 SITEMAP_NAMESPACE = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
 
+def _robots_groups() -> dict[str, list[str]]:
+    """Agrupa `robots.txt` por user-agent para poder afirmar sobre cada bloque.
+
+    El fichero se leía antes con `in`, y `assert "Allow: /" in robots` se cumplía
+    aunque el grupo comprobado no tuviera ninguna directiva: bastaba con que
+    apareciera en cualquier otro sitio del fichero.
+    """
+    groups: dict[str, list[str]] = {}
+    current: list[str] | None = None
+    for raw_line in (FRONTEND_PUBLIC / "robots.txt").read_text(encoding="utf-8").splitlines():
+        line = raw_line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        field, _, value = line.partition(":")
+        name = field.strip().lower()
+        if name == "user-agent":
+            current = groups.setdefault(value.strip(), [])
+        elif name == "sitemap":
+            # `Sitemap` es una directiva de fichero, no de grupo: no pertenece al
+            # último user-agent declarado aunque venga detrás de él.
+            current = None
+        elif current is not None:
+            current.append(line)
+    return groups
+
+
+# Agentes de asistentes y buscadores generativos que deben poder rastrear el
+# sitio. Los `*-User` no rastrean: descargan la página que alguien acaba de
+# pedir en el asistente, y sin su grupo propio pierden el Disallow de /c/.
+AI_AGENTS = (
+    "GPTBot",
+    "ChatGPT-User",
+    "OAI-SearchBot",
+    "ClaudeBot",
+    "Claude-SearchBot",
+    "Claude-User",
+    "PerplexityBot",
+    "Perplexity-User",
+    "Google-Extended",
+    "Google-CloudVertexBot",
+    "Applebot-Extended",
+    "meta-externalagent",
+    "MistralAI-User",
+    "DuckAssistBot",
+    "cohere-ai",
+    "Amazonbot",
+    "CCBot",
+)
+
+
 def test_robots_allows_public_content_and_declares_seo_assets() -> None:
     robots = (FRONTEND_PUBLIC / "robots.txt").read_text(encoding="utf-8")
+    groups = _robots_groups()
 
-    assert "User-agent: *" in robots
-    assert "Allow: /" in robots
-    assert "Disallow: /c/" in robots
+    assert groups["*"] == ["Allow: /", "Disallow: /c/"]
     assert "Sitemap: https://residenciafiscal.org/sitemap.xml" in robots
+    # El resumen para agentes solo sirve si se puede descubrir desde robots.txt.
+    assert "https://residenciafiscal.org/llms.txt" in robots
 
-    for crawler in ("GPTBot", "OAI-SearchBot", "ClaudeBot", "PerplexityBot"):
-        assert f"User-agent: {crawler}" in robots
-        assert "Allow: /" in robots
+
+def test_robots_lets_every_declared_ai_agent_crawl_everything_but_conversations() -> None:
+    groups = _robots_groups()
+
+    for agent in AI_AGENTS:
+        assert agent in groups, f"{agent} no tiene grupo propio en robots.txt"
+        # Un grupo específico no hereda del grupo `*`: si le falta el Disallow,
+        # el agente puede rastrear las conversaciones privadas.
+        assert groups[agent] == ["Allow: /", "Disallow: /c/"], agent
 
 
 def test_sitemap_contains_only_the_canonical_public_routes() -> None:
