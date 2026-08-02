@@ -694,14 +694,22 @@ sola URL para poder encontrarse.
       del primer fallo nuevo y de las regresiones.
     - El gasto sale de la RPC `chat_daily_stats`, que devuelve solo recuentos,
       sumas y percentiles: el script no puede leer contenido aunque quiera.
-    - [ ] **Queda configurarlo en producción**, sin lo cual nada de esto se
-      activa: `CHAT_SENTRY_ENABLED=true` y `CHAT_SENTRY_DSN` como variables
-      ordinarias del contexto `production` y todos los scopes —la cuenta Netlify
-      Legacy **no** permite scope Functions, igual que con el resto de
-      credenciales del backend— y **nunca** con prefijo `VITE_`; después,
-      redeploy. Y en el VPS, instalar el timer
-      `residenciafiscal-daily-chat-cost-telegram`. Runbook:
+    - [x] **Configurado en producción** (2 de agosto de 2026).
+      `CHAT_SENTRY_ENABLED=true` y `CHAT_SENTRY_DSN` son variables ordinarias del
+      contexto `production` y todos los scopes —la cuenta Netlify Legacy **no**
+      permite scope Functions, igual que con el resto de credenciales del
+      backend— y sin prefijo `VITE_`. El timer
+      `residenciafiscal-daily-chat-cost-telegram` está instalado y activo, con
+      una ejecución real verificada de extremo a extremo. Runbook:
       [`CHAT_OBSERVABILITY.md`](../operations/CHAT_OBSERVABILITY.md).
+      - **El timer no vive en el VPS `alfredo`**, donde el backlog lo daba por
+        supuesto. Su `.env` solo tiene `SUPABASE_REF` y `SUPABASE_DB_PASSWORD`
+        para `pg_dump`, y el resumen necesita `SUPABASE_URL` y
+        `SUPABASE_SECRET_KEY` para la RPC `chat_daily_stats`: llevarlo allí
+        ampliaría la superficie de la clave de servicio a cambio de nada. Va
+        como unit de usuario en la máquina de informes, junto al timer semanal
+        de tráfico, que ya corría ahí. El checkout de alfredo, además, sigue
+        desfasado y sin `scripts/agentic/`.
   - [ ] Cuadrar el coste `ESTIMATED` de Gemini y revisar la medición. B sale
     `ESTIMATED` cuando la Interactions API cita documentos pero devuelve cero
     tokens de documento
@@ -717,10 +725,11 @@ sola URL para poder encontrarse.
     convertirlas de variables ordinarias de todos los scopes a secretos de
     scope Functions y rotarlas durante el cambio.
 - [ ] **Completar la protección operativa del endpoint live.** La V1 ya tiene
-  rate limit, cierre por bandera, límite blando configurable de sesión y ledger
-  privado en Supabase. Falta configurar alertas operativas y cerrar el coste
-  contable de Gemini;
-  el límite fuerte por usuario queda condicionado a disponer de cuentas.
+  rate limit, cierre por bandera, límite blando configurable de sesión, ledger
+  privado en Supabase y, desde el 2 de agosto de 2026, los dos canales
+  operativos activos: errores a Sentry y coste diario a Telegram. Falta cerrar
+  el coste contable de Gemini; el límite fuerte por usuario queda condicionado a
+  disponer de cuentas.
 - [ ] **Requisitos legales pendientes con el chat real activo.** La última
   pregunta autosuficiente viaja a OpenAI para A y a Google/Gemini para B; la
   activación técnica del 31 de julio no sustituye estos requisitos.
@@ -791,9 +800,11 @@ sola URL para poder encontrarse.
 - [ ] Crear una landing específica por país (`/españa`, `/portugal`, etc.) con información detallada sobre la residencia fiscal, criterios, obligaciones y particularidades de cada país.
 - [x] Configurar Sentry para la API y el frontend y documentar sus variables de
   entorno (`c0fb582`), reflejado en `README.md` y `CLAUDE.md` el 1 de agosto de
-  2026 con la tabla de variables y el límite que importa: la Netlify Function del
-  chat **no** está instrumentada, y sus fallos solo se ven en
-  `chat_request_failed`.
+  2026 con la tabla de variables. El límite que describía esta entrada —«la
+  Netlify Function del chat no está instrumentada»— **ya no rige**: la Function
+  manda a su propio proyecto `residencia-fiscal-chat` desde el 1 de agosto y
+  quedó activada en producción el 2 de agosto
+  ([`CHAT_OBSERVABILITY.md`](../operations/CHAT_OBSERVABILITY.md)).
 - [ ] **Configurar Resend para correo transaccional.** Las credenciales necesarias
   ya están disponibles en el `.env` de la raíz; reutilizar sus nombres sin leer,
   imprimir, copiar ni versionar los valores.
@@ -909,10 +920,13 @@ orden recomendado:
   con más demanda (Andorra, Portugal, Francia, Emiratos), `/colaborar` y dos o
   tres páginas de país. La API no permite solicitar indexación; solo la
   interfaz.
-- [ ] **Confirmar en el informe del lunes** (2026-08-03) que el sitemap
-  registra 149 URLs y no 38. Google descargó la versión antigua el 1 de agosto
-  a las 19:38 —antes del deploy de normativa— y el sitemap se reenvió por API
-  el 2 de agosto tras detectarlo.
+- [x] **Confirmado que el sitemap registra 149 URLs y no 38** (2 de agosto de
+  2026, por la API de Search Console, sin esperar al informe del lunes). Google
+  descargó la versión antigua el 1 de agosto a las 19:38 —antes del deploy de
+  normativa—; tras el reenvío del 2 de agosto, `sitemaps list` devuelve
+  `submitted: 149`, `errors: 0` y `warnings: 0`, con `lastDownloaded` el mismo 2
+  de agosto a las 11:36 UTC. `indexed: 0` es lo esperado en un sitemap recién
+  descargado y no mide la indexación real.
 - [x] **Materializar el 301 de la raíz.** Ya existía antes de esta ejecución:
   `/` → `/espana` como `301!` generado por `build-netlify-redirects.mjs`, con
   test. La fase B hereda esta base y no debe duplicarla (§5.1 del diseño).

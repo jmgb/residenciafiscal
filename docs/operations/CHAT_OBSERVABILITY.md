@@ -64,7 +64,7 @@ python3 scripts/daily_chat_cost_telegram.py --day 2026-08-01 --dry-run
 El umbral `CHAT_DAILY_COST_ALERT_USD` **solo destaca el mensaje**: el coste
 observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
 
-## Qué falta para activarlo
+## Activación (completada el 2 de agosto de 2026)
 
 1. En Netlify, como **variables ordinarias del contexto `production` y todos los
    scopes**, y redeploy:
@@ -79,8 +79,29 @@ observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
    que no es un secreto como `OPENAI_API_KEY`. Lo que sí es obligatorio es que
    **nunca lleve prefijo `VITE_`**: no por confidencialidad, sino porque es
    configuración de un runtime de servidor y no debe viajar al bundle.
-2. En el VPS, instalar el timer diario con las units de `scripts/agentic/`:
+   Ambas están puestas en `production` desde el 2 de agosto de 2026.
+2. Instalar el timer diario con las units de `scripts/agentic/`:
    `residenciafiscal-daily-chat-cost-telegram.{service,timer}`.
+
+   **No va en el VPS `alfredo`, y es deliberado.** Allí viven los timers de
+   *sistema* del backup y de la retención, cuyo `.env` solo tiene
+   `SUPABASE_REF` y `SUPABASE_DB_PASSWORD` para `pg_dump`. El resumen diario
+   llama a la RPC `chat_daily_stats` por HTTP y necesita `SUPABASE_URL` y
+   `SUPABASE_SECRET_KEY`: llevarlo al VPS ampliaría la superficie de la clave de
+   servicio sin ganar nada. Va como unit **de usuario en la máquina de
+   informes**, junto a `residenciafiscal-weekly-ga4-telegram.timer`, que ya
+   corre ahí y comparte `.env`, ruta y patrón.
+
+   ```bash
+   install -m 644 scripts/agentic/residenciafiscal-daily-chat-cost-telegram.{service,timer} \
+     ~/.config/systemd/user/
+   systemctl --user daemon-reload
+   systemctl --user enable --now residenciafiscal-daily-chat-cost-telegram.timer
+   ```
+
+   `Persistent=true` recupera el envío tras un apagado, igual que el semanal: si
+   la máquina está apagada a las 09:15, el resumen sale al arrancar, con retraso
+   pero sin perderse.
 
 ## Verificación hecha
 
@@ -89,6 +110,10 @@ observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
 - El resumen diario leyó el ledger real: 2 consultas, `$0,006482`, y dejó a la
   vista el `ESTIMATED` de Gemini ya documentado en
   [`TASKS.md`](../project/TASKS.md).
+- El 2 de agosto de 2026, ya con el timer instalado, una ejecución real de
+  `systemctl --user start residenciafiscal-daily-chat-cost-telegram.service`
+  terminó en `Result=success` y entregó ese mismo resumen en Telegram. El
+  siguiente disparo automático queda fijado a las 09:15.
 - Tests deterministas en `frontend/tests/netlify-chat-observability.test.ts` y
   `tests/test_daily_chat_cost_telegram.py`, incluido uno que hace fallar el
   handler real con una excepción que contiene la pregunta y comprueba que no
