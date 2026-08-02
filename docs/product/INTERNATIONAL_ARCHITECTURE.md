@@ -1044,11 +1044,18 @@ sitemap, los 110 preceptos y los 122 enlaces de citas son idénticos.
   fija de cinco).
 - Los 67 títulos y las 67 descripciones son únicos y derivados del dato.
 
-Dos hallazgos de la ejecución:
+Hallazgos de la ejecución, todos corregidos:
 
+- **El convenio enlazado era el vigente hoy, no el del ejercicio enjuiciado.**
+  `SAN 1226/2021` juzga 2011 con el Reino Unido y la ficha apuntaba al convenio
+  de 2013. La proyección resuelve ahora el instrumento por los ejercicios del
+  caso —varios si los cruza— y sin ejercicios no declara ninguno. Lo detectó la
+  revisión cruzada con Codex; es el error que el registro con periodos existe
+  para hacer imposible, y aun así se coló por llamar al resolutor sin ejercicio.
 - **Los `steps` del análisis de convenio filtraban notas internas de revisión**
-  mientras se proyectaban como diccionario crudo. Es exactamente el fallo que la
-  allowlist existe para impedir, y lo detectó el gate, no una lectura.
+  mientras se proyectaban como diccionario crudo, no contaban para el gate de
+  publicación y sus anclajes propios se descartaban. Los tres fallos venían del
+  mismo sitio: un `dict[str, Any]` dentro de una allowlist deja de ser allowlist.
 - **El presupuesto de artefactos se ha quedado estrecho.** `knowledge/jurisprudencia-v3`
   pasa de 761 a 935 ficheros, con el límite de `make rollout-verify` en 1.000.
   Antes de generar el siguiente derivado hay que subir ese límite o mover
