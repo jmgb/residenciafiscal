@@ -71,7 +71,7 @@ Documentos especializados:
 | Área | Documentos |
 |---|---|
 | Corpus normativo | [XML del BOE → preceptos](normativa/NORMATIVA.md) |
-| Producto | [Páginas de país](product/COUNTRY_PAGES.md), [analítica](product/ANALYTICS.md), [auditoría SEO](product/SEO_AUDIT.md) |
+| Producto | [Arquitectura internacional y posts de sentencias](product/INTERNATIONAL_ARCHITECTURE.md), [páginas de país](product/COUNTRY_PAGES.md), [analítica](product/ANALYTICS.md), [auditoría SEO](product/SEO_AUDIT.md) |
 | Modelos | [Paquete `llm_gateway`](development/LLM_GATEWAY.md), [reasoning effort](development/REASONING_EFFORT.md) |
 | Infraestructura | [Despliegue del chat](operations/CHAT_DEPLOYMENT.md), [persistencia Supabase](operations/SUPABASE_CHAT.md), [observabilidad del chat](operations/CHAT_OBSERVABILITY.md), [autofix de Sentry](operations/AUTOFIX.md), [backups](operations/BACKUPS.md), [Netlify](operations/NETLIFY.md), [Netlify Edge](operations/NETLIFY_EDGE.md), [Cloudflare](operations/CLOUDFLARE.md), [UptimeRobot](operations/UPTIMEROBOT.md), [informe semanal de tráfico](operations/WEEKLY_TRAFFIC_REPORT.md) |
 | Identidad | [Guía de marca](brand/brand-guidelines.md), [manifiesto](brand/manifiesto.md) |

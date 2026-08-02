@@ -547,6 +547,21 @@ en cuenta:
   contacto de `SECURITY.md` y `CODE_OF_CONDUCT.md` son los avisos privados de
   GitHub.
 
+## Planes y diseños de trabajo (superpowers)
+
+`docs/superpowers/` (`plans/` y `specs/`) está en `.gitignore` y es scratch
+local: contiene rutas absolutas y referencias a otros proyectos privados, y no
+se versiona ni se sanea retroactivamente. La regla de promoción:
+
+- Un **diseño** que fija decisiones vigentes se gradúa al aprobarse: se mueve
+  al área correspondiente de `docs/` (p. ej.
+  `docs/product/INTERNATIONAL_ARCHITECTURE.md`), se enlaza desde
+  `docs/README.md` y desde entonces se mantiene ahí, no en el scratch.
+- Antes de promocionar, comprobar que no contiene rutas absolutas, referencias
+  a repos privados ni credenciales: el repositorio es público.
+- Los **planes de ejecución** (checklists paso a paso) no se promocionan nunca:
+  su valor termina con la ejecución y el registro real es la historia de git.
+
 ## Frontend (residenciafiscal.org)
 
 SPA React en `frontend/`, desplegada en Netlify: chatbot que consulta el corpus

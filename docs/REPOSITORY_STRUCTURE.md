@@ -53,7 +53,7 @@ con esos archivos.
 | `operations/` | Despliegue, DNS y plataforma |
 | `product/` | Analítica, rutas y decisiones visibles para usuarios |
 | `project/` | Backlog y coordinación |
-| `superpowers/` | Planes y specs históricos; algunos nuevos pueden permanecer solo en local |
+| `superpowers/` | Scratch local de planes y specs (en `.gitignore`, no se versiona); un diseño que fija decisiones vigentes se promociona a su área de `docs/` |
 
 ## Convenciones de rutas
 
