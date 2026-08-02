@@ -8,6 +8,16 @@ propio y el mismo contrato de verificabilidad que rige aquí.
 > **Estado:** propuesta. Ninguna tarea está ejecutada. El orden importa: las
 > fases 0 y 2 condicionan todo lo demás, y la fase 3 no arranca sin fuente
 > reutilizable confirmada.
+>
+> **Aviso (3 de agosto de 2026):** una valoración posterior
+> ([`LEY_BECKHAM_VALORACION.md`](../product/LEY_BECKHAM_VALORACION.md))
+> recomienda la
+> opción contraria — integrar el régimen como sección de residenciafiscal.org
+> bajo `/espana`, sin dominio ni repositorio nuevos. La decisión está pendiente
+> del propietario; el issue con la recomendación y sus pasos está en
+> [`TASKS.md`](TASKS.md), sección «Producto y arquitectura». **No ejecutar las
+> fases 0 y 1 de este plan sin esa decisión.** Las fases de contenido (2–4)
+> siguen siendo válidas en ambos escenarios.
 
 ## 1. Objetivo y no-objetivos
 

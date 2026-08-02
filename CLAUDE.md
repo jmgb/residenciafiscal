@@ -649,6 +649,13 @@ se versiona ni se sanea retroactivamente. La regla de promoción:
   al área correspondiente de `docs/` (p. ej.
   `docs/product/INTERNATIONAL_ARCHITECTURE.md`), se enlaza desde
   `docs/README.md` y desde entonces se mantiene ahí, no en el scratch.
+- **Un documento que haya que enlazar desde `TASKS.md` u otro fichero versionado
+  se promociona siempre**, aunque todavía no esté aprobado: se mueve a `docs/`
+  con su estado declarado en la cabecera («propuesta», «valoración»,
+  «investigación»...) y se enlaza con ruta relativa normal. Nunca se enlaza
+  desde un fichero versionado hacia `docs/superpowers/` —el enlace nacería roto
+  para cualquiera que clone el repo— ni se quita ese directorio del
+  `.gitignore`, que contiene material no saneado.
 - Antes de promocionar, comprobar que no contiene rutas absolutas, referencias
   a repos privados ni credenciales: el repositorio es público.
 - Los **planes de ejecución** (checklists paso a paso) no se promocionan nunca:

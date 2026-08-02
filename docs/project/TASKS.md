@@ -106,6 +106,62 @@ contra el dominio público después de cada deploy.
 
 ## Producto y arquitectura
 
+- [ ] **Ley Beckham (art. 93 LIRPF): integrarla como segunda vertical del corpus
+  español, no como sitio clonado.** Valoración completa en
+  [`LEY_BECKHAM_VALORACION.md`](../product/LEY_BECKHAM_VALORACION.md) (3 de
+  agosto de 2026): frente a
+  la alternativa de clonar el repositorio con dominio propio (`leybeckham.es` o
+  similar), la recomendación es publicar el régimen de impatriados **dentro de
+  residenciafiscal.org**, bajo la plantilla por jurisdicción ya cerrada en
+  [`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md).
+  Razones: es la misma ley (LIRPF), las mismas fuentes y el mismo pipeline; es
+  contenido exclusivamente español que encaja bajo `/espana` sin abrir la
+  plantilla; un segundo dominio partiría de autoridad cero y dividiría el
+  esfuerzo SEO en dos sitios débiles en lugar de acumular autoridad temática en
+  uno; un clon duplica toda la operación (Netlify, Supabase, backups del VPS,
+  Sentry ×3, UptimeRobot, CI, privacidad) y bifurca el código; y «Beckham» es
+  marca de un tercero, frágil como nombre de dominio propio.
+
+  **Tensión documental que hay que resolver primero:**
+  [`TASKS_LEY_BECKHAM.md`](TASKS_LEY_BECKHAM.md) (estado: propuesta, nada
+  ejecutado) planifica la opción contraria — repositorio y dominio propios. Sus
+  fases de contenido (corpus normativo, fuentes DGT/TEAC, modelo de datos)
+  siguen siendo válidas y se reutilizan aquí; lo que esta recomendación descarta
+  son sus fases 0 (dominio/marca) y 1 (duplicación técnica). Si en el futuro se
+  validara un producto separado (p. ej. English-first para «Beckham law», que la
+  decisión D3 de solo-español bloquea aquí), la forma sería **mismo monorepo con
+  un segundo deploy**, nunca un clon.
+
+  - [ ] **Gate de decisión del propietario**: sección integrada vs sitio
+    separado. Hasta decidirlo, no comprar dominio ni crear repositorio. Si se
+    aprueba la integración, marcar `TASKS_LEY_BECKHAM.md` como sustituido en sus
+    fases 0–1 y conservarlo como plan de contenido.
+  - [ ] **Normativa** (pipeline existente, sin LLM): añadir a la selección de
+    preceptos el art. 93 LIRPF, su desarrollo en el RIRPF (opción, renuncia,
+    exclusión; arts. 113–120) y los cambios de la Ley 28/2022, verificando cada
+    uno contra el BOE — no dar la lista por buena de memoria. Fichas en
+    `/espana/normativa/<slug>`. Redacciones pre-2023 rotuladas por ejercicio,
+    como se hace con las derogadas.
+  - [ ] **Dimensionar el corpus candidato antes de comprometer rutas**: búsqueda
+    CENDOJ de sentencias del régimen (art. 93, modelo 149/151, exclusiones) y
+    valoración de si la interpretación viva está más en consultas vinculantes
+    DGT y resoluciones TEAC. Toda fuente nueva exige condiciones de
+    reutilización claras, `AVISO_LEGAL.md` e inventario, y jerarquía de
+    autoridad explícita (TS > AN/TSJ > TEAC > DGT); sin eso, no entra.
+  - [ ] **Landing editorial `/espana/ley-beckham`** enlazando precepto, futuro
+    corpus y el hub de 183 días, con redirect 301 desde `/ley-beckham`. Slug
+    siempre `ley-beckham` (ASCII, guion medio; la política de slugs prohíbe
+    `ley_beckham`). «Ley Beckham» se usa como término descriptivo en títulos y
+    contenido, nunca como marca del producto.
+  - [ ] **Modelo de datos, solo si el corpus lo justifica**: el régimen
+    introduce un `issue_type` de primera clase con criterios propios (no
+    residencia previa, causa del desplazamiento, plazo de la opción, extensión a
+    familiares…), tipo de fuente con fuerza vinculante y **ejercicio aplicable**
+    (mezclar redacciones pre y post Ley 28/2022 es el error más caro). El schema
+    v3 está congelado: exige extensión compatible o versión nueva, con el mismo
+    escalonado 1 → 5 → N y los mismos gates de revisión humana que el corpus del
+    art. 9.
+
 - [x] **Sustituir el motor `stub` del chat por un backend real Netlify-only.** El
   prototipo React → Netlify Edge `/api/chat` → FastAPI → comparador A/B está
   implementado y probado, pero deja de ser el objetivo de la V1. El composition
@@ -542,6 +598,52 @@ comprueban párrafo a párrafo contra la fuente.
     formato y unicidad. La ruta sigue siendo un slug legible y no vale como clave.
 
 ## SEO y contenido
+
+- [ ] **Nichos SEO adyacentes: verticales y páginas pilar candidatas** (investigación
+  del 3 de agosto de 2026; el informe completo con el análisis de SERPs está en
+  [`SEO_NICHOS_ADYACENTES.md`](../product/SEO_NICHOS_ADYACENTES.md)).
+  Criterio: solo entran nichos contencioso-intensivos donde aplique el
+  diferenciador del proyecto (corpus verificable con sentencia, página y
+  extracto literal frente a guías de despachos sin fuentes), que encajen bajo
+  `/espana/{normativa,sentencias,doctrina}` y refuercen el cluster de
+  residencia. Sin datos de keyword tool: la demanda se juzgó por composición de
+  SERPs. Secuencia recomendada:
+
+  - [ ] **1. Publicar lo ya construido**: los 6 hubs de doctrina del art. 9
+    (§6.4 de
+    [`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md)).
+    Mejor ratio esfuerzo/impacto; bloqueado solo por revisión humana y el gap
+    de ausencias esporádicas.
+  - [ ] **2. Art. 7p LIRPF (exención por trabajos en el extranjero) como
+    segunda vertical de corpus.** La cara inversa del corpus actual: residentes
+    que trabajan fuera. Litigiosidad altísima y viva (TS corrigiendo a la AEAT
+    en directivos/administradores; denegaciones masivas → la gente busca
+    sentencias), mismas fuentes ya integradas (precepto en el XML de la LIRPF
+    del pipeline; corpus CENDOJ con el escalonado 1 → 5 → N). Valorar si va por
+    delante de la ley Beckham: más litigio, cero riesgo de marca. Primer paso
+    en ambos casos: dimensionar el corpus CENDOJ disponible antes de
+    comprometer rutas.
+  - [ ] **3. Cluster «salida de España»**: landing editorial del exit tax
+    (art. 95 bis; mucha consulta DGT, poca sentencia aún) y ficha de la
+    cuarentena fiscal (art. 8.2; casi sin competencia de calidad, el corpus ya
+    toca deportistas de élite). Después, corpus del **modelo 720** (STJUE
+    27-1-2022 + TS anulando sanciones; demanda estacional cada Q1).
+  - [ ] **4. Ampliar las fichas de convenio con el artículo de pensiones**
+    (art. 18/19 OCDE). La vía más barata: mismo XML del BOE ya descargado, sin
+    fuente nueva; multiplica el contenido de las 97 fichas precepto a precepto.
+  - [ ] **5. Landings puente**: certificado de residencia fiscal con el único
+    ángulo que la SERP no tiene —su valor probatorio según los tribunales, tema
+    recurrente en las 106—, y teletrabajo internacional (reparte hacia Beckham
+    y 7p).
+
+  **Descartados** (con motivo en el informe): modelo 210/IRNR (materia
+  distinta, gestorías especializadas dominan), ISD de no residentes
+  (controversia resuelta por la Ley 11/2021), dividendos extranjeros/art. 80
+  (audiencia inversor retail; revisar en 2027), guías «irse a
+  Andorra/Portugal/Dubái» (no verificables con nuestras fuentes; ese tráfico se
+  captura desde páginas de país y el cluster de salida). Rigen las reglas
+  vigentes: sin thin content, corpus antes de afirmar doctrina, revisión humana
+  antes de publicar análisis y «un precepto, una URL».
 
 - [x] **La raíz `/` servía una página en blanco y no era canónica de nada**
   (medido y resuelto el 1 de agosto de 2026). `dist/index.html` conserva el
