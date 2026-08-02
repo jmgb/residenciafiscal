@@ -342,7 +342,7 @@ describe('ChatView', () => {
           model: 'gemini-2.5-flash',
           latencyMs: 200,
         };
-        yield { type: 'done' };
+        yield { type: 'done', requestId: 'chat-comparison-1' };
       },
     };
     renderChat(engine);
@@ -350,10 +350,10 @@ describe('ChatView', () => {
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta comparativa');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
-    const structured = await screen.findByRole('region', {
-      name: 'Respuesta con corpus estructurado',
+    const structured = await screen.findByRole('tabpanel', {
+      name: 'Respuesta de la opción A',
     });
-    const fileSearch = screen.getByRole('region', { name: 'Respuesta con Gemini File Search' });
+    const fileSearch = screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' });
     expect(structured).toHaveTextContent('Respuesta estructurada.');
     expect(structured).toHaveTextContent('USD 0.012345');
     expect(structured).toHaveTextContent('Cita literal A.');
@@ -361,6 +361,11 @@ describe('ChatView', () => {
     expect(fileSearch).toHaveTextContent('USD 0.020000');
     expect(fileSearch).toHaveTextContent('Cobertura limitada.');
     expect(screen.getByText(/comparación experimental/i)).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Valorar comparación' })).toBeInTheDocument();
+    const assistant = useConversations
+      .getState()
+      .conversations[0]?.messages.find((message) => message.role === 'assistant');
+    expect(assistant?.comparisonId).toBe('chat-comparison-1');
   });
 
   it('conserva A y muestra el fallo de B si se corta el stream comparativo', async () => {
@@ -398,11 +403,11 @@ describe('ChatView', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
     expect(
-      await screen.findByRole('region', { name: 'Respuesta con corpus estructurado' })
+      await screen.findByRole('tabpanel', { name: 'Respuesta de la opción A' })
     ).toHaveTextContent('Respuesta A conservada.');
-    expect(
-      screen.getByRole('region', { name: 'Respuesta con Gemini File Search' })
-    ).toHaveTextContent(/no se ha podido completar esta estrategia/i);
+    expect(screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' })).toHaveTextContent(
+      /no se ha podido completar esta estrategia/i
+    );
   });
 
   it('despliega el extracto de una fuente al pulsarla', async () => {

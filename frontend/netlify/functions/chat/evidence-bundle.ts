@@ -4,6 +4,8 @@ import type { ChatRetrievalResult } from './structured-retrieval';
 interface Fragment {
   page_index: number;
   printed_page?: string | null;
+  start_offset?: number;
+  end_offset?: number;
   verbatim_text: string;
 }
 
@@ -30,6 +32,11 @@ interface EvidenceUnit {
 
 interface EvidenceCorpus {
   units: EvidenceUnit[];
+}
+
+interface VerbatimArtifact {
+  source_sha256: string;
+  pages: Array<{ page_index: number; raw_page_text: string }>;
 }
 
 export interface EvidenceBundle {
@@ -96,6 +103,32 @@ const selectFragments = (unit: EvidenceUnit, queryTerms: Set<string>) =>
 
 const byteLength = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
 
+const expandedQuote = (
+  judgmentId: string,
+  anchor: Anchor,
+  fragment: Fragment,
+  artifacts?: Record<string, VerbatimArtifact>
+): string => {
+  const artifact = artifacts?.[judgmentId];
+  if (!artifact || artifact.source_sha256 !== anchor.source_sha256) return fragment.verbatim_text;
+  if (!Number.isInteger(fragment.start_offset) || !Number.isInteger(fragment.end_offset)) {
+    return fragment.verbatim_text;
+  }
+  const page = artifact.pages.find((candidate) => candidate.page_index === fragment.page_index);
+  if (!page) return fragment.verbatim_text;
+  const rawStart = Math.max(0, (fragment.start_offset as number) - 240);
+  const rawEnd = Math.min(page.raw_page_text.length, (fragment.end_offset as number) + 360);
+  const firstWhitespace = page.raw_page_text.indexOf(' ', rawStart);
+  const lastWhitespace = page.raw_page_text.lastIndexOf(' ', rawEnd);
+  const start =
+    firstWhitespace >= 0 && firstWhitespace < (fragment.start_offset as number)
+      ? firstWhitespace + 1
+      : rawStart;
+  const end = lastWhitespace > (fragment.end_offset as number) ? lastWhitespace : rawEnd;
+  const quote = page.raw_page_text.slice(start, end).trim();
+  return quote.includes(fragment.verbatim_text) ? quote : fragment.verbatim_text;
+};
+
 const packUnit = (
   unit: EvidenceUnit,
   role: string,
@@ -137,7 +170,8 @@ const packUnit = (
 export const buildEvidenceBundle = (
   rawCorpus: unknown,
   retrieval: ChatRetrievalResult,
-  query: string
+  query: string,
+  artifacts?: Record<string, VerbatimArtifact>
 ): EvidenceBundle => {
   const corpus = rawCorpus as EvidenceCorpus;
   const unitsById = new Map(corpus.units.map((unit) => [unit.unit_id, unit]));
@@ -159,6 +193,7 @@ export const buildEvidenceBundle = (
     };
     for (const { anchor, fragment } of selectFragments(unit, queryTerms)) {
       const evidenceId = `E${evidenceNumber}`;
+      const quote = expandedQuote(unit.judgment_id, anchor, fragment, artifacts);
       const evidenceItem = {
         evidence_id: evidenceId,
         unit_id: unit.unit_id,
@@ -168,7 +203,7 @@ export const buildEvidenceBundle = (
         purpose: anchor.purpose,
         page: fragment.page_index,
         printed_page: fragment.printed_page ?? null,
-        quote: fragment.verbatim_text,
+        quote,
       };
       const prospectiveEvidence = [...hitEvidence, evidenceItem];
       if (byteLength({ unit: minimalUnit, evidence: prospectiveEvidence }) > MAX_JUDGMENT_BYTES)
@@ -179,7 +214,7 @@ export const buildEvidenceBundle = (
         judgment_id: unit.judgment_id,
         page: fragment.page_index,
         source_sha256: anchor.source_sha256,
-        quote: fragment.verbatim_text,
+        quote,
         verification: 'EXACT',
       });
       evidenceNumber += 1;

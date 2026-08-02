@@ -20,10 +20,13 @@ export const judgmentAuthority = (judgmentId: string): JudicialAuthorityIntent |
 };
 
 export const authorityMetadataFilter = (intent: JudicialAuthorityIntent | null): string | null => {
-  if (intent === 'tribunal_supremo') return 'judgment_id="sts-*"';
-  if (intent === 'audiencia_nacional') return 'judgment_id="san-*"';
+  if (intent === 'tribunal_supremo') return 'authority="tribunal_supremo"';
+  if (intent === 'audiencia_nacional') return 'authority="audiencia_nacional"';
   return null;
 };
+
+export const localAuthorityFilter = (intent: JudicialAuthorityIntent | null): string | null =>
+  intent ? `local_authority="${intent}"` : null;
 
 export const authorityMatch = (
   intent: JudicialAuthorityIntent | null,

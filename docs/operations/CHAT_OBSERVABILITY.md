@@ -2,7 +2,9 @@
 
 Cómo se vigila la Netlify Function del chat: qué se envía, qué **no** se envía y
 qué hay que configurar para que funcione. Estado: implementado y verificado el
-1 de agosto de 2026; pendiente de activar en Netlify y en el VPS.
+1 de agosto de 2026; Sentry y el resumen del VPS están activos. El 3 de agosto
+se reforzó el ledger privado porque los logs de Netlify no bastan por sí solos
+para reconstruir el experimento A/B.
 
 ## Dos canales, por naturaleza distinta
 
@@ -11,9 +13,16 @@ qué hay que configurar para que funcione. Estado: implementado y verificado el
 | Fallos (`chat_request_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Agrupa, deduplica y alerta por tasa |
 | Fallos aislados (`chat_strategy_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Avisa aunque la otra estrategia permita completar la petición |
 | Coste (`chat_cost_reconciled`) | Resumen diario a Telegram | No es un error; Sentry lo mide mal |
-| Todos, en crudo | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
+| Eventos operativos, best effort | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
+| Ejecución A/B completa | Supabase privado | Fuente de verdad por petición: versión, respuestas, recuperación, citas y coste |
 
 Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
+
+Los logs de Netlify no son un ledger. En una comprobación real, la consulta de
+logs mostró una línea vacía donde debía aparecer el último evento de coste,
+mientras Supabase sí conservaba la ejecución completa. Por tanto, una ausencia
+en Netlify no se interpreta como ausencia de llamada ni se usa sola para decidir
+entre A y B.
 
 ## Contrato del evento de finalización
 
@@ -34,7 +43,9 @@ conserva por compatibilidad, pero el evento ya no describe solo coste:
   `SAN`, filtro aplicado y recuento de citas candidatas y verificadas;
 - `document_token_accounting=unavailable` distingue el caso en que Gemini aporta
   citas pero no desglosa tokens documentales; no debe interpretarse el cero como
-  ausencia de recuperación;
+  ausencia de recuperación. El adaptador actual reconoce también
+  `total_tool_use_tokens`, el campo observado en Interactions para el contexto
+  recuperado, y en ese caso la medición vuelve a ser `reported`;
 - `failure_code` distingue `timeout`, excepción, contrato de estrategia,
   verificación de citas y validación de evidencia. `error_name` solo admite un
   nombre de clase saneado; nunca sale el mensaje de la excepción.

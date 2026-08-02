@@ -94,7 +94,7 @@ def _validated_documents(
 def _display_name(manifest_path: Path, document_count: int) -> str:
     if document_count == 5 and "sample" in manifest_path.stem:
         return STORE_DISPLAY_NAME
-    return f"residenciafiscal-rollout-{document_count}"
+    return f"residenciafiscal-rollout-{document_count}-authority-v2"
 
 
 def _preparing_state(

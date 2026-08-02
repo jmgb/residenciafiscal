@@ -19,6 +19,16 @@ export interface ChatRequestInput {
   question: string;
 }
 
+export interface ChatExperimentContext {
+  experiment_version: string;
+  deployed_commit: string;
+  comparison_schema_version: ComparisonReport['schema_version'];
+  structured_corpus_version: string;
+  structured_prompt_version: string;
+  file_search_store: string;
+  file_search_prompt_version: string;
+}
+
 interface ChatCompletionInput {
   requestId: string;
   actualMicrousd: number;
@@ -30,6 +40,21 @@ interface ChatFailureInput {
   requestId: string;
   status: 'failed' | 'timed_out';
   failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
+}
+
+export type ChatVoteVerdict = 'a' | 'b' | 'tie' | 'both_bad';
+export type ChatVoteReason =
+  | 'better_grounding'
+  | 'clearer'
+  | 'more_complete'
+  | 'better_limits'
+  | 'no_preference'
+  | 'both_inadequate';
+
+export interface ChatVoteInput {
+  requestId: string;
+  verdict: ChatVoteVerdict;
+  reason: ChatVoteReason;
 }
 
 interface RequestRecordResult {
@@ -52,6 +77,8 @@ const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
   latency_ms: answer.latency_ms,
   limits: answer.limits,
   sources: answer.sources,
+  claims: answer.claims ?? [],
+  diagnostics: answer.diagnostics ?? null,
   cost_microusd: answer.cost.cost_microusd,
   cost_measurement: answer.cost.measurement,
   pricing_version: answer.cost.pricing_version,
@@ -60,8 +87,27 @@ const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
   retrieved_document_tokens: answer.cost.retrieved_document_tokens,
 });
 
-export class SupabaseChatStore {
-  constructor(private readonly client: SupabaseRpcClient) {}
+export class SupabaseChatVoteStore {
+  constructor(protected readonly client: SupabaseRpcClient) {}
+
+  async vote(input: ChatVoteInput): Promise<boolean> {
+    const { data, error } = await this.client.rpc('record_chat_vote', {
+      p_request_id: input.requestId,
+      p_verdict: input.verdict,
+      p_reason: input.reason,
+    });
+    if (error || typeof data !== 'boolean') throw new Error('Supabase no disponible');
+    return data;
+  }
+}
+
+export class SupabaseChatStore extends SupabaseChatVoteStore {
+  constructor(
+    client: SupabaseRpcClient,
+    private readonly experiment: ChatExperimentContext
+  ) {
+    super(client);
+  }
 
   async record(input: ChatRequestInput): Promise<{ requestId: string }> {
     const { data, error } = await this.client.rpc('create_chat_request', {
@@ -70,6 +116,7 @@ export class SupabaseChatStore {
       p_user_message_id: input.userMessageId,
       p_country_path: input.countryPath,
       p_question: input.question,
+      p_experiment: this.experiment,
     });
     if (error || !isRequestRecordResult(data)) throw new Error('Supabase no disponible');
     return { requestId: data.request_id };

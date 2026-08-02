@@ -103,7 +103,7 @@ no token a token desde el proveedor.
 | Selector | `frontend/src/lib/chat-engine.ts` | `stub` seguro por defecto; `live` solo con `VITE_CHAT_MODE=live` |
 | Cliente | `frontend/src/lib/chat-engine.live.ts` | POST same-origin, validación HTTP y protocolo |
 | Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto |
-| UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos bloques separados, fuentes, límites y coste |
+| UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos columnas/pestañas para A/B; una columna si solo hay una respuesta; fuentes, límites, coste y voto ciego |
 | Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, registro y protocolo bufferizado |
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
 | Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro de consulta, coste y serialización de mensajes A/B |
@@ -127,7 +127,7 @@ convertirlas a secretos Functions y rotarlas.
 | `CHAT_COMPARISON_ENABLED` | Debe ser exactamente `true`; cualquier otro valor cierra el endpoint |
 | `OPENAI_API_KEY` | Redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
 | `GEMINI_API_KEY` | Gemini File Search |
-| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
+| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` del rollout de 106 PDF; la versión con autoridad explícita es `fileSearchStores/residenciafiscalrollout106a-zwmb28labwje` |
 | `CHAT_FILE_SEARCH_MODEL` | `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
 | `SUPABASE_URL` | URL del proyecto Supabase; solo backend |
@@ -166,11 +166,20 @@ independiente de 2.000 tokens de salida.
 
 Cuando la consulta pide expresamente Tribunal Supremo o Audiencia Nacional, las
 dos estrategias restringen la recuperación a autoridad directa. A filtra el
-corpus estructurado por prefijo canónico `sts-` / `san-`; B usa el mismo prefijo
-en `metadata_filter` sobre `judgment_id`. Una cita de otro órgano que reproduzca
-doctrina ajena no se trata como autoridad directa: la respuesta completa se
-degrada a parcial y declara el límite. El filtro por una resolución identificada
-de forma exacta sigue teniendo prioridad sobre el filtro general de tribunal.
+corpus estructurado por la autoridad derivada del prefijo canónico `sts-` /
+`san-`; B usa igualdad exacta en `metadata_filter` sobre el campo cerrado
+`authority`. No usar `judgment_id="sts-*"` ni `judgment_id="san-*"`: una llamada
+real confirmó que el comodín devolvía cero resultados aun existiendo documentos.
+Una cita de otro órgano que reproduzca doctrina ajena no se trata como autoridad
+directa: la respuesta completa se degrada a parcial y declara el límite. El
+filtro por una resolución identificada de forma exacta sigue teniendo prioridad
+sobre el filtro general de tribunal.
+
+El store con `authority` se preparó y verificó con 106/106 PDF. Su activación es
+atómica a nivel de despliegue: publicar primero el código que usa igualdad exacta
+y configurar en ese mismo despliegue
+`CHAT_FILE_SEARCH_STORE_NAME=fileSearchStores/residenciafiscalrollout106a-zwmb28labwje`.
+El store anterior se conserva durante la observación inicial para rollback.
 
 ## Despliegue seguro de la V1
 

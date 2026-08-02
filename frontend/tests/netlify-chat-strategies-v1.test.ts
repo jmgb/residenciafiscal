@@ -13,9 +13,13 @@ describe('estrategia A estructurada', () => {
     const write = vi.fn(async (_input: Parameters<StructuredWriter['write']>[0]) => ({
       draft: {
         status: 'completa' as const,
-        answer: 'La Sala valoró un conjunto de indicios.',
+        claims: [
+          {
+            text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+            evidence_ids: ['E1'],
+          },
+        ],
         limits: ['Muestra piloto de cinco sentencias.'],
-        evidence_ids: ['E1'],
       },
       usage: { input_tokens: 100, output_tokens: 40, complete: true },
       model: 'gpt-5.6-luna',
@@ -34,6 +38,8 @@ describe('estrategia A estructurada', () => {
     });
     const writerInput = write.mock.calls[0]?.[0];
     if (!writerInput) throw new Error('El redactor no recibió contexto');
+    expect(writerInput.systemPrompt).toContain('La primera claim debe contestar directamente');
+    expect(writerInput.systemPrompt).toContain('Si la pregunta contiene varias partes');
     expect(
       new TextEncoder().encode(`${writerInput.systemPrompt}\n${writerInput.userPrompt}`).byteLength
     ).toBeLessThanOrEqual(48 * 1024);
@@ -47,6 +53,13 @@ describe('estrategia A estructurada', () => {
     expect(answer).toMatchObject({
       strategy: 'current_structured',
       status: 'completa',
+      text: '- La actuaria realizó un seguimiento de las cuentas bancarias. [1]',
+      claims: [
+        {
+          text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+          source_indexes: [1],
+        },
+      ],
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       sources: [{ strategy: 'current_structured', verification: 'EXACT' }],
@@ -57,6 +70,8 @@ describe('estrategia A estructurada', () => {
         retrieved_document_tokens: 0,
       },
     });
+    expect(answer.limits).not.toContain('ejercicio');
+    expect(answer.limits).not.toContain('país o países implicados');
   });
 
   it('retira una respuesta sustantiva si el redactor inventa IDs de evidencia', async () => {
@@ -64,9 +79,8 @@ describe('estrategia A estructurada', () => {
       write: async () => ({
         draft: {
           status: 'completa',
-          answer: 'No debe publicarse.',
+          claims: [{ text: 'No debe publicarse.', evidence_ids: ['E999'] }],
           limits: [],
-          evidence_ids: ['E999'],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
         model: 'gpt-5.6-luna',
@@ -80,6 +94,157 @@ describe('estrategia A estructurada', () => {
 
     expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
     expect(answer.limits.join(' ')).toContain('E999');
+  });
+
+  it('retira una respuesta si alguna afirmación sustantiva queda sin evidencia', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'completa',
+          claims: [
+            { text: 'Afirmación respaldada.', evidence_ids: ['E1'] },
+            { text: 'Afirmación sin respaldo.', evidence_ids: [] },
+          ],
+          limits: [],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
+    expect(answer.limits.join(' ')).toContain('sin evidencia');
+  });
+
+  it('retira afirmaciones cuyo contenido no guarda relación léxica con sus citas', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'completa',
+          claims: [
+            {
+              text: 'La jurisprudencia valida una colonia permanente en la Luna.',
+              evidence_ids: ['E1'],
+            },
+          ],
+          limits: [],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
+    expect(answer.limits.join(' ')).toContain('relación suficiente');
+  });
+
+  it('conserva las afirmaciones respaldadas y degrada a parcial si retira otra', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'completa',
+          claims: [
+            {
+              text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+              evidence_ids: ['E1'],
+            },
+            {
+              text: 'La jurisprudencia valida una colonia permanente en la Luna.',
+              evidence_ids: ['E1'],
+            },
+          ],
+          limits: [],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer).toMatchObject({
+      status: 'parcial',
+      text: '- La actuaria realizó un seguimiento de las cuentas bancarias. [1]',
+      claims: [
+        {
+          text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+          source_indexes: [1],
+        },
+      ],
+    });
+    expect(answer.text).not.toContain('Luna');
+    expect(answer.limits.join(' ')).toContain('Se retiró 1 afirmación');
+  });
+
+  it('permite que el redactor se abstenga sin inventar afirmaciones ni evidencias', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'abstención',
+          claims: [],
+          limits: ['Los extractos recuperados no bastan para responder.'],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer).toMatchObject({
+      status: 'abstención',
+      text: '',
+      sources: [],
+      claims: [],
+      limits: ['Los extractos recuperados no bastan para responder.'],
+    });
+  });
+
+  it('normaliza IDs repetidos antes de exponer los índices de cita', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'completa',
+          claims: [
+            {
+              text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+              evidence_ids: ['E1', 'E1'],
+            },
+          ],
+          limits: [],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer.claims).toEqual([
+      {
+        text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+        source_indexes: [1],
+      },
+    ]);
   });
 
   it('no llama al LLM cuando debe preguntar o abstenerse', async () => {
@@ -138,7 +303,9 @@ describe('estrategia B Gemini File Search', () => {
         total_input_tokens: 120,
         total_output_tokens: 20,
         total_thought_tokens: 30,
-        input_tokens_by_modality: [{ modality: 'document', tokens: 100 }],
+        input_tokens_by_modality: [{ modality: 'text', tokens: 120 }],
+        total_tool_use_tokens: 100,
+        tool_use_tokens_by_modality: [{ modality: 'text', tokens: 100 }],
       },
     }));
     const strategy = new GeminiFileSearchStrategy({
@@ -170,7 +337,7 @@ describe('estrategia B Gemini File Search', () => {
       ],
       cost: {
         measurement: 'ACTUAL',
-        input_tokens: 20,
+        input_tokens: 120,
         retrieved_document_tokens: 100,
         output_tokens: 50,
       },
@@ -271,8 +438,31 @@ describe('estrategia B Gemini File Search', () => {
     );
 
     expect(interact).toHaveBeenCalledWith(
-      expect.objectContaining({ metadataFilter: 'judgment_id="sts-*"' }),
+      expect.objectContaining({ metadataFilter: 'authority="tribunal_supremo"' }),
       context.signal
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'no concluyas que el corpus carece de documentos'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'Responde primero y de forma directa a lo preguntado'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'No desarrolles dimensiones que la pregunta no necesita'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'No atribuyas al tribunal argumentos de las partes'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain('intención de retorno');
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'contesta cada parte o usa estado parcial'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'No equipares desvirtuar el número de días'
+    );
+    expect(JSON.stringify(interact.mock.calls)).toContain('limits contiene solo carencias reales');
+    expect(JSON.stringify(interact.mock.calls)).toContain(
+      'expresa de forma explícita la condición y sus excepciones'
     );
   });
 

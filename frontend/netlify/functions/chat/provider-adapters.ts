@@ -14,12 +14,26 @@ import type {
 const structuredDraftSchema = {
   type: 'object',
   additionalProperties: false,
-  required: ['status', 'answer', 'limits', 'evidence_ids'],
+  required: ['status', 'claims', 'limits'],
   properties: {
     status: { type: 'string', enum: ['completa', 'parcial', 'pregunta', 'abstención'] },
-    answer: { type: 'string' },
     limits: { type: 'array', items: { type: 'string' } },
-    evidence_ids: { type: 'array', items: { type: 'string', pattern: '^E[0-9]+$' } },
+    claims: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['text', 'evidence_ids'],
+        properties: {
+          text: { type: 'string' },
+          evidence_ids: {
+            type: 'array',
+            uniqueItems: true,
+            items: { type: 'string', pattern: '^E[0-9]+$' },
+          },
+        },
+      },
+    },
   },
 };
 
@@ -39,11 +53,19 @@ const isStructuredDraft = (value: unknown): value is StructuredDraft => {
   const draft = value as Record<string, unknown>;
   return (
     ['completa', 'parcial', 'pregunta', 'abstención'].includes(String(draft.status)) &&
-    typeof draft.answer === 'string' &&
     Array.isArray(draft.limits) &&
     draft.limits.every((item) => typeof item === 'string') &&
-    Array.isArray(draft.evidence_ids) &&
-    draft.evidence_ids.every((item) => typeof item === 'string' && /^E[0-9]+$/.test(item))
+    Array.isArray(draft.claims) &&
+    draft.claims.every(
+      (item) =>
+        item &&
+        typeof item === 'object' &&
+        typeof (item as { text?: unknown }).text === 'string' &&
+        Array.isArray((item as { evidence_ids?: unknown }).evidence_ids) &&
+        ((item as { evidence_ids: unknown[] }).evidence_ids as unknown[]).every(
+          (evidenceId) => typeof evidenceId === 'string' && /^E[0-9]+$/.test(evidenceId)
+        )
+    )
   );
 };
 

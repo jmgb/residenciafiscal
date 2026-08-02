@@ -39,8 +39,9 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 | Tabla | Responsabilidad |
 |---|---|
 | `private.chat_conversations` | Agrupa turnos mediante un UUID aleatorio local y jurisdicción |
-| `private.chat_requests` | Registro idempotente de consulta, coste observado y estado |
-| `private.chat_messages` | Pregunta y respuestas A/B con contenido, fuentes, límites y uso |
+| `private.chat_requests` | Registro idempotente de consulta, coste, estado y versión del experimento |
+| `private.chat_messages` | Pregunta y respuestas A/B con contenido, fuentes, claims, diagnóstico acotado, límites y uso |
+| `private.chat_comparison_votes` | Un voto ciego cerrado por petición completada |
 | `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
 Campos de cada respuesta: estrategia, estado, contenido, modelo efectivo,
@@ -49,6 +50,14 @@ latencia, coste en microdólares, calidad de la medición (`ACTUAL`, `ESTIMATED`
 o `UNAVAILABLE`), versión de precio, tokens de entrada/salida/documento, citas
 exactas y límites declarados. El esfuerzo queda a `NULL` cuando no hubo llamada
 al modelo o la estrategia no configuró un valor equivalente.
+
+La columna `experiment` de `private.chat_requests` identifica
+`experiment_version`, commit o deploy,
+schema comparativo, versión del corpus estructurado, store de File Search y
+versiones de ambos prompts. La columna `diagnostics` de
+`private.chat_messages` conserva únicamente enums, contadores, filtro e IDs
+públicos de sentencias; no guarda mensajes de error ni payloads de proveedor.
+En A, `claims` enlaza cada afirmación con los índices de sus citas exactas.
 
 La Function no escribe tablas directamente. Solo puede invocar con
 `SUPABASE_SECRET_KEY` estas RPC de `public`, todas `SECURITY DEFINER`, con
@@ -59,7 +68,13 @@ La Function no escribe tablas directamente. Solo puede invocar con
 - `complete_chat_request`: guarda A/B, el coste real y completa la petición en
   una sola transacción;
 - `fail_chat_request`: marca una consulta como `failed` o `timed_out` con un
-  código técnico acotado, sin guardar el diagnóstico del proveedor.
+  código técnico acotado, sin guardar el diagnóstico del proveedor;
+- `record_chat_vote`: acepta una sola preferencia por petición completada, con
+  veredicto `a`, `b`, `tie` o `both_bad` y un motivo de una allowlist cerrada.
+
+El voto no admite texto libre y el endpoint `/api/chat-vote` no expone acceso
+directo a Supabase. Un segundo voto para el mismo `request_id` responde como
+duplicado y no sobrescribe el primero.
 
 Las operaciones de ciclo de vida viven en el schema privado y no se exponen por
 la Data API:
@@ -73,12 +88,14 @@ La migración inicial histórica es
 `supabase/migrations/20260731161251_chat_persistence_and_budget.sql`;
 `20260801104446_restore_chat_observability_only.sql` elimina la tabla y columnas
 de presupuesto monetario y deja solo el coste real observado, y la migración
-vigente `20260801111630_chat_messages_reasoning_effort.sql` añade el esfuerzo de
-razonamiento por respuesta. La segunda migración retira un permiso público
-inseguro de `rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de
-ciclo de vida serializan el borrado. `db lint` no devuelve errores de esquema;
-los advisors mantienen avisos informativos esperables para tablas privadas con
-RLS sin políticas públicas.
+`20260801111630_chat_messages_reasoning_effort.sql` añade el esfuerzo de
+razonamiento por respuesta;
+`20260802215501_chat_experiment_ledger.sql` versiona el experimento y conserva
+claims/diagnóstico; y `20260802221008_chat_comparison_votes.sql` añade el voto
+ciego. La segunda migración histórica retira un permiso público inseguro de
+`rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de vida
+serializan el borrado. Tras aplicar las dos migraciones del experimento, los
+advisors de seguridad no devolvieron incidencias.
 
 ## Credenciales y fronteras
 

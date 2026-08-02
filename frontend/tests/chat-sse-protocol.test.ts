@@ -59,6 +59,7 @@ describe('parseChatEventStream', () => {
         event('answer_done', {
           strategy: 'current_structured',
           status: 'completa',
+          claims: [{ text: 'Afirmación A.', source_indexes: [1] }],
           limits: [],
           cost,
           model: 'luna',
@@ -78,7 +79,7 @@ describe('parseChatEventStream', () => {
           model: 'gemini-2.5-flash',
           latency_ms: 900,
         }),
-        event('done', {}),
+        event('done', { request_id: 'chat-test' }),
       ])
     );
 
@@ -103,6 +104,7 @@ describe('parseChatEventStream', () => {
         type: 'answer_done',
         strategy: 'current_structured',
         status: 'completa',
+        claims: [{ text: 'Afirmación A.', sourceIndexes: [1] }],
         limits: [],
         cost: {
           currency: 'USD',
@@ -155,7 +157,7 @@ describe('parseChatEventStream', () => {
         model: 'gemini-2.5-flash',
         latencyMs: 900,
       },
-      { type: 'done' },
+      { type: 'done', requestId: 'chat-test' },
     ]);
   });
 

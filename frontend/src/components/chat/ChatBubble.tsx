@@ -20,17 +20,20 @@ interface ChatBubbleProps {
 
 export function ChatBubble({ message }: ChatBubbleProps) {
   const isUser = message.role === 'user';
+  const isComparison = !isUser && (message.answers?.length ?? 0) > 1;
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
         data-testid={isUser ? 'chat-bubble-user' : 'chat-bubble-assistant'}
-        className={`relative max-w-[92%] rounded-xl px-3.5 py-2.5 shadow-sm ${
+        className={`relative rounded-xl px-3.5 py-2.5 shadow-sm ${
+          isComparison ? 'w-[96%]' : 'max-w-[92%]'
+        } ${
           isUser ? 'rounded-tr-none bg-primary-100' : 'rounded-tl-none bg-card border border-border'
         }`}
       >
         {!isUser && message.answers ? (
-          <ChatComparisonAnswers answers={message.answers} />
+          <ChatComparisonAnswers answers={message.answers} comparisonId={message.comparisonId} />
         ) : (
           <ChatMessageContent content={message.content} isUser={isUser} />
         )}

@@ -120,6 +120,8 @@ function isStoredMessage(value: unknown): value is ChatMessage {
     (value.role === 'user' || value.role === 'assistant') &&
     typeof value.content === 'string' &&
     typeof value.createdAt === 'string' &&
+    (value.comparisonId === undefined ||
+      (typeof value.comparisonId === 'string' && /^chat-[\w-]{1,123}$/.test(value.comparisonId))) &&
     (value.isStreaming === undefined || typeof value.isStreaming === 'boolean') &&
     (value.sources === undefined ||
       (Array.isArray(value.sources) && value.sources.every(isStoredSource))) &&

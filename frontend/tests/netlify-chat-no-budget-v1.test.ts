@@ -19,6 +19,16 @@ vi.mock('openai', () => ({
 import { createProductionDependencies } from '../netlify/functions/chat/composition';
 import { SupabaseChatStore } from '../netlify/functions/chat/supabase-chat-store';
 
+const experiment = {
+  experiment_version: 'test',
+  deployed_commit: 'test',
+  comparison_schema_version: 'residenciafiscal-chat-comparison/1',
+  structured_corpus_version: 'test',
+  structured_prompt_version: 'test',
+  file_search_store: 'fileSearchStores/test',
+  file_search_prompt_version: 'test',
+} as const;
+
 const environment = {
   CHAT_COMPARISON_ENABLED: 'true',
   OPENAI_API_KEY: 'openai-test',
@@ -46,7 +56,7 @@ describe('chat sin presupuesto monetario global', () => {
       data: { request_id: 'chat-request-1', created: true },
       error: null,
     }));
-    const store = new SupabaseChatStore({ rpc });
+    const store = new SupabaseChatStore({ rpc }, experiment);
 
     await expect(
       store.record({
@@ -64,6 +74,7 @@ describe('chat sin presupuesto monetario global', () => {
       p_user_message_id: 'message-1',
       p_country_path: '/espana',
       p_question: 'Pregunta',
+      p_experiment: experiment,
     });
   });
 });

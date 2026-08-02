@@ -314,6 +314,22 @@ contra el dominio público después de cada deploy.
     - [x] Ejecutar A y B en paralelo con aislamiento de errores, conservar el
       orden visual A → B y cancelar todo trabajo restante antes del deadline
       global de 50–55 s.
+    - [x] Corregir la regresión de autoridad en B: el comodín
+      `judgment_id="sts-*"` devolvía un falso vacío. El store nuevo contiene
+      106/106 PDF con `authority` explícita y B filtra por igualdad exacta. El
+      store anterior se conserva para rollback.
+    - [x] Vincular cada afirmación de A con sus citas, ampliar de forma segura
+      los anclajes breves desde el verbatim y retirar claims sin respaldo
+      literal suficiente. La batería real del 3 de agosto está en
+      [`CHAT_AB_QUALITY_ITERATION_2026-08-03.md`](../experiments/CHAT_AB_QUALITY_ITERATION_2026-08-03.md).
+    - [x] Persistir versión de experimento, commit, corpus/store, prompts,
+      filtros, documentos recuperados, citas verificadas, claims y diagnóstico
+      acotado en Supabase. Añadir además el endpoint y RPC de voto ciego cerrado.
+    - [x] Aprobar una variante visual de la vista ciega y conectar el voto en la
+      UI. La variante elegida muestra dos columnas en escritorio y pestañas en
+      móvil solo cuando A y B están activas; con una respuesta conserva una
+      columna sin controles experimentales. El voto ciego cerrado usa el
+      `request_id` persistido y no se muestra hasta que ambas opciones terminan.
     - [ ] Mantener Luna `high` en la V1 y medir durante varios días latencia
       total, percentiles, timeouts, tokens, coste y calidad. Evaluar un esfuerzo
       menor solo después, si la evidencia muestra que falta margen bajo 60 s.

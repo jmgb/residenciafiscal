@@ -1,15 +1,22 @@
 import { createClient } from '@supabase/supabase-js';
 import type { ChatFunctionDependencies } from './chat';
 import type { StrategyAnswer } from './contracts';
-import { CurrentStructuredStrategy } from './current-structured-strategy';
-import { GeminiFileSearchStrategy } from './file-search-strategy';
+import {
+  CurrentStructuredStrategy,
+  STRUCTURED_PROMPT_VERSION,
+} from './current-structured-strategy';
+import { FILE_SEARCH_PROMPT_VERSION, GeminiFileSearchStrategy } from './file-search-strategy';
 import {
   authorityMatch,
   type JudicialAuthorityIntent,
   judgmentAuthority,
 } from './judicial-authority';
 import { createChatObservability } from './observability';
-import { productionCorpus, productionVerbatimArtifacts } from './production-corpus';
+import {
+  productionCorpus,
+  productionCorpusReadiness,
+  productionVerbatimArtifacts,
+} from './production-corpus';
 import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters';
 import { compareStrategiesInParallel } from './runtime';
 import { SupabaseChatStore, type SupabaseRpcClient } from './supabase-chat-store';
@@ -127,8 +134,21 @@ export const createProductionDependencies = (
       return { data, error: error ? { message: error.message } : null };
     },
   };
-  const store = new SupabaseChatStore(rpcClient);
-  const structured = new CurrentStructuredStrategy(productionCorpus, createOpenAIWriter(openAIKey));
+  const store = new SupabaseChatStore(rpcClient, {
+    experiment_version: 'ab-2026-08-03-v3',
+    deployed_commit:
+      environment.COMMIT_REF?.trim() || environment.DEPLOY_ID?.trim() || 'local-development',
+    comparison_schema_version: 'residenciafiscal-chat-comparison/1',
+    structured_corpus_version: productionCorpusReadiness.sampleId,
+    structured_prompt_version: STRUCTURED_PROMPT_VERSION,
+    file_search_store: storeName,
+    file_search_prompt_version: FILE_SEARCH_PROMPT_VERSION,
+  });
+  const structured = new CurrentStructuredStrategy(
+    productionCorpus,
+    createOpenAIWriter(openAIKey),
+    productionVerbatimArtifacts
+  );
   const fileSearch = new GeminiFileSearchStrategy({
     storeName,
     artifacts: productionVerbatimArtifacts,

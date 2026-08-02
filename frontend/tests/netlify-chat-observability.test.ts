@@ -32,7 +32,7 @@ const costEvent = {
       judgment_ids: ['sts-107-2018'],
       authority_counts: { tribunal_supremo: 1, audiencia_nacional: 0, other: 0 },
       authority_match: 'direct' as const,
-      retrieval_filter: 'judgment_id="sts-*"',
+      retrieval_filter: 'authority="tribunal_supremo"',
       citation_candidates: 1,
       citation_verified: 1,
       document_token_accounting: 'not_applicable' as const,

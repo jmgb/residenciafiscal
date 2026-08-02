@@ -1,9 +1,10 @@
+import { claimHasLexicalEvidence } from './claim-evidence-relevance';
 import type { StrategyAnswer } from './contracts';
 import { buildEvidenceBundle } from './evidence-bundle';
 import {
   authorityLabel,
   authorityMatch,
-  authorityMetadataFilter,
+  localAuthorityFilter,
   requestedJudicialAuthority,
 } from './judicial-authority';
 import { marginalCost, zeroCost } from './pricing';
@@ -12,15 +13,20 @@ import { retrieveForChat } from './structured-retrieval';
 
 const MODEL = 'gpt-5.6-luna';
 const REASONING_EFFORT = 'high';
+export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v3';
 
 const systemPrompt =
-  'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal de personas físicas en IRPF y CDI, no sobre extranjería. Responde solo con el contexto recuperado. Distingue hechos acreditados, valoración judicial y resultado; muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. Recibirás fragmentos literales con IDs E<n>: devuelve únicamente los IDs que respaldan la respuesta y no reconstruyas citas en answer. Incluye siempre limits y evidence_ids, aunque sean listas vacías.';
+  'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal de personas físicas en IRPF y CDI, no sobre extranjería. Responde solo con el contexto recuperado. La primera claim debe contestar directamente a lo preguntado, siempre que exista respaldo literal. Si la pregunta contiene varias partes, contesta cada una mediante claims separadas o identifica expresamente en limits la parte que la evidencia no permite resolver. Devuelve afirmaciones jurídicas atómicas: separa hechos acreditados, valoración judicial y resultado, y no mezcles permanencia física, ausencias esporádicas, certificados fiscales extranjeros ni reglas de desempate de CDI en una misma afirmación. Muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. Recibirás fragmentos literales con IDs E<n>: cada claim debe incluir todos y solo los IDs cuyos extractos literales permiten comprobar íntegramente la afirmación. Los campos estructurados sirven para localizar el asunto, pero no bastan para respaldar una claim: si el extracto solo menciona una prueba, no infieras de ahí que el tribunal la aceptó, rechazó o consideró decisiva. No añadas introducciones o conclusiones sustantivas fuera de claims. Incluye siempre limits y claims.';
+
+export interface StructuredClaim {
+  text: string;
+  evidence_ids: string[];
+}
 
 export interface StructuredDraft {
   status: 'completa' | 'parcial' | 'pregunta' | 'abstención';
-  answer: string;
+  claims: StructuredClaim[];
   limits: string[];
-  evidence_ids: string[];
 }
 
 export interface StructuredWriterResult {
@@ -60,7 +66,8 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
 
   constructor(
     private readonly corpus: unknown,
-    private readonly writer: StructuredWriter
+    private readonly writer: StructuredWriter,
+    private readonly verbatimArtifacts?: Parameters<typeof buildEvidenceBundle>[3]
   ) {}
 
   async answer(question: string, context: StrategyContext): Promise<StrategyAnswer> {
@@ -73,7 +80,10 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       preguntar: 'pregunta',
       abstenerse: 'abstención',
     }[retrieval.behavior] as StrategyAnswer['status'];
-    const retrievalLimits = [...retrieval.missingFacts, ...retrieval.uncoveredFacets];
+    const retrievalLimits = [
+      ...(status === 'pregunta' ? retrieval.missingFacts : []),
+      ...retrieval.uncoveredFacets,
+    ];
     if (status === 'pregunta' || status === 'abstención') {
       return {
         strategy: this.id,
@@ -93,7 +103,7 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       };
     }
 
-    const bundle = buildEvidenceBundle(this.corpus, retrieval, question);
+    const bundle = buildEvidenceBundle(this.corpus, retrieval, question, this.verbatimArtifacts);
     const written = await this.writer.write({
       systemPrompt,
       userPrompt: `Pregunta del usuario:\n${question}\n\nContexto estructurado recuperado:\n${bundle.contextJson}`,
@@ -108,15 +118,43 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       retrievedDocumentTokens: 0,
       complete: written.usage.complete,
     });
-    const evidenceIds = [...new Set(written.draft.evidence_ids)];
-    const unknown = evidenceIds.filter((id) => !bundle.sourcesByEvidenceId.has(id));
+    const claimsWithoutEvidence = written.draft.claims.filter(
+      (claim) => !claim.text.trim() || claim.evidence_ids.length === 0
+    );
+    const candidateEvidenceIds = [
+      ...new Set(written.draft.claims.flatMap((claim) => claim.evidence_ids)),
+    ];
+    const unknown = candidateEvidenceIds.filter((id) => !bundle.sourcesByEvidenceId.has(id));
+    const substantiveDraft = ['completa', 'parcial'].includes(written.draft.status);
+    const claimsWithoutRelevantEvidence = unknown.length
+      ? []
+      : written.draft.claims.filter(
+          (claim) =>
+            !claimHasLexicalEvidence(
+              claim.text,
+              claim.evidence_ids.map(
+                (evidenceId) =>
+                  bundle.sourcesByEvidenceId.get(evidenceId) as NonNullable<
+                    ReturnType<typeof bundle.sourcesByEvidenceId.get>
+                  >
+              )
+            )
+        );
     if (
       unknown.length ||
-      (['completa', 'parcial'].includes(written.draft.status) && !evidenceIds.length)
+      claimsWithoutEvidence.length ||
+      (substantiveDraft && !candidateEvidenceIds.length) ||
+      (substantiveDraft &&
+        written.draft.claims.length > 0 &&
+        claimsWithoutRelevantEvidence.length === written.draft.claims.length)
     ) {
       const reason = unknown.length
         ? `El redactor devolvió evidencias desconocidas: ${unknown.join(', ')}.`
-        : 'El redactor no vinculó ninguna evidencia a la respuesta sustantiva.';
+        : claimsWithoutEvidence.length
+          ? 'El redactor devolvió al menos una afirmación vacía o sin evidencia.'
+          : !candidateEvidenceIds.length
+            ? 'El redactor no vinculó ninguna evidencia a la respuesta sustantiva.'
+            : 'Al menos una afirmación no guarda relación suficiente con sus extractos literales.';
       return {
         strategy: this.id,
         status: 'error',
@@ -130,21 +168,39 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         diagnostics: {
           authority_intent: authorityIntent,
           authority_match: 'not_requested',
-          retrieval_filter: authorityMetadataFilter(authorityIntent),
+          retrieval_filter: localAuthorityFilter(authorityIntent),
           retrieved_judgment_ids: [...new Set(retrieval.hits.map((hit) => hit.judgmentId))],
-          citation_candidates: evidenceIds.length,
+          citation_candidates: candidateEvidenceIds.length,
           citation_verified: 0,
           failure_code: 'evidence_validation',
           error_name: null,
         },
       };
     }
+    const relevantClaims = written.draft.claims.filter(
+      (claim) => !claimsWithoutRelevantEvidence.includes(claim)
+    );
+    const evidenceIds = [...new Set(relevantClaims.flatMap((claim) => claim.evidence_ids))];
     const sources = evidenceIds.map(
       (id) =>
         bundle.sourcesByEvidenceId.get(id) as NonNullable<
           ReturnType<typeof bundle.sourcesByEvidenceId.get>
         >
     );
+    const sourceIndexByEvidenceId = new Map(
+      evidenceIds.map((evidenceId, index) => [evidenceId, index + 1])
+    );
+    const claims = relevantClaims.map((claim) => ({
+      text: claim.text.trim(),
+      source_indexes: [...new Set(claim.evidence_ids)].map(
+        (evidenceId) => sourceIndexByEvidenceId.get(evidenceId) as number
+      ),
+    }));
+    const text = claims
+      .map(
+        (claim) => `- ${claim.text} ${claim.source_indexes.map((index) => `[${index}]`).join('')}`
+      )
+      .join('\n');
     const directAuthority = authorityMatch(
       authorityIntent,
       sources.map((source) => source.judgment_id)
@@ -158,14 +214,20 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         ? 'parcial'
         : written.draft.status;
     if (authorityLimit && finalStatus === 'completa') finalStatus = 'parcial';
+    if (claimsWithoutRelevantEvidence.length && finalStatus === 'completa') finalStatus = 'parcial';
+    const relevanceLimit = claimsWithoutRelevantEvidence.length
+      ? `Se retiró ${claimsWithoutRelevantEvidence.length} afirmación sin respaldo literal suficiente.`
+      : null;
     return {
       strategy: this.id,
       status: finalStatus,
-      text: written.draft.answer,
+      text,
       sources,
+      claims,
       limits: [
         ...retrievalLimits,
         ...written.draft.limits,
+        ...(relevanceLimit ? [relevanceLimit] : []),
         ...(authorityLimit ? [authorityLimit] : []),
       ],
       cost,
@@ -175,9 +237,9 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       diagnostics: {
         authority_intent: authorityIntent,
         authority_match: directAuthority,
-        retrieval_filter: authorityMetadataFilter(authorityIntent),
+        retrieval_filter: localAuthorityFilter(authorityIntent),
         retrieved_judgment_ids: [...new Set(retrieval.hits.map((hit) => hit.judgmentId))],
-        citation_candidates: evidenceIds.length,
+        citation_candidates: candidateEvidenceIds.length,
         citation_verified: sources.length,
         failure_code: null,
         error_name: null,

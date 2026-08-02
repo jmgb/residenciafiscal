@@ -2,10 +2,15 @@
 
 **Estado:** F0.2 conserva el baseline de ocho consultas; F0.3 tiene rúbrica y
 paquete ciego listos; A/B está activo en producción sobre las 106 sentencias.
-La revisión jurídica y el banco conversacional de 40 siguen pendientes. La
-opción C agentiva queda solo documentada como posibilidad futura.
+La iteración real del 3 de agosto corrigió el filtro de autoridad de B, añadió
+trazabilidad por afirmación en A y versionó el ledger del experimento. La vista
+ciega con voto usa dos columnas en escritorio y pestañas en móvil cuando A y B
+están activas; si solo existe una respuesta conserva una única columna. La
+revisión jurídica y el banco conversacional de 40
+siguen pendientes. La opción C agentiva queda solo documentada como posibilidad
+futura.
 **Alcance:** piloto inicial de cinco y runtime productivo sobre 106 sentencias.
-**Fecha de actualización:** 2026-08-02.
+**Fecha de actualización:** 2026-08-03.
 
 La vista consolidada de capas, componentes, estado, aprendizajes y siguiente
 gate está en
@@ -80,11 +85,12 @@ El catálogo F0 aplica las tarifas estándar vigentes y las identifica con
 | `gemini-3.5-flash-lite` | USD 0,30 / 1 M tokens | USD 2,50 / 1 M tokens |
 | `gemini-3.6-flash` | USD 1,50 / 1 M tokens | USD 7,50 / 1 M tokens |
 
-Interactions devuelve el total y el desglose por modalidad. F0 separa los
-tokens `document` recuperados de la entrada textual, suma los tokens de
-razonamiento a la salida facturable y calcula el resultado con microdólares
-enteros. El log conserva modelo, tokens y tarifa versionada para que cada
-llamada pueda reconciliarse o recalcularse.
+Interactions devuelve el total y el desglose de uso. El adaptador admite tanto
+el contrato histórico `input_tokens_by_modality=document` como el contrato
+observado en agosto de 2026, que declara la recuperación en
+`total_tool_use_tokens`. Esos tokens se separan como documentos recuperados, se
+suman a la entrada facturable y se conservan junto con la tarifa versionada para
+reconciliar o recalcular cada llamada.
 
 Si existen citas de File Search pero el proveedor omite la modalidad
 `document`, el coste se marca `ESTIMATED`: `retrieved_document_tokens: 0`
@@ -215,8 +221,12 @@ misma muestra y para fundamentar su respuesta:
 5. las citas devueltas por el proveedor se contrastan localmente antes de
    mostrarse como extractos judiciales.
 
-Se pueden adjuntar metadatos deterministas como `judgment_id`,
-`source_sha256`, órgano y fecha. No se adjunta el análisis jurídico derivado:
+Se adjuntan metadatos deterministas como `judgment_id`, `source_sha256`,
+`authority`, órgano y fecha. `authority` usa los valores cerrados
+`tribunal_supremo` y `audiencia_nacional`; una consulta de órgano aplica igualdad
+exacta, no un comodín sobre `judgment_id`. La prueba real demostró que
+`judgment_id="sts-*"` producía un falso vacío aunque el store sí contuviera
+sentencias del Supremo. No se adjunta el análisis jurídico derivado:
 la finalidad es comparar el sistema estructurado con File Search sobre la
 fuente original, no hacer que File Search reutilice el resultado del primero.
 
@@ -262,8 +272,8 @@ pregunta + historial permitido
                   └── respuesta B + fuentes B
 
 presentación:
-  1. Respuesta A — Sistema estructurado actual
-  2. Respuesta B — Gemini File Search
+  1. Opción A
+  2. Opción B
 ```
 
 La presentación es siempre A y después B. La V1 debe ejecutar ambas estrategias
@@ -273,9 +283,17 @@ con la salida de la otra.
 
 ## Contrato visual y semántico
 
+El objetivo aprobado para el experimento es una comparación ciega: durante el
+voto se muestran `Opción A` y `Opción B`, no los nombres de proveedor o sistema.
+En escritorio, la variante aprobada usa dos columnas alineadas; en móvil, dos
+pestañas conservan el ancho legible. Este patrón solo se activa cuando hay dos
+opciones. Con una única estrategia activa se mantiene una respuesta centrada en
+una sola columna, sin pestañas, aviso experimental ni formulario de voto.
+
 Cada bloque debe mostrar:
 
-- nombre completo de la estrategia;
+- etiqueta ciega A/B; la identidad técnica queda en el ledger y puede revelarse
+  después del voto o en metodología;
 - estado `completa`, `parcial`, `pregunta`, `abstención` o `error`;
 - texto de la respuesta;
 - fuentes utilizadas exclusivamente por esa estrategia;
@@ -284,6 +302,11 @@ Cada bloque debe mostrar:
 - indicación `real` o `estimado` del coste;
 - nota de que no incluye la preparación previa del corpus;
 - aviso visible de que se trata de una comparación experimental.
+
+Al final se ofrece un único voto: A, B, empate o ambas insuficientes, con un
+motivo cerrado y sin texto libre. El backend acepta un voto por `request_id` y
+no permite sobrescribirlo. Esta preferencia sirve para UX y evaluación; nunca
+convierte por sí sola una respuesta en jurídicamente correcta.
 
 No se permite:
 
@@ -408,7 +431,11 @@ vigente. El coste adicional de B nunca se mezcla con el consumo de A.
 
 Cada petición escribe un log operativo estructurado sin el texto de la consulta
 ni de la respuesta. Separadamente, Supabase persiste en schema privado la
-pregunta y ambas respuestas con citas y costes para comparar calidad:
+pregunta y ambas respuestas con citas y costes para comparar calidad. También
+conserva versión del experimento, commit desplegado, store, versiones de prompt,
+filtro aplicado, IDs recuperados, citas verificadas, claims de A y diagnóstico
+acotado. Los logs de Netlify no son la fuente única del análisis: si una línea se
+pierde o queda vacía, el ledger privado es la fuente de verdad por petición.
 
 ```json
 {
@@ -429,6 +456,9 @@ pregunta y ambas respuestas con citas y costes para comparar calidad:
 Debe existir un registro por estrategia y pregunta, correlacionado por
 `request_id`. Los dashboards pueden sumar A y B, pero conservan siempre el
 desglose individual que ve el usuario.
+
+La batería real más reciente y su valoración provisional están en
+[`CHAT_AB_QUALITY_ITERATION_2026-08-03.md`](../experiments/CHAT_AB_QUALITY_ITERATION_2026-08-03.md).
 
 ## Posible estrategia futura: unión y reranking local
 

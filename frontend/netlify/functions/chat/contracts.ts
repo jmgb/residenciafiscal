@@ -54,6 +54,12 @@ export interface StrategyDiagnostics {
   error_name: string | null;
 }
 
+export interface StrategyClaim {
+  text: string;
+  /** Índices 1-based sobre `sources`, estables dentro de esta respuesta. */
+  source_indexes: number[];
+}
+
 export interface StrategyAnswer {
   strategy: StrategyId;
   status: AnswerStatus;
@@ -64,6 +70,7 @@ export interface StrategyAnswer {
   model: string;
   reasoning_effort: string | null;
   latency_ms: number;
+  claims?: StrategyClaim[];
   diagnostics?: StrategyDiagnostics;
 }
 

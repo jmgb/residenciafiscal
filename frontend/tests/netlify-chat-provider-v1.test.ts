@@ -27,9 +27,8 @@ describe('adaptador OpenAI de la Function', () => {
     createResponse.mockResolvedValueOnce({
       output_text: JSON.stringify({
         status: 'pregunta',
-        answer: 'Necesito concretar la cuestión.',
+        claims: [],
         limits: [],
-        evidence_ids: [],
       }),
       usage: { input_tokens: 10, output_tokens: 5 },
       model: 'gpt-5.6-luna',

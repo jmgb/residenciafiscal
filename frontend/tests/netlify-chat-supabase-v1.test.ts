@@ -2,6 +2,16 @@ import { describe, expect, it, vi } from 'vitest';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
 import { SupabaseChatStore } from '../netlify/functions/chat/supabase-chat-store';
 
+const experiment = {
+  experiment_version: 'ab-2026-08-03-v3',
+  deployed_commit: 'abc1234',
+  comparison_schema_version: 'residenciafiscal-chat-comparison/1',
+  structured_corpus_version: 'rollout-106',
+  structured_prompt_version: 'structured-claims-v3',
+  file_search_store: 'fileSearchStores/rollout-106-v2',
+  file_search_prompt_version: 'file-search-authority-v6',
+} as const;
+
 const report: ComparisonReport = {
   schema_version: 'residenciafiscal-chat-comparison/1',
   request_id: 'chat-request-1',
@@ -37,6 +47,17 @@ const report: ComparisonReport = {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       latency_ms: 1_500,
+      claims: [{ text: 'Respuesta A', source_indexes: [1] }],
+      diagnostics: {
+        authority_intent: null,
+        authority_match: 'not_requested',
+        retrieval_filter: null,
+        retrieved_judgment_ids: ['san-1210-2023'],
+        citation_candidates: 1,
+        citation_verified: 1,
+        failure_code: null,
+        error_name: null,
+      },
     },
     {
       strategy: 'gemini_file_search',
@@ -69,7 +90,7 @@ describe('persistencia privada del chat en Supabase', () => {
       data: { request_id: 'chat-request-1', created: true },
       error: null,
     }));
-    const store = new SupabaseChatStore({ rpc });
+    const store = new SupabaseChatStore({ rpc }, experiment);
 
     await expect(
       store.record({
@@ -87,12 +108,13 @@ describe('persistencia privada del chat en Supabase', () => {
       p_user_message_id: 'message-1',
       p_country_path: '/espana',
       p_question: '¿Qué pruebas tiene en cuenta Hacienda?',
+      p_experiment: experiment,
     });
   });
 
   it('registra el coste y persiste separadamente las respuestas A y B', async () => {
     const rpc = vi.fn(async () => ({ data: true, error: null }));
-    const store = new SupabaseChatStore({ rpc });
+    const store = new SupabaseChatStore({ rpc }, experiment);
 
     await store.complete({
       requestId: 'chat-request-1',
@@ -112,6 +134,8 @@ describe('persistencia privada del chat en Supabase', () => {
           cost_microusd: 1_200,
           reasoning_effort: 'high',
           sources: report.answers[0].sources,
+          claims: report.answers[0].claims,
+          diagnostics: report.answers[0].diagnostics,
         }),
         expect.objectContaining({
           strategy: 'gemini_file_search',
@@ -129,7 +153,7 @@ describe('persistencia privada del chat en Supabase', () => {
       data: null,
       error: { message: 'Authorization sb_secret_no_debe_salir' },
     }));
-    const store = new SupabaseChatStore({ rpc });
+    const store = new SupabaseChatStore({ rpc }, experiment);
 
     await expect(
       store.record({
@@ -144,7 +168,7 @@ describe('persistencia privada del chat en Supabase', () => {
 
   it('registra un fallo técnico de la consulta', async () => {
     const rpc = vi.fn(async () => ({ data: true, error: null }));
-    const store = new SupabaseChatStore({ rpc });
+    const store = new SupabaseChatStore({ rpc }, experiment);
 
     await store.fail({
       requestId: 'chat-request-1',
@@ -156,6 +180,25 @@ describe('persistencia privada del chat en Supabase', () => {
       p_request_id: 'chat-request-1',
       p_status: 'failed',
       p_failure_code: 'comparison_error',
+    });
+  });
+
+  it('registra un único voto ciego con motivo cerrado', async () => {
+    const rpc = vi.fn(async () => ({ data: true, error: null }));
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await expect(
+      store.vote({
+        requestId: 'chat-request-1',
+        verdict: 'a',
+        reason: 'better_grounding',
+      })
+    ).resolves.toBe(true);
+
+    expect(rpc).toHaveBeenCalledWith('record_chat_vote', {
+      p_request_id: 'chat-request-1',
+      p_verdict: 'a',
+      p_reason: 'better_grounding',
     });
   });
 });

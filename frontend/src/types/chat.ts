@@ -87,6 +87,8 @@ export interface ChatMessage {
   isStreaming?: boolean;
   /** Dos respuestas independientes del experimento A/B. */
   answers?: ChatStrategyAnswer[];
+  /** Petición privada asociada, usada para registrar un único voto A/B. */
+  comparisonId?: string;
 }
 
 export type ChatStrategyId = 'current_structured' | 'gemini_file_search';
@@ -116,6 +118,11 @@ export interface ChatStrategySource {
   verification: 'EXACT';
 }
 
+export interface ChatStrategyClaim {
+  text: string;
+  sourceIndexes: number[];
+}
+
 export interface ChatStrategyAnswer {
   strategy: ChatStrategyId;
   status?: ChatAnswerStatus;
@@ -125,6 +132,7 @@ export interface ChatStrategyAnswer {
   cost?: ChatMarginalCost;
   model?: string;
   latencyMs?: number;
+  claims?: ChatStrategyClaim[];
   isStreaming: boolean;
 }
 
@@ -138,12 +146,13 @@ export type ChatChunk =
       type: 'answer_done';
       strategy: ChatStrategyId;
       status: ChatAnswerStatus;
+      claims?: ChatStrategyClaim[];
       limits: string[];
       cost: ChatMarginalCost;
       model: string;
       latencyMs: number;
     }
-  | { type: 'done' };
+  | { type: 'done'; requestId?: string };
 
 export interface ChatEngine {
   askQuestion(

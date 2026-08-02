@@ -15,6 +15,7 @@ import { extractJudgmentIdentifiers } from './retrieval-lexical';
 import type { NetlifyChatStrategy, StrategyContext } from './runtime';
 
 const DEFAULT_MODEL = 'gemini-3.5-flash-lite';
+export const FILE_SEARCH_PROMPT_VERSION = 'file-search-authority-v6';
 
 export interface Interaction {
   output_text?: string;
@@ -26,7 +27,9 @@ export interface Interaction {
     total_input_tokens?: number;
     total_output_tokens?: number;
     total_thought_tokens?: number;
+    total_tool_use_tokens?: number;
     input_tokens_by_modality?: Array<{ modality?: string; tokens?: number }>;
+    tool_use_tokens_by_modality?: Array<{ modality?: string; tokens?: number }>;
   };
 }
 
@@ -72,16 +75,17 @@ const parseDraft = (serialized: string) => {
 
 const usage = (interaction: Interaction) => {
   const raw = interaction.usage;
-  const retrievedDocumentTokens = (raw?.input_tokens_by_modality ?? []).reduce(
+  const legacyDocumentTokens = (raw?.input_tokens_by_modality ?? []).reduce(
     (total, item) =>
       String(item.modality).toLocaleLowerCase().endsWith('document')
         ? total + (item.tokens ?? 0)
         : total,
     0
   );
+  const retrievedDocumentTokens = raw?.total_tool_use_tokens ?? legacyDocumentTokens;
   const hasCitations = citations(interaction).length > 0;
   return {
-    inputTokens: Math.max(0, (raw?.total_input_tokens ?? 0) - retrievedDocumentTokens),
+    inputTokens: Math.max(0, (raw?.total_input_tokens ?? 0) - legacyDocumentTokens),
     outputTokens: (raw?.total_output_tokens ?? 0) + (raw?.total_thought_tokens ?? 0),
     retrievedDocumentTokens,
     complete:
@@ -118,7 +122,7 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
         requestId: context.requestId,
         metadataFilter,
         prompt:
-          'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Distingue hechos, valoración y resultado; no predigas el caso del usuario ni uses conocimiento externo. Si falta cobertura, responde parcial, pregunta o abstención.' +
+          'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Responde primero y de forma directa a lo preguntado, en una o dos frases, y desarrolla después solo los puntos necesarios. Si la pregunta tiene varias partes, contesta cada parte o usa estado parcial e identifica la parte no resuelta. Si pregunta cuándo, cómo o salvo qué, expresa de forma explícita la condición y sus excepciones respaldadas; no las dejes implícitas. Distingue hechos acreditados, argumentos de las partes, valoración de la instancia, doctrina del tribunal consultado y resultado. No atribuyas al tribunal argumentos de las partes ni razonamientos que la resolución se limite a citar. Separa permanencia física, ausencias esporádicas, certificados fiscales extranjeros y reglas de desempate de CDI si la pregunta mezcla esos conceptos. No desarrolles dimensiones que la pregunta no necesita. No equipares desvirtuar el número de días de presencia con acreditar residencia fiscal en otro país para excluir ausencias esporádicas: explica cuál de esas cuestiones respalda cada pasaje. No conviertas la prueba o el resultado de un caso concreto en una regla general salvo que el pasaje formule expresamente doctrina. Si se preguntan pruebas aceptadas por un tribunal, distingue lo que valoró la instancia de lo que confirmó o estableció directamente ese tribunal. En materia de ausencias esporádicas, no uses la intención de retorno como criterio sin comprobar si el tribunal la adopta o, por el contrario, la rechaza expresamente. El campo limits contiene solo carencias reales de evidencia o alcance, no conclusiones ni repeticiones de la respuesta. No predigas el caso del usuario ni uses conocimiento externo. Si la recuperación no aporta evidencia suficiente, responde parcial, pregunta o abstención; limita el diagnóstico a esta búsqueda y no concluyas que el corpus carece de documentos.' +
           authorityInstruction +
           '\n\nPregunta del usuario:\n' +
           question,

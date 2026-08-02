@@ -238,6 +238,7 @@ export function ChatView({
       let buffer = '';
       let sources: ChatSource[] | undefined;
       let answers: ChatStrategyAnswer[] | undefined;
+      let comparisonId: string | undefined;
       let fallo: string | undefined;
 
       const updateAnswers = () => {
@@ -294,6 +295,7 @@ export function ChatView({
             const answer = answerFor(chunk.strategy);
             if (answer) {
               answer.status = chunk.status;
+              answer.claims = chunk.claims ?? [];
               answer.limits = chunk.limits;
               answer.cost = chunk.cost;
               answer.model = chunk.model;
@@ -301,6 +303,8 @@ export function ChatView({
               answer.isStreaming = false;
               updateAnswers();
             }
+          } else if (chunk.type === 'done') {
+            comparisonId = chunk.requestId;
           }
         }
       } catch {
@@ -334,6 +338,7 @@ export function ChatView({
           content: buffer,
           sources,
           answers,
+          comparisonId,
           isStreaming: false,
         });
         // El nº de fuentes distingue una respuesta apoyada en el corpus de una

@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import corpus from '../../knowledge/jurisprudencia-v3/retrieval/corpus.json';
 import rolloutCorpus from '../../knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json';
+import { buildEvidenceBundle } from '../netlify/functions/chat/evidence-bundle';
+import { productionVerbatimArtifacts } from '../netlify/functions/chat/production-corpus';
 import { rankUnits } from '../netlify/functions/chat/retrieval-lexical';
 import { retrieveForChat } from '../netlify/functions/chat/structured-retrieval';
 
@@ -83,5 +85,24 @@ describe('recuperación estructurada Netlify V1', () => {
 
     expect(result.hits.length).toBeGreaterThan(0);
     expect(result.hits.every((hit) => hit.judgmentId.startsWith('sts-'))).toBe(true);
+  });
+
+  it('amplía el anclaje literal con contexto verificable de la página original', () => {
+    const question = '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?';
+    const retrieval = retrieveForChat(rolloutCorpus, question, 5);
+    const bundle = buildEvidenceBundle(
+      rolloutCorpus,
+      retrieval,
+      question,
+      productionVerbatimArtifacts
+    );
+    const source = [...bundle.sourcesByEvidenceId.values()].find(
+      (candidate) =>
+        candidate.judgment_id === 'sts-3585-2024' &&
+        candidate.quote.includes('Calendario de residencia')
+    );
+
+    expect(source?.quote).toContain('consumos efectuados con las tarjetas virtuales');
+    expect(source?.quote.length).toBeGreaterThan(250);
   });
 });

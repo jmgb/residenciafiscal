@@ -17,6 +17,7 @@ const report: ComparisonReport = {
       strategy: 'current_structured' as const,
       status: 'completa' as const,
       text: 'Respuesta A',
+      claims: [{ text: 'Respuesta A', source_indexes: [] }],
       sources: [],
       limits: [],
       cost: {
@@ -214,6 +215,8 @@ describe('Netlify Function /api/chat V1', () => {
       body.indexOf('"strategy":"gemini_file_search"')
     );
     expect(body).toContain('event: done');
+    expect(body).toContain('data: {"request_id":"chat-test"}');
+    expect(body).toContain('"claims":[{"text":"Respuesta A","source_indexes":[]}]');
     expect(deps.completeRequest).toHaveBeenCalledWith(
       expect.objectContaining({
         actualMicrousd: 3,

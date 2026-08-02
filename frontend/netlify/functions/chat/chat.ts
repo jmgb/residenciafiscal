@@ -128,6 +128,7 @@ export const serializeComparison = (report: ComparisonReport): string => {
       event('answer_done', {
         strategy: answer.strategy,
         status: answer.status,
+        claims: answer.claims ?? [],
         limits: answer.limits,
         cost: answer.cost,
         model: answer.model,
@@ -135,7 +136,7 @@ export const serializeComparison = (report: ComparisonReport): string => {
       })
     );
   }
-  events.push(event('done', {}));
+  events.push(event('done', { request_id: report.request_id }));
   return events.join('');
 };
 

@@ -76,6 +76,16 @@ describe('composition root de la Function con Supabase', () => {
         question: 'Pregunta',
       })
     ).resolves.toEqual({ requestId: 'chat-request-1' });
+    expect(rpc).toHaveBeenCalledWith(
+      'create_chat_request',
+      expect.objectContaining({
+        p_experiment: expect.objectContaining({
+          experiment_version: 'ab-2026-08-03-v3',
+          structured_prompt_version: 'structured-claims-v3',
+          file_search_prompt_version: 'file-search-authority-v6',
+        }),
+      })
+    );
   });
 
   it('registra coste y tokens de A/B sin registrar el contenido fiscal', async () => {
@@ -122,7 +132,7 @@ describe('composition root de la Function con Supabase', () => {
           diagnostics: {
             authority_intent: 'tribunal_supremo',
             authority_match: 'missing',
-            retrieval_filter: 'judgment_id="sts-*"',
+            retrieval_filter: 'authority="tribunal_supremo"',
             retrieved_judgment_ids: [],
             citation_candidates: 1,
             citation_verified: 0,

@@ -106,6 +106,7 @@ def test_prepara_store_con_exactamente_cinco_pdf_y_metadatos(tmp_path: Path) -> 
     first_metadata = client.file_search_stores.uploads[0]["config"]["custom_metadata"]
     assert first_metadata == [
         {"key": "judgment_id", "string_value": "san-0"},
+        {"key": "authority", "string_value": "audiencia_nacional"},
         {
             "key": "source_sha256",
             "string_value": hashlib.sha256(b"pdf-0").hexdigest(),
@@ -189,7 +190,9 @@ def test_prepara_store_reanudable_con_las_106_del_rollout() -> None:
     assert len(receipt.documents) == 106
     assert len(client.file_search_stores.uploads) == 106
     assert len(checkpoints) == 108  # store creado + cada PDF + cierre ACTIVE
-    assert client.file_search_stores.created[0]["display_name"] == ("residenciafiscal-rollout-106")
+    assert client.file_search_stores.created[0]["display_name"] == (
+        "residenciafiscal-rollout-106-authority-v2"
+    )
 
 
 def test_reanuda_desde_el_ultimo_pdf_confirmado_sin_borrar_el_store(

@@ -1,115 +1,113 @@
 import { FlaskConical } from 'lucide-react';
-import type { ChatStrategyAnswer, ChatStrategyId } from '@/types/chat';
-import { ChatMessageContent } from './ChatMessageContent';
-
-const STRATEGY_LABEL: Record<ChatStrategyId, string> = {
-  current_structured: 'Corpus estructurado',
-  gemini_file_search: 'Gemini File Search',
-};
-
-const STRATEGY_ARIA_LABEL: Record<ChatStrategyId, string> = {
-  current_structured: 'Respuesta con corpus estructurado',
-  gemini_file_search: 'Respuesta con Gemini File Search',
-};
-
-const STATUS_LABEL = {
-  completa: 'Respuesta completa',
-  parcial: 'Respuesta parcial',
-  pregunta: 'Necesita más datos',
-  abstención: 'Sin cobertura suficiente',
-  error: 'Error aislado',
-} as const;
+import { type KeyboardEvent, useId, useRef, useState } from 'react';
+import type { ChatStrategyAnswer } from '@/types/chat';
+import { ChatComparisonVote } from './ChatComparisonVote';
+import { ChatStrategyAnswerPanel } from './ChatStrategyAnswerPanel';
 
 interface ChatComparisonAnswersProps {
   answers: ChatStrategyAnswer[];
+  comparisonId?: string;
 }
 
-export function ChatComparisonAnswers({ answers }: ChatComparisonAnswersProps) {
+const optionName = (index: number) => `Opción ${String.fromCharCode(65 + index)}`;
+
+export const ChatComparisonAnswers = ({ answers, comparisonId }: ChatComparisonAnswersProps) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const tabs = useRef<Array<HTMLButtonElement | null>>([]);
+  const componentId = useId().replace(/:/g, '');
+  const isComparison = answers.length > 1;
+  const selectedIndex = Math.min(activeIndex, Math.max(answers.length - 1, 0));
+  const canVote =
+    isComparison &&
+    comparisonId !== undefined &&
+    answers.every((answer) => !answer.isStreaming && answer.status !== undefined);
+
+  if (answers.length === 0) return null;
+
+  const selectTab = (index: number) => {
+    setActiveIndex(index);
+    tabs.current[index]?.focus();
+  };
+
+  const handleTabKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    if (event.key === 'Home') return selectTab(0);
+    if (event.key === 'End') return selectTab(answers.length - 1);
+    const offset = event.key === 'ArrowRight' ? 1 : -1;
+    selectTab((index + offset + answers.length) % answers.length);
+  };
+
   return (
-    <div className='flex flex-col gap-3'>
-      <p className='flex items-start gap-1.5 rounded-md bg-accent px-2.5 py-2 text-xs text-accent-foreground'>
-        <FlaskConical className='mt-0.5 h-3.5 w-3.5 shrink-0' aria-hidden='true' />
-        Comparación experimental: las dos estrategias recuperan y responden de forma independiente.
-      </p>
-      {answers.map((answer) => (
-        <section
-          key={answer.strategy}
-          aria-label={STRATEGY_ARIA_LABEL[answer.strategy]}
-          className='rounded-lg border border-border bg-background p-3'
+    <div className='flex flex-col gap-4'>
+      {isComparison && (
+        <p className='flex items-start gap-2 rounded-lg border border-accent-500/30 bg-accent px-3 py-2.5 text-xs leading-relaxed text-accent-foreground'>
+          <FlaskConical className='mt-0.5 h-3.5 w-3.5 shrink-0' aria-hidden='true' />
+          Comparación experimental: las dos opciones se generan y fundamentan de forma
+          independiente.
+        </p>
+      )}
+
+      {isComparison && (
+        <div
+          role='tablist'
+          aria-label='Opciones de respuesta'
+          className='grid grid-cols-2 rounded-xl border border-border bg-muted p-1 md:hidden'
         >
-          <div className='mb-2 flex flex-wrap items-center justify-between gap-2'>
-            <h3 className='text-sm font-semibold text-foreground'>
-              {STRATEGY_LABEL[answer.strategy]}
-            </h3>
-            {answer.status && (
-              <span className='rounded bg-muted px-2 py-0.5 text-[0.6875rem] text-secondary-foreground'>
-                {STATUS_LABEL[answer.status]}
-              </span>
-            )}
-          </div>
+          {answers.map((answer, index) => {
+            const selected = index === selectedIndex;
+            return (
+              <button
+                key={answer.strategy}
+                ref={(node) => {
+                  tabs.current[index] = node;
+                }}
+                id={`${componentId}-tab-${index}`}
+                type='button'
+                role='tab'
+                aria-selected={selected}
+                aria-controls={`${componentId}-panel-${index}`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => setActiveIndex(index)}
+                onKeyDown={(event) => handleTabKey(event, index)}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold control-focus ${
+                  selected ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground'
+                }`}
+              >
+                {optionName(index)}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
-          {answer.content ? (
-            <ChatMessageContent content={answer.content} isUser={false} />
-          ) : answer.isStreaming ? (
-            <p className='text-sm text-muted-foreground'>Preparando respuesta…</p>
-          ) : null}
-          {answer.isStreaming && <span className='animate-pulse text-muted-foreground'>▍</span>}
+      <div
+        data-testid='comparison-grid'
+        className={`grid w-full grid-cols-1 gap-4 ${
+          isComparison ? 'md:grid-cols-2' : 'mx-auto max-w-3xl'
+        }`}
+      >
+        {answers.map((answer, index) => {
+          const label = isComparison ? optionName(index) : 'Respuesta';
+          return (
+            <ChatStrategyAnswerPanel
+              key={answer.strategy}
+              answer={answer}
+              label={label}
+              ariaLabel={
+                isComparison
+                  ? `Respuesta de la opción ${String.fromCharCode(65 + index)}`
+                  : 'Respuesta única'
+              }
+              id={isComparison ? `${componentId}-panel-${index}` : undefined}
+              tabPanel={isComparison}
+              className={isComparison && index !== selectedIndex ? 'hidden md:block' : undefined}
+            />
+          );
+        })}
+      </div>
 
-          {answer.sources.length > 0 && (
-            <div className='mt-3 border-t border-border pt-2'>
-              <h4 className='text-xs font-semibold uppercase tracking-wide text-muted-foreground'>
-                Citas verificadas ({answer.sources.length})
-              </h4>
-              <ul className='mt-1.5 flex flex-col gap-2'>
-                {answer.sources.map((source) => (
-                  <li
-                    key={`${source.judgmentId}:${source.page}:${source.quote}`}
-                    className='rounded-md bg-muted px-2.5 py-2 text-xs'
-                  >
-                    <p className='font-semibold text-foreground'>
-                      {source.judgmentId} · Página PDF {source.page}
-                    </p>
-                    <blockquote className='mt-1.5 border-l-2 border-primary/40 pl-2 leading-relaxed'>
-                      {source.quote}
-                    </blockquote>
-                    <p className='mt-1.5 break-all font-mono text-[0.625rem] text-muted-foreground'>
-                      PDF SHA-256: {source.sourceSha256}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {answer.limits.length > 0 && (
-            <div className='mt-3 rounded-md bg-muted px-2.5 py-2 text-xs text-secondary-foreground'>
-              <p className='font-semibold'>Límites detectados</p>
-              <ul className='mt-1 list-disc pl-4'>
-                {answer.limits.map((limit) => (
-                  <li key={limit}>{limit}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {answer.cost && (
-            <div className='mt-3 border-t border-border pt-2 text-xs text-muted-foreground'>
-              <p>
-                Coste de esta respuesta:{' '}
-                <strong>
-                  {answer.cost.measurement === 'UNAVAILABLE'
-                    ? 'no disponible'
-                    : `USD ${answer.cost.amountUsd}`}
-                </strong>
-                {answer.cost.measurement !== 'UNAVAILABLE' && (
-                  <> · {answer.cost.measurement === 'ACTUAL' ? 'uso medido' : 'estimación'}</>
-                )}
-              </p>
-              <p className='mt-0.5'>No incluye la preparación previa del corpus.</p>
-            </div>
-          )}
-        </section>
-      ))}
+      {canVote && <ChatComparisonVote comparisonId={comparisonId} />}
     </div>
   );
-}
+};

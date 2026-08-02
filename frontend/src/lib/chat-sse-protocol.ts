@@ -9,6 +9,7 @@ import type {
   ChatAnswerStatus,
   ChatChunk,
   ChatMarginalCost,
+  ChatStrategyClaim,
   ChatStrategyId,
   ChatStrategySource,
 } from '@/types/chat';
@@ -195,6 +196,7 @@ function parseAnswerDone(data: unknown): Extract<ChatChunk, { type: 'answer_done
     !isRecord(data) ||
     !isStrategy(data.strategy) ||
     !isAnswerStatus(data.status) ||
+    (data.claims !== undefined && !Array.isArray(data.claims)) ||
     !Array.isArray(data.limits) ||
     !data.limits.every((limit) => typeof limit === 'string') ||
     typeof data.model !== 'string' ||
@@ -208,10 +210,32 @@ function parseAnswerDone(data: unknown): Extract<ChatChunk, { type: 'answer_done
   if (!cost) {
     throw new ChatEngineError('El servidor envió un coste inválido.', 'invalid_event');
   }
+  const claims = ((data.claims ?? []) as unknown[]).map((claim): ChatStrategyClaim | null => {
+    if (
+      !isRecord(claim) ||
+      typeof claim.text !== 'string' ||
+      !claim.text.trim() ||
+      !Array.isArray(claim.source_indexes) ||
+      !claim.source_indexes.every(
+        (index) => Number.isSafeInteger(index) && (index as number) >= 1
+      ) ||
+      new Set(claim.source_indexes).size !== claim.source_indexes.length
+    ) {
+      return null;
+    }
+    return {
+      text: claim.text.trim(),
+      sourceIndexes: claim.source_indexes as number[],
+    };
+  });
+  if (claims.some((claim) => claim === null)) {
+    throw new ChatEngineError('El servidor envió afirmaciones inválidas.', 'invalid_event');
+  }
   return {
     type: 'answer_done',
     strategy: data.strategy,
     status: data.status,
+    ...(data.claims !== undefined ? { claims: claims as ChatStrategyClaim[] } : {}),
     limits: data.limits,
     cost,
     model: data.model,
@@ -234,10 +258,19 @@ function parseServerError(data: unknown): ChatEngineError {
 }
 
 function parseDone(data: unknown): ChatChunk {
-  if (!isRecord(data) || Array.isArray(data) || Object.keys(data).length > 0) {
+  if (!isRecord(data) || Array.isArray(data)) {
     throw new ChatEngineError('El servidor envió un terminal inválido.', 'invalid_event');
   }
-  return { type: 'done' };
+  const keys = Object.keys(data);
+  if (keys.length === 0) return { type: 'done' };
+  if (
+    keys.length !== 1 ||
+    typeof data.request_id !== 'string' ||
+    !/^chat-[\w-]{1,123}$/.test(data.request_id)
+  ) {
+    throw new ChatEngineError('El servidor envió un terminal inválido.', 'invalid_event');
+  }
+  return { type: 'done', requestId: data.request_id };
 }
 
 function normalizeLineEndings(value: string): string {

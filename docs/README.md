@@ -41,7 +41,8 @@ El orden recomendado de lectura es:
 1. [Arquitectura y estado vigente del chat](jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
 2. [Caso de uso conversacional](jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md).
 3. [Comparación de estrategias del chat](jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
-4. [Smoke pagado de la V1 Netlify-only](experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md)
+4. [Iteración real de calidad A/B del 3 de agosto](experiments/CHAT_AB_QUALITY_ITERATION_2026-08-03.md),
+   [smoke pagado de la V1 Netlify-only](experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md)
    y [resultados históricos de F0.2](experiments/CHAT_STRATEGY_F02_RESULTS.md).
 5. [Roadmap del modelo de datos v3](jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
 6. [Pipeline del caso canónico](jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md).

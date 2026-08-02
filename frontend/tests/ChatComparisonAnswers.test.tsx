@@ -1,34 +1,160 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ChatComparisonAnswers } from '@/components/chat/ChatComparisonAnswers';
 import type { ChatStrategyAnswer } from '@/types/chat';
 
-describe('ChatComparisonAnswers', () => {
-  it('presenta un coste desconocido como no disponible, nunca como cero', () => {
-    const answer: ChatStrategyAnswer = {
-      strategy: 'current_structured',
-      status: 'error',
-      content: '',
-      isStreaming: false,
-      sources: [],
-      limits: ['Tiempo de respuesta agotado.'],
-      model: 'unavailable',
-      latencyMs: 52_000,
-      cost: {
-        currency: 'USD',
-        amountUsd: null,
-        costMicrousd: null,
-        measurement: 'UNAVAILABLE',
-        scope: 'REQUEST_MARGINAL',
-        pricingVersion: 'unavailable',
-        inputTokens: null,
-        outputTokens: null,
-        retrievedDocumentTokens: null,
-        excludesCorpusPreparation: true,
-      },
-    };
+const answer = (
+  strategy: ChatStrategyAnswer['strategy'],
+  overrides: Partial<ChatStrategyAnswer> = {}
+): ChatStrategyAnswer => ({
+  strategy,
+  status: 'completa',
+  content: strategy === 'current_structured' ? 'Contenido de A.' : 'Contenido de B.',
+  isStreaming: false,
+  sources: [],
+  limits: [],
+  model: 'test',
+  latencyMs: 100,
+  cost: {
+    currency: 'USD',
+    amountUsd: '0.001000',
+    costMicrousd: 1_000,
+    measurement: 'ACTUAL',
+    scope: 'REQUEST_MARGINAL',
+    pricingVersion: 'test',
+    inputTokens: 10,
+    outputTokens: 5,
+    retrievedDocumentTokens: 0,
+    excludesCorpusPreparation: true,
+  },
+  ...overrides,
+});
 
-    render(<ChatComparisonAnswers answers={[answer]} />);
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+describe('ChatComparisonAnswers', () => {
+  it('mantiene una sola columna sin pestañas ni voto cuando solo existe una opción', () => {
+    render(<ChatComparisonAnswers answers={[answer('current_structured')]} />);
+
+    expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
+    expect(screen.getByTestId('comparison-grid')).not.toHaveClass('md:grid-cols-2');
+    expect(screen.getByRole('region', { name: 'Respuesta única' })).toHaveTextContent(
+      'Contenido de A.'
+    );
+    expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
+  });
+
+  it('muestra dos columnas en escritorio y pestañas ciegas en móvil', async () => {
+    const user = userEvent.setup();
+    render(
+      <ChatComparisonAnswers
+        answers={[answer('current_structured'), answer('gemini_file_search')]}
+      />
+    );
+
+    expect(screen.getByTestId('comparison-grid')).toHaveClass('md:grid-cols-2');
+    const tabs = screen.getByRole('tablist', { name: 'Opciones de respuesta' });
+    const optionA = within(tabs).getByRole('tab', { name: 'Opción A' });
+    const optionB = within(tabs).getByRole('tab', { name: 'Opción B' });
+    expect(optionA).toHaveAttribute('aria-selected', 'true');
+    expect(optionB).toHaveAttribute('aria-selected', 'false');
+    expect(screen.queryByText('Corpus estructurado')).not.toBeInTheDocument();
+    expect(screen.queryByText('Gemini File Search')).not.toBeInTheDocument();
+
+    optionA.focus();
+    await user.keyboard('{ArrowRight}');
+    expect(optionB).toHaveFocus();
+    expect(optionB).toHaveAttribute('aria-selected', 'true');
+
+    await user.click(optionB);
+
+    expect(optionA).toHaveAttribute('aria-selected', 'false');
+    expect(optionB).toHaveAttribute('aria-selected', 'true');
+    expect(screen.getByRole('tabpanel', { name: 'Respuesta de la opción A' })).toHaveClass(
+      'hidden',
+      'md:block'
+    );
+    expect(screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' })).not.toHaveClass(
+      'hidden'
+    );
+  });
+
+  it('envía un voto ciego con motivo cerrado y confirma el registro', async () => {
+    const user = userEvent.setup();
+    const fetch = vi.fn(
+      async (_input: RequestInfo | URL, _init?: RequestInit) => new Response(null, { status: 204 })
+    );
+    vi.stubGlobal('fetch', fetch);
+    render(
+      <ChatComparisonAnswers
+        answers={[answer('current_structured'), answer('gemini_file_search')]}
+        comparisonId='chat-comparison-1'
+      />
+    );
+
+    const vote = screen.getByRole('region', { name: 'Valorar comparación' });
+    await user.click(within(vote).getByRole('radio', { name: 'Opción A' }));
+    await user.selectOptions(within(vote).getByRole('combobox', { name: 'Motivo' }), 'clearer');
+    await user.click(within(vote).getByRole('button', { name: 'Enviar valoración' }));
+
+    expect(fetch).toHaveBeenCalledOnce();
+    expect(fetch).toHaveBeenCalledWith(
+      '/api/chat-vote',
+      expect.objectContaining({ method: 'POST', headers: { 'content-type': 'application/json' } })
+    );
+    const request = fetch.mock.calls[0]?.[1];
+    expect(JSON.parse(String(request?.body))).toEqual({
+      request_id: 'chat-comparison-1',
+      verdict: 'a',
+      reason: 'clearer',
+    });
+    expect(await within(vote).findByRole('status')).toHaveTextContent('Valoración registrada');
+  });
+
+  it('no permite votar hasta que las dos respuestas han terminado', () => {
+    render(
+      <ChatComparisonAnswers
+        answers={[
+          answer('current_structured'),
+          answer('gemini_file_search', { isStreaming: true, status: undefined }),
+        ]}
+        comparisonId='chat-comparison-1'
+      />
+    );
+
+    expect(screen.queryByRole('region', { name: 'Valorar comparación' })).not.toBeInTheDocument();
+  });
+
+  it('presenta un coste desconocido como no disponible, nunca como cero', () => {
+    render(
+      <ChatComparisonAnswers
+        answers={[
+          answer('current_structured', {
+            status: 'error',
+            content: '',
+            limits: ['Tiempo de respuesta agotado.'],
+            model: 'unavailable',
+            latencyMs: 52_000,
+            cost: {
+              currency: 'USD',
+              amountUsd: null,
+              costMicrousd: null,
+              measurement: 'UNAVAILABLE',
+              scope: 'REQUEST_MARGINAL',
+              pricingVersion: 'unavailable',
+              inputTokens: null,
+              outputTokens: null,
+              retrievedDocumentTokens: null,
+              excludesCorpusPreparation: true,
+            },
+          }),
+        ]}
+      />
+    );
 
     expect(screen.getByText('no disponible')).toBeInTheDocument();
     expect(screen.queryByText(/USD 0\.000000/)).not.toBeInTheDocument();

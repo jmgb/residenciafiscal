@@ -38,6 +38,13 @@ class GoogleGenAIFileSearchGateway:
         judgment_id: str,
         source_sha256: str,
     ) -> str:
+        authority = (
+            "tribunal_supremo"
+            if judgment_id.startswith("sts-")
+            else "audiencia_nacional"
+            if judgment_id.startswith("san-")
+            else "other"
+        )
         operation = self._client.file_search_stores.upload_to_file_search_store(
             file_search_store_name=store_name,
             file=source,
@@ -46,6 +53,7 @@ class GoogleGenAIFileSearchGateway:
                 "mime_type": "application/pdf",
                 "custom_metadata": [
                     {"key": "judgment_id", "string_value": judgment_id},
+                    {"key": "authority", "string_value": authority},
                     {"key": "source_sha256", "string_value": source_sha256},
                 ],
             },
