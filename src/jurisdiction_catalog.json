@@ -1,0 +1,778 @@
+{
+  "schema_version": "residenciafiscal-jurisdictions/1",
+  "jurisdictions": [
+    {
+      "code": "ad",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Andorra",
+      "slug": "andorra",
+      "aliases": [
+        "Principado de Andorra"
+      ]
+    },
+    {
+      "code": "ae",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Emiratos Árabes Unidos",
+      "slug": "emiratos-arabes-unidos",
+      "aliases": [
+        "EAU"
+      ]
+    },
+    {
+      "code": "al",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Albania",
+      "slug": "albania",
+      "aliases": []
+    },
+    {
+      "code": "am",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Armenia",
+      "slug": "armenia",
+      "aliases": []
+    },
+    {
+      "code": "ar",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Argentina",
+      "slug": "argentina",
+      "aliases": [
+        "República Argentina"
+      ]
+    },
+    {
+      "code": "at",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Austria",
+      "slug": "austria",
+      "aliases": []
+    },
+    {
+      "code": "au",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Australia",
+      "slug": "australia",
+      "aliases": []
+    },
+    {
+      "code": "az",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Azerbaiyán",
+      "slug": "azerbaiyan",
+      "aliases": []
+    },
+    {
+      "code": "ba",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Bosnia y Herzegovina",
+      "slug": "bosnia-y-herzegovina",
+      "aliases": []
+    },
+    {
+      "code": "bb",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Barbados",
+      "slug": "barbados",
+      "aliases": []
+    },
+    {
+      "code": "be",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Bélgica",
+      "slug": "belgica",
+      "aliases": []
+    },
+    {
+      "code": "bg",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Bulgaria",
+      "slug": "bulgaria",
+      "aliases": []
+    },
+    {
+      "code": "bo",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Bolivia",
+      "slug": "bolivia",
+      "aliases": []
+    },
+    {
+      "code": "br",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Brasil",
+      "slug": "brasil",
+      "aliases": []
+    },
+    {
+      "code": "by",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Bielorrusia",
+      "slug": "bielorrusia",
+      "aliases": []
+    },
+    {
+      "code": "ca",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Canadá",
+      "slug": "canada",
+      "aliases": []
+    },
+    {
+      "code": "ch",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Suiza",
+      "slug": "suiza",
+      "aliases": [
+        "Confederación Suiza"
+      ]
+    },
+    {
+      "code": "cl",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Chile",
+      "slug": "chile",
+      "aliases": []
+    },
+    {
+      "code": "cn",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "China",
+      "slug": "china",
+      "aliases": []
+    },
+    {
+      "code": "co",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Colombia",
+      "slug": "colombia",
+      "aliases": []
+    },
+    {
+      "code": "cr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Costa Rica",
+      "slug": "costa-rica",
+      "aliases": []
+    },
+    {
+      "code": "cshh",
+      "code_type": "iso-3166-3-alpha-4",
+      "name": "Checoslovaquia",
+      "slug": "checoslovaquia",
+      "aliases": []
+    },
+    {
+      "code": "cu",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Cuba",
+      "slug": "cuba",
+      "aliases": []
+    },
+    {
+      "code": "cv",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Cabo Verde",
+      "slug": "cabo-verde",
+      "aliases": []
+    },
+    {
+      "code": "cy",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Chipre",
+      "slug": "chipre",
+      "aliases": []
+    },
+    {
+      "code": "de",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Alemania",
+      "slug": "alemania",
+      "aliases": [
+        "República Federal de Alemania"
+      ]
+    },
+    {
+      "code": "dk",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Dinamarca",
+      "slug": "dinamarca",
+      "aliases": []
+    },
+    {
+      "code": "do",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "República Dominicana",
+      "slug": "republica-dominicana",
+      "aliases": []
+    },
+    {
+      "code": "dz",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Argelia",
+      "slug": "argelia",
+      "aliases": []
+    },
+    {
+      "code": "ec",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Ecuador",
+      "slug": "ecuador",
+      "aliases": []
+    },
+    {
+      "code": "ee",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Estonia",
+      "slug": "estonia",
+      "aliases": []
+    },
+    {
+      "code": "eg",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Egipto",
+      "slug": "egipto",
+      "aliases": []
+    },
+    {
+      "code": "es",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "España",
+      "slug": "espana",
+      "aliases": [
+        "Reino de España"
+      ]
+    },
+    {
+      "code": "fi",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Finlandia",
+      "slug": "finlandia",
+      "aliases": []
+    },
+    {
+      "code": "fr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Francia",
+      "slug": "francia",
+      "aliases": [
+        "República Francesa"
+      ]
+    },
+    {
+      "code": "gb",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Reino Unido",
+      "slug": "reino-unido",
+      "aliases": [
+        "Gran Bretaña",
+        "Reino Unido de Gran Bretaña e Irlanda del Norte"
+      ]
+    },
+    {
+      "code": "ge",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Georgia",
+      "slug": "georgia",
+      "aliases": []
+    },
+    {
+      "code": "gi",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Gibraltar",
+      "slug": "gibraltar",
+      "aliases": []
+    },
+    {
+      "code": "gq",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Guinea Ecuatorial",
+      "slug": "guinea-ecuatorial",
+      "aliases": [
+        "República de Guinea Ecuatorial"
+      ]
+    },
+    {
+      "code": "gr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Grecia",
+      "slug": "grecia",
+      "aliases": []
+    },
+    {
+      "code": "gt",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Guatemala",
+      "slug": "guatemala",
+      "aliases": []
+    },
+    {
+      "code": "hk",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Hong Kong",
+      "slug": "hong-kong",
+      "aliases": []
+    },
+    {
+      "code": "hn",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Honduras",
+      "slug": "honduras",
+      "aliases": []
+    },
+    {
+      "code": "hr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Croacia",
+      "slug": "croacia",
+      "aliases": []
+    },
+    {
+      "code": "ht",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Haití",
+      "slug": "haiti",
+      "aliases": []
+    },
+    {
+      "code": "hu",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Hungría",
+      "slug": "hungria",
+      "aliases": []
+    },
+    {
+      "code": "id",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Indonesia",
+      "slug": "indonesia",
+      "aliases": []
+    },
+    {
+      "code": "ie",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Irlanda",
+      "slug": "irlanda",
+      "aliases": []
+    },
+    {
+      "code": "il",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Israel",
+      "slug": "israel",
+      "aliases": []
+    },
+    {
+      "code": "in",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "India",
+      "slug": "india",
+      "aliases": []
+    },
+    {
+      "code": "ir",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Irán",
+      "slug": "iran",
+      "aliases": []
+    },
+    {
+      "code": "is",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Islandia",
+      "slug": "islandia",
+      "aliases": []
+    },
+    {
+      "code": "it",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Italia",
+      "slug": "italia",
+      "aliases": []
+    },
+    {
+      "code": "jm",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Jamaica",
+      "slug": "jamaica",
+      "aliases": []
+    },
+    {
+      "code": "jp",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Japón",
+      "slug": "japon",
+      "aliases": []
+    },
+    {
+      "code": "ke",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Kenia",
+      "slug": "kenia",
+      "aliases": []
+    },
+    {
+      "code": "kr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Corea del Sur",
+      "slug": "corea-del-sur",
+      "aliases": [
+        "Corea"
+      ]
+    },
+    {
+      "code": "kw",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Kuwait",
+      "slug": "kuwait",
+      "aliases": []
+    },
+    {
+      "code": "kz",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Kazajistán",
+      "slug": "kazajistan",
+      "aliases": []
+    },
+    {
+      "code": "lt",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Lituania",
+      "slug": "lituania",
+      "aliases": []
+    },
+    {
+      "code": "lu",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Luxemburgo",
+      "slug": "luxemburgo",
+      "aliases": []
+    },
+    {
+      "code": "lv",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Letonia",
+      "slug": "letonia",
+      "aliases": []
+    },
+    {
+      "code": "ma",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Marruecos",
+      "slug": "marruecos",
+      "aliases": []
+    },
+    {
+      "code": "mc",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Mónaco",
+      "slug": "monaco",
+      "aliases": [
+        "Principado de Mónaco"
+      ]
+    },
+    {
+      "code": "md",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Moldavia",
+      "slug": "moldavia",
+      "aliases": []
+    },
+    {
+      "code": "mk",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Macedonia del Norte",
+      "slug": "macedonia-del-norte",
+      "aliases": []
+    },
+    {
+      "code": "mt",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Malta",
+      "slug": "malta",
+      "aliases": []
+    },
+    {
+      "code": "mx",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "México",
+      "slug": "mexico",
+      "aliases": [
+        "Méjico",
+        "Estados Unidos Mexicanos"
+      ]
+    },
+    {
+      "code": "my",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Malasia",
+      "slug": "malasia",
+      "aliases": []
+    },
+    {
+      "code": "ng",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Nigeria",
+      "slug": "nigeria",
+      "aliases": []
+    },
+    {
+      "code": "ni",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Nicaragua",
+      "slug": "nicaragua",
+      "aliases": []
+    },
+    {
+      "code": "nl",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Países Bajos",
+      "slug": "paises-bajos",
+      "aliases": [
+        "Holanda"
+      ]
+    },
+    {
+      "code": "no",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Noruega",
+      "slug": "noruega",
+      "aliases": []
+    },
+    {
+      "code": "nz",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Nueva Zelanda",
+      "slug": "nueva-zelanda",
+      "aliases": []
+    },
+    {
+      "code": "om",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Omán",
+      "slug": "oman",
+      "aliases": []
+    },
+    {
+      "code": "pa",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Panamá",
+      "slug": "panama",
+      "aliases": []
+    },
+    {
+      "code": "pe",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Perú",
+      "slug": "peru",
+      "aliases": []
+    },
+    {
+      "code": "ph",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Filipinas",
+      "slug": "filipinas",
+      "aliases": []
+    },
+    {
+      "code": "pk",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Pakistán",
+      "slug": "pakistan",
+      "aliases": []
+    },
+    {
+      "code": "pl",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Polonia",
+      "slug": "polonia",
+      "aliases": []
+    },
+    {
+      "code": "pt",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Portugal",
+      "slug": "portugal",
+      "aliases": [
+        "República Portuguesa"
+      ]
+    },
+    {
+      "code": "py",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Paraguay",
+      "slug": "paraguay",
+      "aliases": []
+    },
+    {
+      "code": "qa",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Catar",
+      "slug": "catar",
+      "aliases": []
+    },
+    {
+      "code": "ro",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Rumanía",
+      "slug": "rumania",
+      "aliases": []
+    },
+    {
+      "code": "rs",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Serbia",
+      "slug": "serbia",
+      "aliases": []
+    },
+    {
+      "code": "ru",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Rusia",
+      "slug": "rusia",
+      "aliases": [
+        "Federación Rusa"
+      ]
+    },
+    {
+      "code": "sa",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Arabia Saudí",
+      "slug": "arabia-saudi",
+      "aliases": []
+    },
+    {
+      "code": "se",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Suecia",
+      "slug": "suecia",
+      "aliases": []
+    },
+    {
+      "code": "sg",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Singapur",
+      "slug": "singapur",
+      "aliases": []
+    },
+    {
+      "code": "si",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Eslovenia",
+      "slug": "eslovenia",
+      "aliases": []
+    },
+    {
+      "code": "sn",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Senegal",
+      "slug": "senegal",
+      "aliases": []
+    },
+    {
+      "code": "suhh",
+      "code_type": "iso-3166-3-alpha-4",
+      "name": "URSS",
+      "slug": "urss",
+      "aliases": [
+        "Unión de Repúblicas Socialistas Soviéticas"
+      ]
+    },
+    {
+      "code": "sv",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "El Salvador",
+      "slug": "el-salvador",
+      "aliases": []
+    },
+    {
+      "code": "th",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Tailandia",
+      "slug": "tailandia",
+      "aliases": []
+    },
+    {
+      "code": "tn",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Túnez",
+      "slug": "tunez",
+      "aliases": []
+    },
+    {
+      "code": "tr",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Turquía",
+      "slug": "turquia",
+      "aliases": []
+    },
+    {
+      "code": "tt",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Trinidad y Tobago",
+      "slug": "trinidad-y-tobago",
+      "aliases": []
+    },
+    {
+      "code": "tw",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Taiwán",
+      "slug": "taiwan",
+      "aliases": []
+    },
+    {
+      "code": "ua",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Ucrania",
+      "slug": "ucrania",
+      "aliases": []
+    },
+    {
+      "code": "us",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Estados Unidos",
+      "slug": "estados-unidos",
+      "aliases": [
+        "EEUU",
+        "EE.UU.",
+        "Estados Unidos de América"
+      ]
+    },
+    {
+      "code": "uy",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Uruguay",
+      "slug": "uruguay",
+      "aliases": []
+    },
+    {
+      "code": "uz",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Uzbekistán",
+      "slug": "uzbekistan",
+      "aliases": []
+    },
+    {
+      "code": "ve",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Venezuela",
+      "slug": "venezuela",
+      "aliases": []
+    },
+    {
+      "code": "vn",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Vietnam",
+      "slug": "vietnam",
+      "aliases": []
+    },
+    {
+      "code": "za",
+      "code_type": "iso-3166-1-alpha-2",
+      "name": "Sudáfrica",
+      "slug": "sudafrica",
+      "aliases": []
+    }
+  ]
+}

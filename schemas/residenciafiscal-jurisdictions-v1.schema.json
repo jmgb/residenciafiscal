@@ -1,0 +1,73 @@
+{
+  "$defs": {
+    "Jurisdiccion": {
+      "additionalProperties": false,
+      "description": "Una jurisdicción con su código estándar, su nombre y sus grafías.",
+      "properties": {
+        "aliases": {
+          "default": [],
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Aliases",
+          "type": "array"
+        },
+        "code": {
+          "pattern": "^[a-z]{2}(?:[a-z]{2})?$",
+          "title": "Code",
+          "type": "string"
+        },
+        "code_type": {
+          "enum": [
+            "iso-3166-1-alpha-2",
+            "iso-3166-3-alpha-4"
+          ],
+          "title": "Code Type",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "slug": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Slug",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "code_type",
+        "name",
+        "slug"
+      ],
+      "title": "Jurisdiccion",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Documento versionado del catálogo.",
+  "properties": {
+    "jurisdictions": {
+      "items": {
+        "$ref": "#/$defs/Jurisdiccion"
+      },
+      "minItems": 1,
+      "title": "Jurisdictions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-jurisdictions/1",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "jurisdictions"
+  ],
+  "title": "CatalogoJurisdicciones",
+  "type": "object"
+}
