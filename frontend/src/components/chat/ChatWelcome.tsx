@@ -19,7 +19,7 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
       className='flex flex-1 flex-col items-center justify-center px-4 py-8 text-center'
     >
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
-        Decide con las sentencias en la mano
+        Decide tu fiscalidad con las sentencias en la mano
       </h1>
       <p className='mb-3 max-w-xl text-sm leading-relaxed text-muted-foreground'>
         Modelo de IA entrenado con 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre
