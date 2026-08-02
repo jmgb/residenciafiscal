@@ -29,6 +29,15 @@ from pathlib import Path
 
 import yaml
 
+from jurisdictions import cargar_catalogo
+from treaty_relations import cargar_relaciones
+
+
+def sin_acentos(texto: str) -> str:
+    descompuesto = unicodedata.normalize("NFD", texto.casefold())
+    return "".join(c for c in descompuesto if not unicodedata.combining(c))
+
+
 # --- Normas del corpus -------------------------------------------------------
 
 # Siglas tal como las escriben los análisis, con la norma a la que apuntan.
@@ -74,36 +83,33 @@ class ConvenioPais:
         return not (self.hasta_ejercicio is not None and ejercicio > self.hasta_ejercicio)
 
 
-# Convenios de los países que aparecen en el corpus. Es una tabla curada y
-# corta a propósito: deducir el país del título del convenio es inseguro —los 96
-# lo escriben de trece formas— y un país equivocado aquí enlazaría una sentencia
-# con el derecho de otro Estado.
-CONVENIOS_POR_PAIS: dict[str, tuple[ConvenioPais, ...]] = {
-    "reino unido": (
-        ConvenioPais("BOE-A-1976-23347", hasta_ejercicio=2013),
-        ConvenioPais("BOE-A-2014-5171", desde_ejercicio=2014),
-    ),
-    "argentina": (
-        ConvenioPais("BOE-A-1994-20084", hasta_ejercicio=2012),
-        ConvenioPais("BOE-A-2014-373", desde_ejercicio=2013),
-    ),
-    "suiza": (ConvenioPais("BOE-A-1967-3470"),),
-    "francia": (ConvenioPais("BOE-A-1997-12729"),),
-    "alemania": (ConvenioPais("BOE-A-2012-10212"),),
-    "paises bajos": (ConvenioPais("BOE-A-1972-1469"),),
-    "holanda": (ConvenioPais("BOE-A-1972-1469"),),
-    "colombia": (ConvenioPais("BOE-A-2008-17209"),),
-    "emiratos arabes unidos": (ConvenioPais("BOE-A-2007-1343"),),
-    "rusia": (ConvenioPais("BOE-A-2000-12779"),),
-    "federacion rusa": (ConvenioPais("BOE-A-2000-12779"),),
-    "japon": (ConvenioPais("BOE-A-1974-1930", hasta_ejercicio=2020),),
-    "marruecos": (ConvenioPais("BOE-A-1985-9280"),),
-    "estados unidos": (ConvenioPais("BOE-A-1990-30940"),),
-    "eeuu": (ConvenioPais("BOE-A-1990-30940"),),
-    "mexico": (ConvenioPais("BOE-A-1994-23743"),),
-    "mejico": (ConvenioPais("BOE-A-1994-23743"),),
-    "canada": (ConvenioPais("BOE-A-1981-2731"),),
-}
+def _convenios_por_grafia() -> dict[str, tuple[ConvenioPais, ...]]:
+    """Proyecta el registro bilateral sobre las grafías del catálogo.
+
+    Antes esto era una tabla escrita a mano con diecisiete alias: reconocía solo
+    los países que alguien recordó teclear, y cada rango de ejercicios existía
+    por duplicado. Qué país firmó cada convenio sigue siendo un dato curado —no
+    se deduce del título, que los escribe de trece formas distintas—, pero vive
+    en `treaty_relations_es.json`, y aquí únicamente se proyecta.
+    """
+    tabla: dict[str, tuple[ConvenioPais, ...]] = {}
+    catalogo = cargar_catalogo()
+    for code, relacion in cargar_relaciones().items():
+        convenios = tuple(
+            ConvenioPais(
+                instrumento.boe_id,
+                desde_ejercicio=instrumento.effective_from_tax_year,
+                hasta_ejercicio=instrumento.effective_to_tax_year,
+            )
+            for instrumento in relacion.instruments
+        )
+        jurisdiccion = catalogo[code]
+        for grafia in (jurisdiccion.name, *jurisdiccion.aliases):
+            tabla[sin_acentos(grafia)] = convenios
+    return tabla
+
+
+CONVENIOS_POR_PAIS: dict[str, tuple[ConvenioPais, ...]] = _convenios_por_grafia()
 
 # Valores del campo `pais_CDI_aplicado` que no nombran ningún país.
 SIN_PAIS = frozenset({"", "no consta", "no aplica", "ninguno", "n/a", "null", "no"})
@@ -147,11 +153,6 @@ class EnlaceCita:
     apartado: str | None
     certeza: str
     redaccion_aplicable: dict[str, str | None] = field(default_factory=dict)
-
-
-def sin_acentos(texto: str) -> str:
-    descompuesto = unicodedata.normalize("NFD", texto.casefold())
-    return "".join(c for c in descompuesto if not unicodedata.combining(c))
 
 
 # «Artículo 9», «Artículo 95 bis», «Artículo IV»: el número con el que una cita
@@ -266,17 +267,26 @@ def paises_citados(valor: object) -> list[str]:
     El campo es texto libre del modelo: «Méjico», «EEUU», «Marruecos; Estados
     Unidos», «Reino Unido (CDI 1975; referido también CDI 2013)». Se buscan los
     alias conocidos como subcadena, sin acentos, y se admite más de uno.
+
+    La grafía más larga se busca primero **y consume su texto**: sin eso, el
+    nombre oficial del Reino Unido —«… e Irlanda del Norte»— enlazaría además el
+    convenio irlandés, que es de otro Estado.
     """
     if valor is None:
         return []
     normalizado = sin_acentos(str(valor))
     if normalizado.strip() in SIN_PAIS:
         return []
-    encontrados = [alias for alias in CONVENIOS_POR_PAIS if alias in normalizado]
-    # «paises bajos» y «holanda» apuntan al mismo convenio; se deduplica por id.
+
+    restante = normalizado
     vistos: set[str] = set()
     unicos: list[str] = []
-    for alias in sorted(encontrados, key=len, reverse=True):
+    for alias in sorted(CONVENIOS_POR_PAIS, key=len, reverse=True):
+        if alias not in restante:
+            continue
+        restante = restante.replace(alias, " ")
+        # «Países Bajos» y «Holanda» apuntan al mismo convenio: se deduplica por
+        # identificador, no por grafía.
         ids = {c.boe_id for c in CONVENIOS_POR_PAIS[alias]}
         if ids & vistos:
             continue

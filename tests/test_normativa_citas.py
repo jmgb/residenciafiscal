@@ -311,3 +311,43 @@ def test_el_articulo_9_lirpf_es_el_precepto_mas_citado() -> None:
 
     assert mas_citado["slug"] == "lirpf-a9"
     assert mas_citado["total_sentencias"] > 40
+
+
+def test_la_tabla_de_convenios_se_deriva_del_registro_bilateral() -> None:
+    """Deja de haber una copia editable del mismo hecho en tres sitios.
+
+    Antes esta tabla enumeraba a mano diecisiete alias con sus rangos. Ahora
+    sale del registro: si el registro corrige el ejercicio en el que un convenio
+    dejó de aplicarse, el enlazado de citas lo hereda sin tocar nada aquí.
+    """
+    from treaty_relations import instrumentos_de
+
+    for code in ("gb", "ar", "jp"):
+        esperados = [i.boe_id for i in instrumentos_de(code)]
+        grafia = {"gb": "reino unido", "ar": "argentina", "jp": "japon"}[code]
+        assert [c.boe_id for c in CONVENIOS_POR_PAIS[grafia]] == esperados
+
+
+def test_la_tabla_cubre_las_noventa_y_dos_contrapartes() -> None:
+    """Antes solo reconocía los países que alguien recordó escribir a mano."""
+    from treaty_relations import cargar_relaciones
+
+    identificadores = {c.boe_id for convenios in CONVENIOS_POR_PAIS.values() for c in convenios}
+    esperados = {
+        instrumento.boe_id
+        for relacion in cargar_relaciones().values()
+        for instrumento in relacion.instruments
+    }
+    assert identificadores == esperados
+
+
+def test_un_alias_contenido_en_otro_no_produce_un_segundo_pais() -> None:
+    """«Irlanda del Norte» forma parte del Reino Unido, no de Irlanda.
+
+    El campo se recorre consumiendo primero las grafías más largas: sin eso, el
+    nombre oficial del Reino Unido enlazaría además el convenio irlandés.
+    """
+    encontrados = paises_citados("Reino Unido de Gran Bretaña e Irlanda del Norte")
+
+    identificadores = {c.boe_id for alias in encontrados for c in CONVENIOS_POR_PAIS[alias]}
+    assert identificadores == {CDI_REINO_UNIDO_1975, CDI_REINO_UNIDO_2013}
