@@ -35,6 +35,9 @@ export {
   SENTENCIAS_INDEX_PATH,
   sentenciaDescription,
   sentenciaPath,
+  sentenciasIndexDescription,
+  sentenciasIndexPath,
+  sentenciasIndexTitle,
   sentenciaTitle,
 } from './lib/sentencia-metadata';
 export { SENTENCIA_PRELOAD_ELEMENT_ID } from './lib/sentencia-preload';
@@ -46,7 +49,7 @@ export function render(
   url: string,
   treaties: TreatyPreloadMap = {},
   preceptos: PreceptoPreloadMap = {},
-  sentencias: SentenciaPreload = { index: null, fichas: {} }
+  sentencias: SentenciaPreload = { indexes: {}, fichas: {} }
 ): string {
   return renderToString(
     <StrictMode>

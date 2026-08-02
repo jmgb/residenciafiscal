@@ -1,30 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { JsonLd } from '@/components/seo/JsonLd';
+import { jurisdictionName, jurisdictionPath } from '@/data/jurisdictions';
 import {
   anio,
   criterioLabel,
   esBorrador,
   organoCorto,
   resultadoLabel,
-  SENTENCIAS_INDEX_PATH,
   sentenciaPath,
+  sentenciasIndexDescription,
+  sentenciasIndexPath,
+  sentenciasIndexTitle,
 } from '@/lib/sentencia-metadata';
 import { useSentenciasIndexPreload } from '@/lib/sentencia-preload';
 import { loadSentenciasIndex, sentenciasLoadFailed } from '@/lib/sentencias';
 import { breadcrumbJsonLd } from '@/lib/structured-data';
 import { usePageTitle } from '@/lib/usePageTitle';
 import type { SentenciaIndexEntry, SentenciasIndex } from '@/types/sentencias';
-
-const TITLE = 'Sentencias sobre residencia fiscal en España: fichas por sentencia';
-const DESCRIPTION =
-  'Fichas de las sentencias del Tribunal Supremo y la Audiencia Nacional sobre residencia ' +
-  'fiscal: criterios aplicados, pruebas valoradas, resultado y extractos literales con su página.';
-
-const BREADCRUMB = breadcrumbJsonLd([
-  { name: 'España', path: '/espana' },
-  { name: 'Sentencias', path: SENTENCIAS_INDEX_PATH },
-]);
 
 const TODOS = '';
 
@@ -36,12 +29,18 @@ function Chip({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SentenciaRow({ entry }: { entry: SentenciaIndexEntry }) {
+function SentenciaRow({
+  entry,
+  jurisdictionCode,
+}: {
+  entry: SentenciaIndexEntry;
+  jurisdictionCode: string;
+}) {
   return (
     <li className='border-border border-b py-3 last:border-b-0'>
       <Link
         className='font-medium text-primary underline-offset-4 hover:underline'
-        to={sentenciaPath(entry.judgmentId)}
+        to={sentenciaPath(entry.judgmentId, jurisdictionCode)}
       >
         {entry.roj}
       </Link>
@@ -74,8 +73,16 @@ function SentenciaRow({ entry }: { entry: SentenciaIndexEntry }) {
  * vez de aparentar un corpus vacío: el listado sin fichas es un estado
  * legítimo, no un error de carga.
  */
-export function SentenciasIndexPage() {
-  const preloaded = useSentenciasIndexPreload();
+export function SentenciasIndexPage({ jurisdictionCode }: { jurisdictionCode: string }) {
+  const countryName = jurisdictionName(jurisdictionCode);
+  const indexPath = sentenciasIndexPath(jurisdictionCode);
+  const title = sentenciasIndexTitle(jurisdictionCode);
+  const description = sentenciasIndexDescription(jurisdictionCode);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: countryName, path: jurisdictionPath(jurisdictionCode) },
+    { name: 'Sentencias', path: indexPath },
+  ]);
+  const preloaded = useSentenciasIndexPreload(jurisdictionCode);
   const [index, setIndex] = useState<SentenciasIndex | null>(preloaded);
   const [fallo, setFallo] = useState(false);
   const [criterio, setCriterio] = useState(TODOS);
@@ -84,11 +91,11 @@ export function SentenciasIndexPage() {
     index !== null &&
     index.judgments.length > 0 &&
     index.judgments.every((entry) => entry.publicationState === 'published');
-  usePageTitle(TITLE, SENTENCIAS_INDEX_PATH, DESCRIPTION, indexable, true);
+  usePageTitle(title, indexPath, description, indexable, true);
 
   useEffect(() => {
     let vigente = true;
-    loadSentenciasIndex().then((cargado) => {
+    loadSentenciasIndex(jurisdictionCode).then((cargado) => {
       if (!vigente) return;
       setIndex(cargado);
       setFallo(sentenciasLoadFailed());
@@ -96,7 +103,7 @@ export function SentenciasIndexPage() {
     return () => {
       vigente = false;
     };
-  }, []);
+  }, [jurisdictionCode]);
 
   const judgments = useMemo(() => index?.judgments ?? [], [index]);
   const criterios = useMemo(
@@ -114,15 +121,15 @@ export function SentenciasIndexPage() {
 
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
-      <JsonLd data={BREADCRUMB} />
+      <JsonLd data={breadcrumb} />
       <h1 className='mb-3 font-heading font-semibold text-2xl'>
-        Sentencias sobre residencia fiscal
+        Sentencias sobre residencia fiscal en {countryName}
       </h1>
       <p className='mb-6 max-w-2xl text-muted-foreground text-sm leading-relaxed'>
         Una ficha por sentencia del corpus: la cuestión que resuelve, las pruebas que valoró el
-        tribunal, el criterio del artículo 9 LIRPF que aplica y el resultado, con extractos
-        literales verificados contra el PDF del CENDOJ y su página. El análisis lo genera un modelo
-        y solo se publica cuando una persona lo aprueba.
+        tribunal, el criterio jurídico que aplica y el resultado, con extractos literales
+        localizables en la fuente oficial. El análisis lo genera un modelo y solo se publica cuando
+        una persona lo aprueba.
       </p>
 
       {judgments.length > 0 && (
@@ -175,7 +182,11 @@ export function SentenciasIndexPage() {
           </p>
           <ul>
             {visibles.map((entry) => (
-              <SentenciaRow key={entry.judgmentId} entry={entry} />
+              <SentenciaRow
+                key={entry.judgmentId}
+                entry={entry}
+                jurisdictionCode={jurisdictionCode}
+              />
             ))}
           </ul>
         </>

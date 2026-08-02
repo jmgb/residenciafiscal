@@ -1,6 +1,8 @@
 /**
  * Proyección pública de una sentencia, tal como la sirve
- * `scripts/build-sentencias.mjs` desde `knowledge/jurisprudencia-v3/publico/`.
+ * `scripts/build-sentencias.mjs` desde una o más proyecciones públicas. El
+ * manifiesto frontend agrupa sus índices por jurisdicción y las fichas se
+ * sirven bajo `data/sentencias/<jurisdiccion>/<id>.json`.
  *
  * Es una **allowlist** producida por `src/public_judgment_projection.py`: el
  * frontend nunca recibe el caso canónico. Añadir un campo aquí no lo publica;
@@ -13,6 +15,7 @@ export type {
   PublicationState,
   SentenciaIndexEntry,
   SentenciasIndex,
+  SentenciasManifest,
 } from './sentencias-index';
 
 export interface RevisionEstado {

@@ -659,6 +659,17 @@ declara `jurisdiction` y el renderer construye la URL desde esa clave; una
 futura proyección francesa o peruana satisface el mismo contrato y se publica
 bajo su propio slug, no mediante un renderer paralelo.
 
+El contrato del frontend ya es multijurisdicción. El índice agregado
+`public/data/sentencias.json` usa el esquema
+`residenciafiscal-sentencias-index/2` y agrupa índices bajo
+`jurisdictions.<codigo>`; las fichas se materializan en
+`public/data/sentencias/<codigo>/<judgmentId>.json`. El código del país forma
+parte también de la caché y de la precarga SSR, por lo que dos jurisdicciones
+pueden tener el mismo `judgmentId` sin sobrescribirse ni cruzar contenido.
+Sitemap, redirects y prerender leen un único inventario de rutas derivado de
+ese manifiesto. Añadir una fuente al build incorpora así las tres superficies
+sin lógica específica para el país.
+
 El manifiesto distingue tres estados:
 
 - `internal_preview`: renderizable localmente, siempre `noindex` y excluido del
@@ -790,9 +801,15 @@ que se ejecuta **después de aceptar una fuente jurisprudencial de una segunda
 jurisdicción y antes de copiar su primer PDF**. Hasta entonces:
 
 - los nuevos manifiestos y proyecciones declaran `jurisdiction: es`;
-- ningún código nuevo asume que la ruta física implica jurisdicción;
+- ningún código nuevo asume que la ruta física de origen implica jurisdicción;
 - el importador futuro falla si intenta escribir una jurisdicción no española
   en el directorio plano.
+
+Esta restricción afecta solo al layout canónico de entrada. La salida pública
+del frontend ya separa jurisdicciones, admite varias fuentes configuradas y
+prueba la coexistencia de España y Francia con un identificador coincidente. La
+migración futura deberá decidir dónde vive el segundo corpus fuente, pero no
+requiere cambiar otra vez las URLs, loaders o artefactos SEO.
 
 ### 7.2 No mover todavía `knowledge/jurisprudencia-v3/`
 
@@ -1146,6 +1163,26 @@ sitemap, los 110 preceptos y los 122 enlaces de citas son idénticos.
   (`make verify-public-judgments`, unos 50 s; la suite comprueba una muestra
   fija de cinco).
 - Los 67 títulos y las 67 descripciones son únicos y derivados del dato.
+
+### Fase C1.1 — infraestructura multijurisdicción ejecutada
+
+| Pieza | Dónde |
+|---|---|
+| Manifiesto agregado v2 e identidad por país | `frontend/scripts/build-sentencias.mjs`, `src/types/sentencias-index.ts` |
+| Fichas aisladas por jurisdicción | `public/data/sentencias/<codigo>/<judgmentId>.json` |
+| Loaders, cachés y precarga SSR por país | `frontend/src/lib/sentencias.ts`, `sentencia-preload.ts` |
+| Rutas comunes para todas las jurisdicciones | `frontend/src/App.tsx`, `pages/Sentencias*.tsx` |
+| Inventario compartido por sitemap, redirects y prerender | `frontend/scripts/sentencia-route-inventory.mjs` |
+| Prueba con una segunda jurisdicción | `frontend/tests/multijurisdiction-publication.test.ts` |
+
+- España conserva exactamente `/espana/sentencias[/<sentencia>]`; la migración
+  de datos no cambia ninguna URL pública existente.
+- Una nueva fuente con `jurisdiction: fr`, por ejemplo, produce
+  `/francia/sentencias[/<sentencia>]` con títulos, breadcrumbs, canonical,
+  sitemap, redirects y HTML prerenderizado derivados del catálogo compartido.
+- Registrar las rutas React no equivale a publicarlas: si el manifiesto no
+  contiene fichas materializadas, no se generan HTML ni redirects y producción
+  continúa respondiendo 404 real.
 
 Hallazgos de la ejecución, todos corregidos:
 

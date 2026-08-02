@@ -141,11 +141,17 @@ function renderFicha(sentencia: SentenciaPublica = SENTENCIA, preceptos: Precept
   return render(
     <PreceptoPreloadContext.Provider value={preceptos}>
       <SentenciaPreloadContext.Provider
-        value={{ index: null, fichas: { [sentencia.judgment.judgmentId]: sentencia } }}
+        value={{
+          indexes: {},
+          fichas: { es: { [sentencia.judgment.judgmentId]: sentencia } },
+        }}
       >
         <MemoryRouter initialEntries={[`/espana/sentencias/${sentencia.judgment.judgmentId}`]}>
           <Routes>
-            <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+            <Route
+              path='/espana/sentencias/:judgmentId'
+              element={<SentenciaPage jurisdictionCode='es' />}
+            />
           </Routes>
         </MemoryRouter>
       </SentenciaPreloadContext.Provider>
@@ -354,7 +360,10 @@ describe('SentenciaPage', () => {
     render(
       <MemoryRouter initialEntries={['/espana/sentencias/sts-9999-2030']}>
         <Routes>
-          <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+          <Route
+            path='/espana/sentencias/:judgmentId'
+            element={<SentenciaPage jurisdictionCode='es' />}
+          />
         </Routes>
       </MemoryRouter>
     );
@@ -381,13 +390,19 @@ describe('SentenciaPage', () => {
 
     render(
       <SentenciaPreloadContext.Provider
-        value={{ index: null, fichas: { [SENTENCIA.judgment.judgmentId]: SENTENCIA } }}
+        value={{
+          indexes: {},
+          fichas: { es: { [SENTENCIA.judgment.judgmentId]: SENTENCIA } },
+        }}
       >
         <MemoryRouter initialEntries={['/espana/sentencias/san-1386-2017']}>
           <Link to='/espana/sentencias/san-1386-2017'>Ir a SAN</Link>
           <Link to='/espana/sentencias/sts-4306-2017'>Ir a STS</Link>
           <Routes>
-            <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+            <Route
+              path='/espana/sentencias/:judgmentId'
+              element={<SentenciaPage jurisdictionCode='es' />}
+            />
           </Routes>
         </MemoryRouter>
       </SentenciaPreloadContext.Provider>

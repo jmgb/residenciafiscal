@@ -11,10 +11,10 @@ import {
   entryDeSentencia,
   esBorrador,
   revisionLabel,
-  SENTENCIAS_INDEX_PATH,
   sentenciaDescription,
   sentenciaHeading,
   sentenciaPath,
+  sentenciasIndexPath,
   sentenciaTitle,
 } from '@/lib/sentencia-metadata';
 import { useSentenciaPreload } from '@/lib/sentencia-preload';
@@ -41,9 +41,12 @@ type Estado =
  * existe un tipo de schema.org con soporte de Google para resoluciones
  * judiciales, y `Legislation` es de las fichas que publican texto legal.
  */
-export function SentenciaPage() {
+export function SentenciaPage({ jurisdictionCode }: { jurisdictionCode: string }) {
   const { judgmentId = '' } = useParams();
-  const preload = useSentenciaPreload(judgmentId);
+  const indexPath = sentenciasIndexPath(jurisdictionCode);
+  const countryName = jurisdictionName(jurisdictionCode);
+  const countryPath = jurisdictionPath(jurisdictionCode);
+  const preload = useSentenciaPreload(jurisdictionCode, judgmentId);
   const [estado, setEstado] = useState<Estado>(() =>
     preload ? { fase: 'lista', sentencia: preload } : { fase: 'cargando' }
   );
@@ -58,7 +61,7 @@ export function SentenciaPage() {
 
   usePageTitle(
     entry ? sentenciaTitle(entry) : undefined,
-    judgmentId ? sentenciaPath(judgmentId) : SENTENCIAS_INDEX_PATH,
+    judgmentId ? sentenciaPath(judgmentId, jurisdictionCode) : indexPath,
     entry ? sentenciaDescription(entry) : undefined,
     // Un borrador interno nunca es indexable, ni siquiera si alguien comparte
     // su URL de preview.
@@ -96,14 +99,14 @@ export function SentenciaPage() {
     }
     let vigente = true;
     setEstado({ fase: 'cargando' });
-    loadSentencia(judgmentId).then((cargada) => {
+    loadSentencia(jurisdictionCode, judgmentId).then((cargada) => {
       if (!vigente) return;
       setEstado(cargada ? { fase: 'lista', sentencia: cargada } : { fase: 'no-encontrada' });
     });
     return () => {
       vigente = false;
     };
-  }, [judgmentId, preload]);
+  }, [jurisdictionCode, judgmentId, preload]);
 
   if (!sentencia || !entry) {
     return (
@@ -115,7 +118,7 @@ export function SentenciaPage() {
         </p>
         <Link
           className='mt-4 inline-block text-primary text-sm underline-offset-4 hover:underline'
-          to={SENTENCIAS_INDEX_PATH}
+          to={indexPath}
         >
           Ver todas las sentencias
         </Link>
@@ -129,9 +132,9 @@ export function SentenciaPage() {
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: 'España', path: '/espana' },
-          { name: 'Sentencias', path: SENTENCIAS_INDEX_PATH },
-          { name: judgment.roj, path: sentenciaPath(judgment.judgmentId) },
+          { name: countryName, path: countryPath },
+          { name: 'Sentencias', path: indexPath },
+          { name: judgment.roj, path: sentenciaPath(judgment.judgmentId, jurisdictionCode) },
         ])}
       />
 
@@ -190,7 +193,7 @@ export function SentenciaPage() {
 
       <Link
         className='mt-8 inline-block text-primary text-sm underline-offset-4 hover:underline'
-        to={SENTENCIAS_INDEX_PATH}
+        to={indexPath}
       >
         Ver todas las sentencias sobre residencia fiscal
       </Link>

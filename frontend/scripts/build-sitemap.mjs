@@ -3,6 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { jurisdictionSectionPath } from '../src/data/jurisdictions.ts';
+import { sentenciaRouteInventory } from './sentencia-route-inventory.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -19,10 +20,8 @@ const normativa = JSON.parse(readFileSync(join(publicDir, 'data/normativa.json')
 const sentenciasFile = join(publicDir, 'data/sentencias.json');
 const sentencias = existsSync(sentenciasFile)
   ? JSON.parse(readFileSync(sentenciasFile, 'utf8'))
-  : { judgments: [] };
-const sentenciasPublicadas = sentencias.judgments.filter(
-  (entry) => entry.publicationState === 'published'
-);
+  : { jurisdictions: {} };
+const rutasSentenciasPublicadas = sentenciaRouteInventory(sentencias, { publishedOnly: true });
 
 const SITE_URL = 'https://residenciafiscal.org';
 // Solo entra lo indexable. Cada país declara su propia frecuencia y prioridad:
@@ -42,21 +41,10 @@ const publicRoutes = [
     changefreq: 'yearly',
     priority: '0.4',
   })),
-  // El índice solo existe si hay algo que listar; un listado vacío sería una
-  // URL indexable sin contenido propio.
-  ...(sentenciasPublicadas.length > 0
-    ? [
-        {
-          path: jurisdictionSectionPath(sentencias.jurisdiction, 'sentencias'),
-          changefreq: 'weekly',
-          priority: '0.6',
-        },
-      ]
-    : []),
-  ...sentenciasPublicadas.map((entry) => ({
-    path: `${jurisdictionSectionPath(sentencias.jurisdiction, 'sentencias')}/${entry.judgmentId}`,
-    changefreq: 'yearly',
-    priority: '0.5',
+  ...rutasSentenciasPublicadas.map((route) => ({
+    path: route.path,
+    changefreq: route.kind === 'index' ? 'weekly' : 'yearly',
+    priority: route.kind === 'index' ? '0.6' : '0.5',
   })),
 ];
 

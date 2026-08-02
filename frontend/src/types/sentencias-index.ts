@@ -15,10 +15,15 @@ export interface SentenciaIndexEntry {
 }
 
 export interface SentenciasIndex {
-  schemaVersion: string;
   jurisdiction: string;
   /** Candidatas del corpus, publicadas o no. Distingue «vacío» de «roto». */
   candidates: number;
   includesPreview: boolean;
   judgments: SentenciaIndexEntry[];
+}
+
+/** Manifiesto ligero común a todos los corpus disponibles en el despliegue. */
+export interface SentenciasManifest {
+  schemaVersion: 'residenciafiscal-sentencias-index/2';
+  jurisdictions: Record<string, SentenciasIndex>;
 }

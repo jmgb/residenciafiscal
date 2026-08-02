@@ -27,18 +27,23 @@ const ENTRY = {
 };
 
 let sourceDir: string;
+let secondSourceDir: string;
 let targetDir: string;
 
-function writeSource(judgments: Array<Record<string, unknown>>) {
+function writeSource(
+  judgments: Array<Record<string, unknown>>,
+  { directory = sourceDir, jurisdiction = 'es' } = {}
+) {
   const entries: Array<Record<string, unknown>> = judgments.map((judgment) => {
     const publicationState =
       judgment.publicationState === 'published' ? 'publishable' : judgment.publicationState;
     const contenido = `${JSON.stringify({
       schemaVersion: 'residenciafiscal-public-judgment/1',
+      jurisdiction,
       publicationState,
       judgment: { judgmentId: judgment.judgmentId },
     })}\n`;
-    writeFileSync(join(sourceDir, `${judgment.judgmentId}.public.json`), contenido, 'utf8');
+    writeFileSync(join(directory, `${judgment.judgmentId}.public.json`), contenido, 'utf8');
     return {
       ...judgment,
       projectionSha256: createHash('sha256').update(contenido, 'utf8').digest('hex'),
@@ -46,10 +51,10 @@ function writeSource(judgments: Array<Record<string, unknown>>) {
     };
   });
   writeFileSync(
-    join(sourceDir, 'manifest.json'),
+    join(directory, 'manifest.json'),
     JSON.stringify({
       schemaVersion: 'residenciafiscal-public-judgments/1',
-      jurisdiction: 'es',
+      jurisdiction,
       candidates: entries.length,
       published: entries.filter((entry) => entry.publicationState === 'published').length,
       judgments: entries,
@@ -62,18 +67,60 @@ function readIndex() {
   return JSON.parse(readFileSync(join(targetDir, 'sentencias.json'), 'utf8'));
 }
 
+function readJurisdiction(code = 'es') {
+  return readIndex().jurisdictions[code];
+}
+
 beforeEach(() => {
   sourceDir = mkdtempSync(join(tmpdir(), 'sentencias-src-'));
+  secondSourceDir = mkdtempSync(join(tmpdir(), 'sentencias-src-'));
   targetDir = mkdtempSync(join(tmpdir(), 'sentencias-out-'));
   mkdirSync(sourceDir, { recursive: true });
 });
 
 afterEach(() => {
   rmSync(sourceDir, { recursive: true, force: true });
+  rmSync(secondSourceDir, { recursive: true, force: true });
   rmSync(targetDir, { recursive: true, force: true });
 });
 
 describe('build-sentencias', () => {
+  it('materializa simultáneamente dos jurisdicciones sin colisiones de slug', () => {
+    writeSource([{ ...ENTRY, publicationState: 'published' }]);
+    writeSource(
+      [
+        {
+          ...ENTRY,
+          judgmentId: 'san-1210-2023',
+          roj: 'CE 1210/2023',
+          court: "Conseil d'État",
+          jurisdictions: ['fr'],
+          publicationState: 'published',
+        },
+      ],
+      { directory: secondSourceDir, jurisdiction: 'fr' }
+    );
+
+    const resultado = buildSentencias({
+      sources: [
+        { jurisdiction: 'es', sourceDir },
+        { jurisdiction: 'fr', sourceDir: secondSourceDir },
+      ],
+      targetDir,
+    });
+
+    expect(resultado).toEqual({ total: 2, preview: 0, jurisdictions: 2 });
+    expect(readIndex()).toMatchObject({
+      schemaVersion: 'residenciafiscal-sentencias-index/2',
+      jurisdictions: {
+        es: { jurisdiction: 'es', judgments: [{ judgmentId: 'san-1210-2023' }] },
+        fr: { jurisdiction: 'fr', judgments: [{ judgmentId: 'san-1210-2023' }] },
+      },
+    });
+    expect(existsSync(join(targetDir, 'sentencias', 'es', 'san-1210-2023.json'))).toBe(true);
+    expect(existsSync(join(targetDir, 'sentencias', 'fr', 'san-1210-2023.json'))).toBe(true);
+  });
+
   it('sin SENTENCIAS_PREVIEW solo materializa los casos published', () => {
     writeSource([
       { ...ENTRY, publicationState: 'internal_preview' },
@@ -83,11 +130,11 @@ describe('build-sentencias', () => {
     const resultado = buildSentencias({ sourceDir, targetDir });
 
     expect(resultado.total).toBe(1);
-    expect(readIndex().judgments.map((j: { judgmentId: string }) => j.judgmentId)).toEqual([
+    expect(readJurisdiction().judgments.map((j: { judgmentId: string }) => j.judgmentId)).toEqual([
       'sts-1-2020',
     ]);
-    expect(existsSync(join(targetDir, 'sentencias', 'sts-1-2020.json'))).toBe(true);
-    expect(existsSync(join(targetDir, 'sentencias', 'san-1210-2023.json'))).toBe(false);
+    expect(existsSync(join(targetDir, 'sentencias', 'es', 'sts-1-2020.json'))).toBe(true);
+    expect(existsSync(join(targetDir, 'sentencias', 'es', 'san-1210-2023.json'))).toBe(false);
   });
 
   it('materializa en la ficha el estado published concedido por el manifiesto', () => {
@@ -96,7 +143,7 @@ describe('build-sentencias', () => {
     buildSentencias({ sourceDir, targetDir });
 
     const ficha = JSON.parse(
-      readFileSync(join(targetDir, 'sentencias', 'san-1210-2023.json'), 'utf8')
+      readFileSync(join(targetDir, 'sentencias', 'es', 'san-1210-2023.json'), 'utf8')
     );
     expect(ficha.publicationState).toBe('published');
   });
@@ -107,11 +154,11 @@ describe('build-sentencias', () => {
     const resultado = buildSentencias({ sourceDir, targetDir });
 
     expect(resultado.total).toBe(0);
-    expect(readIndex().judgments).toEqual([]);
+    expect(readJurisdiction().judgments).toEqual([]);
     // El índice declara cuántos candidatos hay: un listado vacío por falta de
     // aprobación no se puede confundir con un build roto.
-    expect(readIndex().candidates).toBe(1);
-    expect(readIndex().includesPreview).toBe(false);
+    expect(readJurisdiction().candidates).toBe(1);
+    expect(readJurisdiction().includesPreview).toBe(false);
   });
 
   it('en preview añade los internal_preview y lo declara en el índice', () => {
@@ -121,7 +168,7 @@ describe('build-sentencias', () => {
 
     expect(resultado.total).toBe(1);
     expect(resultado.preview).toBe(1);
-    const index = readIndex();
+    const index = readJurisdiction();
     expect(index.includesPreview).toBe(true);
     expect(index.judgments[0].publicationState).toBe('internal_preview');
     expect(index.judgments[0].legalReview).toBe('AGENT_REVIEWED');
@@ -144,18 +191,18 @@ describe('build-sentencias', () => {
     const resultado = buildSentencias({ sourceDir, targetDir });
 
     expect(resultado.total).toBe(0);
-    expect(readIndex().judgments).toEqual([]);
+    expect(readJurisdiction().judgments).toEqual([]);
     expect(existsSync(join(targetDir, 'sentencias'))).toBe(false);
   });
 
   it('una ficha retirada del manifiesto desaparece del build', () => {
     writeSource([{ ...ENTRY, publicationState: 'published' }]);
     buildSentencias({ sourceDir, targetDir });
-    expect(existsSync(join(targetDir, 'sentencias', 'san-1210-2023.json'))).toBe(true);
+    expect(existsSync(join(targetDir, 'sentencias', 'es', 'san-1210-2023.json'))).toBe(true);
 
     writeSource([{ ...ENTRY, publicationState: 'internal_preview' }]);
     buildSentencias({ sourceDir, targetDir });
 
-    expect(existsSync(join(targetDir, 'sentencias', 'san-1210-2023.json'))).toBe(false);
+    expect(existsSync(join(targetDir, 'sentencias', 'es', 'san-1210-2023.json'))).toBe(false);
   });
 });

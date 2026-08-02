@@ -129,9 +129,11 @@ def test_gate_el_indice_servido_no_lleva_borradores_en_produccion() -> None:
         pytest.skip("el índice se genera en el prebuild; no está versionado")
 
     datos = json.loads(indice.read_text(encoding="utf-8"))
-    if datos["includesPreview"]:
+    assert datos["schemaVersion"] == "residenciafiscal-sentencias-index/2"
+    indices = datos["jurisdictions"].values()
+    if any(indice_pais["includesPreview"] for indice_pais in indices):
         pytest.skip("índice generado en modo preview")
-    assert datos["judgments"] == []
+    assert all(indice_pais["judgments"] == [] for indice_pais in indices)
 
 
 def test_gate_el_enlazado_publico_no_usa_countries_en_bruto(casos: list[dict]) -> None:

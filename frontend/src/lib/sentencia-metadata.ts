@@ -1,4 +1,4 @@
-import { jurisdictionSectionPath } from '@/data/jurisdictions';
+import { jurisdictionName, jurisdictionSectionPath } from '@/data/jurisdictions';
 import type { SentenciaIndexEntry, SentenciaPublica } from '@/types/sentencias';
 
 /**
@@ -13,8 +13,23 @@ import type { SentenciaIndexEntry, SentenciaPublica } from '@/types/sentencias';
 
 export const SENTENCIAS_INDEX_PATH = jurisdictionSectionPath('es', 'sentencias');
 
-export function sentenciaPath(judgmentId: string): string {
-  return `${SENTENCIAS_INDEX_PATH}/${judgmentId}`;
+export function sentenciasIndexPath(jurisdictionCode: string): string {
+  return jurisdictionSectionPath(jurisdictionCode, 'sentencias');
+}
+
+export function sentenciaPath(judgmentId: string, jurisdictionCode = 'es'): string {
+  return `${sentenciasIndexPath(jurisdictionCode)}/${judgmentId}`;
+}
+
+export function sentenciasIndexTitle(jurisdictionCode: string): string {
+  return `Sentencias sobre residencia fiscal en ${jurisdictionName(jurisdictionCode)}: fichas por sentencia`;
+}
+
+export function sentenciasIndexDescription(jurisdictionCode: string): string {
+  return (
+    `Fichas de sentencias sobre residencia fiscal en ${jurisdictionName(jurisdictionCode)}: ` +
+    'criterios aplicados, pruebas valoradas, resultado y extractos literales localizables en la fuente.'
+  );
 }
 
 /** Etiquetas de los siete criterios del catálogo (`src/config.py`). */

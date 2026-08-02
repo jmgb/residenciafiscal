@@ -8,8 +8,8 @@
  * manifiesto ya declara publicable, verifica que cada fichero coincide con su
  * hash y hace visible el estado editorial `published` cuando corresponda.
  *
- *   public/data/sentencias.json          índice ligero para el listado
- *   public/data/sentencias/<slug>.json   la ficha completa de una sentencia
+ *   public/data/sentencias.json                 índices ligeros por jurisdicción
+ *   public/data/sentencias/<pais>/<slug>.json  fichas completas, aisladas por país
  *
  * **Fail-closed.** Por defecto solo entran los casos `published`. Con el corpus
  * de hoy son cero —los 67 candidatos siguen en `internal_preview` porque su
@@ -32,6 +32,7 @@ const repoDir = join(frontendDir, '..');
 
 const SOURCE_DIR = join(repoDir, 'knowledge', 'jurisprudencia-v3', 'publico');
 const TARGET_DIR = join(frontendDir, 'public', 'data');
+const DEFAULT_SOURCES = [{ jurisdiction: 'es', sourceDir: SOURCE_DIR }];
 
 /** Estados del manifiesto que un build público puede materializar. */
 const PUBLIC_STATES = ['published'];
@@ -39,98 +40,120 @@ const PUBLIC_STATES = ['published'];
 const PREVIEW_STATES = ['internal_preview', 'publishable'];
 
 export function buildSentencias({
-  sourceDir = SOURCE_DIR,
+  sourceDir,
+  sources,
   targetDir = TARGET_DIR,
   includePreview = false,
 } = {}) {
+  const configuredSources = sources ?? [{ jurisdiction: 'es', sourceDir: sourceDir ?? SOURCE_DIR }];
   const indexFile = join(targetDir, 'sentencias.json');
   const fichaDir = join(targetDir, 'sentencias');
-  const manifestFile = join(sourceDir, 'manifest.json');
 
   mkdirSync(targetDir, { recursive: true });
   rmSync(fichaDir, { recursive: true, force: true });
-
-  if (!existsSync(manifestFile)) {
-    // Sin fuente no se publica nada: es el estado seguro, no un fallback que
-    // conserve fichas viejas cuyo estado de revisión ya no se puede comprobar.
-    process.stderr.write(
-      `[sentencias] No existe ${manifestFile}; se escribe un índice vacío.\n` +
-        '[sentencias] Regenéralo con `make export-public-judgments` desde la raíz.\n'
-    );
-    writeFileSync(indexFile, `${JSON.stringify(emptyIndex(), null, 2)}\n`, 'utf8');
-    return { total: 0, preview: 0 };
-  }
-
-  const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
   const allowed = new Set(includePreview ? [...PUBLIC_STATES, ...PREVIEW_STATES] : PUBLIC_STATES);
-  const selected = manifest.judgments.filter((entry) => allowed.has(entry.publicationState));
+  const jurisdictionIndexes = {};
+  let total = 0;
+  let preview = 0;
 
-  mkdirSync(fichaDir, { recursive: true });
-  for (const entry of selected) {
-    const source = join(sourceDir, `${entry.judgmentId}.public.json`);
-    const raw = readFileSync(source, 'utf8');
-    const digest = createHash('sha256').update(raw, 'utf8').digest('hex');
-    if (digest !== entry.projectionSha256) {
+  for (const configuredSource of configuredSources) {
+    const manifestFile = join(configuredSource.sourceDir, 'manifest.json');
+    if (!existsSync(manifestFile)) {
+      // Sin fuente no se publica nada: es el estado seguro, no un fallback que
+      // conserve fichas viejas cuyo estado de revisión ya no se puede comprobar.
+      process.stderr.write(
+        `[sentencias] No existe ${manifestFile}; se escribe un índice vacío para ${configuredSource.jurisdiction}.\n` +
+          '[sentencias] Regenera su proyección pública antes de desplegar contenido.\n'
+      );
+      jurisdictionIndexes[configuredSource.jurisdiction] = emptyJurisdictionIndex(
+        configuredSource.jurisdiction
+      );
+      continue;
+    }
+
+    const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
+    if (manifest.jurisdiction !== configuredSource.jurisdiction) {
       throw new Error(
-        `${entry.judgmentId}: el hash de la proyección no coincide con el manifiesto. ` +
-          'Regenera con `make export-public-judgments`; no se publica un fichero sin verificar.'
+        `${manifestFile}: declara la jurisdicción «${manifest.jurisdiction}», ` +
+          `pero la fuente está configurada como «${configuredSource.jurisdiction}».`
       );
     }
-    const projection = JSON.parse(raw);
-    const expectedProjectionState =
-      entry.publicationState === 'published' ? 'publishable' : entry.publicationState;
-    if (
-      projection.judgment?.judgmentId !== entry.judgmentId ||
-      projection.publicationState !== expectedProjectionState
-    ) {
-      throw new Error(
-        `${entry.judgmentId}: la identidad o el estado de la proyección no coincide con el manifiesto.`
-      );
+    if (jurisdictionIndexes[manifest.jurisdiction]) {
+      throw new Error(`La jurisdicción «${manifest.jurisdiction}» aparece más de una vez.`);
     }
-    const materialized =
-      entry.publicationState === 'published'
-        ? { ...projection, publicationState: 'published' }
-        : projection;
-    // Las previews conservan exactamente los bytes de la proyección verificada.
-    // Solo una entrada publicada necesita materializar el ascenso editorial que
-    // vive en el manifiesto y no en el artefacto jurídico inmutable.
-    const output =
-      entry.publicationState === 'published' ? `${JSON.stringify(materialized, null, 2)}\n` : raw;
-    writeFileSync(join(fichaDir, `${entry.judgmentId}.json`), output, 'utf8');
+
+    const selected = manifest.judgments.filter((entry) => allowed.has(entry.publicationState));
+    const jurisdictionFichaDir = join(fichaDir, manifest.jurisdiction);
+    if (selected.length > 0) mkdirSync(jurisdictionFichaDir, { recursive: true });
+
+    for (const entry of selected) {
+      const source = join(configuredSource.sourceDir, `${entry.judgmentId}.public.json`);
+      const raw = readFileSync(source, 'utf8');
+      const digest = createHash('sha256').update(raw, 'utf8').digest('hex');
+      if (digest !== entry.projectionSha256) {
+        throw new Error(
+          `${entry.judgmentId}: el hash de la proyección no coincide con el manifiesto. ` +
+            'Regenera la exportación pública; no se publica un fichero sin verificar.'
+        );
+      }
+      const projection = JSON.parse(raw);
+      const expectedProjectionState =
+        entry.publicationState === 'published' ? 'publishable' : entry.publicationState;
+      if (
+        projection.judgment?.judgmentId !== entry.judgmentId ||
+        projection.publicationState !== expectedProjectionState ||
+        projection.jurisdiction !== manifest.jurisdiction
+      ) {
+        throw new Error(
+          `${entry.judgmentId}: la identidad, jurisdicción o estado de la proyección no coincide con el manifiesto.`
+        );
+      }
+      const materialized =
+        entry.publicationState === 'published'
+          ? { ...projection, publicationState: 'published' }
+          : projection;
+      // Las previews conservan exactamente los bytes de la proyección
+      // verificada. Solo `published` materializa el ascenso editorial.
+      const output =
+        entry.publicationState === 'published' ? `${JSON.stringify(materialized, null, 2)}\n` : raw;
+      writeFileSync(join(jurisdictionFichaDir, `${entry.judgmentId}.json`), output, 'utf8');
+    }
+
+    jurisdictionIndexes[manifest.jurisdiction] = {
+      ...emptyJurisdictionIndex(manifest.jurisdiction),
+      // El índice declara qué contiene: sin esto, una página no podría distinguir
+      // un listado vacío porque nada está aprobado de un build roto.
+      candidates: manifest.candidates,
+      includesPreview: includePreview,
+      judgments: selected.map((entry) => ({
+        judgmentId: entry.judgmentId,
+        roj: entry.roj,
+        court: entry.court,
+        decisionDate: entry.decisionDate,
+        taxYears: entry.taxYears,
+        criterionIds: entry.criterionIds,
+        outcomes: entry.outcomes,
+        jurisdictions: entry.jurisdictions,
+        publicationState: entry.publicationState,
+        legalReview: entry.legalReview,
+      })),
+    };
+    total += selected.length;
+    preview += selected.filter((entry) => entry.publicationState !== 'published').length;
   }
 
   const index = {
-    ...emptyIndex(),
-    jurisdiction: manifest.jurisdiction,
-    // El índice declara qué contiene: sin esto, una página no podría distinguir
-    // un listado vacío porque nada está aprobado de un build roto.
-    candidates: manifest.candidates,
-    includesPreview: includePreview,
-    judgments: selected.map((entry) => ({
-      judgmentId: entry.judgmentId,
-      roj: entry.roj,
-      court: entry.court,
-      decisionDate: entry.decisionDate,
-      taxYears: entry.taxYears,
-      criterionIds: entry.criterionIds,
-      outcomes: entry.outcomes,
-      jurisdictions: entry.jurisdictions,
-      publicationState: entry.publicationState,
-      legalReview: entry.legalReview,
-    })),
+    schemaVersion: 'residenciafiscal-sentencias-index/2',
+    jurisdictions: jurisdictionIndexes,
   };
   writeFileSync(indexFile, `${JSON.stringify(index, null, 2)}\n`, 'utf8');
 
-  return {
-    total: selected.length,
-    preview: selected.filter((entry) => entry.publicationState !== 'published').length,
-  };
+  return { total, preview, jurisdictions: Object.keys(jurisdictionIndexes).length };
 }
 
-function emptyIndex() {
+function emptyJurisdictionIndex(jurisdiction) {
   return {
-    schemaVersion: 'residenciafiscal-sentencias-index/1',
-    jurisdiction: 'es',
+    jurisdiction,
     candidates: 0,
     includesPreview: false,
     judgments: [],
@@ -139,9 +162,13 @@ function emptyIndex() {
 
 function main() {
   const includePreview = process.env.SENTENCIAS_PREVIEW === '1';
-  const { total, preview } = buildSentencias({ includePreview });
+  const { total, preview, jurisdictions } = buildSentencias({
+    sources: DEFAULT_SOURCES,
+    includePreview,
+  });
   process.stdout.write(
-    `[sentencias] ${total} fichas (${preview} en preview, noindex) -> public/data/\n`
+    `[sentencias] ${total} fichas de ${jurisdictions} jurisdicciones ` +
+      `(${preview} en preview, noindex) -> public/data/\n`
   );
 }
 

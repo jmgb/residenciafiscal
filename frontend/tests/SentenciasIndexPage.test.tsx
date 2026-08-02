@@ -32,7 +32,6 @@ const OTRA: SentenciaIndexEntry = {
 
 function indice(judgments: SentenciaIndexEntry[], candidates = judgments.length): SentenciasIndex {
   return {
-    schemaVersion: 'residenciafiscal-sentencias-index/1',
     jurisdiction: 'es',
     candidates,
     includesPreview: true,
@@ -40,11 +39,18 @@ function indice(judgments: SentenciaIndexEntry[], candidates = judgments.length)
   };
 }
 
+function manifest(index: SentenciasIndex) {
+  return {
+    schemaVersion: 'residenciafiscal-sentencias-index/2',
+    jurisdictions: { [index.jurisdiction]: index },
+  };
+}
+
 function renderIndice(index: SentenciasIndex) {
   return render(
-    <SentenciaPreloadContext.Provider value={{ index, fichas: {} }}>
+    <SentenciaPreloadContext.Provider value={{ indexes: { es: index }, fichas: {} }}>
       <MemoryRouter initialEntries={['/espana/sentencias']}>
-        <SentenciasIndexPage />
+        <SentenciasIndexPage jurisdictionCode='es' />
       </MemoryRouter>
     </SentenciaPreloadContext.Provider>
   );
@@ -74,9 +80,48 @@ afterEach(() => {
 });
 
 describe('SentenciasIndexPage', () => {
+  it('construye listado, enlaces y canonical desde la jurisdicción de la ruta', () => {
+    const francesa = indice([
+      {
+        ...ENTRADA,
+        judgmentId: 'ce-1210-2023',
+        roj: 'CE 1210/2023',
+        court: "Conseil d'État",
+        jurisdictions: ['fr'],
+      },
+    ]);
+    francesa.jurisdiction = 'fr';
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          schemaVersion: 'residenciafiscal-sentencias-index/2',
+          jurisdictions: { fr: francesa },
+        })
+      ) as Response
+    );
+    const canonical = prepararCanonical();
+
+    render(
+      <SentenciaPreloadContext.Provider value={{ indexes: { fr: francesa }, fichas: {} }}>
+        <MemoryRouter initialEntries={['/francia/sentencias']}>
+          <SentenciasIndexPage jurisdictionCode='fr' />
+        </MemoryRouter>
+      </SentenciaPreloadContext.Provider>
+    );
+
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'Sentencias sobre residencia fiscal en Francia'
+    );
+    expect(screen.getByRole('link', { name: 'CE 1210/2023' })).toHaveAttribute(
+      'href',
+      '/francia/sentencias/ce-1210-2023'
+    );
+    expect(canonical).toHaveAttribute('href', 'https://residenciafiscal.org/francia/sentencias');
+  });
+
   it('lista las sentencias con su órgano, criterio y resultado', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify(indice([ENTRADA, OTRA]))) as Response
+      new Response(JSON.stringify(manifest(indice([ENTRADA, OTRA])))) as Response
     );
 
     renderIndice(indice([ENTRADA, OTRA]));
@@ -92,7 +137,7 @@ describe('SentenciasIndexPage', () => {
 
   it('filtra en cliente sin cambiar de URL ni de canonical', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify(indice([ENTRADA, OTRA]))) as Response
+      new Response(JSON.stringify(manifest(indice([ENTRADA, OTRA])))) as Response
     );
     const canonical = prepararCanonical();
 
@@ -107,7 +152,7 @@ describe('SentenciasIndexPage', () => {
 
   it('con cero publicadas explica por qué, en vez de aparentar un corpus vacío', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify(indice([], 67))) as Response
+      new Response(JSON.stringify(manifest(indice([], 67)))) as Response
     );
 
     renderIndice(indice([], 67));
@@ -128,7 +173,7 @@ describe('SentenciasIndexPage', () => {
 
     render(
       <MemoryRouter initialEntries={['/espana/sentencias']}>
-        <SentenciasIndexPage />
+        <SentenciasIndexPage jurisdictionCode='es' />
       </MemoryRouter>
     );
 
@@ -139,7 +184,7 @@ describe('SentenciasIndexPage', () => {
 
   it('marca como borrador lo que aún no está publicado', () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify(indice([ENTRADA]))) as Response
+      new Response(JSON.stringify(manifest(indice([ENTRADA])))) as Response
     );
 
     renderIndice(indice([ENTRADA]));
@@ -149,7 +194,7 @@ describe('SentenciasIndexPage', () => {
 
   it('mantiene noindex en runtime cuando el índice contiene borradores', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify(indice([ENTRADA]))) as Response
+      new Response(JSON.stringify(manifest(indice([ENTRADA])))) as Response
     );
     const meta = prepararMetaRobots();
 

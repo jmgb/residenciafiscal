@@ -12,25 +12,28 @@ import type { SentenciaPublica, SentenciasIndex } from '@/types/sentencias';
  * lee del JSON embebido. Vacío, las páginas cargan por `fetch` como siempre.
  */
 export interface SentenciaPreload {
-  index: SentenciasIndex | null;
-  fichas: Record<string, SentenciaPublica>;
+  indexes: Record<string, SentenciasIndex>;
+  fichas: Record<string, Record<string, SentenciaPublica>>;
 }
 
 export const SentenciaPreloadContext = createContext<SentenciaPreload>({
-  index: null,
+  indexes: {},
   fichas: {},
 });
 
 /** El identificador del elemento `<script>` que transporta la precarga. */
 export const SENTENCIA_PRELOAD_ELEMENT_ID = 'sentencia-preload';
 
-export function useSentenciaPreload(judgmentId: string | null): SentenciaPublica | undefined {
+export function useSentenciaPreload(
+  jurisdiction: string,
+  judgmentId: string | null
+): SentenciaPublica | undefined {
   const { fichas } = useContext(SentenciaPreloadContext);
-  return judgmentId ? fichas[judgmentId] : undefined;
+  return judgmentId ? fichas[jurisdiction]?.[judgmentId] : undefined;
 }
 
-export function useSentenciasIndexPreload(): SentenciasIndex | null {
-  return useContext(SentenciaPreloadContext).index;
+export function useSentenciasIndexPreload(jurisdiction: string): SentenciasIndex | null {
+  return useContext(SentenciaPreloadContext).indexes[jurisdiction] ?? null;
 }
 
 /**
@@ -38,7 +41,7 @@ export function useSentenciasIndexPreload(): SentenciasIndex | null {
  * degrada al `fetch` de siempre, nunca tumba el arranque.
  */
 export function readEmbeddedSentenciaPreload(document: Document): SentenciaPreload {
-  const vacio: SentenciaPreload = { index: null, fichas: {} };
+  const vacio: SentenciaPreload = { indexes: {}, fichas: {} };
   const element = document.getElementById(SENTENCIA_PRELOAD_ELEMENT_ID);
   if (!element?.textContent) return vacio;
   try {
@@ -46,7 +49,7 @@ export function readEmbeddedSentenciaPreload(document: Document): SentenciaPrelo
     if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return vacio;
     const candidato = parsed as Partial<SentenciaPreload>;
     return {
-      index: candidato.index ?? null,
+      indexes: candidato.indexes ?? {},
       fichas: candidato.fichas ?? {},
     };
   } catch (error) {

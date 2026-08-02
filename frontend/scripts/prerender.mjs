@@ -37,15 +37,16 @@ import {
   PRECEPTO_PRELOAD_ELEMENT_ID,
   render,
   SENTENCIA_PRELOAD_ELEMENT_ID,
-  SENTENCIAS_INDEX_PATH,
   sentenciaDescription,
-  sentenciaPath,
+  sentenciasIndexDescription,
+  sentenciasIndexTitle,
   sentenciaTitle,
   TREATY_PRELOAD_ELEMENT_ID,
 } from '../dist-ssr/entry-server.js';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
 import staticRoutes from '../src/data/staticRoutes.json' with { type: 'json' };
 import treatyRelations from '../src/data/treatyRelations.json' with { type: 'json' };
+import { sentenciaRouteInventory } from './sentencia-route-inventory.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -72,7 +73,7 @@ const NORMATIVA = JSON.parse(readFileSync(join(publicDir, 'data', 'normativa.jso
 const SENTENCIAS_INDEX_FILE = join(publicDir, 'data', 'sentencias.json');
 const SENTENCIAS = existsSync(SENTENCIAS_INDEX_FILE)
   ? JSON.parse(readFileSync(SENTENCIAS_INDEX_FILE, 'utf8'))
-  : { judgments: [] };
+  : { jurisdictions: {} };
 
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
 /** Convenio vigente de una jurisdicción, desde el registro bilateral. */
@@ -128,40 +129,37 @@ const PRECEPTO_ROUTES = NORMATIVA.map((entry) => ({
 }));
 
 /** Una ruta por ficha de sentencia materializada, más su índice. */
-const SENTENCIA_ROUTES =
-  SENTENCIAS.judgments.length === 0
-    ? []
-    : [
-        {
-          path: SENTENCIAS_INDEX_PATH,
-          treatyBoeId: null,
-          sentenciasIndex: true,
-          dir: SENTENCIAS_INDEX_PATH.slice(1),
-          title: 'Sentencias sobre residencia fiscal en España: fichas por sentencia',
-          description:
-            'Fichas de las sentencias del Tribunal Supremo y la Audiencia Nacional sobre ' +
-            'residencia fiscal: criterios aplicados, pruebas valoradas, resultado y extractos ' +
-            'literales con su página.',
-          // El índice solo es indexable si todas sus fichas lo son: enlazar
-          // borradores desde una página indexable los expondría igualmente.
-          robots: SENTENCIAS.judgments.every((entry) => !esBorrador(entry))
-            ? 'index, follow'
-            : 'noindex, follow',
-          url: `${SITE_URL}${SENTENCIAS_INDEX_PATH}`,
-          image: null,
-        },
-        ...SENTENCIAS.judgments.map((entry) => ({
-          path: sentenciaPath(entry.judgmentId),
-          treatyBoeId: null,
-          judgmentId: entry.judgmentId,
-          dir: sentenciaPath(entry.judgmentId).slice(1),
-          title: sentenciaTitle(entry),
-          description: sentenciaDescription(entry),
-          robots: esBorrador(entry) ? 'noindex, follow' : 'index, follow',
-          url: `${SITE_URL}${sentenciaPath(entry.judgmentId)}`,
-          image: null,
-        })),
-      ];
+const SENTENCIA_ROUTES = sentenciaRouteInventory(SENTENCIAS).map((route) =>
+  route.kind === 'index'
+    ? {
+        path: route.path,
+        treatyBoeId: null,
+        sentenciasIndex: true,
+        jurisdiction: route.jurisdiction,
+        dir: route.path.slice(1),
+        title: sentenciasIndexTitle(route.jurisdiction),
+        description: sentenciasIndexDescription(route.jurisdiction),
+        // El índice solo es indexable si todas sus fichas lo son: enlazar
+        // borradores desde una página indexable los expondría igualmente.
+        robots: route.index.judgments.every((entry) => !esBorrador(entry))
+          ? 'index, follow'
+          : 'noindex, follow',
+        url: `${SITE_URL}${route.path}`,
+        image: null,
+      }
+    : {
+        path: route.path,
+        treatyBoeId: null,
+        jurisdiction: route.jurisdiction,
+        judgmentId: route.entry.judgmentId,
+        dir: route.path.slice(1),
+        title: sentenciaTitle(route.entry),
+        description: sentenciaDescription(route.entry),
+        robots: esBorrador(route.entry) ? 'noindex, follow' : 'index, follow',
+        url: `${SITE_URL}${route.path}`,
+        image: null,
+      }
+);
 
 const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES, ...PRECEPTO_ROUTES, ...SENTENCIA_ROUTES];
 
@@ -272,7 +270,10 @@ function preloadPreceptos(route) {
   // Google debe poder seguir en el HTML.
   if (route.judgmentId) {
     const ficha = JSON.parse(
-      readFileSync(join(publicDir, 'data', 'sentencias', `${route.judgmentId}.json`), 'utf8')
+      readFileSync(
+        join(publicDir, 'data', 'sentencias', route.jurisdiction, `${route.judgmentId}.json`),
+        'utf8'
+      )
     );
     const identificadores = new Set(
       ficha.jurisdictions.flatMap((jurisdiccion) => jurisdiccion.treatyBoeIds ?? [])
@@ -294,20 +295,35 @@ function preloadPreceptos(route) {
  */
 function preloadSentencias(route) {
   if (route.judgmentId) {
-    const fichaFile = join(publicDir, 'data', 'sentencias', `${route.judgmentId}.json`);
+    const fichaFile = join(
+      publicDir,
+      'data',
+      'sentencias',
+      route.jurisdiction,
+      `${route.judgmentId}.json`
+    );
     if (!existsSync(fichaFile)) {
       throw new Error(
-        `${route.path}: falta public/data/sentencias/${route.judgmentId}.json. ` +
+        `${route.path}: falta public/data/sentencias/${route.jurisdiction}/${route.judgmentId}.json. ` +
           'Regenera con `node scripts/build-sentencias.mjs`.'
       );
     }
     return {
-      index: null,
-      fichas: { [route.judgmentId]: JSON.parse(readFileSync(fichaFile, 'utf8')) },
+      indexes: {},
+      fichas: {
+        [route.jurisdiction]: {
+          [route.judgmentId]: JSON.parse(readFileSync(fichaFile, 'utf8')),
+        },
+      },
     };
   }
-  if (route.sentenciasIndex) return { index: SENTENCIAS, fichas: {} };
-  return { index: null, fichas: {} };
+  if (route.sentenciasIndex) {
+    return {
+      indexes: { [route.jurisdiction]: SENTENCIAS.jurisdictions[route.jurisdiction] },
+      fichas: {},
+    };
+  }
+  return { indexes: {}, fichas: {} };
 }
 
 function renderRoute(shell, route) {
@@ -317,7 +333,8 @@ function renderRoute(shell, route) {
   const treaties = preloadTreaties(route);
   const preceptos = preloadPreceptos(route);
   const sentencias = preloadSentencias(route);
-  const haySentencias = sentencias.index !== null || Object.keys(sentencias.fichas).length > 0;
+  const haySentencias =
+    Object.keys(sentencias.indexes).length > 0 || Object.keys(sentencias.fichas).length > 0;
 
   let html = shell;
   // El contenido va dentro de `#root`, no en un `<noscript>`: es la misma
