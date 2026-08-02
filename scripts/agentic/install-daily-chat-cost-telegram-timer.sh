@@ -26,8 +26,15 @@ SYSTEMD_DIR="${HOME}/.config/systemd/user"
 UNITS=(
     residenciafiscal-daily-chat-cost-telegram.service
     residenciafiscal-daily-chat-cost-telegram.timer
+    residenciafiscal-daily-chat-cost-freshness.service
+    residenciafiscal-daily-chat-cost-freshness.timer
 )
-TIMER=residenciafiscal-daily-chat-cost-telegram.timer
+# El guardián se instala con el digest a propósito: vigila que el digest corra,
+# y un guardián que se instala aparte es un guardián que se olvida.
+TIMERS=(
+    residenciafiscal-daily-chat-cost-telegram.timer
+    residenciafiscal-daily-chat-cost-freshness.timer
+)
 
 REQUIRED_KEYS=(
     SUPABASE_URL
@@ -57,7 +64,10 @@ for unit in "${UNITS[@]}"; do
 done
 
 systemctl --user daemon-reload
-systemctl --user enable --now "$TIMER"
+for timer in "${TIMERS[@]}"; do
+    systemctl --user enable --now "$timer"
+done
 
 echo
-systemctl --user list-timers --all --no-pager | grep -E "UNIT|${TIMER}" || true
+systemctl --user list-timers --all --no-pager |
+    grep -E "UNIT|$(IFS='|'; echo "${TIMERS[*]}")" || true

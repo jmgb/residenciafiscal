@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
 import pathlib
 import sys
 import urllib.error
@@ -192,13 +193,39 @@ def build_skipped_message(days: list[dt.date]) -> str:
     )
 
 
-def build_failure_message(day: dt.date, exit_code: int, detail: str = "") -> str:
+def is_manual_invocation(environ: dict[str, str] | None = None) -> bool:
+    """¿Viene el aviso de un disparo a mano en vez de del timer?
+
+    systemd exporta `INVOCATION_ID` al servicio y los hijos lo heredan, así que
+    su ausencia identifica una ejecución desde la terminal.
+    """
+    values = environ if environ is not None else dict(os.environ)
+    return not values.get("INVOCATION_ID")
+
+
+def build_failure_message(
+    day: dt.date,
+    exit_code: int,
+    detail: str = "",
+    manual: bool = False,
+) -> str:
+    """Aviso de que el resumen no salió.
+
+    Un disparo manual se marca en la primera línea: `--failure-alert` acepta
+    cualquier `--failure-exit-code` desde la terminal, y un mensaje de prueba
+    indistinguible de uno real gasta la credibilidad de la alerta. La
+    notificación push solo enseña el principio, así que el marcador va delante.
+    """
+    prefix = f"{HEADER_PREFIX} 🧪 PRUEBA ·" if manual else f"{HEADER_PREFIX} ⚠️"
     lines = [
-        f"{HEADER_PREFIX} ⚠️ Chat · el resumen diario FALLÓ {day.isoformat()}",
+        f"{prefix} Chat · el resumen diario FALLÓ {day.isoformat()}",
         "",
         f"Exit: {exit_code}.",
         f"Revisa: journalctl --user -u {SERVICE_NAME} -n 100 --no-pager",
     ]
+    if manual:
+        lines.insert(1, "")
+        lines.insert(2, "Disparo manual fuera de systemd: no ha fallado ningún job.")
     if detail:
         lines.extend(["", detail[:FAILURE_DETAIL_LIMIT]])
     return "\n".join(lines)
@@ -240,7 +267,15 @@ def main(argv: list[str] | None = None) -> int:
     today = dt.date.fromisoformat(arguments.today) if arguments.today else dt.date.today()
 
     if arguments.failure_alert:
-        message = build_failure_message(today, arguments.failure_exit_code, arguments.failure_alert)
+        message = build_failure_message(
+            today,
+            arguments.failure_exit_code,
+            arguments.failure_alert,
+            manual=is_manual_invocation(),
+        )
+        if arguments.dry_run:
+            print(message)
+            return 0
         send_telegram(message, env)
         print("Aviso de fallo enviado a Telegram.")
         return 0

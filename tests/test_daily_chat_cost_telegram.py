@@ -202,6 +202,39 @@ class AvisoDeFalloTest(unittest.TestCase):
         self.assertLess(len(mensaje), 800)
 
 
+class AvisoDePruebaTest(unittest.TestCase):
+    """Una alerta de prueba no puede parecer un fallo real.
+
+    `--failure-alert` se puede disparar a mano con cualquier `--failure-exit-code`,
+    y el mensaje resultante era indistinguible del que manda un job roto. Solo lo
+    salvaba que alguien escribiera «PRUEBA» a mano en el texto.
+    """
+
+    def test_un_disparo_manual_se_marca_en_la_primera_linea(self) -> None:
+        """La notificación push solo enseña el principio del mensaje."""
+        mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 99, "", manual=True)
+
+        self.assertIn("PRUEBA", mensaje.splitlines()[0])
+
+    def test_el_disparo_manual_declara_que_no_ha_fallado_nada(self) -> None:
+        mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 99, "", manual=True)
+
+        self.assertIn("no ha fallado ningún job", mensaje)
+
+    def test_un_fallo_real_no_se_marca_como_prueba(self) -> None:
+        mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 2, "Supabase devolvió 500")
+
+        self.assertNotIn("PRUEBA", mensaje)
+
+    def test_systemd_identifica_la_ejecucion_real_por_invocation_id(self) -> None:
+        """systemd exporta `INVOCATION_ID` al servicio y los hijos lo heredan."""
+        self.assertFalse(MODULE.is_manual_invocation({"INVOCATION_ID": "8f3c"}))
+
+    def test_sin_invocation_id_la_ejecucion_es_manual(self) -> None:
+        self.assertTrue(MODULE.is_manual_invocation({}))
+        self.assertTrue(MODULE.is_manual_invocation({"INVOCATION_ID": ""}))
+
+
 class CableadoDelRunnerTest(unittest.TestCase):
     """El runner del timer llama a `main`; la recuperación tiene que llegar ahí."""
 
@@ -289,6 +322,25 @@ class CableadoDelRunnerTest(unittest.TestCase):
         self.assertEqual(self.dias_pedidos, [])
         self.assertIn("Exit: 2", self.enviados[0])
         self.assertIn("Supabase devolvió 500", self.enviados[0])
+
+    def test_el_aviso_lanzado_desde_systemd_no_se_marca_como_prueba(self) -> None:
+        with mock.patch.dict("os.environ", {"INVOCATION_ID": "8f3c"}, clear=False):
+            MODULE.main(["--failure-alert", "Supabase devolvió 500", "--failure-exit-code", "2"])
+
+        self.assertNotIn("PRUEBA", self.enviados[0])
+
+    def test_el_aviso_lanzado_a_mano_se_marca_como_prueba(self) -> None:
+        with mock.patch.dict("os.environ", {}, clear=True):
+            MODULE.main(["--failure-alert", "probando la alerta", "--failure-exit-code", "99"])
+
+        self.assertIn("PRUEBA", self.enviados[0])
+
+    def test_el_aviso_en_seco_no_llega_a_telegram(self) -> None:
+        """Probar la alerta no debería costar un mensaje falso en el canal real."""
+        codigo = MODULE.main(["--failure-alert", "probando", "--dry-run"])
+
+        self.assertEqual(codigo, 0)
+        self.assertEqual(self.enviados, [])
 
 
 class RunnerDelTimerTest(unittest.TestCase):

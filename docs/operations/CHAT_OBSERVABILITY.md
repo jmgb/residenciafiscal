@@ -10,9 +10,36 @@ qué hay que configurar para que funcione. Estado: implementado y verificado el
 |-------|-------|---------|
 | Fallos (`chat_request_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Agrupa, deduplica y alerta por tasa |
 | Coste (`chat_cost_reconciled`) | Resumen diario a Telegram | No es un error; Sentry lo mide mal |
-| Ambos, en crudo | Logs de Netlify | Siguen emitiéndose por consola, sin cambios |
+| Ambos, en crudo | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
 
 Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
+
+## Contrato del evento de finalización
+
+Cada petición que termina y se persiste emite `chat_cost_reconciled`. El nombre se
+conserva por compatibilidad, pero el evento ya no describe solo coste:
+
+- `request_status=completed` separa el resultado operativo de la contabilidad;
+- `cost_measurement_complete` indica si todos los costes son `ACTUAL`;
+  `actual_complete` conserva el mismo valor como alias histórico y **no** significa
+  que la respuesta haya quedado incompleta;
+- `timings_ms` separa registro, comparación, persistencia y total;
+- `authority_intent` registra solo el enum seguro `tribunal_supremo` /
+  `audiencia_nacional`, nunca el texto que lo originó;
+- cada estrategia declara estado, modelo, latencia, tokens, coste, número de
+  fuentes y límites, IDs de resoluciones recuperadas, reparto de citas `STS` /
+  `SAN`, filtro aplicado y recuento de citas candidatas y verificadas;
+- `document_token_accounting=unavailable` distingue el caso en que Gemini aporta
+  citas pero no desglosa tokens documentales; no debe interpretarse el cero como
+  ausencia de recuperación;
+- `failure_code` distingue `timeout`, excepción, contrato de estrategia,
+  verificación de citas y validación de evidencia. `error_name` solo admite un
+  nombre de clase saneado; nunca sale el mensaje de la excepción.
+
+El evento puede contener IDs públicos de sentencias, contadores y enums. No puede
+contener pregunta, respuesta, citas literales, `limits` ni diagnósticos brutos del
+proveedor. El contenido necesario para una revisión autorizada sigue en el ledger
+privado con su retención propia.
 
 ## Qué llega a Sentry, y qué no
 
@@ -41,6 +68,10 @@ Tres decisiones que evitan un incidente:
 - **Fallo cerrado y aislado.** Sin `CHAT_SENTRY_ENABLED=true` y sin DSN válido no
   se envía nada, y todo el sink va en `try/catch`: Sentry caído no puede tumbar
   el chat, porque el fallo ya quedó en el log estructurado.
+
+Si `SENTRY_RELEASE` no está configurado, la Function usa `COMMIT_REF` y después
+`DEPLOY_ID`, variables nativas del despliegue de Netlify. Así un error queda
+asociado a una versión sin mantener una variable manual.
 
 ## Alertas: dos reglas, no una
 
@@ -109,6 +140,51 @@ acoplaría la alerta de este proyecto a otro repositorio.
 El aviso corta el detalle en 500 caracteres y nombra la unit y el `exit`, para
 que el journal se consulte con un comando ya escrito.
 
+#### Una alerta de prueba se marca sola
+
+`--failure-alert` acepta cualquier `--failure-exit-code` desde la terminal, así
+que probarla producía un mensaje **idéntico** al de un job roto; solo lo salvaba
+que alguien escribiera «PRUEBA» a mano en el texto. Una alerta que se puede
+confundir con un simulacro deja de leerse como alerta.
+
+El aviso se marca ahora solo: si falta `INVOCATION_ID` —que systemd exporta al
+servicio y heredan sus hijos—, la ejecución viene de la terminal y la primera
+línea sale como `🧪 PRUEBA`, con una frase que declara que no ha fallado nada.
+El marcador va **delante** porque la notificación push solo enseña el principio.
+
+`--dry-run` funciona también con `--failure-alert`, para probar el texto sin
+gastar un mensaje en el canal real.
+
+### El silencio del timer también se vigila
+
+Todo lo anterior solo actúa cuando el resumen **corre y falla**. Si el timer no
+llega a dispararse —máquina apagada, timer parado, unit desinstalada por un
+`git pull` sin reinstalar—, no hay fallo que capturar y el silencio vuelve a ser
+indistinguible del éxito.
+
+`scripts/check_daily_chat_cost_freshness.py` cierra ese hueco a las 10:15, una
+hora después del digest, con su propio par de units
+(`residenciafiscal-daily-chat-cost-freshness.{service,timer}`). Es el equivalente
+del check de frescura independiente que ya protege los backups. Alerta cuando:
+
+- el estado lleva `--max-staleness-days` (1 por defecto) sin avanzar,
+- el timer vigilado no está `active`, aunque el estado aún parezca fresco,
+- no existe estado de ningún envío previo.
+
+Si todo está al día **no manda nada**: un guardián que habla a diario deja de
+leerse. `--report` fuerza el veredicto para comprobarlo a mano.
+
+No reimplementa la lectura del estado, la **importa** del propio digest: un
+guardián que parsea el fichero por su cuenta acaba divergiendo de quien lo
+escribe, y entonces miente en la dirección peor, diciendo que todo está bien.
+Corre con `python3` del sistema por el mismo motivo que el aviso de fallo.
+
+**Su límite es real y no se disimula**: comparte máquina con lo que vigila, así
+que no puede avisar de un apagón *mientras* dura; `Persistent=true` lo dispara al
+arrancar y el aviso sale entonces. Vigilarlo desde fuera exigiría mover el timer
+al VPS `alfredo`, que es la decisión que la sección de activación descarta a
+propósito por no ampliar la superficie de la clave de servicio.
+
 ## Activación (completada el 2 de agosto de 2026)
 
 1. En Netlify, como **variables ordinarias del contexto `production` y todos los
@@ -126,7 +202,8 @@ que el journal se consulte con un comando ya escrito.
    configuración de un runtime de servidor y no debe viajar al bundle.
    Ambas están puestas en `production` desde el 2 de agosto de 2026.
 2. Instalar el timer diario con las units de `scripts/agentic/`:
-   `residenciafiscal-daily-chat-cost-telegram.{service,timer}`.
+   `residenciafiscal-daily-chat-cost-telegram.{service,timer}` y su guardián
+   `residenciafiscal-daily-chat-cost-freshness.{service,timer}`.
 
    **No va en el VPS `alfredo`, y es deliberado.** Allí viven los timers de
    *sistema* del backup y de la retención, cuyo `.env` solo tiene
@@ -146,6 +223,10 @@ que el journal se consulte con un comando ya escrito.
    `TELEGRAM_TOKEN` y `TELEGRAM_CHAT_ID`—, así que se relanza tras cada
    `git pull` que toque las units. Es el gemelo de
    `install-weekly-ga4-telegram-timer.sh`.
+
+   Instala las **cuatro** units de una vez, a propósito: el guardián existe para
+   vigilar que el digest corra, y un guardián que se instala aparte es un
+   guardián que se olvida de instalar.
 
 ## Verificación hecha
 
@@ -167,3 +248,13 @@ que el journal se consulte con un comando ya escrito.
   `tests/test_daily_chat_cost_telegram.py`, incluido uno que hace fallar el
   handler real con una excepción que contiene la pregunta y comprueba que no
   aparece en el cuerpo enviado a Sentry.
+- El marcador de prueba, comprobado en la cadena real el 2 de agosto de 2026:
+  bajo `systemd-run --user`, el aviso sale sin marca; el mismo comando desde la
+  terminal sale como `🧪 PRUEBA`. La premisa se verificó aparte leyendo
+  `INVOCATION_ID` dentro de una unit.
+- El guardián de frescura, contra el estado real de la máquina el mismo día:
+  con el estado al día calló (`--report` confirmó «al día», timer `active`); con
+  un estado del 2026-07-28 avisó de 4 días; sin estado avisó de que no se había
+  enviado nunca; y **con el timer del digest parado de verdad** avisó aunque el
+  estado estuviera fresco, quedando el timer restaurado a `active`. Una
+  ejecución del service terminó en `0/SUCCESS` sin mandar nada.

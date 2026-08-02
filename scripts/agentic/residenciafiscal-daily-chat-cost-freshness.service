@@ -1,0 +1,16 @@
+[Unit]
+Description=Residencia Fiscal daily chat digest freshness guard
+# No toca la red salvo para mandar la alerta: sin frescura que declarar, calla.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu/ai_projects/residenciafiscal
+# Con el intérprete del sistema, igual que el aviso de fallo del digest: un
+# entorno de `uv` roto no puede silenciar al guardián que vigila el silencio.
+ExecStart=/usr/bin/python3 /home/ubuntu/ai_projects/residenciafiscal/scripts/check_daily_chat_cost_freshness.py
+# Peor caso: consultar systemd y mandar una alerta por Telegram.
+TimeoutStartSec=120
+StandardOutput=journal
+StandardError=journal

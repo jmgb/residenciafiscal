@@ -1,0 +1,15 @@
+[Unit]
+Description=Check every day at 10:15 (Europe/Madrid) that the chat digest actually ran
+
+[Timer]
+# Una hora después del digest de las 09:15: comprobarlo antes solo produciría
+# falsos positivos mientras el propio resumen se está enviando.
+OnCalendar=*-*-* 10:15:00 Europe/Madrid
+# Sin esto, el guardián callaría justo cuando más falta hace: al volver de un
+# apagón largo, que es el escenario en el que el digest se ha perdido días.
+Persistent=true
+AccuracySec=1min
+Unit=residenciafiscal-daily-chat-cost-freshness.service
+
+[Install]
+WantedBy=timers.target
