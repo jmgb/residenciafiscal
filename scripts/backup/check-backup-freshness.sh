@@ -125,3 +125,16 @@ fi
 
 AGE_HOURS=$((AGE_SECONDS / 3600))
 echo "[$(timestamp)] Backup freshness OK: ${LATEST_BACKUP} (${AGE_HOURS}h old, gzip and SQL contract ok)"
+
+# Un backup fresco y válido no dice nada sobre si el script que lo produce sigue
+# siendo el del repositorio. Esa pregunta la contesta el guardián de deriva, que
+# no tiene timer propio y cuelga de aquí igual que el verificador de contrato.
+DRIFT_SCRIPT="${BACKUP_DRIFT_SCRIPT:-$SCRIPT_DIR/check-operational-drift.sh}"
+if [[ -f "$DRIFT_SCRIPT" ]]; then
+    if ! DRIFT_OUTPUT="$(/bin/bash "$DRIFT_SCRIPT" 2>&1)"; then
+        fail_with_alert "El checkout del VPS ya no coincide con el repositorio: ${DRIFT_OUTPUT}"
+    fi
+    echo "$DRIFT_OUTPUT"
+else
+    echo "[$(timestamp)] WARN: guardián de deriva no encontrado: $DRIFT_SCRIPT" >&2
+fi

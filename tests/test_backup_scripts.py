@@ -323,3 +323,87 @@ def test_el_simulacro_compara_con_el_inventario_vivo_de_supabase() -> None:
     assert "SUPABASE_DB_PASSWORD" in contenido
     assert "SUPABASE_REF" in contenido
     assert "BACKUP_VERIFY_LIVE_CONTRACT=1" in contenido
+
+
+# ---------------------------------------------------------------------------
+# Deriva entre el checkout del VPS y el repositorio
+# ---------------------------------------------------------------------------
+#
+# Los scripts se copiaron a mano al VPS y coincidían con el repo por suerte, no
+# por mecanismo: no hay `git pull` ni comprobación, así que el día que se toque
+# uno el VPS seguiría ejecutando el viejo en silencio. El `Backup contract OK`
+# no lo detecta, porque valida el dump contra Supabase, no el script contra git.
+
+DRIFT_SCRIPT = BACKUP_DIR / "check-operational-drift.sh"
+
+
+def _repo_de_prueba(tmp_path: Path) -> Path:
+    """Copia el guardián a un repo git nuevo, como el checkout del VPS."""
+    raiz = tmp_path / "checkout"
+    (raiz / "scripts" / "backup").mkdir(parents=True)
+    (raiz / "scripts" / "privacy").mkdir(parents=True)
+    for nombre in ("check-operational-drift.sh", "vps-backup.sh"):
+        destino = raiz / "scripts" / "backup" / nombre
+        destino.write_text((BACKUP_DIR / nombre).read_text("utf-8"), "utf-8")
+    (raiz / "scripts" / "backup" / "residenciafiscal-backup.service").write_text(
+        (BACKUP_DIR / "residenciafiscal-backup.service").read_text("utf-8"), "utf-8"
+    )
+
+    entorno = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t"}
+    entorno.update(GIT_COMMITTER_NAME="t", GIT_COMMITTER_EMAIL="t@t")
+    for orden in (["init", "-q"], ["add", "-A"], ["commit", "-qm", "inicial"]):
+        subprocess.run(["git", *orden], cwd=raiz, check=True, env=entorno)
+    return raiz
+
+
+def _ejecutar_guardian(raiz: Path, unit_dir: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["/bin/bash", str(raiz / "scripts" / "backup" / "check-operational-drift.sh")],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "OPERATIONAL_DRIFT_UNIT_DIR": str(unit_dir)},
+    )
+
+
+def test_el_guardian_acepta_un_checkout_alineado(tmp_path: Path) -> None:
+    raiz = _repo_de_prueba(tmp_path)
+    units_instaladas = tmp_path / "systemd"
+    units_instaladas.mkdir()
+    (units_instaladas / "residenciafiscal-backup.service").write_text(
+        (BACKUP_DIR / "residenciafiscal-backup.service").read_text("utf-8"), "utf-8"
+    )
+
+    resultado = _ejecutar_guardian(raiz, units_instaladas)
+
+    assert resultado.returncode == 0, resultado.stdout + resultado.stderr
+
+
+def test_el_guardian_detecta_un_script_editado_solo_en_el_vps(tmp_path: Path) -> None:
+    raiz = _repo_de_prueba(tmp_path)
+    (raiz / "scripts" / "backup" / "vps-backup.sh").write_text("# editado a mano\n", "utf-8")
+
+    resultado = _ejecutar_guardian(raiz, tmp_path / "no-existe")
+
+    assert resultado.returncode != 0
+    assert "vps-backup.sh" in resultado.stdout + resultado.stderr
+
+
+def test_el_guardian_detecta_una_unit_instalada_distinta(tmp_path: Path) -> None:
+    raiz = _repo_de_prueba(tmp_path)
+    units_instaladas = tmp_path / "systemd"
+    units_instaladas.mkdir()
+    (units_instaladas / "residenciafiscal-backup.service").write_text(
+        "[Service]\nExecStart=/bin/bash /otra/ruta.sh\n", "utf-8"
+    )
+
+    resultado = _ejecutar_guardian(raiz, units_instaladas)
+
+    assert resultado.returncode != 0
+    assert "residenciafiscal-backup.service" in resultado.stdout + resultado.stderr
+
+
+def test_el_check_diario_ejecuta_el_guardian() -> None:
+    """Sin timer nuevo: cuelga del check de frescura, como el verificador."""
+    contenido = (BACKUP_DIR / "check-backup-freshness.sh").read_text("utf-8")
+
+    assert "check-operational-drift.sh" in contenido

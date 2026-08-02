@@ -16,8 +16,9 @@ ellos están señaladas donde aparecen.
 
 ## Qué responde cada pieza
 
-El sistema contesta cuatro preguntas distintas, y son distintas a propósito: un
-backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto.
+El sistema contesta cinco preguntas distintas, y son distintas a propósito: un
+backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto, y puede salir
+verde a diario ejecutando un script que ya no es el del repositorio.
 
 | Pregunta | Pieza | Cuándo |
 |---|---|---|
@@ -25,6 +26,20 @@ backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto.
 | ¿Hay en R2 un backup reciente, legible y estructuralmente íntegro? | `residenciafiscal-backup-freshness.timer` → `check-backup-freshness.sh` | Diario, 03:05 |
 | ¿Coincide el backup con el contrato vivo de Supabase? | `residenciafiscal-backup-restore-drill.timer` → `check-backup-restore-drill.sh` | Día 1 de cada mes, 06:35 |
 | ¿Se ha aplicado la retención de Supabase? | `residenciafiscal-chat-retention.timer` → `scripts/privacy/purge-chat-data.sh` | Diario, 03:20 |
+| ¿Lo que se ejecuta sigue siendo lo que dice el repositorio? | `check-operational-drift.sh`, invocado por el check de frescura | Diario, 03:05 |
+
+El guardián de deriva no tiene timer propio, igual que
+`verify-backup-contract.sh`: cuelga del check de frescura, que ya corre a diario
+y ya sabe avisar por Telegram. Compara tres cosas y **solo lee**: que el
+checkout no tenga ediciones sin versionar en `scripts/backup` ni en
+`scripts/privacy`, que `origin/main` no traiga versiones más nuevas de esos
+scripts, y que las units instaladas en `/etc/systemd/system` sigan siendo las
+del checkout —reinstalar es un paso manual y olvidarlo deja el timer viejo
+corriendo—. Sin red, avisa de que no pudo consultar `origin` y sigue con lo
+comprobable en local, porque quedarse sin GitHub no es un fallo del backup.
+
+Nunca reconcilia por su cuenta: hacerlo tiene consecuencias y es una decisión,
+no un automatismo.
 
 Los timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
 estaba apagado) y `RandomizedDelaySec=300`. Los huecos horarios están elegidos
@@ -154,18 +169,27 @@ aws s3 mb s3://residenciafiscal-backup \
 unit hay que sincronizar las rutas operativas indicadas abajo y volver a lanzar
 el instalador; si no, el VPS sigue ejecutando la versión anterior sin decir nada.
 
-> **Deuda del arranque (2026-07-31).** El sistema se instaló antes de que
-> `scripts/backup/` estuviera commiteado, así que el checkout del VPS conserva
-> copias operativas sin seguimiento de git. No se debe hacer un `git pull` ni
-> borrar esas copias a ciegas. Hasta reconciliar el checkout, los despliegues se
-> hacen copiando únicamente `scripts/backup/` y reinstalando las units:
+> **Deuda del arranque, saldada el 2026-08-02.** El sistema se instaló antes de
+> que `scripts/backup/` estuviera commiteado, así que el checkout del VPS
+> conservó 21 copias operativas sin seguimiento de git durante dos días. Se
+> comprobó por SHA-256 que las 20 ejecutables eran **idénticas** a las del repo
+> —también las 9 units instaladas en `/etc/systemd/system`—, y solo divergía
+> `docs/operations/BACKUPS.md`, que no se ejecuta. El checkout quedó reconciliado
+> en `origin/main` y con el árbol limpio.
+>
+> **`git pull` no sirve para reconciliar** un checkout así: falla con
+> `untracked working tree files would be overwritten`, porque esos ficheros ya
+> existen en `main`. Lo que funciona es sobrescribirlos, y solo después de
+> comprobar que no llevan ediciones locales:
 >
 > ```bash
-> rsync -av --itemize-changes scripts/backup/ \
->   alfredo:residenciafiscal/scripts/backup/
-> ssh -o RemoteCommand=none alfredo \
->   'sudo bash "$HOME/residenciafiscal/scripts/backup/install-backup-timer.sh"'
+> ssh alfredo 'cd residenciafiscal && tar czf /tmp/pre-reset.tar.gz scripts/ &&
+>   git fetch origin && git reset --hard origin/main'
 > ```
+
+Desde entonces los despliegues son un `git pull` normal; tras cambiar una unit
+hay que relanzar además el instalador, porque systemd ejecuta su propia copia en
+`/etc/systemd/system` y esa no la actualiza git.
 
 ## Operativa
 
@@ -271,8 +295,12 @@ contenido.
 4. **Retención plana**: snapshots diarios hasta `BACKUP_RETENTION_DAYS`. Sin retención semanal ni mensual.
 5. **Depende del VPS.** Si `alfredo` está caído, no hay backup esa noche; el
    check de frescura del día siguiente lo delata.
-6. **El checkout del VPS puede quedarse atrás** respecto al repo. Presupuestor
-   resolvió esto con un timer de `git pull`; aquí, de momento, es manual.
+6. **El checkout del VPS puede quedarse atrás** respecto al repo: actualizarlo
+   sigue siendo manual, a diferencia de Presupuestor, que lo resolvió con un
+   timer de `git pull`. Lo que ya no puede pasar es que ocurra en silencio: el
+   guardián de deriva lo convierte en una alerta diaria. Se prefirió avisar
+   antes que actualizar solo, porque un `git pull` automático desplegaría en
+   producción cualquier commit de `main` sin que nadie lo decidiera.
 
 ## Troubleshooting
 

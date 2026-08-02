@@ -448,9 +448,12 @@ crear un schema nuevo hay que añadirlo a `BACKUP_SCHEMAS` en `vps-backup.sh`; e
 guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan
 si alguien lo olvida. Cada snapshot valida tablas, bloques `COPY` y las tres RPC
 vigentes antes de subirlo; el simulacro mensual compara ese contrato con
-Supabase. El checkout operativo del VPS no se actualiza solo y conserva copias
-no versionadas: hasta reconciliarlo, se sincroniza únicamente
-`scripts/backup/` y se relanza `install-backup-timer.sh` según el runbook.
+Supabase. El checkout operativo del VPS quedó reconciliado con `origin/main` el
+2 de agosto de 2026 y **sigue sin actualizarse solo**: tras cambiar un script
+hay que hacer `git pull` allí, y relanzar `install-backup-timer.sh` si cambió
+una unit, porque systemd ejecuta su propia copia. Que eso se olvide ya no pasa
+en silencio: `check-operational-drift.sh` compara a diario el checkout, las
+units instaladas y `origin/main`, y alerta por Telegram. Nunca reconcilia solo.
 Arquitectura, operativa, límites y consecuencias de privacidad:
 [`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
 
