@@ -9,8 +9,9 @@ qué hay que configurar para que funcione. Estado: implementado y verificado el
 | Señal | Canal | Por qué |
 |-------|-------|---------|
 | Fallos (`chat_request_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Agrupa, deduplica y alerta por tasa |
+| Fallos aislados (`chat_strategy_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Avisa aunque la otra estrategia permita completar la petición |
 | Coste (`chat_cost_reconciled`) | Resumen diario a Telegram | No es un error; Sentry lo mide mal |
-| Ambos, en crudo | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
+| Todos, en crudo | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
 
 Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
 
@@ -19,6 +20,8 @@ Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
 Cada petición que termina y se persiste emite `chat_cost_reconciled`. El nombre se
 conserva por compatibilidad, pero el evento ya no describe solo coste:
 
+- `schema_version=residenciafiscal-chat-observability/1` versiona el contrato
+  común de los tres eventos estructurados;
 - `request_status=completed` separa el resultado operativo de la contabilidad;
 - `cost_measurement_complete` indica si todos los costes son `ACTUAL`;
   `actual_complete` conserva el mismo valor como alias histórico y **no** significa
@@ -46,12 +49,12 @@ privado con su retención propia.
 La Function **no usa `@sentry/node`**, y es deliberado. El SDK captura
 breadcrumbs de consola y contexto del runtime por defecto, y este runtime loguea
 eventos estructurados por consola; desactivar cada captura automática es más
-frágil que escribir el payload. `netlify/functions/chat/observability.ts`
-construye el envelope con `fetch`, así que **lo que sale es exactamente lo que se
-lee en `buildEnvelope`**.
+frágil que escribir el payload. `netlify/functions/chat/sentry-envelope.ts`
+construye el envelope y `observability.ts` lo envía con `fetch`, así que lo que
+sale está acotado por un contrato revisable.
 
-Viaja: `failure_code`, `stage`, `status`, `request_id`, `error_name`, entorno y
-fingerprint.
+Viaja: `schema_version`, `failure_code`, `stage` o `strategy`, `status` cuando
+existe, `request_id`, `error_name`, latencia, entorno y fingerprint.
 
 No viaja, nunca: la pregunta, la respuesta, el `message` de la excepción del
 proveedor, cabeceras, cookies ni cuerpo de la petición. El motivo es concreto: un
@@ -69,6 +72,12 @@ Tres decisiones que evitan un incidente:
   se envía nada, y todo el sink va en `try/catch`: Sentry caído no puede tumbar
   el chat, porque el fallo ya quedó en el log estructurado.
 
+Una petición puede terminar `completed` aunque A o B devuelva `error`. Después de
+persistir el ledger y antes del evento de coste, la Function envía en paralelo
+un `chat_strategy_failed` por cada estrategia fallida. Su fingerprint agrupa por
+estrategia y código (`timeout`, excepción, contrato, cita o evidencia), sin incluir
+el mensaje del proveedor. Un fallo de Sentry no cambia la respuesta HTTP.
+
 Si `SENTRY_RELEASE` no está configurado, la Function usa `COMMIT_REF` y después
 `DEPLOY_ID`, variables nativas del despliegue de Netlify. Así un error queda
 asociado a una versión sin mantener una variable manual.
@@ -78,8 +87,8 @@ asociado a una versión sin mantener una variable manual.
 Con el tráfico actual una alerta **solo** por tasa no saltaría nunca. Por eso hay
 dos en `residencia-fiscal-chat`:
 
-1. `Chat: fallo nuevo en la Function` — primer fallo y regresiones.
-2. `Chat: tasa de fallos elevada` — 5 eventos en 1 hora.
+1. `Chat: fallo nuevo en la Function` — primer fallo global o aislado y regresiones.
+2. `Chat: tasa de fallos elevada` — 5 eventos globales o aislados en 1 hora.
 
 ## Resumen diario de gasto
 
@@ -185,6 +194,33 @@ arrancar y el aviso sale entonces. Vigilarlo desde fuera exigiría mover el time
 al VPS `alfredo`, que es la decisión que la sección de activación descarta a
 propósito por no ampliar la superficie de la clave de servicio.
 
+#### El guardián tampoco puede morir callado
+
+Nació más frágil que lo que vigila: si reventaba, systemd lo marcaba `failed` y
+nadie lo leía —la misma clase de silencio que existe para eliminar, un nivel más
+arriba—. Dos cierres, y el segundo importa más que el primero:
+
+- **Un fallo propio se avisa por Telegram**, nombrando su unit y cortando el
+  detalle en 500 caracteres. Si ni el aviso sale, queda el journal y un exit
+  distinto de cero (`1`); ahí termina la cadena, y termina a propósito.
+- **El canal se comprueba en cada pasada**, no solo cuando hay algo que avisar.
+  Con todo al día el check sale por el camino del silencio **antes** de tocar el
+  `.env`, así que sin esta comprobación un `TELEGRAM_TOKEN` desaparecido no se
+  descubriría hasta la primera alerta de verdad: el peor momento posible. Si
+  falta, el check no puede avisar por Telegram de que no puede avisar por
+  Telegram, así que falla ruidosamente con exit `3`. Se comprueban los **mismos
+  alias** que acepta `send_telegram` (`TG_BOT_TOKEN`, `TG_CHAT_ID`): mirar solo
+  el nombre canónico declararía roto un canal que funciona.
+
+`--dry-run` exime de esa comprobación —en seco no hay envío que proteger, y
+exigirla impediría probar el check sin `.env`—, y tampoco entrega el aviso de
+fallo: probar el guardián no puede costar una alerta falsa en el canal.
+
+El guardián hereda además el **marcador de prueba** del resumen diario: un aviso
+suyo disparado a mano sale como `🧪 PRUEBA`. Es un emisor de alertas más, y si
+probarlo mete en el canal un mensaje indistinguible de uno real, se gasta la
+credibilidad de todos.
+
 ## Activación (completada el 2 de agosto de 2026)
 
 1. En Netlify, como **variables ordinarias del contexto `production` y todos los
@@ -252,6 +288,11 @@ propósito por no ampliar la superficie de la clave de servicio.
   bajo `systemd-run --user`, el aviso sale sin marca; el mismo comando desde la
   terminal sale como `🧪 PRUEBA`. La premisa se verificó aparte leyendo
   `INVOCATION_ID` dentro de una unit.
+- El guardián, ya endurecido, el 2 de agosto de 2026: un fallo real provocado
+  con una fecha imposible produjo su aviso (`ValueError`) y exit `1` sin
+  entregarlo en seco; una ejecución normal con el `.env` verdadero **no** dio
+  falso positivo de canal, que era el riesgo de haber errado los alias; y un
+  aviso de desfase se **entregó de verdad** en Telegram, marcado `🧪 PRUEBA`.
 - El guardián de frescura, contra el estado real de la máquina el mismo día:
   con el estado al día calló (`--report` confirmó «al día», timer `active`); con
   un estado del 2026-07-28 avisó de 4 días; sin estado avisó de que no se había

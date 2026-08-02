@@ -38,9 +38,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from daily_chat_cost_telegram import (  # noqa: E402
     DEFAULT_STATE_PATH,
     HEADER_PREFIX,
+    is_manual_invocation,
     read_last_sent,
 )
-from lib_telegram import load_env, send_telegram  # noqa: E402
+from lib_telegram import env_value, load_env, send_telegram  # noqa: E402
 
 SERVICE_NAME = "residenciafiscal-daily-chat-cost-freshness.service"
 WATCHED_TIMER = "residenciafiscal-daily-chat-cost-telegram.timer"
@@ -49,6 +50,13 @@ WATCHED_SERVICE = "residenciafiscal-daily-chat-cost-telegram.service"
 # de un día ya es real: no es un retraso, es que no corrió.
 DEFAULT_MAX_STALENESS_DAYS = 1
 SYSTEMCTL_TIMEOUT_SECONDS = 15
+CRASH_DETAIL_LIMIT = 500
+# Los mismos alias que acepta `send_telegram`: comprobar solo el nombre canónico
+# declararía roto un canal que funciona.
+TELEGRAM_TOKEN_KEYS = ("TELEGRAM_BOT_TOKEN", "TG_BOT_TOKEN", "TELEGRAM_TOKEN")
+TELEGRAM_CHAT_KEYS = ("TELEGRAM_CHAT_ID", "TG_CHAT_ID")
+EXIT_CRASHED = 1
+EXIT_CHANNEL_UNAVAILABLE = 3
 
 
 def staleness_days(last_sent: dt.date | None, today: dt.date) -> int | None:
@@ -112,6 +120,52 @@ def build_never_sent_message() -> str:
     )
 
 
+def missing_telegram_keys(env: dict[str, str]) -> list[str]:
+    """Claves que impedirían avisar, comprobadas **en cada pasada**.
+
+    Con todo al día el check sale por el camino del silencio, así que sin esta
+    comprobación el canal solo se ejercía el día que había algo que avisar: justo
+    el peor momento para descubrir que el token desapareció del `.env`.
+    """
+    missing: list[str] = []
+    if not env_value(env, *TELEGRAM_TOKEN_KEYS):
+        missing.append("TELEGRAM_TOKEN")
+    if not env_value(env, *TELEGRAM_CHAT_KEYS):
+        missing.append("TELEGRAM_CHAT_ID")
+    return missing
+
+
+def mark_as_test(message: str) -> str:
+    """Marca un aviso disparado a mano, con la misma regla que el resumen diario.
+
+    El guardián es un emisor de alertas más: si probarlo mete en el canal un
+    mensaje indistinguible de uno real, se gasta la credibilidad de todos.
+    """
+    head, _, rest = message.partition("\n")
+    head = head.replace(f"{HEADER_PREFIX} ⚠️", f"{HEADER_PREFIX} 🧪 PRUEBA ·", 1)
+    return "\n".join(
+        [head, "", "Disparo manual fuera de systemd: no ha fallado ningún job.", rest.lstrip("\n")]
+    )
+
+
+def build_crash_message(error: BaseException) -> str:
+    """El guardián no puede ser más frágil que lo que vigila.
+
+    Si revienta y solo lo registra el journal, reaparece el silencio que existe
+    para eliminar. El detalle se corta como en el aviso del digest.
+    """
+    return "\n".join(
+        [
+            f"{HEADER_PREFIX} ⚠️ Chat · el guardián del resumen diario FALLÓ",
+            "",
+            f"{type(error).__name__}: {str(error)[:CRASH_DETAIL_LIMIT]}",
+            "",
+            "No se ha comprobado si el resumen diario sigue saliendo.",
+            f"Revisa: journalctl --user -u {SERVICE_NAME} -n 50 --no-pager",
+        ]
+    )
+
+
 def build_timer_stopped_message(state: str) -> str:
     return "\n".join(
         [
@@ -142,6 +196,36 @@ def main(argv: list[str] | None = None) -> int:
     )
     arguments = parser.parse_args(argv)
 
+    # En seco no hay envío que proteger, y exigir credenciales impediría probar
+    # el check sin `.env`. La unit real nunca usa `--dry-run`.
+    env = load_env()
+    if not arguments.dry_run:
+        missing = missing_telegram_keys(env)
+        if missing:
+            print(
+                f"No hay canal para avisar: falta {', '.join(missing)} en .env. "
+                "El guardián no puede avisar por Telegram de que no puede avisar "
+                "por Telegram, así que falla ruidosamente.",
+                file=sys.stderr,
+            )
+            return EXIT_CHANNEL_UNAVAILABLE
+
+    try:
+        return run(arguments, env)
+    except Exception as error:  # noqa: BLE001 - el guardián no puede morir callado
+        if arguments.dry_run:
+            print(build_crash_message(error))
+            return EXIT_CRASHED
+        try:
+            send_telegram(build_crash_message(error), env)
+        except Exception:  # noqa: BLE001 - aquí termina la cadena
+            print(f"el guardián falló y tampoco pudo avisar: {error}", file=sys.stderr)
+        else:
+            print(f"el guardián falló y avisó por Telegram: {error}", file=sys.stderr)
+        return EXIT_CRASHED
+
+
+def run(arguments: argparse.Namespace, env: dict[str, str]) -> int:
     today = dt.date.fromisoformat(arguments.today) if arguments.today else dt.date.today()
     state_path = pathlib.Path(arguments.state_file) if arguments.state_file else DEFAULT_STATE_PATH
     last_sent = read_last_sent(state_path)
@@ -165,12 +249,13 @@ def main(argv: list[str] | None = None) -> int:
             print(message)
         return 0
 
-    env = load_env()
+    manual = is_manual_invocation()
     for alert in alerts:
+        message = mark_as_test(alert) if manual else alert
         if arguments.dry_run:
-            print(alert)
+            print(message)
             continue
-        send_telegram(alert, env)
+        send_telegram(message, env)
         print("Aviso de frescura enviado a Telegram.")
     return 0
 

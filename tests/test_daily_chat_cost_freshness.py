@@ -94,12 +94,15 @@ class TimerVigiladoTest(unittest.TestCase):
         self.assertIsNone(MODULE.timer_state(run=sin_systemctl))
 
 
+CREDENCIALES = {"TELEGRAM_TOKEN": "t", "TELEGRAM_CHAT_ID": "c"}
+
+
 class CableadoTest(unittest.TestCase):
     def setUp(self) -> None:
         self.enviados: list[str] = []
         dobles = {
             "send_telegram": lambda mensaje, env: self.enviados.append(mensaje),
-            "load_env": dict,
+            "load_env": lambda: dict(CREDENCIALES),
             "timer_state": lambda run=None: "active",
         }
         for nombre, doble in dobles.items():
@@ -187,6 +190,165 @@ class CableadoTest(unittest.TestCase):
 
         self.assertIs(MODULE.read_last_sent, digest.read_last_sent)
         self.assertEqual(MODULE.DEFAULT_STATE_PATH, digest.DEFAULT_STATE_PATH)
+
+
+class CanalDeAvisoTest(unittest.TestCase):
+    """El canal solo se usaba el día que hacía falta, que es el peor para probarlo.
+
+    Con todo al día el check salía por el camino del silencio **antes** de tocar
+    el `.env`, así que un `TELEGRAM_TOKEN` desaparecido no se descubría hasta la
+    primera alerta de verdad: justo cuando ya no puede avisar de nada.
+    """
+
+    def test_las_claves_que_faltan_se_nombran(self) -> None:
+        """Con `os.environ` aislado: `env_value` lo consulta antes que el `.env`,
+        y sin aislarlo el test mediría la máquina en vez del código."""
+        with mock.patch.dict("os.environ", {}, clear=True):
+            faltan = MODULE.missing_telegram_keys({})
+
+        self.assertEqual(faltan, ["TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID"])
+
+    def test_una_clave_exportada_al_entorno_cuenta_como_presente(self) -> None:
+        """`send_telegram` la usaría, así que declararla ausente sería mentir."""
+        with mock.patch.dict("os.environ", {"TELEGRAM_TOKEN": "t"}, clear=True):
+            faltan = MODULE.missing_telegram_keys({"TELEGRAM_CHAT_ID": "c"})
+
+        self.assertEqual(faltan, [])
+
+    def test_un_canal_completo_no_echa_de_menos_nada(self) -> None:
+        self.assertEqual(MODULE.missing_telegram_keys(dict(CREDENCIALES)), [])
+
+    def test_acepta_los_mismos_alias_que_el_envio(self) -> None:
+        """`send_telegram` admite `TG_BOT_TOKEN` y `TG_CHAT_ID`; comprobar solo el
+        nombre canónico declararía roto un canal que funciona."""
+        alias = {"TG_BOT_TOKEN": "t", "TG_CHAT_ID": "c"}
+
+        self.assertEqual(MODULE.missing_telegram_keys(alias), [])
+
+    def test_sin_canal_el_check_falla_ruidosamente_aunque_todo_este_al_dia(self) -> None:
+        """No puede avisar por Telegram de que no puede avisar por Telegram."""
+        with mock.patch.dict("os.environ", {}, clear=True):
+            with mock.patch.object(MODULE, "load_env", dict):
+                with mock.patch.object(MODULE, "timer_state", lambda run=None: "active"):
+                    carpeta = tempfile.mkdtemp()
+                    estado = pathlib.Path(carpeta) / "last_day.txt"
+                    estado.write_text("2026-08-02\n", encoding="utf-8")
+
+                    codigo = MODULE.main(["--today", "2026-08-03", "--state-file", str(estado)])
+
+        self.assertNotEqual(codigo, 0)
+
+
+class FalloDelPropioGuardianTest(unittest.TestCase):
+    """El guardián no puede ser más frágil que lo que vigila.
+
+    Si revienta, systemd lo marca `failed` y nadie lo lee: es la misma clase de
+    silencio que existe para eliminar, un nivel más arriba.
+    """
+
+    def setUp(self) -> None:
+        self.enviados: list[str] = []
+        parche = mock.patch.object(
+            MODULE, "send_telegram", lambda mensaje, env: self.enviados.append(mensaje)
+        )
+        parche.start()
+        self.addCleanup(parche.stop)
+        parche_env = mock.patch.object(MODULE, "load_env", lambda: dict(CREDENCIALES))
+        parche_env.start()
+        self.addCleanup(parche_env.stop)
+
+    def revienta(self, *args: object, **kwargs: object) -> None:
+        raise OSError("systemctl colgado")
+
+    def test_un_fallo_del_check_avisa_por_telegram(self) -> None:
+        with mock.patch.object(MODULE, "timer_state", self.revienta):
+            codigo = MODULE.main(["--today", "2026-08-03"])
+
+        self.assertNotEqual(codigo, 0)
+        self.assertEqual(len(self.enviados), 1)
+        self.assertIn("systemctl colgado", self.enviados[0])
+
+    def test_el_aviso_del_fallo_nombra_su_propia_unit(self) -> None:
+        with mock.patch.object(MODULE, "timer_state", self.revienta):
+            MODULE.main(["--today", "2026-08-03"])
+
+        self.assertIn("residenciafiscal-daily-chat-cost-freshness.service", self.enviados[0])
+
+    def test_si_ni_el_aviso_sale_el_check_falla_ruidosamente(self) -> None:
+        """La cadena termina aquí: queda el journal y un exit distinto de cero."""
+
+        def telegram_roto(mensaje: str, env: dict[str, str]) -> None:
+            raise RuntimeError("Telegram devolvió error")
+
+        with mock.patch.object(MODULE, "timer_state", self.revienta):
+            with mock.patch.object(MODULE, "send_telegram", telegram_roto):
+                codigo = MODULE.main(["--today", "2026-08-03"])
+
+        self.assertNotEqual(codigo, 0)
+
+    def test_en_seco_el_aviso_de_fallo_tampoco_llega_a_telegram(self) -> None:
+        """Probar el guardián en seco no puede costar una alerta falsa en el canal."""
+        with mock.patch.object(MODULE, "timer_state", self.revienta):
+            codigo = MODULE.main(["--today", "2026-08-03", "--dry-run"])
+
+        self.assertNotEqual(codigo, 0)
+        self.assertEqual(self.enviados, [])
+
+    def test_el_aviso_no_arrastra_un_traceback_entero(self) -> None:
+        def revienta_largo(*args: object, **kwargs: object) -> None:
+            raise OSError("x" * 2000)
+
+        with mock.patch.object(MODULE, "timer_state", revienta_largo):
+            MODULE.main(["--today", "2026-08-03"])
+
+        self.assertLess(len(self.enviados[0]), 800)
+
+
+class MarcadorDePruebaTest(unittest.TestCase):
+    """El guardián es un emisor de alertas más: hereda la misma regla que el digest.
+
+    Sin esto, probarlo a mano metía en el canal un aviso indistinguible de uno
+    real, que es exactamente lo que se corrigió en el resumen diario.
+    """
+
+    def test_un_disparo_manual_se_marca_en_la_primera_linea(self) -> None:
+        marcado = MODULE.mark_as_test(MODULE.build_stale_message(dt.date(2026, 7, 30), 3))
+
+        self.assertIn("PRUEBA", marcado.splitlines()[0])
+
+    def test_el_marcado_conserva_el_contenido_del_aviso(self) -> None:
+        original = MODULE.build_stale_message(dt.date(2026, 7, 30), 3)
+        marcado = MODULE.mark_as_test(original)
+
+        self.assertIn("2026-07-30", marcado)
+        self.assertIn("no ha fallado ningún job", marcado)
+
+    def test_desde_systemd_el_aviso_sale_sin_marca(self) -> None:
+        enviados: list[str] = []
+        carpeta = tempfile.mkdtemp()
+        estado = pathlib.Path(carpeta) / "last_day.txt"
+        estado.write_text("2026-07-30\n", encoding="utf-8")
+
+        with mock.patch.dict("os.environ", {"INVOCATION_ID": "8f3c"}, clear=False):
+            with mock.patch.object(MODULE, "send_telegram", lambda m, e: enviados.append(m)):
+                with mock.patch.object(MODULE, "load_env", lambda: dict(CREDENCIALES)):
+                    with mock.patch.object(MODULE, "timer_state", lambda run=None: "active"):
+                        MODULE.main(["--today", "2026-08-03", "--state-file", str(estado)])
+
+        self.assertNotIn("PRUEBA", enviados[0])
+
+    def test_a_mano_el_aviso_sale_marcado(self) -> None:
+        enviados: list[str] = []
+        carpeta = tempfile.mkdtemp()
+        estado = pathlib.Path(carpeta) / "last_day.txt"
+        estado.write_text("2026-07-30\n", encoding="utf-8")
+
+        with mock.patch.dict("os.environ", dict(CREDENCIALES), clear=True):
+            with mock.patch.object(MODULE, "send_telegram", lambda m, e: enviados.append(m)):
+                with mock.patch.object(MODULE, "timer_state", lambda run=None: "active"):
+                    MODULE.main(["--today", "2026-08-03", "--state-file", str(estado)])
+
+        self.assertIn("PRUEBA", enviados[0])
 
 
 class UnitsTest(unittest.TestCase):
