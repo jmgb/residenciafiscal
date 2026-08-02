@@ -1,9 +1,12 @@
 import { Send, Square } from 'lucide-react';
-import { type KeyboardEvent, useRef, useState } from 'react';
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { Button } from '@/shared/components/ui/button';
 
 const MAX_LENGTH = 500;
 const TEXTAREA_MAX_HEIGHT_PX = 160;
+const DEFAULT_PLACEHOLDER = 'Escribe tu consulta sobre residencia fiscal…';
+const MOBILE_PLACEHOLDER = 'Escribe tu consulta...';
+const MOBILE_VIEWPORT_QUERY = '(max-width: 639px)';
 
 interface ChatComposerProps {
   onSend: (content: string) => void;
@@ -13,15 +16,35 @@ interface ChatComposerProps {
   placeholder?: string;
 }
 
+const useIsMobileViewport = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return;
+
+    const mediaQuery = window.matchMedia(MOBILE_VIEWPORT_QUERY);
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener('change', update);
+
+    return () => mediaQuery.removeEventListener('change', update);
+  }, []);
+
+  return isMobile;
+};
+
 export function ChatComposer({
   onSend,
   onStop,
   isStreaming,
   disabled = false,
-  placeholder = 'Escribe tu consulta sobre residencia fiscal…',
+  placeholder = DEFAULT_PLACEHOLDER,
 }: ChatComposerProps) {
   const [text, setText] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isMobile = useIsMobileViewport();
+  const displayedPlaceholder =
+    isMobile && placeholder === DEFAULT_PLACEHOLDER ? MOBILE_PLACEHOLDER : placeholder;
   const trimmedLength = text.trim().length;
   const isOverMaxLength = trimmedLength > MAX_LENGTH;
   const showCharCount = trimmedLength > MAX_LENGTH * 0.8;
@@ -47,12 +70,12 @@ export function ChatComposer({
   };
 
   return (
-    <div className='shrink-0 bg-canvas px-4 pb-8 pt-3'>
+    <div className='shrink-0 bg-canvas px-4 pb-4 pt-2 sm:pb-8 sm:pt-3'>
       {/* El composer flota como tarjeta blanca sobre el lienzo: el contraste de
           fondo sustituye al borde superior que antes lo separaba del hilo. El
           hueco inferior lo despega del borde del viewport en vez de dejarlo
           pegado abajo. */}
-      <div className='mx-auto flex w-full max-w-3xl items-center gap-2 rounded-2xl border border-border bg-card p-3 shadow-md focus-within:ring-2 focus-within:ring-ring'>
+      <div className='mx-auto flex w-full max-w-3xl items-center gap-1.5 rounded-2xl border border-border bg-card p-2 shadow-md focus-within:ring-2 focus-within:ring-ring sm:gap-2 sm:p-3'>
         <textarea
           ref={textareaRef}
           value={text}
@@ -65,7 +88,7 @@ export function ChatComposer({
           }}
           onKeyDown={handleKeyDown}
           rows={1}
-          placeholder={placeholder}
+          placeholder={displayedPlaceholder}
           aria-label='Consulta'
           // El padding vertical simétrico centra la primera línea; el suelo es
           // compacto en móvil y recupera el tamaño anterior desde `sm`.
