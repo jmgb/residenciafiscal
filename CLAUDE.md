@@ -617,10 +617,10 @@ chat y despliegue están en [`frontend/CLAUDE.md`](frontend/CLAUDE.md), que se
 carga solo al trabajar dentro de ese directorio.
 
 La disponibilidad la vigila **UptimeRobot** desde fuera: dos monitores de palabra
-clave cada 5 minutos, uno sobre la home y otro sobre `data/corpus.json` —el
-fallback SPA de Netlify devuelve 200 para cualquier ruta, así que un monitor HTTP
-simple no detectaría un corpus perdido. Monitores, credenciales y la trampa de la
-API v2 (que rechaza toda escritura en este plan) están en
+clave cada 5 minutos, uno sobre la home y otro sobre `data/corpus.json`. El
+fallback actual devuelve 404, pero la palabra clave comprueba además que la home
+y el corpus contienen el artefacto esperado. Monitores, credenciales y la trampa
+de la API v2 (que rechaza toda escritura en este plan) están en
 [`docs/operations/UPTIMEROBOT.md`](docs/operations/UPTIMEROBOT.md).
 
 ## Un país, un corpus
@@ -645,9 +645,10 @@ Al escribir copy sobre esto, dos límites:
   describe mal el requisito; hay un test que impide que esa fórmula reaparezca.
 
 Canales, perfiles y ruta viven en `frontend/src/lib/contribution.ts`; la página
-pública es `/colaborar`, la única indexable del circuito porque las páginas de
-país sin corpus son `noindex` (el recuento no se escribe en prosa: sale de
-`countryRoutes.json` y cambia cada vez que se reserva una ruta). El formulario es
+pública del circuito es `/colaborar`. Las páginas de país sin corpus también son
+indexables desde que publican contenido bilateral propio y verificable; eso no
+significa que tengan jurisprudencia nacional. El recuento no se escribe en
+prosa: sale de `countryRoutes.json` y cambia al reservar una ruta. El formulario es
 [`.github/ISSUE_TEMPLATE/aportar_pais.yml`](.github/ISSUE_TEMPLATE/aportar_pais.yml).
 Contrato operativo en [`CONTRIBUTING.md`](CONTRIBUTING.md) y estado de las páginas
 en [`docs/product/COUNTRY_PAGES.md`](docs/product/COUNTRY_PAGES.md).

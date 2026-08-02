@@ -4,9 +4,11 @@ Residencia Fiscal transforma documentos jurídicos oficiales en datos
 estructurados y corpus consultables. El sistema separa las fuentes originales,
 la lógica Python, los artefactos derivados y las interfaces de usuario.
 
-El corpus v3 se prepara offline mediante Python + agente y actualmente está
-validado sobre cinco sentencias. La inferencia LLM pertenece exclusivamente al
-chat online; no existe un analizador automático de sentencias.
+El corpus v3 se prepara offline mediante Python + agente y está validado sobre
+106 sentencias. Sus 67 candidatas web siguen en preview privada y no están
+publicadas: el análisis continúa en `AGENT_REVIEWED_ONLY`. La inferencia LLM
+pertenece exclusivamente al chat online; no existe un analizador automático de
+sentencias.
 
 ## Vista general
 
@@ -14,7 +16,7 @@ chat online; no existe un analizador automático de sentencias.
 flowchart LR
     PDF["sentencias/<br/>PDF del CENDOJ"]
     BOE["normativa/<br/>XML del BOE"] --> NORM
-    PDF --> FILESEARCH["Gemini File Search<br/>store piloto de 5 PDF"]
+    PDF --> FILESEARCH["Gemini File Search<br/>store de 106 PDF"]
 
     subgraph PYTHON["src/"]
         API["API FastAPI local<br/>prototipo / opción futura"]
@@ -23,6 +25,8 @@ flowchart LR
         OKF["Publicación OKF<br/>okf_*"]
         VERBATIM["Corpus por páginas<br/>verbatim_*"]
         NORM["Transformación normativa<br/>normativa_*"]
+        JURISDICTIONS["Catálogo y relaciones<br/>jurisdiction_* / treaty_relations"]
+        PUBLIC["Proyección pública<br/>public_judgment_*"]
         CHAT["Comparador F0.2<br/>chat_strategy_*"]
     end
 
@@ -30,12 +34,15 @@ flowchart LR
     CITES --> OKF
     PDF --> VERBATIM
     VERBATIM --> CASES
+    CASES --> PUBLIC
     CASES --> CHAT
     FILESEARCH --> CHAT
     CHAT --> CHATOUT["output/file-search/<br/>respuestas y logs locales"]
     CASES --> KNOWLEDGE["knowledge/<br/>corpus versionados"]
     OKF --> KNOWLEDGE
     NORM --> KNOWLEDGE
+    JURISDICTIONS --> KNOWLEDGE
+    PUBLIC --> KNOWLEDGE
     KNOWLEDGE --> WEB["frontend/<br/>React"]
     WEB --> FUNCTION["Netlify Function V1<br/>A y B en paralelo<br/>implementada y cerrada"]
     KNOWLEDGE --> FUNCTION
@@ -54,12 +61,15 @@ flowchart LR
 | API HTTP Python | `src/api/` | Prototipo local y posible runtime futuro para llamadas de más de 60 s |
 | Citas | `src/citation_*.py`, `src/legal_text_matching.py` | Localizar y verificar extractos literales |
 | Jurisprudencia v3 | `src/jurisprudence_*.py` | Compilar casos, validar referencias, recuperar y evaluar |
+| Jurisdicciones y convenios | `src/jurisdiction_*.py`, `src/jurisdictions.py`, `src/treaty_relations.py` | Normalizar identidades, roles judiciales y periodos de instrumentos bilaterales |
+| Proyección jurisprudencial web | `src/public_judgment_projection.py`, `src/export_public_judgments.py` | Aplicar allowlist, gates de revisión, hashes y lotes antes de entregar datos al frontend |
 | OKF | `src/okf_*.py` | Normalizar, renderizar y validar perfiles publicables |
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
 | Runtime web V1 | `frontend/netlify/functions/chat/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
 | Persistencia web V1 | `supabase/migrations/`, `supabase-chat-store.ts` | Reserva atómica y mensajes A/B con citas, uso y coste en schema privado |
+| Renderer de sentencias | `frontend/src/pages/Sentencias*.tsx`, `frontend/scripts/build-sentencias.mjs` | Renderizar índice y fichas; producción falla cerrada y la preview permanece `noindex` |
 | Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
@@ -90,7 +100,7 @@ dominio y con una migración de imports independiente.
    presupuesto y un deadline global de 50–55 s.
 3. La Function inicia A y B en paralelo. A recupera unidades v3, limita el
    contexto y redacta mediante IDs de evidencia que se resuelven localmente.
-4. B consulta de forma independiente un File Search Store con los cinco PDF
+4. B consulta de forma independiente un File Search Store con los 106 PDF
    originales y devuelve anotaciones del proveedor.
 5. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
    que quede sin respaldo.
@@ -110,6 +120,19 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 3. La exportación copia el texto de la fuente, sin LLM ni reescritura.
 4. Los preceptos y enlaces derivados se guardan en
    `knowledge/normativa/<jurisdicción>/`.
+
+### Publicación web de sentencias
+
+1. El exportador selecciona únicamente casos canónicos dentro de ámbito y crea
+   una proyección con allowlist; ningún campo nuevo se expone por accidente.
+2. El manifiesto separa `internal_preview`, `publishable` y `published`, fija
+   hashes y rechaza IDs de lote desconocidos.
+3. El build público solo materializa `published`. Con el estado actual genera
+   un índice vacío, ninguna ficha y por tanto un 404 real para sus rutas.
+4. `SENTENCIAS_PREVIEW=1` añade las candidatas internas, siempre fuera del
+   sitemap y con `noindex` tanto en HTML como en cabecera.
+5. Solo las relaciones con rol `treaty_applied` enlazan a convenios; una mera
+   mención o residencia alegada no autoriza ese enlace.
 
 ## Invariantes
 
@@ -135,8 +158,9 @@ Arquitectura, estado, aprendizajes y siguiente gate:
   provisionar el presupuesto y superar los gates legales/humanos.
 - FastAPI no se borra: se reevaluará si hacen falta llamadas de más de 60 s,
   reintentos largos o mayor control operativo.
-- El rollout 1 → 5 → 106 exige gates y revisión humana; no se amplía el corpus
-  automáticamente.
+- El rollout 1 → 5 → 106 ya superó sus gates técnicos. Publicar su análisis
+  exige revisión humana y una decisión editorial independiente; una preview no
+  concede ninguna de las dos.
 
 Los contratos detallados están indexados en la
 [documentación de jurisprudencia](README.md#jurisprudencia) y en la

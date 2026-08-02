@@ -73,10 +73,15 @@ beca, no la jurisdicción en disputa.
 
 ## Organización del código
 
-- `frontend/src/data/countryRoutes.json` es la fuente única de nombres, rutas, estado del corpus,
+- `src/jurisdiction_catalog.json` es la fuente única de identidad de las
+  jurisdicciones; `frontend/src/data/jurisdictions.json` es su proyección
+  generada.
+- `src/treaty_relations_es.json` versiona los instrumentos bilaterales y sus
+  periodos; `frontend/src/data/treatyRelations.json` es su proyección generada.
+- `frontend/src/data/countryRoutes.json` conserva solo ruta, estado de producto,
   metadata SEO y referencias jurídicas validadas.
-- `frontend/src/data/countryRoutes.ts` valida esa fuente al cargarla, la tipa para el frontend y
-  resuelve el contexto de las rutas de consulta.
+- `frontend/src/data/countryRoutes.ts` cruza y valida las tres fuentes, tipa el
+  resultado para el frontend y resuelve el contexto de consulta.
 - `frontend/src/pages/CountryPage.tsx` contiene la plantilla compartida, con la invitación a
   contribuir. `frontend/tests/CountryPage.test.tsx` fija su copy y el enlace de la issue.
 - `frontend/src/lib/contribution.ts` construye la URL del formulario
@@ -122,8 +127,6 @@ Y su propia metadata de buscador, que ya no se compone en el código:
 - `description`: la meta description, distinta en cada país.
 - `sitemap`: `changefreq` y `priority` propios. `/espana` cambia con el corpus; una jurisdicción
   sin corpus publica un convenio que se mueve muy de tarde en tarde.
-- `treatyBoeId`: identificador del BOE del convenio de doble imposición entre España y ese país,
-  o `null` si no hay convenio en vigor. Ver la sección siguiente.
 - `code`: código ISO 3166-1 alfa-2 en minúscula. Es la clave que comparte con el dato
   (`normativa/es/`, el campo `jurisdiccion` del corpus normativo); la ruta es un slug legible y no
   sirve para cruzar la web con los artefactos. Sin este campo, cada consumidor reconstruía la
@@ -168,10 +171,11 @@ en `noindex`. Lo que sí puede publicar hoy, verificado y sin criterio jurídico
 versionada en `normativa/es/` y publicada artículo a artículo en
 `knowledge/normativa/es/preceptos/`.
 
-`treatyBoeId` es esa declaración, y solo eso: un identificador del BOE. Todo lo demás —título
-oficial de la norma, artículo de residencia, redacción vigente, sentencias del corpus que lo
-aplican, texto literal y enlace oficial— lo resuelve `TaxTreaty.tsx` contra el corpus normativo,
-así que no hay una segunda copia del dato que pueda desincronizarse.
+La relación no se declara en la ruta. `TaxTreaty.tsx` resuelve por el código ISO
+el instrumento vigente de `treatyRelations.json` y cruza su `boeId` con el
+corpus normativo. Título oficial, artículo de residencia, redacción vigente,
+sentencias que lo aplican, texto literal y enlace oficial siguen saliendo del
+artefacto normativo, sin una segunda copia editable.
 
 Tres límites, todos en el copy de la página:
 
@@ -183,10 +187,9 @@ Tres límites, todos en el copy de la página:
   y la página lo dice explícitamente. Hoy son Mónaco, Guatemala, Haití, Honduras, Nicaragua y
   Perú.
 
-`tests/test_country_tax_treaties.py` ata cada `treatyBoeId` al corpus: comprueba que existe, que
-el título oficial de la norma nombra a ese país —un identificador equivocado publicaría el
-convenio de otra jurisdicción con el nombre correcto encima—, que no está derogado y que el
-artículo publicado es el que resuelve la doble residencia.
+`tests/test_treaty_relations.py` y `tests/test_country_tax_treaties.py` atan el
+registro al corpus: comprueban contraparte, periodos sin solape, norma existente,
+vigencia y que el artículo publicado resuelve la doble residencia.
 
 `legalReferences` es distinto y no se mezcla con esto: describe el **derecho del propio país** y
 exige validación de un especialista de allí. Es una lista porque no todas las jurisdicciones

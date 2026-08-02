@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { CuestionSection } from '@/components/sentencias/CuestionSection';
+import { SentenciaAnchors } from '@/components/sentencias/SentenciaAnchors';
+import { SentenciaSource } from '@/components/sentencias/SentenciaSource';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { jurisdictionName, jurisdictionPath } from '@/data/jurisdictions';
 import { loadNormativa } from '@/lib/normativa';
-import { fichaPath } from '@/lib/normativa-fichas';
 import { usePreceptoPreloadAll } from '@/lib/precepto-preload';
 import {
   entryDeSentencia,
@@ -21,58 +22,12 @@ import { loadSentencia } from '@/lib/sentencias';
 import { breadcrumbJsonLd } from '@/lib/structured-data';
 import { usePageTitle } from '@/lib/usePageTitle';
 import type { PreceptoEntry } from '@/types/normativa';
-import type { AnclajeLiteral, SentenciaPublica } from '@/types/sentencias';
-
-const CENDOJ_BUSCADOR = 'https://www.poderjudicial.es/search/';
+import type { SentenciaPublica } from '@/types/sentencias';
 
 type Estado =
   | { fase: 'cargando' }
   | { fase: 'no-encontrada' }
   | { fase: 'lista'; sentencia: SentenciaPublica };
-
-function paginaLabel(fragmento: { pageIndex: number; printedPage: string | null }): string {
-  const fisica = `Página PDF ${fragmento.pageIndex}`;
-  if (!fragmento.printedPage || fragmento.printedPage === String(fragmento.pageIndex))
-    return fisica;
-  return `${fisica} · Página impresa ${fragmento.printedPage}`;
-}
-
-/**
- * Extractos literales de la sentencia. Es lo único de la página que reproduce
- * texto judicial, y por eso va con su página física, su etiqueta impresa y el
- * hash del PDF del que sale. No se recorta, une ni reformatea: si hay que
- * abreviarlo para la UI, se abrevia con CSS.
- */
-function Anclajes({ anchors }: { anchors: AnclajeLiteral[] }) {
-  if (anchors.length === 0) return null;
-  return (
-    <section aria-labelledby='anclajes' className='mt-8 border-border border-t pt-6'>
-      <h2 id='anclajes' className='mb-1.5 font-heading font-semibold text-lg'>
-        Extractos literales de la sentencia
-      </h2>
-      <p className='mb-4 text-muted-foreground text-xs leading-relaxed'>
-        Texto copiado del PDF publicado por el CENDOJ y verificado carácter a carácter contra él.
-        Todo lo demás de esta página es análisis estructurado, no palabras del tribunal.
-      </p>
-      <ul className='space-y-4'>
-        {anchors.map((anclaje) => (
-          <li key={anclaje.anchorId}>
-            {anclaje.fragments.map((fragmento) => (
-              <figure key={`${anclaje.anchorId}:${fragmento.pageIndex}`}>
-                <blockquote className='border-border border-l-2 pl-3 text-sm leading-relaxed italic'>
-                  {fragmento.verbatimText}
-                </blockquote>
-                <figcaption className='mt-1 text-muted-foreground text-xs'>
-                  {paginaLabel(fragmento)}
-                </figcaption>
-              </figure>
-            ))}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
 
 /**
  * Ficha pública de una sentencia del corpus.
@@ -134,7 +89,11 @@ export function SentenciaPage() {
   }, []);
 
   useEffect(() => {
-    if (!judgmentId || preload) return;
+    if (!judgmentId) return;
+    if (preload) {
+      setEstado({ fase: 'lista', sentencia: preload });
+      return;
+    }
     let vigente = true;
     setEstado({ fase: 'cargando' });
     loadSentencia(judgmentId).then((cargada) => {
@@ -226,45 +185,8 @@ export function SentenciaPage() {
         <CuestionSection key={cuestion.issueId} cuestion={cuestion} />
       ))}
 
-      <Anclajes anchors={sentencia.anchors} />
-
-      <section aria-labelledby='fuente' className='mt-8 border-border border-t pt-6'>
-        <h2 id='fuente' className='mb-2 font-heading font-semibold text-lg'>
-          Fuente
-        </h2>
-        <p className='text-sm leading-relaxed'>
-          {judgment.roj} · {judgment.ecli} · {judgment.pageCount} páginas.{' '}
-          <a
-            className='text-primary underline-offset-4 hover:underline'
-            href={CENDOJ_BUSCADOR}
-            rel='noreferrer noopener'
-            target='_blank'
-          >
-            Buscador del CENDOJ
-          </a>
-        </p>
-        <p className='mt-1 break-all text-muted-foreground text-xs'>
-          SHA-256 del PDF: {judgment.sourceSha256}
-        </p>
-        {sentencia.jurisdictions.flatMap((jurisdiccion) =>
-          jurisdiccion.treatyBoeIds.map((boeId) => {
-            const ficha = preceptos.find((precepto) => precepto.boeId === boeId);
-            if (!ficha) return null;
-            return (
-              <p className='mt-2 text-sm' key={`${jurisdiccion.code}:${boeId}`}>
-                <Link
-                  className='text-primary underline-offset-4 hover:underline'
-                  to={fichaPath(ficha)}
-                >
-                  Convenio de doble imposición España–{jurisdictionName(jurisdiccion.code)}
-                  {ficha.derogada && ' (el aplicable al ejercicio, hoy derogado)'}:{' '}
-                  {ficha.designacion}
-                </Link>
-              </p>
-            );
-          })
-        )}
-      </section>
+      <SentenciaAnchors anchors={sentencia.anchors} />
+      <SentenciaSource sentencia={sentencia} preceptos={preceptos} />
 
       <Link
         className='mt-8 inline-block text-primary text-sm underline-offset-4 hover:underline'

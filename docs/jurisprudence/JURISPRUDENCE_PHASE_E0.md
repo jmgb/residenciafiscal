@@ -18,6 +18,12 @@ La publicación del build es `AGENT_REVIEWED_ONLY`. Es un corpus interno
 procesado, no una aprobación jurídica humana ni una autorización para sustituir
 la estrategia del chat.
 
+La proyección técnica para web vive en
+`knowledge/jurisprudencia-v3/publico/manifest.json`. Sus 67 candidatas siguen en
+`internal_preview`: la preview privada puede renderizarlas con `noindex`, pero
+producción no materializa ninguna ficha. Ese artefacto no cambia el estado
+jurídico ni sustituye el gate `HUMAN_APPROVED` descrito aquí.
+
 ## Alcance y decisión
 
 E0 preparó la expansión del corpus, antes de que se autorizara crear el listado

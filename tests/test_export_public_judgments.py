@@ -64,6 +64,20 @@ def test_declarar_publicado_un_caso_sin_aprobar_rompe_el_build(casos: list[dict]
         export_public_judgments.LOTES_PUBLICADOS.update(original)
 
 
+def test_un_lote_con_un_id_desconocido_rompe_el_build(casos: list[dict]) -> None:
+    """Un typo editorial no puede quedar como una publicación que nunca ocurre."""
+    import export_public_judgments
+
+    original = dict(export_public_judgments.LOTES_PUBLICADOS)
+    export_public_judgments.LOTES_PUBLICADOS["lote-inventado"] = ("sts-9999-2030",)
+    try:
+        with pytest.raises(ValueError, match="no es una candidata"):
+            construir_manifiesto(casos)
+    finally:
+        export_public_judgments.LOTES_PUBLICADOS.clear()
+        export_public_judgments.LOTES_PUBLICADOS.update(original)
+
+
 def test_cada_entrada_lleva_el_hash_de_su_proyeccion(manifiesto: dict, casos: list[dict]) -> None:
     """Sin hash, el frontend no puede detectar una proyección cambiada."""
     import hashlib

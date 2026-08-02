@@ -2,7 +2,7 @@
   base = "frontend"
   command = "npm run build"
   publish = "dist"
-  ignore = 'if [ -z "$CACHED_COMMIT_REF" ] || [ "$CACHED_COMMIT_REF" = "$COMMIT_REF" ]; then exit 1; fi; git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- ":/frontend" ":/netlify.toml"'
+  ignore = 'if [ -z "$CACHED_COMMIT_REF" ] || [ "$CACHED_COMMIT_REF" = "$COMMIT_REF" ]; then exit 1; fi; git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- ":/frontend" ":/knowledge/jurisprudencia-v3/publico" ":/netlify.toml"'
 
 [build.environment]
   NODE_VERSION = "24"

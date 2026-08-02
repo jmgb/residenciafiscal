@@ -334,7 +334,11 @@ def _jurisdicciones(caso: dict) -> tuple[JurisdiccionPublica, ...]:
             JurisdiccionPublica(
                 code=entrada.code,
                 roles=tuple(str(rol) for rol in roles),
-                treaty_boe_ids=_convenios_del_caso(entrada.code, ejercicios),
+                treaty_boe_ids=(
+                    _convenios_del_caso(entrada.code, ejercicios)
+                    if Rol.TREATY_APPLIED in roles
+                    else ()
+                ),
             )
         )
     return tuple(publicas)

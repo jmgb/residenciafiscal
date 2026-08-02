@@ -897,7 +897,7 @@ sola URL para poder encontrarse.
 El diseño vive en
 [`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md). Las
 fases **A** (fundación de datos) y **C1** (renderer jurisprudencial en preview)
-están **en ejecución desde el 2 de agosto de 2026** con otro agente. La fase
+quedaron **ejecutadas y verificadas el 2 de agosto de 2026**. La fase
 **C2 está aplazada sin fecha** por falta de revisor humano; ninguna otra fase
 depende de ella y el gate de `HUMAN_APPROVED` no se rebaja. Lo pendiente, en el
 orden recomendado:
@@ -911,18 +911,17 @@ orden recomendado:
   registra 149 URLs y no 38. Google descargó la versión antigua el 1 de agosto
   a las 19:38 —antes del deploy de normativa— y el sitemap se reenvió por API
   el 2 de agosto tras detectarlo.
-- [ ] **Materializar el 301 de la raíz** (semana del 2026-08-03). `/` →
-  `/espana` como `301!` generado por `build-netlify-redirects.mjs`, con test;
-  hoy es un `<Navigate>` de cliente que Google resuelve peor. Cambio
-  autocontenido: no espera al resto de la fase B (§5.1 del diseño).
+- [x] **Materializar el 301 de la raíz.** Ya existía antes de esta ejecución:
+  `/` → `/espana` como `301!` generado por `build-netlify-redirects.mjs`, con
+  test. La fase B hereda esta base y no debe duplicarla (§5.1 del diseño).
 - [ ] **Primeros backlinks** (continuo desde 2026-08-03). Repositorio público
   de GitHub, perfiles y comunidades de fiscalidad internacional o expats. Sin
   autoridad entrante, la cola de indexación de un dominio nuevo seguirá lenta
   con independencia de los ajustes técnicos.
-- [ ] **Gate A** (al cerrar la fase A en curso). Verificar contra §9 del
+- [x] **Gate A.** Verificado contra §9 del
   diseño: schemas válidos, cobertura completa, sin solapes de periodos, ningún
   `countries` desconocido, diff vacío al regenerar dos veces.
-- [ ] **Gate C1** (al cerrar C1). Deploy Preview con `X-Robots-Tag: noindex`,
+- [x] **Gate C1 técnico.** Build preview con `X-Robots-Tag: noindex`,
   404 real de toda ruta `internal_preview` en producción, allowlist sin fugas.
   Este gate no concede publicación.
 - [ ] **Decisión de producto: ficha documental sin análisis** (§6.3 del
@@ -940,7 +939,7 @@ orden recomendado:
   de forma masiva como «Crawled – currently not indexed», activar la
   diferenciación prevista; hasta entonces no podar el sitemap (§12.1 del
   diseño y decisión del 2 de agosto de no reducir URLs).
-- [ ] **Actualizar los documentos de §13 del diseño con cada fase**, no al
+- [x] **Actualizar los documentos de §13 del diseño con cada fase**, no al
   final: `COUNTRY_PAGES.md`, `SEO_AUDIT.md`, `NORMATIVA.md`, `ARCHITECTURE.md`
   y este backlog (las tareas absorbidas por el plan se marcan al implementarse).
 - [ ] **Opcional, sin fecha — Fase C2 (publicación con análisis).** Solo si

@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route, Routes } from 'react-router';
+import userEvent from '@testing-library/user-event';
+import { Link, MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PreceptoPreloadContext, type PreceptoPreloadMap } from '@/lib/precepto-preload';
 import { SentenciaPreloadContext } from '@/lib/sentencia-preload';
@@ -179,6 +180,74 @@ describe('SentenciaPage', () => {
     expect(screen.getByText('Gana el contribuyente')).toBeInTheDocument();
   });
 
+  it('publica el detalle estructurado de prueba, carga, presencia y convenio', () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('[]'));
+    const rica = {
+      ...SENTENCIA,
+      issues: [
+        {
+          ...SENTENCIA.issues[0],
+          burdenOfProof: [
+            {
+              stepId: 'carga-1',
+              sequence: 1,
+              initialBearer: 'TAXPAYER',
+              factToProve: 'la residencia efectiva en Suiza',
+              responseRequired: 'aportar prueba coherente de permanencia',
+              conclusion: 'La carga quedó satisfecha con el conjunto documental.',
+              anchorIds: [],
+              review: REVIEW,
+            },
+          ],
+          presencePeriods: [
+            {
+              periodId: 'periodo-1',
+              country: 'Suiza',
+              classification: 'PRESENT',
+              startDate: '2009-04-01',
+              endDate: '2009-12-31',
+              dayCount: 275,
+              countedFor183DayRule: true,
+              calculationMethod: 'Conteo por días acreditados.',
+              determinedBy: 'COURT',
+              anchorIds: [],
+              review: REVIEW,
+            },
+          ],
+          treatyAnalyses: [
+            {
+              treatyAnalysisId: 'cdi-1',
+              treatyCitation: 'Artículo 4 del CDI España–Suiza',
+              countries: ['España', 'Suiza'],
+              dualResidenceEstablished: true,
+              resultCountry: 'Suiza',
+              steps: [
+                {
+                  stepId: 'cdi-paso-1',
+                  sequence: 1,
+                  criterion: 'CENTRO_INTERESES_VITALES',
+                  applied: true,
+                  conclusion: 'El centro de intereses vitales estaba en Suiza.',
+                  anchorIds: [],
+                  review: REVIEW,
+                },
+              ],
+              anchorIds: [],
+              review: REVIEW,
+            },
+          ],
+        },
+      ],
+    } as SentenciaPublica;
+
+    renderFicha(rica);
+
+    expect(screen.getByText(/Documentación fiscal extranjera/)).toBeInTheDocument();
+    expect(screen.getByText(/La carga quedó satisfecha/)).toBeInTheDocument();
+    expect(screen.getByText(/Presencia · computa para la regla de 183 días/)).toBeInTheDocument();
+    expect(screen.getByText(/El centro de intereses vitales estaba en Suiza/)).toBeInTheDocument();
+  });
+
   it('reproduce el extracto literal con su página física e impresa', () => {
     renderFicha();
 
@@ -293,5 +362,41 @@ describe('SentenciaPage', () => {
     await waitFor(() => {
       expect(screen.getByText(/no está publicada en el corpus/)).toBeInTheDocument();
     });
+  });
+
+  it('restaura la ficha precargada al volver mediante navegación SPA', async () => {
+    const otra: SentenciaPublica = {
+      ...SENTENCIA,
+      judgment: {
+        ...SENTENCIA.judgment,
+        judgmentId: 'sts-4306-2017',
+        roj: 'STS 4306/2017',
+      },
+    };
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+      const url = String(input);
+      if (url.endsWith('/sts-4306-2017.json')) return new Response(JSON.stringify(otra));
+      return new Response('null', { status: 404 });
+    });
+
+    render(
+      <SentenciaPreloadContext.Provider
+        value={{ index: null, fichas: { [SENTENCIA.judgment.judgmentId]: SENTENCIA } }}
+      >
+        <MemoryRouter initialEntries={['/espana/sentencias/san-1386-2017']}>
+          <Link to='/espana/sentencias/san-1386-2017'>Ir a SAN</Link>
+          <Link to='/espana/sentencias/sts-4306-2017'>Ir a STS</Link>
+          <Routes>
+            <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+          </Routes>
+        </MemoryRouter>
+      </SentenciaPreloadContext.Provider>
+    );
+
+    await userEvent.click(screen.getByRole('link', { name: 'Ir a STS' }));
+    await screen.findByRole('heading', { level: 1, name: /STS 4306\/2017/ });
+    await userEvent.click(screen.getByRole('link', { name: 'Ir a SAN' }));
+
+    expect(await screen.findByRole('heading', { level: 1, name: /SAN 1386\/2017/ })).toBeVisible();
   });
 });

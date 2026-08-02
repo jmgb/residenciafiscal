@@ -7,37 +7,19 @@
  * hay que añadirlo antes en la proyección de Python, que es donde la decisión
  * queda registrada.
  */
+import type { PublicationState } from './sentencias-index';
 
-/** `internal_preview` nunca es indexable, pase lo que pase en el frontend. */
-export type PublicationState = 'internal_preview' | 'publishable' | 'published';
+export type {
+  PublicationState,
+  SentenciaIndexEntry,
+  SentenciasIndex,
+} from './sentencias-index';
 
 export interface RevisionEstado {
   legal: string;
   technical: string;
   reviewedAt?: string | null;
   reviewedBy?: string | null;
-}
-
-export interface SentenciaIndexEntry {
-  judgmentId: string;
-  roj: string;
-  court: string;
-  decisionDate: string;
-  taxYears: number[];
-  criterionIds: string[];
-  outcomes: string[];
-  jurisdictions: string[];
-  publicationState: PublicationState;
-  legalReview: string;
-}
-
-export interface SentenciasIndex {
-  schemaVersion: string;
-  jurisdiction: string;
-  /** Candidatas del corpus, publicadas o no. Distingue «vacío» de «roto». */
-  candidates: number;
-  includesPreview: boolean;
-  judgments: SentenciaIndexEntry[];
 }
 
 export interface FragmentoLiteral {
@@ -131,7 +113,18 @@ export interface PeriodoPresencia {
   endDate?: string | null;
   dayCount?: number | null;
   countedFor183DayRule?: boolean | null;
+  determinedBy?: string | null;
   calculationMethod?: string | null;
+  anchorIds: string[];
+  review: RevisionEstado;
+}
+
+export interface PasoConvenio {
+  stepId: string;
+  sequence: number;
+  criterion: string;
+  applied?: boolean | null;
+  conclusion?: string | null;
   anchorIds: string[];
   review: RevisionEstado;
 }
@@ -142,6 +135,7 @@ export interface AnalisisConvenio {
   countries: string[];
   dualResidenceEstablished?: boolean | null;
   resultCountry?: string | null;
+  steps: PasoConvenio[];
   anchorIds: string[];
   review: RevisionEstado;
 }

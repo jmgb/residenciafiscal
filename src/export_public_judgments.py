@@ -52,6 +52,14 @@ def _judgment_ids_publicados() -> set[str]:
 def construir_manifiesto(casos: list[dict]) -> dict:
     """Manifiesto con el estado y el hash de cada proyección candidata."""
     publicados = _judgment_ids_publicados()
+    candidatos = {
+        caso["judgment"]["judgment_id"]
+        for caso in casos
+        if caso["judgment"]["is_tax_residence_case"]
+    }
+    desconocidos = sorted(publicados - candidatos)
+    if desconocidos:
+        raise ValueError(f"{', '.join(desconocidos)} no es una candidata publicable")
     entradas: list[dict[str, object]] = []
     for caso in casos:
         if not caso["judgment"]["is_tax_residence_case"]:

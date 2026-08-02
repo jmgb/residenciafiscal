@@ -31,7 +31,13 @@ let targetDir: string;
 
 function writeSource(judgments: Array<Record<string, unknown>>) {
   const entries: Array<Record<string, unknown>> = judgments.map((judgment) => {
-    const contenido = `${JSON.stringify({ judgment })}\n`;
+    const publicationState =
+      judgment.publicationState === 'published' ? 'publishable' : judgment.publicationState;
+    const contenido = `${JSON.stringify({
+      schemaVersion: 'residenciafiscal-public-judgment/1',
+      publicationState,
+      judgment: { judgmentId: judgment.judgmentId },
+    })}\n`;
     writeFileSync(join(sourceDir, `${judgment.judgmentId}.public.json`), contenido, 'utf8');
     return {
       ...judgment,
@@ -82,6 +88,17 @@ describe('build-sentencias', () => {
     ]);
     expect(existsSync(join(targetDir, 'sentencias', 'sts-1-2020.json'))).toBe(true);
     expect(existsSync(join(targetDir, 'sentencias', 'san-1210-2023.json'))).toBe(false);
+  });
+
+  it('materializa en la ficha el estado published concedido por el manifiesto', () => {
+    writeSource([{ ...ENTRY, publicationState: 'published' }]);
+
+    buildSentencias({ sourceDir, targetDir });
+
+    const ficha = JSON.parse(
+      readFileSync(join(targetDir, 'sentencias', 'san-1210-2023.json'), 'utf8')
+    );
+    expect(ficha.publicationState).toBe('published');
   });
 
   it('con el corpus real de hoy un build público no publica ninguna ficha', () => {

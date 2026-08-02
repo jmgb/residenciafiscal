@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /**
- * Copia al frontend la proyección pública de las sentencias.
+ * Materializa en el frontend la proyección pública de las sentencias.
  *
  * La fuente es `knowledge/jurisprudencia-v3/publico/`, que genera
  * `src/export_public_judgments.py` con allowlist, estado calculado y hashes.
  * Este script **no decide** qué se publica: solo materializa lo que el
- * manifiesto ya declara publicable, y verifica que cada fichero coincide con su
- * hash antes de copiarlo.
+ * manifiesto ya declara publicable, verifica que cada fichero coincide con su
+ * hash y hace visible el estado editorial `published` cuando corresponda.
  *
  *   public/data/sentencias.json          índice ligero para el listado
  *   public/data/sentencias/<slug>.json   la ficha completa de una sentencia
@@ -76,7 +76,27 @@ export function buildSentencias({
           'Regenera con `make export-public-judgments`; no se publica un fichero sin verificar.'
       );
     }
-    writeFileSync(join(fichaDir, `${entry.judgmentId}.json`), raw, 'utf8');
+    const projection = JSON.parse(raw);
+    const expectedProjectionState =
+      entry.publicationState === 'published' ? 'publishable' : entry.publicationState;
+    if (
+      projection.judgment?.judgmentId !== entry.judgmentId ||
+      projection.publicationState !== expectedProjectionState
+    ) {
+      throw new Error(
+        `${entry.judgmentId}: la identidad o el estado de la proyección no coincide con el manifiesto.`
+      );
+    }
+    const materialized =
+      entry.publicationState === 'published'
+        ? { ...projection, publicationState: 'published' }
+        : projection;
+    // Las previews conservan exactamente los bytes de la proyección verificada.
+    // Solo una entrada publicada necesita materializar el ascenso editorial que
+    // vive en el manifiesto y no en el artefacto jurídico inmutable.
+    const output =
+      entry.publicationState === 'published' ? `${JSON.stringify(materialized, null, 2)}\n` : raw;
+    writeFileSync(join(fichaDir, `${entry.judgmentId}.json`), output, 'utf8');
   }
 
   const index = {

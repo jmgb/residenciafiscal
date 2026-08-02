@@ -172,6 +172,19 @@ def test_la_jurisdiccion_enlazada_trae_su_convenio_con_espana() -> None:
     assert preceptos_citados(proyeccion) == ("BOE-A-1967-3470",)
 
 
+def test_solo_enlaza_el_convenio_si_la_sentencia_lo_aplica() -> None:
+    """Reclamar residencia extranjera no prueba que el tribunal resolviera por CDI."""
+    caso = cargar("san-1386-2017")
+    caso["treaty_analyses"] = []
+
+    proyeccion = proyectar(caso)
+
+    suiza = next(j for j in proyeccion.jurisdictions if j.code == "ch")
+    assert suiza.roles == ("residence_claimed",)
+    assert suiza.treaty_boe_ids == ()
+    assert preceptos_citados(proyeccion) == ()
+
+
 def test_el_convenio_enlazado_es_el_que_regia_el_ejercicio_enjuiciado() -> None:
     """El Reino Unido tiene convenio de 1975 y de 2013: el ejercicio decide.
 

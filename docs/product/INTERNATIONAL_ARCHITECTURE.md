@@ -433,14 +433,12 @@ jurídico real del plan.
 /consulta /c/:id               (sin cambios, noindex)
 ```
 
-**Nota sobre la raíz.** «`/` → 301 a `/espana`» describe el objetivo, no el
-estado actual: hoy `/` sirve el shell de la SPA con 200 y redirige en cliente
-(`<Navigate>` en `App.tsx`); `_redirects` no tiene entrada para `/`. En la
-fase B se materializa como redirección de servidor (`/ /espana 301!`), que es
-la señal de consolidación que Google entiende sin ejecutar JavaScript. Y una
-reserva declarada: si el producto llega a ser realmente internacional, la raíz
-es el hueco natural de una portada global de jurisdicciones. Ese 301 se trata
-como decisión revisable al abrir la fase D, no como permanente.
+**Nota sobre la raíz.** El objetivo ya estaba materializado antes de esta
+implementación: `_redirects` contiene `/ /espana 301!`, generado y cubierto por
+test. La fase B hereda esa señal de consolidación y no necesita recrearla. Se
+mantiene una reserva: si el producto llega a ser realmente internacional, la
+raíz es el hueco natural de una portada global de jurisdicciones. El 301 se
+trata como decisión revisable al abrir la fase D, no como permanente.
 
 ### 5.2 Migración sin dos URLs indexables para el mismo contenido
 
@@ -588,10 +586,10 @@ decir algo que el caso no dice.
 
 El frontend no debe recibir el caso completo. Un exportador Python crea una
 **proyección pública con allowlist** y un manifiesto; valida hashes, literalidad,
-estado de revisión y campos permitidos. `build-sentencias.mjs` se limita a copiar
-esa proyección a un índice ligero y un fichero por sentencia, siguiendo el
-patrón de normativa. Así, añadir un campo al caso canónico no lo publica por
-accidente.
+estado de revisión y campos permitidos. `build-sentencias.mjs` verifica hashes e
+identidad, materializa el estado editorial del manifiesto y escribe un índice
+ligero y un fichero por sentencia, siguiendo el patrón de normativa. Así,
+añadir un campo al caso canónico no lo publica por accidente.
 
 El manifiesto distingue tres estados:
 
@@ -610,8 +608,9 @@ Slug: derivado del ROJ, ya normalizado en los nombres de fichero
 
 Se hereda la del perfil OKF/3, que ya está validada:
 
-1. **Identidad** — órgano, sala, fecha, ROJ, ECLI, ejercicios, países,
-   enlace al PDF del CENDOJ.
+1. **Identidad** — órgano, sala, fecha, ROJ, ECLI, ejercicios, países y enlace
+   al buscador oficial del CENDOJ. El caso canónico actual no conserva una URL
+   estable por documento, por lo que no se fabrica un enlace directo al PDF.
 2. **Por cada cuestión jurídica** — pregunta, hechos relevantes, pruebas
    valoradas (con su categoría del catálogo de 12), normas y doctrina, carga de
    la prueba, cronología y CDI, conclusión estructurada y resultado.
@@ -1056,6 +1055,19 @@ Hallazgos de la ejecución, todos corregidos:
   mientras se proyectaban como diccionario crudo, no contaban para el gate de
   publicación y sus anclajes propios se descartaban. Los tres fallos venían del
   mismo sitio: un `dict[str, Any]` dentro de una allowlist deja de ser allowlist.
+- **El estado `published` vivía solo en el manifiesto.** El build copiaba la
+  proyección todavía marcada `publishable`, lo que habría reactivado banner de
+  borrador y `noindex` en una publicación futura. Ahora materializa el ascenso
+  editorial únicamente después de validar hash, identidad y estado previo.
+- **La navegación SPA no restauraba una ficha precargada.** Al volver desde
+  otra ruta quedaba en «Cargando» porque el efecto detectaba la precarga pero no
+  la reponía en estado. La transición está cubierta por test.
+- **Solo `treaty_applied` autoriza un enlace bilateral.** Una residencia alegada
+  o una mera mención ya no puede presentar como aplicado un convenio que el
+  tribunal no usó para resolver.
+- **La interfaz omitía detalle estructurado permitido.** Ya muestra categoría
+  de prueba, conclusión y respuesta sobre carga, semántica del recuento de
+  presencia y pasos del desempate por CDI, sin ampliar la allowlist.
 - **El presupuesto de artefactos se ha quedado estrecho.** `knowledge/jurisprudencia-v3`
   pasa de 761 a 935 ficheros, con el límite de `make rollout-verify` en 1.000.
   Antes de generar el siguiente derivado hay que subir ese límite o mover
@@ -1063,6 +1075,6 @@ Hallazgos de la ejecución, todos corregidos:
 
 ### Lo que sigue pendiente
 
-Fase B (bilaterales y el 301 de la raíz), fase C2 (sin revisor humano
+Fase B (bilaterales; el 301 de la raíz ya existe), fase C2 (sin revisor humano
 disponible), fase D y fase E, tal como quedan descritas en §9. El gate C1 **no
 concede publicación**.

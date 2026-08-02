@@ -42,8 +42,9 @@ y `preceptos/<slug>.json` el articulado literal de uno solo. Cargar los 110
 juntos serían ~480 KB para que alguien lea el artículo 9 LIRPF.
 
 La página de cada país usa esos dos niveles para publicar el **convenio de doble
-imposición entre España y esa jurisdicción**: `countryRoutes.json` declara el
-`treatyBoeId`, `TaxTreaty.tsx` lo cruza con el índice y pide el articulado. El
+imposición entre España y esa jurisdicción**: `countryRoutes.json` aporta el
+código ISO, `treatyRelations.json` resuelve el instrumento vigente y
+`TaxTreaty.tsx` cruza su `boeId` con el índice para pedir el articulado. El
 convenio es norma española y no describe la ley interna del otro país; el copy
 lo dice y `tests/CountryPage.test.tsx` lo fija.
 

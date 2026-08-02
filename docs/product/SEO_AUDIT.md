@@ -18,10 +18,15 @@
 >
 > - **Fichas por precepto publicadas** (también el 1 de agosto de 2026): 110
 >   fichas (`/espana/normativa/<slug>`) más su índice (`/espana/normativa`),
->   prerenderizadas con el texto literal del BOE, título por país
->   (`normativaFichas.json`, curado y cruzado con `countryRoutes.json`),
+>   prerenderizadas con el texto literal del BOE y título por jurisdicción
+>   (catálogo y registro bilateral proyectados al frontend),
 >   JSON-LD `Legislation` + `BreadcrumbList`, y enlazadas desde las páginas de
 >   país y `/espana/fuentes`. El sitemap pasa de 38 a 149 URLs.
+>
+> - **Renderer jurisprudencial privado** (2 de agosto de 2026): 67 candidatas
+>   con proyección allowlist, hashes, índice y ficha en Deploy Preview. Todas
+>   siguen en `internal_preview`, fuera del sitemap y con `noindex`; producción
+>   materializa cero porque aún no existe revisión humana.
 >
 > - **Fuentes autoalojadas** (2 de agosto de 2026): Inter y Space Grotesk salen
 >   del mismo origen vía `@fontsource-variable/*`, con `preload` del subconjunto
@@ -161,22 +166,23 @@ Dos arreglos compatibles, de menos a más:
   página de «no encontrado»). Requiere test de que todas las rutas públicas
   siguen sirviendo su fichero físico prerenderizado.
 
-#### 4. Publicar el corpus como páginas indexables (la palanca grande)
+#### 4. Publicar el corpus como páginas indexables (renderer hecho; gate pendiente)
 
 El activo diferencial del proyecto —106 sentencias verbatim verificadas y 110
-preceptos literales del BOE— **no tiene ni una página indexable propia**. Todo
-vive dentro del chat o en JSON. Es exactamente el tipo de contenido long-tail
-que un despacho busca en Google:
+preceptos literales del BOE— ya tiene páginas indexables para normativa y un
+renderer privado para jurisprudencia. Las 67 candidatas de sentencias **no
+tienen ninguna página pública ni indexable** hasta superar el gate humano y el
+lote editorial. Es exactamente el tipo de contenido long-tail que un despacho
+busca en Google, pero el potencial no rebaja ese gate:
 
 - **Ficha por sentencia** (`/espana/sentencias/<ecli-o-slug>`): órgano, fecha,
   ECLI, resultado del catálogo canónico, criterios aplicados, cuestiones
   jurídicas y extractos literales ya verificados por el pipeline de citas, con
-  el rótulo de estado de revisión que ya usa el chat. ~106 páginas de contenido
-  único y verificable, más un índice `/espana/sentencias` filtrable.
-- **Página por precepto** (`/espana/normativa/<slug>` o similar): el art. 9
-  LIRPF y compañía ya existen como Markdown literal en
-  `knowledge/normativa/es/preceptos/`; hoy solo se sirven como JSON. El texto es
-  literal del BOE, con test de identidad — cero riesgo editorial.
+  el rótulo de estado de revisión que ya usa el chat. El inventario máximo son
+  67 candidatas dentro de ámbito, más un índice `/espana/sentencias` filtrable;
+  el número publicado será el del lote expresamente aprobado.
+- **Página por precepto** (`/espana/normativa/<slug>`): ya publicada para 110
+  preceptos con texto literal del BOE y test de identidad.
 
 Captura consultas del tipo «STS residencia fiscal 2024», «artículo 9 LIRPF
 texto», «sentencia becarios ICEX residencia fiscal», y da a las páginas de país
@@ -285,9 +291,9 @@ apagado (interferiría con el bundle y la CSP).
 - **No** presentar el corpus como revisado por expertos en ningún copy nuevo:
   las anotaciones siguen en `status: proposed` y el registro es profesional
   (límites de la sección «Un país, un corpus» del `CLAUDE.md` raíz).
-- **No** ampliar a los ~98 convenios ni lanzar las fichas por sentencia antes de
-  que GSC confirme que el formato actual indexa y recibe impresiones (gate de
-  `TASKS.md`).
+- **No** ampliar a los ~98 convenios antes de que GSC confirme que el formato
+  actual indexa y recibe impresiones; ni publicar fichas por sentencia sin
+  `HUMAN_APPROVED` y lote editorial explícito (gates de `TASKS.md`).
 - **No** tocar `changefreq`/`priority` esperando efecto: Google los ignora; el
   esfuerzo va en `lastmod` y en contenido.
 
@@ -301,7 +307,7 @@ apagado (interferiría con el bundle y la CSP).
 | 4 | Fallback 404 real en `netlify.toml` | Bajo | Medio |
 | 5 | `lastmod`, JSON-LD `WebSite`/`Organization`, e-mail obfuscation (fuentes self-host: hecho) | Bajo | Bajo-medio |
 | 6 | Diferenciar países sin convenio | Medio | Medio |
-| 7 | Fichas por sentencia y por precepto (diseño ya; ejecución tras el gate GSC) | Alto | El mayor a medio plazo |
+| 7 | Publicar por lotes fichas de sentencia tras revisión humana (renderer ya hecho) | Alto | El mayor a medio plazo |
 
 Con 1–3 hechas, el sitio queda en condiciones de que el gate de las 4-6 semanas
 mida algo real; la 7 es la que convierte el corpus en tráfico.

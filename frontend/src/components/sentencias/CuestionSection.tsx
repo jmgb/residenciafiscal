@@ -1,5 +1,10 @@
 import { criterioLabel, resultadoLabel } from '@/lib/sentencia-metadata';
 import type { CuestionJuridica } from '@/types/sentencias';
+import {
+  evidenceCategoryLabel,
+  presenceSummary,
+  TreatyAnalysisList,
+} from './SentenciaAnalysisDetails';
 
 /**
  * Una cuestión jurídica de la sentencia con lo que el tribunal decidió sobre
@@ -91,6 +96,7 @@ export function CuestionSection({ cuestion }: { cuestion: CuestionJuridica }) {
             <li key={prueba.evidenceId}>
               <span className='font-medium'>{prueba.description}</span>
               <span className='block text-muted-foreground text-xs'>
+                {evidenceCategoryLabel(prueba.category)} ·{' '}
                 {OFRECIDA_POR[prueba.offeredBy] ?? prueba.offeredBy} ·{' '}
                 {VALORACION[prueba.assessment] ?? prueba.assessment}
                 {prueba.assessmentReason && `: ${prueba.assessmentReason}`}
@@ -122,6 +128,12 @@ export function CuestionSection({ cuestion }: { cuestion: CuestionJuridica }) {
                   · se traslada a {SUJETO_CARGA[paso.shiftsTo] ?? paso.shiftsTo}
                 </span>
               )}
+              {paso.responseRequired && (
+                <span className='block text-muted-foreground text-xs'>
+                  Respuesta exigida: {paso.responseRequired}
+                </span>
+              )}
+              {paso.conclusion && <span className='block text-xs'>{paso.conclusion}</span>}
             </li>
           ))}
         </ol>
@@ -135,6 +147,9 @@ export function CuestionSection({ cuestion }: { cuestion: CuestionJuridica }) {
               {periodo.startDate && `, desde ${periodo.startDate}`}
               {periodo.endDate && ` hasta ${periodo.endDate}`}
               {typeof periodo.dayCount === 'number' && ` · ${periodo.dayCount} días`}
+              <span className='block text-muted-foreground text-xs'>
+                {presenceSummary(periodo)}
+              </span>
               {periodo.calculationMethod && (
                 <span className='block text-muted-foreground text-xs'>
                   {periodo.calculationMethod}
@@ -146,19 +161,7 @@ export function CuestionSection({ cuestion }: { cuestion: CuestionJuridica }) {
       </Bloque>
 
       <Bloque titulo='Convenio de doble imposición' vacio={cuestion.treatyAnalyses.length === 0}>
-        <ul className='space-y-1.5 text-sm leading-relaxed'>
-          {cuestion.treatyAnalyses.map((analisis) => (
-            <li key={analisis.treatyAnalysisId}>
-              {analisis.treatyCitation}
-              {analisis.resultCountry && (
-                <span className='text-muted-foreground'>
-                  {' '}
-                  · residencia atribuida a {analisis.resultCountry}
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
+        <TreatyAnalysisList analyses={cuestion.treatyAnalyses} />
       </Bloque>
 
       {holding && (

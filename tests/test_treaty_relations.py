@@ -179,15 +179,14 @@ def test_los_convenios_de_estados_extintos_conservan_su_contraparte_historica() 
         assert instrumentos_de(code)[0].status == "current"
 
 
-def test_el_treaty_boe_id_de_cada_ruta_coincide_con_el_instrumento_vigente() -> None:
-    """El dato del frontend y el registro no pueden discrepar."""
+def test_cada_ruta_deriva_su_convenio_del_registro() -> None:
+    """La ruta solo aporta ISO; el convenio se deriva del registro compartido."""
     rutas = json.loads(
         (PROJECT_ROOT / "frontend" / "src" / "data" / "countryRoutes.json").read_text("utf-8")
     )
     for ruta in rutas:
-        declarado = ruta.get("treatyBoeId")
-        if declarado is None:
-            continue
+        assert "treatyBoeId" not in ruta, ruta["code"]
         vigente = instrumento_vigente(ruta["code"])
-        assert vigente is not None, ruta["code"]
-        assert vigente.boe_id == declarado, ruta["code"]
+        if vigente is None:
+            continue
+        assert contraparte_de(vigente.boe_id) == ruta["code"]

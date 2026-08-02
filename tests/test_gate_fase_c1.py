@@ -115,6 +115,13 @@ def test_gate_el_deploy_preview_es_revisable_y_no_indexable() -> None:
     assert "noindex" in preview["headers"][0]["values"]["X-Robots-Tag"]
 
 
+def test_gate_netlify_reconstruye_si_cambia_una_proyeccion_publica() -> None:
+    """El build consume estas proyecciones aunque vivan fuera de `frontend/`."""
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+
+    assert ":/knowledge/jurisprudencia-v3/publico" in config["build"]["ignore"]
+
+
 def test_gate_el_indice_servido_no_lleva_borradores_en_produccion() -> None:
     """El índice versionado del build público está vacío y lo declara."""
     indice = FRONTEND / "public" / "data" / "sentencias.json"

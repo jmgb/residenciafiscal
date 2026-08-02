@@ -59,6 +59,15 @@ function prepararCanonical(): HTMLLinkElement {
   return link;
 }
 
+function prepararMetaRobots(): HTMLMetaElement {
+  for (const previo of document.querySelectorAll('meta[name="robots"]')) previo.remove();
+  const meta = document.createElement('meta');
+  meta.setAttribute('name', 'robots');
+  meta.setAttribute('content', 'index, follow');
+  document.head.appendChild(meta);
+  return meta;
+}
+
 afterEach(() => {
   vi.restoreAllMocks();
   resetSentenciasCache();
@@ -136,5 +145,16 @@ describe('SentenciasIndexPage', () => {
     renderIndice(indice([ENTRADA]));
 
     expect(screen.getByText('borrador interno')).toBeInTheDocument();
+  });
+
+  it('mantiene noindex en runtime cuando el índice contiene borradores', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify(indice([ENTRADA]))) as Response
+    );
+    const meta = prepararMetaRobots();
+
+    renderIndice(indice([ENTRADA]));
+
+    await waitFor(() => expect(meta).toHaveAttribute('content', 'noindex, follow'));
   });
 });

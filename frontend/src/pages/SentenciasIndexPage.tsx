@@ -75,12 +75,16 @@ function SentenciaRow({ entry }: { entry: SentenciaIndexEntry }) {
  * legítimo, no un error de carga.
  */
 export function SentenciasIndexPage() {
-  usePageTitle(TITLE, SENTENCIAS_INDEX_PATH, DESCRIPTION, true, true);
   const preloaded = useSentenciasIndexPreload();
   const [index, setIndex] = useState<SentenciasIndex | null>(preloaded);
   const [fallo, setFallo] = useState(false);
   const [criterio, setCriterio] = useState(TODOS);
   const [resultado, setResultado] = useState(TODOS);
+  const indexable =
+    index !== null &&
+    index.judgments.length > 0 &&
+    index.judgments.every((entry) => entry.publicationState === 'published');
+  usePageTitle(TITLE, SENTENCIAS_INDEX_PATH, DESCRIPTION, indexable, true);
 
   useEffect(() => {
     let vigente = true;
