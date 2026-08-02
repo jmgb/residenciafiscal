@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { normalizeRoutePath } from '@/lib/route-path';
 import countryRouteData from './countryRoutes.json';
+import { currentTreatyBoeId, jurisdictionName } from './jurisdictions';
 
 const legalReferenceSchema = z.object({
   kind: z.enum(['domestic-residence', 'tax-treaty']),
@@ -10,8 +11,16 @@ const legalReferenceSchema = z.object({
   reviewedAt: z.iso.date(),
 });
 
+/**
+ * Configuración de producto y SEO de cada página de país.
+ *
+ * **No contiene identidad de la jurisdicción.** El nombre y el convenio vigente
+ * salían de aquí y del catálogo compartido a la vez, y dos copias editables del
+ * mismo hecho divergen: la página de un país podía decir «Méjico» mientras la
+ * ficha de su convenio decía «México». Ahora se componen desde
+ * `jurisdictions.ts`, y este fichero solo decide lo que es editorial.
+ */
 const countryRouteSchema = z.object({
-  name: z.string().min(1),
   /**
    * Código ISO 3166-1 alfa-2 en minúscula: la misma clave que usan
    * `normativa/<code>/` y el campo `jurisdiccion` del corpus. La ruta es un
@@ -22,16 +31,6 @@ const countryRouteSchema = z.object({
   path: z.string().startsWith('/'),
   corpusStatus: z.enum(['published', 'pending']),
   legalReferences: z.array(legalReferenceSchema),
-  /**
-   * Convenio de doble imposición entre España y este país, por su identificador
-   * del BOE. Es **norma española**, no el marco nacional de la jurisdicción: por
-   * eso no vive en `legalReferences`, que describe el derecho del propio país y
-   * exige validación de un especialista de allí. Aquí basta con que el
-   * identificador exista en el corpus normativo, y hay un test que lo comprueba.
-   * `null` significa que no hay convenio en vigor según la relación oficial de
-   * la AEAT, no que no se haya buscado.
-   */
-  treatyBoeId: z.string().startsWith('BOE-A-').nullable(),
   /** Título completo de la página, tal cual sale en la pestaña y en el buscador. */
   title: z.string().min(1),
   description: z.string().min(1),
@@ -44,9 +43,29 @@ const countryRouteSchema = z.object({
 
 export type CorpusStatus = z.infer<typeof countryRouteSchema>['corpusStatus'];
 export type LegalReference = z.infer<typeof legalReferenceSchema>;
-export type CountryRoute = z.infer<typeof countryRouteSchema>;
+export type CountryRoute = z.infer<typeof countryRouteSchema> & {
+  /** Nombre en español, del catálogo compartido. */
+  name: string;
+  /**
+   * Convenio de doble imposición entre España y este país, por su identificador
+   * del BOE. Es **norma española**, no el marco nacional de la jurisdicción: por
+   * eso no vive en `legalReferences`, que describe el derecho del propio país y
+   * exige validación de un especialista de allí. `null` significa que no hay
+   * convenio en vigor según la relación oficial de la AEAT, no que no se haya
+   * buscado. Sale del registro bilateral, que declara además desde qué
+   * ejercicio rige.
+   */
+  treatyBoeId: string | null;
+};
 
-export const COUNTRY_ROUTES = z.array(countryRouteSchema).parse(countryRouteData);
+export const COUNTRY_ROUTES: CountryRoute[] = z
+  .array(countryRouteSchema)
+  .parse(countryRouteData)
+  .map((route) => ({
+    ...route,
+    name: jurisdictionName(route.code),
+    treatyBoeId: currentTreatyBoeId(route.code),
+  }));
 
 export const COUNTRY_ROUTE_REDIRECTS = COUNTRY_ROUTES.flatMap((route) => {
   const legacyPath = `/${route.name.toLowerCase().replace(/\s+/g, '-')}`;

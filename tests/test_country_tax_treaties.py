@@ -15,6 +15,8 @@ from pathlib import Path
 
 import yaml
 
+from treaty_relations import instrumento_vigente
+
 PROJECT_ROOT = Path(__file__).parents[1]
 COUNTRY_ROUTES = PROJECT_ROOT / "frontend" / "src" / "data" / "countryRoutes.json"
 PRECEPTOS = PROJECT_ROOT / "knowledge" / "normativa" / "es" / "preceptos"
@@ -60,7 +62,18 @@ SIN_CONVENIO = ("/monaco", "/guatemala", "/haiti", "/honduras", "/nicaragua", "/
 
 
 def _rutas() -> list[dict]:
-    return json.loads(COUNTRY_ROUTES.read_text(encoding="utf-8"))
+    """Rutas de país con el convenio que les corresponde ya resuelto.
+
+    `treatyBoeId` dejó de estar en el JSON: la relación bilateral es dato de
+    dominio y vive en `treaty_relations_es.json`. Este test sigue siendo la
+    verificación independiente de que ese identificador es de verdad el
+    convenio de ese país, porque lo contrasta con el título oficial del BOE.
+    """
+    rutas = json.loads(COUNTRY_ROUTES.read_text(encoding="utf-8"))
+    for ruta in rutas:
+        vigente = instrumento_vigente(ruta["code"])
+        ruta["treatyBoeId"] = vigente.boe_id if vigente else None
+    return rutas
 
 
 def _preceptos_por_boe_id() -> dict[str, tuple[dict, str]]:

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import countryRoutes from '@/data/countryRoutes.json';
+import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import {
   fichaDescription,
   fichaHeading,
@@ -44,16 +44,20 @@ describe('normativa-fichas', () => {
   });
 
   it('todo CDI tiene país y coincide con el nombre de su página de país', () => {
+    // Ficha y página de país comparten ahora la misma fuente —el catálogo
+    // compartido—, así que esto ya no cruza dos copias: comprueba que la
+    // proyección resuelve el país de los 97 convenios y que el título lo usa.
+    // Que el convenio declarado sea de verdad el de ese país lo verifica
+    // `tests/test_country_tax_treaties.py` contra el título oficial del BOE.
     const byTreaty = new Map(
-      countryRoutes
-        .filter((route) => route.treatyBoeId)
-        .map((route) => [route.treatyBoeId as string, route.name])
+      COUNTRY_ROUTES.filter((route) => route.treatyBoeId).map((route) => [
+        route.treatyBoeId as string,
+        route.name,
+      ])
     );
     for (const entry of ENTRIES.filter((candidate) => candidate.grupo.startsWith('cdi'))) {
       const pais = paisDelConvenio(entry);
       expect(pais, `país de ${entry.slug}`).toBeTruthy();
-      // Verificación cruzada: donde ya existe página de país, el nombre del
-      // mapeo curado debe ser exactamente el mismo.
       const routeName = byTreaty.get(entry.boeId);
       if (routeName) expect(pais, entry.slug).toBe(routeName);
       expect(fichaTitle(entry)).toContain(`España-${pais}`);

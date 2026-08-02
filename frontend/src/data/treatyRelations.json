@@ -1,0 +1,871 @@
+{
+  "$comment": "Generado por src/export_frontend_projections.py. No editar a mano.",
+  "sourceJurisdiction": "es",
+  "byCounterpart": {
+    "ad": [
+      {
+        "boeId": "BOE-A-2015-13248",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ae": [
+      {
+        "boeId": "BOE-A-2007-1343",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "al": [
+      {
+        "boeId": "BOE-A-2011-4709",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "am": [
+      {
+        "boeId": "BOE-A-2012-5179",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ar": [
+      {
+        "boeId": "BOE-A-1994-20084",
+        "status": "superseded",
+        "fromTaxYear": null,
+        "toTaxYear": 2012
+      },
+      {
+        "boeId": "BOE-A-2014-373",
+        "status": "current",
+        "fromTaxYear": 2013,
+        "toTaxYear": null
+      }
+    ],
+    "at": [
+      {
+        "boeId": "BOE-A-1968-21",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "au": [
+      {
+        "boeId": "BOE-A-1992-28742",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "az": [
+      {
+        "boeId": "BOE-A-2020-13685",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ba": [
+      {
+        "boeId": "BOE-A-2010-16974",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "bb": [
+      {
+        "boeId": "BOE-A-2011-14659",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "be": [
+      {
+        "boeId": "BOE-A-2003-13375",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "bg": [
+      {
+        "boeId": "BOE-A-1991-18006",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "bo": [
+      {
+        "boeId": "BOE-A-1998-28474",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "br": [
+      {
+        "boeId": "BOE-A-1975-26928",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "by": [
+      {
+        "boeId": "BOE-A-2021-3239",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ca": [
+      {
+        "boeId": "BOE-A-1981-2731",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ch": [
+      {
+        "boeId": "BOE-A-1967-3470",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cl": [
+      {
+        "boeId": "BOE-A-2004-1897",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cn": [
+      {
+        "boeId": "BOE-A-1992-14734",
+        "status": "superseded",
+        "fromTaxYear": null,
+        "toTaxYear": 2021
+      },
+      {
+        "boeId": "BOE-A-2021-4911",
+        "status": "current",
+        "fromTaxYear": 2022,
+        "toTaxYear": null
+      }
+    ],
+    "co": [
+      {
+        "boeId": "BOE-A-2008-17209",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cr": [
+      {
+        "boeId": "BOE-A-2011-1",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cshh": [
+      {
+        "boeId": "BOE-A-1981-15642",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cu": [
+      {
+        "boeId": "BOE-A-2001-682",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cv": [
+      {
+        "boeId": "BOE-A-2020-15389",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "cy": [
+      {
+        "boeId": "BOE-A-2014-5485",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "de": [
+      {
+        "boeId": "BOE-A-2012-10212",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "do": [
+      {
+        "boeId": "BOE-A-2014-6918",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "dz": [
+      {
+        "boeId": "BOE-A-2005-12618",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ec": [
+      {
+        "boeId": "BOE-A-1993-11362",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ee": [
+      {
+        "boeId": "BOE-A-2005-1716",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "eg": [
+      {
+        "boeId": "BOE-A-2006-12440",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "fi": [
+      {
+        "boeId": "BOE-A-2018-7056",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "fr": [
+      {
+        "boeId": "BOE-A-1997-12729",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "gb": [
+      {
+        "boeId": "BOE-A-1976-23347",
+        "status": "superseded",
+        "fromTaxYear": null,
+        "toTaxYear": 2013
+      },
+      {
+        "boeId": "BOE-A-2014-5171",
+        "status": "current",
+        "fromTaxYear": 2014,
+        "toTaxYear": null
+      }
+    ],
+    "ge": [
+      {
+        "boeId": "BOE-A-2011-9527",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "gr": [
+      {
+        "boeId": "BOE-A-2002-18967",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "hk": [
+      {
+        "boeId": "BOE-A-2012-5039",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "hr": [
+      {
+        "boeId": "BOE-A-2006-8938",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "hu": [
+      {
+        "boeId": "BOE-A-1987-26228",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "id": [
+      {
+        "boeId": "BOE-A-2000-725",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ie": [
+      {
+        "boeId": "BOE-A-1994-28597",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "il": [
+      {
+        "boeId": "BOE-A-2001-679",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "in": [
+      {
+        "boeId": "BOE-A-1995-3165",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ir": [
+      {
+        "boeId": "BOE-A-2006-17160",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "is": [
+      {
+        "boeId": "BOE-A-2002-20192",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "it": [
+      {
+        "boeId": "BOE-A-1980-27501",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "jm": [
+      {
+        "boeId": "BOE-A-2009-7830",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "jp": [
+      {
+        "boeId": "BOE-A-1974-1930",
+        "status": "superseded",
+        "fromTaxYear": null,
+        "toTaxYear": 2021
+      },
+      {
+        "boeId": "BOE-A-2021-2977",
+        "status": "current",
+        "fromTaxYear": 2022,
+        "toTaxYear": null
+      }
+    ],
+    "kr": [
+      {
+        "boeId": "BOE-A-1994-27627",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "kw": [
+      {
+        "boeId": "BOE-A-2013-5942",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "kz": [
+      {
+        "boeId": "BOE-A-2011-9672",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "lt": [
+      {
+        "boeId": "BOE-A-2004-1898",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "lu": [
+      {
+        "boeId": "BOE-A-1987-17981",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "lv": [
+      {
+        "boeId": "BOE-A-2005-415",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ma": [
+      {
+        "boeId": "BOE-A-1985-9280",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "md": [
+      {
+        "boeId": "BOE-A-2009-6068",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "mk": [
+      {
+        "boeId": "BOE-A-2006-35",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "mt": [
+      {
+        "boeId": "BOE-A-2006-15574",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "mx": [
+      {
+        "boeId": "BOE-A-1994-23743",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "my": [
+      {
+        "boeId": "BOE-A-2008-2484",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ng": [
+      {
+        "boeId": "BOE-A-2015-3936",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "nl": [
+      {
+        "boeId": "BOE-A-1972-1469",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "no": [
+      {
+        "boeId": "BOE-A-2001-678",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "nz": [
+      {
+        "boeId": "BOE-A-2006-17741",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "om": [
+      {
+        "boeId": "BOE-A-2015-9673",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "pa": [
+      {
+        "boeId": "BOE-A-2011-11425",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ph": [
+      {
+        "boeId": "BOE-A-1994-27626",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "pk": [
+      {
+        "boeId": "BOE-A-2011-8456",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "pl": [
+      {
+        "boeId": "BOE-A-1982-14239",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "pt": [
+      {
+        "boeId": "BOE-A-1995-24001",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "py": [
+      {
+        "boeId": "BOE-A-2024-15573",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "qa": [
+      {
+        "boeId": "BOE-A-2017-14765",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ro": [
+      {
+        "boeId": "BOE-A-1980-21211",
+        "status": "superseded",
+        "fromTaxYear": null,
+        "toTaxYear": 2021
+      },
+      {
+        "boeId": "BOE-A-2020-15493",
+        "status": "current",
+        "fromTaxYear": 2022,
+        "toTaxYear": null
+      }
+    ],
+    "rs": [
+      {
+        "boeId": "BOE-A-2010-1083",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ru": [
+      {
+        "boeId": "BOE-A-2000-12779",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "sa": [
+      {
+        "boeId": "BOE-A-2008-11986",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "se": [
+      {
+        "boeId": "BOE-A-1977-1910",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "sg": [
+      {
+        "boeId": "BOE-A-2012-404",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "si": [
+      {
+        "boeId": "BOE-A-2002-12757",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "sn": [
+      {
+        "boeId": "BOE-A-2014-13569",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "suhh": [
+      {
+        "boeId": "BOE-A-1986-25055",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "sv": [
+      {
+        "boeId": "BOE-A-2009-9325",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "th": [
+      {
+        "boeId": "BOE-A-1998-23417",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "tn": [
+      {
+        "boeId": "BOE-A-1987-5470",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "tr": [
+      {
+        "boeId": "BOE-A-2004-1013",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "tt": [
+      {
+        "boeId": "BOE-A-2009-19767",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "us": [
+      {
+        "boeId": "BOE-A-1990-30940",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "uy": [
+      {
+        "boeId": "BOE-A-2011-6551",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "uz": [
+      {
+        "boeId": "BOE-A-2015-9736",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "ve": [
+      {
+        "boeId": "BOE-A-2004-11070",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "vn": [
+      {
+        "boeId": "BOE-A-2006-278",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ],
+    "za": [
+      {
+        "boeId": "BOE-A-2008-2672",
+        "status": "current",
+        "fromTaxYear": null,
+        "toTaxYear": null
+      }
+    ]
+  },
+  "byBoeId": {
+    "BOE-A-1967-3470": "ch",
+    "BOE-A-1968-21": "at",
+    "BOE-A-1972-1469": "nl",
+    "BOE-A-1974-1930": "jp",
+    "BOE-A-1975-26928": "br",
+    "BOE-A-1976-23347": "gb",
+    "BOE-A-1977-1910": "se",
+    "BOE-A-1980-21211": "ro",
+    "BOE-A-1980-27501": "it",
+    "BOE-A-1981-15642": "cshh",
+    "BOE-A-1981-2731": "ca",
+    "BOE-A-1982-14239": "pl",
+    "BOE-A-1985-9280": "ma",
+    "BOE-A-1986-25055": "suhh",
+    "BOE-A-1987-17981": "lu",
+    "BOE-A-1987-26228": "hu",
+    "BOE-A-1987-5470": "tn",
+    "BOE-A-1990-30940": "us",
+    "BOE-A-1991-18006": "bg",
+    "BOE-A-1992-14734": "cn",
+    "BOE-A-1992-28742": "au",
+    "BOE-A-1993-11362": "ec",
+    "BOE-A-1994-20084": "ar",
+    "BOE-A-1994-23743": "mx",
+    "BOE-A-1994-27626": "ph",
+    "BOE-A-1994-27627": "kr",
+    "BOE-A-1994-28597": "ie",
+    "BOE-A-1995-24001": "pt",
+    "BOE-A-1995-3165": "in",
+    "BOE-A-1997-12729": "fr",
+    "BOE-A-1998-23417": "th",
+    "BOE-A-1998-28474": "bo",
+    "BOE-A-2000-12779": "ru",
+    "BOE-A-2000-725": "id",
+    "BOE-A-2001-678": "no",
+    "BOE-A-2001-679": "il",
+    "BOE-A-2001-682": "cu",
+    "BOE-A-2002-12757": "si",
+    "BOE-A-2002-18967": "gr",
+    "BOE-A-2002-20192": "is",
+    "BOE-A-2003-13375": "be",
+    "BOE-A-2004-1013": "tr",
+    "BOE-A-2004-11070": "ve",
+    "BOE-A-2004-1897": "cl",
+    "BOE-A-2004-1898": "lt",
+    "BOE-A-2005-12618": "dz",
+    "BOE-A-2005-1716": "ee",
+    "BOE-A-2005-415": "lv",
+    "BOE-A-2006-12440": "eg",
+    "BOE-A-2006-15574": "mt",
+    "BOE-A-2006-17160": "ir",
+    "BOE-A-2006-17741": "nz",
+    "BOE-A-2006-278": "vn",
+    "BOE-A-2006-35": "mk",
+    "BOE-A-2006-8938": "hr",
+    "BOE-A-2007-1343": "ae",
+    "BOE-A-2008-11986": "sa",
+    "BOE-A-2008-17209": "co",
+    "BOE-A-2008-2484": "my",
+    "BOE-A-2008-2672": "za",
+    "BOE-A-2009-19767": "tt",
+    "BOE-A-2009-6068": "md",
+    "BOE-A-2009-7830": "jm",
+    "BOE-A-2009-9325": "sv",
+    "BOE-A-2010-1083": "rs",
+    "BOE-A-2010-16974": "ba",
+    "BOE-A-2011-1": "cr",
+    "BOE-A-2011-11425": "pa",
+    "BOE-A-2011-14659": "bb",
+    "BOE-A-2011-4709": "al",
+    "BOE-A-2011-6551": "uy",
+    "BOE-A-2011-8456": "pk",
+    "BOE-A-2011-9527": "ge",
+    "BOE-A-2011-9672": "kz",
+    "BOE-A-2012-10212": "de",
+    "BOE-A-2012-404": "sg",
+    "BOE-A-2012-5039": "hk",
+    "BOE-A-2012-5179": "am",
+    "BOE-A-2013-5942": "kw",
+    "BOE-A-2014-13569": "sn",
+    "BOE-A-2014-373": "ar",
+    "BOE-A-2014-5171": "gb",
+    "BOE-A-2014-5485": "cy",
+    "BOE-A-2014-6918": "do",
+    "BOE-A-2015-13248": "ad",
+    "BOE-A-2015-3936": "ng",
+    "BOE-A-2015-9673": "om",
+    "BOE-A-2015-9736": "uz",
+    "BOE-A-2017-14765": "qa",
+    "BOE-A-2018-7056": "fi",
+    "BOE-A-2020-13685": "az",
+    "BOE-A-2020-15389": "cv",
+    "BOE-A-2020-15493": "ro",
+    "BOE-A-2021-2977": "jp",
+    "BOE-A-2021-3239": "by",
+    "BOE-A-2021-4911": "cn",
+    "BOE-A-2024-15573": "py"
+  }
+}

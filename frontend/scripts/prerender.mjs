@@ -39,6 +39,7 @@ import {
 } from '../dist-ssr/entry-server.js';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
 import staticRoutes from '../src/data/staticRoutes.json' with { type: 'json' };
+import treatyRelations from '../src/data/treatyRelations.json' with { type: 'json' };
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -52,9 +53,15 @@ const SITE_URL = 'https://residenciafiscal.org';
 const NORMATIVA = JSON.parse(readFileSync(join(publicDir, 'data', 'normativa.json'), 'utf8'));
 
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
+/** Convenio vigente de una jurisdicción, desde el registro bilateral. */
+function currentTreatyBoeId(code) {
+  const instruments = treatyRelations.byCounterpart[code] ?? [];
+  return instruments.find((instrument) => instrument.status === 'current')?.boeId ?? null;
+}
+
 const COUNTRY_ROUTES = countryRoutes.map((route) => ({
   path: route.path,
-  treatyBoeId: route.treatyBoeId,
+  treatyBoeId: currentTreatyBoeId(route.code),
   dir: route.path.slice(1),
   // El título sale del JSON y no se compone aquí, por el mismo motivo que en las
   // rutas estáticas: la página lo fija también en runtime y dos copias divergen.

@@ -1,3 +1,4 @@
+import { counterpartNamesWithSeveralTreaties, treatyCounterpartName } from '@/data/jurisdictions';
 import fichas from '@/data/normativaFichas.json';
 import type { PreceptoEntry } from '@/types/normativa';
 
@@ -9,19 +10,19 @@ import type { PreceptoEntry } from '@/types/normativa';
  * en runtime, porque salen de estas funciones y de ningún otro sitio.
  *
  * El nombre común del país de cada convenio no existe en el corpus normativo
- * —el BOE solo da el título oficial— así que vive curado a mano en
- * `normativaFichas.json`. `tests/normativa-fichas.test.ts` exige cobertura
- * completa y cruza los nombres con `countryRoutes.json`: un convenio nuevo sin
- * entrada rompe el build de tests, no publica una ficha sin país.
+ * —el BOE solo da el título oficial—, así que sale del registro bilateral a
+ * través de `jurisdictions.ts`. Antes vivía duplicado aquí, y una ficha podía
+ * decir «Méjico» mientras la página del país decía «México».
  */
 
-const PAISES: Record<string, string> = fichas.paises;
 const NORMAS: Record<string, string> = fichas.normas;
 
-/** Países que aparecen en más de un convenio (Argentina, Reino Unido, Japón…). */
-const PAISES_REPETIDOS = new Set(
-  Object.values(PAISES).filter((pais, _index, all) => all.indexOf(pais) !== all.lastIndexOf(pais))
-);
+/**
+ * Países con más de un convenio (Argentina, Reino Unido, Japón, Rumanía y
+ * China). Su ficha lleva el año en el título, porque «Artículo 4 del CDI
+ * España-Japón» nombraría igual a dos preceptos distintos.
+ */
+const PAISES_REPETIDOS = counterpartNamesWithSeveralTreaties();
 
 export const NORMATIVA_INDEX_PATH = '/espana/normativa';
 
@@ -36,7 +37,7 @@ export function fichaPath(entry: PreceptoEntry): string {
 /** Nombre común de la contraparte del convenio; `null` si no es un CDI. */
 export function paisDelConvenio(entry: PreceptoEntry): string | null {
   if (!entry.grupo.startsWith('cdi')) return null;
-  return PAISES[entry.boeId] ?? null;
+  return treatyCounterpartName(entry.boeId);
 }
 
 function nombreODenominacion(entry: PreceptoEntry): string {

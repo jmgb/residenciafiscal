@@ -23,6 +23,7 @@ SHELL := /bin/bash
 	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
 	export-jurisdiction-roles check-jurisdiction-roles \
+	export-frontend-projections check-frontend-projections \
 	test \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -147,6 +148,7 @@ help:
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
 	@echo "  make export-jurisdiction-roles  Deriva el papel de cada jurisdicción por sentencia"
+	@echo "  make export-frontend-projections  Proyecta el catálogo compartido al frontend"
 	@echo "  Variables base: INPUT= OUTPUT="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
@@ -467,6 +469,14 @@ export-jurisdiction-roles:
 
 check-jurisdiction-roles:
 	uv run python $(PYTHON_SOURCE)/export_jurisdiction_roles.py --check
+
+# El frontend no puede importar Python: recibe el catálogo y el registro
+# bilateral como proyecciones generadas y versionadas.
+export-frontend-projections:
+	uv run python $(PYTHON_SOURCE)/export_frontend_projections.py
+
+check-frontend-projections:
+	uv run python $(PYTHON_SOURCE)/export_frontend_projections.py --check
 
 enlazar-normativa:
 	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi
