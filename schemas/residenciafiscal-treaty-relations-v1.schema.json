@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "Instrumento": {
+      "additionalProperties": false,
+      "description": "Un convenio concreto y los ejercicios fiscales en los que se aplica.\n\nLos rangos son de **ejercicio**, no de fecha de entrada en vigor: lo que\ndecide qué convenio aplica una sentencia es el ejercicio enjuiciado, y la\nentrada en vigor casi nunca coincide con el 1 de enero.",
+      "properties": {
+        "boe_id": {
+          "pattern": "^BOE-A-\\d{4}-\\d+$",
+          "title": "Boe Id",
+          "type": "string"
+        },
+        "effective_from_tax_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective From Tax Year"
+        },
+        "effective_to_tax_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective To Tax Year"
+        },
+        "replaced_by": {
+          "anyOf": [
+            {
+              "pattern": "^BOE-A-\\d{4}-\\d+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replaced By"
+        },
+        "source_note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Note"
+        },
+        "status": {
+          "enum": [
+            "current",
+            "superseded"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "boe_id",
+        "status"
+      ],
+      "title": "Instrumento",
+      "type": "object"
+    },
+    "RelacionBilateral": {
+      "additionalProperties": false,
+      "description": "Todos los convenios firmados con una contraparte, en orden cronológico.",
+      "properties": {
+        "counterpart": {
+          "pattern": "^[a-z]{2}(?:[a-z]{2})?$",
+          "title": "Counterpart",
+          "type": "string"
+        },
+        "instruments": {
+          "items": {
+            "$ref": "#/$defs/Instrumento"
+          },
+          "minItems": 1,
+          "title": "Instruments",
+          "type": "array"
+        }
+      },
+      "required": [
+        "counterpart",
+        "instruments"
+      ],
+      "title": "RelacionBilateral",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Documento versionado de las relaciones de una jurisdicción fuente.",
+  "properties": {
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/RelacionBilateral"
+      },
+      "minItems": 1,
+      "title": "Relations",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-treaty-relations/1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_jurisdiction": {
+      "pattern": "^[a-z]{2}(?:[a-z]{2})?$",
+      "title": "Source Jurisdiction",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_jurisdiction",
+    "relations"
+  ],
+  "title": "RegistroRelaciones",
+  "type": "object"
+}

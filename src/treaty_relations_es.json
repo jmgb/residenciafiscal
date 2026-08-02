@@ -1,0 +1,879 @@
+{
+  "schema_version": "residenciafiscal-treaty-relations/1",
+  "source_jurisdiction": "es",
+  "relations": [
+    {
+      "counterpart": "ad",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2015-13248",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ae",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2007-1343",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "al",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-4709",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "am",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2012-5179",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ar",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1994-20084",
+          "status": "superseded",
+          "effective_to_tax_year": 2012,
+          "replaced_by": "BOE-A-2014-373",
+          "source_note": "Rango heredado de la tabla curada del enlazador de citas (CONVENIOS_POR_PAIS)."
+        },
+        {
+          "boe_id": "BOE-A-2014-373",
+          "status": "current",
+          "effective_from_tax_year": 2013,
+          "source_note": "Rango heredado de la tabla curada del enlazador de citas (CONVENIOS_POR_PAIS)."
+        }
+      ]
+    },
+    {
+      "counterpart": "at",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1968-21",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "au",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1992-28742",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "az",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2020-13685",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ba",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2010-16974",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "bb",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-14659",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "be",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2003-13375",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "bg",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1991-18006",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "bo",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1998-28474",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "br",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1975-26928",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "by",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2021-3239",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ca",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1981-2731",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ch",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1967-3470",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cl",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2004-1897",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cn",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1992-14734",
+          "status": "superseded",
+          "effective_to_tax_year": 2021,
+          "replaced_by": "BOE-A-2021-4911",
+          "source_note": "Art. 30.2.a) del convenio de 2018: surte efecto respecto de los impuestos no retenidos en la fuente para los ejercicios que comiencen a partir de su entrada en vigor (2-5-2021); el primero es el que comienza el 1-1-2022."
+        },
+        {
+          "boe_id": "BOE-A-2021-4911",
+          "status": "current",
+          "effective_from_tax_year": 2022,
+          "source_note": "Art. 30.2.a) del convenio de 2018: surte efecto respecto de los impuestos no retenidos en la fuente para los ejercicios que comiencen a partir de su entrada en vigor (2-5-2021); el primero es el que comienza el 1-1-2022."
+        }
+      ]
+    },
+    {
+      "counterpart": "co",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2008-17209",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-1",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cshh",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1981-15642",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cu",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2001-682",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cv",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2020-15389",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "cy",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2014-5485",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "de",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2012-10212",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "do",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2014-6918",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "dz",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2005-12618",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ec",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1993-11362",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ee",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2005-1716",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "eg",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-12440",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "fi",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2018-7056",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "fr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1997-12729",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "gb",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1976-23347",
+          "status": "superseded",
+          "effective_to_tax_year": 2013,
+          "replaced_by": "BOE-A-2014-5171",
+          "source_note": "Rango heredado de la tabla curada del enlazador de citas (CONVENIOS_POR_PAIS)."
+        },
+        {
+          "boe_id": "BOE-A-2014-5171",
+          "status": "current",
+          "effective_from_tax_year": 2014,
+          "source_note": "Rango heredado de la tabla curada del enlazador de citas (CONVENIOS_POR_PAIS)."
+        }
+      ]
+    },
+    {
+      "counterpart": "ge",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-9527",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "gr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2002-18967",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "hk",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2012-5039",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "hr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-8938",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "hu",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1987-26228",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "id",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2000-725",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ie",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1994-28597",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "il",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2001-679",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "in",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1995-3165",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ir",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-17160",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "is",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2002-20192",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "it",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1980-27501",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "jm",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2009-7830",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "jp",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1974-1930",
+          "status": "superseded",
+          "effective_to_tax_year": 2021,
+          "replaced_by": "BOE-A-2021-2977",
+          "source_note": "Art. 30.2.a) del convenio de 2018: surte efectos para los ejercicios que comiencen desde el 1 de enero del año siguiente a su entrada en vigor (1-5-2021). El art. 30.4 declara inaplicable el convenio de 1974 desde esa misma fecha."
+        },
+        {
+          "boe_id": "BOE-A-2021-2977",
+          "status": "current",
+          "effective_from_tax_year": 2022,
+          "source_note": "Art. 30.2.a) del convenio de 2018: surte efectos para los ejercicios que comiencen desde el 1 de enero del año siguiente a su entrada en vigor (1-5-2021). El art. 30.4 declara inaplicable el convenio de 1974 desde esa misma fecha."
+        }
+      ]
+    },
+    {
+      "counterpart": "kr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1994-27627",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "kw",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2013-5942",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "kz",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-9672",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "lt",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2004-1898",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "lu",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1987-17981",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "lv",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2005-415",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ma",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1985-9280",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "md",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2009-6068",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "mk",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-35",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "mt",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-15574",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "mx",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1994-23743",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "my",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2008-2484",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ng",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2015-3936",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "nl",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1972-1469",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "no",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2001-678",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "nz",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-17741",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "om",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2015-9673",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "pa",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-11425",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ph",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1994-27626",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "pk",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-8456",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "pl",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1982-14239",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "pt",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1995-24001",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "py",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2024-15573",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "qa",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2017-14765",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ro",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1980-21211",
+          "status": "superseded",
+          "effective_to_tax_year": 2021,
+          "replaced_by": "BOE-A-2020-15493",
+          "source_note": "Art. 28.2 del convenio de 2013: surte efecto respecto de las rentas obtenidas desde el primer día de enero del año civil siguiente a su entrada en vigor (14-1-2021), y declara terminado el convenio de 1979 desde esa fecha."
+        },
+        {
+          "boe_id": "BOE-A-2020-15493",
+          "status": "current",
+          "effective_from_tax_year": 2022,
+          "source_note": "Art. 28.2 del convenio de 2013: surte efecto respecto de las rentas obtenidas desde el primer día de enero del año civil siguiente a su entrada en vigor (14-1-2021), y declara terminado el convenio de 1979 desde esa fecha."
+        }
+      ]
+    },
+    {
+      "counterpart": "rs",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2010-1083",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ru",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2000-12779",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "sa",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2008-11986",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "se",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1977-1910",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "sg",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2012-404",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "si",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2002-12757",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "sn",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2014-13569",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "suhh",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1986-25055",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "sv",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2009-9325",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "th",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1998-23417",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "tn",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1987-5470",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "tr",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2004-1013",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "tt",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2009-19767",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "us",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-1990-30940",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "uy",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2011-6551",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "uz",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2015-9736",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "ve",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2004-11070",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "vn",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2006-278",
+          "status": "current"
+        }
+      ]
+    },
+    {
+      "counterpart": "za",
+      "instruments": [
+        {
+          "boe_id": "BOE-A-2008-2672",
+          "status": "current"
+        }
+      ]
+    }
+  ]
+}
