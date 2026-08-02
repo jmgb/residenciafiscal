@@ -1,7 +1,5 @@
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
-import { JurisdictionLegalReferences } from '@/components/jurisdiction/JurisdictionLegalReferences';
-import type { LegalReference } from '@/data/countryRoutes';
 
 export const SUGGESTED_PROMPTS = [
   '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
@@ -12,10 +10,9 @@ export const SUGGESTED_PROMPTS = [
 
 interface ChatWelcomeProps {
   onSelectPrompt: (prompt: string) => void;
-  legalReferences: LegalReference[];
 }
 
-export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProps) {
+export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
   return (
     <div
       data-testid='chat-welcome'
@@ -28,7 +25,6 @@ export function ChatWelcome({ onSelectPrompt, legalReferences }: ChatWelcomeProp
         Modelo de IA entrenado con 106 sentencias del Tribunal Supremo y la Audiencia Nacional sobre
         el art. 9 LIRPF.
       </p>
-      {legalReferences.length > 0 && <JurisdictionLegalReferences references={legalReferences} />}
       <p className='mb-8 text-sm'>
         <Link
           to='/manifiesto'

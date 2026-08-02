@@ -202,7 +202,7 @@ describe('ChatView', () => {
     expect(banner).toHaveTextContent(/^Aviso:/i);
     expect(banner).not.toHaveTextContent(/respuestas.*simuladas/i);
     expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
-    expect(banner).toHaveTextContent(/consultar a un profesional antes de tomar decisiones/i);
+    expect(banner).toHaveTextContent(/consulta a un profesional antes de tomar decisiones/i);
     expect(within(banner).getByRole('link', { name: 'Privacidad' })).toHaveAttribute(
       'href',
       '/privacidad'

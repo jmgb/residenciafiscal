@@ -84,21 +84,14 @@ describe('SpainPage', () => {
     expect(document.title).toBe('Residencia fiscal en España: jurisprudencia del art. 9 LIRPF');
   });
 
-  it('expone el marco jurídico con su fuente oficial y fecha de revisión', () => {
+  it('no muestra el bloque de marco jurídico en la bienvenida', () => {
     renderPage();
 
-    const framework = screen.getByRole('region', { name: 'Marco jurídico' });
-    const officialSource = within(framework).getByRole('link', { name: 'Art. 9 LIRPF' });
-
-    expect(officialSource).toHaveAttribute(
-      'href',
-      'https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764#a9'
-    );
-    expect(officialSource).toHaveAttribute('target', '_blank');
+    expect(screen.queryByRole('region', { name: 'Marco jurídico' })).not.toBeInTheDocument();
+    expect(screen.queryByText('Art. 9 LIRPF')).not.toBeInTheDocument();
     expect(
-      within(framework).getByText('Ley 35/2006 del Impuesto sobre la Renta de las Personas Físicas')
-    ).toBeVisible();
-    expect(framework).toHaveTextContent('Fuente oficial · Revisada el 30 de julio de 2026');
-    expect(framework.querySelector('time')).toHaveAttribute('datetime', '2026-07-30');
+      screen.queryByText('Ley 35/2006 del Impuesto sobre la Renta de las Personas Físicas')
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/Fuente oficial · Revisada el/)).not.toBeInTheDocument();
   });
 });

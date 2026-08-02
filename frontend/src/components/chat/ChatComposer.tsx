@@ -67,9 +67,9 @@ export function ChatComposer({
           rows={1}
           placeholder={placeholder}
           aria-label='Consulta'
-          // El padding vertical simétrico centra la primera línea dentro de la
-          // caja alta; `min-h-14` es solo el suelo, no fija el alto.
-          className='max-h-40 min-h-14 flex-1 resize-none bg-transparent px-3 py-4 text-base leading-relaxed outline-none placeholder:text-muted-foreground'
+          // El padding vertical simétrico centra la primera línea; el suelo es
+          // compacto en móvil y recupera el tamaño anterior desde `sm`.
+          className='max-h-40 min-h-12 flex-1 resize-none bg-transparent px-2.5 py-3 text-[15px] leading-6 outline-none placeholder:text-muted-foreground sm:min-h-14 sm:px-3 sm:py-4 sm:text-base sm:leading-relaxed'
         />
         {isStreaming ? (
           <Button

@@ -54,9 +54,8 @@ function SafetyBanner() {
     >
       <AlertTriangle className='mt-0.5 h-4 w-4 shrink-0' aria-hidden='true' />
       <p>
-        <strong>Aviso:</strong> esta herramienta sirve para investigación y no constituye
-        asesoramiento jurídico. Recomendamos siempre consultar a un profesional antes de tomar
-        decisiones.
+        <strong>Aviso:</strong> no constituye asesoramiento jurídico. Consulta a un profesional
+        antes de tomar decisiones.
         <a className='ml-1 underline' href='/privacidad'>
           Privacidad
         </a>
@@ -396,7 +395,7 @@ export function ChatView({
             {showTypingIndicator && <TypingIndicator />}
           </div>
         ) : (
-          <ChatWelcome onSelectPrompt={handleSend} legalReferences={country.legalReferences} />
+          <ChatWelcome onSelectPrompt={handleSend} />
         )}
       </div>
 
