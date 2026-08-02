@@ -1,5 +1,38 @@
 # Páginas por país
 
+## Arquitectura objetivo cerrada
+
+España es la primera instancia de una plantilla SEO común a todas las
+jurisdicciones. El destino no es una web española con páginas auxiliares de
+país, sino el mismo producto para cada país que incorpore corpus:
+
+```text
+/<pais>
+├── /fuentes
+├── /normativa
+│   └── /<precepto>
+├── /convenios
+│   └── /<otro-pais>
+├── /sentencias
+│   └── /<sentencia>
+└── /doctrina
+    └── /<tema>
+```
+
+La estructura se decide una vez y se construye desde el slug del catálogo. Una
+norma pertenece al país de su fuente oficial y una sentencia al del tribunal
+que la dicta; mencionar otra jurisdicción crea una relación o un enlace, no una
+copia bajo ese país. La simetría no publica páginas vacías: un nodo sin corpus,
+revisión o contenido diferencial suficiente no se prerenderiza, no entra en el
+sitemap y devuelve 404.
+
+Las páginas `/<pais>` actuales son los hubs estables de esa jerarquía. El
+contenido español que hoy muestran algunas —el artículo del convenio con
+España— es una situación transitoria: la fase B lo moverá a
+`/espana/convenios/<pais>`, mientras el hub conserva solo contenido propio de la
+jurisdicción y los enlaces a relaciones relevantes. Contrato completo y fases:
+[`INTERNATIONAL_ARCHITECTURE.md`](INTERNATIONAL_ARCHITECTURE.md).
+
 ## Estado actual
 
 El frontend ya tiene una entrada por país para que la navegación y la arquitectura puedan
@@ -162,7 +195,7 @@ la firma del convenio y es un dato que el corpus no tiene. `legislationLegalForc
 `frontend/tests/entry-server.test.tsx` comprueba que los dos bloques llegan al HTML servido, que es
 donde los lee el bot.
 
-## El convenio de doble imposición con España
+## Estado transitorio: el convenio de doble imposición con España
 
 Una página de país sin corpus tenía hasta ahora un solo contenido: la invitación a contribuir.
 Eso la hacía inútil para quien llega buscando su situación entre dos países, y por eso estaban
@@ -170,6 +203,12 @@ en `noindex`. Lo que sí puede publicar hoy, verificado y sin criterio jurídico
 **convenio de doble imposición entre España y esa jurisdicción**: es norma española del BOE, ya
 versionada en `normativa/es/` y publicada artículo a artículo en
 `knowledge/normativa/es/preceptos/`.
+
+Esta solución explica el estado publicado actual, pero no es la arquitectura
+objetivo. Al ejecutar la fase B, ese contenido pasa al subárbol de su fuente
+española (`/espana/convenios/<pais>`); `/<pais>` queda como hub del propio país.
+Cuando ese país incorpore su fuente normativa, activará sus mismos subárboles
+`fuentes`, `normativa` y `convenios`, sin una plantilla reducida.
 
 La relación no se declara en la ruta. `TaxTreaty.tsx` resuelve por el código ISO
 el instrumento vigente de `treatyRelations.json` y cruza su `boeId` con el

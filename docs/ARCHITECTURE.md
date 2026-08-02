@@ -10,6 +10,29 @@ publicadas: el análisis continúa en `AGENT_REVIEWED_ONLY`. La inferencia LLM
 pertenece exclusivamente al chat online; no existe un analizador automático de
 sentencias.
 
+## Arquitectura web internacional
+
+La frontera pública es la jurisdicción fuente. España implementa primero una
+plantilla SEO que se reutiliza sin variantes reducidas para cualquier país:
+
+```text
+/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}
+```
+
+`normativa/<iso>/` determina la jurisdicción de una norma; el órgano que dicta
+una resolución determina la de una sentencia. Países mencionados, residencia
+alegada y ubicación de pruebas son relaciones tipadas y generan enlaces, no
+copias del documento bajo otros prefijos. Código ISO, nombre y slug proceden del
+catálogo compartido; el frontend construye las secciones mediante
+`jurisdictionSectionPath()`.
+
+La arquitectura lógica es completa desde ahora, pero el inventario es
+fail-closed: un índice o una ficha solo se prerenderiza, entra en redirects y se
+incorpora al sitemap cuando su jurisdicción tiene fuente versionada, contenido
+diferencial y estado de publicación suficiente. Hasta entonces la ruta devuelve
+404. El contrato cerrado, la jerarquía completa y los gates están en
+[`product/INTERNATIONAL_ARCHITECTURE.md`](product/INTERNATIONAL_ARCHITECTURE.md).
+
 ## Vista general
 
 ```mermaid
@@ -69,7 +92,8 @@ flowchart LR
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
 | Runtime web V1 | `frontend/netlify/functions/chat/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
 | Persistencia web V1 | `supabase/migrations/`, `supabase-chat-store.ts` | Reserva atómica y mensajes A/B con citas, uso y coste en schema privado |
-| Renderer de sentencias | `frontend/src/pages/Sentencias*.tsx`, `frontend/scripts/build-sentencias.mjs` | Renderizar índice y fichas; producción falla cerrada y la preview permanece `noindex` |
+| Rutas por jurisdicción | `frontend/src/data/jurisdictions.ts` | Construir el hub y los cinco subárboles SEO desde el slug canónico compartido |
+| Renderer de sentencias | `frontend/src/pages/Sentencias*.tsx`, `frontend/scripts/build-sentencias.mjs` | Renderizar por jurisdicción índice y fichas; España es la primera instancia, producción falla cerrada y la preview permanece `noindex` |
 | Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |

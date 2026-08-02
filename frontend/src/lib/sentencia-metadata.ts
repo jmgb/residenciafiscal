@@ -1,3 +1,4 @@
+import { jurisdictionSectionPath } from '@/data/jurisdictions';
 import type { SentenciaIndexEntry, SentenciaPublica } from '@/types/sentencias';
 
 /**
@@ -10,7 +11,7 @@ import type { SentenciaIndexEntry, SentenciaPublica } from '@/types/sentencias';
  * acabaría en descripciones duplicadas, que es lo que §5.5 prohíbe.
  */
 
-export const SENTENCIAS_INDEX_PATH = '/espana/sentencias';
+export const SENTENCIAS_INDEX_PATH = jurisdictionSectionPath('es', 'sentencias');
 
 export function sentenciaPath(judgmentId: string): string {
   return `${SENTENCIAS_INDEX_PATH}/${judgmentId}`;

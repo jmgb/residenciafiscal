@@ -1,5 +1,14 @@
 # Auditoría SEO — 1 de agosto de 2026
 
+> **Decisión posterior cerrada (2 de agosto de 2026):** España es la primera
+> instancia de una arquitectura común por jurisdicción:
+> `/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`. Las conclusiones
+> históricas de esta auditoría sobre las URLs españolas siguen vigentes, pero
+> cualquier expansión reutiliza la misma jerarquía, canonicales, breadcrumbs,
+> prerender y gates; no se diseña un árbol reducido para otros países. Una rama
+> sin corpus publicable no existe y devuelve 404. Contrato:
+> [`INTERNATIONAL_ARCHITECTURE.md`](INTERNATIONAL_ARCHITECTURE.md).
+
 > **Estado (1 de agosto de 2026, mismo día):** aplicadas las mejoras 1–4 del
 > orden sugerido.
 >

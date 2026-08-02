@@ -2,7 +2,10 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
+import { jurisdictionSectionPath } from '@/data/jurisdictions';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
+import { NORMATIVA_INDEX_PATH } from '@/lib/normativa-fichas';
+import { SENTENCIAS_INDEX_PATH } from '@/lib/sentencia-metadata';
 import { ColaborarPage } from '@/pages/ColaborarPage';
 import { CountryPage } from '@/pages/CountryPage';
 import { EspanaFuentesPage } from '@/pages/EspanaFuentesPage';
@@ -16,6 +19,7 @@ import { SentenciasIndexPage } from '@/pages/SentenciasIndexPage';
 import { SpainPage } from '@/pages/SpainPage';
 
 const isStub = chatEngineMode === 'stub';
+const SPAIN_SOURCES_PATH = jurisdictionSectionPath('es', 'fuentes');
 
 export function App() {
   return (
@@ -23,11 +27,11 @@ export function App() {
       <Route element={<AppLayout />}>
         <Route path='/' element={<Navigate to={SPAIN_ROUTE.path} replace />} />
         <Route path={SPAIN_ROUTE.path} element={<SpainPage />} />
-        <Route path='/espana/fuentes' element={<EspanaFuentesPage />} />
-        <Route path='/espana/normativa' element={<NormativaIndexPage />} />
-        <Route path='/espana/normativa/:slug' element={<PreceptoPage />} />
-        <Route path='/espana/sentencias' element={<SentenciasIndexPage />} />
-        <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+        <Route path={SPAIN_SOURCES_PATH} element={<EspanaFuentesPage />} />
+        <Route path={NORMATIVA_INDEX_PATH} element={<NormativaIndexPage />} />
+        <Route path={`${NORMATIVA_INDEX_PATH}/:slug`} element={<PreceptoPage />} />
+        <Route path={SENTENCIAS_INDEX_PATH} element={<SentenciasIndexPage />} />
+        <Route path={`${SENTENCIAS_INDEX_PATH}/:judgmentId`} element={<SentenciaPage />} />
         {/*
          * `/consulta` y `/c/:id` sirven exactamente el mismo chat que `/espana`,
          * así que canonicalizan allí: es la URL del sitemap. Autocanonicalizarse

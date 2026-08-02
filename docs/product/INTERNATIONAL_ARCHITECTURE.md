@@ -1,7 +1,9 @@
 # Arquitectura internacional de URLs y posts por sentencia
 
 > **Estado:** diseño revisado. **Fases A y C1 ejecutadas** el 2 de agosto de
-> 2026; B, C2, D y E siguen pendientes. Fecha del diseño: 2 de agosto de 2026.
+> 2026; la plantilla SEO común a todas las jurisdicciones queda cerrada e
+> incorporada a los constructores de ruta; B, C2, D y E siguen pendientes.
+> Fecha del diseño: 2 de agosto de 2026.
 >
 > Lo que ya existe en el repositorio: el catálogo de jurisdicciones y su schema,
 > el registro bilateral de las 92 contrapartes con periodos, el normalizador de
@@ -51,6 +53,13 @@ fase C2 queda **aplazada sin fecha y marcada como opcional**: ninguna otra fase
 depende de ella y el gate de `HUMAN_APPROVED` no se rebaja — simplemente no se
 programa. La vía realista para contenido jurisprudencial indexable mientras
 tanto es la ficha documental sin análisis de §6.3.
+
+**Cuarta pasada (misma fecha).** España deja de ser un caso especial en la
+arquitectura objetivo: es la primera instancia de una **plantilla SEO común por
+jurisdicción**. Todo país podrá tener los mismos subárboles —fuentes, normativa,
+convenios, sentencias y doctrina— cuando disponga del corpus que los sustenta.
+Definir la gramática futura no crea URLs vacías: cada índice y cada ficha sigue
+naciendo únicamente al superar sus gates de fuente, calidad y publicación.
 
 ---
 
@@ -213,11 +222,12 @@ arrastran.
 ### D1 — Esquema de URL: slug legible + subárbol
 
 ```
-/peru                      jurisdicción Perú (hub)
-/peru/convenios            índice futuro de la red de convenios de Perú
-/peru/convenios/japon      ejemplo ilustrativo; no verificado ni publicable hoy
-/espana/convenios/francia  convenio España–Francia (fuente BOE)
-/espana/normativa/<slug>   ficha de articulado literal — sin cambios
+/<pais>                          hub de la jurisdicción
+/<pais>/fuentes                  procedencia y cobertura de sus corpus
+/<pais>/normativa/<slug>         ficha de articulado de esa jurisdicción
+/<pais>/convenios/<otro-pais>    relación bilateral desde su perspectiva
+/<pais>/sentencias/<slug>        resolución de sus tribunales
+/<pais>/doctrina/<tema>          hub doctrinal de esa jurisdicción
 ```
 
 Se descartaron el prefijo ISO (`/pe/convenios/jp`) y la ruta bilateral única
@@ -260,7 +270,7 @@ español mientras no se decida lo contrario.
 > centraliza la construcción de rutas; no añade prefijos configurables, locales
 > ni ramas inactivas que nadie consume.
 
-### D4 — Destino de URLs: 67 candidatos, con hubs de doctrina fuera de la URL
+### D4 — Sentencias y doctrina: patrón común, con 67 candidatos españoles hoy
 
 ```
 /espana/sentencias                      índice filtrable
@@ -275,6 +285,13 @@ criterios (`san-1210-2023` aplica cuatro); meterla bajo uno sería arbitrario y
 obligaría a redirigir cuando el análisis cambie. Los hubs son páginas de
 categoría que enlazan a los posts; la relación es N:M y vive en el dato.
 
+El patrón no es exclusivo de España: toda sentencia vive bajo la jurisdicción
+del órgano que la dicta (`/<pais>/sentencias/<slug>`) y enlaza los hubs de
+doctrina de esa misma jurisdicción (`/<pais>/doctrina/<tema>`). Los países
+mencionados, la residencia alegada o la ubicación de una prueba no cambian la
+jurisdicción primaria ni crean copias del post bajo otros países. El prefijo de
+país permite reutilizar un mismo slug local sin colisiones globales.
+
 El conjunto candidato contiene **67**, las que tienen
 `is_tax_residence_case: true`. Las 39 fuera de ámbito no entran en este producto:
 su `issue_type` es `OTHER` y su análisis no habla de residencia fiscal.
@@ -285,6 +302,31 @@ por sentencia y exige el gate vigente de `JURISPRUDENCE_PHASE_E0.md`: todos los
 elementos jurídicos que exponga esa ficha deben estar `HUMAN_APPROVED`. Una
 decisión general de producto o un descargo visible no sustituyen la aprobación
 por caso.
+
+### D5 — Una plantilla SEO para todas las jurisdicciones
+
+España es la primera implementación, no una excepción permanente. La gramática
+objetivo de cada jurisdicción es idéntica:
+
+```text
+/<pais>
+├── /fuentes
+├── /normativa
+│   └── /<precepto>
+├── /convenios
+│   └── /<otro-pais>
+├── /sentencias
+│   └── /<sentencia>
+└── /doctrina
+    └── /<tema>
+```
+
+La simetría es de arquitectura, navegación y contrato SEO; no de inventario.
+Un subárbol se materializa únicamente cuando esa jurisdicción tiene fuente
+versionada, contenido diferencial y autorización suficiente. Mientras tanto no
+se reserva una página vacía ni se publica un índice `noindex`: la ruta devuelve
+404. Todos los generadores reciben `jurisdiction.code` y construyen la URL con
+su `slug`; ningún renderer nuevo concatena `"/espana"` como regla de dominio.
 
 ---
 
@@ -416,22 +458,37 @@ jurídico real del plan.
 ### 5.1 Árbol completo
 
 ```
-/                              → 301 a /espana
-/espana                        chat + contenido de España (sin cambios)
-/espana/fuentes                (sin cambios)
-/espana/normativa              índice de 110 fichas de precepto (sin cambios)
-/espana/normativa/<slug>       ficha de articulado literal (sin cambios)
-/espana/convenios              índice de la red española de convenios      ← NUEVO
-/espana/convenios/<pais>       relación bilateral España–<país>            ← NUEVO
-/espana/sentencias             índice de las sentencias aprobadas          ← NUEVO
-/espana/sentencias/<slug>      un post por sentencia                       ← NUEVO
-/espana/doctrina/<tema>        hub temático                                ← NUEVO
-/<pais>                        hub de jurisdicción (34 rutas actuales)
-/<pais>/convenios              índice de su red        ← NUEVO, solo con normativa/<iso>/
-/<pais>/convenios/<otro>       bilateral desde su óptica ← NUEVO, solo con normativa/<iso>/
+/                                      → hoy, 301 a /espana
+/<pais>                                hub de la jurisdicción
+/<pais>/fuentes                        fuentes, cobertura y metodología local
+/<pais>/normativa                      índice de su corpus normativo
+/<pais>/normativa/<precepto>           articulado literal de esa jurisdicción
+/<pais>/convenios                      índice de su red bilateral
+/<pais>/convenios/<otro-pais>          relación desde la jurisdicción fuente
+/<pais>/sentencias                     índice de resoluciones publicadas
+/<pais>/sentencias/<sentencia>         ficha de una resolución de sus tribunales
+/<pais>/doctrina                       índice de doctrina cuando aporte valor propio
+/<pais>/doctrina/<tema>                hub doctrinal de esa jurisdicción
 /manifiesto /metodologia /colaborar /privacidad   (sin cambios)
 /consulta /c/:id               (sin cambios, noindex)
 ```
+
+España instancia hoy esa plantilla con `/espana`, `/espana/fuentes`,
+`/espana/normativa` y sus 110 fichas. Las ramas `/espana/convenios`,
+`/espana/sentencias` y `/espana/doctrina` se activan por las fases B y C. Un
+segundo país usa exactamente los mismos componentes de ruta y contratos SEO;
+no recibe un árbol reducido ni nombres especiales por llegar después.
+
+La pertenencia al subárbol se decide por la **jurisdicción fuente**: una norma,
+la autoridad que publica el texto oficial; una sentencia, el órgano que la
+dicta; una doctrina, el corpus jurisprudencial del que se deriva. Que un
+documento mencione otros países crea enlaces tipados hacia ellos, nunca copias
+del documento bajo varios prefijos.
+
+La plantilla no obliga a publicar todos sus nodos. Por ejemplo,
+`/peru/sentencias` y `/peru/normativa` siguen devolviendo 404 mientras no exista
+corpus peruano aprobado. Cuando exista, nacen en esas rutas ya decididas, sin
+rediseñar la arquitectura ni migrar URLs públicas.
 
 **Nota sobre la raíz.** El objetivo ya estaba materializado antes de esta
 implementación: `_redirects` contiene `/ /espana 301!`, generado y cubierto por
@@ -537,48 +594,56 @@ de magnitud muy superiores y considera «pequeño» un sitio de unas 500 página
 [crawl budget](https://developers.google.com/crawling/docs/crawl-budget) y
 [sitemaps](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview).
 
-### 5.5 Contrato SEO de plantilla: metadatos, enlazado y errores
+### 5.5 Contrato SEO común: metadatos, enlazado y errores
 
-Cada tipo de URL nuevo entra con el contrato que ya cumplen las rutas actuales
-(`staticRoutes.json` + `prerender.mjs`) y lo amplía con cuatro reglas que el
-borrador daba por supuestas:
+Cada tipo de URL y cada jurisdicción entra con el mismo contrato que ya cumplen
+las rutas actuales (`staticRoutes.json` + `prerender.mjs`). Cambia el dato y el
+slug del país, no las garantías SEO:
 
 1. **Metadatos únicos y derivados del dato.** El `title`, la `meta description`
    y el canonical de cada bilateral, post y hub salen de la proyección validada
-   (nombre de la contraparte, ROJ, criterio, ejercicios), no de copy manual por
-   página. Dos URLs con el mismo título o la misma descripción en el inventario
-   hacen fallar el build. El patrón de título lleva la entidad primero
+   (jurisdicción fuente, nombre de la contraparte, identificador judicial,
+   criterio, ejercicios), no de copy manual por página. Dos URLs con el mismo
+   título o la misma descripción en el inventario hacen fallar el build. El
+   patrón de título lleva la entidad primero
    («Convenio de doble imposición España–Japón…», «SAN 1210/2023: …») y la
    marca al final, como las fichas de normativa. No se generan imágenes OG por
    página en esta fase: se usa la de sitio.
 2. **Lo que Google debe seguir vive en el HTML prerenderizado.** Los enlaces de
    §6.2, los índices y los breadcrumbs se emiten en el HTML de `prerender.mjs`;
-   ningún enlace estructural ni redirección depende de JavaScript. Toda URL
-   indexable nueva queda a ≤3 clics de `/espana` —la página de prioridad 1.0—,
-   que enlaza los tres índices nuevos; y las fichas de precepto de CDI enlazan
-   de vuelta a su bilateral cuando esta exista, para que la malla no sea
-   unidireccional.
-3. **Filtros y parámetros no generan URLs indexables.** El índice de sentencias
-   filtra en cliente o con query params fuera del canonical; ninguna
+   ningún enlace estructural ni redirección depende de JavaScript. Toda ficha
+   queda a un clic de su índice y a dos de `/<pais>`; todo hub de país publicado
+   aparece en la navegación global de jurisdicciones. Las fichas de precepto de
+   un tratado enlazan de vuelta a su bilateral cuando esta exista, para que la
+   malla no sea unidireccional.
+3. **Filtros y parámetros no generan URLs indexables.** Cada índice de
+   sentencias filtra en cliente o con query params fuera del canonical; ninguna
    combinación de facetas entra en el sitemap ni en enlaces internos. Con 67
-   candidatos no hay paginación; si algún día hace falta, su contrato se decide
-   antes de construirla, no después.
+   candidatos españoles no hay paginación; si una jurisdicción la necesita, su
+   contrato se decide antes de construirla, no después.
 4. **Fail-closed también en HTTP.** El fallback del sitio ya devuelve 404 real
    (`SEO_AUDIT.md`, punto 3): un slug de sentencia no publicado, una bilateral
    sin relación curada o un hub sin masa devuelven 404 en producción — nunca el
    shell de la SPA ni una página vacía. El `noindex` de `internal_preview` se
    emite como `<meta name="robots">` en el HTML prerenderizado, que es el patrón
    vigente, y los Deploy Previews añaden además `X-Robots-Tag: noindex` de
-   cabecera, para que un preview con los 67 borradores no sea indexable aunque
-   su URL se comparta.
+   cabecera, para que un preview con borradores no sea indexable aunque su URL
+   se comparta.
+5. **Jerarquía y propiedad inequívocas.** Breadcrumb, canonical, sitemap y
+   JSON-LD usan siempre `/<pais>/<seccion>/...` con el slug obtenido del catálogo.
+   Una resolución pertenece al país del tribunal y una norma al de la fuente
+   oficial; las menciones transfronterizas solo generan enlaces. No hay
+   canonical cruzado entre países ni copias de una ficha bajo varias
+   jurisdicciones.
 
 ---
 
-## 6. Posts por sentencia
+## 6. Posts por sentencia, comunes a cualquier jurisdicción
 
 ### 6.1 Fuente y contrato
 
-La fuente es el **caso canónico v3** (`knowledge/jurisprudencia-v3/cases/*.case.json`),
+La primera fuente es el **caso canónico v3 español**
+(`knowledge/jurisprudencia-v3/cases/*.case.json`),
 no el Markdown. Razón: el JSON es el artefacto validado por el pipeline, el
 Markdown es una vista derivada (`docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md`).
 Renderizar desde el JSON evita parsear Markdown y garantiza que el post no puede
@@ -589,7 +654,10 @@ El frontend no debe recibir el caso completo. Un exportador Python crea una
 estado de revisión y campos permitidos. `build-sentencias.mjs` verifica hashes e
 identidad, materializa el estado editorial del manifiesto y escribe un índice
 ligero y un fichero por sentencia, siguiendo el patrón de normativa. Así,
-añadir un campo al caso canónico no lo publica por accidente.
+añadir un campo al caso canónico no lo publica por accidente. El manifiesto
+declara `jurisdiction` y el renderer construye la URL desde esa clave; una
+futura proyección francesa o peruana satisface el mismo contrato y se publica
+bajo su propio slug, no mediante un renderer paralelo.
 
 El manifiesto distingue tres estados:
 
@@ -601,15 +669,18 @@ El manifiesto distingue tres estados:
 El build público falla cerrado si una ruta indexable no está en `published` o
 si su hash no coincide. Un flag de frontend no puede ascender un caso.
 
-Slug: derivado del ROJ, ya normalizado en los nombres de fichero
-(`SAN 1210/2023` → `san-1210-2023`). Es estable, único y legible.
+Slug: derivado del identificador oficial de la resolución según el contrato de
+cada fuente. En España sale del ROJ (`SAN 1210/2023` → `san-1210-2023`). Debe
+ser estable y único dentro de la jurisdicción; el prefijo `/<pais>` evita exigir
+un identificador mundial artificial.
 
 ### 6.2 Estructura del post
 
 Se hereda la del perfil OKF/3, que ya está validada:
 
-1. **Identidad** — órgano, sala, fecha, ROJ, ECLI, ejercicios, países y enlace
-   al buscador oficial del CENDOJ. El caso canónico actual no conserva una URL
+1. **Identidad** — jurisdicción fuente, órgano, sala, fecha, identificadores
+   oficiales, ejercicios, países y enlace al buscador oficial disponible. Para
+   España son ROJ, ECLI y CENDOJ; el caso canónico actual no conserva una URL
    estable por documento, por lo que no se fabrica un enlace directo al PDF.
 2. **Por cada cuestión jurídica** — pregunta, hechos relevantes, pruebas
    valoradas (con su categoría del catálogo de 12), normas y doctrina, carga de
@@ -617,12 +688,14 @@ Se hereda la del perfil OKF/3, que ya está validada:
 3. **Anclajes literales** — solo los extractos aprobados y verificados contra el
    PDF, con página física y etiqueta impresa. Es lo único de la página que
    reproduce texto judicial.
-4. **Enlaces** — a los hubs de doctrina aplicables, a las fichas de precepto que
-   la sentencia cita y a `/espana/convenios/<pais>` cuando resuelva por CDI.
+4. **Enlaces** — a los hubs de doctrina y las fichas de precepto de su
+   jurisdicción fuente, y a `/<pais-fuente>/convenios/<contraparte>` cuando
+   resuelva por tratado. Los demás países tipados enlazan a sus hubs, nunca
+   reciben una copia de la sentencia.
 
 ### 6.3 La aprobación humana es un gate, no un rótulo
 
-Los 106 casos agregan 1.620 elementos `AGENT_REVIEWED`, ninguno
+En España, los 106 casos agregan 1.620 elementos `AGENT_REVIEWED`, ninguno
 `HUMAN_APPROVED`; los perfiles están en `status: draft` y el build completo en
 `AGENT_REVIEWED_ONLY`. `JURISPRUDENCE_PHASE_E0.md` fija dos gates distintos:
 build técnico y publicación jurídica. El segundo exige aprobación humana de
@@ -666,9 +739,13 @@ no depende de ella (§9). La ficha documental del párrafo anterior es la
 alternativa realista si se quiere contenido jurisprudencial indexable antes de
 contar con revisor.
 
-### 6.4 Hubs de doctrina
+### 6.4 Hubs de doctrina por jurisdicción
 
-Seis hubs, uno por criterio con masa suficiente:
+La ruta común es `/<pais>/doctrina/<tema>`. Cada hub sintetiza únicamente la
+doctrina de los tribunales de esa jurisdicción; compartir un slug como
+`183-dias` no declara que la regla ni su interpretación sean equivalentes en
+otro país. España tiene hoy seis candidatos, uno por criterio con masa
+suficiente:
 
 | Ruta | Criterio | Cuestiones |
 |---|---|---|
@@ -704,8 +781,9 @@ fiable.
 ### 7.1 No mover todavía `sentencias/`
 
 `sentencias/` aparece en cientos de referencias de código, tests y documentos.
-Moverlo no aporta nada a las nuevas URLs ni al renderer español y mezclaría una
-migración física de alto churn con dos features de producto.
+Moverlo no aporta nada a las nuevas URLs ni a la primera instancia española del
+renderer común y mezclaría una migración física de alto churn con dos features
+de producto.
 
 El cambio pasa a ser una migración independiente, con su propio diseño y diff,
 que se ejecuta **después de aceptar una fuente jurisprudencial de una segunda
@@ -787,6 +865,8 @@ ningún rol jurídico se infiere solo por alias; regenerar dos veces da diff vac
 
 ### Fase B — Red española, primero como piloto
 
+- Implementar la plantilla común por jurisdicción, usando `es` como primera
+  instancia y sin constructores que fijen `"/espana"` como regla general.
 - Crear `/espana/convenios` como índice de relaciones, no de preceptos.
 - Construir tres páginas piloto que cubran: convenio único, sucesión de
   convenios y fuente vigente obtenida del diario en vez del consolidado.
@@ -805,8 +885,9 @@ no automáticamente a 92.
 ### Fase C1 — Renderer jurisprudencial privado
 
 - Exportador Python con allowlist, manifiesto y hashes.
-- `build-sentencias.mjs`, índice, post, filtros y prerender de los 67 candidatos
-  en `internal_preview`.
+- `build-sentencias.mjs`, índice, post, filtros y prerender comunes por
+  jurisdicción; primera instancia con los 67 candidatos españoles en
+  `internal_preview`.
 - `robots: noindex`, exclusión del sitemap y prueba de que un build público no
   puede ascender esos casos.
 - Enlazado solo contra relaciones y roles tipados; nunca desde
@@ -848,47 +929,58 @@ sola no invalida la arquitectura de una URL factual nueva.
   ejemplo Perú–Japón sigue siendo solo ilustrativo.
 - Implementar un lector específico que satisfaga el contrato común, sin una
   abstracción de proveedores prematura.
+- Activar para esa jurisdicción la misma superficie que España:
+  `/<pais>/fuentes`, `/<pais>/normativa`, sus fichas y, cuando proceda,
+  `/<pais>/convenios`; no diseñar una versión reducida para «otros países».
 - Crear relaciones y páginas solo cuando añadan contexto propio de esa
   jurisdicción, no por duplicar el mismo tratado desde otra URL oficial.
 
 **Gate D:** contrato de `NORMATIVA.md`, especialista comprometido, fuente
-reutilizable y tests de aislamiento. Una segunda jurisdicción normativa no
-obliga a mover todavía el corpus jurisprudencial.
+reutilizable, tests de aislamiento y paridad de plantilla SEO con España. Una
+segunda jurisdicción normativa no obliga a materializar todavía sus ramas de
+sentencias o doctrina, que permanecen 404 hasta la fase E.
 
 ### Fase E — Segunda jurisdicción jurisprudencial
 
 Solo aquí se diseñan y ejecutan, como migración independiente, los movimientos
 `sentencias/` → `sentencias/es/` y `knowledge/jurisprudencia-v3/` → layout por
 jurisdicción. Deben preservar hashes, manifiestos, restauración, OKF/2 legado y
-reproducibilidad antes de admitir el primer PDF nuevo.
+reproducibilidad antes de admitir el primer PDF nuevo. El nuevo corpus activa
+exactamente `/<pais>/sentencias`, `/<pais>/sentencias/<slug>` y, cuando alcance
+masa y revisión suficientes, `/<pais>/doctrina/<tema>`, reutilizando el mismo
+renderer, breadcrumbs, metadatos, sitemap y gates de España.
 
 ---
 
 ## 10. Decisiones cerradas por esta revisión
 
-1. **No se acepta solapamiento temporal como estrategia.** Las bilaterales se
+1. **Una sola arquitectura para todos los países.** España es la primera
+   instancia de `/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`, no
+   un producto especial. Un país futuro reutiliza la plantilla y activa solo
+   los nodos respaldados por su corpus; los demás responden 404.
+2. **No se acepta solapamiento temporal como estrategia.** Las bilaterales se
    pilotan a la vez que sus páginas de país cambian de rol; nunca quedan dos
    URLs indexables publicando el mismo articulado completo.
-2. **Se mantienen tres niveles.** La ficha normativa contiene el texto literal;
+3. **Se mantienen tres niveles.** La ficha normativa contiene el texto literal;
    la bilateral, aplicabilidad y relaciones; el país, estado y contenido de la
    jurisdicción. Una bilateral vacía no nace.
-3. **Los dos índices no se fusionan.** Convenios y preceptos son entidades e
+4. **Los dos índices no se fusionan.** Convenios y preceptos son entidades e
    intenciones distintas, aunque se enlacen y compartan filtros.
-4. **No se publican los 67 `AGENT_REVIEWED`.** Se construyen en preview y se
+5. **No se publican los 67 `AGENT_REVIEWED`.** Se construyen en preview y se
    publican por caso tras `HUMAN_APPROVED`. Una eventual ficha documental sin
    análisis requiere otro contrato y otra autorización.
-5. **No se añade infraestructura i18n.** El catálogo separa `name`, `code` y
+6. **No se añade infraestructura i18n.** El catálogo separa `name`, `code` y
    `slug`, y los generadores no concatenan rutas fuera de una función central;
    esa separación cuesta casi cero y evita acoplamiento, sin introducir hoy
    prefijos, locale ni `hreflang`.
-6. **Ausencias esporádicas espera.** Primero se cierra el gap de datos y se
+7. **Ausencias esporádicas espera.** Primero se cierra el gap de datos y se
    aprueban casos suficientes; el potencial de tráfico no rebaja el gate.
-7. **Perú–Japón sigue siendo ilustrativo.** No entra en datos, rutas ni tests
+8. **Perú–Japón sigue siendo ilustrativo.** No entra en datos, rutas ni tests
    hasta verificar la fuente peruana y sus condiciones de reutilización.
-8. **No hay problema de crawl budget a esta escala.** Se escalona para validar
+9. **No hay problema de crawl budget a esta escala.** Se escalona para validar
    calidad, canonicalización y operación, no para racionar rastreo. El sitemap
    contiene todas y solo las páginas realmente publicables de cada lote.
-9. **Una URL bilateral, varias versiones.** Japón, Rumanía y China muestran el
+10. **Una URL bilateral, varias versiones.** Japón, Rumanía y China muestran el
    instrumento actual y los sustituidos con rango de ejercicios. La relación
    temporal curada, no la URL ni el estado del consolidado del BOE, decide cuál
    aplica.
@@ -899,6 +991,12 @@ reproducibilidad antes de admitir el primer PDF nuevo.
 
 - **No** migrar las 34 rutas de país a códigos ISO ni a ningún otro esquema.
   Decisión D1, y Search Console lleva un día midiéndolas.
+- **No** diseñar un árbol reducido para países distintos de España ni crear
+  renderers SEO específicos por país. Cambian fuentes y datos; no la gramática
+  `/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`.
+- **No** concatenar `"/espana"` en código reutilizable: las rutas salen del
+  código de jurisdicción y su slug canónico. Las constantes españolas actuales
+  son instancias de ese constructor común.
 - **No** publicar una página de convenio sin texto literal versionado en el repo.
   Decisión D2.
 - **No** deducir el país de un convenio con una regex sobre su título.
@@ -943,6 +1041,8 @@ Cada fase entrega tests, no solo código. Modelos que ya existen en el repo:
 | Ningún slug colisiona entre subárboles (país, estático, normativa, sentencias, doctrina) | test de inventario global de rutas sobre las fuentes del prerender |
 | `title` y `description` únicos y derivados del dato en todo el inventario | tests de `prerender.mjs` |
 | Rutas no publicadas devuelven 404 real, no el shell | `tests/test_frontend_cache_policy.py` + `SEO_AUDIT.md` punto 3 |
+| Toda jurisdicción usa la misma gramática de secciones | tests del constructor `jurisdictionSectionPath()` para España y otra jurisdicción |
+| Norma, sentencia y doctrina quedan bajo su jurisdicción fuente | gates de proyección y test de inventario multijurisdicción antes de las fases D/E |
 
 `ci.yml` no ignora `frontend/**` a propósito: hay tests de pytest que leen
 ficheros del frontend. Si se añade un test Python que lea una ruta nueva, hay que
@@ -952,34 +1052,37 @@ comprobar que no cae en `paths-ignore`.
 
 La vigilancia semanal de Search Console ya existe: el informe de los lunes
 (`scripts/weekly_ga4_telegram.py`) consulta la API de GSC. Al abrir cada
-subárbol se añade su prefijo (`/espana/convenios/`, `/espana/sentencias/`,
-`/espana/doctrina/`) como segmento observado: cobertura —indexadas frente a
-«rastreada, actualmente sin indexar»—, canonicales elegidas por Google y
-consultas que traen impresiones. Los criterios de ampliación o parada del
+subárbol se observa una matriz **jurisdicción × superficie**: por ejemplo,
+`/espana/convenios/`, `/espana/sentencias/`, `/peru/normativa/` o
+`/peru/sentencias/` cuando existan. Cada segmento mide cobertura —indexadas
+frente a «rastreada, actualmente sin indexar»—, canonicales elegidas por Google
+y consultas que traen impresiones. Los criterios de ampliación o parada del
 piloto (§5.2, paso 5) se evalúan sobre esos segmentos, nunca sobre el agregado
-del sitio, que los diluiría. Si el inventario llega a superar con holgura las
-~150 URLs actuales, dividir el sitemap por subárbol es una herramienta de
-diagnóstico de cobertura en GSC — no una optimización de rastreo, que a esta
-escala no existe (§5.4).
+del sitio, que los diluiría ni comparando países con inventarios distintos. Si
+el inventario llega a superar con holgura las ~150 URLs actuales, el sitemap se
+puede dividir primero por jurisdicción y después por superficie como herramienta
+de diagnóstico en GSC — no como optimización de rastreo, que a esta escala no
+existe (§5.4).
 
 ---
 
-## 13. Documentos que habrá que actualizar
+## 13. Documentación alineada con esta decisión
 
-- `docs/product/COUNTRY_PAGES.md` — deja de describir «la contraparte de España».
-- `docs/product/SEO_AUDIT.md` — los puntos 4 y 5 quedan resueltos o replanteados.
-- `docs/project/TASKS.md` — las tareas de las líneas 78, 93, 440 y 489 quedan
-  absorbidas o reordenadas por este plan.
-- `docs/normativa/NORMATIVA.md` — el contrato de jurisdicción pasa de teórico a
-  ejercido.
-- `docs/ARCHITECTURE.md` — catálogo compartido, proyecciones públicas y gates.
-- `docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md` — no cambia el gate; solo se
-  enlaza el nuevo manifiesto de publicación cuando exista.
-- `docs/REPOSITORY_STRUCTURE.md` — solo en la futura Fase E que mueva rutas, no
-  durante las fases A–D.
-- `CLAUDE.md` — mantener la frontera y los invariantes; actualizar la
-  descripción del sitio solo cuando el producto internacional esté realmente
-  publicado.
+- `CLAUDE.md` y `frontend/CLAUDE.md` — fijan la plantilla común, los
+  constructores por jurisdicción y el comportamiento 404 de ramas sin corpus.
+- `docs/ARCHITECTURE.md` — declara la jurisdicción fuente como frontera pública.
+- `docs/REPOSITORY_STRUCTURE.md` — separa la arquitectura lógica común del
+  layout físico español, cuya migración sigue perteneciendo a la fase E.
+- `docs/product/COUNTRY_PAGES.md` — define cada página de país como hub del
+  mismo árbol y documenta como transitorio el convenio español incrustado hoy.
+- `docs/product/SEO_AUDIT.md` — conserva la medición histórica y añade la
+  decisión común para cualquier expansión.
+- `docs/normativa/NORMATIVA.md` — enlaza cada corpus oficial con
+  `/<pais>/normativa` sin exigir un renderer específico.
+- `docs/project/TASKS.md` — registra la decisión como cerrada y mantiene las
+  fases B, D y E como activaciones de la misma plantilla.
+- `docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md` no cambia su gate: cuando
+  exista publicación, el manifiesto aporta la jurisdicción al renderer común.
 
 
 ---
@@ -1030,6 +1133,7 @@ sitemap, los 110 preceptos y los 122 enlaces de citas son idénticos.
 | Manifiesto con hashes y lotes | `src/export_public_judgments.py`, `knowledge/jurisprudencia-v3/publico/` |
 | Build al frontend | `frontend/scripts/build-sentencias.mjs` |
 | Índice y ficha | `frontend/src/pages/Sentencias*.tsx`, `components/sentencias/` |
+| Constructor de secciones por jurisdicción | `frontend/src/data/jurisdictions.ts` |
 | Gate ejecutable | `tests/test_gate_fase_c1.py`, `make verify-public-judgments` |
 
 - Los **67 candidatos** están en `internal_preview`; `LOTES_PUBLICADOS` está

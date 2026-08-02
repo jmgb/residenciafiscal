@@ -1,4 +1,8 @@
-import { counterpartNamesWithSeveralTreaties, treatyCounterpartName } from '@/data/jurisdictions';
+import {
+  counterpartNamesWithSeveralTreaties,
+  jurisdictionSectionPath,
+  treatyCounterpartName,
+} from '@/data/jurisdictions';
 import fichas from '@/data/normativaFichas.json';
 import type { PreceptoEntry } from '@/types/normativa';
 
@@ -24,7 +28,7 @@ const NORMAS: Record<string, string> = fichas.normas;
  */
 const PAISES_REPETIDOS = counterpartNamesWithSeveralTreaties();
 
-export const NORMATIVA_INDEX_PATH = '/espana/normativa';
+export const NORMATIVA_INDEX_PATH = jurisdictionSectionPath('es', 'normativa');
 
 export function fichaPathForSlug(slug: string): string {
   return `${NORMATIVA_INDEX_PATH}/${slug}`;

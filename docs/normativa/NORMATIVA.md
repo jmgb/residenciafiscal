@@ -211,8 +211,10 @@ país:
 
 Lo que hace falta para añadir un país: un lector que deje en
 `normativa/<código>/` la fuente y un `manifest.json` con `id`, `grupo`, `titulo`
-y `texto_sha256` por norma, y una entrada en `JURISDICCIONES`. Lo que **no** hace
-falta tocar: el renderizado, los tests de literalidad ni el frontend.
+y `texto_sha256` por norma, y una entrada en `JURISDICCIONES`. Se reutilizan el
+renderizado y los tests de literalidad; el frontend solo activa la nueva
+proyección bajo `/<pais>/normativa` y `/<pais>/normativa/<precepto>`, mediante
+los constructores comunes, sin crear una plantilla específica para ese país.
 
 El código ISO no coincide con las rutas del frontend (`/espana`) a propósito:
 aquellas son de presentación y admiten acentos, esta es la clave de máquina del
@@ -223,6 +225,12 @@ cada jurisdicción declara `code`, `name` y `slug`, el frontend recibe una
 proyección generada y `countryRoutes.json` ya no guarda copia del nombre.
 Checoslovaquia y la URSS entran con su código **ISO 3166-3** —el estándar para
 Estados extintos— porque sus convenios siguen en el corpus.
+
+La arquitectura SEO queda cerrada antes de incorporar el segundo corpus:
+`/<pais>/fuentes`, `/<pais>/normativa`, `/<pais>/convenios`,
+`/<pais>/sentencias` y `/<pais>/doctrina`. Este pipeline solo activa las ramas
+normativas respaldadas por una fuente oficial; no publica por sí mismo las demás
+ni crea índices vacíos.
 
 ## Enlace con la jurisprudencia
 

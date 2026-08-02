@@ -6,6 +6,7 @@ import {
   currentTreatyBoeId,
   jurisdictionName,
   jurisdictionPath,
+  jurisdictionSectionPath,
   treatyCounterpart,
   treatyCounterpartName,
   treatyInstruments,
@@ -43,6 +44,16 @@ describe('catálogo de jurisdicciones', () => {
     for (const route of COUNTRY_ROUTES) {
       expect(jurisdictionPath(route.code), route.code).toBe(route.path);
     }
+  });
+
+  it('construye la misma arquitectura de secciones para cualquier jurisdicción', () => {
+    expect(jurisdictionSectionPath('es', 'fuentes')).toBe('/espana/fuentes');
+    expect(jurisdictionSectionPath('es', 'normativa')).toBe('/espana/normativa');
+    expect(jurisdictionSectionPath('es', 'convenios')).toBe('/espana/convenios');
+    expect(jurisdictionSectionPath('es', 'sentencias')).toBe('/espana/sentencias');
+    expect(jurisdictionSectionPath('es', 'doctrina')).toBe('/espana/doctrina');
+    expect(jurisdictionSectionPath('pe', 'sentencias')).toBe('/peru/sentencias');
+    expect(jurisdictionSectionPath('fr', 'normativa')).toBe('/francia/normativa');
   });
 
   it('resuelve el convenio vigente de cada país desde el registro', () => {

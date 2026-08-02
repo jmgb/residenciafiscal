@@ -75,6 +75,24 @@ con esos archivos.
 - Las rutas de documentación se escriben desde la raíz cuando aparecen como
   texto; los enlaces Markdown se expresan relativos al documento.
 
+## Jurisdicciones: arquitectura lógica y ubicación física
+
+La web usa una única arquitectura lógica para cualquier país:
+`/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`. Código, nombre y
+slug salen del catálogo compartido, y los constructores de frontend reciben el
+código de jurisdicción; España es la primera instancia, no una rama especial.
+
+La ubicación física todavía refleja el corpus disponible: `normativa/es/`,
+`sentencias/` y `knowledge/jurisprudencia-v3/`. No se interpreta esa forma como
+contrato de URL ni se deduce de ella la jurisdicción. Los manifiestos declaran
+la clave explícitamente y las proyecciones públicas la conservan.
+
+Al incorporar el primer corpus jurisprudencial no español, la fase E de
+[`product/INTERNATIONAL_ARCHITECTURE.md`](product/INTERNATIONAL_ARCHITECTURE.md)
+migrará las fuentes y derivados a un layout por jurisdicción antes de aceptar el
+primer PDF. Esa migración física no altera la gramática pública, que ya queda
+cerrada, y debe preservar hashes, manifiestos y reproducibilidad.
+
 ## Archivos que deben permanecer en la raíz
 
 `README.md`, `LICENSE`, `NOTICE.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`,

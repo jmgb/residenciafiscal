@@ -915,6 +915,15 @@ quedaron **ejecutadas y verificadas el 2 de agosto de 2026**. La fase
 depende de ella y el gate de `HUMAN_APPROVED` no se rebaja. Lo pendiente, en el
 orden recomendado:
 
+- [x] **Cerrar una única arquitectura SEO para todos los países** (2 de agosto
+  de 2026). España es la primera instancia de
+  `/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`. La plantilla,
+  constructores de ruta, canonicales, breadcrumbs, prerender, sitemap y gates
+  se reutilizan para cada jurisdicción; las ramas sin corpus suficiente no se
+  materializan y devuelven 404. Alineados el diseño rector, `CLAUDE.md`,
+  arquitectura, estructura del repositorio, páginas de país, normativa y esta
+  auditoría/backlog.
+
 - [ ] **Pedir indexación manual en la UI de GSC** (2026-08-03, ~15 min). Unas
   diez URLs prioritarias: `/espana/normativa`, `lirpf-a9`, las fichas de CDI
   con más demanda (Andorra, Portugal, Francia, Emiratos), `/colaborar` y dos o
@@ -950,7 +959,8 @@ orden recomendado:
   la semana del 2026-08-10). `/espana/convenios`, tres bilaterales que cubran
   convenio único, sucesión (Japón/Rumanía/China) y fuente del diario; sus
   páginas de país se convierten en hubs en el mismo lote. Ampliar por lotes
-  solo si el Gate B pasa.
+  solo si el Gate B pasa. Los componentes se implementan desde el inicio por
+  jurisdicción, aunque `es` sea la única instancia con datos.
 - [ ] **Checkpoint GSC de las fichas de CDI** (2026-09-01). Si las 97 aparecen
   de forma masiva como «Crawled – currently not indexed», activar la
   diferenciación prevista; hasta entonces no podar el sitemap (§12.1 del
@@ -962,6 +972,12 @@ orden recomendado:
   aparece un revisor humano comprometido: lote pequeño y diverso,
   `HUMAN_APPROVED` por caso con identidad y fecha. No programar; no bloquea
   nada.
+- [ ] **Fase D — primera normativa no española.** Activar para el país elegido
+  la misma superficie `fuentes` + `normativa` + `convenios`, con fuente oficial,
+  especialista y tests de aislamiento; no crear una plantilla abreviada.
+- [ ] **Fase E — primera jurisprudencia no española.** Migrar antes el layout
+  físico por jurisdicción y activar el mismo renderer de `sentencias` y
+  `doctrina`, preservando hashes y gates de aprobación.
 - [x] **Limpieza menor de excepciones históricas** (2026-08-02). El diseño del
   chat backend se promocionó a
   [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md)

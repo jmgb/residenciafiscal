@@ -2,6 +2,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { jurisdictionSectionPath } from '../src/data/jurisdictions.ts';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const frontendDir = join(scriptDir, '..');
@@ -37,17 +38,23 @@ const publicRoutes = [
     .filter((route) => route.indexable)
     .map((route) => ({ path: route.path, ...route.sitemap })),
   ...normativa.map((entry) => ({
-    path: `/espana/normativa/${entry.slug}`,
+    path: `${jurisdictionSectionPath(entry.jurisdiccion, 'normativa')}/${entry.slug}`,
     changefreq: 'yearly',
     priority: '0.4',
   })),
   // El índice solo existe si hay algo que listar; un listado vacío sería una
   // URL indexable sin contenido propio.
   ...(sentenciasPublicadas.length > 0
-    ? [{ path: '/espana/sentencias', changefreq: 'weekly', priority: '0.6' }]
+    ? [
+        {
+          path: jurisdictionSectionPath(sentencias.jurisdiction, 'sentencias'),
+          changefreq: 'weekly',
+          priority: '0.6',
+        },
+      ]
     : []),
   ...sentenciasPublicadas.map((entry) => ({
-    path: `/espana/sentencias/${entry.judgmentId}`,
+    path: `${jurisdictionSectionPath(sentencias.jurisdiction, 'sentencias')}/${entry.judgmentId}`,
     changefreq: 'yearly',
     priority: '0.5',
   })),

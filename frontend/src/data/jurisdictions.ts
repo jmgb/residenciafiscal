@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import jurisdictionData from './jurisdictions.json';
-import treatyRelationData from './treatyRelations.json';
+import jurisdictionData from './jurisdictions.json' with { type: 'json' };
+import treatyRelationData from './treatyRelations.json' with { type: 'json' };
 
 /**
  * Catálogo de jurisdicciones y relaciones bilaterales, proyectados desde el
@@ -32,6 +32,7 @@ const instrumentSchema = z.object({
 
 export type Jurisdiction = z.infer<typeof jurisdictionSchema>;
 export type TreatyInstrument = z.infer<typeof instrumentSchema>;
+export type JurisdictionSection = 'fuentes' | 'normativa' | 'convenios' | 'sentencias' | 'doctrina';
 
 const JURISDICTIONS = z
   .record(z.string(), jurisdictionSchema)
@@ -60,6 +61,12 @@ export function jurisdictionPath(code: string): string {
     throw new Error(`La jurisdicción «${code}» no está en el catálogo compartido.`);
   }
   return `/${jurisdiction.slug}`;
+}
+
+/** Subárbol SEO común de una jurisdicción. Definir la ruta no la publica: los
+ * generadores solo materializan las secciones que superan sus gates. */
+export function jurisdictionSectionPath(code: string, section: JurisdictionSection): string {
+  return `${jurisdictionPath(code)}/${section}`;
 }
 
 /** Convenios firmados con esa contraparte, del más antiguo al vigente. */

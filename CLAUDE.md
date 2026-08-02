@@ -2,6 +2,48 @@
 
 Guía para Claude Code en el proyecto **Residencia Fiscal** — [residenciafiscal.org](https://residenciafiscal.org).
 
+## Dominio canónico de producción
+
+El dominio público y canónico de producción es **`https://residenciafiscal.org`**.
+Toda ruta, enlace, comprobación HTTP, canonical, sitemap, JSON-LD y referencia
+al sitio en producción debe usar ese origen. `www.residenciafiscal.org` solo
+redirige al dominio canónico.
+
+`residenciafiscal.netlify.app`, `main--residenciafiscal.netlify.app` y
+`deploy-preview-*--residenciafiscal.netlify.app` son direcciones técnicas de
+Netlify: no son URLs de producción y no deben presentarse ni enlazarse como
+tales. Las dos primeras pueden usarse únicamente para diagnosticar el origen,
+dejándolo explícito; las de `deploy-preview-*` son previews privados. Si
+Cloudflare impide una comprobación automatizada del dominio canónico, se informa
+del bloqueo y no se sustituyen las rutas reales de producción por el origen de
+Netlify.
+
+## Arquitectura SEO por jurisdicción
+
+España es la primera instancia de una plantilla común, no un caso especial. La
+arquitectura cerrada para cualquier jurisdicción es:
+
+```text
+/<pais>
+├── /fuentes
+├── /normativa
+│   └── /<precepto>
+├── /convenios
+│   └── /<otro-pais>
+├── /sentencias
+│   └── /<sentencia>
+└── /doctrina
+    └── /<tema>
+```
+
+El slug sale siempre de `src/jurisdiction_catalog.json` mediante los
+constructores compartidos; no se concatena `"/espana"` dentro de código
+reutilizable. Norma, sentencia y doctrina pertenecen a su jurisdicción fuente
+—fuente oficial u órgano judicial—, aunque mencionen otros países. La plantilla
+define el futuro, pero no crea thin content: una sección o ficha sin corpus,
+revisión o contenido diferencial suficiente no se materializa y devuelve 404.
+Contrato y fases: [`docs/product/INTERNATIONAL_ARCHITECTURE.md`](docs/product/INTERNATIONAL_ARCHITECTURE.md).
+
 ## Quick Start
 
 El proyecto usa **uv** (no pip/venv a mano) y un **Makefile** como interfaz única.
