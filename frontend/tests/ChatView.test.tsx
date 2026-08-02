@@ -174,7 +174,7 @@ describe('ChatView', () => {
     expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
     expect(
       screen.getByRole('button', {
-        name: '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
+        name: '¿Qué pruebas valora el Tribunal Supremo para acreditar o discutir el cómputo de los 183 días?',
       })
     ).toBeInTheDocument();
   });
@@ -421,19 +421,82 @@ describe('ChatView', () => {
     expect(screen.getByText('Extracto de prueba.')).toBeInTheDocument();
   });
 
-  it('un prompt sugerido lanza la consulta', async () => {
+  it.each([
+    [
+      '¿Qué pruebas valora el Tribunal Supremo para acreditar o discutir el cómputo de los 183 días?',
+      /no existe una lista cerrada/i,
+      /STS 3498\/2025/,
+    ],
+    [
+      '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
+      /duración o intensidad/i,
+      /STS 115\/2018/,
+    ],
+    [
+      '¿Qué valor probatorio tiene un certificado de residencia fiscal extranjero?',
+      /no puede ignorarse/i,
+      /STS 3498\/2025/,
+    ],
+    [
+      '¿Cuándo se aplica la regla de desempate del art. 4 del CDI aplicable?',
+      /doble residencia/i,
+      /STS 3498\/2025/,
+    ],
+  ])(
+    'el prompt editorial %s responde sin llamar al comparador',
+    async (question, answerExcerpt, sourceLabel) => {
+      const user = userEvent.setup();
+      const askQuestion = vi.fn(async function* () {
+        yield { type: 'done' as const };
+      });
+      renderChat({ askQuestion });
+
+      await user.click(screen.getByRole('button', { name: question }));
+
+      expect(await screen.findByText(question)).toBeInTheDocument();
+      expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toHaveTextContent(
+        answerExcerpt
+      );
+      expect(screen.getByText(sourceLabel)).toBeInTheDocument();
+      expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
+      expect(askQuestion).not.toHaveBeenCalled();
+    }
+  );
+
+  it('el mismo texto escrito manualmente sigue siendo una consulta al motor', async () => {
     const user = userEvent.setup();
-    renderChat();
+    const askQuestion = vi.fn(async function* () {
+      yield { type: 'done' as const };
+    });
+    renderChat({ askQuestion });
+    const question = '¿Qué valor probatorio tiene un certificado de residencia fiscal extranjero?';
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), question);
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(askQuestion).toHaveBeenCalledOnce();
+    expect(screen.queryByRole('region', { name: 'Respuesta editorial' })).not.toBeInTheDocument();
+  });
+
+  it('una respuesta editorial no consume el límite de consultas al motor', async () => {
+    vi.stubEnv('VITE_CHAT_SESSION_MESSAGE_LIMIT', '1');
+    const user = userEvent.setup();
+    const askQuestion = vi.fn(async function* () {
+      yield { type: 'done' as const };
+    });
+    renderChat({ askQuestion });
 
     await user.click(
       screen.getByRole('button', {
-        name: '¿Cuándo entra el tie-breaker del art. 4 del Modelo OCDE?',
+        name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
       })
     );
 
+    expect(screen.getByRole('textbox', { name: 'Consulta' })).toBeEnabled();
     expect(
-      await screen.findByText('¿Cuándo entra el tie-breaker del art. 4 del Modelo OCDE?')
-    ).toBeInTheDocument();
+      screen.queryByRole('status', { name: /límite de mensajes de sesión/i })
+    ).not.toBeInTheDocument();
+    expect(askQuestion).not.toHaveBeenCalled();
   });
 
   it('guarda la conversación en el store', async () => {

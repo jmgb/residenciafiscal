@@ -2,6 +2,7 @@ import type { ChatMessage } from '@/types/chat';
 import { ChatComparisonAnswers } from './ChatComparisonAnswers';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatSources } from './ChatSources';
+import { EditorialChatAnswer } from './EditorialChatAnswer';
 
 function formatTime(isoString: string): string {
   try {
@@ -32,7 +33,9 @@ export function ChatBubble({ message }: ChatBubbleProps) {
           isUser ? 'rounded-tr-none bg-primary-100' : 'rounded-tl-none bg-card border border-border'
         }`}
       >
-        {!isUser && message.answers ? (
+        {!isUser && message.editorial ? (
+          <EditorialChatAnswer message={message} />
+        ) : !isUser && message.answers ? (
           <ChatComparisonAnswers answers={message.answers} comparisonId={message.comparisonId} />
         ) : (
           <ChatMessageContent content={message.content} isUser={isUser} />

@@ -134,7 +134,74 @@ describe('useConversations', () => {
     const stored = window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY);
 
     expect(stored).not.toBeNull();
-    expect(JSON.parse(stored as string).version).toBe(3);
+    expect(JSON.parse(stored as string).version).toBe(4);
+  });
+
+  it('conserva una respuesta editorial trazable al rehidratar', () => {
+    const conversations = [
+      {
+        id: 'c-editorial',
+        title: 'respuesta editorial',
+        createdAt: '2026-08-03T00:00:00.000Z',
+        updatedAt: '2026-08-03T00:00:01.000Z',
+        messages: [
+          {
+            id: 'a-editorial',
+            role: 'assistant',
+            content: 'Contenido revisado.',
+            createdAt: '2026-08-03T00:00:01.000Z',
+            editorial: {
+              answerId: 'sporadic-absences',
+              version: 'home-editorial-2026-08-03-v1',
+              updatedAt: '2026-08-03',
+              sources: [
+                {
+                  judgmentId: 'sts-115-2018',
+                  roj: 'STS 115/2018',
+                  ecli: 'ECLI:ES:TS:2018:115',
+                  page: 10,
+                  sourceSha256: 'a'.repeat(64),
+                  quote: 'Cita literal.',
+                  verification: 'EXACT',
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ];
+
+    expect(clearStreamingFlags(conversations)[0]?.messages[0]?.editorial).toMatchObject({
+      answerId: 'sporadic-absences',
+      version: 'home-editorial-2026-08-03-v1',
+    });
+  });
+
+  it('descarta una respuesta editorial cuya cita no sea trazable', () => {
+    const conversations = [
+      {
+        id: 'c-editorial-invalida',
+        title: 'respuesta editorial',
+        createdAt: '2026-08-03T00:00:00.000Z',
+        updatedAt: '2026-08-03T00:00:01.000Z',
+        messages: [
+          {
+            id: 'a-editorial',
+            role: 'assistant',
+            content: 'Contenido corrupto.',
+            createdAt: '2026-08-03T00:00:01.000Z',
+            editorial: {
+              answerId: 'sporadic-absences',
+              version: 'home-editorial-2026-08-03-v1',
+              updatedAt: '2026-08-03',
+              sources: [{ judgmentId: 'sts-115-2018', quote: '' }],
+            },
+          },
+        ],
+      },
+    ];
+
+    expect(clearStreamingFlags(conversations)).toEqual([]);
   });
 
   it('conserva y cierra las dos respuestas comparativas al rehidratar', () => {

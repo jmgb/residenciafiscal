@@ -89,6 +89,34 @@ export interface ChatMessage {
   answers?: ChatStrategyAnswer[];
   /** Petición privada asociada, usada para registrar un único voto A/B. */
   comparisonId?: string;
+  /** Contenido editorial elegido desde la home; no procede del motor ni tiene coste. */
+  editorial?: EditorialChatAttribution;
+}
+
+export interface EditorialChatSource {
+  judgmentId: string;
+  roj: string;
+  ecli: string;
+  page: number;
+  sourceSha256: string;
+  quote: string;
+  verification: 'EXACT';
+}
+
+export interface EditorialChatAttribution {
+  answerId: string;
+  version: string;
+  updatedAt: string;
+  sources: EditorialChatSource[];
+}
+
+export interface EditorialChatAnswer {
+  id: string;
+  question: string;
+  content: string;
+  version: string;
+  updatedAt: string;
+  sources: EditorialChatSource[];
 }
 
 export type ChatStrategyId = 'current_structured' | 'gemini_file_search';

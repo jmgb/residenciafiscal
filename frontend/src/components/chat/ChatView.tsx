@@ -7,6 +7,7 @@ import {
   type ChatSessionMessageUsage,
   consumeChatSessionMessage,
 } from '@/lib/chat-session-message-limit';
+import { useEditorialChatAnswer } from '@/lib/useEditorialChatAnswer';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
 import type {
@@ -108,6 +109,10 @@ export function ChatView({
 
   const conversation = conversations.find((c) => c.id === conversationId);
   const messages = conversation?.messages ?? [];
+  const showEditorialAnswer = useEditorialChatAnswer({
+    conversationId,
+    countryPath: country.path,
+  });
 
   const [isStreaming, setIsStreaming] = useState(false);
   const [sessionMessageLimit, setSessionMessageLimit] = useState<ChatSessionMessageUsage | null>(
@@ -186,6 +191,14 @@ export function ChatView({
     streamOwnerRef.current = null;
     setIsStreaming(false);
   }, []);
+
+  const handleEditorialPrompt = useCallback(
+    (answer: Parameters<typeof showEditorialAnswer>[0]) => {
+      isPinnedToBottomRef.current = true;
+      showEditorialAnswer(answer);
+    },
+    [showEditorialAnswer]
+  );
 
   const handleSend = useCallback(
     async (content: string) => {
@@ -395,7 +408,7 @@ export function ChatView({
             {showTypingIndicator && <TypingIndicator />}
           </div>
         ) : (
-          <ChatWelcome onSelectPrompt={handleSend} />
+          <ChatWelcome onSelectPrompt={handleEditorialPrompt} />
         )}
       </div>
 

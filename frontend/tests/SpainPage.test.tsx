@@ -12,7 +12,7 @@ function renderPage() {
 }
 
 describe('SpainPage', () => {
-  it('conserva literalmente la experiencia de consulta que estaba en la home', () => {
+  it('muestra la experiencia de consulta con respuestas editoriales y consulta libre', () => {
     renderPage();
 
     expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
@@ -21,7 +21,11 @@ describe('SpainPage', () => {
         name: 'Decide tu fiscalidad con las sentencias en la mano',
       })
     ).toBeInTheDocument();
-    expect(screen.getByText(/Modelo de IA entrenado con 106 sentencias/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        '106 sentencias sobre residencia fiscal, con la cita siempre a la vista. Elige una respuesta editorial o escribe tu propia consulta.'
+      )
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /183 días/ })).toBeInTheDocument();
   });
 

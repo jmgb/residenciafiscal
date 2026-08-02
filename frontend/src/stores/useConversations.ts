@@ -17,10 +17,12 @@ import type {
   ChatStrategyAnswer,
   ChatStrategySource,
   Conversation,
+  EditorialChatAttribution,
+  EditorialChatSource,
 } from '@/types/chat';
 
 export const CONVERSATIONS_STORAGE_KEY = 'rf.conversations.v1';
-const CONVERSATIONS_STORAGE_VERSION = 3;
+const CONVERSATIONS_STORAGE_VERSION = 4;
 
 const TITLE_MAX_LENGTH = 60;
 const DEFAULT_TITLE = 'Consulta sin título';
@@ -61,6 +63,40 @@ function isStoredStrategySource(value: unknown): value is ChatStrategySource {
     typeof value.quote === 'string' &&
     value.quote.trim().length > 0 &&
     value.verification === 'EXACT'
+  );
+}
+
+function isStoredEditorialSource(value: unknown): value is EditorialChatSource {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.judgmentId === 'string' &&
+    /^[a-z0-9-]+$/.test(value.judgmentId) &&
+    typeof value.roj === 'string' &&
+    value.roj.trim().length > 0 &&
+    typeof value.ecli === 'string' &&
+    value.ecli.startsWith('ECLI:') &&
+    Number.isSafeInteger(value.page) &&
+    (value.page as number) > 0 &&
+    typeof value.sourceSha256 === 'string' &&
+    /^[0-9a-f]{64}$/i.test(value.sourceSha256) &&
+    typeof value.quote === 'string' &&
+    value.quote.trim().length > 0 &&
+    value.verification === 'EXACT'
+  );
+}
+
+function isStoredEditorial(value: unknown): value is EditorialChatAttribution {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.answerId === 'string' &&
+    /^[a-z0-9-]+$/.test(value.answerId) &&
+    typeof value.version === 'string' &&
+    /^home-editorial-\d{4}-\d{2}-\d{2}-v\d+$/.test(value.version) &&
+    typeof value.updatedAt === 'string' &&
+    /^\d{4}-\d{2}-\d{2}$/.test(value.updatedAt) &&
+    Array.isArray(value.sources) &&
+    value.sources.length > 0 &&
+    value.sources.every(isStoredEditorialSource)
   );
 }
 
@@ -126,7 +162,11 @@ function isStoredMessage(value: unknown): value is ChatMessage {
     (value.sources === undefined ||
       (Array.isArray(value.sources) && value.sources.every(isStoredSource))) &&
     (value.answers === undefined ||
-      (Array.isArray(value.answers) && value.answers.every(isStoredAnswer)))
+      (Array.isArray(value.answers) && value.answers.every(isStoredAnswer))) &&
+    (value.editorial === undefined ||
+      (value.role === 'assistant' &&
+        value.content.trim().length > 0 &&
+        isStoredEditorial(value.editorial)))
   );
 }
 
