@@ -25,11 +25,14 @@ if [[ "${ENABLED:-true}" =~ ^([Ff]alse|0|no|NO)$ ]]; then
 fi
 
 # El informe corre sobre PostHog con la librería estándar. Las dependencias de
-# GA4 solo se instalan cuando hay una propiedad declarada, para no depender de
-# PyPI en la ruta que hoy está activa.
+# Google solo se instalan cuando la fuente correspondiente está declarada, para
+# no depender de PyPI en rutas que no se usan.
 UV_EXTRA_ARGS=()
 if [[ -n "$(read_env_value GA4_PROPERTY_ID || true)" ]]; then
-  UV_EXTRA_ARGS=(--with google-analytics-data --with google-auth)
+  UV_EXTRA_ARGS+=(--with google-analytics-data --with google-auth)
+fi
+if [[ -n "$(read_env_value GSC_SITE_URL || true)" ]]; then
+  UV_EXTRA_ARGS+=(--with google-api-python-client --with google-auth)
 fi
 
 uv run "${UV_EXTRA_ARGS[@]}" python scripts/weekly_ga4_telegram.py "$@" || {

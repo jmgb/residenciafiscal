@@ -27,6 +27,25 @@ una**, sin promediarlas ni elegir una como buena:
 - **GA4**, propiedad `547477728` (measurement ID `G-XKX3N9KVJH`).
 - **PostHog**, proyecto `237205` («Residencia Fiscal») en la organización europea.
 
+Desde agosto de 2026 hay además una **tercera línea, Search Console**
+(`GSC_SITE_URL` en `.env`, hoy `sc-domain:residenciafiscal.org`), que no mide
+visitas sino la métrica del gate SEO: clicks, impresiones, CTR y posición media
+en Google. Cuatro cosas propias de esa fuente:
+
+- **Sus ventanas no son las del resto del informe.** La API publica con ~2 días
+  de retraso: consultar la misma semana compararía ~5 días recortados contra 7
+  completos y la variación saldría siempre en caída. `compute_gsc_windows`
+  desplaza las dos ventanas para que terminen al menos 3 días antes de la
+  ejecución, siempre completas; el histórico guarda las fechas realmente
+  consultadas en el bloque `search_console`.
+- Sin `GSC_SITE_URL` la fuente está **apagada, no rota**: no se configuran
+  credenciales ni se imprime línea alguna (una instalación solo-PostHog no debe
+  ver un error de una fuente que nunca activó).
+- Un fallo real de GSC **no tumba el informe**: se declara en su línea («no
+  disponible esta semana») y la fuente no se lista.
+- Mientras no haya impresiones, la línea lo dice en claro en vez de alinear
+  ceros.
+
 La ventana son los **siete días cerrados anteriores** al día de ejecución, y se
 compara con los siete inmediatamente anteriores. El lunes 3 de agosto se informa
 del 27 de julio al 2 de agosto frente al 20–26 de julio: nunca entra el día en

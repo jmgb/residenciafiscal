@@ -32,11 +32,13 @@
 >   cuenta administradora de GA4, que ya era propietaria delegada en GSC).
 > - **Vigilancia y quick wins** (2 de agosto de 2026): el informe semanal de
 >   Telegram añade la línea de Search Console —clicks, impresiones, CTR y
->   posición media, con fallo declarado y nunca silencioso—; el sitemap emite
->   `lastmod` en las fichas de precepto (la fecha de la redacción vigente,
->   nunca la del build); el layout emite JSON-LD `WebSite` + `Organization` en
->   todas las rutas; y la ofuscación de e-mails de Cloudflare está desactivada
->   (los `mailto:` vuelven a ser legibles para bots).
+>   posición media, sobre dos semanas completas desplazadas por el retraso de
+>   la API, con fallo declarado y nunca silencioso—; el layout emite JSON-LD
+>   `WebSite` + `Organization` en todas las rutas; y la ofuscación de e-mails
+>   de Cloudflare está desactivada (los `mailto:` vuelven a ser legibles para
+>   bots). El punto 6 (`lastmod`) se cierra en sentido contrario al propuesto:
+>   no hay fecha fiable de modificación de página (la vigencia jurídica no lo
+>   es), así que **no se emite** y un test lo fija.
 >
 > Pendientes: Bing Webmaster Tools (manual, cuenta de Miguel), países sin
 > convenio y fichas por sentencia (ambos tras el gate de GSC de 4-6 semanas).

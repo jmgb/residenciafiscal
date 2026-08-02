@@ -13,6 +13,7 @@ import pathlib
 import tempfile
 import types
 import unittest
+import unittest.mock
 
 SCRIPT_PATH = pathlib.Path(__file__).resolve().parents[1] / "scripts" / "weekly_ga4_telegram.py"
 
@@ -58,6 +59,14 @@ def sitio(current, previous, code: str = "RESIDENCIAFISCAL", property_id: str = 
         current=current,
         previous=previous,
     )
+
+
+def busqueda(clicks: int, impressions: int, position: float | None):
+    return MODULE.SearchPeriod(clicks=clicks, impressions=impressions, position=position)
+
+
+def search_console(current, previous, site_url: str = "sc-domain:residenciafiscal.org"):
+    return MODULE.SearchConsoleTraffic(site_url=site_url, current=current, previous=previous)
 
 
 class VentanasTests(unittest.TestCase):
@@ -266,6 +275,162 @@ class MensajeTests(unittest.TestCase):
 
         self.assertIn("GA4: 168 visitas (+40,0%), 81 usuarios (+35,0%), 6 recurrentes", message)
         self.assertIn("propiedad 547477728, propiedad 999", message)
+
+
+class SearchConsoleTests(unittest.TestCase):
+    """El bloque de Search Console: la métrica del gate SEO, no la de visitas."""
+
+    def setUp(self):
+        self.posthog = posthog(
+            current=periodo(pageviews=7, users=1, returning_users=0),
+            previous=MODULE.EMPTY_PERIOD,
+        )
+        self.gsc = search_console(
+            current=busqueda(clicks=3, impressions=210, position=21.4),
+            previous=busqueda(clicks=2, impressions=0, position=None),
+        )
+
+    def test_search_console_ocupa_su_propia_linea_con_ctr_y_posicion(self):
+        message = MODULE.build_message(
+            [], self.posthog, dt.date(2026, 8, 3), search_console=self.gsc
+        )
+
+        self.assertIn(
+            "Search Console: 3 clicks (+50,0%), 210 impresiones (nuevo), "
+            "CTR 1,4%, posición media 21,4.",
+            message,
+        )
+
+    def test_sin_impresiones_lo_dice_en_vez_de_alinear_ceros(self):
+        gsc = search_console(
+            current=busqueda(clicks=0, impressions=0, position=None),
+            previous=busqueda(clicks=0, impressions=0, position=None),
+        )
+
+        message = MODULE.build_message([], self.posthog, dt.date(2026, 8, 3), search_console=gsc)
+
+        self.assertIn("Search Console: sin impresiones en buscadores todavía.", message)
+
+    def test_la_fuente_nombra_tambien_search_console(self):
+        message = MODULE.build_message(
+            [], self.posthog, dt.date(2026, 8, 3), search_console=self.gsc
+        )
+
+        self.assertIn(
+            "Fuente: PostHog (residenciafiscal.org) y "
+            "Search Console (sc-domain:residenciafiscal.org).",
+            message,
+        )
+
+    def test_con_tres_fuentes_la_conjuncion_solo_va_ante_la_ultima(self):
+        ga4_rows = [
+            sitio(
+                current=periodo(pageviews=2, users=1, returning_users=0),
+                previous=MODULE.EMPTY_PERIOD,
+            )
+        ]
+
+        message = MODULE.build_message(
+            ga4_rows, self.posthog, dt.date(2026, 8, 3), search_console=self.gsc
+        )
+
+        self.assertIn(
+            "Fuente: GA4 (propiedad 547477728), PostHog (residenciafiscal.org) y "
+            "Search Console (sc-domain:residenciafiscal.org).",
+            message,
+        )
+
+    def test_un_fallo_de_gsc_se_declara_sin_romper_el_informe(self):
+        message = MODULE.build_message(
+            [], self.posthog, dt.date(2026, 8, 3), search_console_error="HTTP 403"
+        )
+
+        self.assertIn("Search Console: no disponible esta semana (HTTP 403).", message)
+        self.assertNotIn("Search Console (sc-domain", message)
+
+    def test_el_historico_conserva_el_bloque_de_busqueda(self):
+        current, previous = MODULE.compute_windows(dt.date(2026, 8, 3))
+
+        record = MODULE.build_history_record(
+            [], self.posthog, current, previous, dt.date(2026, 8, 3), search_console=self.gsc
+        )
+
+        bloque = record["search_console"]
+        self.assertEqual(bloque["site_url"], "sc-domain:residenciafiscal.org")
+        self.assertEqual(bloque["clicks"], 3)
+        self.assertEqual(bloque["previous_clicks"], 2)
+        self.assertEqual(bloque["clicks_change_pct"], 50.0)
+        self.assertEqual(bloque["impressions"], 210)
+        self.assertEqual(bloque["position"], 21.4)
+        self.assertIsNone(bloque["previous_position"])
+
+    def test_sin_search_console_el_historico_lo_deja_explicitamente_nulo(self):
+        current, previous = MODULE.compute_windows(dt.date(2026, 8, 3))
+
+        record = MODULE.build_history_record(
+            [], self.posthog, current, previous, dt.date(2026, 8, 3)
+        )
+
+        self.assertIsNone(record["search_console"])
+
+    def test_sin_gsc_site_url_no_toca_credenciales_ni_declara_error(self):
+        # Una instalación solo-PostHog no tiene GSC_SITE_URL ni credenciales de
+        # Google: la fuente está apagada a propósito, no «no disponible».
+        # `os.environ` se vacía porque otros tests de la suite importan módulos
+        # que cargan el `.env` real del proyecto con `load_dotenv()`.
+        with unittest.mock.patch.dict("os.environ", {}, clear=True):
+            traffic, error = MODULE.collect_search_console(
+                {}, *MODULE.compute_gsc_windows(dt.date(2026, 8, 3))
+            )
+
+        self.assertIsNone(traffic)
+        self.assertIsNone(error)
+
+    def test_las_ventanas_gsc_se_desplazan_para_comparar_semanas_completas(self):
+        # La API publica con ~2 días de retraso: sin desplazar, la semana en
+        # curso llega recortada y la anterior completa, y la variación miente.
+        current, previous = MODULE.compute_gsc_windows(dt.date(2026, 8, 3))
+
+        self.assertEqual(current.start, dt.date(2026, 7, 25))
+        self.assertEqual(current.end, dt.date(2026, 7, 31))
+        self.assertEqual(previous.start, dt.date(2026, 7, 18))
+        self.assertEqual(previous.end, dt.date(2026, 7, 24))
+        self.assertEqual((current.end - current.start).days, 6)
+        self.assertEqual(previous.end + dt.timedelta(days=1), current.start)
+        self.assertGreaterEqual((dt.date(2026, 8, 3) - current.end).days, MODULE.GSC_LAG_DAYS)
+
+    def test_el_historico_declara_las_ventanas_propias_de_gsc(self):
+        window, previous_window = MODULE.compute_gsc_windows(dt.date(2026, 8, 3))
+        traffic = MODULE.SearchConsoleTraffic(
+            site_url="sc-domain:residenciafiscal.org",
+            current=busqueda(clicks=3, impressions=210, position=21.4),
+            previous=busqueda(clicks=2, impressions=100, position=25.0),
+            window=window,
+            previous_window=previous_window,
+        )
+        current, previous = MODULE.compute_windows(dt.date(2026, 8, 3))
+
+        record = MODULE.build_history_record(
+            [], self.posthog, current, previous, dt.date(2026, 8, 3), search_console=traffic
+        )
+
+        self.assertEqual(
+            record["search_console"]["window"], {"start": "2026-07-25", "end": "2026-07-31"}
+        )
+        self.assertEqual(
+            record["search_console"]["previous_window"],
+            {"start": "2026-07-18", "end": "2026-07-24"},
+        )
+
+    def test_las_filas_de_la_api_se_convierten_en_los_dos_periodos(self):
+        traffic = MODULE.parse_gsc_totals(
+            "sc-domain:residenciafiscal.org",
+            {"rows": [{"clicks": 3, "impressions": 210, "ctr": 0.0142, "position": 21.42}]},
+            {"rows": []},
+        )
+
+        self.assertEqual(traffic.current, busqueda(clicks=3, impressions=210, position=21.42))
+        self.assertEqual(traffic.previous, busqueda(clicks=0, impressions=0, position=None))
 
 
 class HistoricoTests(unittest.TestCase):

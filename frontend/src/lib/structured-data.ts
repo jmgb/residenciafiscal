@@ -52,6 +52,48 @@ export interface BreadcrumbStep {
   path: string;
 }
 
+export interface WebSite {
+  '@context': 'https://schema.org';
+  '@type': 'WebSite';
+  name: string;
+  url: string;
+  inLanguage: 'es';
+}
+
+export interface Organization {
+  '@context': 'https://schema.org';
+  '@type': 'Organization';
+  name: string;
+  url: string;
+  logo: string;
+}
+
+/**
+ * Identidad del sitio, emitida una vez en el layout para todas las páginas.
+ * Solo hechos: nombre, URL e idioma. Sin `potentialAction` de búsqueda —el
+ * sitelinks searchbox está retirado— ni datos sociales que no existen.
+ */
+export function websiteJsonLd(): WebSite {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    inLanguage: 'es',
+  };
+}
+
+/** El logo es el artefacto raster ya generado del brandbook (180×180 px). */
+export function organizationJsonLd(): Organization {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    logo: `${SITE_URL}/apple-touch-icon.png`,
+  };
+}
+
 /** Jerarquía de la ruta: la home del sitio y los tramos que cuelgan de ella. */
 export function breadcrumbJsonLd(trail: BreadcrumbStep[]): BreadcrumbList {
   return {

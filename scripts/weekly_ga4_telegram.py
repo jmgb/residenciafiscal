@@ -61,6 +61,23 @@ class PostHogTraffic(NamedTuple):
     previous: PeriodTraffic
 
 
+class SearchPeriod(NamedTuple):
+    clicks: int
+    impressions: int
+    #: Posición media ponderada por impresiones; `None` sin impresiones.
+    position: float | None
+
+
+class SearchConsoleTraffic(NamedTuple):
+    site_url: str
+    current: SearchPeriod
+    previous: SearchPeriod
+    #: Ventanas realmente consultadas: van desplazadas respecto a las del
+    #: informe por el retraso de publicación de la API (ver compute_gsc_windows).
+    window: DateWindow | None = None
+    previous_window: DateWindow | None = None
+
+
 class SiteMetric(NamedTuple):
     code: str
     property_key: str
@@ -384,6 +401,129 @@ def aggregate_ga4(rows: list[SiteMetric]) -> tuple[PeriodTraffic, PeriodTraffic]
 
 
 # ---------------------------------------------------------------------------
+# Search Console
+# ---------------------------------------------------------------------------
+#
+# Es la métrica del gate SEO —clicks, impresiones y posición—, no otra medida
+# de visitas. Ojo al desfase: la API publica los datos con ~2 días de retraso,
+# así que los últimos días de la ventana pueden llegar incompletos; la
+# comparación semana contra semana sigue siendo homogénea porque las dos
+# ventanas sufren el mismo recorte.
+
+
+EMPTY_SEARCH_PERIOD = SearchPeriod(clicks=0, impressions=0, position=None)
+
+#: La API de Search Console publica con ~2 días de retraso. Con 3 de margen,
+#: las dos ventanas consultadas están siempre completas.
+GSC_LAG_DAYS = 3
+
+
+def compute_gsc_windows(today: dt.date) -> tuple[DateWindow, DateWindow]:
+    """Dos semanas completas terminadas al menos `GSC_LAG_DAYS` antes de hoy.
+
+    Consultar las mismas ventanas que GA4/PostHog compararía ~5 días de la
+    semana en curso (recortada por el retraso) contra 7 de la anterior, y la
+    variación saldría siempre en caída. Se desplazan las dos.
+    """
+    end = today - dt.timedelta(days=GSC_LAG_DAYS)
+    current = DateWindow(end - dt.timedelta(days=6), end)
+    previous_end = current.start - dt.timedelta(days=1)
+    return current, DateWindow(previous_end - dt.timedelta(days=6), previous_end)
+
+
+def parse_gsc_totals(
+    site_url: str, current_response: dict[str, Any], previous_response: dict[str, Any]
+) -> SearchConsoleTraffic:
+    def period(response: dict[str, Any]) -> SearchPeriod:
+        rows = response.get("rows") or []
+        if not rows:
+            return EMPTY_SEARCH_PERIOD
+        row = rows[0]
+        return SearchPeriod(
+            clicks=int(row.get("clicks", 0)),
+            impressions=int(row.get("impressions", 0)),
+            position=row.get("position"),
+        )
+
+    return SearchConsoleTraffic(
+        site_url=site_url, current=period(current_response), previous=period(previous_response)
+    )
+
+
+def fetch_gsc_traffic(
+    env: dict[str, str], current: DateWindow, previous: DateWindow
+) -> SearchConsoleTraffic | None:
+    """Totales de búsqueda de las dos ventanas; `None` si no hay propiedad."""
+    site_url = env_value(env, "GSC_SITE_URL")
+    if not site_url:
+        return None
+
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
+
+    credentials = service_account.Credentials.from_service_account_file(
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"],
+        scopes=["https://www.googleapis.com/auth/webmasters.readonly"],
+    )
+    service = build("searchconsole", "v1", credentials=credentials, cache_discovery=False)
+
+    def query(window: DateWindow) -> dict[str, Any]:
+        return (
+            service.searchanalytics()
+            .query(
+                siteUrl=site_url,
+                body={"startDate": window.start.isoformat(), "endDate": window.end.isoformat()},
+            )
+            .execute()
+        )
+
+    traffic = parse_gsc_totals(site_url, query(current), query(previous))
+    return traffic._replace(window=current, previous_window=previous)
+
+
+def collect_search_console(
+    env: dict[str, str], current: DateWindow, previous: DateWindow
+) -> tuple[SearchConsoleTraffic | None, str | None]:
+    """Nunca tumba el informe: un fallo de GSC se declara como línea propia.
+
+    Sin `GSC_SITE_URL` la fuente está apagada a propósito: ni se configuran
+    credenciales —una instalación solo-PostHog no las tiene— ni se declara
+    error alguno.
+    """
+    if not env_value(env, "GSC_SITE_URL"):
+        return None, None
+    tmp_credentials = None
+    try:
+        tmp_credentials = configure_google_credentials(env)
+        return fetch_gsc_traffic(env, current, previous), None
+    except Exception as error:  # noqa: BLE001 — el informe debe salir igual.
+        return None, f"{type(error).__name__}: {error}"[:120]
+    finally:
+        if tmp_credentials:
+            pathlib.Path(tmp_credentials.name).unlink(missing_ok=True)
+
+
+def format_position(value: float) -> str:
+    return f"{value:.1f}".replace(".", ",")
+
+
+def build_gsc_line(traffic: SearchConsoleTraffic) -> str:
+    current, previous = traffic.current, traffic.previous
+    if current.impressions == 0 and previous.impressions == 0:
+        return "Search Console: sin impresiones en buscadores todavía."
+    linea = (
+        f"Search Console: {format_int(current.clicks)} clicks "
+        f"({format_variation(current.clicks, previous.clicks)}), "
+        f"{format_plural(current.impressions, 'impresión', 'impresiones')} "
+        f"({format_variation(current.impressions, previous.impressions)}), "
+        f"CTR {format_share(current.clicks, current.impressions)}"
+    )
+    if current.position is not None:
+        linea += f", posición media {format_position(current.position)}"
+    return linea + "."
+
+
+# ---------------------------------------------------------------------------
 # Mensaje e histórico
 # ---------------------------------------------------------------------------
 
@@ -408,10 +548,19 @@ def build_source_line(label: str, current: PeriodTraffic, previous: PeriodTraffi
     return linea
 
 
+def join_sources(sources: list[str]) -> str:
+    """«A y B» con dos fuentes, «A, B y C» con tres: la conjunción solo una vez."""
+    if len(sources) == 1:
+        return sources[0]
+    return f"{', '.join(sources[:-1])} y {sources[-1]}"
+
+
 def build_message(
     ga4_rows: list[SiteMetric],
     posthog: PostHogTraffic,
     run_date: dt.date | None = None,
+    search_console: SearchConsoleTraffic | None = None,
+    search_console_error: str | None = None,
 ) -> str:
     lines = [f"{SUCCESS_ICON} {REPORT_TITLE} {(run_date or dt.date.today()).isoformat()}", ""]
     sources = []
@@ -421,7 +570,14 @@ def build_message(
         sources.append(f"GA4 ({', '.join(f'propiedad {row.property_id}' for row in ga4_rows)})")
     lines.append(build_source_line("PostHog", posthog.current, posthog.previous))
     sources.append(f"PostHog ({posthog.host})")
-    lines.extend(["", f"Fuente: {' y '.join(sources)}."])
+    if search_console is not None:
+        lines.append(build_gsc_line(search_console))
+        sources.append(f"Search Console ({search_console.site_url})")
+    elif search_console_error is not None:
+        # El fallo se declara en su línea, nunca en silencio; pero una fuente
+        # que no aportó datos no se lista como fuente.
+        lines.append(f"Search Console: no disponible esta semana ({search_console_error}).")
+    lines.extend(["", f"Fuente: {join_sources(sources)}."])
     return "\n".join(lines)
 
 
@@ -451,12 +607,35 @@ def period_to_dict(current: PeriodTraffic, previous: PeriodTraffic) -> dict[str,
     }
 
 
+def search_console_to_dict(traffic: SearchConsoleTraffic | None) -> dict[str, Any] | None:
+    if traffic is None:
+        return None
+    current, previous = traffic.current, traffic.previous
+    return {
+        "site_url": traffic.site_url,
+        "window": window_to_dict(traffic.window) if traffic.window else None,
+        "previous_window": (
+            window_to_dict(traffic.previous_window) if traffic.previous_window else None
+        ),
+        "clicks": current.clicks,
+        "previous_clicks": previous.clicks,
+        "clicks_change_pct": compute_change_pct(current.clicks, previous.clicks),
+        "impressions": current.impressions,
+        "previous_impressions": previous.impressions,
+        "impressions_change_pct": compute_change_pct(current.impressions, previous.impressions),
+        "ctr_pct": compute_share_pct(current.clicks, current.impressions),
+        "position": current.position,
+        "previous_position": previous.position,
+    }
+
+
 def build_history_record(
     ga4_rows: list[SiteMetric],
     posthog: PostHogTraffic,
     current_window: DateWindow,
     previous_window: DateWindow,
     run_date: dt.date,
+    search_console: SearchConsoleTraffic | None = None,
 ) -> dict[str, Any]:
     ga4: dict[str, Any] | None = None
     if ga4_rows:
@@ -480,6 +659,7 @@ def build_history_record(
         "previous_window": window_to_dict(previous_window),
         "posthog": {"host": posthog.host, **period_to_dict(posthog.current, posthog.previous)},
         "ga4": ga4,
+        "search_console": search_console_to_dict(search_console),
     }
 
 
@@ -577,13 +757,18 @@ def main(argv: list[str] | None = None) -> int:
     current, previous = compute_windows(today)
     posthog = fetch_posthog_traffic(env, current, previous)
     ga4_rows = collect_ga4_metrics(env, current, previous)
-    message = build_message(ga4_rows, posthog, today)
+    gsc, gsc_error = collect_search_console(env, *compute_gsc_windows(today))
+    message = build_message(
+        ga4_rows, posthog, today, search_console=gsc, search_console_error=gsc_error
+    )
     if args.dry_run:
         print(message)
         return 0
 
     if not args.no_history:
-        paths = write_history(build_history_record(ga4_rows, posthog, current, previous, today))
+        paths = write_history(
+            build_history_record(ga4_rows, posthog, current, previous, today, search_console=gsc)
+        )
         print(f"Histórico escrito: {paths['dated']}")
     send_telegram(message, env)
     print("Mensaje enviado por Telegram.")

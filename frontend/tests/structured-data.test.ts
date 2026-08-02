@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
-import { breadcrumbJsonLd, jsonLdScript, treatyJsonLd } from '@/lib/structured-data';
+import {
+  breadcrumbJsonLd,
+  jsonLdScript,
+  organizationJsonLd,
+  treatyJsonLd,
+  websiteJsonLd,
+} from '@/lib/structured-data';
 import type { PreceptoEntry } from '@/types/normativa';
 
 const URUGUAY: PreceptoEntry = {
@@ -27,6 +33,26 @@ function countryByPath(path: string) {
   if (!route) throw new Error(`ruta de país no registrada: ${path}`);
   return route;
 }
+
+describe('datos estructurados de sitio', () => {
+  it('WebSite declara nombre, URL e idioma y nada inventado', () => {
+    expect(websiteJsonLd()).toEqual({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Residencia Fiscal',
+      url: 'https://residenciafiscal.org/',
+      inLanguage: 'es',
+    });
+  });
+
+  it('Organization apunta al logo servido por el propio sitio', () => {
+    const organization = organizationJsonLd();
+
+    expect(organization['@type']).toBe('Organization');
+    expect(organization.url).toBe('https://residenciafiscal.org/');
+    expect(organization.logo).toBe('https://residenciafiscal.org/apple-touch-icon.png');
+  });
+});
 
 describe('breadcrumbJsonLd', () => {
   it('encadena los tramos de una subpágina bajo su país', () => {

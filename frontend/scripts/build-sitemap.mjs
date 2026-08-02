@@ -33,14 +33,20 @@ const publicRoutes = [
   })),
 ];
 
+// Sin `lastmod` a propósito. La fecha que Google espera ahí es la de la última
+// modificación significativa de la página, y este build no dispone de ninguna
+// fiable: `vigenteDesde` es la vigencia jurídica (año 1967 en una página
+// publicada ayer) y la fecha del build sería ruido en cada deploy. Antes que
+// mentir, se omite; `tests/test_frontend_seo_assets.py` lo fija.
+
 const escapeXml = (value) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 const entries = publicRoutes
-  .map(
-    (route) =>
-      `  <url>\n    <loc>${escapeXml(`${SITE_URL}${route.path}`)}</loc>\n    <changefreq>${route.changefreq}</changefreq>\n    <priority>${route.priority}</priority>\n  </url>`
-  )
+  .map((route) => {
+    const lastmod = route.lastmod ? `\n    <lastmod>${escapeXml(route.lastmod)}</lastmod>` : '';
+    return `  <url>\n    <loc>${escapeXml(`${SITE_URL}${route.path}`)}</loc>${lastmod}\n    <changefreq>${route.changefreq}</changefreq>\n    <priority>${route.priority}</priority>\n  </url>`;
+  })
   .join('\n');
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`;

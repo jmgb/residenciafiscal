@@ -128,6 +128,16 @@ def test_sitemap_contains_only_the_canonical_public_routes() -> None:
     assert all("/c/" not in location for location in locations)
 
 
+def test_sitemap_has_no_lastmod_because_there_is_no_reliable_date() -> None:
+    """`lastmod` debe ser la última modificación significativa de la página y el
+    build no dispone de ninguna fecha fiable: la vigencia jurídica no lo es
+    (un convenio de 1967 en una página publicada en 2026) y la fecha del build
+    sería ruido en cada deploy. Antes que mentir, no se emite."""
+    root = ET.parse(FRONTEND_PUBLIC / "sitemap.xml").getroot()
+
+    assert root.findall("sm:url/sm:lastmod", SITEMAP_NAMESPACE) == []
+
+
 def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:
     llms = (FRONTEND_PUBLIC / "llms.txt").read_text(encoding="utf-8")
 

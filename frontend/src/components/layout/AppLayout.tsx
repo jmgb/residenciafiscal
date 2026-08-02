@@ -1,7 +1,9 @@
 import { PanelLeft, PanelLeftClose } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getJurisdictionRoute } from '@/data/countryRoutes';
+import { organizationJsonLd, websiteJsonLd } from '@/lib/structured-data';
 import { Button } from '@/shared/components/ui/button';
 import { AppSidebar } from './AppSidebar';
 import { AppUpdateBanner } from './AppUpdateBanner';
@@ -47,6 +49,11 @@ export function AppLayout() {
 
   return (
     <div className='flex h-screen supports-[height:100dvh]:h-dvh overflow-hidden bg-canvas'>
+      {/* Identidad del sitio para el buscador: se emite aquí, una vez para
+          todas las rutas, y dentro del árbol de React para que el HTML
+          prerenderizado y la SPA no puedan divergir. */}
+      <JsonLd data={websiteJsonLd()} />
+      <JsonLd data={organizationJsonLd()} />
       <AppSidebar id={SIDEBAR_ID} collapsed={collapsed} className='hidden lg:flex' />
 
       <div className='flex min-w-0 flex-1 flex-col'>

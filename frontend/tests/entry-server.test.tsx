@@ -122,9 +122,16 @@ describe('entry-server', () => {
     const bloques = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(
       (match) => JSON.parse(match[1])
     );
-    expect(bloques.map((bloque) => bloque['@type'])).toEqual(['BreadcrumbList', 'Legislation']);
-    expect(bloques[0].itemListElement[1].item).toBe('https://residenciafiscal.org/francia');
-    expect(bloques[1].legislationIdentifier).toBe('BOE-A-1997-12729');
+    // El layout emite la identidad del sitio en todas las rutas; la página
+    // añade su jerarquía y el precepto que publica.
+    expect(bloques.map((bloque) => bloque['@type'])).toEqual([
+      'WebSite',
+      'Organization',
+      'BreadcrumbList',
+      'Legislation',
+    ]);
+    expect(bloques[2].itemListElement[1].item).toBe('https://residenciafiscal.org/francia');
+    expect(bloques[3].legislationIdentifier).toBe('BOE-A-1997-12729');
   });
 
   it('marca todas las rutas de país, también las que no usan CountryPage', () => {
@@ -168,7 +175,13 @@ describe('entry-server', () => {
   }, 30_000);
 
   it('no marca lo que no se indexa', () => {
-    expect(render('/privacidad')).not.toContain('application/ld+json');
+    // La identidad del sitio (WebSite/Organization) la emite el layout en
+    // todas las rutas y es inocua; lo que una página `noindex` no debe llevar
+    // son marcas de contenido propias: ni jerarquía ni precepto.
+    const html = render('/privacidad');
+
+    expect(html).not.toContain('BreadcrumbList');
+    expect(html).not.toContain('"Legislation"');
   });
 
   it('renderiza también las rutas que no son de país', () => {
