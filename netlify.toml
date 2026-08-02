@@ -133,3 +133,21 @@
   from = "/*"
   to = "/404.html"
   status = 404
+
+# Deploy Preview: el renderer jurisprudencial privado.
+#
+# Los 67 candidatos siguen en `internal_preview` porque su análisis es
+# `AGENT_REVIEWED`, así que un build de producción no materializa ninguna ficha
+# —sin fichero ni regla, el fallback de arriba devuelve un 404 real—. El preview
+# sí las construye para que una persona pueda revisarlas.
+#
+# La cabecera `X-Robots-Tag` va **además** del `noindex` que cada ficha lleva en
+# su HTML: si alguien comparte la URL del preview, ni el HTML ni la respuesta
+# HTTP permiten indexarla.
+[context.deploy-preview.environment]
+  SENTENCIAS_PREVIEW = "1"
+
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"

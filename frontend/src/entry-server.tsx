@@ -15,6 +15,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import { App } from './App';
 import { PreceptoPreloadContext, type PreceptoPreloadMap } from './lib/precepto-preload';
+import { type SentenciaPreload, SentenciaPreloadContext } from './lib/sentencia-preload';
 import { TreatyPreloadContext, type TreatyPreloadMap } from './lib/treaty-preload';
 
 // Metadatos de las fichas de precepto: el prerender escribe exactamente los
@@ -26,6 +27,17 @@ export {
   NORMATIVA_INDEX_PATH,
 } from './lib/normativa-fichas';
 export { PRECEPTO_PRELOAD_ELEMENT_ID } from './lib/precepto-preload';
+// Metadatos de las fichas de sentencia, por el mismo motivo que los de las
+// fichas de precepto: el prerender no puede componer un título distinto del
+// que fija la página en runtime.
+export {
+  esBorrador,
+  SENTENCIAS_INDEX_PATH,
+  sentenciaDescription,
+  sentenciaPath,
+  sentenciaTitle,
+} from './lib/sentencia-metadata';
+export { SENTENCIA_PRELOAD_ELEMENT_ID } from './lib/sentencia-preload';
 // El prerender necesita el mismo identificador que leerá el navegador, y este
 // módulo es su única puerta de entrada al código de la aplicación.
 export { TREATY_PRELOAD_ELEMENT_ID } from './lib/treaty-preload';
@@ -33,15 +45,18 @@ export { TREATY_PRELOAD_ELEMENT_ID } from './lib/treaty-preload';
 export function render(
   url: string,
   treaties: TreatyPreloadMap = {},
-  preceptos: PreceptoPreloadMap = {}
+  preceptos: PreceptoPreloadMap = {},
+  sentencias: SentenciaPreload = { index: null, fichas: {} }
 ): string {
   return renderToString(
     <StrictMode>
       <TreatyPreloadContext.Provider value={treaties}>
         <PreceptoPreloadContext.Provider value={preceptos}>
-          <StaticRouter location={url}>
-            <App />
-          </StaticRouter>
+          <SentenciaPreloadContext.Provider value={sentencias}>
+            <StaticRouter location={url}>
+              <App />
+            </StaticRouter>
+          </SentenciaPreloadContext.Provider>
         </PreceptoPreloadContext.Provider>
       </TreatyPreloadContext.Provider>
     </StrictMode>

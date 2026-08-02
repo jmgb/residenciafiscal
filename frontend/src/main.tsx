@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router';
 import { App } from './App';
 import { installModulePreloadRecovery } from './lib/module-preload-recovery';
 import { PreceptoPreloadContext, readEmbeddedPreceptoPreload } from './lib/precepto-preload';
+import { readEmbeddedSentenciaPreload, SentenciaPreloadContext } from './lib/sentencia-preload';
 import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
 import { readEmbeddedTreatyPreload, TreatyPreloadContext } from './lib/treaty-preload';
 // Las dos familias se autoalojan: vite emite los woff2 con hash bajo `/assets`
@@ -36,6 +37,8 @@ if (!container) throw new Error('No se encontró el elemento #root');
 const treaties = readEmbeddedTreatyPreload(document);
 // Mismo mecanismo para las fichas de precepto de /espana/normativa.
 const preceptos = readEmbeddedPreceptoPreload(document);
+// Y para las fichas de sentencia de /espana/sentencias.
+const sentencias = readEmbeddedSentenciaPreload(document);
 
 createRoot(container).render(
   <StrictMode>
@@ -56,9 +59,11 @@ createRoot(container).render(
     >
       <TreatyPreloadContext.Provider value={treaties}>
         <PreceptoPreloadContext.Provider value={preceptos}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <SentenciaPreloadContext.Provider value={sentencias}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SentenciaPreloadContext.Provider>
         </PreceptoPreloadContext.Provider>
       </TreatyPreloadContext.Provider>
     </SentryErrorBoundary>

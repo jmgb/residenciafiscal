@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build:chat-artifacts": "node scripts/build-chat-verbatim-artifacts.mjs",
-    "prebuild": "npm run build:chat-artifacts && node scripts/build-corpus.mjs && node scripts/build-normativa.mjs && node scripts/build-sitemap.mjs && node scripts/build-netlify-redirects.mjs",
+    "prebuild": "npm run build:chat-artifacts && node scripts/build-corpus.mjs && node scripts/build-normativa.mjs && node scripts/build-sentencias.mjs && node scripts/build-sitemap.mjs && node scripts/build-netlify-redirects.mjs",
     "build": "tsc --noEmit && vite build",
     "postbuild": "npm run build:ssr && node scripts/inject-font-preload.mjs && node scripts/prerender.mjs && node scripts/build-version.mjs",
     "preview": "vite preview",

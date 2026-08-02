@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -12,6 +12,16 @@ const staticRoutes = JSON.parse(
 );
 
 const normativa = JSON.parse(readFileSync(join(publicDir, 'data/normativa.json'), 'utf8'));
+// Las fichas de sentencia solo entran cuando su análisis ha superado la
+// revisión humana: el índice las materializa en preview con `internal_preview`,
+// y un borrador jamás puede acabar en el sitemap. Hoy son cero.
+const sentenciasFile = join(publicDir, 'data/sentencias.json');
+const sentencias = existsSync(sentenciasFile)
+  ? JSON.parse(readFileSync(sentenciasFile, 'utf8'))
+  : { judgments: [] };
+const sentenciasPublicadas = sentencias.judgments.filter(
+  (entry) => entry.publicationState === 'published'
+);
 
 const SITE_URL = 'https://residenciafiscal.org';
 // Solo entra lo indexable. Cada país declara su propia frecuencia y prioridad:
@@ -30,6 +40,16 @@ const publicRoutes = [
     path: `/espana/normativa/${entry.slug}`,
     changefreq: 'yearly',
     priority: '0.4',
+  })),
+  // El índice solo existe si hay algo que listar; un listado vacío sería una
+  // URL indexable sin contenido propio.
+  ...(sentenciasPublicadas.length > 0
+    ? [{ path: '/espana/sentencias', changefreq: 'weekly', priority: '0.6' }]
+    : []),
+  ...sentenciasPublicadas.map((entry) => ({
+    path: `/espana/sentencias/${entry.judgmentId}`,
+    changefreq: 'yearly',
+    priority: '0.5',
   })),
 ];
 

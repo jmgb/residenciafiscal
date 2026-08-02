@@ -135,3 +135,9 @@ docs/superpowers/
 
 # Local Netlify folder
 .netlify
+
+# Proyección de sentencias servida al frontend. Se genera en el prebuild
+# desde knowledge/jurisprudencia-v3/publico/, que sí está versionado; un
+# build de preview escribe aquí las 67 fichas internas y no debe commitearlas.
+frontend/public/data/sentencias.json
+frontend/public/data/sentencias/

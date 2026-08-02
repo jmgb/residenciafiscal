@@ -29,12 +29,18 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  esBorrador,
   fichaDescription,
   fichaPath,
   fichaTitle,
   NORMATIVA_INDEX_PATH,
   PRECEPTO_PRELOAD_ELEMENT_ID,
   render,
+  SENTENCIA_PRELOAD_ELEMENT_ID,
+  SENTENCIAS_INDEX_PATH,
+  sentenciaDescription,
+  sentenciaPath,
+  sentenciaTitle,
   TREATY_PRELOAD_ELEMENT_ID,
 } from '../dist-ssr/entry-server.js';
 import countryRoutes from '../src/data/countryRoutes.json' with { type: 'json' };
@@ -51,6 +57,22 @@ const SITE_URL = 'https://residenciafiscal.org';
 
 /** Índice normativo ya generado por `build-normativa.mjs` en el `prebuild`. */
 const NORMATIVA = JSON.parse(readFileSync(join(publicDir, 'data', 'normativa.json'), 'utf8'));
+
+/**
+ * Sentencias que `build-sentencias.mjs` ha materializado en este build. En un
+ * build público son solo las `published` —hoy, ninguna—; con
+ * `SENTENCIAS_PREVIEW=1` entran también los borradores internos, y entonces
+ * cada ficha se emite con `noindex` porque su estado sigue siendo
+ * `internal_preview`.
+ *
+ * Ni el índice ni las fichas se prerenderizan si no hay ninguna sentencia
+ * materializada: un listado vacío sería una URL indexable sin contenido propio,
+ * y sin fichero el fallback de Netlify devuelve un 404 real.
+ */
+const SENTENCIAS_INDEX_FILE = join(publicDir, 'data', 'sentencias.json');
+const SENTENCIAS = existsSync(SENTENCIAS_INDEX_FILE)
+  ? JSON.parse(readFileSync(SENTENCIAS_INDEX_FILE, 'utf8'))
+  : { judgments: [] };
 
 /** Rutas a prerenderizar. `image` a `null` hereda la imagen OG de la home. */
 /** Convenio vigente de una jurisdicción, desde el registro bilateral. */
@@ -105,7 +127,43 @@ const PRECEPTO_ROUTES = NORMATIVA.map((entry) => ({
   image: null,
 }));
 
-const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES, ...PRECEPTO_ROUTES];
+/** Una ruta por ficha de sentencia materializada, más su índice. */
+const SENTENCIA_ROUTES =
+  SENTENCIAS.judgments.length === 0
+    ? []
+    : [
+        {
+          path: SENTENCIAS_INDEX_PATH,
+          treatyBoeId: null,
+          sentenciasIndex: true,
+          dir: SENTENCIAS_INDEX_PATH.slice(1),
+          title: 'Sentencias sobre residencia fiscal en España: fichas por sentencia',
+          description:
+            'Fichas de las sentencias del Tribunal Supremo y la Audiencia Nacional sobre ' +
+            'residencia fiscal: criterios aplicados, pruebas valoradas, resultado y extractos ' +
+            'literales con su página.',
+          // El índice solo es indexable si todas sus fichas lo son: enlazar
+          // borradores desde una página indexable los expondría igualmente.
+          robots: SENTENCIAS.judgments.every((entry) => !esBorrador(entry))
+            ? 'index, follow'
+            : 'noindex, follow',
+          url: `${SITE_URL}${SENTENCIAS_INDEX_PATH}`,
+          image: null,
+        },
+        ...SENTENCIAS.judgments.map((entry) => ({
+          path: sentenciaPath(entry.judgmentId),
+          treatyBoeId: null,
+          judgmentId: entry.judgmentId,
+          dir: sentenciaPath(entry.judgmentId).slice(1),
+          title: sentenciaTitle(entry),
+          description: sentenciaDescription(entry),
+          robots: esBorrador(entry) ? 'noindex, follow' : 'index, follow',
+          url: `${SITE_URL}${sentenciaPath(entry.judgmentId)}`,
+          image: null,
+        })),
+      ];
+
+const ROUTES = [...COUNTRY_ROUTES, ...STATIC_ROUTES, ...PRECEPTO_ROUTES, ...SENTENCIA_ROUTES];
 
 /**
  * Patrones de los metadatos de la shell. Tolerantes al salto de línea porque
@@ -210,12 +268,37 @@ function preloadPreceptos(route) {
   return {};
 }
 
+/**
+ * Sentencias resueltas antes de renderizar, por el mismo motivo que los
+ * preceptos: en el build no corren los efectos y la ficha saldría diciendo
+ * «Cargando la sentencia…».
+ */
+function preloadSentencias(route) {
+  if (route.judgmentId) {
+    const fichaFile = join(publicDir, 'data', 'sentencias', `${route.judgmentId}.json`);
+    if (!existsSync(fichaFile)) {
+      throw new Error(
+        `${route.path}: falta public/data/sentencias/${route.judgmentId}.json. ` +
+          'Regenera con `node scripts/build-sentencias.mjs`.'
+      );
+    }
+    return {
+      index: null,
+      fichas: { [route.judgmentId]: JSON.parse(readFileSync(fichaFile, 'utf8')) },
+    };
+  }
+  if (route.sentenciasIndex) return { index: SENTENCIAS, fichas: {} };
+  return { index: null, fichas: {} };
+}
+
 function renderRoute(shell, route) {
   const title = escapeAttr(route.title);
   const description = escapeAttr(route.description);
   const url = escapeAttr(route.url);
   const treaties = preloadTreaties(route);
   const preceptos = preloadPreceptos(route);
+  const sentencias = preloadSentencias(route);
+  const haySentencias = sentencias.index !== null || Object.keys(sentencias.fichas).length > 0;
 
   let html = shell;
   // El contenido va dentro de `#root`, no en un `<noscript>`: es la misma
@@ -224,12 +307,15 @@ function renderRoute(shell, route) {
     html,
     'div#root',
     PATTERNS.root,
-    `<div id="root">${render(route.path, treaties, preceptos)}</div>` +
+    `<div id="root">${render(route.path, treaties, preceptos, sentencias)}</div>` +
       (Object.keys(treaties).length > 0
         ? `<script id="${TREATY_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(treaties)}</script>`
         : '') +
       (Object.keys(preceptos).length > 0
         ? `<script id="${PRECEPTO_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(preceptos)}</script>`
+        : '') +
+      (haySentencias
+        ? `<script id="${SENTENCIA_PRELOAD_ELEMENT_ID}" type="application/json">${embedJson(sentencias)}</script>`
         : '')
   );
   html = replaceOnce(html, 'title', PATTERNS.title, `<title>${title}</title>`);

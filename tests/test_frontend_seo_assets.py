@@ -238,3 +238,37 @@ def test_country_routes_have_prerender_redirects() -> None:
 
     redirects_file = FRONTEND_PUBLIC / "_redirects"
     assert redirects_file.read_text(encoding="utf-8").splitlines() == expected_lines
+
+
+def test_ninguna_ruta_de_sentencia_esta_en_el_sitemap() -> None:
+    """Los 67 candidatos son `internal_preview`: no se indexa ningún borrador.
+
+    El sitemap se genera desde `public/data/sentencias.json`, que en un build
+    público solo trae los casos `published`. Hoy son cero, así que ni el índice
+    ni las fichas existen como URL indexable.
+    """
+    sitemap = (FRONTEND_PUBLIC / "sitemap.xml").read_text(encoding="utf-8")
+
+    assert "/espana/sentencias" not in sitemap
+
+
+def test_ninguna_ruta_de_sentencia_tiene_regla_de_servicio() -> None:
+    """Sin regla ni fichero, el fallback de Netlify devuelve un 404 real.
+
+    Es lo que hace que compartir la URL de un borrador desde el Deploy Preview
+    no publique nada en producción.
+    """
+    redirects = (FRONTEND_PUBLIC / "_redirects").read_text(encoding="utf-8")
+
+    assert "/espana/sentencias" not in redirects
+
+
+def test_el_deploy_preview_prohibe_indexar_por_cabecera() -> None:
+    """El `noindex` del HTML no basta si alguien comparte la URL del preview."""
+    config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
+    preview = config["context"]["deploy-preview"]
+
+    assert preview["environment"]["SENTENCIAS_PREVIEW"] == "1"
+    cabeceras = [regla for regla in preview["headers"] if regla["for"] == "/*"]
+    assert cabeceras, "el Deploy Preview no declara cabeceras para todas las rutas"
+    assert "noindex" in cabeceras[0]["values"]["X-Robots-Tag"]
