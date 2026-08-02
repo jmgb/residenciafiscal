@@ -141,3 +141,4 @@ docs/superpowers/
 # build de preview escribe aquí las 67 fichas internas y no debe commitearlas.
 frontend/public/data/sentencias.json
 frontend/public/data/sentencias/
+frontend/public/sentencias/

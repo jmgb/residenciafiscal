@@ -96,6 +96,34 @@ function fakeLayout(element: HTMLElement, clientHeight: number, scrollHeight: ()
   Object.defineProperty(element, 'scrollHeight', { configurable: true, get: scrollHeight });
 }
 
+function fakeMessageGeometry(
+  container: HTMLElement,
+  assistantContentTop: number,
+  containerTop = 20
+) {
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+    this: HTMLElement
+  ) {
+    const top =
+      this === container
+        ? containerTop
+        : this.dataset.chatMessageId && this.querySelector('[data-testid="chat-bubble-assistant"]')
+          ? containerTop + assistantContentTop - container.scrollTop
+          : 0;
+    return {
+      x: 0,
+      y: top,
+      top,
+      right: 0,
+      bottom: top,
+      left: 0,
+      width: 0,
+      height: 0,
+      toJSON: () => ({}),
+    };
+  });
+}
+
 /** Deja en el head una única meta robots `noindex`, como la de la shell. */
 function seedShellRobotsMeta() {
   document.head.querySelector('meta[name="robots"]')?.remove();
@@ -113,6 +141,7 @@ describe('ChatView', () => {
 
   afterEach(() => {
     vi.unstubAllEnvs();
+    vi.restoreAllMocks();
   });
 
   it('solo la ruta canónica queda indexable en runtime', async () => {
@@ -357,6 +386,13 @@ describe('ChatView', () => {
     expect(structured).toHaveTextContent('Respuesta estructurada.');
     expect(structured).toHaveTextContent('USD 0.012345');
     expect(structured).toHaveTextContent('Cita literal A.');
+    expect(within(structured).queryByText(/SHA-256/)).not.toBeInTheDocument();
+    expect(
+      within(structured).getByRole('link', { name: 'Abrir sentencia STS 107/2018' })
+    ).toHaveAttribute('href', '/sentencias/sts-107-2018.pdf');
+    expect(
+      within(structured).getByRole('link', { name: 'Descargar PDF STS 107/2018' })
+    ).toHaveAttribute('download', 'STS_107_2018.pdf');
     expect(fileSearch).toHaveTextContent('Respuesta File Search.');
     expect(fileSearch).toHaveTextContent('USD 0.020000');
     expect(fileSearch).toHaveTextContent('Cobertura limitada.');
@@ -458,10 +494,39 @@ describe('ChatView', () => {
         answerExcerpt
       );
       expect(screen.getByText(sourceLabel)).toBeInTheDocument();
+      expect(screen.queryByText(/SHA-256/)).not.toBeInTheDocument();
       expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
       expect(askQuestion).not.toHaveBeenCalled();
     }
   );
+
+  it('sitúa el inicio de una respuesta editorial en la parte superior de lectura', async () => {
+    const user = userEvent.setup();
+    renderChat();
+    const container = screen.getByTestId('chat-scroll');
+    fakeLayout(container, 300, () => 1200);
+    fakeMessageGeometry(container, 260);
+
+    await user.click(
+      screen.getByRole('button', {
+        name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
+      })
+    );
+    await screen.findByRole('region', { name: 'Respuesta editorial' });
+
+    expect(screen.getByRole('link', { name: 'Abrir sentencia STS 115/2018' })).toHaveAttribute(
+      'href',
+      '/sentencias/sts-115-2018.pdf'
+    );
+    expect(screen.getByRole('link', { name: 'Descargar PDF STS 115/2018' })).toHaveAttribute(
+      'download',
+      'STS_115_2018.pdf'
+    );
+
+    await waitFor(() => {
+      expect(container.scrollTop).toBe(260);
+    });
+  });
 
   it('el mismo texto escrito manualmente sigue siendo una consulta al motor', async () => {
     const user = userEvent.setup();
@@ -739,7 +804,7 @@ describe('ChatView', () => {
     expect(useConversations.getState().conversations[0].id).not.toBe('no-existe');
   });
 
-  it('el autoscroll sigue al texto que llega mientras se recibe la respuesta', async () => {
+  it('sigue el streaming y al terminar sitúa el inicio de la respuesta arriba', async () => {
     const user = userEvent.setup();
     const { engine, release } = createGatedEngine();
     renderChatAt(['/'], engine);
@@ -747,10 +812,14 @@ describe('ChatView', () => {
     const container = screen.getByTestId('chat-scroll');
     let scrollHeight = 400;
     fakeLayout(container, 300, () => scrollHeight);
+    fakeMessageGeometry(container, 240);
 
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
     await screen.findByText(/primer tramo\./);
+    await waitFor(() => {
+      expect(container.scrollTop).toBe(400);
+    });
 
     // El texto en streaming crece sin que cambie el número de mensajes.
     scrollHeight = 1200;
@@ -758,11 +827,11 @@ describe('ChatView', () => {
     await screen.findByText(/segundo tramo\./);
 
     await waitFor(() => {
-      expect(container.scrollTop).toBe(1200);
+      expect(container.scrollTop).toBe(240);
     });
   });
 
-  it('no arrastra al usuario abajo si ha subido a leer durante el streaming', async () => {
+  it('no arrastra durante el streaming y al terminar abre la respuesta desde su inicio', async () => {
     const user = userEvent.setup();
     const { engine, release } = createGatedEngine();
     renderChatAt(['/'], engine);
@@ -770,6 +839,7 @@ describe('ChatView', () => {
     const container = screen.getByTestId('chat-scroll');
     let scrollHeight = 400;
     fakeLayout(container, 300, () => scrollHeight);
+    fakeMessageGeometry(container, 240);
 
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
@@ -783,6 +853,8 @@ describe('ChatView', () => {
     release();
     await screen.findByText(/segundo tramo\./);
 
-    expect(container.scrollTop).toBe(0);
+    await waitFor(() => {
+      expect(container.scrollTop).toBe(240);
+    });
   });
 });

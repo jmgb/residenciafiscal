@@ -1,8 +1,10 @@
 import { ChevronDown, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { isChatSourceV2 } from '@/lib/chat-source';
+import { judgmentIdFromSourceFile } from '@/lib/judgment-documents';
 import { cn } from '@/shared/lib/utils';
 import type { ChatSource, ChatSourceV2 } from '@/types/chat';
+import { JudgmentDocumentActions } from './JudgmentDocumentActions';
 
 const RESULTADO_LABEL: Record<string, string> = {
   GANA_AEAT: 'Gana AEAT',
@@ -74,6 +76,7 @@ export function ChatSources({ sources }: ChatSourcesProps) {
         {sources.map((source, index) => {
           const itemId = sourceKey(source, index);
           const isExpanded = expandedId === itemId;
+          const judgmentId = judgmentIdFromSourceFile(source.archivo);
           return (
             <li key={itemId}>
               <button
@@ -110,10 +113,9 @@ export function ChatSources({ sources }: ChatSourcesProps) {
                         {source.extracto}
                       </blockquote>
                       <p className='mt-2 text-muted-foreground'>{reviewLabel(source)}</p>
-                      <p className='mt-1.5 break-all font-mono text-[0.6875rem]'>{source.ecli}</p>
-                      <p className='mt-1 break-all font-mono text-[0.6875rem]'>
-                        PDF SHA-256: {source.sourceSha256}
-                      </p>
+                      {judgmentId && (
+                        <JudgmentDocumentActions judgmentId={judgmentId} ecli={source.ecli} />
+                      )}
                     </>
                   ) : (
                     <>
@@ -124,7 +126,9 @@ export function ChatSources({ sources }: ChatSourcesProps) {
                       <p className='mt-1 text-muted-foreground'>
                         Resumen conservado del motor simulado; no es una cita judicial verificada.
                       </p>
-                      <p className='mt-1.5 font-mono text-[0.6875rem]'>{source.ecli}</p>
+                      {judgmentId && (
+                        <JudgmentDocumentActions judgmentId={judgmentId} ecli={source.ecli} />
+                      )}
                     </>
                   )}
                 </div>

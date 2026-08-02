@@ -1,5 +1,7 @@
+import { getJudgmentDocument } from '@/lib/judgment-documents';
 import type { ChatStrategyAnswer } from '@/types/chat';
 import { ChatMessageContent } from './ChatMessageContent';
+import { JudgmentDocumentActions } from './JudgmentDocumentActions';
 
 const STATUS_LABEL = {
   completa: 'Respuesta completa',
@@ -57,22 +59,23 @@ export const ChatStrategyAnswerPanel = ({
           Citas verificadas ({answer.sources.length})
         </h4>
         <ul className='mt-2 flex flex-col gap-2'>
-          {answer.sources.map((source) => (
-            <li
-              key={`${source.judgmentId}:${source.page}:${source.quote}`}
-              className='rounded-lg bg-muted px-3 py-2.5 text-xs'
-            >
-              <p className='font-semibold text-foreground'>
-                {source.judgmentId} · Página PDF {source.page}
-              </p>
-              <blockquote className='mt-1.5 border-l-2 border-primary/40 pl-2 leading-relaxed'>
-                {source.quote}
-              </blockquote>
-              <p className='mt-1.5 break-all font-mono text-[0.625rem] text-muted-foreground'>
-                PDF SHA-256: {source.sourceSha256}
-              </p>
-            </li>
-          ))}
+          {answer.sources.map((source) => {
+            const document = getJudgmentDocument(source.judgmentId);
+            return (
+              <li
+                key={`${source.judgmentId}:${source.page}:${source.quote}`}
+                className='rounded-lg bg-muted px-3 py-2.5 text-xs'
+              >
+                <p className='font-semibold text-foreground'>
+                  {document?.roj ?? source.judgmentId} · Página PDF {source.page}
+                </p>
+                <blockquote className='mt-1.5 border-l-2 border-primary/40 pl-2 leading-relaxed'>
+                  {source.quote}
+                </blockquote>
+                <JudgmentDocumentActions judgmentId={source.judgmentId} />
+              </li>
+            );
+          })}
         </ul>
       </div>
     )}

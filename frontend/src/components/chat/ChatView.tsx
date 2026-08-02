@@ -185,6 +185,31 @@ export function ChatView({
     if (container) container.scrollTop = container.scrollHeight;
   }, [messages.length, lastMessageContent]);
 
+  const completedAnswerId =
+    lastMessage?.role === 'assistant' &&
+    lastMessage.isStreaming !== true &&
+    !lastMessage.answers?.some((answer) => answer.isStreaming)
+      ? lastMessage.id
+      : null;
+
+  // Al completarse cualquier respuesta, editorial o generada, empieza su lectura arriba.
+  useEffect(() => {
+    if (!completedAnswerId) return;
+    const container = scrollRef.current;
+    if (!container) return;
+    const answer = Array.from(
+      container.querySelectorAll<HTMLElement>('[data-chat-message-id]')
+    ).find((element) => element.dataset.chatMessageId === completedAnswerId);
+    if (!answer) return;
+
+    const answerTop =
+      container.scrollTop +
+      answer.getBoundingClientRect().top -
+      container.getBoundingClientRect().top;
+    container.scrollTop = Math.max(0, answerTop);
+    isPinnedToBottomRef.current = false;
+  }, [completedAnswerId]);
+
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
     abortRef.current = null;

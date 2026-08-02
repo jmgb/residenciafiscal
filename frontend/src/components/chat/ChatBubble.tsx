@@ -24,7 +24,10 @@ export function ChatBubble({ message }: ChatBubbleProps) {
   const isComparison = !isUser && (message.answers?.length ?? 0) > 1;
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div
+      data-chat-message-id={message.id}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
+    >
       <div
         data-testid={isUser ? 'chat-bubble-user' : 'chat-bubble-assistant'}
         className={`relative rounded-xl px-3.5 py-2.5 shadow-sm ${

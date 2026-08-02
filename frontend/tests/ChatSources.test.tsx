@@ -64,7 +64,7 @@ describe('ChatSources', () => {
     expect(screen.queryByText('Segundo fragmento literal.')).not.toBeInTheDocument();
   });
 
-  it('muestra cuestión, página, fidelidad, revisión y hash al desplegar v2', async () => {
+  it('muestra trazabilidad útil y acciones del documento al desplegar v2', async () => {
     const user = userEvent.setup();
     render(<ChatSources sources={[baseSource]} />);
 
@@ -77,7 +77,20 @@ describe('ChatSources', () => {
     expect(
       screen.getByText('Validación técnica · Revisión jurídica por agente')
     ).toBeInTheDocument();
-    expect(screen.getByText(`PDF SHA-256: ${baseSource.sourceSha256}`)).toBeInTheDocument();
+    expect(screen.queryByText(/SHA-256/)).not.toBeInTheDocument();
+    expect(screen.getByText(`Referencia: ${baseSource.ecli}`)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Abrir sentencia SAN 1210/2023' })).toHaveAttribute(
+      'href',
+      '/sentencias/san-1210-2023.pdf'
+    );
+    expect(screen.getByRole('link', { name: 'Descargar PDF SAN 1210/2023' })).toHaveAttribute(
+      'download',
+      'SAN_1210_2023.pdf'
+    );
+    expect(screen.getByRole('link', { name: 'Fuente oficial SAN 1210/2023' })).toHaveAttribute(
+      'href',
+      'https://e-justice.europa.eu/ecli/ECLI:ES:AN:2023:1210'
+    );
   });
 
   it('distingue una fuente histórica de una cita judicial verificada', async () => {
@@ -88,5 +101,9 @@ describe('ChatSources', () => {
 
     expect(screen.getByText('Fuente histórica sin anclaje v2')).toBeInTheDocument();
     expect(screen.getByText('Resumen histórico del motor simulado.')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Descargar PDF STS 107/2018' })).toHaveAttribute(
+      'href',
+      '/sentencias/sts-107-2018.pdf'
+    );
   });
 });

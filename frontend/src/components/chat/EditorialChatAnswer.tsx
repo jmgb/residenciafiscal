@@ -1,5 +1,6 @@
 import type { ChatMessage } from '@/types/chat';
 import { ChatMessageContent } from './ChatMessageContent';
+import { JudgmentDocumentActions } from './JudgmentDocumentActions';
 
 interface EditorialChatAnswerProps {
   message: ChatMessage;
@@ -43,10 +44,7 @@ export const EditorialChatAnswer = ({ message }: EditorialChatAnswerProps) => {
               <blockquote className='mt-1.5 border-l-2 border-primary/40 pl-2 leading-relaxed'>
                 {source.quote}
               </blockquote>
-              <p className='mt-1.5 font-mono text-[0.625rem]'>{source.ecli}</p>
-              <p className='mt-1 break-all font-mono text-[0.625rem]'>
-                PDF SHA-256: {source.sourceSha256}
-              </p>
+              <JudgmentDocumentActions judgmentId={source.judgmentId} ecli={source.ecli} />
             </li>
           ))}
         </ul>

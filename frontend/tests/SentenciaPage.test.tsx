@@ -184,6 +184,15 @@ describe('SentenciaPage', () => {
     expect(screen.getByText(/Certificados del Cantón de Ticino/)).toBeInTheDocument();
     expect(screen.getByText(/Artículo 9.1 de la Ley 35\/2006/)).toBeInTheDocument();
     expect(screen.getByText('Gana el contribuyente')).toBeInTheDocument();
+    expect(screen.queryByText(/SHA-256/)).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Abrir sentencia SAN 1386/2017' })).toHaveAttribute(
+      'href',
+      '/sentencias/san-1386-2017.pdf'
+    );
+    expect(screen.getByRole('link', { name: 'Descargar PDF SAN 1386/2017' })).toHaveAttribute(
+      'download',
+      'SAN_1386_2017.pdf'
+    );
   });
 
   it('publica el detalle estructurado de prueba, carga, presencia y convenio', () => {

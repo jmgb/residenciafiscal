@@ -1,10 +1,9 @@
 import { Link } from 'react-router';
+import { JudgmentDocumentActions } from '@/components/chat/JudgmentDocumentActions';
 import { jurisdictionName } from '@/data/jurisdictions';
 import { fichaPath } from '@/lib/normativa-fichas';
 import type { PreceptoEntry } from '@/types/normativa';
 import type { SentenciaPublica } from '@/types/sentencias';
-
-const CENDOJ_SEARCH = 'https://www.poderjudicial.es/search/';
 
 export function SentenciaSource({
   sentencia,
@@ -20,19 +19,9 @@ export function SentenciaSource({
         Fuente
       </h2>
       <p className='text-sm leading-relaxed'>
-        {judgment.roj} · {judgment.ecli} · {judgment.pageCount} páginas.{' '}
-        <a
-          className='text-primary underline-offset-4 hover:underline'
-          href={CENDOJ_SEARCH}
-          rel='noreferrer noopener'
-          target='_blank'
-        >
-          Buscador del CENDOJ
-        </a>
+        {judgment.roj} · {judgment.pageCount} páginas.
       </p>
-      <p className='mt-1 break-all text-muted-foreground text-xs'>
-        SHA-256 del PDF: {judgment.sourceSha256}
-      </p>
+      <JudgmentDocumentActions judgmentId={judgment.judgmentId} ecli={judgment.ecli} />
       {sentencia.jurisdictions.flatMap((jurisdiction) =>
         jurisdiction.treatyBoeIds.map((boeId) => {
           const ficha = preceptos.find((precepto) => precepto.boeId === boeId);
