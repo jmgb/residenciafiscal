@@ -124,8 +124,9 @@ PDF de la muestra. Cada respuesta mantiene sus propias fuentes, errores,
 métricas y coste visible en USD. No se ha adoptado `pgvector`; una unión futura
 de candidatos con reranking local solo se evaluará después de esta comparación.
 
-- Diseño: `docs/superpowers/specs/2026-07-29-chat-backend-design.md`
+- Diseño: `docs/development/CHAT_BACKEND_DESIGN.md`
 - Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
+  (scratch local, sin versionar)
 - Contrato de la comparación:
   [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md)
 - Límites de plataforma medidos: [`docs/operations/NETLIFY_EDGE.md`](../docs/operations/NETLIFY_EDGE.md)

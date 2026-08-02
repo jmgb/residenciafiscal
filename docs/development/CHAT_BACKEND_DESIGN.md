@@ -7,20 +7,20 @@
 > deadline inferior a 60 s. El prototipo Edge → FastAPI no se borra y se
 > conserva como opción futura para llamadas de más de 60 s. No
 > implementes las tareas ni variables de este documento sin contrastarlas con
-> [`CHAT_SYSTEM_ARCHITECTURE.md`](../../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
-> [`CHAT_DEPLOYMENT.md`](../../operations/CHAT_DEPLOYMENT.md) y
-> [`TASKS.md`](../../project/TASKS.md), que son las fuentes actuales.
+> [`CHAT_SYSTEM_ARCHITECTURE.md`](../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
+> [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md) y
+> [`TASKS.md`](../project/TASKS.md), que son las fuentes actuales.
 
 **Fecha**: 2026-07-29
 **Estado**: aprobado · fase 0 ejecutada el 2026-07-29 · **bloqueado en la fase 0b**
-**Continúa**: [`2026-07-29-frontend-chatbot-design.md`](2026-07-29-frontend-chatbot-design.md), que dejó el backend explícitamente fuera de alcance
+**Continúa**: el diseño del frontend del chatbot (`2026-07-29-frontend-chatbot-design.md`, en el scratch local `docs/superpowers/`, sin versionar), que dejó el backend explícitamente fuera de alcance
 
 Las restricciones de plataforma se contrastaron con la documentación oficial y
 después **se midieron** contra un Deploy Preview en el *spike* de la fase 0
 (2026-07-29). Cuatro de los cinco criterios pasaron y la decisión de runtime
 queda confirmada; el quinto invalidó el mecanismo de estado y abrió la fase 0b,
 que bloquea la implementación. Mediciones completas en
-[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
+[`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md).
 
 ## 1. Objetivo
 
@@ -33,16 +33,16 @@ residencia del usuario ni predice su resultado.
 
 Este es el caso de uso principal, no una extensión opcional. Su contrato
 funcional está en
-[`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](../../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md) y
+[`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](../jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md) y
 gobierna el corpus, la recuperación, el prompt, las fuentes y la evaluación.
 El orden de implementación y los gates previos al backend están en
-[`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
+[`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](../jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md).
 
 Una decisión posterior añade un modo experimental con dos respuestas
 independientes por mensaje: primero el sistema estructurado descrito en este
 documento y después Gemini File Search sobre los PDF originales. El contrato
 que amplía la presentación, el protocolo y la evaluación está en
-[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 La unión de ambas recuperaciones con reranking local queda expresamente
 aplazada.
 
@@ -246,7 +246,7 @@ exige que exporte por defecto una función: un `_corpus.ts` ahí rompe el build 
 `Default export … must be a function`. El subdirectorio no se escanea.
 
 Medido en el spike de la fase 0; ver
-[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
+[`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md).
 
 La ruta y el límite nativo se declaran en el propio `chat.ts`; `rateLimit` no se
 puede declarar en `netlify.toml`:
@@ -393,7 +393,7 @@ módulo es **puro y sin globals de Deno**, para que se pueda probar con Vitest.
 > ⛔ **Esta sección está invalidada por la medición de la fase 0 y necesita una
 > decisión antes de implementarse.** El compare-and-swap en el que se apoya no
 > es atómico. Ver
-> [`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md) y la
+> [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) y la
 > subsección «Qué hacer» más abajo.
 
 El diseño original era:
@@ -479,7 +479,7 @@ fallar de forma explícita las dos estrategias. Cada `answer_done` incluye el
 coste marginal de su estrategia en USD, tokens y el estado `ACTUAL` o
 `ESTIMATED`; el frontend lo muestra debajo de la respuesta. La forma completa
 se especifica en
-[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
 
 ```
 event: token    data: {"text":"El cómputo de los días… (ROJ: STS 107/2018)"}
@@ -779,7 +779,7 @@ anotados aquí como **condición de la fase 3**, no como sugerencia.
 
 Ejecutada contra un Deploy Preview con un corpus sintético de 891 KB, el tamaño
 que tendrá el real. Resultados completos y metodología en
-[`docs/operations/NETLIFY_EDGE.md`](../../operations/NETLIFY_EDGE.md).
+[`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md).
 
 | # | Criterio | Objetivo | Medido | |
 |---|---|---|---|---|
@@ -826,10 +826,10 @@ debe afirmar.
 
 El inventario inicial de preguntas y conversaciones que alimentará ese banco
 está en
-[`docs/jurisprudence/CHAT_USER_QUESTION_CATALOG.md`](../../jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
+[`docs/jurisprudence/CHAT_USER_QUESTION_CATALOG.md`](../jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
 La selección inicial de 40, con respuestas manuales, casos esperados,
 contracasos, límites y gaps del schema sobre la muestra de cinco, está en
-[`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../../experiments/CHAT_QUESTION_PILOT_5.md).
+[`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../experiments/CHAT_QUESTION_PILOT_5.md).
 
 Los gates se separan en dos grupos, porque tienen coste y naturaleza muy
 distintos y mezclarlos bloquea la entrega sin ganar seguridad.

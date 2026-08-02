@@ -18,9 +18,10 @@ contra el dominio público después de cada deploy.
 > conserva como alternativa futura si hacen falta llamadas más largas o mayor
 > control operativo, pero no debe desplegarse como V1.
 >
-> El diseño y el plan viven en `docs/superpowers/`, que está en `.gitignore`: esos
-> dos ficheros son excepciones añadidas con `git add -f`. Si creas más documentos
-> ahí, no se versionarán solos.
+> El diseño está promocionado en
+> [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md);
+> el plan de ejecución quedó como scratch local en `docs/superpowers/`, que está
+> en `.gitignore` y no se versiona (regla de promoción en `CLAUDE.md`).
 
 > **Si retomas el corpus normativo**, las cuatro entradas de «Corpus normativo»
 > son independientes entre sí y se pueden coger por separado. El schema v3 ya
@@ -217,8 +218,9 @@ contra el dominio público después de cada deploy.
       segunda revisión ciega. Esta ejecución compara stacks completos, no
       permite atribuir las diferencias exclusivamente al recuperador. Solo si
       pasa los gates, ejecutar las 40.
-  - Diseño: [`docs/superpowers/specs/2026-07-29-chat-backend-design.md`](../superpowers/specs/2026-07-29-chat-backend-design.md)
-  - Plan de ejecución: [`docs/superpowers/plans/2026-07-29-chat-backend.md`](../superpowers/plans/2026-07-29-chat-backend.md)
+  - Diseño: [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md)
+  - Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
+    (scratch local, sin versionar)
   - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
     Deploy Preview. Cuatro de cinco criterios pasan y **la decisión de runtime queda
     confirmada**: p95 de CPU 15,3 ms, streaming de 19,87 s, cabeceras en 0,30 s y los
@@ -946,10 +948,13 @@ orden recomendado:
   aparece un revisor humano comprometido: lote pequeño y diverso,
   `HUMAN_APPROVED` por caso con identidad y fecha. No programar; no bloquea
   nada.
-- [ ] **Limpieza menor de excepciones históricas.** Decidir si los dos ficheros
-  de `docs/superpowers/` versionados con `git add -f` (diseño y plan del chat
-  backend, ya ejecutados) se desversionan o se promocionan según la regla nueva
-  de `CLAUDE.md`; hoy son la única contradicción con ella.
+- [x] **Limpieza menor de excepciones históricas** (2026-08-02). El diseño del
+  chat backend se promocionó a
+  [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md)
+  —seguía referenciado desde `NETLIFY_EDGE.md`, este backlog y
+  `frontend/CLAUDE.md`— y el plan de ejecución se desversionó (queda como
+  scratch local). `docs/superpowers/` ya no contiene ningún fichero versionado
+  y la regla de `CLAUDE.md` se cumple sin excepciones.
 
 ## Criterio de cierre SEO
 

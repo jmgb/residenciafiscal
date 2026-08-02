@@ -31,7 +31,7 @@ optimista.
 | 5 | Compare-and-swap sin perder incrementos | exacto | **incrementos perdidos** | ❌ |
 
 Cuatro de cinco. El quinto invalida el diseño de cuotas y presupuesto del
-[spec del backend de chat](../superpowers/specs/2026-07-29-chat-backend-design.md),
+[spec del backend de chat](../development/CHAT_BACKEND_DESIGN.md),
 sección 4.
 
 ## Criterio 2 — CPU y el corpus en dos niveles
