@@ -123,7 +123,9 @@ def test_resolver_devuelve_none_ante_lo_desconocido() -> None:
 
 def test_resolver_no_acepta_coincidencias_parciales() -> None:
     """Buscar por subcadena convertiría «Guinea Ecuatorial» en «Guinea»."""
-    assert resolver("República de Guinea Ecuatorial").code == "gq"
+    guinea = resolver("República de Guinea Ecuatorial")
+    assert guinea is not None
+    assert guinea.code == "gq"
     assert resolver("Nueva España") is None
 
 
@@ -133,12 +135,26 @@ def test_todo_code_de_country_routes_existe_en_el_catalogo(catalogo) -> None:
         assert ruta["code"] in catalogo, ruta["code"]
 
 
-def test_el_catalogo_cubre_los_paises_de_las_fichas_de_precepto(catalogo) -> None:
-    """Cobertura de las 97 fichas de CDI: ni un `boeId` sin jurisdicción."""
+def test_el_catalogo_cubre_la_contraparte_de_todos_los_convenios(catalogo) -> None:
+    """Cobertura de los 97 convenios: ni uno sin jurisdicción resuelta.
+
+    La semilla de esta correspondencia fue el bloque `paises` de
+    `normativaFichas.json`, curado a mano contra el título oficial del BOE. Ese
+    bloque ya no existe —era la tercera copia editable del mismo hecho—, así
+    que la comprobación se hace ahora contra el registro bilateral.
+    """
+    from treaty_relations import cargar_relaciones
+
+    relaciones = cargar_relaciones()
+    assert len(relaciones) == 92
+    for code in relaciones:
+        assert code in catalogo, code
+
+
+def test_las_fichas_de_precepto_ya_no_guardan_su_propia_copia_de_paises() -> None:
     fichas = json.loads(NORMATIVA_FICHAS.read_text(encoding="utf-8"))
-    for boe_id, nombre in fichas.get("paises", {}).items():
-        jurisdiccion = resolver(nombre)
-        assert jurisdiccion is not None, f"{boe_id}: «{nombre}» no está en el catálogo"
+
+    assert "paises" not in fichas
 
 
 def test_el_catalogo_no_precarga_jurisdicciones_sin_consumidor(catalogo) -> None:
