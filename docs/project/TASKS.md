@@ -83,7 +83,9 @@ contra el dominio público después de cada deploy.
   tail, y por eso van después y no antes.
 
   **El gate es medir, no el calendario.** Las 34 rutas vigentes se publicaron el
-  1 de agosto de 2026 y no hay ni un dato de Search Console. Si a las 4-6 semanas
+  1 de agosto de 2026 y Search Console mide desde ese mismo día (propiedad
+  verificada, sitemap enviado y línea semanal en Telegram); la primera lectura
+  útil de cobertura llega hacia mediados de agosto. Si a las 4-6 semanas
   no se indexan o no reciben impresiones, ampliar multiplica un formato que no
   funciona; si funcionan, esta lista ya está priorizada. Para llegar a los ~98
   convenios hace falta antes la tarea de cruzar cada página con sus sentencias:
@@ -844,11 +846,21 @@ sola URL para poder encontrarse.
   - **El cambio de CSP exige redeploy**; hasta entonces rige la anterior, que era
     compatible por más permisiva.
 - [x] **Registrar el sitemap en Google Search Console** (1 de agosto de 2026).
-  La propiedad `sc-domain:residenciafiscal.org` ya existía; el bloqueo era solo
-  que la service account
-  `presupuestor-claude-skill@presupuestor-485509.iam.gserviceaccount.com` no
-  estaba dada de alta en ella. Añadida como usuario, el envío por API funcionó.
-  Google descargó el sitemap con **0 errores y 0 avisos**.
+  La propiedad `sc-domain:residenciafiscal.org` **no existía: se creó y
+  verificó por API el mismo día**, sin pasar por la UI. La Site Verification
+  API está deshabilitada en el proyecto GCP `presupuestor-485509` (inaccesible
+  para la cuenta local), así que se habilitó junto a la de Search Console en
+  `doctor-489817` —que sí es del usuario— y la verificación la hizo su service
+  account `claude-mcp-access@doctor-489817`: token DNS, registro TXT creado por
+  la API de Cloudflare y `webResource.insert`. Esa SA delegó después la
+  propiedad a las cuentas personales y a
+  `presupuestor-claude-skill@presupuestor-485509`, la del skill
+  `google-search-console`, que quedó `siteOwner` y envió el sitemap. Google lo
+  descargó con **0 errores y 0 avisos**. Detalle operativo completo en
+  [`SEO_AUDIT.md`](../product/SEO_AUDIT.md).
+  - **No borrar el registro TXT** `google-site-verification=…` de la zona de
+    Cloudflare: sostiene la verificación de la propiedad; si desaparece, la
+    verificación caduca y con ella el acceso de todos los owners delegados.
   - **El recuento delataba un sitemap viejo.** Search Console registraba `5` URLs
     —justo `/espana` más las cuatro estáticas, es decir, el sitemap anterior a
     publicar las rutas de país— mientras producción servía ya 38. Había
@@ -856,14 +868,17 @@ sola URL para poder encontrarse.
     URLs, `indexed: 0` por recién descargado.
   - Verificar el recuento tras cada deploy que añada rutas: un sitemap servido
     correctamente y una versión obsoleta en Google se ven igual desde fuera.
-  - **No se pudo automatizar la verificación de propiedad**, por si hace falta
-    otro dominio: la Site Verification API está deshabilitada en el proyecto GCP
-    `presupuestor-485509` y la cuenta `gcloud` local no tiene acceso a él. Las
-    alternativas son verificar desde la UI —lo que se hizo— o crear un proyecto
-    GCP propio del repositorio con su service account, que además rompería el
-    acoplamiento de que este proyecto use credenciales de `presupuestor`.
+  - Para el próximo dominio, el flujo es repetible sin UI: las dos APIs siguen
+    habilitadas en `doctor-489817` y el procedimiento (token → TXT → verify →
+    delegar owners → `sites.add` → `sitemaps.submit`) está documentado en la
+    auditoría.
   - `GSC_SITE_URL` queda declarada en `.env.example` para que el skill
     `google-search-console` no necesite el flag `--site-url`.
+  - **Complementos ya operativos** (2 de agosto de 2026): enlace GSC ↔ GA4
+    activo —manual en la UI de GA4, con la cuenta administradora, que ya era
+    owner delegada en GSC— y línea de Search Console en el informe semanal de
+    Telegram ([`WEEKLY_TRAFFIC_REPORT.md`](../operations/WEEKLY_TRAFFIC_REPORT.md)).
+    Pendiente solo Bing Webmaster Tools (importar desde GSC, manual).
 - [ ] Revisar durante varios días los eventos del WAF. Ajustar la regla custom si
   los User-Agents genéricos (`curl`, `axios`, `python-requests`) bloquean monitores
   o integraciones legítimas.
