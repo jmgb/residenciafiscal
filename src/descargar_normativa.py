@@ -67,6 +67,31 @@ CDI_NO_CONSOLIDADO: dict[str, str] = {
     "BOE-A-2024-15573": "CDI España-Paraguay de 2023, aún no incorporado a la base consolidada",
 }
 
+# Normas que el filtro por título arrastra al grupo `cdi` sin ser un convenio
+# general de doble imposición sobre la renta. No es un fallo del filtro que se
+# arregle afinando el texto: el BOE las titula así porque tratan de doble
+# imposición, solo que una es derecho interno y las otras dos son convenios
+# sectoriales de transporte. Ninguna contiene regla de residencia, y dejarlas en
+# `cdi` haría que la relación bilateral de Venezuela apuntase a un convenio de
+# navegación marítima y aérea con el nombre correcto encima.
+#
+# La lista es la misma que `export_normativa.SIN_PRECEPTO_RESIDENCIA`, y hay un
+# test que impide que las dos descripciones del mismo hecho diverjan.
+RECLASIFICACION: dict[str, tuple[str, str]] = {
+    "BOE-A-1996-28330": (
+        "interna_no_cdi",
+        "Ley 10/1996: doble imposición interna intersocietaria, no es un tratado",
+    ),
+    "BOE-A-1989-2339": (
+        "cdi_sectorial",
+        "Convenio con Venezuela de navegación marítima y aérea, sin regla de residencia",
+    ),
+    "BOE-A-1983-5313": (
+        "cdi_sectorial",
+        "Convenio con Argentina de navegación marítima y aérea, sin regla de residencia",
+    ),
+}
+
 # Convenios sustituidos, que por eso ya no aparecen en ese índice. Se citan en
 # sentencias del corpus porque regían el ejercicio enjuiciado, así que hay que
 # bajarlos del diario igual que las normas estatales derogadas.
@@ -212,6 +237,16 @@ def grupo_declarado(boe_id: str) -> tuple[str, str] | None:
     return normas_del_diario().get(boe_id)
 
 
+def grupo_del_indice(boe_id: str) -> tuple[str, str]:
+    """Grupo de un convenio que llega por el filtro de título del índice.
+
+    Casi siempre es `cdi`; las excepciones están curadas en `RECLASIFICACION`
+    porque distinguir un convenio general de renta de una ley interna o de un
+    convenio sectorial es una decisión jurídica, no un ajuste del filtro.
+    """
+    return RECLASIFICACION.get(boe_id, ("cdi", ""))
+
+
 def fusionar_manifiesto(
     previo: dict, registros: list[dict[str, object]]
 ) -> list[dict[str, object]]:
@@ -247,7 +282,9 @@ def main() -> int:
     if args.solo:
         # Un CDI que sale del índice no está declarado en ninguna tabla: si no
         # lo conocemos, es uno de esos y se pide a la base consolidada.
-        objetivos = [(boe_id, grupo_declarado(boe_id) or ("cdi", "")) for boe_id in args.solo]
+        objetivos = [
+            (boe_id, grupo_declarado(boe_id) or grupo_del_indice(boe_id)) for boe_id in args.solo
+        ]
         consolidadas = [
             (boe_id, grupo) for boe_id, (grupo, _) in objetivos if boe_id not in del_diario
         ]
@@ -264,7 +301,7 @@ def main() -> int:
                 flush=True,
             )
         consolidadas = [(boe_id, "nucleo") for boe_id in NUCLEO]
-        consolidadas += [(boe_id, "cdi") for boe_id in cdis]
+        consolidadas += [(boe_id, grupo_del_indice(boe_id)[0]) for boe_id in cdis]
         diario = del_diario
         print(f"Núcleo: {len(NUCLEO)} | CDI vigentes: {len(cdis)} | del diario: {len(diario)}")
 

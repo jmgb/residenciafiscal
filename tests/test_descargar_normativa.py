@@ -15,9 +15,11 @@ from descargar_normativa import (
     CDI_DEROGADO,
     CDI_NO_CONSOLIDADO,
     NUCLEO,
+    RECLASIFICACION,
     cdis_del_indice,
     fusionar_manifiesto,
     grupo_declarado,
+    grupo_del_indice,
     normas_del_diario,
 )
 
@@ -79,6 +81,43 @@ def test_descargar_una_norma_no_borra_el_inventario_de_las_demas() -> None:
     assert [registro["id"] for registro in fusionado] == ["BOE-A-1", "BOE-A-2", "BOE-A-3"]
     # El registro repetido se sustituye por el recién descargado, no se duplica.
     assert fusionado[1]["texto_sha256"] == "nuevo"
+
+
+def test_el_filtro_por_titulo_arrastra_normas_que_no_son_un_cdi_general() -> None:
+    """`doble imposición` en el título no basta para ser un convenio de renta.
+
+    El índice devuelve una ley interna sobre doble imposición intersocietaria y
+    dos convenios sectoriales de navegación marítima y aérea. Los tres carecen
+    de regla de residencia, y publicarlos como CDI del país haría que la
+    relación bilateral de Venezuela apuntase a un convenio de navegación.
+    """
+    assert grupo_del_indice("BOE-A-1997-12729") == ("cdi", "")
+
+    for boe_id, (grupo, motivo) in RECLASIFICACION.items():
+        assert grupo_del_indice(boe_id) == (grupo, motivo)
+        assert grupo != "cdi", boe_id
+        assert motivo, f"{boe_id} no explica por qué se reclasifica"
+
+
+def test_el_manifiesto_publicado_refleja_la_reclasificacion() -> None:
+    """El manifiesto versionado ya trae lo que produciría una descarga nueva.
+
+    Sin esta comprobación, la próxima ejecución con red devolvería las tres
+    normas al grupo `cdi` y nadie se enteraría hasta ver un convenio de
+    navegación publicado como CDI.
+    """
+    manifiesto = json.loads(MANIFIESTO.read_text(encoding="utf-8"))
+    registros = {registro["id"]: registro for registro in manifiesto["normas"]}
+
+    for boe_id, (grupo, _) in RECLASIFICACION.items():
+        assert registros[boe_id]["grupo"] == grupo, boe_id
+
+
+def test_las_reclasificadas_son_las_que_no_publican_articulo_de_residencia() -> None:
+    """Dos tablas describen el mismo hecho y no pueden divergir."""
+    from export_normativa import SIN_PRECEPTO_RESIDENCIA
+
+    assert set(RECLASIFICACION) == set(SIN_PRECEPTO_RESIDENCIA)
 
 
 def test_el_manifiesto_publicado_incluye_los_dos_convenios_no_consolidados() -> None:

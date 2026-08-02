@@ -11,10 +11,20 @@ DESGLOSE
 --------
 - Nucleo estatal vigente:     5 normas
 - Nucleo estatal derogado:    1 norma
-- Convenios de doble imp.:   98 convenios vigentes (1967-2024)
+- Convenios de doble imp.:   95 convenios generales vigentes (1967-2024)
 - Convenios sustituidos:      2 convenios (Argentina 1992, Reino Unido 1975)
+- Convenios sectoriales:      2 convenios (Venezuela 1986, Argentina 1978)
+- Ley interna, no convenio:   1 norma (Ley 10/1996)
 
-Dos de los 98 convenios vigentes no salen del indice de legislacion consolidada
+Las tres ultimas llegaron al corpus porque su titulo dice "doble imposicion",
+pero no son un convenio general de renta y no contienen regla de residencia:
+dos son convenios de navegacion maritima y aerea y la tercera es derecho interno
+sobre doble imposicion intersocietaria. El manifiesto las separa en los grupos
+cdi_sectorial e interna_no_cdi (src/descargar_normativa.py, RECLASIFICACION)
+para que la relacion bilateral de Venezuela no acabe apuntando a un convenio de
+navegacion con el nombre correcto encima.
+
+Dos de los 95 convenios generales vigentes no salen del indice consolidado
 y estan declarados a mano en src/descargar_normativa.py (CDI_NO_CONSOLIDADO):
 
 - BOE-A-2004-11070  CDI Espana-Venezuela 2003: su titulo dice "doble

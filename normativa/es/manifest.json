@@ -1141,7 +1141,7 @@
     },
     {
       "id": "BOE-A-1996-28330",
-      "grupo": "cdi",
+      "grupo": "interna_no_cdi",
       "titulo": "Ley 10/1996, de 18 de diciembre, de Medidas fiscales urgentes sobre corrección de la doble imposición interna intersocietaria y sobre incentivos a la internacionalización de las empresas.",
       "rango": "Ley",
       "fecha_disposicion": "19961218",
@@ -1333,7 +1333,7 @@
     },
     {
       "id": "BOE-A-1989-2339",
-      "grupo": "cdi",
+      "grupo": "cdi_sectorial",
       "titulo": "Convenio entre el Gobierno de España y el Gobierno de la República de Venezuela para evitar la doble imposición internacional en relación con el ejercicio de la navegación marítima y aérea, hecho en Caracas el 6 de marzo de 1986.",
       "rango": "Acuerdo Internacional",
       "fecha_disposicion": "19860306",
@@ -1429,7 +1429,7 @@
     },
     {
       "id": "BOE-A-1983-5313",
-      "grupo": "cdi",
+      "grupo": "cdi_sectorial",
       "titulo": "Instrumento de ratificación del Convenio entre el Gobierno de España y el Gobierno de la República Argentina para evitar la doble imposición internacional en relación con el ejercicio de la navegación marítima y aérea, firmado en Buenos Aires el 30 de noviembre de 1978.",
       "rango": "Acuerdo Internacional",
       "fecha_disposicion": "19781130",
