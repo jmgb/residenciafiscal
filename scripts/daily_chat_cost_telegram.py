@@ -24,6 +24,13 @@ from lib_telegram import env_value, load_env, send_telegram  # noqa: E402
 
 HEADER_PREFIX = "[RESIDENCIAFISCAL]"
 RPC_TIMEOUT_SECONDS = 30
+SERVICE_NAME = "residenciafiscal-daily-chat-cost-telegram.service"
+PROJECT_DIR = pathlib.Path(__file__).resolve().parents[1]
+DEFAULT_STATE_PATH = PROJECT_DIR / "reports" / "daily_chat_cost_telegram" / "last_day.txt"
+# `Persistent=true` dispara la unit una sola vez al arrancar: sin recuperación,
+# una máquina apagada tres días manda un resumen y pierde dos sin dejar rastro.
+MAX_CATCH_UP_DAYS = 7
+FAILURE_DETAIL_LIMIT = 500
 STRATEGY_LABELS = {
     "current_structured": "A · corpus v3",
     "gemini_file_search": "B · file search",
@@ -123,6 +130,80 @@ def build_message(stats: dict, alert_usd: float | None) -> str:
     return "\n".join(lines)
 
 
+def pending_days(
+    last_sent: dt.date | None,
+    today: dt.date,
+    max_days: int = MAX_CATCH_UP_DAYS,
+) -> tuple[list[dt.date], list[dt.date]]:
+    """Días que faltan por resumir y días demasiado viejos para recuperarlos.
+
+    Sin estado previo solo se manda ayer: el primer arranque no reconstruye la
+    historia entera.
+
+    Un `last_sent` posterior a ayer es imposible —lo deja un reloj adelantado
+    durante una ejecución— y se trata como estado inválido, no como «nada
+    pendiente»: si no, el resumen quedaría mudo hasta que el tiempo real
+    alcanzara esa fecha. Se repara mandando ayer, sin inventar los días
+    intermedios.
+    """
+    yesterday = today - dt.timedelta(days=1)
+    if last_sent is None or last_sent > yesterday:
+        return [yesterday], []
+    if last_sent == yesterday:
+        return [], []
+
+    days: list[dt.date] = []
+    day = last_sent + dt.timedelta(days=1)
+    while day <= yesterday:
+        days.append(day)
+        day += dt.timedelta(days=1)
+
+    if len(days) > max_days:
+        return days[-max_days:], days[:-max_days]
+    return days, []
+
+
+def read_last_sent(path: pathlib.Path) -> dt.date | None:
+    """Último día resumido. Un estado ausente o corrupto nunca impide el envío."""
+    try:
+        raw = path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    try:
+        return dt.date.fromisoformat(raw)
+    except ValueError:
+        return None
+
+
+def write_last_sent(path: pathlib.Path, day: dt.date) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(f"{day.isoformat()}\n", encoding="utf-8")
+
+
+def build_skipped_message(days: list[dt.date]) -> str:
+    """Los días que no se recuperan se declaran; el silencio no es una opción."""
+    return "\n".join(
+        [
+            f"{HEADER_PREFIX} ⚠️ Chat · {len(days)} resúmenes diarios omitidos",
+            "",
+            f"Sin enviar del {days[0].isoformat()} al {days[-1].isoformat()}.",
+            "El ledger de Supabase conserva el dato: recupéralo con --day.",
+        ]
+    )
+
+
+def build_failure_message(day: dt.date, exit_code: int, detail: str = "") -> str:
+    lines = [
+        f"{HEADER_PREFIX} ⚠️ Chat · el resumen diario FALLÓ {day.isoformat()}",
+        "",
+        f"Exit: {exit_code}.",
+        f"Revisa: journalctl --user -u {SERVICE_NAME} -n 100 --no-pager",
+    ]
+    if detail:
+        lines.extend(["", detail[:FAILURE_DETAIL_LIMIT]])
+    return "\n".join(lines)
+
+
 def parse_alert_threshold(env: dict[str, str]) -> float | None:
     raw = env_value(env, "CHAT_DAILY_COST_ALERT_USD")
     if not raw:
@@ -142,22 +223,64 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Imprime el mensaje sin enviarlo a Telegram.",
     )
+    parser.add_argument(
+        "--catch-up",
+        action="store_true",
+        help="Recupera los días pendientes desde el último resumen enviado.",
+    )
+    parser.add_argument("--today", help="Fecha base YYYY-MM-DD para --catch-up. Default: hoy.")
+    parser.add_argument(
+        "--state-file", help=f"Estado del último día enviado. Default: {DEFAULT_STATE_PATH}."
+    )
+    parser.add_argument("--failure-alert", help="Envía un aviso de fallo por Telegram y termina.")
+    parser.add_argument("--failure-exit-code", type=int, default=1)
     arguments = parser.parse_args(argv)
 
     env = load_env()
-    day = (
-        dt.date.fromisoformat(arguments.day)
-        if arguments.day
-        else dt.date.today() - dt.timedelta(days=1)
-    )
-    stats = fetch_stats(day, env)
-    message = build_message(stats, parse_alert_threshold(env))
+    today = dt.date.fromisoformat(arguments.today) if arguments.today else dt.date.today()
 
-    if arguments.dry_run:
-        print(message)
+    if arguments.failure_alert:
+        message = build_failure_message(today, arguments.failure_exit_code, arguments.failure_alert)
+        send_telegram(message, env)
+        print("Aviso de fallo enviado a Telegram.")
         return 0
-    send_telegram(message, env)
-    print(f"Resumen del {day.isoformat()} enviado a Telegram.")
+
+    alert_usd = parse_alert_threshold(env)
+
+    if not arguments.catch_up:
+        day = (
+            dt.date.fromisoformat(arguments.day) if arguments.day else today - dt.timedelta(days=1)
+        )
+        message = build_message(fetch_stats(day, env), alert_usd)
+        if arguments.dry_run:
+            print(message)
+            return 0
+        send_telegram(message, env)
+        print(f"Resumen del {day.isoformat()} enviado a Telegram.")
+        return 0
+
+    state_path = pathlib.Path(arguments.state_file) if arguments.state_file else DEFAULT_STATE_PATH
+    days, skipped = pending_days(read_last_sent(state_path), today)
+
+    if skipped:
+        skipped_message = build_skipped_message(skipped)
+        if arguments.dry_run:
+            print(skipped_message)
+        else:
+            send_telegram(skipped_message, env)
+
+    if not days:
+        print("Sin resúmenes pendientes.")
+        return 0
+
+    for day in days:
+        message = build_message(fetch_stats(day, env), alert_usd)
+        if arguments.dry_run:
+            print(message)
+            continue
+        send_telegram(message, env)
+        write_last_sent(state_path, day)
+        print(f"Resumen del {day.isoformat()} enviado a Telegram.")
     return 0
 
 

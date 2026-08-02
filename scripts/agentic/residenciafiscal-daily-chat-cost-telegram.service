@@ -7,6 +7,9 @@ After=network-online.target
 Type=oneshot
 WorkingDirectory=/home/ubuntu/ai_projects/residenciafiscal
 ExecStart=/bin/bash /home/ubuntu/ai_projects/residenciafiscal/scripts/agentic/daily_chat_cost_telegram_runner.sh
-TimeoutStartSec=300
+# Cubre el peor caso de `--catch-up`: siete días, cada uno con su timeout de
+# RPC y de Telegram, más el aviso de días omitidos. Con 300 s systemd mataba el
+# job a mitad, sin avanzar el estado y sin dejar salir la alerta de fallo.
+TimeoutStartSec=600
 StandardOutput=journal
 StandardError=journal

@@ -59,10 +59,55 @@ no UTC.
 
 ```bash
 python3 scripts/daily_chat_cost_telegram.py --day 2026-08-01 --dry-run
+python3 scripts/daily_chat_cost_telegram.py --catch-up --dry-run
 ```
 
 El umbral `CHAT_DAILY_COST_ALERT_USD` **solo destaca el mensaje**: el coste
 observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
+
+### Un día perdido no desaparece en silencio
+
+El timer lo lanza el runner en modo `--catch-up`, no con el día suelto.
+`Persistent=true` dispara la unit **una sola vez** al arrancar, así que una
+máquina apagada tres días enviaría un resumen y perdería dos sin dejar rastro.
+
+El estado es una línea con el último día resumido, en
+`reports/daily_chat_cost_telegram/last_day.txt` —directorio ya ignorado por
+git—. Un estado ausente o corrupto no bloquea el envío: se comporta como el
+primer arranque y manda solo ayer, sin reconstruir la historia entera. Un reloj
+adelantado tampoco inventa días.
+
+La recuperación está acotada a `MAX_CATCH_UP_DAYS = 7` para que un apagón largo
+no dispare decenas de mensajes; **lo que queda fuera se declara** en un aviso
+propio con el rango omitido, porque el dato sigue en el ledger y se recupera con
+`--day`. Callarlo sería el mismo fallo que se quiso evitar.
+
+Ese tope fija el `TimeoutStartSec` de la unit: siete días, cada uno con su
+timeout de RPC y de Telegram, más el aviso de omitidos, no caben en los 300 s
+iniciales. Con `600` systemd ya no puede matar el job a mitad —lo que dejaría el
+estado sin avanzar y sin salir la alerta de fallo—, y un test enlaza las tres
+constantes para que subir `MAX_CATCH_UP_DAYS` sin tocar la unit ponga el gate en
+rojo.
+
+Un `last_sent` posterior a ayer es imposible y solo lo deja un reloj adelantado
+durante una ejecución. **No se trata como «nada pendiente»**, porque eso dejaría
+el resumen mudo hasta que el tiempo real alcanzase esa fecha: se considera
+estado inválido, se manda ayer y se reescribe el estado al día real.
+
+### Un fallo del timer no puede parecer silencio
+
+Si el envío falla, el resumen simplemente no llega, y eso es indistinguible de
+un día tranquilo. El runner captura el fallo y avisa por Telegram con
+`--failure-alert`, usando **`python3` del sistema**: si lo que se ha roto es el
+entorno, el aviso tiene que salir igual. Es el mismo patrón del informe semanal
+de tráfico.
+
+No se usa `OnFailure=agent-unit-failure-notify@`, la plantilla que sí emplean
+otras units de la máquina: apunta al checkout y al `.env` de *presupuestor*, y
+acoplaría la alerta de este proyecto a otro repositorio.
+
+El aviso corta el detalle en 500 caracteres y nombra la unit y el `exit`, para
+que el journal se consulte con un comando ya escrito.
 
 ## Activación (completada el 2 de agosto de 2026)
 
@@ -93,15 +138,14 @@ observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
    corre ahí y comparte `.env`, ruta y patrón.
 
    ```bash
-   install -m 644 scripts/agentic/residenciafiscal-daily-chat-cost-telegram.{service,timer} \
-     ~/.config/systemd/user/
-   systemctl --user daemon-reload
-   systemctl --user enable --now residenciafiscal-daily-chat-cost-telegram.timer
+   bash scripts/agentic/install-daily-chat-cost-telegram-timer.sh
    ```
 
-   `Persistent=true` recupera el envío tras un apagado, igual que el semanal: si
-   la máquina está apagada a las 09:15, el resumen sale al arrancar, con retraso
-   pero sin perderse.
+   El instalador es idempotente y valida antes que el `.env` tiene las cuatro
+   claves que el resumen necesita —`SUPABASE_URL`, `SUPABASE_SECRET_KEY`,
+   `TELEGRAM_TOKEN` y `TELEGRAM_CHAT_ID`—, así que se relanza tras cada
+   `git pull` que toque las units. Es el gemelo de
+   `install-weekly-ga4-telegram-timer.sh`.
 
 ## Verificación hecha
 
@@ -114,6 +158,11 @@ observado es contabilidad, no control de admisión, y no gobierna ninguna cuota.
   `systemctl --user start residenciafiscal-daily-chat-cost-telegram.service`
   terminó en `Result=success` y entregó ese mismo resumen en Telegram. El
   siguiente disparo automático queda fijado a las 09:15.
+- Ese mismo día, con la recuperación ya cableada: un `--catch-up` en seco con
+  estado del 1 de junio recuperó los 7 días permitidos y declaró los 55
+  omitidos; una ejecución real del service con el estado al día imprimió «Sin
+  resúmenes pendientes» sin reenviar nada; y `--failure-alert` entregó su aviso
+  en Telegram.
 - Tests deterministas en `frontend/tests/netlify-chat-observability.test.ts` y
   `tests/test_daily_chat_cost_telegram.py`, incluido uno que hace fallar el
   handler real con una excepción que contiene la pregunta y comprueba que no

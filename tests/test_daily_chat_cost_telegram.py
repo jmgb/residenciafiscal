@@ -6,25 +6,27 @@ ruta en lugar de importarse como paquete, igual que el informe semanal.
 
 from __future__ import annotations
 
+import datetime as dt
 import importlib.util
 import pathlib
+import tempfile
 import types
 import unittest
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCRIPT_PATH = ROOT / "scripts" / "daily_chat_cost_telegram.py"
 MIGRATION_PATH = ROOT / "supabase" / "migrations" / "20260801210500_chat_daily_stats.sql"
 
 
-def load_module() -> types.ModuleType:
-    spec = importlib.util.spec_from_file_location("daily_chat_cost_telegram", SCRIPT_PATH)
+def load_script(name: str) -> types.ModuleType:
+    spec = importlib.util.spec_from_file_location(name, ROOT / "scripts" / f"{name}.py")
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
-MODULE = load_module()
+MODULE = load_script("daily_chat_cost_telegram")
 
 STATS = {
     "day": "2026-08-01",
@@ -97,6 +99,263 @@ class ResumenDiarioTest(unittest.TestCase):
 
     def test_latencia_ausente_no_se_inventa(self) -> None:
         self.assertEqual(MODULE.format_seconds(None), "—")
+
+
+class RecuperacionDeDiasTest(unittest.TestCase):
+    """Un resumen diario perdido no puede desaparecer en silencio.
+
+    `Persistent=true` dispara la unit una sola vez al arrancar, así que una
+    máquina apagada tres días enviaría un mensaje y dejaría dos días sin
+    resumen y sin rastro de que faltan.
+    """
+
+    def test_sin_estado_previo_solo_manda_ayer(self) -> None:
+        pendientes, omitidos = MODULE.pending_days(None, dt.date(2026, 8, 3))
+
+        self.assertEqual(pendientes, [dt.date(2026, 8, 2)])
+        self.assertEqual(omitidos, [])
+
+    def test_no_repite_un_dia_ya_enviado(self) -> None:
+        pendientes, omitidos = MODULE.pending_days(dt.date(2026, 8, 2), dt.date(2026, 8, 3))
+
+        self.assertEqual(pendientes, [])
+        self.assertEqual(omitidos, [])
+
+    def test_recupera_los_dias_perdidos_tras_un_apagon(self) -> None:
+        pendientes, omitidos = MODULE.pending_days(dt.date(2026, 7, 30), dt.date(2026, 8, 3))
+
+        self.assertEqual(
+            pendientes,
+            [dt.date(2026, 7, 31), dt.date(2026, 8, 1), dt.date(2026, 8, 2)],
+        )
+        self.assertEqual(omitidos, [])
+
+    def test_un_apagon_largo_recorta_y_declara_los_omitidos(self) -> None:
+        pendientes, omitidos = MODULE.pending_days(
+            dt.date(2026, 7, 30), dt.date(2026, 8, 3), max_days=2
+        )
+
+        self.assertEqual(pendientes, [dt.date(2026, 8, 1), dt.date(2026, 8, 2)])
+        self.assertEqual(omitidos, [dt.date(2026, 7, 31)])
+
+    def test_un_estado_del_futuro_se_repara_en_vez_de_callar(self) -> None:
+        """Un reloj adelantado durante una ejecución deja un `last_sent` imposible.
+
+        Tratarlo como «nada pendiente» dejaría el resumen mudo hasta que el
+        tiempo real alcanzara esa fecha, que es justo el silencio que la
+        recuperación existe para evitar. Se trata como estado inválido: se
+        manda ayer, sin inventar los días intermedios.
+        """
+        pendientes, omitidos = MODULE.pending_days(dt.date(2026, 8, 20), dt.date(2026, 8, 3))
+
+        self.assertEqual(pendientes, [dt.date(2026, 8, 2)])
+        self.assertEqual(omitidos, [])
+
+    def test_los_dias_omitidos_se_declaran_en_telegram(self) -> None:
+        mensaje = MODULE.build_skipped_message([dt.date(2026, 7, 28), dt.date(2026, 7, 31)])
+
+        self.assertIn("[RESIDENCIAFISCAL]", mensaje)
+        self.assertIn("⚠️", mensaje)
+        self.assertIn("2", mensaje)
+        self.assertIn("2026-07-28", mensaje)
+        self.assertIn("2026-07-31", mensaje)
+
+
+class EstadoDelUltimoEnvioTest(unittest.TestCase):
+    def test_escribe_y_relee_el_ultimo_dia_enviado(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            ruta = pathlib.Path(carpeta) / "sub" / "last_day.txt"
+
+            MODULE.write_last_sent(ruta, dt.date(2026, 8, 2))
+
+            self.assertEqual(MODULE.read_last_sent(ruta), dt.date(2026, 8, 2))
+
+    def test_sin_estado_previo_devuelve_none(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            self.assertIsNone(MODULE.read_last_sent(pathlib.Path(carpeta) / "no-existe.txt"))
+
+    def test_un_estado_corrupto_no_rompe_el_envio(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            ruta = pathlib.Path(carpeta) / "last_day.txt"
+            ruta.write_text("no soy una fecha", encoding="utf-8")
+
+            self.assertIsNone(MODULE.read_last_sent(ruta))
+
+
+class AvisoDeFalloTest(unittest.TestCase):
+    """Un fallo del timer no puede ser indistinguible del silencio."""
+
+    def test_el_aviso_nombra_la_unit_el_exit_y_el_detalle(self) -> None:
+        mensaje = MODULE.build_failure_message(
+            dt.date(2026, 8, 3), 2, "Supabase devolvió 500 al pedir chat_daily_stats"
+        )
+
+        self.assertIn("[RESIDENCIAFISCAL]", mensaje)
+        self.assertIn("2026-08-03", mensaje)
+        self.assertIn("Exit: 2", mensaje)
+        self.assertIn("residenciafiscal-daily-chat-cost-telegram.service", mensaje)
+        self.assertIn("Supabase devolvió 500", mensaje)
+
+    def test_el_aviso_no_arrastra_diagnosticos_enormes(self) -> None:
+        mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 1, "x" * 2000)
+
+        self.assertLess(len(mensaje), 800)
+
+
+class CableadoDelRunnerTest(unittest.TestCase):
+    """El runner del timer llama a `main`; la recuperación tiene que llegar ahí."""
+
+    def setUp(self) -> None:
+        self.enviados: list[str] = []
+        self.dias_pedidos: list[dt.date] = []
+
+        def fetch_stats(day: dt.date, env: dict[str, str]) -> dict:
+            self.dias_pedidos.append(day)
+            return {"day": day.isoformat(), "requests": 0, "total_microusd": 0}
+
+        dobles = {
+            "fetch_stats": fetch_stats,
+            "send_telegram": lambda mensaje, env: self.enviados.append(mensaje),
+            "load_env": dict,
+        }
+        for nombre, doble in dobles.items():
+            parche = mock.patch.object(MODULE, nombre, doble)
+            parche.start()
+            self.addCleanup(parche.stop)
+
+    def test_catch_up_envia_los_dias_perdidos_y_avanza_el_estado(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            estado = pathlib.Path(carpeta) / "last_day.txt"
+            MODULE.write_last_sent(estado, dt.date(2026, 7, 31))
+
+            codigo = MODULE.main(
+                ["--catch-up", "--today", "2026-08-03", "--state-file", str(estado)]
+            )
+
+            self.assertEqual(codigo, 0)
+            self.assertEqual(self.dias_pedidos, [dt.date(2026, 8, 1), dt.date(2026, 8, 2)])
+            self.assertEqual(len(self.enviados), 2)
+            self.assertEqual(MODULE.read_last_sent(estado), dt.date(2026, 8, 2))
+
+    def test_catch_up_sin_pendientes_no_manda_nada(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            estado = pathlib.Path(carpeta) / "last_day.txt"
+            MODULE.write_last_sent(estado, dt.date(2026, 8, 2))
+
+            codigo = MODULE.main(
+                ["--catch-up", "--today", "2026-08-03", "--state-file", str(estado)]
+            )
+
+            self.assertEqual(codigo, 0)
+            self.assertEqual(self.enviados, [])
+
+    def test_en_seco_no_escribe_el_estado(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            estado = pathlib.Path(carpeta) / "last_day.txt"
+
+            MODULE.main(
+                ["--catch-up", "--dry-run", "--today", "2026-08-03", "--state-file", str(estado)]
+            )
+
+            self.assertEqual(self.enviados, [])
+            self.assertFalse(estado.exists())
+
+    def test_un_apagon_largo_avisa_de_los_dias_que_no_recupera(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            estado = pathlib.Path(carpeta) / "last_day.txt"
+            MODULE.write_last_sent(estado, dt.date(2026, 6, 1))
+
+            MODULE.main(["--catch-up", "--today", "2026-08-03", "--state-file", str(estado)])
+
+            self.assertIn("resúmenes diarios omitidos", self.enviados[0])
+            self.assertEqual(len(self.dias_pedidos), MODULE.MAX_CATCH_UP_DAYS)
+
+    def test_un_estado_del_futuro_se_reescribe_al_dia_real(self) -> None:
+        with tempfile.TemporaryDirectory() as carpeta:
+            estado = pathlib.Path(carpeta) / "last_day.txt"
+            MODULE.write_last_sent(estado, dt.date(2026, 8, 20))
+
+            MODULE.main(["--catch-up", "--today", "2026-08-03", "--state-file", str(estado)])
+
+            self.assertEqual(self.dias_pedidos, [dt.date(2026, 8, 2)])
+            self.assertEqual(MODULE.read_last_sent(estado), dt.date(2026, 8, 2))
+
+    def test_el_aviso_de_fallo_se_manda_y_no_consulta_el_ledger(self) -> None:
+        codigo = MODULE.main(
+            ["--failure-alert", "Supabase devolvió 500", "--failure-exit-code", "2"]
+        )
+
+        self.assertEqual(codigo, 0)
+        self.assertEqual(self.dias_pedidos, [])
+        self.assertIn("Exit: 2", self.enviados[0])
+        self.assertIn("Supabase devolvió 500", self.enviados[0])
+
+
+class RunnerDelTimerTest(unittest.TestCase):
+    """El runner es lo que ejecuta la unit: la recuperación y el aviso viven ahí."""
+
+    RUNNER = (ROOT / "scripts" / "agentic" / "daily_chat_cost_telegram_runner.sh").read_text(
+        encoding="utf-8"
+    )
+    SERVICE = (
+        ROOT / "scripts" / "agentic" / "residenciafiscal-daily-chat-cost-telegram.service"
+    ).read_text(encoding="utf-8")
+
+    def test_el_runner_recupera_los_dias_pendientes(self) -> None:
+        self.assertIn("--catch-up", self.RUNNER)
+
+    def test_el_runner_avisa_por_telegram_cuando_el_envio_falla(self) -> None:
+        self.assertIn("--failure-alert", self.RUNNER)
+        self.assertIn("--failure-exit-code", self.RUNNER)
+
+    def test_el_aviso_usa_el_interprete_del_sistema(self) -> None:
+        """Un entorno de `uv` roto no puede silenciar la alerta."""
+        aviso = self.RUNNER.split("--failure-alert")[0]
+        self.assertIn("python3 scripts/daily_chat_cost_telegram.py", aviso.rsplit("\n", 2)[-2])
+
+    def test_la_unit_ejecuta_ese_runner(self) -> None:
+        self.assertIn("daily_chat_cost_telegram_runner.sh", self.SERVICE)
+
+    def test_la_unit_aguanta_la_recuperacion_mas_larga(self) -> None:
+        """Si systemd mata el job a mitad, ni avanza el estado ni sale la alerta.
+
+        El peor caso son `MAX_CATCH_UP_DAYS` días, cada uno con su timeout de
+        RPC y su timeout de Telegram, más el aviso de días omitidos.
+        """
+        lib_telegram = load_script("lib_telegram")
+        por_dia = MODULE.RPC_TIMEOUT_SECONDS + lib_telegram.TELEGRAM_TIMEOUT_SECONDS
+        peor_caso = (MODULE.MAX_CATCH_UP_DAYS + 1) * por_dia
+
+        declarado = next(
+            int(linea.split("=", 1)[1])
+            for linea in self.SERVICE.splitlines()
+            if linea.startswith("TimeoutStartSec=")
+        )
+
+        self.assertGreaterEqual(declarado, peor_caso)
+
+
+class InstaladorDelTimerTest(unittest.TestCase):
+    """El timer semanal tiene instalador idempotente; el diario también."""
+
+    INSTALLER = ROOT / "scripts" / "agentic" / "install-daily-chat-cost-telegram-timer.sh"
+
+    def test_el_instalador_existe(self) -> None:
+        self.assertTrue(self.INSTALLER.exists())
+
+    def test_valida_las_claves_que_el_resumen_necesita(self) -> None:
+        contenido = self.INSTALLER.read_text(encoding="utf-8")
+
+        for clave in ("SUPABASE_URL", "SUPABASE_SECRET_KEY", "TELEGRAM_TOKEN", "TELEGRAM_CHAT_ID"):
+            self.assertIn(clave, contenido)
+
+    def test_instala_las_dos_units_y_activa_el_timer(self) -> None:
+        contenido = self.INSTALLER.read_text(encoding="utf-8")
+
+        self.assertIn("residenciafiscal-daily-chat-cost-telegram.service", contenido)
+        self.assertIn("residenciafiscal-daily-chat-cost-telegram.timer", contenido)
+        self.assertIn("daemon-reload", contenido)
+        self.assertIn("enable --now", contenido)
 
 
 class PrivacidadDeLaRpcTest(unittest.TestCase):
