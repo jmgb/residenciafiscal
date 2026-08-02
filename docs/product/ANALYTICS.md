@@ -73,11 +73,15 @@ En producción, comprobar en DevTools → Network que se cargan:
 
 - `https://www.googletagmanager.com/gtag/js?id=G-XKX3N9KVJH` y peticiones a
   `www.google-analytics.com`;
-- `https://eu.i.posthog.com/static/array.js` y peticiones a `eu.i.posthog.com`.
+- `https://eu.i.posthog.com/static/array.js`, la configuración remota desde
+  `eu-assets.i.posthog.com` y peticiones de captura a `eu.i.posthog.com`.
 
 Si Netlify aplica una CSP, `script-src` debe permitir
-`https://www.googletagmanager.com` y `https://eu.i.posthog.com`; `connect-src`,
-`https://www.google-analytics.com` y `https://eu.i.posthog.com`.
+`https://www.googletagmanager.com`, `https://eu.i.posthog.com` y
+`https://eu-assets.i.posthog.com`; `connect-src`,
+`https://www.google-analytics.com`, `https://eu.i.posthog.com` y
+`https://eu-assets.i.posthog.com`. El segundo host de PostHog sirve el
+`config.js` del proyecto y su equivalente JSON; no recibe los eventos.
 
 ## Consentimiento
 
