@@ -9,101 +9,38 @@
  * Por eso el envelope se construye a mano en lugar de usar `@sentry/node`: el
  * SDK captura breadcrumbs de consola y contexto del runtime por defecto, y esta
  * Function loguea eventos estructurados por consola. Lo que sale hacia Sentry es
- * exactamente lo que se lee en `buildEnvelope`.
+ * exactamente lo que construye `sentry-envelope.ts`.
  */
 
-export type ChatFailureStage = 'record' | 'compare' | 'complete';
+import {
+  CHAT_OBSERVABILITY_SCHEMA_VERSION,
+  type ChatCostEvent,
+  type ChatFailureEvent,
+  type ChatObservability,
+  type ChatStrategyFailureEvent,
+  sanitizeErrorName,
+} from './observability-contracts';
+import {
+  buildSentryEnvelope,
+  parseSentryDsn,
+  type SentryDsnParts,
+  type SyntheticFailureEvent,
+} from './sentry-envelope';
 
-export interface ChatFailureEvent {
-  requestId: string;
-  failureCode: string;
-  stage: ChatFailureStage;
-  status?: 'failed' | 'timed_out';
-  /** Nombre de la clase del error. Se sanea antes de salir del proceso. */
-  errorName?: string;
-  latencyMs?: number;
-}
-
-export interface ChatCostStrategy {
-  strategy: string;
-  status: string;
-  model: string | null;
-  reasoning_effort: string | null;
-  latency_ms: number;
-  cost_microusd: number | null;
-  measurement: string;
-  input_tokens: number | null;
-  output_tokens: number | null;
-  retrieved_document_tokens: number | null;
-  source_count: number;
-  limit_count: number;
-  judgment_ids: string[];
-  authority_counts: {
-    tribunal_supremo: number;
-    audiencia_nacional: number;
-    other: number;
-  };
-  authority_match: 'direct' | 'missing' | 'not_requested';
-  retrieval_filter: string | null;
-  citation_candidates: number;
-  citation_verified: number;
-  document_token_accounting: 'reported' | 'unavailable' | 'not_applicable';
-  failure_code: string | null;
-  error_name: string | null;
-}
-
-export interface ChatCostEvent {
-  requestId: string;
-  actualMicrousd: number;
-  actualComplete: boolean;
-  authorityIntent: 'tribunal_supremo' | 'audiencia_nacional' | null;
-  timingsMs: {
-    record: number;
-    compare: number;
-    persistence: number;
-    total: number;
-  };
-  strategies: readonly ChatCostStrategy[];
-}
-
-export interface ChatObservability {
-  recordFailure(event: ChatFailureEvent): Promise<void>;
-  recordCost(event: ChatCostEvent): Promise<void>;
-}
-
-export interface SentryDsnParts {
-  endpoint: string;
-  publicKey: string;
-}
-
-export const parseSentryDsn = (dsn: string): SentryDsnParts | null => {
-  if (!dsn) return null;
-  let url: URL;
-  try {
-    url = new URL(dsn);
-  } catch {
-    return null;
-  }
-  const projectId = url.pathname.replace(/^\/+/, '');
-  if (!projectId || !url.username) return null;
-  return {
-    endpoint: `${url.protocol}//${url.host}/api/${projectId}/envelope/`,
-    publicKey: url.username,
-  };
-};
-
-/**
- * Solo un identificador de clase puede salir como `error_name`. Cualquier otra
- * cosa —un mensaje del proveedor, una URL con credenciales— se descarta entera.
- */
-const sanitizeErrorName = (value: string | undefined): string =>
-  value && /^[A-Za-z][A-Za-z0-9_]{0,39}$/.test(value) ? value : 'unknown';
+export type {
+  ChatCostEvent,
+  ChatFailureEvent,
+  ChatObservability,
+  ChatStrategyFailureEvent,
+} from './observability-contracts';
+export { parseSentryDsn } from './sentry-envelope';
 
 /** Emite los eventos estructurados que ya consumen los logs de Netlify. */
 export class ConsoleChatObservability implements ChatObservability {
   async recordFailure(event: ChatFailureEvent): Promise<void> {
     console.error(
       JSON.stringify({
+        schema_version: CHAT_OBSERVABILITY_SCHEMA_VERSION,
         event: 'chat_request_failed',
         request_id: event.requestId,
         failure_code: event.failureCode,
@@ -115,9 +52,24 @@ export class ConsoleChatObservability implements ChatObservability {
     );
   }
 
+  async recordStrategyFailure(event: ChatStrategyFailureEvent): Promise<void> {
+    console.error(
+      JSON.stringify({
+        schema_version: CHAT_OBSERVABILITY_SCHEMA_VERSION,
+        event: 'chat_strategy_failed',
+        request_id: event.requestId,
+        strategy: event.strategy,
+        failure_code: event.failureCode,
+        error_name: sanitizeErrorName(event.errorName),
+        latency_ms: event.latencyMs,
+      })
+    );
+  }
+
   async recordCost(event: ChatCostEvent): Promise<void> {
     console.info(
       JSON.stringify({
+        schema_version: CHAT_OBSERVABILITY_SCHEMA_VERSION,
         event: 'chat_cost_reconciled',
         request_id: event.requestId,
         request_status: 'completed',
@@ -156,42 +108,7 @@ export class SentryChatObservability implements ChatObservability {
     this.timeoutMs = options.timeoutMs ?? 2_000;
   }
 
-  private buildEnvelope(event: ChatFailureEvent): string {
-    const eventId = crypto.randomUUID().replace(/-/g, '');
-    const payload = {
-      event_id: eventId,
-      timestamp: Date.now() / 1000,
-      platform: 'node',
-      level: 'error',
-      logger: 'chat',
-      environment: this.options.environment,
-      ...(this.options.release ? { release: this.options.release } : {}),
-      message: {
-        formatted: `chat_request_failed: ${event.failureCode} (${event.stage})`,
-      },
-      fingerprint: ['chat_request_failed', event.failureCode, event.stage],
-      tags: {
-        service: 'residencia-fiscal',
-        component: 'netlify-function',
-        failure_code: event.failureCode,
-        stage: event.stage,
-        ...(event.status ? { status: event.status } : {}),
-        error_name: sanitizeErrorName(event.errorName),
-      },
-      extra: {
-        request_id: event.requestId,
-        ...(event.latencyMs !== undefined ? { latency_ms: event.latencyMs } : {}),
-      },
-    };
-    return [
-      JSON.stringify({ event_id: eventId, sent_at: new Date().toISOString() }),
-      JSON.stringify({ type: 'event' }),
-      JSON.stringify(payload),
-    ].join('\n');
-  }
-
-  async recordFailure(event: ChatFailureEvent): Promise<void> {
-    await this.options.inner.recordFailure(event);
+  private async send(event: SyntheticFailureEvent): Promise<void> {
     if (!this.parts) return;
     try {
       await this.fetchImpl(this.parts.endpoint, {
@@ -200,12 +117,41 @@ export class SentryChatObservability implements ChatObservability {
           'content-type': 'application/x-sentry-envelope',
           'X-Sentry-Auth': `Sentry sentry_version=7, sentry_key=${this.parts.publicKey}, sentry_client=residenciafiscal-chat/1.0`,
         },
-        body: this.buildEnvelope(event),
+        body: buildSentryEnvelope(this.options, event),
         signal: AbortSignal.timeout(this.timeoutMs),
       });
     } catch {
       // Observar no puede tumbar el chat: el fallo ya quedó en el log estructurado.
     }
+  }
+
+  async recordFailure(event: ChatFailureEvent): Promise<void> {
+    await this.options.inner.recordFailure(event);
+    await this.send({
+      eventName: 'chat_request_failed',
+      requestId: event.requestId,
+      failureCode: event.failureCode,
+      qualifierKey: 'stage',
+      qualifierValue: event.stage,
+      fingerprint: ['chat_request_failed', event.failureCode, event.stage],
+      errorName: event.errorName,
+      latencyMs: event.latencyMs,
+      tags: event.status ? { status: event.status } : undefined,
+    });
+  }
+
+  async recordStrategyFailure(event: ChatStrategyFailureEvent): Promise<void> {
+    await this.options.inner.recordStrategyFailure(event);
+    await this.send({
+      eventName: 'chat_strategy_failed',
+      requestId: event.requestId,
+      failureCode: event.failureCode,
+      qualifierKey: 'strategy',
+      qualifierValue: event.strategy,
+      fingerprint: ['chat_strategy_failed', event.strategy, event.failureCode],
+      errorName: event.errorName,
+      latencyMs: event.latencyMs,
+    });
   }
 
   async recordCost(event: ChatCostEvent): Promise<void> {

@@ -75,6 +75,7 @@ describe('ConsoleChatObservability', () => {
 
     expect(errorLog).toHaveBeenCalledWith(
       JSON.stringify({
+        schema_version: 'residenciafiscal-chat-observability/1',
         event: 'chat_request_failed',
         request_id: 'chat-1',
         failure_code: 'comparison_error',
@@ -96,6 +97,7 @@ describe('ConsoleChatObservability', () => {
 
     expect(errorLog).toHaveBeenCalledWith(
       JSON.stringify({
+        schema_version: 'residenciafiscal-chat-observability/1',
         event: 'chat_request_failed',
         request_id: 'chat-1',
         failure_code: 'record_error',
@@ -110,6 +112,7 @@ describe('ConsoleChatObservability', () => {
 
     expect(infoLog).toHaveBeenCalledWith(
       JSON.stringify({
+        schema_version: 'residenciafiscal-chat-observability/1',
         event: 'chat_cost_reconciled',
         request_id: 'chat-1',
         request_status: 'completed',
@@ -119,6 +122,29 @@ describe('ConsoleChatObservability', () => {
         authority_intent: 'tribunal_supremo',
         timings_ms: costEvent.timingsMs,
         strategies: costEvent.strategies,
+      })
+    );
+  });
+
+  it('emite un evento versionado para el fallo aislado de una estrategia', async () => {
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    await new ConsoleChatObservability().recordStrategyFailure({
+      requestId: 'chat-1',
+      strategy: 'gemini_file_search',
+      failureCode: 'timeout',
+      errorName: 'DeadlineExceeded',
+      latencyMs: 52_001,
+    });
+
+    expect(errorLog).toHaveBeenCalledWith(
+      JSON.stringify({
+        schema_version: 'residenciafiscal-chat-observability/1',
+        event: 'chat_strategy_failed',
+        request_id: 'chat-1',
+        strategy: 'gemini_file_search',
+        failure_code: 'timeout',
+        error_name: 'DeadlineExceeded',
+        latency_ms: 52_001,
       })
     );
   });
@@ -179,6 +205,43 @@ describe('SentryChatObservability', () => {
     ]);
     expect(call.payload.environment).toBe('production');
     expect(call.envelopeHeader.event_id).toMatch(/^[0-9a-f]{32}$/);
+  });
+
+  it('alerta en Sentry por un fallo aislado sin convertirlo en fallo global', async () => {
+    const fetchMock = vi.fn(async () => new Response('', { status: 200 }));
+    const observability = new SentryChatObservability({
+      dsn: DSN,
+      environment: 'production',
+      fetchImpl: fetchMock as unknown as typeof fetch,
+      inner: new ConsoleChatObservability(),
+    });
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    await observability.recordStrategyFailure({
+      requestId: 'chat-1',
+      strategy: 'current_structured',
+      failureCode: 'citation_verification',
+      errorName: 'Error: contiene la pregunta de Andorra',
+      latencyMs: 900,
+    });
+
+    const { payload, rawBody } = sentryCall(fetchMock);
+    expect(payload.message.formatted).toBe(
+      'chat_strategy_failed: citation_verification (current_structured)'
+    );
+    expect(payload.fingerprint).toEqual([
+      'chat_strategy_failed',
+      'current_structured',
+      'citation_verification',
+    ]);
+    expect(payload.tags).toMatchObject({
+      schema_version: 'residenciafiscal-chat-observability/1',
+      strategy: 'current_structured',
+      failure_code: 'citation_verification',
+      error_name: 'unknown',
+    });
+    expect(payload.extra).toEqual({ request_id: 'chat-1', latency_ms: 900 });
+    expect(rawBody).not.toContain('Andorra');
   });
 
   it('no emite ninguna estructura capaz de transportar datos de la petición', async () => {

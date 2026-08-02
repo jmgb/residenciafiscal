@@ -165,6 +165,19 @@ export const createProductionDependencies = (
         report,
       });
       const persistenceLatencyMs = Math.round(performance.now() - persistenceStarted);
+      await Promise.all(
+        report.answers
+          .filter((answer) => answer.status === 'error')
+          .map((answer) =>
+            observability.recordStrategyFailure({
+              requestId,
+              strategy: answer.strategy,
+              failureCode: answer.diagnostics?.failure_code ?? 'unknown',
+              errorName: answer.diagnostics?.error_name ?? undefined,
+              latencyMs: answer.latency_ms,
+            })
+          )
+      );
       await observability.recordCost({
         requestId,
         actualMicrousd,

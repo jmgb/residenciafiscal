@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { createClient, rpc } = vi.hoisted(() => ({
   createClient: vi.fn(),
@@ -35,6 +35,10 @@ beforeEach(() => {
   createClient.mockReset();
   rpc.mockReset();
   createClient.mockReturnValue({ rpc });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe('composition root de la Function con Supabase', () => {
@@ -77,6 +81,7 @@ describe('composition root de la Function con Supabase', () => {
   it('registra coste y tokens de A/B sin registrar el contenido fiscal', async () => {
     rpc.mockResolvedValueOnce({ data: true, error: null });
     const log = vi.spyOn(console, 'info').mockImplementation(() => undefined);
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const dependencies = createProductionDependencies(environment);
     const report: ComparisonReport = {
       schema_version: 'residenciafiscal-chat-comparison/1',
@@ -107,13 +112,23 @@ describe('composition root de la Function con Supabase', () => {
         },
         {
           strategy: 'gemini_file_search',
-          status: 'parcial',
+          status: 'error',
           text: 'Otra respuesta privada',
           sources: [],
           limits: [],
           model: 'gemini-3.5-flash-lite',
           reasoning_effort: null,
           latency_ms: 900,
+          diagnostics: {
+            authority_intent: 'tribunal_supremo',
+            authority_match: 'missing',
+            retrieval_filter: 'judgment_id="sts-*"',
+            retrieved_judgment_ids: [],
+            citation_candidates: 1,
+            citation_verified: 0,
+            failure_code: 'citation_verification',
+            error_name: 'TypeError',
+          },
           cost: {
             currency: 'USD',
             amount_usd: '0.000800',
@@ -141,6 +156,7 @@ describe('composition root de la Function con Supabase', () => {
 
     const serialized = String(log.mock.calls[0]?.[0]);
     expect(JSON.parse(serialized)).toMatchObject({
+      schema_version: 'residenciafiscal-chat-observability/1',
       event: 'chat_cost_reconciled',
       request_id: 'chat-request-1',
       request_status: 'completed',
@@ -172,5 +188,15 @@ describe('composition root de la Function con Supabase', () => {
     });
     expect(serialized).not.toContain('Dato fiscal');
     expect(serialized).not.toContain('Otra respuesta');
+    expect(errorLog).toHaveBeenCalledOnce();
+    expect(JSON.parse(String(errorLog.mock.calls[0]?.[0]))).toMatchObject({
+      schema_version: 'residenciafiscal-chat-observability/1',
+      event: 'chat_strategy_failed',
+      request_id: 'chat-request-1',
+      strategy: 'gemini_file_search',
+      failure_code: 'citation_verification',
+      error_name: 'TypeError',
+      latency_ms: 900,
+    });
   });
 });
