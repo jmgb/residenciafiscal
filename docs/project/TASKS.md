@@ -430,6 +430,18 @@ contra el dominio público después de cada deploy.
   del diseño: eventos SSE, los dos `429` (el del limitador nativo llega sin ejecutar la
   función y no es SSE), `502` antes del primer token frente a `event: error` a mitad de
   stream, cancelación por `AbortSignal` y degradación a búsqueda léxica si el router falla.
+- [ ] **Futuro — API/MCP para agentes externos con créditos prepagados.** Vender
+  la consulta del corpus y las respuestas del chat a agentes de IA de terceros:
+  cuenta por organización, API keys hasheadas, ledger de créditos append-only en
+  Supabase con reserva → liquidación por petición, y doble superficie REST + MCP
+  remoto reutilizando los módulos de la Function del chat (la estrategia B no se
+  expone). Diseño completo, fases (F1 piloto manual → F2 self-service con Stripe
+  → F3 MCP público) y riesgos en
+  [`AGENT_API_MCP.md`](../product/AGENT_API_MCP.md). **No arrancar antes de**:
+  chat de producción estabilizado, coste medio real por respuesta medido sobre el
+  ledger, y los bloqueantes legales del diseño (ampliar `/privacidad`, ToS del
+  API, consulta fiscal sobre IVA de servicios electrónicos). La F1 existe para
+  validar demanda barato: 1–3 clientes con clave manual y recarga contra factura.
 
 ## Corpus normativo
 
