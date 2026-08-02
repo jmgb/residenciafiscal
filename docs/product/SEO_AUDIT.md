@@ -309,15 +309,27 @@ jurisdicción es `/espana/doctrina/<tema>`
 por cuestión jurídica recurrente («ausencias esporádicas 183 días», «becarios
 en el extranjero», «teletrabajo y centro de intereses»...), no una por consulta.
 
+Los *temas* no se inventan con clustering libre: cada consulta se clasifica
+contra el catálogo jurídico que ya existe (criterios de `src/config.py` y
+unidades de recuperación por cuestión), que es lo que el router del chat hace ya
+en cada petición. Así todo tema candidato tiene corpus detrás por construcción,
+y antes de crear una página se comprueba si el tema ya está cubierto por una URL
+existente (ficha de precepto, página de país), en cuyo caso se amplía esa página
+en lugar de crear una casi duplicada que canibalice el ranking.
+
 Límites que condicionan el diseño:
 
 - **Privacidad.** Una consulta del chat es dato fiscal con **15 días de
   retención** declarados en `/privacidad`. Nunca se publica una consulta
   literal ni nada que permita reidentificar al autor: las consultas solo se
-  usan como señal agregada para elegir *temas*, y el análisis debe operar
-  dentro de esa ventana (o sobre agregados temáticos que no sean dato
-  personal). Si se monta un proceso periódico de clustering de consultas, no
-  puede exigir alargar la retención.
+  usan como señal agregada para elegir *temas*, con un umbral de
+  **k-anonimato** (un tema solo se materializa si lo formularon varias
+  sesiones distintas; uno preguntado por una sola persona es un caso concreto
+  reidentificable). El análisis debe operar dentro de esa ventana (o sobre
+  agregados temáticos que no sean dato personal) y no puede exigir alargar la
+  retención. Usar las consultas para esto es además una finalidad nueva del
+  tratamiento: hay que declararla en `/privacidad` antes de la primera
+  agregación, también en modo agregado.
 - **Contenido, no thin content.** La landing se redacta desde los textos
   literales del corpus y el copy institucional, con el mismo criterio que el
   punto 2: sin afirmar revisión humana y sin materializar una página que no

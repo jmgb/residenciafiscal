@@ -558,23 +558,54 @@ comprueban párrafo a párrafo contra la fuente.
   antes, y una landing con URL propia (`/espana/doctrina/<tema>`, punto 11 de
   [`SEO_AUDIT.md`](../product/SEO_AUDIT.md)) puede capturar esa demanda en
   Google respondiéndola con el corpus.
-  - **Anonimato del usuario, innegociable.** La consulta del chat es dato
-    fiscal: nunca se publica una consulta literal ni nada que permita
-    reidentificar a su autor (hechos concretos, fechas, países, cuantías de un
-    caso particular). El runner agrega las consultas en *temas* jurídicos
-    recurrentes y redacta la página desde el tema, no desde la conversación; la
-    frecuencia diaria encaja además con la retención de 15 días declarada en
-    `/privacidad`, que este proceso no puede exigir alargar.
-  - El contenido de cada landing sale de los textos literales del corpus
-    (extractos verificados, preceptos del BOE) y remata invitando al chat; sin
-    corpus suficiente detrás, el tema no se materializa (regla anti thin
-    content de la arquitectura internacional).
-  - Decidir si el runner publica directamente o deja borradores para
-    aprobación: el gate editorial y el de GSC de 4-6 semanas siguen rigiendo, y
-    ninguna página puede afirmar revisión humana inexistente.
-  - Requisito previo: volumen real de consultas. Con el tráfico actual el
-    clustering diario no tendría señal; hasta entonces basta la selección
-    manual de temas del punto 11 de la auditoría.
+  - **Clasificar contra el catálogo jurídico existente, no clustering libre.**
+    El corpus ya tiene taxonomía: los criterios de `src/config.py` y las
+    unidades de recuperación por cuestión jurídica (el router del chat ya
+    clasifica cada consulta contra ellas en producción). El runner asigna cada
+    consulta a esa taxonomía, de modo que todo tema candidato tiene corpus
+    detrás **por construcción** —la regla anti thin content se cumple sola— y
+    la evidencia de la landing (sentencias, páginas, extractos literales) se
+    ensambla reutilizando el retriever offline, sin publicar nunca texto
+    generado por el LLM.
+  - **Anonimato como propiedad mecánica: umbral de k-anonimato.** La consulta
+    del chat es dato fiscal: nunca se publica una consulta literal ni nada que
+    permita reidentificar a su autor (hechos concretos, fechas, cuantías de un
+    caso particular). El límite no es solo editorial sino verificable: un tema
+    solo se materializa si lo han formulado **≥k sesiones distintas** dentro de
+    la ventana de retención (k por decidir; ≥3 como suelo). Un tema preguntado
+    por una sola persona es un caso concreto reidentificable y, además, no
+    tiene demanda que justifique una página. La agregación diaria encaja con la
+    retención de 15 días declarada en `/privacidad`, que este proceso no puede
+    exigir alargar.
+  - **Deduplicar contra lo ya publicado antes de crear.** Muchos temas
+    recurrentes ya tienen URL (la ficha del art. 9 LIRPF, las páginas de país,
+    `/metodologia`). El runner mapea primero tema → URL existente y, si hay
+    cobertura, propone **ampliar** esa página en lugar de crear una casi
+    duplicada que canibalice el ranking.
+  - **Segundo artefacto: las preguntas sin respuesta.** Las consultas donde el
+    chat se abstiene o no encuentra cobertura son la señal más valiosa del
+    proceso: demanda insatisfecha y gaps del corpus. No generan landing (no hay
+    corpus detrás), pero salen del runner como backlog priorizado de expansión
+    del corpus.
+  - **Cadencia: diaria para agregar, por lotes para publicar.** La agregación
+    debe ser frecuente porque las consultas caducan a los 15 días, pero la
+    publicación va en lotes pequeños y espaciados (pocas páginas por semana
+    como techo): decenas de páginas nuevas de golpe en un dominio joven encajan
+    en el patrón de «scaled content abuse» que Google penaliza desde 2024.
+    Decidir si el runner publica directamente o deja borradores como PR —el
+    merge sería el gate editorial—; el gate de GSC sigue rigiendo y ninguna
+    página puede afirmar revisión humana inexistente.
+  - **Se puede empezar a acumular ya, sin esperar el volumen.** El ranking de
+    temas no caduca aunque las consultas sí: un script quincenal mínimo que
+    clasifique las consultas contra el catálogo y persista **solo contadores
+    agregados por tema** haría que el runner nazca con histórico. Cautela
+    previa: incluso esos contadores son ya una finalidad nueva del tratamiento
+    que `/privacidad` no declara hoy; hay que declararla (con su base jurídica)
+    antes de la primera ejecución, también en modo agregado.
+  - Requisito previo para el runner completo: volumen real de consultas. Con el
+    tráfico actual el clustering diario no tendría señal; hasta entonces bastan
+    el acumulador quincenal y la selección manual de temas del punto 11 de la
+    auditoría.
 
 ## Colaboración internacional
 
