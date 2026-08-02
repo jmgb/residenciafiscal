@@ -1,0 +1,622 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "vuelos con origen o destino en Barcelona"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "existencia de una relación estable con persona residente en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "chofer y entrenador\npersonal residentes en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "ha sido emitido mediante actuaciones simuladas\ndel interesado"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "pagos y cobros\nrealizados desde cuentas bancarias sitas en Suiza"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "el recurrente aporta un certiﬁcado de residencia ﬁscal en Suiza"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "así como constaba inscrito en el Consulado de España en Ginebra"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "tenía\nsu residencia ﬁscal"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "desde la fecha 26/06/2000\nhasta 15/03/2007"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "vino a ratiﬁcar esa declaración de hechos probados"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "a los efectos del IRPF"
+        },
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "la sentencia ﬁrme"
+        },
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "apreció que su residencia se\nencontraba en Suiza"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "se basa en una extensa documental"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "gestor residente en Suiza"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_OTRO"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Indicios de desplazamientos: vuelos con origen o destino en Barcelona.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Inferir permanencia y vínculos de hecho en España durante 2005.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "vuelos con origen o destino Barcelona"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Indicio personal: existencia de relación estable con persona residente en España.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar centro de intereses vitales/arraigo personal en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "relación estable con residente en España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "SALUD_Y_SERVICIOS_PERSONALES",
+          "description": "Indicios de servicios personales en España: chofer y entrenador personal residentes en España.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Inferir vida cotidiana/organización personal en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "chofer y entrenador personal residentes en España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La Inspección/TEAC sostienen que el certificado de residencia suizo se obtuvo mediante actuaciones simuladas para aparentar residencia en Suiza.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Suiza",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS no confirma expresamente esta conclusión; la sentencia se resuelve por contradicción fáctica no motivada y por la sentencia firme AN/penal.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "AEAT",
+          "probativePurpose": "Desacreditar la prueba directa de residencia fiscal en Suiza aportada por el contribuyente.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "impugnación de certificado suizo como simulado"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Operativa bancaria en Suiza (pagos/cobros) que el TSJ calificó como parte de la simulación de residencia, no como gestión económica real.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Negar que el uso de cuentas suizas acredite residencia o centro económico fuera de España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pagos/cobros desde cuentas suizas (considerados simulación)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado de residencia fiscal en Suiza aportado por el contribuyente para el ejercicio 2005 (discutido por Inspección/TEAC).",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Suiza",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS no decide sobre su autenticidad/suficiencia, sino sobre la falta de motivación del TSJ y la coherencia con sentencias firmes penal/AN.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Suiza en 2005 y excluir residencia en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado de residencia fiscal en Suiza"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS reproduce el hecho probado penal que lo incluye y lo trata como dato fáctico relevante a considerar para evitar contradicciones.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Constancia de inscripción en el Consulado de España en Ginebra durante el periodo en que se afirma residencia en Suiza.",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Corroborar residencia efectiva en Suiza (vínculo administrativo coherente con residencia).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "inscripción consular en Ginebra"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS la considera una \"nítida aseveración\" sobre un dato fáctico esencial que debía ser tenido en cuenta y cuya contradicción exigía motivación.",
+          "category": "OTROS",
+          "description": "Sentencia penal 1/10/2018 (Juzgado Penal 19 Barcelona) que declara probado que el contribuyente tenía residencia fiscal en Friburgo (Suiza) 26/06/2000-15/03/2007 (incluye 2005).",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Fijar como hecho probado judicialmente la residencia fiscal en Suiza también en 2005.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "sentencia penal Juzgado Penal 19 Barcelona (hechos probados)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS descarta la tesis de extralimitación/indefensión y asume que la Audiencia Provincial ratificó la declaración de hechos probados.",
+          "category": "OTROS",
+          "description": "Sentencia de 21/05/2019 (AP Barcelona) desestima apelación de AEAT y confirma la declaración contundente de residencia en Suiza.",
+          "evidenceId": "evidence-legacy-009",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Reforzar firmeza y contundencia del hecho probado penal sobre residencia en Suiza.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "sentencia Audiencia Provincial Barcelona confirmando hechos probados"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS usa esta sentencia firme como soporte para declarar la misma circunstancia fáctica en IP 2005 por remisión legal (art. 5 Dos LIP).",
+          "category": "OTROS",
+          "description": "Sentencia AN 26/05/2021 (IRPF 2005) que, considerando el hecho probado penal y su propia valoración, concluye residencia fiscal en Suiza en 2005 y anula IRPF 2005.",
+          "evidenceId": "evidence-legacy-010",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que a efectos del IRPF 2005 (y por remisión del IP) la residencia estaba en Suiza.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "sentencia Audiencia Nacional IRPF 2005 (firme)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El TS no detalla documentos concretos, pero destaca que no hubo duda y que la conclusión fue contundente tras valorar una extensa documental.",
+          "category": "OTROS",
+          "description": "Referencia a que la condena/absolución penal se apoya en una extensa documental y valoración indiciaria conjunta conforme a sana crítica.",
+          "evidenceId": "evidence-legacy-011",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Corroborar que la residencia en Suiza se declaró probada con base probatoria amplia (no por duda).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documental de la defensa valorada en sede penal (no especificada)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-012"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Alegación de gestión patrimonial/manager en Suiza (el TSJ indica que no se acredita gestión más allá de abrir cuenta).",
+          "evidenceId": "evidence-legacy-012",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que el centro de intereses económicos/gestión estaría fuera de España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "manager/gestor residente en Suiza (Sr. Secundino)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.",
+        "consequences": [],
+        "decisiveReasoning": "El TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2005,
+            2006
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2023-07-14",
+    "ecli": "ECLI:ES:TS:2023:3574",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-3574-2023",
+    "pageCount": 21,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 3574/2023",
+    "sourceFile": "sentencias/STS_3574_2023.pdf",
+    "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf",
+    "taxYears": [
+      2005,
+      2006
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

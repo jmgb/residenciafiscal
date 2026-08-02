@@ -1,0 +1,603 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "tiene su domicilio desde hace varios años en el  NUM007"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "según conﬁrma el portero de la ﬁnca el obligado\ntributario"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "las comunicaciones de inicio\nfueron recibidas por el propio destinatario en Barcelona"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "el actor estaba al frente de las mercantiles"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "radicadas\nen España, con un volumen de operaciones respecto de la primera de 3.449.941 € en 2007"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "se recogen las manifestaciones de su cónyuge (que dijo que su domicilio\nﬁscal está en Barcelona"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "no se\nhayan aportado otro tipo de justiﬁcantes demostrativos del \" rastro\" de las actividades en Andorra, como por\nejemplo de compras o pagos con tarjetas de crédito"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el citado es el domicilio\nseñalado en la póliza del seguro de Sanitas por el obligado tributario"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "certiﬁcado de residencia ﬁscal del Principado\nde Andorra de 18 de diciembre de 2013"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "en el Hotel  DIRECCION003"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "certiﬁcado de residencia suscrito\npor el Cónsul Mayor"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "en el que se\ndemuestra la residencia en Andorra desde el 23 de enero de 1995"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "copia de la autorización de residencia y\ntrabajo de 22 de diciembre de 2004"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "válida hasta el\n13 de noviembre de 2014"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "los hijos fruto del matrimonio nacieron en  NUM001  de 2008\ny  NUM001  de 2011, por lo tanto después de los ejercicios comprobados"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "copia del pasaporte donde ﬁgura\nun certiﬁcado del Consulado General de España en Andorra la Vella, constando inscrito el demandante como\nresidente desde el 24 de agosto de 2006"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Valorada como indicio relevante aunque no constituye actuación de inicio del procedimiento inspector",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Diligencia de constancia de hechos de 29-09-2011 donde el portero manifiesta que el obligado tiene su domicilio en el nº indicado de Barcelona",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar domicilio efectivo y permanencia en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Diligencia 29/09/2011 (portero)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Se considera indicio a tener en cuenta dentro de la valoración conjunta de pruebas",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Comunicación de inicio y notificaciones recibidas en domicilio de Barcelona (Av. Diagonal)",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar presencia y vinculación administrativa en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Notificaciones comunicaciones inicio en Barcelona"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Determinante para el tribunal; usado como prueba fehaciente del predominio de intereses económicos en España",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Registros/actas que muestran volúmenes de operaciones de sociedades radicadas en España (DIRECCION007: 3.449.941€ en 2007 y 2.161.896€ en 2008)",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar que radica en España el núcleo principal de intereses económicos",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Volumen operaciones sociedades españolas"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Tomadas como indicio significativo aunque con matices por la propia incoherencia temporal de los documentos sobre su residencia",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Manifestaciones de la cónyuge ante agentes tributarios sobre domicilio y circunstancias familiares",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar ubicación del centro de intereses vitales/familiares",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Declaraciones de la cónyuge"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Valorada negativamente frente a la documentación formal andorrana; la Sala destaca la ausencia de 'rastro' (compras, pagos) en Andorra",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Falta de justificantes de pagos, compras o movimientos bancarios que acrediten vida cotidiana en Andorra",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Probar ausencia de rastro de vida cotidiana económica en Andorra",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Ausencia de justificantes de gasto en Andorra"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Considerada como indicio más formal que concluyente pero valorada dentro del conjunto probatorio",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Dirección señalada en póliza de seguro Sanitas como domicilio del obligado",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar domicilio habitual en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Póliza seguro Sanitas con dirección Barcelona"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "La Sala reconoce que aporta indicios pero lo valora en conjunto y lo estima insuficiente para enervar el resto de indicios que sitúan intereses en España",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado expedido por Director del Departamento de Tributs de Andorra en que consta residencia fiscal en el Hotel DIRECCION003",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Principado de Andorra",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "La Sala reconoce que aporta indicios pero lo valora en conjunto y lo estima insuficiente para enervar el resto de indicios que sitúan intereses en España",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Andorra durante años comprobados",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificado residencia fiscal Andorra 18/12/2013"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Admitida como indicio formal pero la Sala la considera insuficiente frente a los indicios en España y al carácter de paraíso fiscal de Andorra en esos ejercicios",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado del Cónsul Mayor de la parroquia donde consta residencia en Andorra desde 23/01/1995",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Principado de Andorra",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "Admitida como indicio formal pero la Sala la considera insuficiente frente a los indicios en España y al carácter de paraíso fiscal de Andorra en esos ejercicios",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar larga residencia en Andorra",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificado Cónsul Mayor 10/12/2014"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Valorada como indicio formal; la Sala considera que tales documentos son resultado de actuaciones solicitadas por el propio interesado y no suficientes por sí solos",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Copia de autorización de residencia y trabajo concedida por Servei d'Inmigració del Govern de Andorra (vigente hasta 13/11/2014)",
+          "evidenceId": "evidence-legacy-009",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia legal y uso de vivienda en Andorra",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Permiso de residencia y trabajo Andorra 22/12/2004"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Admitida pero no suficiente: hijos nacieron en fechas posteriores al periodo comprobado y la ubicación de la cónyuge no acreditó residencia habitual en Andorra durante ambos ejercicios",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Libro de familia y datos sobre hijos y matrimonio aportados al expediente",
+          "evidenceId": "evidence-legacy-010",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Aportar indicios sobre ubicación familiar y tiempo de nacimiento de hijos",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Libro de familia y datos filiación"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "La Sala reconoce la existencia de inscripciones administrativas pero las considera insuficientes frente a los indicios de actividad y residencia en España",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Copia de pasaporte con anotación del Consulado General de España en Andorra la Vella con inscripción desde 24/08/2006",
+          "evidenceId": "evidence-legacy-011",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Principado de Andorra",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "La Sala reconoce la existencia de inscripciones administrativas pero las considera insuficientes frente a los indicios de actividad y residencia en España",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia administrativa en Andorra",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Pasaporte y anotación consular"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.",
+        "consequences": [],
+        "decisiveReasoning": "La Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "PARCIAL",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2007,
+            2008
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+    "decisionDate": "2021-10-21",
+    "ecli": "ECLI:ES:AN:2021:4992",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-4992-2021",
+    "pageCount": 15,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 4992/2021",
+    "sourceFile": "sentencias/SAN_4992_2021.pdf",
+    "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b",
+    "taxYears": [
+      2007,
+      2008
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

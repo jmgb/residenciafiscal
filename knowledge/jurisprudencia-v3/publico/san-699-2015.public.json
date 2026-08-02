@@ -1,0 +1,855 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "dicho inmueble \"domicilio habitual familiar"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "compareció el fallecido"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "en el Padrón municipal, desde el 1 de mayo de 1996"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "facturas emitidas por Seguritas Direct -ejercicios 2005 a\n2008-; consumo de agua 2005 a 2008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Constan consultas externas en el Hospital Puerta de Hierro los días 21 de junio"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "11 de noviembre\nde 2005"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Uso de tarjetas"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "9 de abril; 9 de junio; 1,4,8,12,17"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "31 de\ndiciembre de 2005"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "En esa misma cuenta se efectuaba el cobro de la pensión del\nsujeto pasivo por el periodo 2005 a 2008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "suponen un total de 29.939.384"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "El 18 de febrero de 2005 cobró por caja dos talones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "ﬁrmó órdenes de transferencia en España los días 8 de julio de 2005 (25.000.000"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "El fallecido era administrador único de la entidad UBRBESPAIN SA"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "en 2005 transﬁrió"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "la esposa del fallecido era miembro de la Asociación Parkinson de Madrid"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "asistiendo a sesiones desde el 13 de enero de 2006"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "mantenía una póliza de gastos de entierro en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-013",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "fecha 30 de abril de 2009"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "hasta el 23 de julio de 2008 -fecha del fallecimiento"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-014",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "La autorización de estancia en Suiza se expide el 14 de octubre de 2005 y"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "el 14 de diciembre de 2005"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-015",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "la aportación de"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "la documentación sobre la contratación del seguro médico en Suiza"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "frente al conjunto"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-016",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no es el contrato privado de\npréstamo, sino un documento privado consistente en un reconocimiento de deuda"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-017",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "la intervención notarial no permite acreditar que dichos\npagarés existiesen y estuviesen ﬁrmados antes"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-evidence-013",
+        "anchor-legacy-evidence-014",
+        "anchor-legacy-evidence-015",
+        "anchor-legacy-evidence-016",
+        "anchor-legacy-evidence-017"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acredita domicilio familiar y comparecencia del fallecido en escritura; correlaciona con otros indicios",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Escritura pública (1999) en la que el inmueble en Pozuelo se señala como domicilio habitual familiar y comparece el fallecido",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar vivienda habitual en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "escritura domicilio familiar Pozuelo 1999"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Empadronamiento continuado es indicio fuerte de permanencia y arraigo familiar",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Certificado del Servicio de Empadronamiento de Pozuelo de 22-11-2008 que registra al fallecido, su esposa e hijos desde 1-5-1996",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar residencia continuada en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado empadronamiento 22-11-2008"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Gasto regular y domiciliado en la vivienda corrobora ocupación habitual",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Facturas Seguritas Direct (2005-2008), consumo agua (2005-2008), electricidad (2005-2008), teléfono (2004-2007) pagadas por familiares o con autorizaciones",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Probar uso efectivo y ocupación de la vivienda en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Seguritas, agua, electricidad, teléfono 2004-2008"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Atestigua presencia física en fechas del año 2005",
+          "category": "SALUD_Y_SERVICIOS_PERSONALES",
+          "description": "Registros de consultas externas en Hospital Puerta de Hierro los días 21-6, 3-10 y 11-11-2005",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar presencia física y uso de servicios sanitarios en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "consultas Hospital Puerta de Hierro 2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Frecuente uso de tarjetas en España indica presencia repetida y continuada",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Registros de uso de tarjetas por el fallecido en numerosas fechas de 2005 (listado de días en abril, junio, julio, septiembre, octubre, diciembre)",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar estancias y presencia física en España durante 2005",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "uso tarjetas comercios 2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Movimientos y cobro de pensión en cuentas españolas acreditan vínculo económico",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Extractos de cuenta corriente con movimientos relativos a esposa, hijos y fallecido; cobro de pensión 2005-2008",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Mostrar gestión y recepción de ingresos en cuentas españolas",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "extractos c/c Caja Madrid 2005-2008"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Elevadas entradas en cuentas del contribuyente confirman vinculación económica en España",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Movimientos dinerarios a cuentas del sujeto pasivo en 2005 por 29.939.384€; ingresos y cheques nominativos",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Probar percepción de importantes ingresos en cuentas españolas en 2005",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "entradas a cuenta y cheques 2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Operaciones en ventanilla y cheques corroboran actividad financiera efectiva en España",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Cobró por caja dos talones de 250.000€ y 1.800.000€ el 18-2-2005 y realizó ingresos 23,24,28 feb y 18 junio mediante cheques nominativos",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar operaciones bancarias y presencia de fondos en España en 2005",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "cobro cheques y ingresos febrero/junio 2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Firmas de transferencias de gran cuantía en España son indicio decisivo de gestión económica desde España",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Firmó órdenes de transferencia en España 8-7-2005 (25.000.000€) y 12-9-2005 (609.000€)",
+          "evidenceId": "evidence-legacy-009",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar gestión de fondos y actuaciones económicas desde España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "órdenes transferencias 8-7-2005 y 12-9-2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La posición societaria y transferencias desde sociedades españolas prueban que el núcleo económico radicaba en España",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Administrador único y socio mayoritario de múltiples sociedades españolas (URBESPAIN SA, GRUPO PROCOVIF, INMOBILIARIA EUROCENTRO, etc.) que en 2005 transfirieron importantes sumas al sujeto pasivo (listado y cantidades)",
+          "evidenceId": "evidence-legacy-010",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar centro de intereses económicos en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "cargos en sociedades y pagos desde sociedades 2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Vínculos familiares y actividades sociales de la esposa en España fortalecen presunción de residencia",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Esposa e hijos empadronados; esposa miembro de Asociación Parkinson (asistencias desde 13-1-2006) y rehabilitación a domicilio 2006-2009",
+          "evidenceId": "evidence-legacy-011",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar centro de intereses vitales en España por vínculos familiares y sociales",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "presencia esposa/hijos y actividades asociación Parkinson"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-012"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Elementos de arraigo social contribuyen al conjunto de indicios favorables a España",
+          "category": "OTROS",
+          "description": "Póliza de gastos de entierro en España y pertenencia a hermandades y asociaciones españolas 2005-2008",
+          "evidenceId": "evidence-legacy-012",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar arraigo y vida social en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "póliza gastos de entierro y pertenencias a cofradías"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-013"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "No especifica periodo 2005; insuficiente para acreditar residencia fiscal en 2005",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado (30-04-2009) de la Administration fiscale cantonale de Genève indicando que estuvo sujeto ilimitadamente hasta 23-7-2008, sin indicar desde cuándo",
+          "evidenceId": "evidence-legacy-013",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Suiza",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "No especifica periodo 2005; insuficiente para acreditar residencia fiscal en 2005",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado autoridades fiscales Ginebra 30-04-2009"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-014"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Autorización de estancia y comunicación de cambio posteriores a la mayor parte del año; no prueba residencia fiscal en 2005",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Autorización de estancia en Suiza expedida el 14-10-2005 y comunicación de cambio de residencia el 14-12-2005",
+          "evidenceId": "evidence-legacy-014",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar estancia y cambio de residencia a Suiza en 2005",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Autorisation de séjour 14-10-2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-015"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Insuficiente frente al conjunto de indicios en España y no acredita residencia fiscal en 2005",
+          "category": "OTROS",
+          "description": "Documentación sobre contratación de seguro médico en Suiza aportada por la parte recurrente",
+          "evidenceId": "evidence-legacy-015",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar vida y presencia en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "seguro médico Suiza"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-016"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Documento privado insuficiente, aportado tardíamente, sin eficacia frente a terceros ni prueba de autenticidad de fecha; no desvirtúa la calificación fiscal",
+          "category": "OTROS",
+          "description": "Documento privado de reconocimiento de deuda fechado 29-06-2005 por importe de 16.000.000€ aportado en fase de alegaciones",
+          "evidenceId": "evidence-legacy-016",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Justificar origen de ingresos y que no eran ganancias patrimoniales",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documento privado reconocimiento deuda 29-06-2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-017"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Cotejo notarial cuatro años después no prueba existencia o firma en la fecha indicada; pagarés no acreditan por sí la realidad del préstamo frente a terceros",
+          "category": "OTROS",
+          "description": "Tres pagarés emitidos por BANKINTER (1.000.000€,3.000.000€,12.000.000€) fechados 29-06-2005; copia cotejada por notario el 27-11-2009",
+          "evidenceId": "evidence-legacy-017",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar la concesión de préstamos y justificar ingresos en cuentas",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pagarés BANKINTER 29-06-2005 (copias cotejadas)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala considera probada la residencia en España en 2005 por la concurrencia de presencia física (consumos, consultas hospitalarias, uso de tarjetas), empadronamiento y, sobre todo, por la concentración de intereses económicos (administraciones y pagos desde sociedades españolas). Para 2006 acepta certificado suizo de residencia fiscal pero, por doble residencia, aplica el art.4.2 del Convenio y concluye que el centro de intereses vitales y la vivienda permanente vinculan al contribuyente a España.",
+        "consequences": [],
+        "decisiveReasoning": "La Sala considera probada la residencia en España en 2005 por la concurrencia de presencia física (consumos, consultas hospitalarias, uso de tarjetas), empadronamiento y, sobre todo, por la concentración de intereses económicos (administraciones y pagos desde sociedades españolas). Para 2006 acepta certificado suizo de residencia fiscal pero, por doble residencia, aplica el art.4.2 del Convenio y concluye que el centro de intereses vitales y la vivienda permanente vinculan al contribuyente a España.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2005,
+            2006
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decisionDate": "2015-02-18",
+    "ecli": "ES:AN:2015:699",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-699-2015",
+    "pageCount": 9,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 699/2015",
+    "sourceFile": "sentencias/SAN_699_2015.pdf",
+    "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea",
+    "taxYears": [
+      2005,
+      2006
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

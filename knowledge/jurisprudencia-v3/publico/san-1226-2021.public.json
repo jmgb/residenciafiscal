@@ -1,0 +1,617 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-regla-articulo-9",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "a).- Que permanezca más de 183 días, durante el año natural, en territorio español. Para determinar este período\nde permanencia en territorio español se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país.\nb).- Que radique en España el núcleo principal o la base de sus actividades o intereses económicos, de forma\ndirecta o indirecta. Se presumirá, salvo prueba en contrario, que el contribuyente tiene su residencia habitual en\nterritorio español cuando, de acuerdo con los criterios anteriores, resida habitualmente en España el cónyuge no\nseparado legalmente y los hijos menores de edad que dependan de aquél\"."
+        }
+      ],
+      "purpose": "LEGAL_RULE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-regla-solapamiento-cdi",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "Son los Estados los que deﬁnen en su normativa interna los criterios que determinan la condición de residente\ny, en el caso de que se produzca un solapamiento de los criterios con otro Estado, de forma que ambos lo\nconsideren residente, debe acudirse como medio de solución a lo establecido en el Convenio para evitar la\ndoble imposición. Por tal razón y con acierto, el TEAC comienza por analizar si el demandante era o no residente\ncon arreglo a la normativa española, pues de no serlo decaería el debate."
+        }
+      ],
+      "purpose": "TREATY",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-traslado-laboral",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "\"....está acreditado que el demandante, empleado del BBVA, fue trasladado por su entidad empleadora con\nefectos de 1 de junio de 2011 a Londres (Reino Unido) para desempeñar el cargo de Director de Wholesale\nBanking & Asset Management y Director de Global Markets, por un periodo de dos años."
+        }
+      ],
+      "purpose": "FACT",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-computo-214-dias",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "En consecuencia, en el año 2011 el recurrente permaneció fuera de España durante más de 183 días, en concreto\n214 días (desde el día 1 de junio hasta el día 31 de diciembre del indicado año), de forma que no cumple el primero\nde los requisitos exigidos por el art. 9.1 de la Ley del IRPF para ser considerado residente en territorio español,\nal que se anuda la obligación de tributar en España por el Impuesto sobre la Renta de las Personas Físicas."
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-traslado-familia",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Sin embargo, los documentos aportados por el recurrente con la demanda acreditan que tanto su cónyuge\ncomo sus cinco hijos permanecieron en España hasta la ﬁnalización del curso escolar 2010/2011, trasladándose\ntodos ellos al Reino Unido en fecha 29 de agosto de 2011 con la intención de residir en ese país, lo que resulta\ndebidamente probado con los billetes de avión expedidos a favor de su esposa.....y de sus cinco hijos...., así\ncomo con los documentos que justiﬁcan la aceptación de sus hijos.....para cursar estudios en la escuela.......de\nLondres, la comunicación y justiﬁcante de pago del depósito en la escuela..... para su hija....., y la admisión en la\nUniversidad de Bath de su hijo.....; todos para el curso 2011/2012."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-certificado-britanico",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Aparte de esto, el interesado ha aportado un certiﬁcado de la autoridad tributaria británica en el que se hace\nconstar que, en virtud de la información suministrada por D. Juan, éste \"es residente del Reino Unido desde el\n1 de junio de 2011 de acuerdo con las leyes del Reino Unido y a los efectos del art. 4(1) del Convenio de Doble\nimposición suscrito entre el Reino Unido y el Reino de España , añadiendo que \" Juan puede tener derecho a\nsolicitar que se someta a imposición en base a las remesas y en el caso de que realice tal solicitud, es posible\nque no tenga derecho a los beneﬁcios del Convenio salvo que realmente se remitan retas o ganancias desde\nel extranjero al Reino Unido.\""
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-declaracion-britanica",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Pero lo cierto es que no hay prueba alguna en las actuaciones que permita aﬁrmar que el actor hiciese la\nsolicitud a que se reﬁere el último párrafo del certiﬁcado expedido por la autoridad ﬁscal de ese país y, además,\nel recurrente ha aportado al proceso su declaración de la renta en el Reino Unido correspondiente al periodo 6\nde abril de 2011 a 5 de abril de 2012 (documento nº 5 de la demanda), y ello evidencia su residencia ﬁscal en\ndicho país, no teniendo competencia esta Sala para enjuiciar si tal declaración se ajusta a la legislación tributaria\nbritánica, lo que corresponde en exclusiva a los órganos administrativos y/o jurisdiccionales de ese Estado."
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-no-residencia-conclusion",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "En deﬁnitiva, en el ejercicio 2011 el recurrente residió en España menos de 183 días y no radicaba en España\nel núcleo de sus intereses económicos, en los términos previstos en el art. 9.1.b) de la Ley 35/2006 , de modo\nque no tenía su residencia habitual en territorio español y, por ello, no estaba obligado a tributar en España por\nel IRPF, a tenor del art. 8.1.a) de la mencionada Ley ."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "anchorId": "anchor-recurso-estimado",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "En consecuencia, concluye la Sala y coincidimos con su parecer, el recurso debe estimarse pues durante el\nejercicio 2011 el recurrente no residió en el Reino de España. Lo que tiene su proyección tanto en el IRPF -que\nya enjuicio el TSJ de Madrid- como en el IRNR que ahora enjuiciamos."
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-regla-articulo-9",
+        "anchor-regla-solapamiento-cdi",
+        "anchor-traslado-laboral",
+        "anchor-computo-214-dias",
+        "anchor-traslado-familia",
+        "anchor-certificado-britanico",
+        "anchor-declaracion-britanica",
+        "anchor-no-residencia-conclusion",
+        "anchor-recurso-estimado"
+      ],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-computo-214-dias",
+            "anchor-traslado-familia",
+            "anchor-declaracion-britanica",
+            "anchor-no-residencia-conclusion"
+          ],
+          "conclusion": "El conjunto probatorio acreditó 214 días fuera, traslado familiar y residencia fiscal británica.",
+          "factToProve": "Traslado efectivo y residencia fiscal en Reino Unido durante 2011.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-contribuyente-traslado"
+        }
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-traslado-laboral",
+            "anchor-computo-214-dias"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La Sala consideró acreditado el traslado con efectos de 1 de junio.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Traslado por el empleador para desempeñar funciones directivas durante dos años.",
+          "evidenceId": "evidence-traslado-empleador",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar empleo, actividad económica y establecimiento efectivo en Reino Unido.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "traslado laboral a Londres"
+        },
+        {
+          "anchorIds": [
+            "anchor-traslado-familia"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La Sala consideró debidamente probado el traslado familiar y su motivo.",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Billetes del 29 de agosto y documentos de escolarización y universidad en Reino Unido.",
+          "evidenceId": "evidence-billetes-escolarizacion",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Desvirtuar la presunción familiar y acreditar el traslado del núcleo familiar.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "billetes y admisiones educativas"
+        },
+        {
+          "anchorIds": [
+            "anchor-certificado-britanico",
+            "anchor-declaracion-britanica"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La duda sobre una posible solicitud de tributación por remesas no estaba respaldada por prueba.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado que indicaba residencia británica desde el 1 de junio de 2011 y mencionaba el CDI.",
+          "evidenceId": "evidence-certificado-britanico",
+          "foreignDocument": {
+            "defects": [
+              "Incluía una advertencia condicional sobre una posible solicitud de tributación por remesas."
+            ],
+            "documentType": "TAX_RESIDENCE_CERTIFICATE",
+            "issuingAuthority": "Autoridad tributaria británica",
+            "jurisdiction": "Reino Unido",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": "2011-06-01",
+            "probativeEffect": "Corroboró la residencia británica junto con la declaración y el traslado efectivo.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Reino Unido.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado de la autoridad tributaria británica"
+        },
+        {
+          "anchorIds": [
+            "anchor-declaracion-britanica"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La Sala afirmó que la declaración evidenciaba la residencia fiscal británica.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Declaración correspondiente al periodo de 6 de abril de 2011 a 5 de abril de 2012.",
+          "evidenceId": "evidence-declaracion-renta-britanica",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "TAX_RETURN",
+            "issuingAuthority": null,
+            "jurisdiction": "Reino Unido",
+            "nature": "TAX",
+            "periodEnd": "2012-04-05",
+            "periodStart": "2011-04-06",
+            "probativeEffect": "Evidenció residencia fiscal en Reino Unido.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Demostrar tributación efectiva y residencia fiscal en Reino Unido.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "declaración de renta británica"
+        }
+      ],
+      "facts": [
+        {
+          "anchorIds": [
+            "anchor-traslado-laboral"
+          ],
+          "assertedBy": "COURT",
+          "category": "EMPLOYMENT",
+          "country": "Reino Unido",
+          "description": "El empleador trasladó al recurrente a Londres con efectos de 1 de junio de 2011 por dos años.",
+          "endDate": null,
+          "factId": "fact-traslado-londres",
+          "place": "Londres",
+          "proceduralStatus": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": "2011-06-01",
+          "subjectRole": "TAXPAYER",
+          "taxYears": [
+            2011
+          ]
+        },
+        {
+          "anchorIds": [
+            "anchor-computo-214-dias"
+          ],
+          "assertedBy": "COURT",
+          "category": "PRESENCE",
+          "country": "Reino Unido",
+          "description": "El recurrente permaneció fuera de España 214 días entre el 1 de junio y el 31 de diciembre de 2011.",
+          "endDate": "2011-12-31",
+          "factId": "fact-214-dias-fuera",
+          "place": null,
+          "proceduralStatus": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": "2011-06-01",
+          "subjectRole": "TAXPAYER",
+          "taxYears": [
+            2011
+          ]
+        },
+        {
+          "anchorIds": [
+            "anchor-traslado-familia"
+          ],
+          "assertedBy": "COURT",
+          "category": "FAMILY",
+          "country": "Reino Unido",
+          "description": "La esposa y los cinco hijos se trasladaron al Reino Unido el 29 de agosto de 2011 para residir y estudiar allí.",
+          "endDate": null,
+          "factId": "fact-traslado-familia",
+          "place": "Londres",
+          "proceduralStatus": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": "2011-08-29",
+          "subjectRole": "SPOUSE",
+          "taxYears": [
+            2011
+          ]
+        },
+        {
+          "anchorIds": [
+            "anchor-certificado-britanico",
+            "anchor-declaracion-britanica"
+          ],
+          "assertedBy": "COURT",
+          "category": "FOREIGN_TAX",
+          "country": "Reino Unido",
+          "description": "El certificado y la declaración británicos acreditaron residencia fiscal en Reino Unido.",
+          "endDate": null,
+          "factId": "fact-residencia-fiscal-britanica",
+          "place": null,
+          "proceduralStatus": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": "2011-06-01",
+          "subjectRole": "TAXPAYER",
+          "taxYears": [
+            2011
+          ]
+        },
+        {
+          "anchorIds": [
+            "anchor-no-residencia-conclusion",
+            "anchor-recurso-estimado"
+          ],
+          "assertedBy": "COURT",
+          "category": "PRESENCE",
+          "country": "España",
+          "description": "La Sala concluyó que el recurrente no tenía residencia habitual en España en 2011.",
+          "endDate": null,
+          "factId": "fact-no-residente-espana",
+          "place": null,
+          "proceduralStatus": "PROVEN",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": null,
+          "subjectRole": "TAXPAYER",
+          "taxYears": [
+            2011
+          ]
+        }
+      ],
+      "holding": {
+        "anchorIds": [
+          "anchor-computo-214-dias",
+          "anchor-traslado-familia",
+          "anchor-declaracion-britanica",
+          "anchor-no-residencia-conclusion",
+          "anchor-recurso-estimado"
+        ],
+        "conclusion": "El recurrente no tenía residencia habitual en España durante 2011 y residió en Reino Unido.",
+        "consequences": [
+          "No estaba obligado a tributar en España por IRPF.",
+          "Estimación del recurso relativo al IRNR."
+        ],
+        "decisiveReasoning": "Permaneció 214 días fuera, trasladó su actividad y familia y aportó documentación fiscal británica concordante.",
+        "holdingId": "holding-residencia-fiscal-2011",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": "Reino Unido",
+          "spanishResidence": "NON_RESIDENT_IN_SPAIN",
+          "taxYears": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-07-29",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal-2011",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [
+        {
+          "anchorIds": [
+            "anchor-regla-articulo-9"
+          ],
+          "citation": "Artículo 9.1 de la Ley 35/2006",
+          "legalRuleId": "rule-articulo-9-lirpf",
+          "proposition": "La permanencia, el núcleo de intereses y la presunción familiar determinan la residencia habitual conforme a la ley interna.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "ruleType": "STATUTE"
+        },
+        {
+          "anchorIds": [
+            "anchor-regla-solapamiento-cdi"
+          ],
+          "citation": "Convenio para evitar la doble imposición entre España y Reino Unido",
+          "legalRuleId": "rule-orden-ley-interna-cdi",
+          "proposition": "Solo se acude al convenio si la normativa interna de ambos Estados produce un solapamiento de residencias.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "ruleType": "TREATY"
+        }
+      ],
+      "presencePeriods": [
+        {
+          "anchorIds": [
+            "anchor-computo-214-dias"
+          ],
+          "calculationMethod": "Cómputo expreso de la sentencia desde el 1 de junio hasta el 31 de diciembre de 2011.",
+          "classification": "PRESENT",
+          "countedFor183DayRule": true,
+          "country": "Reino Unido",
+          "dayCount": 214,
+          "determinedBy": "COURT",
+          "endDate": "2011-12-31",
+          "periodId": "period-reino-unido-2011",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "startDate": "2011-06-01"
+        }
+      ],
+      "question": "¿Fue el recurrente no residente en España durante 2011?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-07-29",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": [
+        {
+          "anchorIds": [
+            "anchor-regla-solapamiento-cdi",
+            "anchor-no-residencia-conclusion"
+          ],
+          "countries": [
+            "España",
+            "Reino Unido"
+          ],
+          "dualResidenceEstablished": false,
+          "resultCountry": "Reino Unido",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-07-29",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "steps": [],
+          "treatyAnalysisId": "treaty-spain-united-kingdom",
+          "treatyCitation": "Convenio para evitar la doble imposición entre España y Reino Unido"
+        }
+      ]
+    }
+  ],
+  "judgment": {
+    "chamber": "Sala de lo Contencioso-Administrativo, Sección Segunda",
+    "court": "Audiencia Nacional",
+    "decisionDate": "2021-03-04",
+    "ecli": "ECLI:ES:AN:2021:1226",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-1226-2021",
+    "pageCount": 4,
+    "provenance": {
+      "generatedAt": "2026-07-29T20:20:00+02:00",
+      "modelId": "codex-agent",
+      "producer": "residenciafiscal-hybrid-agent-pipeline"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-07-29",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 1226/2021",
+    "sourceFile": "sentencias/SAN_1226_2021.pdf",
+    "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1",
+    "taxYears": [
+      2011
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed",
+        "treaty_applied"
+      ],
+      "treatyBoeId": null
+    },
+    {
+      "code": "gb",
+      "roles": [
+        "residence_claimed",
+        "treaty_applied"
+      ],
+      "treatyBoeId": "BOE-A-2014-5171"
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

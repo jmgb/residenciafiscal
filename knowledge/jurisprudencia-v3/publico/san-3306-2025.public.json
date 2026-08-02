@@ -1,0 +1,348 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "acuerdo de liquidación provisional de 26 de marzo de 2019"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el artículo 20 del CDI España-Rusia determina que dichos rendimientos no pueden gravarse en\nRusia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 1,
+          "printedPage": "1",
+          "verbatimText": "resolución\ndel Tribunal Económico-Administrativo Central de 29 de junio de 2020"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "no resuelven la misma cuestión litigiosa"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se refería a una beca para Kuwait, país con el que no existía Convenio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acto administrativo vigente y base del procedimiento; la Sala confirma su adecuación al ordenamiento",
+          "category": "OTROS",
+          "description": "Acuerdo de liquidación provisional dictado por la Oficina Nacional de Gestión Tributaria (devolución parcial denegada)",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar la sujeción de las percepciones al IRNR y la liquidación practicada",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Acuerdo liquidación provisional 26-03-2019"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Aplicación del artículo 20 del Convenio entre España y la Federación Rusa (16/12/1998) que impide gravamen en Rusia",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Rusia",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "La Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "AEAT",
+          "probativePurpose": "Determinar que la renta no puede gravarse en Rusia y, por tanto, debe considerarse obtenida en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Convenio España-Rusia (art.20)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Resolución administrativa previa que la Sala estima adecuada y confirma",
+          "category": "OTROS",
+          "description": "Resolución confirmatoria del TEAC que desestimó la reclamación contra la liquidación",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Confirmar la valoración administrativa y la aplicación del IRNR",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Resolución TEAC 29-06-2020"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "No acreditó que el plan sea un \"plan anual de cooperación internacional aprobado en Consejo de Ministros\"; la Sala exige prueba de ese extremo y la considera insuficiente",
+          "category": "OTROS",
+          "description": "Plan de Internacionalización de la Economía Española aportado por la parte actora como marco de las becas ICEX",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que las becas se encuadran en un plan anual de cooperación internacional y son exentas (art.14.1.b TRLIRNR)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Documento 4 - Plan de Internacionalización 2014/2015"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "La Sala considera que esas sentencias no resuelven la misma cuestión litigiosa y no constituyen precedente obligatorio para el caso; por tanto no son aptas para fundamentar la pretensión",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "STS 4306/2017, 4305/2017, 4307/2017 y 334/2018 invocadas por la parte actora como precedente de no tributación",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Sostener trato diferenciado y fundamento para no sujeción o exención",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Sentencias TS y otras (invocadas por la demanda)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "La Sala estima que las consultas no son comparables por diferencia de supuestos (países, convenios y planes distintos) y no sirven para desvirtuar la aplicación del CDI aplicable",
+          "category": "OTROS",
+          "description": "Consultas tributarias invocadas por la parte actora sobre régimen de becas (una referida a Kuwait, otra a Plan 2011)",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Aportar interpretación administrativa favorable a la no sujeción/exención",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Consultas vinculantes (NUM000, NUM001)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
+        "consequences": [],
+        "decisiveReasoning": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2015
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2025-07-11",
+    "ecli": "ES:AN:2025:3306",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-3306-2025",
+    "pageCount": 6,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 3306/2025",
+    "sourceFile": "sentencias/SAN_3306_2025.pdf",
+    "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d",
+    "taxYears": [
+      2015
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

@@ -1,0 +1,1189 @@
+{
+  "$defs": {
+    "AnalisisConvenioPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "countries": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Countries",
+          "type": "array"
+        },
+        "dualResidenceEstablished": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dualresidenceestablished"
+        },
+        "resultCountry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resultcountry"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "steps": {
+          "default": [],
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Steps",
+          "type": "array"
+        },
+        "treatyAnalysisId": {
+          "title": "Treatyanalysisid",
+          "type": "string"
+        },
+        "treatyCitation": {
+          "title": "Treatycitation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "treatyAnalysisId",
+        "treatyCitation",
+        "review"
+      ],
+      "title": "AnalisisConvenioPublico",
+      "type": "object"
+    },
+    "AnclajePublico": {
+      "additionalProperties": false,
+      "description": "Lo único de la ficha que reproduce texto judicial.",
+      "properties": {
+        "anchorId": {
+          "title": "Anchorid",
+          "type": "string"
+        },
+        "fidelity": {
+          "title": "Fidelity",
+          "type": "string"
+        },
+        "fragments": {
+          "items": {
+            "$ref": "#/$defs/FragmentoPublico"
+          },
+          "title": "Fragments",
+          "type": "array"
+        },
+        "purpose": {
+          "title": "Purpose",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "sourceSha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcesha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "anchorId",
+        "purpose",
+        "fidelity",
+        "sourceSha256",
+        "fragments",
+        "review"
+      ],
+      "title": "AnclajePublico",
+      "type": "object"
+    },
+    "CuestionPublica": {
+      "additionalProperties": false,
+      "description": "Una cuestión jurídica con todo lo que el post publica bajo ella.",
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "burdenOfProof": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PasoCargaPublico"
+          },
+          "title": "Burdenofproof",
+          "type": "array"
+        },
+        "criterionIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Criterionids",
+          "type": "array"
+        },
+        "evidence": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PruebaPublica"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "facts": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/HechoPublico"
+          },
+          "title": "Facts",
+          "type": "array"
+        },
+        "holding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FalloPublico"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "issueId": {
+          "title": "Issueid",
+          "type": "string"
+        },
+        "issueType": {
+          "title": "Issuetype",
+          "type": "string"
+        },
+        "legalRules": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/NormaPublica"
+          },
+          "title": "Legalrules",
+          "type": "array"
+        },
+        "presencePeriods": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PeriodoPublico"
+          },
+          "title": "Presenceperiods",
+          "type": "array"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "treatyAnalyses": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/AnalisisConvenioPublico"
+          },
+          "title": "Treatyanalyses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "issueId",
+        "issueType",
+        "question",
+        "review"
+      ],
+      "title": "CuestionPublica",
+      "type": "object"
+    },
+    "DeterminacionPublica": {
+      "additionalProperties": false,
+      "properties": {
+        "nonResidentFrom": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nonresidentfrom"
+        },
+        "otherCountry": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Othercountry"
+        },
+        "spanishResidence": {
+          "title": "Spanishresidence",
+          "type": "string"
+        },
+        "taxYears": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Taxyears",
+          "type": "array"
+        }
+      },
+      "required": [
+        "spanishResidence"
+      ],
+      "title": "DeterminacionPublica",
+      "type": "object"
+    },
+    "DocumentoExtranjeroPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "defects": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Defects",
+          "type": "array"
+        },
+        "documentType": {
+          "title": "Documenttype",
+          "type": "string"
+        },
+        "issuingAuthority": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issuingauthority"
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "nature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nature"
+        },
+        "periodEnd": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Periodend"
+        },
+        "periodStart": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Periodstart"
+        },
+        "probativeEffect": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Probativeeffect"
+        },
+        "taxScope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Taxscope"
+        }
+      },
+      "required": [
+        "documentType"
+      ],
+      "title": "DocumentoExtranjeroPublico",
+      "type": "object"
+    },
+    "EstadoPublicacion": {
+      "enum": [
+        "internal_preview",
+        "publishable"
+      ],
+      "title": "EstadoPublicacion",
+      "type": "string"
+    },
+    "FalloPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "conclusion": {
+          "title": "Conclusion",
+          "type": "string"
+        },
+        "consequences": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Consequences",
+          "type": "array"
+        },
+        "decisiveReasoning": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decisivereasoning"
+        },
+        "holdingId": {
+          "title": "Holdingid",
+          "type": "string"
+        },
+        "outcome": {
+          "title": "Outcome",
+          "type": "string"
+        },
+        "residenceDetermination": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DeterminacionPublica"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        }
+      },
+      "required": [
+        "holdingId",
+        "outcome",
+        "conclusion",
+        "review"
+      ],
+      "title": "FalloPublico",
+      "type": "object"
+    },
+    "FragmentoPublico": {
+      "additionalProperties": false,
+      "description": "Trozo literal del PDF, con su página física y su etiqueta impresa.",
+      "properties": {
+        "pageIndex": {
+          "title": "Pageindex",
+          "type": "integer"
+        },
+        "printedPage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Printedpage"
+        },
+        "verbatimText": {
+          "title": "Verbatimtext",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pageIndex",
+        "printedPage",
+        "verbatimText"
+      ],
+      "title": "FragmentoPublico",
+      "type": "object"
+    },
+    "HechoPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "assertedBy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assertedby"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enddate"
+        },
+        "factId": {
+          "title": "Factid",
+          "type": "string"
+        },
+        "place": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place"
+        },
+        "proceduralStatus": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Proceduralstatus"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Startdate"
+        },
+        "subjectRole": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subjectrole"
+        },
+        "taxYears": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Taxyears",
+          "type": "array"
+        }
+      },
+      "required": [
+        "factId",
+        "category",
+        "description",
+        "review"
+      ],
+      "title": "HechoPublico",
+      "type": "object"
+    },
+    "IdentidadPublica": {
+      "additionalProperties": false,
+      "description": "Datos primarios de la sentencia. Son hechos registrales, no análisis.",
+      "properties": {
+        "chamber": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chamber"
+        },
+        "court": {
+          "title": "Court",
+          "type": "string"
+        },
+        "decisionDate": {
+          "title": "Decisiondate",
+          "type": "string"
+        },
+        "ecli": {
+          "title": "Ecli",
+          "type": "string"
+        },
+        "isTaxResidenceCase": {
+          "title": "Istaxresidencecase",
+          "type": "boolean"
+        },
+        "judgmentId": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Judgmentid",
+          "type": "string"
+        },
+        "pageCount": {
+          "title": "Pagecount",
+          "type": "integer"
+        },
+        "provenance": {
+          "$ref": "#/$defs/ProcedenciaPublica"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "roj": {
+          "title": "Roj",
+          "type": "string"
+        },
+        "sourceFile": {
+          "title": "Sourcefile",
+          "type": "string"
+        },
+        "sourceSha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sourcesha256",
+          "type": "string"
+        },
+        "taxYears": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Taxyears",
+          "type": "array"
+        }
+      },
+      "required": [
+        "judgmentId",
+        "roj",
+        "ecli",
+        "court",
+        "decisionDate",
+        "taxYears",
+        "pageCount",
+        "sourceFile",
+        "sourceSha256",
+        "isTaxResidenceCase",
+        "provenance",
+        "review"
+      ],
+      "title": "IdentidadPublica",
+      "type": "object"
+    },
+    "JurisdiccionPublica": {
+      "additionalProperties": false,
+      "description": "Jurisdicción con papel tipado y, si procede, su convenio con España.\n\nSolo salen los roles que autorizan enlace. Lo que únicamente aparece en\n`judgment.countries` no llega aquí: el enlazado se construye contra roles\ntipados, nunca contra el campo en bruto.",
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Roles",
+          "type": "array"
+        },
+        "treatyBoeId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Treatyboeid"
+        }
+      },
+      "required": [
+        "code",
+        "roles"
+      ],
+      "title": "JurisdiccionPublica",
+      "type": "object"
+    },
+    "NormaPublica": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "legalRuleId": {
+          "title": "Legalruleid",
+          "type": "string"
+        },
+        "proposition": {
+          "title": "Proposition",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "ruleType": {
+          "title": "Ruletype",
+          "type": "string"
+        }
+      },
+      "required": [
+        "legalRuleId",
+        "ruleType",
+        "citation",
+        "proposition",
+        "review"
+      ],
+      "title": "NormaPublica",
+      "type": "object"
+    },
+    "PasoCargaPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "conclusion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conclusion"
+        },
+        "factToProve": {
+          "title": "Facttoprove",
+          "type": "string"
+        },
+        "initialBearer": {
+          "title": "Initialbearer",
+          "type": "string"
+        },
+        "responseRequired": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Responserequired"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "shiftsTo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Shiftsto"
+        },
+        "stepId": {
+          "title": "Stepid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stepId",
+        "sequence",
+        "initialBearer",
+        "factToProve",
+        "review"
+      ],
+      "title": "PasoCargaPublico",
+      "type": "object"
+    },
+    "PeriodoPublico": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "calculationMethod": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calculationmethod"
+        },
+        "classification": {
+          "title": "Classification",
+          "type": "string"
+        },
+        "countedFor183DayRule": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Countedfor183Dayrule"
+        },
+        "country": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Country"
+        },
+        "dayCount": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Daycount"
+        },
+        "determinedBy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Determinedby"
+        },
+        "endDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Enddate"
+        },
+        "periodId": {
+          "title": "Periodid",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Startdate"
+        }
+      },
+      "required": [
+        "periodId",
+        "classification",
+        "review"
+      ],
+      "title": "PeriodoPublico",
+      "type": "object"
+    },
+    "ProcedenciaPublica": {
+      "additionalProperties": false,
+      "description": "Quién generó el análisis. Lo exige §6.3: la procedencia es visible.\n\nNo incluye `prompt_sha256` ni `run_id`: identifican una ejecución interna y\nno aportan nada a quien lee la ficha.",
+      "properties": {
+        "generatedAt": {
+          "title": "Generatedat",
+          "type": "string"
+        },
+        "modelId": {
+          "title": "Modelid",
+          "type": "string"
+        },
+        "producer": {
+          "title": "Producer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "producer",
+        "modelId",
+        "generatedAt"
+      ],
+      "title": "ProcedenciaPublica",
+      "type": "object"
+    },
+    "PruebaPublica": {
+      "additionalProperties": false,
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "assessment": {
+          "title": "Assessment",
+          "type": "string"
+        },
+        "assessmentReason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assessmentreason"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "evidenceId": {
+          "title": "Evidenceid",
+          "type": "string"
+        },
+        "foreignDocument": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DocumentoExtranjeroPublico"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offeredBy": {
+          "title": "Offeredby",
+          "type": "string"
+        },
+        "probativePurpose": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Probativepurpose"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "subtype": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subtype"
+        }
+      },
+      "required": [
+        "evidenceId",
+        "category",
+        "description",
+        "offeredBy",
+        "assessment",
+        "review"
+      ],
+      "title": "PruebaPublica",
+      "type": "object"
+    },
+    "RevisionPublica": {
+      "additionalProperties": false,
+      "description": "Estado de revisión, sin las notas internas del pipeline.",
+      "properties": {
+        "legal": {
+          "title": "Legal",
+          "type": "string"
+        },
+        "reviewedAt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewedat"
+        },
+        "reviewedBy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewedby"
+        },
+        "technical": {
+          "title": "Technical",
+          "type": "string"
+        }
+      },
+      "required": [
+        "legal",
+        "technical"
+      ],
+      "title": "RevisionPublica",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Lo que puede salir del corpus hacia la web, y nada más.",
+  "properties": {
+    "anchors": {
+      "items": {
+        "$ref": "#/$defs/AnclajePublico"
+      },
+      "title": "Anchors",
+      "type": "array"
+    },
+    "issues": {
+      "items": {
+        "$ref": "#/$defs/CuestionPublica"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "judgment": {
+      "$ref": "#/$defs/IdentidadPublica"
+    },
+    "jurisdiction": {
+      "const": "es",
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "jurisdictions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/JurisdiccionPublica"
+      },
+      "title": "Jurisdictions",
+      "type": "array"
+    },
+    "publicationState": {
+      "$ref": "#/$defs/EstadoPublicacion"
+    },
+    "schemaVersion": {
+      "const": "residenciafiscal-public-judgment/1",
+      "title": "Schemaversion",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "jurisdiction",
+    "publicationState",
+    "judgment",
+    "issues",
+    "anchors"
+  ],
+  "title": "PublicJudgment",
+  "type": "object"
+}

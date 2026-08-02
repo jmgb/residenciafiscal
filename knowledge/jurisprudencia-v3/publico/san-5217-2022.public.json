@@ -1,0 +1,237 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "el período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "La Inspección denegó la devolución solicitada por considerar que la residencia ﬁscal en Italia"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "no había sido acreditada"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "no cabe\nreputar como ocasional o esporádica una ausencia prolongada"
+        },
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "por un\ntraslado laboral a Italia y a Turquía respectivamente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Tribunal considera que, según la documentación, el período acreditado no resulta superior a 183 días; por tanto, la prueba no alcanza para acreditar residencia.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Documentación obrante en expediente acreditando período de presencia/ausencia (no detallada en la sentencia)",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar permanencia superior a 183 días en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documentación del expediente sobre días de permanencia"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El tribunal considera indiferente la falta de acreditación de residencia en otro país cuando el período acreditado no supera 183 días; por tanto la ausencia de esa prueba no justifica la residencia en España.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La Inspección denegó devolución por considerar no acreditada la residencia fiscal en Italia (Sr. Gines) y en Turquía (Sr. Elias)",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Italia; Turquía",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El tribunal considera indiferente la falta de acreditación de residencia en otro país cuando el período acreditado no supera 183 días; por tanto la ausencia de esa prueba no justifica la residencia en España.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "AEAT",
+          "probativePurpose": "Desvirtuar la pretensión de devolución acreditando residencia en el extranjero",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "falta acreditación de residencia en Italia/Turquía (según Inspección)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Tribunal estima que las ausencias se deben a traslado laboral prolongado y no son esporádicas; ello desplaza la regla de los 183 días y determina la no residencia en 2015.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Alegación y documentación sobre traslado laboral de los jugadores a Italia y Turquía y períodos de estancia fuera de España (documentos del expediente, no individualizados en la sentencia)",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que las ausencias fueron prolongadas por traslado laboral y no esporádicas",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "traslado laboral a Italia/Turquía (contratos/actuaciones)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.",
+        "consequences": [],
+        "decisiveReasoning": "El tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2011,
+            2015
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decisionDate": "2022-09-06",
+    "ecli": "ECLI:ES:AN:2022:5217",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-5217-2022",
+    "pageCount": 20,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 5217/2022",
+    "sourceFile": "sentencias/SAN_5217_2022.pdf",
+    "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485",
+    "taxYears": [
+      2011,
+      2015
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

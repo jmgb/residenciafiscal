@@ -1,0 +1,269 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "el propio recurrente reconoció durante las actuaciones inspectoras que en el año 2006 había\npermanecido más de 183 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "Su cónyuge había presentado declaración por el IRPF del ejercicio 2006"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "por una hija menor de edad\ncomún"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "En diligencia de 03-06-2011 se hizo constar que durante 2006 residió en España la mayor parte del año"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "durante 2006 residía\nen Japón"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "Recuerda que estuvo más días en España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El propio recurrente reconoció haber permanecido más de 183 días, lo que acredita la presencia",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Actuaciones inspectoras donde el recurrente declara que en 2006 residía en Japón pero recuerda que estuvo más días en España.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar permanencia superior a 183 días en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "diligencia 04-05-2011 (declaración del recurrente)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La residencia habitual del cónyuge y la hija en España genera la presunción iuris tantum de residencia del contribuyente",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Consta que la cónyuge presentó declaración por IRPF en régimen individual y dedujo el mínimo por descendientes por la hija menor.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar residencia habitual de la familia en España (presunción legal)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "declaración IRPF cónyuge y deducción por hija menor"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acta administrativa que manifiesta la residencia mayoritaria en España, concordante con otras declaraciones",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Diligencia donde se hace constar que durante 2006 residió en España la mayor parte del año.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Corroborar permanencia mayoritaria en España durante 2006",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "diligencia 03-06-2011 (acta)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Se reconoce actividad en Japón pero el propio recurrente admite haber estado más días en España; no desvirtúa la presunción ni acredita residencia fiscal en Japón",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Manifestaciones del recurrente sobre su actividad en Japón desde 1983 y asesoramiento a empresa japonesa en 2006.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar centro de intereses vitales/económicos en Japón y ausencias no esporádicas",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "diligencia 04-05-2011 (declaración del recurrente)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.",
+        "consequences": [],
+        "decisiveReasoning": "El tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2006
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+    "decisionDate": "2019-10-23",
+    "ecli": "ES:AN:2019:4670",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-4670-2019",
+    "pageCount": 7,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 4670/2019",
+    "sourceFile": "sentencias/SAN_4670_2019.pdf",
+    "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4",
+    "taxYears": [
+      2006
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

@@ -1,0 +1,446 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "en la que la Inspección consideró que la Base imponible general debía ser incrementada en 120.000"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "El pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "juega en su contra la presunción de residencia en España al residir en este país"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "su cónyuge y de sus hijos menores"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "residente en esta demarcación consular desde el día 20 de julio de 2003"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "BAJA con fecha 30 de\nnoviembre de 2009"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Contrato de arrendamiento de vivienda sita en Malabo"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "concertado el 15 de abril\nde 2004 a favor de D.  Gonzalo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "ﬁgurado inscrito en el Censo Electoral de Españoles Residentes Ausentes desde 31/03/2005\na 30/11/2009, con domicilio en Malabo"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Escritura de compraventa de un terreno en Guinea en fecha 13/12/2005"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "facturas expedidas por la mercantil  DIRECCION002"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "aportando un informe"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "informe realizado en\nmayo de 2012"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acta inspectoría aporta la motivación y cuantificación que el Tribunal considera relevante para la liquidación",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Acta de disconformidad de la Inspección que incrementa la base imponible y califica importes como rendimientos y ganancias no declaradas.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar ingresos no declarados y justificar liquidación",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Acta de disconformidad 16/05/2012"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El Tribunal considera probado que el pagaré fue descontado y abonado en 2006, por lo que la ganancia se imputa a 2006",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Registro bancario/operación de descuento del pagaré derivado de la venta del terreno y abono en cuenta el 6/10/2006.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar que el cobro de la venta se produjo en 2006",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Descuento pagaré 06/10/2006"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El Tribunal aplica la presunción legal al no aportarse prueba suficiente en contrario",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Argumento/presunción de la Administración (y asumida por la resolución recurrida) de que la residencia habitual del cónyuge y de los hijos menores en España presume la residencia del contribuyente.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Desvirtuar la alegación de residencia en el extranjero y presumir residencia en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Presunción por residencia de cónyuge e hijos"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El Tribunal considera que, pese a su veracidad, no acredita la permanencia efectiva por más de 183 días en 2006",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Certificado de baja en el Registro de Matrícula de la Embajada de España en Malabo, indica residencia desde 20/07/2003 y baja el 30/11/2009.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia efectiva en Guinea durante periodo alegado",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificado de Baja Consular (Embajada en Malabo) 11/07/2011"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El Tribunal entiende que el contrato por sí solo no prueba permanencia por más de 183 días en 2006",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Contrato de arrendamiento de vivienda sita en Malabo a favor del recurrente.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar domicilio y permanencia en Guinea",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Contrato de arrendamiento Malabo 15/04/2004"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "No suficiente para acreditar permanencia efectiva; tribunal exige certificado de residencia expedido por autoridades de Guinea",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Certificado que consta inscrito en CERA desde 31/03/2005 a 30/11/2009 con domicilio en Malabo.",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia en Guinea durante periodo alegado",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Inscripción Censo Electoral de Españoles Residentes Ausentes (CERA) 03/10/2012"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El Tribunal considera que la escritura no prueba por sí sola la permanencia por más de 183 días en 2006",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Escritura de compra de un terreno en Guinea.",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar vinculación patrimonial y estancia en Guinea",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Escritura compraventa terreno Guinea 13/12/2005"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Tribunal rechaza muchas facturas por ser emitidas por la constructora del contribuyente y por faltas de presupuestos, licencias y pago; admite ciertos importes reducidos considerados por la Inspección",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Diversas facturas expedidas por la mercantil DIRECCION002 por obras realizadas, importe total alegado 335.263,35€ y informe de arquitecto.",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Aumentar valor de adquisición inmueble y anular ganancia patrimonial",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Facturas obras DIRECCION002 (2000-2003)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.",
+        "consequences": [],
+        "decisiveReasoning": "El Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "PARCIAL",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2006
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decisionDate": "2023-05-31",
+    "ecli": "ES:AN:2023:4187",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-4187-2023",
+    "pageCount": 9,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 4187/2023",
+    "sourceFile": "sentencias/SAN_4187_2023.pdf",
+    "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d",
+    "taxYears": [
+      2006
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

@@ -1,0 +1,452 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "Consta en dicha Resolución que el demandante fue jugador"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "según contrato suscrito\nel 18 de noviembre de 2010"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "extinción del contrato con\nefectos de 4 de agosto de 2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "nómina del mes de julio de 2011, aportada como doc. 2 de la demanda"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "consta que el cónyuge e hijos han residido en España en el ejercicio 2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "con sello de entrada en Argentina el 31 de mayo de 2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "presenta inscripción en la AFIP"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "donde consta inscrito desde\n2003"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Documento emitido por el Contador Público"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "certiﬁca que el Sr.\nFeliciano  ha presentado la Declaración Jurada"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "El 2 de julio de 2011, el demandante presentó declaración por el IRNR, que dio como resultado una cantidad a\ndevolver de 743.039,41"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Diversas informaciones periodísticas publicadas en Internet, en relación a los acaecimientos deportivos del\nrecurrente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acredita vínculo contractual y demuestra que el núcleo económico estaba en España hasta la fecha de extinción",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Contrato laboral suscrito 18-11-2010 y extinción notificada con efectos 4-08-2011, constando que estaba bajo disciplina del club hasta dicha fecha.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar vinculación contractual y que el centro de intereses económicos radicaba en España hasta 4-8-2011",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "contrato FC Barcelona 18-11-2010"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Prueba fehaciente de que percibía salario en España hasta la fecha indicada, reforzando la vinculación económica",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Nómina del mes de julio de 2011 aportada (doc. 2), que evidencia percepción de salario hasta la extinción contractual.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar percepción de retribución en España durante 2011, reforzando centro de intereses económicos en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "nómina julio 2011 (doc. 2)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Corrobora la presunción legal; el recurrente no desvirtuó suficientemente esta circunstancia",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Datos en poder de la Administración que constatan que el cónyuge y los hijos han residido en España en el ejercicio 2011.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar la presunción prevista en el art.9 LIRPF respecto de la residencia habitual por núcleo familiar",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "datos administrativos sobre cónyuge e hijos"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El Tribunal considera la salida como ausencia esporádica vinculada a obligaciones deportivas; por tanto el sello no basta para acreditar residencia fiscal en Argentina",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Pasaporte con sello de entrada en Argentina el 31 de mayo de 2011; alega que no regresó a España.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Demostrar ausencia física desde 31-05-2011 y, por tanto, no permanencia >183 días en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pasaporte con sello 31-05-2011"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "La inscripción no acredita que en 2011 tributara en Argentina por su renta mundial; no prueba condición de residente fiscal en ese ejercicio",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Inscripción en la AFIP donde consta inscrito desde 2003 (primera declaración en 2003).",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Argentina",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "La inscripción no acredita que en 2011 tributara en Argentina por su renta mundial; no prueba condición de residente fiscal en ese ejercicio",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar tributación o residencia fiscal en Argentina",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "inscripción AFIP (desde 2003)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El emisor no es la autoridad fiscal competente; el Tribunal considera que carece de fuerza probatoria suficiente frente a la falta del certificado oficial",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Documento del Contador que certifica haber presentado declaraciones en Argentina y certifica residencia fiscal en Argentina para 2011 (emitido 19-11-2011 y 27-09-2012).",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Argentina en 2011",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificados del Contador Público N. Elizari (27-09-2012 y 19-11-2011)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "La presentación del formulario no basta para acreditar residencia fiscal en otro Estado cuando no se prueba tributación allí en 2011; la devolución fue denegada por la existencia de liquidación por IRPF",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Declaración por el Impuesto sobre la Renta de no Residentes (modelo 210) presentada el 2 de julio de 2011 por la que solicitó devolución por 743.039,41 €.",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar tributación como no residente y solicitar devolución por aplicación del IRNR",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "modelo 210 presentado 02-07-2011"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Prueba de escaso valor probatorio para acreditar residencia fiscal; informaciones periodísticas no suplen necesidad de certificado oficial",
+          "category": "TRAZAS_DIGITALES",
+          "description": "Diversas informaciones periodísticas publicadas en Internet sobre acontecimientos deportivos del recurrente.",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Aportar indicios sobre desplazamientos y trayectoria profesional",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "informaciones periodísticas en Internet"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.",
+        "consequences": [],
+        "decisiveReasoning": "La Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2020-09-30",
+    "ecli": "ECLI:ES:AN:2020:2602",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-2602-2020",
+    "pageCount": 6,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 2602/2020",
+    "sourceFile": "sentencias/SAN_2602_2020.pdf",
+    "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8",
+    "taxYears": [
+      2011
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

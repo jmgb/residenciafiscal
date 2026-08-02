@@ -1,0 +1,184 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "Durante dicho ejercicio 2011 le fue retenida por el ICEX la cantidad de 3.292,54 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "La Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "La AEAT aleg\u0003o que el interesado no aport\u0003o certificado acreditativo de residencia por la autoridad fiscal competente de otro pa\u0003s",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Estados Unidos (Miami)",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "La Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar que no resid\u0003a fiscalmente en otro pa\u0003s y que la ausencia era espor\u0003adica",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "ausencia de certificado de residencia fiscal"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Documento administrativo que prueba la pr\u0003actica de la retenci\u0003n y el importe reclamado; la Sala acuerda la devoluci\u0003n al estimar la no residencia",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Importe de retenciones practicadas por ICEX en 2011 por 3.292,54 euros que se reclamaron a devoluci\u0003n",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar la retenci\u0003n efectuada y el derecho a su devoluci\u0003n si no existe residencia en Espa\u0003na",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "retenciones ICEX ejercicio 2011"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.",
+        "consequences": [],
+        "decisiveReasoning": "El Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+    "decisionDate": "2018-02-08",
+    "ecli": "ES:TS:2018:698",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-698-2018",
+    "pageCount": 7,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 698/2018",
+    "sourceFile": "sentencias/STS_698_2018.pdf",
+    "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856",
+    "taxYears": [
+      2011
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

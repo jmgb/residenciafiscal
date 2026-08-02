@@ -1,0 +1,278 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "a la vista del consumo eléctrico facturado durante los años 2013, 2014,\n2015 y 2016"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "se deducía que su domicilio habitual"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "constituía esta\núltima vivienda"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "El Director General"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "de la Comunidad de Madrid, mediante\nresolución de 19 de enero de 2018, declara la incompetencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "constando que la Sra.  Lourdes\ntenía su residencia habitual en la Comunidad Autónoma de Madrid, consignado expresamente en sus\nautoliquidaciones del IRPF como domicilio ﬁscal"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "en cuyo FD octavo se señala"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "procede anular las liquidaciones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Corroborada por otras actuaciones administrativas y considerada indicio suficiente para situar el punto de conexión en Andalucía.",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Diligencia de Colaboración A08 (NUM015) basada en el consumo eléctrico facturado en las viviendas de Madrid y Marbella entre 2013-2016, que dedujo la residencia habitual en Marbella.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar residencia habitual en Marbella (Andalucía) en ejercicios 2013-2016",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "consumo eléctrico 2013-2016 (Diligencia A08)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La aquiescencia de la Administración de Madrid corrobora el cambio de punto de conexión y fue valorada por el Tribunal.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Oficio de remisión a la Gerencia Provincial de Málaga y resolución del Director General de Tributos de la Comunidad de Madrid de 19/01/2018 declarando la incompetencia de Madrid y remitiendo expediente a Andalucía.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar que la Comunidad de Madrid se ratiﬁcó en su incompetencia y que Andalucía asumió la competencia por punto de conexión.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "oficio remisión y resolución Comunidad de Madrid 19-01-2018"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El Tribunal reconoce la existencia del domicilio fiscal declarado pero lo considera insuficiente para excluir los indicios de residencia habitual en Andalucía.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Autoliquidaciones del IRPF en las que doña Lourdes consignó como domicilio fiscal la calle en Madrid (CALLE000).",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que la residencia habitual era en Madrid (domicilio fiscal declarado).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "autoliquidaciones IRPF (domicilio Calle000 Madrid)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El Tribunal Supremo no comparte la conclusión jurídica del TEARA; considera que, una vez constatado el punto de conexión, no es exigible la previa modificación formal del domicilio fiscal.",
+          "category": "OTROS",
+          "description": "Resolución del TEARA que estimó las reclamaciones de las sucesoras y anuló las liquidaciones por falta de procedimiento contradictorio de cambio de domicilio fiscal.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Anular liquidaciones por entender no tramitado el procedimiento de comprobación del domicilio fiscal.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Resolución TEARA 24/06/2021"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.",
+        "consequences": [],
+        "decisiveReasoning": "El Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "RETROACCION",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2015,
+            2016
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2024-04-15",
+    "ecli": "ECLI:ES:TS:2024:2013",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-2013-2024",
+    "pageCount": 14,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 2013/2024",
+    "sourceFile": "sentencias/STS_2013_2024.pdf",
+    "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923",
+    "taxYears": [
+      2015,
+      2016
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

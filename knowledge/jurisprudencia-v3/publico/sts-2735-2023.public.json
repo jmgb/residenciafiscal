@@ -1,0 +1,1143 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "El 7 de noviembre de 2013 se formalizó el acta de disconformidad"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "así como informe ampliatorio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "Don  Artemio  permaneció 56, 63 y 91 días, respectivamente, en España"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "12, 3 y 7 días\nen Marruecos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "está empadronado"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "desde el día 20 de mayo de 2002"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "contestación"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "del Ayuntamiento"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "abonos periódicos"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "LIQUIDACIONES OA VICKERS FINANCIAL GROUP"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "propietario de cuatro viviendas en España y una en Marruecos"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "valor catastral"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "se aproxima al millón"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "Existen facturas de consumo considerable durante todo el año"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "sin haber acreditado este hecho en Marruecos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "propietario de seis vehículos en España"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "Porsche Cayenne"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "titular único"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "cuentas bancarias en España"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "roza los cuatro millones y medio"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "indica reiteradamente domicilios"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "en Gran Canaria"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "Securitas Direct"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "American Express Card"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "no hay constancia de su residencia ﬁscal ni de la tributación"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "en Marruecos o EE.UU"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "se acuerda DESESTIMAR"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "tales certiﬁcados deben reputarse\nhábiles para probar la residencia ﬁscal en EEUU"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "hábiles para considerar que existe un conﬂicto"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-012",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Certiﬁcados"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Certiﬁcados"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "de Marruecos, y, posteriormente"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "de EEUU, que son\nlos únicos que se hacen valer"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-013",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "aportando las declaraciones de la renta 2008,\n2009 y 2010 (Form 1040 US Individual Income Tax Return"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-014",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "También entrega fotocopia del pasaporte estadounidense con numerosos sellos por viajes a Asia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-015",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "copias de tarjetas\nVISA de cuentas en bancos americanos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-016",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "fotocopia del carnet\nde conducir en aquel país (anverso y reverso"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-017",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "Además,\naporta copia de las tarjetas VISA de sus cuentas en bancos de Singapur"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-018",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "aportando documentación diversa extraída de\ninternet y de periódicos respecto de la residencia"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "de su entorno familiar"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-019",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "entregar un documento"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "Etat de Paiements"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "pagos por cotizaciones"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "años 2009 a 2013"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-020",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no basta con aportar\ncopia del contrato de alquiler de un piso en Nueva York"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "lo relevante sería"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "plazos prolongados"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-021",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "Aporta el actor documentación -carente de traducción mediante intérprete jurado- relativa a su participación\nen diversas entidades"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-evidence-013",
+        "anchor-legacy-evidence-014",
+        "anchor-legacy-evidence-015",
+        "anchor-legacy-evidence-016",
+        "anchor-legacy-evidence-017",
+        "anchor-legacy-evidence-018",
+        "anchor-legacy-evidence-019",
+        "anchor-legacy-evidence-020",
+        "anchor-legacy-evidence-021"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Acta de disconformidad IRPF 2008-2010 e informe ampliatorio con hechos indiciarios sobre residencia (inmuebles, consumos, cuentas, etc.).",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Sustentar residencia fiscal en España por indicios (principalmente centro de intereses económicos).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "acta A02 NUM001 e informe ampliatorio (Inspección)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Conclusión inspectora: permaneció 56/63/91 días en España y 12/3/7 días en Marruecos (2008/2009/2010).",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Contextualizar permanencias y desplazamientos (no superar 183 días, pero apoyar reconstrucción de vida).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "cómputo días en España/Marruecos (Inspección)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Empadronamiento en AVENIDA000 NUM003 desde 20/05/2002 (Ayuntamiento San Bartolomé de Tirajana).",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indicio de residencia/arraigo administrativo en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado/contestación empadronamiento"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Abonos periódicos del GRUPO VICKERS en cuenta española (Caja Insular de Canarias), importes anuales 2008-2010 y mensual aprox. 25.000€.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indiciar centro de intereses económicos/gestión y cobro de rentas en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "abonos GRUPO VICKERS en cuenta española"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Propiedad de cuatro viviendas en España y una en Marruecos (más vivienda alquilada en Francia); valor catastral acumulado cerca de 1M€ en 2009-2010.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indiciar base patrimonial en España vinculada a intereses económicos/vitales.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "titularidad viviendas en España/Marruecos"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Facturas de consumo considerable durante todo el año en viviendas en España; no acreditado consumo similar en Marruecos.",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indiciar uso efectivo de viviendas en España y vida ordinaria.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "facturas de consumo viviendas España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Propiedad de seis vehículos en España con matrículas históricas y adquisiciones (Porsche Cayenne 03/2008; Hyundai H1 08/2009).",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indicio de arraigo/patrimonio y vida en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "vehículos matriculados en España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Titular único de 3-5 cuentas en España; total transferencias/ingresos roza 4,5M€ en 2008-2010.",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indiciar localización de intereses económicos/financieros en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "cuentas bancarias en España (movimientos)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Uso reiterado de domicilios de contacto/notificaciones en Gran Canaria en relaciones con Securitas Direct, Pelayo, Caixa, American Express, Spanair, etc.",
+          "evidenceId": "evidence-legacy-009",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Indicio de residencia/centro de vida y gestión desde España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "domicilios de contacto/notificaciones en Gran Canaria con terceros"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Argumentación inspectora: no constancia de tributación en Marruecos/EEUU; críticas a certificados Marruecos y a fotocopias de Form 1040 sin validación.",
+          "evidenceId": "evidence-legacy-010",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "EEUU",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS no confirma ni descarta esta argumentación; fija doctrina sobre fuerza del certificado a efectos CDI y ordena retroacción.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "AEAT",
+          "probativePurpose": "Desvirtuar residencia fiscal alegada en el extranjero y sostener residencia en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "alegación de inexistencia prueba tributación Marruecos/EEUU (Inspección)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS declara que, emitidos por autoridad competente y extendidos a efectos del CDI, son hábiles para probar residencia a efectos del Convenio y acreditar conflicto de residencia.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Tres certificados (uno por ejercicio) emitidos por el Servicio de Impuestos Internos del Departamento del Tesoro (EEUU) indicando residencia en EEUU “a efectos” del CDI con España.",
+          "evidenceId": "evidence-legacy-011",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "EEUU",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS declara que, emitidos por autoridad competente y extendidos a efectos del CDI, son hábiles para probar residencia a efectos del Convenio y acreditar conflicto de residencia.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en EEUU a efectos del CDI y forzar reconocimiento de conflicto de residencia y aplicación del art. 4.2 CDI (tie-breaker).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "certificados residencia fiscal EEUU (IRS) a efectos CDI"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-012"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificados de 27/12/2012 (con añadido manuscrito “2008 a 2011”) y 31/05/2013 indicando residencia fiscal en Marruecos 2008-2012.",
+          "evidenceId": "evidence-legacy-012",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "EEUU",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS se centra en los certificados de EEUU (objeto del recurso de casación) y no valora los emitidos por Marruecos.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Marruecos.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificados residencia fiscal Marruecos (Ministerio Finanzas)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-013"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Aportó Form 1040 de 2008-2010 (US Individual Income Tax Return) como prueba de residencia/tributación en EEUU (la Inspección las calificó de fotocopias sin validación).",
+          "evidenceId": "evidence-legacy-013",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "EEUU",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS no se pronuncia sobre su suficiencia; la sentencia casa por la eficacia del certificado IRS y ordena retroacción.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Probar residencia fiscal en EEUU y/o tributación allí.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "declaraciones renta EEUU Form 1040 (fotocopias)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-014"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Copia de pasaporte estadounidense (mencionada por Inspección; también con sellos de viajes a Asia).",
+          "evidenceId": "evidence-legacy-014",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Indiciar desplazamientos internacionales y conexión con EEUU (nacionalidad/residencia).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "pasaporte EEUU (copia)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-015"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Copias de tarjetas VISA de cuentas en bancos americanos (sin extractos).",
+          "evidenceId": "evidence-legacy-015",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Indiciar vínculos bancarios con EEUU y vida económica allí.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "tarjetas VISA (bancos EEUU)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-016"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Fotocopia de carnet de conducir de EEUU (anverso y reverso).",
+          "evidenceId": "evidence-legacy-016",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Indiciar vínculo administrativo con EEUU (posible residencia).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "carnet conducir americano (copia)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-017"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Copia de tarjetas VISA de sus cuentas en bancos de Singapur.",
+          "evidenceId": "evidence-legacy-017",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Apoyar tesis de que su actividad/rentas se localizan fuera de España (Singapur/Asia).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "tarjetas VISA (bancos Singapur)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-018"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "OTROS",
+          "description": "Documentación diversa extraída de internet y periódicos para sostener que su entorno familiar cercano reside habitualmente en Marruecos.",
+          "evidenceId": "evidence-legacy-018",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Probar centro de intereses vitales en Marruecos.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documentación internet/prensa sobre entorno familiar en Marruecos"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-019"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Documento en francés 'Etat de Paiements' (traducción aportada) sobre supuestos pagos/cotizaciones a Tesorería marroquí 2009-2013.",
+          "evidenceId": "evidence-legacy-019",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "EEUU",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS no se pronuncia sobre este documento; aparece como discusión en el acuerdo de liquidación.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar cumplimiento/pagos en Marruecos y apoyar residencia fiscal allí.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documento 'Etat de Paiements' (Marruecos)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-020"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Copia de contrato de alquiler de un piso en Nueva York (y otros arrendamientos), invocada para sostener vivienda habitual fuera de España.",
+          "evidenceId": "evidence-legacy-020",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Probar vivienda permanente/estancias prolongadas en EEUU (paso 1 tie-breaker).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contrato alquiler piso en Nueva York (copia)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-021"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Documentación sobre participación en diversas entidades mercantiles (carente de traducción jurada), invocada para ubicar actividad fuera de España.",
+          "evidenceId": "evidence-legacy-021",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar localización de actividad económica y origen de rentas fuera de España/EEUU.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "documentación participación en entidades mercantiles (sin traducción jurada)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El TS censura que la AN “banalice” el certificado de residencia fiscal de EEUU y niegue el conflicto de residencia. Si el certificado lo emite la autoridad competente y expresa que se expide a efectos del CDI, es hábil para probar residencia a efectos del Convenio y, por tanto, para afirmar conflicto (doble residencia). Acreditado el conflicto, España no puede prescindir unilateralmente del CDI: debe aplicarse el art. 4.2 (vivienda permanente → centro intereses vitales → morada habitual → nacionalidad → acuerdo). El TS no fija el desempate en casación y ordena retroacción para que la AN lo resuelva.",
+        "consequences": [],
+        "decisiveReasoning": "El TS censura que la AN “banalice” el certificado de residencia fiscal de EEUU y niegue el conflicto de residencia. Si el certificado lo emite la autoridad competente y expresa que se expide a efectos del CDI, es hábil para probar residencia a efectos del Convenio y, por tanto, para afirmar conflicto (doble residencia). Acreditado el conflicto, España no puede prescindir unilateralmente del CDI: debe aplicarse el art. 4.2 (vivienda permanente → centro intereses vitales → morada habitual → nacionalidad → acuerdo). El TS no fija el desempate en casación y ordena retroacción para que la AN lo resuelva.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "RETROACCION",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2008,
+            2009,
+            2010
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2023-06-12",
+    "ecli": "ES:TS:2023:2735",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-2735-2023",
+    "pageCount": 16,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 2735/2023",
+    "sourceFile": "sentencias/STS_2735_2023.pdf",
+    "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976",
+    "taxYears": [
+      2008,
+      2009,
+      2010
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

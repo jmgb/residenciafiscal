@@ -1,0 +1,338 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "la liquidación de fecha\n28 de marzo de 2019 de la Oﬁcina Nacional de Gestión Tributaria de la AEAT"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "TRIBUNAL ECONOMICO ADMINISTRATIVO CENTRAL de 21 de julio de 2020"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "El recurrente durante ese período estuvo prestando sus servicios en la Oﬁcina Económica y Comercial de la\nEmbajada de España en Colombia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "aportado como documento 4 con la demanda, pero no ha acreditado que reúna las\ncondiciones"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "ni siquiera del documento nº2 que aporta con la demanda"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "la invocada por la actora, V0775/13, se refería a una beca para Kuwait"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acredita la actuación administrativa y sirve de base al recurso; no cuestionada en su autenticidad.",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Acta/Acuerdo de liquidación de la Oficina Nacional de Gestión Tributaria de la AEAT fechada 28/03/2019 que deniega devolución y fija importe liquidado.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar la liquidación y la obligación tributaria en España (IRNR)",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Liquidación ONGT 28-03-2019"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "La Audiencia Nacional confirma la resolución del TEAC por su adecuación al ordenamiento jurídico; decisiva para el resultado.",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Resolución del Tribunal Económico-Administrativo Central de 21/07/2020 que desestima la reclamación económico-administrativa nº 2878/2019.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Confirmar la legalidad de la liquidación y el criterio de la Administración",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "Resolución TEAC 21-07-2020"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Se considera probado como presupuesto determinante del expediente (no discutido).",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Constancia administrativa de que el recurrente prestó sus servicios en la Oficina Económica y Comercial de la Embajada de España en Colombia en 2015.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar actividad y localización de la prestación para determinar residencia/territorialidad de la renta",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Prestación de servicios en Oficina Comercial (Embajada)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Prueba insuficiente para acreditar que el plan aportado sea un 'plan anual de cooperación internacional aprobado en Consejo de Ministros'.",
+          "category": "OTROS",
+          "description": "Plan estratégico de internacionalización de la economía española 2014/2015 aportado por la parte actora para sostener que la beca se enmarca en el plan anual de cooperación internacional.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar que la beca encaja en el 'plan anual de cooperación internacional' y, por tanto, que procede la exención del art.14.1.b TRLIRNR",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Documento 4 - Plan Internacionalización 2014/2015"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El tribunal indica que incluso dicho documento nº2 no valida la tesis de la no sujeción; insuficiente o inidóneo.",
+          "category": "OTROS",
+          "description": "Documento nº2 aportado con la demanda (contenido no especificado en la sentencia) citado por la parte actora.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Presuntamente acreditar la naturaleza de la retribución pública o su régimen",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Documento nº2 (no especificado)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "No hay identidad de supuestos con la consulta vinculante ni con las sentencias citadas; no desvirtúan la calificación aplicada.",
+          "category": "OTROS",
+          "description": "Referencias a publicaciones en la web de la AEAT y a la consulta vinculante V0775/13 aportadas por la actora.",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Invocar buena fe y confianza legítima por interpretaciones previas de la AEAT",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Web AEAT y consulta vinculante V0775/13"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El tribunal parte de que el recurrente fue residente en Colombia en 2015 y que prestó servicios en la Oficina Económica y Comercial en Colombia; aplica el artículo 19 del CDI España-Colombia para concluir que la beca no se gravó en Colombia y, por tanto, se califica como renta obtenida en territorio español sujeta al IRNR. Además, como doctrina interpretativa (previamente fijada), declara que las ausencias superiores a 183 días por beca no son ausencias esporádicas a efectos del art.9 LIRPF.",
+        "consequences": [],
+        "decisiveReasoning": "El tribunal parte de que el recurrente fue residente en Colombia en 2015 y que prestó servicios en la Oficina Económica y Comercial en Colombia; aplica el artículo 19 del CDI España-Colombia para concluir que la beca no se gravó en Colombia y, por tanto, se califica como renta obtenida en territorio español sujeta al IRNR. Además, como doctrina interpretativa (previamente fijada), declara que las ausencias superiores a 183 días por beca no son ausencias esporádicas a efectos del art.9 LIRPF.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2015
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2025-10-02",
+    "ecli": "ES:AN:2025:4438",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-4438-2025",
+    "pageCount": 6,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 4438/2025",
+    "sourceFile": "sentencias/SAN_4438_2025.pdf",
+    "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265",
+    "taxYears": [
+      2015
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

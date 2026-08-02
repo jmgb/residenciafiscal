@@ -1,0 +1,432 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se deduce que ha estado ente Miami y Perú un total\nde 126 días"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "consta empadronado en dicho domicilio hasta el 18-03-2011"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Consta en el modelo 347 del ejercicio 2011 una imputación de cobros realizada por ENDESA"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Mediante escritura pública de fecha 28-10-2011"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "adquiere un inmueble en la  CALLE003  nº  NUM008"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "nos atiende una\nempleada de hogar que maniﬁesta que el obligado tributario tiene su domicilio en la  CALLE003"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "se aporta contrato"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "donde deposita 248\nartículos por un valor de 40 millones de pesetas"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "Se han\nadjuntado las copias de los pasaportes y no constan los sellos de entrada y salida del territorio Español"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "Carece de\nactividad económica en España, ni rentas ni saldos bancarios"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El tribunal admite los certificados para cuantificar 126 días fuera de España, pero estima que no acreditan entradas/salidas a España ni permiten inferir fehacientemente que el resto del año estuvo en España.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Certificado de la Administración de EEUU y certificado migratorio expedido en Lima (Perú) de 5/5/2014, que permiten computar estancias en Miami y Perú por 126 días en 2011.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar días de permanencia en el extranjero y, por diferencia, que el resto del año estuvo en España (>183 días).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Certificados EEUU y Perú (movimientos 2011)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El tribunal estima que el padrón por sí no constituye prueba fehaciente de permanencia física superior a 183 días en el año.",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Constancia de empadronamiento en CALLE000 nº NUM004 de Madrid hasta el 18-03-2011.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar residencia habitual en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Empadronamiento (INE) hasta 18-03-2011"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El tribunal aprecia que el consumo acreditado puede corresponder a la finca vendida en febrero de 2011 y no prueba permanencia continuada durante el año.",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Referencia en el modelo 347 de imputación de cobros realizada por ENDESA correspondiente al ejercicio 2011.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar vida doméstica en España mediante consumos eléctricos.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Imputación de cobros por ENDESA / consumo luz 2011"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "La compra de un inmueble es indicio relevante pero no prueba por sí la residencia efectiva durante el año 2011.",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Escritura pública del 28-10-2011 por importe de 2.600.000 euros de una vivienda en CALLE003 nº NUM008 de Madrid.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar titularidad y posible vivienda habitual en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Escritura pública adquisición inmueble en Madrid (28/10/2011)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "La declaración testimonial corrobora un domicilio, pero la constatación de ausencia en la notificación limita su valor probatorio sobre la permanencia anual.",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Diligencia de notificación en la que una empleada del hogar manifiesta que el obligado tributario tiene su domicilio en CALLE003 nº NUM008 y que en ese momento no se encontraba en el domicilio.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar presencia/uso de vivienda y señalar domicilio habitual.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Diligencia notificación y declaración empleada del hogar (11/04/2011)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El tribunal indica que el guardamuebles no acredita la residencia efectiva en España; puede incluso respaldar la tesis de estancias fuera del país.",
+          "category": "OTROS",
+          "description": "Contrato de guardamuebles con depósito de 248 artículos valorados en 40 millones de pesetas (240.404,84€), aportado por URBANO MUDANZAS SL.",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar existencia de efectos fuera de vivienda que podrían indicar estancia fuera de España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Contrato guardamuebles URBANO MUDANZAS SL (18/11/1998)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El tribunal observa que la ausencia de sellos en las copias no permite acreditar fehacientemente permanencias o ausencias del territorio y que la Administración podría haber aportado pasaporte con sellos.",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Copias de pasaportes aportadas por el recurrente en las que no constan sellos de entrada/salida del territorio español.",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar ausencias o entradas/salidas y, por tanto, negar residencia en España en 2011.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Copias de pasaportes (sin sellos)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Alegación del recurrente de que no disponía de medios económicos en España, no tenía rentas, ni saldos bancarios ni actividad económica.",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Demostrar la falta de centro de intereses económicos en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "Alegación de ausencia de saldos bancarios y rentas en España"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.",
+        "consequences": [],
+        "decisiveReasoning": "La Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+    "decisionDate": "2022-12-07",
+    "ecli": "ES:AN:2022:6289",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-6289-2022",
+    "pageCount": 8,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 6289/2022",
+    "sourceFile": "sentencias/SAN_6289_2022.pdf",
+    "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236",
+    "taxYears": [
+      2011
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

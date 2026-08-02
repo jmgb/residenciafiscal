@@ -1,0 +1,1668 @@
+{
+  "schemaVersion": "residenciafiscal-public-judgments/1",
+  "jurisdiction": "es",
+  "candidates": 67,
+  "published": 0,
+  "judgments": [
+    {
+      "judgmentId": "san-1071-2025",
+      "roj": "SAN 1071/2025",
+      "court": "Audiencia Nacional",
+      "decisionDate": "2025-02-18",
+      "taxYears": [
+        2010,
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_OTRO"
+      ],
+      "outcomes": [
+        "GANA_AEAT",
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es",
+        "fr"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "4a12d8f6852f33d0a8df4279b2035dc64f0897dad8f0ff86a18bb6c30b27816b",
+      "sourceSha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+    },
+    {
+      "judgmentId": "san-1136-2016",
+      "roj": "SAN 1136/2016",
+      "court": "Audiencia Nacional",
+      "decisionDate": "2016-03-22",
+      "taxYears": [
+        2007
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_OTRO",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "6b445b84d31e8572975bb04c1babd0da82a3649f72f053e51e22d7474bed7a8b",
+      "sourceSha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+    },
+    {
+      "judgmentId": "san-1210-2023",
+      "roj": "SAN 1210/2023",
+      "court": "Audiencia Nacional",
+      "decisionDate": "2023-02-22",
+      "taxYears": [
+        2011,
+        2012,
+        2013
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "ba811638a5f73645ce1119536b9ad26b49ce87bb08e917b564ff9a51803988bc",
+      "sourceSha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+    },
+    {
+      "judgmentId": "san-1226-2021",
+      "roj": "SAN 1226/2021",
+      "court": "Audiencia Nacional",
+      "decisionDate": "2021-03-04",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es",
+        "gb"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "da522cd78ab8eb5d2d05824da572cdc82e707ed89b6f3aab858d0abfd87f8a38",
+      "sourceSha256": "33190f2cdb25e19037ca1c46e91b8c0deefc294cb03af903c6fac7b96ef6cdf1"
+    },
+    {
+      "judgmentId": "san-1386-2017",
+      "roj": "SAN 1386/2017",
+      "court": "Audiencia Nacional",
+      "decisionDate": "2017-03-30",
+      "taxYears": [
+        2009
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_OTRO",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT",
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "ch",
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "c482183e7decadf76d9fb45d55a19f509d89ca7a19f0c13adebf9c9c0defaacf",
+      "sourceSha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76"
+    },
+    {
+      "judgmentId": "san-2132-2025",
+      "roj": "SAN 2132/2025",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 2",
+      "decisionDate": "2025-04-28",
+      "taxYears": [
+        2014
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "ec1b60161890114deb8333f04acc80b5396c3af4bf2adb84dc8f98ea61cd6a25",
+      "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+    },
+    {
+      "judgmentId": "san-2229-2022",
+      "roj": "SAN 2229/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso",
+      "decisionDate": "2022-05-23",
+      "taxYears": [
+        2014
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "a42c2ab29648aec718a3866360a3a1c050712a71655672ec86e85e1dd8efe0d2",
+      "sourceSha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+    },
+    {
+      "judgmentId": "san-2335-2022",
+      "roj": "SAN 2335/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2022-03-16",
+      "taxYears": [
+        2008,
+        2010
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "2167146ee1ed5d69bfe41de9ed52b0ba46ec29ddc57190f97927b2b1fb029659",
+      "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+    },
+    {
+      "judgmentId": "san-2347-2022",
+      "roj": "SAN 2347/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2022-05-11",
+      "taxYears": [
+        2007
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "316444c2776eadd95d7b9af0f8b3f8fe9c84e0d699bda91f04da6b242cf351fc",
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "judgmentId": "san-2602-2020",
+      "roj": "SAN 2602/2020",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2020-09-30",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "a6b4fc2ae4ed7dcfce1cf37f2e9a10760bcd7c51ea51f3d9acab43c2338b5064",
+      "sourceSha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+    },
+    {
+      "judgmentId": "san-2602-2022",
+      "roj": "SAN 2602/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2022-06-08",
+      "taxYears": [
+        2008,
+        2010
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "75b644f63916a2328af89b76fe2cf0c6c7d0e8c78f0031e5f7811f7650b8c4c8",
+      "sourceSha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+    },
+    {
+      "judgmentId": "san-3169-2024",
+      "roj": "SAN 3169/2024",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+      "decisionDate": "2024-05-14",
+      "taxYears": [
+        2009,
+        2010,
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "141442bf922289da13fd7977f2fea288d00c6d988a62c4a8d88a8a6634d66c58",
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "judgmentId": "san-3306-2025",
+      "roj": "SAN 3306/2025",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2025-07-11",
+      "taxYears": [
+        2015
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "ca47cde9cc17c57d37f18cbb8a51a51d435b7eb8aa4bd1200868871dc8cec14a",
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "judgmentId": "san-3421-2021",
+      "roj": "SAN 3421/2021",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2021-05-26",
+      "taxYears": [
+        2005
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "e163d657c6024a42d0099da9d404fb9f99c432b7d74ae36475085a6efc1a460f",
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "judgmentId": "san-3477-2022",
+      "roj": "SAN 3477/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+      "decisionDate": "2022-06-16",
+      "taxYears": [
+        2010,
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "d5623b62b3b0109b5adcb389edc0895553cf4c36f8a8cc40eb8b02a80bfcc08b",
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "judgmentId": "san-3960-2020",
+      "roj": "SAN 3960/2020",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2020-11-23",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "678dfe9b8f108a39da705d4993a085b51e18f5fa531fe21f34a857557a2aa1f2",
+      "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+    },
+    {
+      "judgmentId": "san-4187-2023",
+      "roj": "SAN 4187/2023",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2023-05-31",
+      "taxYears": [
+        2006
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "PARCIAL"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "dcadbb36bf95e6c8660b2f5435393aa44038b25b6675ce8d18ba23695969fcb5",
+      "sourceSha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+    },
+    {
+      "judgmentId": "san-4248-2020",
+      "roj": "SAN 4248/2020",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+      "decisionDate": "2020-12-09",
+      "taxYears": [
+        2006,
+        2007,
+        2008
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "9e54c4171a60dbcc275561af3a1801470da7923ef5c64f2d2d7f63440a362b06",
+      "sourceSha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+    },
+    {
+      "judgmentId": "san-4438-2025",
+      "roj": "SAN 4438/2025",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2025-10-02",
+      "taxYears": [
+        2015
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "00dd2aeebf2df500c829247ae459ac2095584e54339b8dadb2f2d295f87344c3",
+      "sourceSha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "judgmentId": "san-4670-2019",
+      "roj": "SAN 4670/2019",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+      "decisionDate": "2019-10-23",
+      "taxYears": [
+        2006
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "bfb187c49b87f80cad15c6cfaae86d3a9a4ab04de39d35e5853b79beb8e5b577",
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "judgmentId": "san-4992-2021",
+      "roj": "SAN 4992/2021",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+      "decisionDate": "2021-10-21",
+      "taxYears": [
+        2007,
+        2008
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "PARCIAL"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "71e5923009ea5494af63b9a20789104c9853a03fd0c3aeea394381a4d8bc1ee7",
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "judgmentId": "san-5096-2021",
+      "roj": "SAN 5096/2021",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+      "decisionDate": "2021-11-10",
+      "taxYears": [
+        2008,
+        2009,
+        2010
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "5b4ad6ff35c2bba3c61464d7d0126f883c40ffb816a44c11c2e39972c4507b74",
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "judgmentId": "san-5151-2019",
+      "roj": "SAN 5151/2019",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Cuarta",
+      "decisionDate": "2019-11-20",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "6b72c315960a6cbb29d1f4225f976cd969d9b4c5154b738aba379fb14f5c2829",
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "judgmentId": "san-5217-2022",
+      "roj": "SAN 5217/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+      "decisionDate": "2022-09-06",
+      "taxYears": [
+        2011,
+        2015
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "b77426df2236b954c83c6142703d3985d1056a31ee1de95bc186b5a177d4faf1",
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "judgmentId": "san-5630-2023",
+      "roj": "SAN 5630/2023",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2023-10-03",
+      "taxYears": [
+        2005,
+        2006,
+        2007,
+        2008
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "9253839eed4c9eef1a07581b91396e214d3746a7ce5084518d3b1c1e13bf251c",
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "judgmentId": "san-5640-2023",
+      "roj": "SAN 5640/2023",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2023-10-03",
+      "taxYears": [
+        2008,
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "84f2e079b1b2f0eaaec02b2b436970eed91a8ae89c4ce27ede3ee333e51a713c",
+      "sourceSha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "judgmentId": "san-5983-2024",
+      "roj": "SAN 5983/2024",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4ª",
+      "decisionDate": "2024-10-29",
+      "taxYears": [
+        2007,
+        2009
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "fa9ed1455b4b8af3e0ccea1a83f515f336d46c873774a3114105dbc3f03e50a4",
+      "sourceSha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+    },
+    {
+      "judgmentId": "san-6289-2022",
+      "roj": "SAN 6289/2022",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo, Sección 4",
+      "decisionDate": "2022-12-07",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "d79bc9b3d8455d30a345e6806e84ed7de3683ed60deb86a95476212574b5732a",
+      "sourceSha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+    },
+    {
+      "judgmentId": "san-6981-2024",
+      "roj": "SAN 6981/2024",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-12-11",
+      "taxYears": [
+        2017
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "3a6a2627041661ee26bec9db5299fb70df99371be317f62bbcb8b8f8bb71b4c0",
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "judgmentId": "san-699-2015",
+      "roj": "SAN 699/2015",
+      "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+      "decisionDate": "2015-02-18",
+      "taxYears": [
+        2005,
+        2006
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "baaf949b3889577bc0d5593666fab55b63c7310a89c03eec7889cdc5243217a2",
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "judgmentId": "sts-107-2018",
+      "roj": "STS 107/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "5ee9ba4b68d38343e3611d0205fe819ef1c1869fa7476c4238067db8e20f8576",
+      "sourceSha256": "ee61608187016b48f492a3f9095ae647c746aef49a3c5046ab958cb3207d105b"
+    },
+    {
+      "judgmentId": "sts-108-2018",
+      "roj": "STS 108/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo, Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "b826df567b4b113d69155f7be293b42a7cdb01c91b1059e07c057fa2ff8ff5fd",
+      "sourceSha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+    },
+    {
+      "judgmentId": "sts-109-2018",
+      "roj": "STS 109/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "2bad0662f2ba937d2968e21d760015f31132ac69447d34d0fcdcbe01c4ab749c",
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "judgmentId": "sts-110-2018",
+      "roj": "STS 110/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+      "decisionDate": "2018-01-18",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "25772c4013f68154078bb39a540d41a125b982d982ac6bc31ec0ab20510f35d9",
+      "sourceSha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
+    },
+    {
+      "judgmentId": "sts-112-2018",
+      "roj": "STS 112/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "2c8567c68a709bc43e99f5364b5786c8c14e8774034db9897032c0257ceff67f",
+      "sourceSha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+    },
+    {
+      "judgmentId": "sts-114-2018",
+      "roj": "STS 114/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "de4ff0490c798cd83f6fa681a2060236eaf0a6c25a5813e9f190c343d3ae5167",
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "judgmentId": "sts-115-2018",
+      "roj": "STS 115/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "e57d82bea609da16259a96c49c063825426e6df68a00ce9ea22bd43662ff30ee",
+      "sourceSha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "judgmentId": "sts-1682-2022",
+      "roj": "STS 1682/2022",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2022-05-03",
+      "taxYears": [
+        2012,
+        2017
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_OTRO"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "815fe8d42466fc299b47340e1e0c52e238e000613432cbfbf37552b71d052674",
+      "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+    },
+    {
+      "judgmentId": "sts-183-2018",
+      "roj": "STS 183/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-18",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "ad152c3298ab4660d2ef46ab4a483b01ea1abd4dc85d7aea25be4dea09541066",
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "judgmentId": "sts-184-2018",
+      "roj": "STS 184/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-18",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "360b612956ca4820f8bff1d4fc84bd5b215b488d43f2f6aa22e84aa1023d8974",
+      "sourceSha256": "fc3b96e5de3c53be81e329bcf367ce339f54bd2f7afd1b2346ffe1ce721d46f3"
+    },
+    {
+      "judgmentId": "sts-188-2018",
+      "roj": "STS 188/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "2b0ef61f54857aca046cc2bf7ae9dc5b2cd786713c2168ecc5ffc9ae7b54d03b",
+      "sourceSha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+    },
+    {
+      "judgmentId": "sts-2013-2024",
+      "roj": "STS 2013/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-04-15",
+      "taxYears": [
+        2015,
+        2016
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "outcomes": [
+        "RETROACCION"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "30abf6ecb6adb5373422f442695798d83169a73e522c7175176e9d9853675624",
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "judgmentId": "sts-2735-2023",
+      "roj": "STS 2735/2023",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2023-06-12",
+      "taxYears": [
+        2008,
+        2009,
+        2010
+      ],
+      "criterionIds": [
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "outcomes": [
+        "RETROACCION"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "af80ac82f6ff53c8eec045017616167eea09049860f318425906b82597ee42bb",
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "judgmentId": "sts-305-2018",
+      "roj": "STS 305/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-01-16",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "b09184560caae533c5e9ecfd4b6a062af68adc242e4709f55800950d97fcc5b1",
+      "sourceSha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "judgmentId": "sts-3498-2025",
+      "roj": "STS 3498/2025",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2025-07-15",
+      "taxYears": [
+        2014,
+        2015,
+        2016
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "98d2f070a73643cc61c563b477bad0507ce36019482eafda8dee5095e4bddd4c",
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "judgmentId": "sts-3574-2023",
+      "roj": "STS 3574/2023",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2023-07-14",
+      "taxYears": [
+        2005,
+        2006
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_OTRO"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "e9f61d2274564ba4d34fe16c94d911c9c3fe3886068cc5fc5785ed440a162551",
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "judgmentId": "sts-3585-2024",
+      "roj": "STS 3585/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-06-19",
+      "taxYears": [
+        2011,
+        2012,
+        2014,
+        2016
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS"
+      ],
+      "outcomes": [
+        "RETROACCION"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "5eb1aa3f216f04105cb4bbbbad9533f0b9cf7db00fb0d20b39c46ee657de53c4",
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "judgmentId": "sts-3881-2024",
+      "roj": "STS 3881/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-07-09",
+      "taxYears": [
+        2014
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "a862867d66473df0e6bf84185daccb21b7d963130f1fa24d6db2f88d7a6ec2aa",
+      "sourceSha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "judgmentId": "sts-3882-2024",
+      "roj": "STS 3882/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-07-08",
+      "taxYears": [
+        2014
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "4134b365a7a5b8fa009417aa224e1dc1cd7d77b115f1280387ef2e3e7136ff65",
+      "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+    },
+    {
+      "judgmentId": "sts-4219-2024",
+      "roj": "STS 4219/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2024-07-22",
+      "taxYears": [
+        2010,
+        2011,
+        2012,
+        2013
+      ],
+      "criterionIds": [
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "1eec792b1d6d91f147e24b3f46ee6ffeb09e294fb706409a9551f104285031aa",
+      "sourceSha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+    },
+    {
+      "judgmentId": "sts-4220-2024",
+      "roj": "STS 4220/2024",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2",
+      "decisionDate": "2024-07-22",
+      "taxYears": [
+        2014
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "outcomes": [
+        "GANA_AEAT"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "13a214ea9498363704d875d92cb398fc0d00ecd8769b459c0b2fe807b87b5b10",
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "judgmentId": "sts-4305-2017",
+      "roj": "STS 4305/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2017-11-28",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "624b32dd9532ecdca4130c7ce075acca8afca4d66f5c2cbba80464026468a071",
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "judgmentId": "sts-4306-2017",
+      "roj": "STS 4306/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2017-11-28",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "cd613fb7d2c87657264d2abbe40237beac18d31818bfbab443ccbcd3ea3b92c7",
+      "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+    },
+    {
+      "judgmentId": "sts-4307-2017",
+      "roj": "STS 4307/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2017-11-28",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "489ab4200c4be9dfa19aaf45e22fe4b479cc60598710435f0011acf0f991f543",
+      "sourceSha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac"
+    },
+    {
+      "judgmentId": "sts-4433-2017",
+      "roj": "STS 4433/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2017-11-28",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "d02a356d77dd75e000d3500577315acc144186a2924c4306ac1501650ff1dd9c",
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "judgmentId": "sts-4434-2017",
+      "roj": "STS 4434/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2",
+      "decisionDate": "2017-11-28",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "1c9571b1a13a78dd03861bd28c6af0c1b0ebd4f2028fa9384b78b775e87d21ff",
+      "sourceSha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+    },
+    {
+      "judgmentId": "sts-4670-2017",
+      "roj": "STS 4670/2017",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2017-12-14",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "6fb112524e534f8af798263c9c743c5b287e542179e5e88d7b8fae55ecd59813",
+      "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+    },
+    {
+      "judgmentId": "sts-691-2018",
+      "roj": "STS 691/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo, Sección Segunda",
+      "decisionDate": "2018-02-08",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "ee734e94d5b66dc8d2281b7e09edd339c7830edd9d11c80fafd982d3245e1cc1",
+      "sourceSha256": "c1ff8163792eec2aa89669d1737314471d1af84810d9246599a944e1d5b1051d"
+    },
+    {
+      "judgmentId": "sts-695-2018",
+      "roj": "STS 695/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo, Sección Segunda",
+      "decisionDate": "2018-03-01",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "c6ad596798a24b0ea134d28a67fd81437eb9a10799b023b38c8b6d78d4be9188",
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "judgmentId": "sts-697-2018",
+      "roj": "STS 697/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-02-08",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "5f72a06a844557a1814e979c0f03a9bb92effa66647c106b87617a277a512221",
+      "sourceSha256": "2ace80235e1dae0aba06ac08d300649ccdca38f606756c4bf6ad8dee497143e7"
+    },
+    {
+      "judgmentId": "sts-698-2018",
+      "roj": "STS 698/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+      "decisionDate": "2018-02-08",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "4b6422aa855a89497e0d8bad14784f17c863d738c2c4744203fbcc4a4d5885ee",
+      "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+    },
+    {
+      "judgmentId": "sts-700-2018",
+      "roj": "STS 700/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+      "decisionDate": "2018-02-08",
+      "taxYears": [
+        2011,
+        2012
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "999a2d8e5c9d46794479f73afd8e9dbeffed9120a8d5406eaff174a7fc608b68",
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "judgmentId": "sts-701-2018",
+      "roj": "STS 701/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-02-08",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "7386f45cd8f2a9895ecc3081b1c048f892b120c86470047cec815eb5ee9fc603",
+      "sourceSha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f"
+    },
+    {
+      "judgmentId": "sts-839-2018",
+      "roj": "STS 839/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-03-06",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "66c4055a3c2174a942c617f54a2593d0c7d6a000ee9f3a43c70c02565692f36d",
+      "sourceSha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c"
+    },
+    {
+      "judgmentId": "sts-840-2018",
+      "roj": "STS 840/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2",
+      "decisionDate": "2018-03-06",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "2689b32e5d62f17e556911949b63f001f50fcd61b6e62469933f8e681cbeb0ff",
+      "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
+    },
+    {
+      "judgmentId": "sts-841-2018",
+      "roj": "STS 841/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2ª",
+      "decisionDate": "2018-03-06",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "a0569c3bccdc8d3e5a8dc498242654be3a2079924369ed0b463abc9de04b6255",
+      "sourceSha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+    },
+    {
+      "judgmentId": "sts-842-2018",
+      "roj": "STS 842/2018",
+      "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+      "decisionDate": "2018-03-06",
+      "taxYears": [
+        2011
+      ],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_OTRO"
+      ],
+      "outcomes": [
+        "GANA_CONTRIBUYENTE"
+      ],
+      "jurisdictions": [
+        "es"
+      ],
+      "publicationState": "internal_preview",
+      "legalReview": "AGENT_REVIEWED",
+      "projectionSha256": "44005347e1205897aca324ba60cc65a6dde1d40bbed20e630bb39ea094a9760b",
+      "sourceSha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    }
+  ]
+}

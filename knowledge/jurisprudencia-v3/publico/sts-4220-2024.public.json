@@ -1,0 +1,482 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "era titular de otra en un municipio de Valencia"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "y en la que quedaba acreditado vivía su pareja"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "era titular de otra"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "de la que asumía los\ngastos de suministros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "considerando probado"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "residencia disponible"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "tanto en España como en\nReino Unido"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "necesario aplicar"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "artículo 4.2"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "También resulta evidente que el núcleo principal de los intereses económicos del recurrente se desenvuelve\nen España"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "No se niega por la Administración la validez y alcance del certiﬁcado"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "lo\nconsidera válido y eﬁcaz y aplica las reglas de desempate"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "aunque había alquilado una\nvivienda durante ocho meses en Inglaterra, era titular de otra en un municipio de Valencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "disponía de una vivienda\npermanente"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "en Bournemouth y que había residido allí más de 183\ndías"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el recurrente no prueba que tuviera que tributar en el Reino Unido en un impuesto análogo al IRPF"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CDI_TIEBREAKER",
+        "CRIT_CENTRO_INTERESES_VITALES"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El tribunal de instancia/TS toma como hecho relevante que el contribuyente era titular de vivienda en Valencia y que vivía su pareja, apoyando disponibilidad y vínculos en España.",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Titularidad de una vivienda en un municipio de Valencia, considerada disponible para el contribuyente en 2014, con acreditación de ocupación por su pareja.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar disponibilidad de vivienda en España y residencia efectiva/arraigo personal en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "vivienda en municipio de Valencia (propiedad)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Se considera indicio relevante de disponibilidad y uso de vivienda en España, conectado a la residencia efectiva.",
+          "category": "SUMINISTROS_Y_CONSUMOS_DOMESTICOS",
+          "description": "Asunción de gastos de suministros de la vivienda en municipio de Valencia durante 2014.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Evidenciar uso/disponibilidad real de vivienda en España y permanencia/vida cotidiana vinculada a España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "gastos de suministros vivienda España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TEAR y la sentencia de instancia parten de doble disponibilidad de vivienda para aplicar el art. 4.2 CDI; el TS asume ese marco (no se discute que la Administración aplicó el CDI).",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Conclusión inspectora/TEAR de que el obligado tributario tuvo residencia disponible en España y en Reino Unido en 2014.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Justificar la existencia de conflicto de doble residencia y la necesidad de aplicar las reglas de desempate del art. 4.2 CDI.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "doble vivienda disponible (España y Reino Unido)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "El tribunal lo declara evidente/remitiéndose a la Administración, pero el documento no reproduce los indicios concretos, limitando la verificabilidad externa del detalle probatorio.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Afirmación judicial de que el núcleo principal de intereses económicos del recurrente se desenvolvía en España, por las razones apuntadas por la Administración (sin detallar en el texto transcrito).",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar que radica en España el núcleo principal o base de actividades/intereses económicos (art. 9.1.b LIRPF) y, en el CDI, apoyar el centro de intereses vitales en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "centro intereses económicos en España (razones Administración)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "El TS afirma que la Administración no negó su validez y alcance y lo tuvo por válido, aplicando las reglas de desempate del CDI; no determina por sí solo la residencia exclusiva en UK.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado de residencia fiscal emitido por Her Majesty's Revenue and Customs, expedido a efectos del CDI España-Reino Unido para 2014.",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Reino Unido",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El TS afirma que la Administración no negó su validez y alcance y lo tuvo por válido, aplicando las reglas de desempate del CDI; no determina por sí solo la residencia exclusiva en UK.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Reino Unido y activar (en su caso) el conflicto de doble residencia y el desempate del CDI.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "certificado de residencia fiscal UK (HMRC) a efectos CDI"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Se acepta la existencia de alquiler en Inglaterra, pero no excluye la disponibilidad de vivienda en España ni resuelve el desempate a su favor.",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Alegación y referencia a que el contribuyente alquiló una vivienda en Inglaterra y disponía de vivienda permanente en Bournemouth durante 2014.",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar vivienda permanente a disposición en Reino Unido para el primer escalón del art. 4.2.a) CDI y sostener residencia en UK.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "alquiler vivienda en Inglaterra (Bournemouth)"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Manifestación del recurrente de haber residido en Reino Unido más de 183 días en 2014.",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Intentar excluir la residencia en España por el criterio de permanencia (art. 9.1.a LIRPF) y reforzar la residencia en Reino Unido.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "alegación permanencia >183 días en Reino Unido"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "El tribunal afirma expresamente que el recurrente no lo prueba, restando consistencia a su invocación del CDI en el razonamiento de instancia.",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Falta de acreditación por el recurrente de que tuviera que tributar en Reino Unido por un impuesto análogo al IRPF (ni se aporta prueba de tributación).",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Reino Unido",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "El tribunal afirma expresamente que el recurrente no lo prueba, restando consistencia a su invocación del CDI en el razonamiento de instancia.",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Sostener que, además de residir, estuvo sometido a imposición en UK (reforzar su tesis de residencia UK en el contexto del CDI).",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "prueba de tributación efectiva/impuesto análogo en Reino Unido (no aportada)"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El TS parte de que la Administración no niega la validez del certificado de residencia fiscal UK y, por ello, acepta el escenario de doble residencia y aplica el art. 4.2 CDI. Para afirmar residencia en España, considera aplicable el art. 9.1 LIRPF, destacando que no es determinante el criterio de permanencia (183 días) y que la Administración acude al criterio del art. 9.1.b) (núcleo principal o base de intereses económicos) en España. Con doble residencia, el desempate del CDI se resuelve a favor de España por centro de intereses vitales (relaciones personales y económicas más estrechas), apoyado en la disponibilidad de vivienda en España y en la localización de intereses económicos/patrimoniales en España. El TS desestima la casación y confirma la residencia fiscal en España en 2014.",
+        "consequences": [],
+        "decisiveReasoning": "El TS parte de que la Administración no niega la validez del certificado de residencia fiscal UK y, por ello, acepta el escenario de doble residencia y aplica el art. 4.2 CDI. Para afirmar residencia en España, considera aplicable el art. 9.1 LIRPF, destacando que no es determinante el criterio de permanencia (183 días) y que la Administración acude al criterio del art. 9.1.b) (núcleo principal o base de intereses económicos) en España. Con doble residencia, el desempate del CDI se resuelve a favor de España por centro de intereses vitales (relaciones personales y económicas más estrechas), apoyado en la disponibilidad de vivienda en España y en la localización de intereses económicos/patrimoniales en España. El TS desestima la casación y confirma la residencia fiscal en España en 2014.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_AEAT",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2014
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección 2",
+    "decisionDate": "2024-07-22",
+    "ecli": "ECLI:ES:TS:2024:4220",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-4220-2024",
+    "pageCount": 13,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 4220/2024",
+    "sourceFile": "sentencias/STS_4220_2024.pdf",
+    "sourceSha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381",
+    "taxYears": [
+      2014
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

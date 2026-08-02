@@ -24,6 +24,7 @@ SHELL := /bin/bash
 	descargar-normativa export-normativa enlazar-normativa \
 	export-jurisdiction-roles check-jurisdiction-roles \
 	export-frontend-projections check-frontend-projections \
+	export-public-judgments check-public-judgments \
 	test \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -149,6 +150,7 @@ help:
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
 	@echo "  make export-jurisdiction-roles  Deriva el papel de cada jurisdicción por sentencia"
 	@echo "  make export-frontend-projections  Proyecta el catálogo compartido al frontend"
+	@echo "  make export-public-judgments  Proyecta las sentencias candidatas con allowlist"
 	@echo "  Variables base: INPUT= OUTPUT="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
@@ -477,6 +479,14 @@ export-frontend-projections:
 
 check-frontend-projections:
 	uv run python $(PYTHON_SOURCE)/export_frontend_projections.py --check
+
+# Proyección pública de las sentencias: allowlist, manifiesto y hashes. No
+# publica nada por sí sola; el estado lo calcula la revisión de cada elemento.
+export-public-judgments:
+	uv run python $(PYTHON_SOURCE)/export_public_judgments.py
+
+check-public-judgments:
+	uv run python $(PYTHON_SOURCE)/export_public_judgments.py --check
 
 enlazar-normativa:
 	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi

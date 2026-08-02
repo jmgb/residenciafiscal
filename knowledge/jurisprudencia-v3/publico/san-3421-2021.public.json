@@ -1,0 +1,607 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Fingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "información aportada por la entidad que gestionaba sus viajes (CARLSON WAGON LIT ESPAÑA, SL"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "mayoría de los vuelos"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no podemos compartir ni la probanza de\nlos indicios, ni, por consiguiente, la deducción o consecuencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Noticias de prensa"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Ausencia de noticia alguna que lo relacione con Suiza, y sí de\nque su pareja vivía en Esplugues"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "Si se incluye el inmueble sito en Esplugues"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "la valoración del total de activos ascendería a 3.629.386,60 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-006",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Certiﬁcado de la Autoridad ﬁscal del Cantón de Friburgo"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "desde 26 / 06 / 2000 hasta 15/\n03/ 2007"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-007",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Certiﬁcado del Cónsul español en Ginebra"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "inscrito en\nel registro de matrícula consular"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "desde el día 18 / 03/ 2003"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-008",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Se ha aportado, asimismo, un contrato de arrendamiento de la vivienda situada en Suiza"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "y recibos del pago del alquiler"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-009",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Certiﬁcado de un organismo suizo de Justicia y Seguridad que informa de su entrada en Suiza en fecha de\n26 /06 / 2000 y su salida en fecha de 14/ 02 / 2007"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-010",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "Activos ﬁnancieros EFG Bank 5.976.855,77 euros"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "Total: 6.256.888,69 euros"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-011",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "la prueba personal practicada"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "nos lleva a la sana convicción"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "la tesis de la Acusación Particular - residencia simulada en Suiza- no es tal"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-evidence-011"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS",
+        "CRIT_CENTRO_INTERESES_ECONOMICOS",
+        "CRIT_CENTRO_INTERESES_VITALES",
+        "CRIT_PRESUNCION_FAMILIA",
+        "CRIT_CDI_TIEBREAKER"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Prueba insuficiente para acreditar residencia; no consta permanencia en esos inmuebles",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Acta de la Inspección donde se afirma que el interesado fingió no disponer de inmuebles en España simulando arrendamientos y usando sociedad instrumental",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar residencia efectiva en vivienda española",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contratos de arrendamiento supuestamente simulados"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Admitido como indicio pero explicado por el recurrente (logística profesional); no prueba concluyente de permanencia >183 días",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Información de la entidad que gestionaba sus viajes indicando que la mayoría de los vuelos del interesado tenían origen/destino Barcelona y ninguna ruta Suiza",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar presencia frecuente/permanente en España y ausencias no justificadas",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "informes CARLSON WAGON LIT"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Testimonios no postulados adecuadamente por la Acusación; contradichos por testificales de la defensa y valorados con poca eficacia",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Diligencias con declaraciones de vecinos y actuarios que apuntaban presencia del entorno del recurrente en España y ausencia del propio recurrente",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Corroborar residencia habitual en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "testimonios de vecinos y actuaciones de los actuarios"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "PARTIAL",
+          "assessmentReason": "Valoradas como indicios pero insuficientes y contradichas por documentación probatoria de residencia en Suiza",
+          "category": "FAMILIA_Y_ENTORNO_PERSONAL",
+          "description": "Citas en prensa y alusiones a la pareja del recurrente viviendo en Esplugues como indicio de arraigo en España",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar centro de intereses vitales en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "noticias prensa y presencia pareja en Esplugues"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-005"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Contradicho por pruebas documentales que muestran mayor volumen de patrimonio y gestión en Suiza",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Actuaciones inspectoras con valoración de bienes y atribución de inmuebles en España para cuantificar la base imponible",
+          "evidenceId": "evidence-legacy-005",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Demostrar que la mayor parte de intereses económicos y patrimonio estaban en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "informe patrimonial y atribución de bienes en España"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-006"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Documento cualificado de autoridad fiscal extranjera, valorado como medio incontestable para probar residencia en otro Estado",
+          "category": "DOCUMENTACION_FISCAL_EXTRANJERA",
+          "description": "Certificado de la autoridad fiscal del Cantón de Friburgo que declara al recurrente residente en Suiza según Convenio (26/06/2000-15/03/2007)",
+          "evidenceId": "evidence-legacy-006",
+          "foreignDocument": {
+            "defects": [],
+            "documentType": "OTHER",
+            "issuingAuthority": null,
+            "jurisdiction": "Suiza",
+            "nature": "TAX",
+            "periodEnd": null,
+            "periodStart": null,
+            "probativeEffect": "Documento cualificado de autoridad fiscal extranjera, valorado como medio incontestable para probar residencia en otro Estado",
+            "taxScope": "NOT_STATED"
+          },
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia fiscal en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "certificado autoridad fiscal Cantón Friburgo"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-007"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acreditada la inscripción consular como indicio formal y relevante de residencia en Suiza; valorada por el tribunal",
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Certificado del Cónsul español en Ginebra donde consta inscripción en el registro de matrícula consular (18/03/2003 - 29/03/2007)",
+          "evidenceId": "evidence-legacy-007",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar residencia efectiva y formalización en representación consular en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "matrícula consular en Ginebra"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-008"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Documental de uso de vivienda en Suiza valorada junto con otros indicios; contribuye a acreditar residencia extranjera",
+          "category": "VIVIENDA_Y_USO_EFECTIVO",
+          "description": "Contrato de arrendamiento de vivienda en Chatel-St-Denis y recibos de pago de alquileres",
+          "evidenceId": "evidence-legacy-008",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar vivienda habitual y estancia en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "contrato de arrendamiento vivienda en Suiza y recibos de alquiler"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-009"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Corrobora períodos de estancia en Suiza; valor probatorio importante unido a demás documentación",
+          "category": "PRESENCIA_FISICA_Y_DESPLAZAMIENTOS",
+          "description": "Certificado de organismo suizo de Justicia y Seguridad que informa de entrada en Suiza 26/06/2000 y salida 14/02/2007",
+          "evidenceId": "evidence-legacy-009",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar estancias prolongadas en Suiza y ausencia de permanencia en España",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "registro entrada/salida Suiza"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-010"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Prueba determinante sobre localización del patrimonio y gestión desde Suiza; valorada por la Sala como indicio objetivo",
+          "category": "CONSUMOS_FINANCIEROS",
+          "description": "Extractos y saldos de cuentas bancarias suizas con saldos medios elevados (EFG y Lombard Odier)",
+          "evidenceId": "evidence-legacy-010",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar centro patrimonial y gestión financiera en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "extractos y saldos cuentas en EFG/Lombard Odier"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-011"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Valoradas por el Juzgador como verosímiles y coherentes con la documentación aportada; contribuyeron a la sana crítica",
+          "category": "TESTIFICAL_Y_PERICIAL",
+          "description": "Testificales del chófer, entrenador y perito en juicio que corroboraron la organización profesional y gestión desde Suiza y la existencia de pruebas documentales",
+          "evidenceId": "evidence-legacy-011",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Desvirtuar los indicios de residencia en España y apoyar residencia en Suiza",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "declaraciones chofer y entrenador y perito de la defensa"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "La Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.",
+        "consequences": [],
+        "decisiveReasoning": "La Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2005
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Audiencia Nacional. Sala de lo Contencioso-Administrativo. Sección 4",
+    "decisionDate": "2021-05-26",
+    "ecli": "ES:AN:2021:3421",
+    "isTaxResidenceCase": true,
+    "judgmentId": "san-3421-2021",
+    "pageCount": 14,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "SAN 3421/2021",
+    "sourceFile": "sentencias/SAN_3421_2021.pdf",
+    "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955",
+    "taxYears": [
+      2005
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}

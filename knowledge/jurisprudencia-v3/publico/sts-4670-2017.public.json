@@ -1,0 +1,271 @@
+{
+  "anchors": [
+    {
+      "anchorId": "anchor-legacy-evidence-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "la Oﬁcina de Gestión Tributaria en Asturias de la AEAT formuló propuesta\nde resolución"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "en que se denegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "al no haber aportado certiﬁcado acreditativo de residencia"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "desarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011, en la Oﬁcina Económica y Comercial de España en Panamá"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "En el propio condicionado de concesión de la beca se\nestablecía la obligación a cargo del ICEX de hacerse cargo de los títulos de transporte"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+    },
+    {
+      "anchorId": "anchor-legacy-evidence-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el contribuyente presentó en la Agencia Tributaria"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el modelo 210 del impuesto sobre la renta de no residentes (IRNR), en que solicitó\nla devolución"
+        }
+      ],
+      "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+    }
+  ],
+  "issues": [
+    {
+      "anchorIds": [
+        "anchor-legacy-evidence-001",
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-evidence-004"
+      ],
+      "burdenOfProof": [],
+      "criterionIds": [
+        "CRIT_183_DIAS",
+        "CRIT_AUSENCIAS_ESPORADICAS"
+      ],
+      "evidence": [
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-001"
+          ],
+          "assessment": "REJECTED",
+          "assessmentReason": "Prueba insuficiente para acreditar que la estancia era esporádica; tribunal considera acreditada la residencia efectiva en el extranjero por duración y finalidad.",
+          "category": "OTROS",
+          "description": "Propuesta de resolución de la Oficina de Gestión Tributaria en Asturias que deniega devolución por falta de certificado de residencia fiscal en otro país y por no acreditarse tributación en el Estado de destino.",
+          "evidenceId": "evidence-legacy-001",
+          "foreignDocument": null,
+          "offeredBy": "AEAT",
+          "probativePurpose": "Acreditar que la ausencia debía considerarse esporádica y que el interesado debía tributar en España.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "propuesta de resolución denegatoria"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-002"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Acredita el hecho de permanencia y la finalidad formativa de la estancia; el tribunal lo considera determinante para excluir que la ausencia sea esporádica.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Contrato por el que el interesado desarrollaría su labor desde 1-10-2010 hasta 30-9-2011 en la Oficina Económica y Comercial de España en Panamá.",
+          "evidenceId": "evidence-legacy-002",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Demostrar permanencia en Panamá durante el periodo (superior a 183 días) y que la estancia obedecía a la beca.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "DECISIVE",
+          "subtype": "contrato ICEX"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-003"
+          ],
+          "assessment": "ACCEPTED",
+          "assessmentReason": "Corrobora la finalidad formativa y la previsión de desplazamiento prolongado; el Tribunal considera que no convierte la estancia en esporádica.",
+          "category": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+          "description": "Condicionado de la beca ICEX que establece la obligación del ICEX de sufragar los títulos de transporte ida y vuelta entre lugar de residencia y país de destino.",
+          "evidenceId": "evidence-legacy-003",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Acreditar la naturaleza y finalidad de la beca, su vínculo con la permanencia en el extranjero y la previsión de retorno al término de la beca.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "condicionado concesión beca ICEX"
+        },
+        {
+          "anchorIds": [
+            "anchor-legacy-evidence-004"
+          ],
+          "assessment": "UNRESOLVED",
+          "assessmentReason": null,
+          "category": "VINCULOS_ADMINISTRATIVOS_EN_ESPANA",
+          "description": "Presentación del modelo 210 (IRNR) solicitando devolución por considerarse no residente fiscal en España.",
+          "evidenceId": "evidence-legacy-004",
+          "foreignDocument": null,
+          "offeredBy": "TAXPAYER",
+          "probativePurpose": "Probar la alegación de no residencia y solicitar la devolución de retenciones practicadas por IRPF 2011.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "role": "CORROBORATIVE",
+          "subtype": "modelo 210 presentado 19/02/2015"
+        }
+      ],
+      "facts": [],
+      "holding": {
+        "anchorIds": [
+          "anchor-legacy-evidence-001"
+        ],
+        "conclusion": "El Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.",
+        "consequences": [],
+        "decisiveReasoning": "El Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.",
+        "holdingId": "holding-residencia-fiscal",
+        "outcome": "GANA_CONTRIBUYENTE",
+        "residenceDetermination": {
+          "nonResidentFrom": null,
+          "otherCountry": null,
+          "spanishResidence": "NOT_DECIDED",
+          "taxYears": [
+            2011
+          ]
+        },
+        "review": {
+          "legal": "AGENT_REVIEWED",
+          "reviewedAt": "2026-08-01",
+          "reviewedBy": "agent:codex",
+          "technical": "VALIDATED"
+        }
+      },
+      "issueId": "residencia-fiscal",
+      "issueType": "TAX_RESIDENCE",
+      "legalRules": [],
+      "presencePeriods": [],
+      "question": "¿Qué decidió la resolución sobre la residencia fiscal?",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "treatyAnalyses": []
+    }
+  ],
+  "judgment": {
+    "chamber": null,
+    "court": "Tribunal Supremo. Sala de lo Contencioso-Administrativo. Sección Segunda",
+    "decisionDate": "2017-12-14",
+    "ecli": "ES:TS:2017:4670",
+    "isTaxResidenceCase": true,
+    "judgmentId": "sts-4670-2017",
+    "pageCount": 11,
+    "provenance": {
+      "generatedAt": "2026-08-01T00:00:00+02:00",
+      "modelId": "legacy-analysis-agent-reviewed",
+      "producer": "residenciafiscal-legacy-bootstrap"
+    },
+    "review": {
+      "legal": "AGENT_REVIEWED",
+      "reviewedAt": "2026-08-01",
+      "reviewedBy": "agent:codex",
+      "technical": "VALIDATED"
+    },
+    "roj": "STS 4670/2017",
+    "sourceFile": "sentencias/STS_4670_2017.pdf",
+    "sourceSha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93",
+    "taxYears": [
+      2011
+    ]
+  },
+  "jurisdiction": "es",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "roles": [
+        "residence_claimed"
+      ],
+      "treatyBoeId": null
+    }
+  ],
+  "publicationState": "internal_preview",
+  "schemaVersion": "residenciafiscal-public-judgment/1"
+}
