@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import json
 from enum import StrEnum
-from typing import Annotated, Any, Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints
 from pydantic.alias_generators import to_camel
@@ -200,13 +200,29 @@ class PeriodoPublico(ModeloPublico):
     review: RevisionPublica
 
 
+class PasoConvenioPublico(ModeloPublico):
+    """Un paso del desempate del convenio (vivienda, centro de intereses…).
+
+    Estaba proyectado como `dict` crudo y por ahí se colaban las notas internas
+    de revisión: el agujero exacto que la allowlist existe para cerrar.
+    """
+
+    step_id: str
+    sequence: int
+    criterion: str
+    applied: bool | None = None
+    conclusion: str | None = None
+    anchor_ids: tuple[str, ...] = ()
+    review: RevisionPublica
+
+
 class AnalisisConvenioPublico(ModeloPublico):
     treaty_analysis_id: str
     treaty_citation: str
     countries: tuple[str, ...] = ()
     dual_residence_established: bool | None = None
     result_country: str | None = None
-    steps: tuple[dict[str, Any], ...] = ()
+    steps: tuple[PasoConvenioPublico, ...] = ()
     anchor_ids: tuple[str, ...] = ()
     review: RevisionPublica
 
@@ -463,7 +479,20 @@ def _convenio(analisis: dict) -> AnalisisConvenioPublico:
         countries=tuple(analisis.get("countries") or ()),
         dual_residence_established=analisis.get("dual_residence_established"),
         result_country=analisis.get("result_country"),
-        steps=tuple(analisis.get("steps") or ()),
+        steps=tuple(
+            PasoConvenioPublico(
+                step_id=paso["step_id"],
+                sequence=paso["sequence"],
+                criterion=paso["criterion"],
+                applied=paso.get("applied"),
+                conclusion=paso.get("conclusion"),
+                anchor_ids=tuple(paso.get("anchor_ids") or ()),
+                review=_revision(paso),
+            )
+            for paso in sorted(
+                analisis.get("steps") or (), key=lambda paso: paso.get("sequence", 0)
+            )
+        ),
         anchor_ids=tuple(analisis.get("anchor_ids") or ()),
         review=_revision(analisis),
     )

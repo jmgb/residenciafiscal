@@ -24,7 +24,7 @@ SHELL := /bin/bash
 	descargar-normativa export-normativa enlazar-normativa \
 	export-jurisdiction-roles check-jurisdiction-roles \
 	export-frontend-projections check-frontend-projections \
-	export-public-judgments check-public-judgments \
+	export-public-judgments check-public-judgments verify-public-judgments \
 	test \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -487,6 +487,11 @@ export-public-judgments:
 
 check-public-judgments:
 	uv run python $(PYTHON_SOURCE)/export_public_judgments.py --check
+
+# Invariante de literalidad sobre lo que de verdad se publicaría: abre los 67
+# PDF, así que no está en `fast-check` (unos 50 s).
+verify-public-judgments:
+	uv run python $(PYTHON_SOURCE)/export_public_judgments.py --verify-verbatim
 
 enlazar-normativa:
 	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi

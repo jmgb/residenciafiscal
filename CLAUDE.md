@@ -232,6 +232,53 @@ make evaluate-retrieval-phase-d  # mide router, paráfrasis y recuperación @3
 make evaluate-holdout-e0  # observación congelada; nunca ajusta el router
 ```
 
+### Catálogo de jurisdicciones y relaciones bilaterales
+
+`src/jurisdiction_catalog.json` es la **única clave de cruce** entre el corpus
+normativo, el jurisprudencial y la web: cada jurisdicción declara su `code` ISO,
+su nombre y su `slug`. `src/treaty_relations_es.json` dice qué convenio rige
+entre España y cada una de las 92 contrapartes, con el rango de ejercicios y la
+cláusula que lo sostiene. Ambos tienen schema generado desde su modelo Pydantic.
+
+El frontend **no** guarda copia: recibe proyecciones generadas y versionadas
+(`make export-frontend-projections`), y `countryRoutes.json` ya no contiene
+`name` ni `treatyBoeId`. `CONVENIOS_POR_PAIS` es también una proyección.
+
+Checoslovaquia y la URSS entran con código **ISO 3166-3** porque sus convenios
+siguen en el corpus y el Estado firmante ya no existe; no se declara sucesión.
+Tres normas que el filtro del BOE traía como `cdi` no son convenio general de
+renta y están reclasificadas en `descargar_normativa.py`.
+
+`knowledge/jurisprudencia-v3/jurisdicciones/` guarda, por sentencia, qué papel
+juega cada jurisdicción —`residence_claimed`, `treaty_applied`,
+`evidence_location`, `mentioned_only`— derivado de campos tipados del caso y con
+la procedencia anotada. **`judgment.countries` es texto libre y no debe usarse
+para cruzar nada**: 78 apariciones son menciones sin papel jurídico, y la saga
+de becarios del ICEX convertiría el país de destino de la beca en «sentencias
+sobre ese país».
+
+### Publicación de sentencias como páginas
+
+`src/public_judgment_projection.py` proyecta cada caso v3 a lo que puede salir a
+la web, campo a campo. Es una **allowlist**: añadir un campo al schema canónico
+no lo publica, y el estado de publicación se **calcula** desde la revisión
+jurídica de lo proyectado. Hoy los 67 candidatos son `internal_preview` y
+`LOTES_PUBLICADOS` está vacío; declarar ahí un caso sin aprobación humana rompe
+el build.
+
+El renderer existe pero **no publica nada**: un build de producción no
+materializa ninguna ficha y las rutas devuelven 404 real. El Deploy Preview las
+construye con `SENTENCIAS_PREVIEW=1`, con `noindex` en el HTML y
+`X-Robots-Tag` en la cabecera. Contrato y estado:
+[`docs/product/INTERNATIONAL_ARCHITECTURE.md`](docs/product/INTERNATIONAL_ARCHITECTURE.md).
+
+```bash
+make export-frontend-projections  # catálogo y relaciones -> frontend
+make export-jurisdiction-roles    # papel de cada jurisdicción por sentencia
+make export-public-judgments      # proyección pública + manifiesto con hashes
+make verify-public-judgments      # 897 extractos contra sus 67 PDF (~50 s)
+```
+
 ### Corpus normativo
 
 `normativa/es/` guarda el XML del BOE de las 106 normas que deciden la

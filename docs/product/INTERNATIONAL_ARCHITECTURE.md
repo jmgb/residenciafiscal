@@ -1,7 +1,15 @@
 # Arquitectura internacional de URLs y posts por sentencia
 
-> **Estado:** diseño revisado; todavía no implementado. Fecha: 2 de agosto de
-> 2026.
+> **Estado:** diseño revisado. **Fases A y C1 ejecutadas** el 2 de agosto de
+> 2026; B, C2, D y E siguen pendientes. Fecha del diseño: 2 de agosto de 2026.
+>
+> Lo que ya existe en el repositorio: el catálogo de jurisdicciones y su schema,
+> el registro bilateral de las 92 contrapartes con periodos, el normalizador de
+> `judgment.countries`, el sidecar de roles de las 106 sentencias, las
+> proyecciones del frontend, la proyección pública con allowlist y manifiesto, y
+> el renderer del índice y las fichas en preview privado. **No se ha publicado
+> ninguna URL nueva**: los 67 candidatos siguen en `internal_preview` y en
+> producción devuelven 404. Detalle al final, en «Estado de ejecución».
 >
 > Las cifras del apartado 2 salen del repositorio y son reproducibles. Lo que
 > **no** está verificado se marca explícitamente como «sin verificar». La
@@ -973,3 +981,81 @@ escala no existe (§5.4).
 - `CLAUDE.md` — mantener la frontera y los invariantes; actualizar la
   descripción del sitio solo cuando el producto internacional esté realmente
   publicado.
+
+
+---
+
+## 14. Estado de ejecución (2 de agosto de 2026)
+
+### Fase A — ejecutada
+
+| Pieza | Dónde |
+|---|---|
+| Catálogo de 105 jurisdicciones + schema | `src/jurisdiction_catalog.json`, `src/jurisdictions.py` |
+| Registro bilateral de 92 contrapartes + schema | `src/treaty_relations_es.json`, `src/treaty_relations.py` |
+| Normalizador de `judgment.countries` | `src/jurisdiction_normalization.py` |
+| Sidecar de roles de las 106 sentencias | `knowledge/jurisprudencia-v3/jurisdicciones/`, `src/jurisdiction_roles.py` |
+| Proyecciones del frontend | `frontend/src/data/jurisdictions.json`, `treatyRelations.json` |
+| Gate ejecutable | `tests/test_gate_fase_a.py` |
+
+Cinco decisiones que el diseño dejaba abiertas y ha habido que cerrar:
+
+1. **Checoslovaquia y la URSS entran con código ISO 3166-3** (`cshh`, `suhh`).
+   Sus convenios siguen en el corpus y no tienen alfa-2; inventarles uno habría
+   fabricado una clave que ningún otro sistema reconoce. No se declara sucesión:
+   qué Estado hereda cada convenio es criterio jurídico sin verificar.
+2. **Los rangos de Japón, Rumanía y China salen de la cláusula de entrada en
+   vigor de cada convenio nuevo**, citada en `source_note`. Los tres coinciden:
+   el instrumento moderno surte efecto desde el ejercicio 2022 y el anterior
+   rige hasta 2021. La tabla previa daba 2020 para Japón; ninguna sentencia del
+   corpus enjuicia ejercicios posteriores a 2019, así que el enlazado no cambia.
+3. **Las tres normas `cdi` sin ficha se reclasifican en el descargador**
+   (`RECLASIFICACION`), no editando el manifiesto: así una descarga nueva
+   produce el mismo grupo. `cdi` pasa de 98 a 95, y aparecen `cdi_sectorial` (2)
+   e `interna_no_cdi` (1).
+4. **Los roles se derivan de campos tipados del caso**, con `derived_from` por
+   cada uno. El resultado es conservador a propósito: 78 apariciones se quedan
+   en `mentioned_only`, que no autoriza ningún enlace público.
+5. **`countryRoutes.json` pierde `name` y `treatyBoeId`.** El tipo
+   `CountryRoute` los sigue exponiendo, compuestos desde las proyecciones, así
+   que ningún componente cambió. `normativaFichas.json` pierde sus 97 países.
+
+Efecto medido sobre lo publicado: **ninguno**. Las 34 rutas, las 149 URL del
+sitemap, los 110 preceptos y los 122 enlaces de citas son idénticos.
+
+### Fase C1 — ejecutada
+
+| Pieza | Dónde |
+|---|---|
+| Proyección con allowlist + estado calculado | `src/public_judgment_projection.py` |
+| Manifiesto con hashes y lotes | `src/export_public_judgments.py`, `knowledge/jurisprudencia-v3/publico/` |
+| Build al frontend | `frontend/scripts/build-sentencias.mjs` |
+| Índice y ficha | `frontend/src/pages/Sentencias*.tsx`, `components/sentencias/` |
+| Gate ejecutable | `tests/test_gate_fase_c1.py`, `make verify-public-judgments` |
+
+- Los **67 candidatos** están en `internal_preview`; `LOTES_PUBLICADOS` está
+  vacío y declarar ahí un caso sin aprobar **rompe el build**.
+- Un build de producción no materializa ninguna ficha: sin fichero ni regla en
+  `_redirects`, el fallback devuelve 404 real. El sitemap sigue con 149 URL.
+- El Deploy Preview las construye con `SENTENCIAS_PREVIEW=1`, cada ficha lleva
+  `noindex` en su HTML y el contexto añade `X-Robots-Tag: noindex, nofollow`.
+- **897 extractos literales verificados** contra sus 67 PDF, sin un solo fallo
+  (`make verify-public-judgments`, unos 50 s; la suite comprueba una muestra
+  fija de cinco).
+- Los 67 títulos y las 67 descripciones son únicos y derivados del dato.
+
+Dos hallazgos de la ejecución:
+
+- **Los `steps` del análisis de convenio filtraban notas internas de revisión**
+  mientras se proyectaban como diccionario crudo. Es exactamente el fallo que la
+  allowlist existe para impedir, y lo detectó el gate, no una lectura.
+- **El presupuesto de artefactos se ha quedado estrecho.** `knowledge/jurisprudencia-v3`
+  pasa de 761 a 935 ficheros, con el límite de `make rollout-verify` en 1.000.
+  Antes de generar el siguiente derivado hay que subir ese límite o mover
+  material secundario, según `JURISPRUDENCE_ARTIFACT_POLICY.md`.
+
+### Lo que sigue pendiente
+
+Fase B (bilaterales y el 301 de la raíz), fase C2 (sin revisor humano
+disponible), fase D y fase E, tal como quedan descritas en §9. El gate C1 **no
+concede publicación**.

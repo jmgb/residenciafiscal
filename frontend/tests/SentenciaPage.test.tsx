@@ -208,6 +208,26 @@ describe('SentenciaPage', () => {
     expect(screen.getByRole('link', { name: 'Suiza' })).toHaveAttribute('href', '/suiza');
   });
 
+  it('tiene una jerarquía de encabezados navegable', () => {
+    const { container } = renderFicha();
+
+    // Un solo h1 y ningún salto de nivel: es lo que permite recorrer la ficha
+    // con un lector de pantalla sin perderse entre cuestiones.
+    expect(container.querySelectorAll('h1')).toHaveLength(1);
+    const niveles = [...container.querySelectorAll('h1, h2, h3')].map((el) =>
+      Number(el.tagName.slice(1))
+    );
+    for (const [indice, nivel] of niveles.entries()) {
+      if (indice === 0) continue;
+      expect(nivel - niveles[indice - 1]).toBeLessThanOrEqual(1);
+    }
+    // Las secciones se anuncian por su propio encabezado.
+    for (const seccion of container.querySelectorAll('section[aria-labelledby]')) {
+      const id = seccion.getAttribute('aria-labelledby') ?? '';
+      expect(container.querySelector(`#${id}`)).not.toBeNull();
+    }
+  });
+
   it('avisa cuando la sentencia no está publicada, sin inventar contenido', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response('null', { status: 404 }) as Response

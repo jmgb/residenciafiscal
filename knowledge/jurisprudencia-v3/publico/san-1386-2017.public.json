@@ -709,31 +709,24 @@
           },
           "steps": [
             {
-              "anchor_ids": [
+              "anchorIds": [
                 "anchor-reglas-articulo-9-cdi",
                 "anchor-centro-intereses-suiza"
               ],
               "applied": true,
               "conclusion": "El recurrente disponía y vivía en un inmueble en Mendrisio.",
               "criterion": "VIVIENDA_PERMANENTE",
-              "evidence_ids": [
-                "evidence-vivienda-cuentas-mendrisio"
-              ],
-              "fact_ids": [
-                "fact-inmueble-cuentas-suiza"
-              ],
               "review": {
                 "legal": "AGENT_REVIEWED",
-                "notes": "Paso estructurado por el agente a partir del razonamiento conjunto.",
-                "reviewed_at": "2026-07-29",
-                "reviewed_by": "agent:codex",
+                "reviewedAt": "2026-07-29",
+                "reviewedBy": "agent:codex",
                 "technical": "VALIDATED"
               },
               "sequence": 1,
-              "step_id": "treaty-step-permanent-home"
+              "stepId": "treaty-step-permanent-home"
             },
             {
-              "anchor_ids": [
+              "anchorIds": [
                 "anchor-traslado-y-familia",
                 "anchor-centro-intereses-suiza",
                 "anchor-residencia-suiza-conclusion"
@@ -741,27 +734,14 @@
               "applied": true,
               "conclusion": "Empleo, vivienda, gastos, vehículos y cuentas situaban las relaciones económicas más estrechas en Suiza.",
               "criterion": "CENTRO_INTERESES_VITALES",
-              "evidence_ids": [
-                "evidence-empleo-modefine",
-                "evidence-gastos-diarios",
-                "evidence-discapacidad-hijo",
-                "evidence-vivienda-cuentas-mendrisio"
-              ],
-              "fact_ids": [
-                "fact-empleo-suiza",
-                "fact-vida-cotidiana-suiza",
-                "fact-inmueble-cuentas-suiza",
-                "fact-familia-espana-discapacidad"
-              ],
               "review": {
                 "legal": "AGENT_REVIEWED",
-                "notes": "Paso estructurado por el agente; pendiente de validación jurídica humana.",
-                "reviewed_at": "2026-07-29",
-                "reviewed_by": "agent:codex",
+                "reviewedAt": "2026-07-29",
+                "reviewedBy": "agent:codex",
                 "technical": "VALIDATED"
               },
               "sequence": 2,
-              "step_id": "treaty-step-vital-interests"
+              "stepId": "treaty-step-vital-interests"
             }
           ],
           "treatyAnalysisId": "treaty-spain-switzerland",

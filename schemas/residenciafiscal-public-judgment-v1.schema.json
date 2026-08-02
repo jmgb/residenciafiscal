@@ -49,8 +49,7 @@
         "steps": {
           "default": [],
           "items": {
-            "additionalProperties": true,
-            "type": "object"
+            "$ref": "#/$defs/PasoConvenioPublico"
           },
           "title": "Steps",
           "type": "array"
@@ -842,6 +841,67 @@
         "review"
       ],
       "title": "PasoCargaPublico",
+      "type": "object"
+    },
+    "PasoConvenioPublico": {
+      "additionalProperties": false,
+      "description": "Un paso del desempate del convenio (vivienda, centro de intereses…).\n\nEstaba proyectado como `dict` crudo y por ahí se colaban las notas internas\nde revisión: el agujero exacto que la allowlist existe para cerrar.",
+      "properties": {
+        "anchorIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Anchorids",
+          "type": "array"
+        },
+        "applied": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Applied"
+        },
+        "conclusion": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conclusion"
+        },
+        "criterion": {
+          "title": "Criterion",
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/RevisionPublica"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "stepId": {
+          "title": "Stepid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stepId",
+        "sequence",
+        "criterion",
+        "review"
+      ],
+      "title": "PasoConvenioPublico",
       "type": "object"
     },
     "PeriodoPublico": {

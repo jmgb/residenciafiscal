@@ -31,6 +31,7 @@ from public_judgment_projection import (
     proyectar,
     render_public_judgment,
 )
+from verbatim_extraction import extract_verbatim_corpus
 
 RAIZ = Path(__file__).resolve().parents[1]
 CASOS_POR_DEFECTO = RAIZ / "knowledge" / "jurisprudencia-v3" / "cases"
@@ -115,6 +116,39 @@ def cargar_casos(directorio: Path) -> list[dict]:
     ]
 
 
+def verificar_literalidad(casos: list[dict], raiz: Path = RAIZ) -> list[str]:
+    """Comprueba que cada extracto publicado está en su página del PDF.
+
+    Es el invariante bloqueante del proyecto: una cita solo se publica desde una
+    subcadena exacta del texto bruto extraído del PDF. Se hace aquí, sobre la
+    proyección ya construida, porque es lo que de verdad va a la web.
+
+    Vive en un comando aparte y no en la suite ordinaria porque abrir los 67 PDF
+    cuesta unos 50 segundos; `make fast-check` comprueba una muestra fija.
+    """
+    fallos: list[str] = []
+    for caso in casos:
+        if not caso["judgment"]["is_tax_residence_case"]:
+            continue
+        proyeccion = proyectar(caso)
+        identidad = proyeccion.judgment
+        corpus = extract_verbatim_corpus(
+            raiz / identidad.source_file,
+            document_id=identidad.judgment_id,
+            source_file=identidad.source_file,
+        )
+        paginas = {pagina.page_index: pagina.raw_page_text for pagina in corpus.pages}
+        for anclaje in proyeccion.anchors:
+            for fragmento in anclaje.fragments:
+                pagina = paginas.get(fragmento.page_index, "")
+                if fragmento.verbatim_text not in pagina:
+                    fallos.append(
+                        f"{identidad.judgment_id}/{anclaje.anchor_id}: el extracto no aparece "
+                        f"en la página {fragmento.page_index} del PDF"
+                    )
+    return fallos
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases-dir", type=Path, default=CASOS_POR_DEFECTO)
@@ -124,12 +158,24 @@ def main() -> int:
         action="store_true",
         help="No escribe: falla si algún artefacto versionado está desactualizado.",
     )
+    parser.add_argument(
+        "--verify-verbatim",
+        action="store_true",
+        help="Comprueba cada extracto publicado contra su página del PDF (~50 s).",
+    )
     args = parser.parse_args()
 
     casos = cargar_casos(args.cases_dir)
     if not casos:
         print(f"❌ No hay casos en {args.cases_dir}")
         return 1
+
+    if args.verify_verbatim:
+        fallos = verificar_literalidad(casos)
+        for fallo in fallos:
+            print(f"  ✗ {fallo}")
+        print(f"{'❌' if fallos else '✅'} literalidad de los extractos publicados")
+        return 1 if fallos else 0
 
     manifiesto = construir_manifiesto(casos)
     candidatos = {entrada["judgmentId"] for entrada in manifiesto["judgments"]}
