@@ -5,7 +5,11 @@ import { SPAIN_ROUTE } from '@/data/countryRoutes';
 import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
 import { breadcrumbJsonLd } from '@/lib/structured-data';
 
-export function SpainPage() {
+interface SpainPageProps {
+  showLandingContent?: boolean;
+}
+
+export function SpainPage({ showLandingContent = true }: SpainPageProps) {
   return (
     /*
      * España es una landing de país como las demás —su canonical es `/espana`,
@@ -18,7 +22,7 @@ export function SpainPage() {
     <div className='flex min-h-0 flex-1 flex-col overflow-y-auto'>
       {/* Sin esta línea era la única de las 34 rutas sin datos estructurados,
           que es justo la que más importa. */}
-      <JsonLd data={breadcrumbJsonLd([SPAIN_ROUTE])} />
+      {showLandingContent && <JsonLd data={breadcrumbJsonLd([SPAIN_ROUTE])} />}
       <div className='flex h-full shrink-0 flex-col'>
         <ChatView
           engine={chatEngine}
@@ -27,7 +31,7 @@ export function SpainPage() {
           country={SPAIN_ROUTE}
         />
       </div>
-      <SpainLandingContent />
+      {showLandingContent && <SpainLandingContent />}
     </div>
   );
 }

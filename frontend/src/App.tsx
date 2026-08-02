@@ -1,9 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { ChatView } from '@/components/chat/ChatView';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { COUNTRY_ROUTE_REDIRECTS, COUNTRY_ROUTES, SPAIN_ROUTE } from '@/data/countryRoutes';
 import { jurisdictionSectionPath } from '@/data/jurisdictions';
-import { chatEngine, chatEngineMode } from '@/lib/chat-engine';
 import { NORMATIVA_INDEX_PATH } from '@/lib/normativa-fichas';
 import { ColaborarPage } from '@/pages/ColaborarPage';
 import { CountryPage } from '@/pages/CountryPage';
@@ -17,7 +15,6 @@ import { SentenciaPage } from '@/pages/SentenciaPage';
 import { SentenciasIndexPage } from '@/pages/SentenciasIndexPage';
 import { SpainPage } from '@/pages/SpainPage';
 
-const isStub = chatEngineMode === 'stub';
 const SPAIN_SOURCES_PATH = jurisdictionSectionPath('es', 'fuentes');
 
 export function App() {
@@ -50,28 +47,8 @@ export function App() {
          * las publicaba como contenido duplicado indexable, y `/consulta` está
          * enlazada desde `/manifiesto`, que sí se indexa.
          */}
-        <Route
-          path='/consulta'
-          element={
-            <ChatView
-              engine={chatEngine}
-              isStub={isStub}
-              canonicalPath={SPAIN_ROUTE.path}
-              country={SPAIN_ROUTE}
-            />
-          }
-        />
-        <Route
-          path='/c/:conversationId'
-          element={
-            <ChatView
-              engine={chatEngine}
-              isStub={isStub}
-              canonicalPath={SPAIN_ROUTE.path}
-              country={SPAIN_ROUTE}
-            />
-          }
-        />
+        <Route path='/consulta' element={<SpainPage showLandingContent={false} />} />
+        <Route path='/c/:conversationId' element={<SpainPage showLandingContent={false} />} />
         {COUNTRY_ROUTES.filter((country) => country.path !== SPAIN_ROUTE.path).map((country) => (
           <Route
             key={country.path}
