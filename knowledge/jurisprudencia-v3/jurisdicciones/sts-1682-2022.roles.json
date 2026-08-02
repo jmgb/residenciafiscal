@@ -1,0 +1,16 @@
+{
+  "judgment_id": "sts-1682-2022",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+}

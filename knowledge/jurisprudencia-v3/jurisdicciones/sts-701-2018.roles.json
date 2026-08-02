@@ -1,0 +1,25 @@
+{
+  "judgment_id": "sts-701-2018",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "tn",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f"
+}

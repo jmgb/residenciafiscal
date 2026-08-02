@@ -1,0 +1,34 @@
+{
+  "judgment_id": "san-5096-2021",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "ma",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "us",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+}

@@ -1,0 +1,34 @@
+{
+  "judgment_id": "sts-691-2018",
+  "jurisdictions": [
+    {
+      "code": "br",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "il",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "c1ff8163792eec2aa89669d1737314471d1af84810d9246599a944e1d5b1051d"
+}

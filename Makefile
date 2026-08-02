@@ -22,6 +22,7 @@ SHELL := /bin/bash
 	validate-chat-absences-candidate compile-chat-f03-results \
 	file-search-delete \
 	descargar-normativa export-normativa enlazar-normativa \
+	export-jurisdiction-roles check-jurisdiction-roles \
 	test \
 	lint format format-check fix typecheck fast-check \
 	lock upgrade export-requirements \
@@ -145,6 +146,7 @@ help:
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
+	@echo "  make export-jurisdiction-roles  Deriva el papel de cada jurisdicción por sentencia"
 	@echo "  Variables base: INPUT= OUTPUT="
 	@echo "  Verificación: CITATION_SOURCE_FILE= CITATION_JSONL= CITATION_THRESHOLD="
 	@echo "  OKF: OKF_SOURCE_FILE= OKF_JSONL= OKF_THRESHOLD= OKF_OUTPUT="
@@ -457,6 +459,14 @@ export-normativa:
 		--jurisdiccion $(NORMATIVA_JURISDICCION) \
 		--sources-root $(NORMATIVA_SOURCES) \
 		--output-root $(NORMATIVA_OUTPUT)
+
+# Roles jurisdiccionales de cada sentencia. Determinista y sin LLM: se deriva de
+# campos tipados del caso v3 y no toca ninguno de los 106 casos.
+export-jurisdiction-roles:
+	uv run python $(PYTHON_SOURCE)/export_jurisdiction_roles.py
+
+check-jurisdiction-roles:
+	uv run python $(PYTHON_SOURCE)/export_jurisdiction_roles.py --check
 
 enlazar-normativa:
 	@if [ -z "$(NORMATIVA_JSONL)" ]; then echo "❌ No hay output/analisis_*.jsonl"; exit 1; fi

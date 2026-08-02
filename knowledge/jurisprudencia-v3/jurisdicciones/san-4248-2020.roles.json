@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-4248-2020",
+  "jurisdictions": [
+    {
+      "code": "ar",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+}

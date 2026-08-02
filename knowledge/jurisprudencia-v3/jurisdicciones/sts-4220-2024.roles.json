@@ -1,0 +1,26 @@
+{
+  "judgment_id": "sts-4220-2024",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "gb",
+      "derived_from": [
+        "evidence_findings[4].foreign_document.jurisdiction",
+        "evidence_findings[7].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+}

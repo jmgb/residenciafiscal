@@ -1,0 +1,82 @@
+{
+  "$defs": {
+    "Rol": {
+      "description": "Papel de una jurisdicción en el caso, del más fuerte al residual.",
+      "enum": [
+        "residence_claimed",
+        "treaty_applied",
+        "evidence_location",
+        "mentioned_only"
+      ],
+      "title": "Rol",
+      "type": "string"
+    },
+    "RolJurisdiccional": {
+      "additionalProperties": false,
+      "description": "Una jurisdicción del caso con sus papeles y su procedencia.",
+      "properties": {
+        "code": {
+          "pattern": "^[a-z]{2}(?:[a-z]{2})?$",
+          "title": "Code",
+          "type": "string"
+        },
+        "derived_from": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Derived From",
+          "type": "array"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/Rol"
+          },
+          "minItems": 1,
+          "title": "Roles",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "roles",
+        "derived_from"
+      ],
+      "title": "RolJurisdiccional",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Sidecar de una sentencia, atado a su fuente por el hash del PDF.",
+  "properties": {
+    "judgment_id": {
+      "title": "Judgment Id",
+      "type": "string"
+    },
+    "jurisdictions": {
+      "items": {
+        "$ref": "#/$defs/RolJurisdiccional"
+      },
+      "title": "Jurisdictions",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "residenciafiscal-jurisdiction-roles/1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Source Sha256",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "judgment_id",
+    "source_sha256",
+    "jurisdictions"
+  ],
+  "title": "SidecarRoles",
+  "type": "object"
+}

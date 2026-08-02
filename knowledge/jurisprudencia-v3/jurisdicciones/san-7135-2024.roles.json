@@ -1,0 +1,16 @@
+{
+  "judgment_id": "san-7135-2024",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "4c1a06e82dfc7ffe9531ce698268d993c01ee681b879b5f84510d5a1b4cc3467"
+}

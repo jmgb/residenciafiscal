@@ -1,0 +1,31 @@
+{
+  "judgment_id": "san-1136-2016",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "facts[0].country",
+        "facts[1].country",
+        "facts[2].country",
+        "facts[3].country",
+        "facts[4].country",
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed",
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "ru",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
+}

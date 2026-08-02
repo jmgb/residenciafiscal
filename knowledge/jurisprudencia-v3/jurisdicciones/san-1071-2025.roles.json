@@ -1,0 +1,37 @@
+{
+  "judgment_id": "san-1071-2025",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "facts[0].country",
+        "facts[1].country",
+        "facts[2].country",
+        "facts[4].country",
+        "holdings[0].residence_determination.spanish_residence",
+        "treaty_analyses[0].countries",
+        "treaty_analyses[0].result_country"
+      ],
+      "roles": [
+        "residence_claimed",
+        "treaty_applied",
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "fr",
+      "derived_from": [
+        "evidence_findings[3].foreign_document.jurisdiction",
+        "evidence_findings[5].foreign_document.jurisdiction",
+        "facts[3].country",
+        "treaty_analyses[0].countries"
+      ],
+      "roles": [
+        "treaty_applied",
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "43be81687f4871186c1c34a3c2a97166fc64753662d4d4914bf03c466873c3cf"
+}

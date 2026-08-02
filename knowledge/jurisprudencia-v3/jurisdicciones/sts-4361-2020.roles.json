@@ -1,0 +1,25 @@
+{
+  "judgment_id": "sts-4361-2020",
+  "jurisdictions": [
+    {
+      "code": "ca",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "4e6f4a65409f7c2ac71be5dfd3cc549cde498213780ba9d9fc0db8ce7319abe7"
+}

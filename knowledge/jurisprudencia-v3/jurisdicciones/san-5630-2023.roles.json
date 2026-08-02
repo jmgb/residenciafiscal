@@ -1,0 +1,34 @@
+{
+  "judgment_id": "san-5630-2023",
+  "jurisdictions": [
+    {
+      "code": "ch",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "gb",
+      "derived_from": [
+        "evidence_findings[5].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+}

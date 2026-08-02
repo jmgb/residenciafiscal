@@ -1,0 +1,16 @@
+{
+  "judgment_id": "sts-1594-2023",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "7576082140af2aa6da2879e58b27b107fae950d111316bf2a4780031cc5b42b2"
+}

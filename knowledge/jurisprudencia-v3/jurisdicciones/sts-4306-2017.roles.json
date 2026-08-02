@@ -1,0 +1,26 @@
+{
+  "judgment_id": "sts-4306-2017",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "ro",
+      "derived_from": [
+        "evidence_findings[1].foreign_document.jurisdiction",
+        "evidence_findings[4].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+}

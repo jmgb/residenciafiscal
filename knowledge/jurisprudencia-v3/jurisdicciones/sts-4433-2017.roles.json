@@ -1,0 +1,34 @@
+{
+  "judgment_id": "sts-4433-2017",
+  "jurisdictions": [
+    {
+      "code": "ch",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "us",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+}

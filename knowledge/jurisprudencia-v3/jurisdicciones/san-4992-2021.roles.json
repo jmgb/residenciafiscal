@@ -1,0 +1,27 @@
+{
+  "judgment_id": "san-4992-2021",
+  "jurisdictions": [
+    {
+      "code": "ad",
+      "derived_from": [
+        "evidence_findings[10].foreign_document.jurisdiction",
+        "evidence_findings[6].foreign_document.jurisdiction",
+        "evidence_findings[7].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+}

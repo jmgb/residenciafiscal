@@ -1,0 +1,41 @@
+{
+  "judgment_id": "san-1386-2017",
+  "jurisdictions": [
+    {
+      "code": "ch",
+      "derived_from": [
+        "evidence_findings[0].foreign_document.jurisdiction",
+        "facts[0].country",
+        "facts[1].country",
+        "facts[2].country",
+        "facts[4].country",
+        "holdings[0].residence_determination.other_country",
+        "presence_events[0].country",
+        "presence_periods[0].country",
+        "treaty_analyses[0].countries",
+        "treaty_analyses[0].result_country"
+      ],
+      "roles": [
+        "residence_claimed",
+        "treaty_applied",
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "facts[3].country",
+        "facts[5].country",
+        "holdings[0].residence_determination.spanish_residence",
+        "treaty_analyses[0].countries"
+      ],
+      "roles": [
+        "residence_claimed",
+        "treaty_applied",
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "ab9a42aab52294bc68b88411289089ad4ebfc57d9c778c7d572c29e6f3367f76"
+}

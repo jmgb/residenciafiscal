@@ -1,0 +1,16 @@
+{
+  "judgment_id": "sts-2013-2024",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+}

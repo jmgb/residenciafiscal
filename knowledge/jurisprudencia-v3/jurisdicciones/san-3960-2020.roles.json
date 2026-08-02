@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-3960-2020",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "kw",
+      "derived_from": [
+        "evidence_findings[0].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+}

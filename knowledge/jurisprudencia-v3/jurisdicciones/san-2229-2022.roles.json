@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-2229-2022",
+  "jurisdictions": [
+    {
+      "code": "co",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "a117e049a74ec3cdf96478cb3aa43ba71458d3c2ac8ee08e8264edbc2d52560a"
+}

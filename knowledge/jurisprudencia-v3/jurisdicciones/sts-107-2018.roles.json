@@ -1,0 +1,26 @@
+{
+  "judgment_id": "sts-107-2018",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "sa",
+      "derived_from": [
+        "evidence_findings[0].foreign_document.jurisdiction",
+        "evidence_findings[1].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "ee61608187016b48f492a3f9095ae647c746aef49a3c5046ab958cb3207d105b"
+}

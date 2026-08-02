@@ -1,0 +1,35 @@
+{
+  "judgment_id": "san-1210-2023",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "facts[0].country",
+        "facts[1].country",
+        "facts[2].country",
+        "facts[3].country",
+        "facts[5].country",
+        "facts[7].country",
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed",
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "mc",
+      "derived_from": [
+        "evidence_findings[5].foreign_document.jurisdiction",
+        "evidence_findings[6].foreign_document.jurisdiction",
+        "evidence_findings[7].foreign_document.jurisdiction",
+        "facts[4].country"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d"
+}

@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-3477-2022",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    },
+    {
+      "code": "fr",
+      "derived_from": [
+        "evidence_findings[6].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+}

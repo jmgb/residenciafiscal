@@ -1,0 +1,27 @@
+{
+  "judgment_id": "san-5151-2019",
+  "jurisdictions": [
+    {
+      "code": "ar",
+      "derived_from": [
+        "evidence_findings[4].foreign_document.jurisdiction",
+        "evidence_findings[5].foreign_document.jurisdiction",
+        "evidence_findings[6].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+}

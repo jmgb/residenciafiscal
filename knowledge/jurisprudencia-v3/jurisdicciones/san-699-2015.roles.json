@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-699-2015",
+  "jurisdictions": [
+    {
+      "code": "ch",
+      "derived_from": [
+        "evidence_findings[12].foreign_document.jurisdiction"
+      ],
+      "roles": [
+        "evidence_location"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+}

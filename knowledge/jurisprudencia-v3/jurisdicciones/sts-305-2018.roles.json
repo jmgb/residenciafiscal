@@ -1,0 +1,18 @@
+{
+  "judgment_id": "sts-305-2018",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "evidence_findings[0].foreign_document.jurisdiction",
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed",
+        "evidence_location"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+}

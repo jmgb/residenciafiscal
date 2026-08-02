@@ -1,0 +1,25 @@
+{
+  "judgment_id": "san-2132-2025",
+  "jurisdictions": [
+    {
+      "code": "ae",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+}

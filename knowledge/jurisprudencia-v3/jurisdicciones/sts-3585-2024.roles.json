@@ -1,0 +1,25 @@
+{
+  "judgment_id": "sts-3585-2024",
+  "jurisdictions": [
+    {
+      "code": "ad",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    },
+    {
+      "code": "es",
+      "derived_from": [
+        "holdings[0].residence_determination.spanish_residence"
+      ],
+      "roles": [
+        "residence_claimed"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+}

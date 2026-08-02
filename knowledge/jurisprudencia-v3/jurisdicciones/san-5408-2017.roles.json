@@ -1,0 +1,16 @@
+{
+  "judgment_id": "san-5408-2017",
+  "jurisdictions": [
+    {
+      "code": "es",
+      "derived_from": [
+        "judgment.countries"
+      ],
+      "roles": [
+        "mentioned_only"
+      ]
+    }
+  ],
+  "schema_version": "residenciafiscal-jurisdiction-roles/1",
+  "source_sha256": "6ccf853b53be69c4c1747e9904965380a720e6187f1588453b8b605b0458711c"
+}
