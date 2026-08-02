@@ -19,6 +19,7 @@ import type {
 import { ChatBubble } from './ChatBubble';
 import { ChatComposer } from './ChatComposer';
 import { ChatWelcome } from './ChatWelcome';
+import { TypingIndicator } from './TypingIndicator';
 
 function newMessageId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID();
@@ -31,20 +32,16 @@ function newMessageId(): string {
  */
 const STICK_TO_BOTTOM_THRESHOLD_PX = 48;
 
-function TypingIndicator() {
+/**
+ * ¿Es el placeholder del asistente aún sin nada que enseñar? Mientras lo sea,
+ * su burbuja no se pinta: en su lugar se muestra el `TypingIndicator`.
+ */
+function isEmptyStreamingPlaceholder(message: ChatMessage): boolean {
   return (
-    <div className='flex justify-start' role='status' aria-label='Buscando en las sentencias'>
-      <div className='flex items-center gap-1.5 rounded-xl rounded-tl-none border border-border bg-card px-4 py-3 text-sm text-muted-foreground shadow-sm'>
-        <span>Buscando en las sentencias</span>
-        {[0, 1, 2].map((i) => (
-          <span
-            key={i}
-            className='h-[7px] w-[7px] animate-bounce rounded-full bg-muted-foreground/60'
-            style={{ animationDelay: `${i * 0.2}s`, animationDuration: '1.4s' }}
-          />
-        ))}
-      </div>
-    </div>
+    message.role === 'assistant' &&
+    message.isStreaming === true &&
+    !message.content &&
+    !message.answers?.length
   );
 }
 
@@ -366,7 +363,7 @@ export function ChatView({
 
   const hasMessages = messages.length > 0;
   const showTypingIndicator =
-    isStreaming && lastMessage?.isStreaming && !lastMessage.content && !lastMessage.answers?.length;
+    isStreaming && lastMessage !== undefined && isEmptyStreamingPlaceholder(lastMessage);
 
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
@@ -386,9 +383,11 @@ export function ChatView({
             aria-live='polite'
             aria-relevant='additions'
           >
-            {messages.map((message) => (
-              <ChatBubble key={message.id} message={message} />
-            ))}
+            {messages
+              .filter((message) => !isEmptyStreamingPlaceholder(message))
+              .map((message) => (
+                <ChatBubble key={message.id} message={message} />
+              ))}
             {showTypingIndicator && <TypingIndicator />}
           </div>
         ) : (

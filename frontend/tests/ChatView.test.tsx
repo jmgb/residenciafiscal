@@ -504,6 +504,38 @@ describe('ChatView', () => {
     expect(await screen.findByText('Respuesta detenida.')).toBeInTheDocument();
   });
 
+  it('mientras se espera el primer token solo se ve el indicador, sin burbuja vacía', async () => {
+    const user = userEvent.setup();
+    let release = () => {};
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const engine: ChatEngine = {
+      async *askQuestion(): AsyncIterable<ChatChunk> {
+        await gate;
+        yield { type: 'token', text: 'Respuesta tras la espera.' };
+        yield { type: 'done' };
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    expect(
+      await screen.findByRole('status', { name: /preparando la respuesta/i })
+    ).toBeInTheDocument();
+    // La burbuja del asistente no aparece hasta que hay contenido que enseñar.
+    expect(screen.queryByTestId('chat-bubble-assistant')).not.toBeInTheDocument();
+
+    release();
+    expect(await screen.findByText('Respuesta tras la espera.')).toBeInTheDocument();
+    expect(screen.getByTestId('chat-bubble-assistant')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('status', { name: /preparando la respuesta/i })
+    ).not.toBeInTheDocument();
+  });
+
   it('marca una respuesta parcial si el motor falla durante el streaming', async () => {
     const user = userEvent.setup();
     const engine: ChatEngine = {
