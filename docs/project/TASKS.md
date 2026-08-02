@@ -336,6 +336,13 @@ contra el dominio público después de cada deploy.
     - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
       contrato actual es deliberadamente single-turn: el historial se muestra
       localmente, pero solo la última pregunta autosuficiente sale del navegador.
+    - [ ] **Futuro, no autorizado — evaluar una opción C agentiva.** Solo después
+      de cerrar el baseline jurídico ciego de A/B, ejecutar un piloto offline y
+      acotado sobre preguntas difíciles. Debe usar worker asíncrono, corpus de
+      solo lectura, red deshabilitada, herramientas jurídicas estrechas, salida
+      estructurada y el verificador determinista de citas. No pertenece al
+      runtime Netlify síncrono ni se activa por defecto. Pros, contras, UX y gates:
+      [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#posible-estrategia-futura-c-investigación-agentiva).
   - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están
     activos en Production desde el 31 de julio de 2026. El rollback es volver a
     `stub` y deshabilitar el backend. La activación técnica no cierra privacidad,

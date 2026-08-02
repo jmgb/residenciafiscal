@@ -1,10 +1,11 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
 **Estado:** F0.2 conserva el baseline de ocho consultas; F0.3 tiene rúbrica y
-paquete ciego listos; el transporte A/B está conectado detrás de `stub`. La
-revisión jurídica, el banco de 40 y la activación productiva siguen pendientes.
-**Alcance inicial:** las cinco sentencias piloto.
-**Fecha de actualización:** 2026-07-31.
+paquete ciego listos; A/B está activo en producción sobre las 106 sentencias.
+La revisión jurídica y el banco conversacional de 40 siguen pendientes. La
+opción C agentiva queda solo documentada como posibilidad futura.
+**Alcance:** piloto inicial de cinco y runtime productivo sobre 106 sentencias.
+**Fecha de actualización:** 2026-08-02.
 
 La vista consolidada de capas, componentes, estado, aprendizajes y siguiente
 gate está en
@@ -17,9 +18,9 @@ La fase F0 creó el comparador local que sigue disponible por CLI. El mismo
 dominio está expuesto en el prototipo por FastAPI, un proxy fino de Netlify Edge
 y el cliente comparativo. Ese recorrido se conserva como opción futura si se
 necesitan llamadas de más de 60 s. La V1 ya está portada a una Netlify Function
-TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s.
-Producción mantiene `VITE_CHAT_MODE=stub`; implementar cualquiera de los
-recorridos no autoriza activarlo. B usa el
+TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s, y
+`VITE_CHAT_MODE=live` está activo en producción desde el 31 de julio de 2026.
+B usa el
 SDK oficial `google-genai`, la Interactions API y un store basado en
 `models/gemini-embedding-2`.
 
@@ -454,7 +455,127 @@ Hasta entonces:
 - no se mezclan candidatos;
 - no existe respuesta híbrida;
 - no se usa File Search como autoridad jurídica;
-- no se amplía el experimento a las 106 sentencias.
+- no se activa la unión ni en el piloto ni en el runtime productivo de 106.
+
+## Posible estrategia futura C: investigación agentiva
+
+**Estado de decisión:** posibilidad documentada; no implementada, presupuestada
+ni autorizada para tráfico real. No cambia el contrato A/B vigente.
+
+C sería una investigación de mayor profundidad en la que un agente pudiera
+iterar sobre el corpus: formular búsquedas, leer unidades v3, abrir páginas
+verbatim, ampliar o descartar candidatos, contrastar varias resoluciones y
+verificar si la evidencia sostiene cada afirmación antes de responder. Un
+piloto puede usar Codex como explorador de archivos; una eventual versión de
+producto debe exponer herramientas jurídicas estrechas en lugar de shell y
+acceso general al repositorio.
+
+La documentación oficial permite controlar Codex desde servidor mediante el
+[Codex SDK](https://learn.chatgpt.com/docs/codex-sdk), ejecutarlo de forma
+[no interactiva](https://learn.chatgpt.com/docs/non-interactive-mode) con salida
+estructurada y limitarlo con un sandbox de solo lectura. Si Codex fuese un
+especialista dentro de una orquestación mayor, la ruta documentada es
+[Codex como MCP con Agents SDK](https://learn.chatgpt.com/docs/mcp-server). Estas
+interfaces hacen viable un prototipo, pero no deciden por sí mismas que Codex
+sea el runtime jurídico definitivo. Los límites de permisos se regirían por el
+contrato oficial de [sandbox y aprobaciones](https://learn.chatgpt.com/docs/sandboxing).
+
+### Objetivo y encaje
+
+C persigue dos usos posibles:
+
+1. medir un techo de calidad frente a A y B con más tiempo y herramientas;
+2. ofrecer «Investigación profunda» bajo demanda cuando las respuestas rápidas
+   discrepen, sean parciales, se abstengan o no aporten autoridad directa.
+
+No persigue sustituir el pipeline offline, modificar casos v3, navegar por
+fuentes externas ni decidir automáticamente cuál de las otras respuestas es
+correcta. Si C dispone de internet o de un corpus distinto, deja de ser
+comparable con A y B y debe tratarse como otro experimento.
+
+```text
+pregunta
+   ├── A — corpus estructurado ───────┐
+   ├── B — Gemini File Search ────────┼── comparación rápida
+   │                                  │
+   └── C — investigación profunda ◄───┘
+          activación explícita o por criterio medido
+             └── worker asíncrono
+                    └── búsqueda y lectura iterativas
+                           └── salida estructurada
+                                  └── verificador determinista
+```
+
+### Ventajas y desventajas
+
+| Dimensión | Ventaja potencial | Coste o riesgo |
+|---|---|---|
+| Recuperación | Reformula consultas y amplía la búsqueda cuando un primer intento falla | Menor reproducibilidad si no se congelan herramientas, modelo y presupuesto |
+| Profundidad | Puede leer contexto completo y separar presencia, residencia extranjera y CDI | Más latencia y consumo que las rutas rápidas |
+| Contraste | Puede comparar varias resoluciones y buscar apoyo y contraejemplos | Riesgo de exploración excesiva o de seleccionar evidencia después de ver la conclusión |
+| Grounding | Puede revisar si una cita sostiene una proposición antes de entregarla | La autorrevisión del agente no sustituye la validación literal local |
+| Cobertura | Puede rescatar preguntas parciales o desacuerdos A/B | Un agente más flexible también puede producir respuestas plausibles fuera de alcance |
+| Producto | Permite una modalidad diferenciada de investigación profunda | Complica UX, presupuestos, cancelación, retención y soporte operativo |
+| Evaluación | Sirve como referencia superior para medir margen de mejora | Ya no aísla recuperación: compara un stack completo con más recursos |
+
+### Fronteras de seguridad y operación
+
+Un piloto aceptable debe cumplir simultáneamente:
+
+- ejecutarse fuera de la Netlify Function síncrona, en un worker asíncrono con
+  timeout y cancelación;
+- crear un entorno efímero por petición y montar en solo lectura únicamente los
+  PDF, verbatim, casos e índices permitidos;
+- excluir `.env`, credenciales, configuración de despliegue, historial Git y
+  cualquier otro repositorio;
+- deshabilitar red y escritura, salvo un directorio temporal desechable;
+- tratar todo texto recuperado como datos, nunca como instrucciones;
+- ofrecer herramientas acotadas como `buscar_sentencias`,
+  `buscar_en_sentencia`, `leer_paginas`, `leer_unidad_v3`,
+  `comparar_resoluciones` y `verificar_cita`;
+- fijar límites de tiempo, turnos, llamadas de herramienta, documentos, páginas
+  y coste antes de iniciar la ejecución;
+- exigir JSON Schema con estado, respuesta, límites, afirmaciones y evidencias;
+- resolver citas contra el verbatim/PDF mediante código determinista y retirar
+  cualquier afirmación sustantiva sin apoyo válido;
+- no persistir ni mostrar cadena de pensamiento. La traza operativa conserva
+  solo herramientas invocadas, IDs de sentencia/página, métricas, estados y
+  códigos de fallo seguros.
+
+La pregunta fiscal y la respuesta seguirían bajo el mismo contrato privado de
+retención que A/B. Antes de tráfico real deben revisarse además el mecanismo de
+autenticación del worker, la retención propia del runtime elegido y el acuerdo
+de tratamiento aplicable.
+
+### Comparabilidad y gate de promoción
+
+El piloto no se ejecutará antes de cerrar el baseline jurídico ciego de A/B.
+Después debe usar una muestra pequeña de preguntas difíciles separada del
+holdout y mantener constantes:
+
+- corpus y fecha de corte;
+- ausencia de internet;
+- contrato de respuesta y verificación;
+- presupuesto máximo de herramientas, tiempo y coste;
+- versión del agente, modelo, instrucciones y herramientas;
+- rúbrica ciega, sin revelar A/B/C al revisor.
+
+Los gates binarios siguen siendo cero identificadores inventados, autoridad
+correcta, todas las citas literales y ninguna afirmación sustantiva sin apoyo.
+Solo después se comparan utilidad jurídica, cobertura, claridad, latencia,
+coste y tasa de cancelación. C se promueve únicamente si aporta una mejora
+relevante y repetible que compense su coste operativo. Si no, permanece como
+diagnóstico offline o herramienta interna de evaluación.
+
+### Presentación futura
+
+C no debe convertirse en una tercera columna larga ni retrasar siempre A/B. La
+interfaz propuesta es un botón explícito «Iniciar investigación profunda» o una
+oferta posterior a una discrepancia. Mientras corre muestra estados objetivos
+—búsqueda, lectura y verificación—, no razonamiento interno. Al terminar añade
+un bloque o pestaña C independiente, con fuentes, límites, coste y latencia, y
+permite votar A, B, C o empate. Nunca sustituye una respuesta anterior ni se
+declara ganadora automáticamente.
 
 ## Criterio de salida
 

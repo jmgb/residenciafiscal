@@ -152,17 +152,34 @@ Reglas de comparabilidad:
   excepción del proveedor;
 - el coste incurrido se conserva incluso cuando el gate bloquea la prosa.
 
-La misma comparación sigue disponible por CLI y el prototipo está conectado a
-FastAPI, un proxy fino de Netlify Edge y el frontend. Todas las capas permanecen
-cerradas por defecto: producción usa `stub`.
+La misma comparación sigue disponible por CLI y el prototipo conserva FastAPI,
+un proxy fino de Netlify Edge y el frontend como referencia. Producción usa ya
+la **V1 Netlify-only**: una Function TypeScript autosuficiente ejecuta A y B en
+paralelo, conserva errores, fuentes y costes separados y los presenta en orden
+estable A → B. La Function cancela antes de alcanzar los 60 s del runtime y
+mantiene Luna con esfuerzo `high`. Latencia, percentiles, timeouts, tokens,
+coste y calidad deben decidir cualquier cambio posterior de esfuerzo o modelo.
 
-La **V1 de producto** sustituirá ese recorrido por una Netlify Function
-TypeScript autosuficiente. A y B se ejecutarán en paralelo; conservarán errores,
-fuentes y costes separados y se presentarán en orden estable A → B. La Function
-cancelará antes de alcanzar los 60 s del runtime y mantendrá Luna con esfuerzo
-`high`. Durante los primeros días se medirán latencia, percentiles, timeouts,
-tokens, coste y calidad; bajar el esfuerzo será una decisión posterior basada
-en esos datos, no una condición previa del despliegue.
+### 5.1. Opción C futura: investigación agentiva
+
+Se documenta una tercera estrategia posible, **no implementada ni autorizada
+para producción**. C permitiría que un agente planificase búsquedas sucesivas,
+leyese datos estructurados y páginas verbatim, contrastase resoluciones y
+revisase sus propios candidatos antes de redactar. Su finalidad sería medir el
+techo de calidad de una investigación con más tiempo y herramientas, y actuar
+eventualmente como rescate bajo demanda cuando A y B discrepen o no encuentren
+cobertura suficiente.
+
+C no sería una variante aislada del recuperador: compararía un stack completo
+—modelo, planificación, herramientas y presupuesto—. Tampoco debe ejecutarse
+dentro de la Function síncrona actual ni recibir acceso general al repositorio.
+Un piloto tendría que usar un worker asíncrono, entorno efímero, corpus montado
+en solo lectura, red deshabilitada, herramientas acotadas y el mismo gate
+determinista de citas que A y B. La salida permanecería separada como
+«Investigación profunda»; nunca reemplazaría silenciosamente otra respuesta.
+
+Pros, contras, límites operativos, UX y gates de promoción:
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#posible-estrategia-futura-c-investigación-agentiva).
 
 El prototipo FastAPI no se elimina. Se conserva como arquitectura futura más
 robusta si el producto acaba necesitando llamadas de más de 60 s, reintentos
