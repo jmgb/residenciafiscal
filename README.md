@@ -233,6 +233,10 @@ Nunca viaja la pregunta, la respuesta ni el `message` de la excepción del
 proveedor. El coste se sigue observando por `chat_cost_reconciled` en los logs y
 por el resumen diario del ledger, no por Sentry.
 
+Las incidencias accionables de los tres proyectos entran en el mismo autofix
+aislado y con gates que Presupuestor; arquitectura y guardrails en
+[`docs/operations/AUTOFIX.md`](docs/operations/AUTOFIX.md).
+
 | Variable | Ámbito | Nota |
 |----------|--------|------|
 | `SENTRY_ENABLED`, `SENTRY_BACKEND_DSN` | API | Sin ambas, la API no inicializa Sentry |

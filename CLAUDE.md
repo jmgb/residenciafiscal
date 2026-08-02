@@ -433,6 +433,12 @@ no), y `SENTRY_TOKEN`/`SENTRY_ORG_SLUG` son solo del build de sourcemaps y nunca
 llevan ese prefijo. El token de Sentry filtrado en la historia de git el
 2026-03-19 está revocado; la variable canónica vigente es `SENTRY_TOKEN`.
 
+Los tres proyectos alimentan el autofix compartido con Presupuestor. El contrato
+repo-local, los gates de publicación y los guardrails operativos están en
+[`docs/operations/AUTOFIX.md`](docs/operations/AUTOFIX.md). Si se añade un cuarto
+runtime de Sentry, hay que declararlo también en `.autofix.yml` y en el registro
+del control plane; instrumentarlo por sí solo no lo hace resoluble.
+
 ## Costes del chat
 
 Cada respuesta real del chat debe mostrar y registrar por separado tokens,

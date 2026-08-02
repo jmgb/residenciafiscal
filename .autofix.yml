@@ -14,6 +14,7 @@ incident_sources:
   sentry_projects:
     - residencia-fiscal-backend
     - residencia-fiscal-frontend
+    - residencia-fiscal-chat
 
 validation:
   required_before_publish:
@@ -57,7 +58,9 @@ validation:
 
 delivery:
   create_pr: true
-  auto_merge: false
+  # Igual que en Presupuestor: solo los fixes con test de regresión y sin CI
+  # rojo llegan al merge automático. Debug logs y bloqueos quedan para revisión.
+  auto_merge: true
   push_direct_to_main: false
   merge_authentication: github_app_or_pat
 
