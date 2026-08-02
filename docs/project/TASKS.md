@@ -548,6 +548,33 @@ comprueban párrafo a párrafo contra la fuente.
   declaración explícita de que no hay convenio en vigor. Todo sale del corpus normativo
   versionado, así que el «proceso editorial» es regenerarlo (`make export-normativa`).
   Alcance y limitaciones siguen en la propia página: no hay jurisprudencia de ese país.
+- [ ] **Futuro (en unos meses, cuando exista volumen de preguntas/respuestas en
+  el chat): runner diario que convierta las consultas en landings long tail.**
+  Evaluar un runner o agente programado (systemd timer, como el informe semanal
+  de tráfico) que cada día procese las conversaciones del día anterior y
+  proponga o cree las páginas correspondientes. El objetivo es **posicionar las
+  búsquedas long tail que los usuarios ya formulan al chat**: cada pregunta real
+  es una keyword long tail que ninguna herramienta de terceros va a descubrir
+  antes, y una landing con URL propia (`/espana/doctrina/<tema>`, punto 11 de
+  [`SEO_AUDIT.md`](../product/SEO_AUDIT.md)) puede capturar esa demanda en
+  Google respondiéndola con el corpus.
+  - **Anonimato del usuario, innegociable.** La consulta del chat es dato
+    fiscal: nunca se publica una consulta literal ni nada que permita
+    reidentificar a su autor (hechos concretos, fechas, países, cuantías de un
+    caso particular). El runner agrega las consultas en *temas* jurídicos
+    recurrentes y redacta la página desde el tema, no desde la conversación; la
+    frecuencia diaria encaja además con la retención de 15 días declarada en
+    `/privacidad`, que este proceso no puede exigir alargar.
+  - El contenido de cada landing sale de los textos literales del corpus
+    (extractos verificados, preceptos del BOE) y remata invitando al chat; sin
+    corpus suficiente detrás, el tema no se materializa (regla anti thin
+    content de la arquitectura internacional).
+  - Decidir si el runner publica directamente o deja borradores para
+    aprobación: el gate editorial y el de GSC de 4-6 semanas siguen rigiendo, y
+    ninguna página puede afirmar revisión humana inexistente.
+  - Requisito previo: volumen real de consultas. Con el tráfico actual el
+    clustering diario no tendría señal; hasta entonces basta la selección
+    manual de temas del punto 11 de la auditoría.
 
 ## Colaboración internacional
 

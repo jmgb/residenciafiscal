@@ -292,6 +292,46 @@ apagado (interferiría con el bundle y la CSP).
 - Revisar los eventos del WAF para confirmar que ningún crawler legítimo menor
   (Applebot, DuckDuckBot, monitores) recibe 403 (tarea ya abierta en `TASKS.md`).
 
+#### 11. Landing pages SEO a partir de las consultas reales del chat
+
+Las preguntas que los usuarios hacen al chat ya se persisten en Supabase
+(schema `private`, RPC atómicas de la Netlify Function;
+[`SUPABASE_CHAT.md`](../operations/SUPABASE_CHAT.md)). Son la señal de demanda
+más directa que tiene el proyecto: keywords long-tail formuladas por el usuario
+real, no por una herramienta de terceros.
+
+Idea: cuando una cuestión se repita, crear una **landing page con URL propia
+optimizada para esa consulta**, que la responda con el material del corpus
+(extractos literales verificados, preceptos del BOE, sentencias enlazadas) y
+remate invitando a preguntar al chat. El hueco natural en la arquitectura por
+jurisdicción es `/espana/doctrina/<tema>`
+([`INTERNATIONAL_ARCHITECTURE.md`](INTERNATIONAL_ARCHITECTURE.md)): una página
+por cuestión jurídica recurrente («ausencias esporádicas 183 días», «becarios
+en el extranjero», «teletrabajo y centro de intereses»...), no una por consulta.
+
+Límites que condicionan el diseño:
+
+- **Privacidad.** Una consulta del chat es dato fiscal con **15 días de
+  retención** declarados en `/privacidad`. Nunca se publica una consulta
+  literal ni nada que permita reidentificar al autor: las consultas solo se
+  usan como señal agregada para elegir *temas*, y el análisis debe operar
+  dentro de esa ventana (o sobre agregados temáticos que no sean dato
+  personal). Si se monta un proceso periódico de clustering de consultas, no
+  puede exigir alargar la retención.
+- **Contenido, no thin content.** La landing se redacta desde los textos
+  literales del corpus y el copy institucional, con el mismo criterio que el
+  punto 2: sin afirmar revisión humana y sin materializar una página que no
+  tenga corpus suficiente detrás (la regla de la arquitectura internacional:
+  sin contenido diferencial, 404).
+- **Gates vigentes.** Mismo tratamiento que el punto 4: la selección de temas
+  puede empezar ya (las consultas caducan; el ranking de temas, no), pero la
+  publicación respeta el gate GSC de 4-6 semanas y los lotes editoriales.
+
+La evolución automatizada de esta idea —un runner diario que agregue las
+conversaciones del día anterior y proponga las landings— está registrada como
+tarea futura en [`TASKS.md`](../project/TASKS.md#seo-y-contenido), condicionada
+a que exista volumen real de consultas.
+
 ## Qué NO hacer
 
 - **No** añadir `FAQPage`/`Article`/`Review` schema sin que exista ese contenido
@@ -317,6 +357,7 @@ apagado (interferiría con el bundle y la CSP).
 | 5 | `lastmod`, JSON-LD `WebSite`/`Organization`, e-mail obfuscation (fuentes self-host: hecho) | Bajo | Bajo-medio |
 | 6 | Diferenciar países sin convenio | Medio | Medio |
 | 7 | Publicar por lotes fichas de sentencia tras revisión humana (renderer ya hecho) | Alto | El mayor a medio plazo |
+| 8 | Landing pages `/espana/doctrina/<tema>` desde temas agregados de consultas del chat | Medio-alto | Alto cuando haya volumen de consultas |
 
 Con 1–3 hechas, el sitio queda en condiciones de que el gate de las 4-6 semanas
 mida algo real; la 7 es la que convierte el corpus en tráfico.
