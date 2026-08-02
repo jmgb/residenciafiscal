@@ -1068,10 +1068,12 @@ Hallazgos de la ejecución, todos corregidos:
 - **La interfaz omitía detalle estructurado permitido.** Ya muestra categoría
   de prueba, conclusión y respuesta sobre carga, semántica del recuento de
   presencia y pasos del desempate por CDI, sin ampliar la allowlist.
-- **El presupuesto de artefactos se ha quedado estrecho.** `knowledge/jurisprudencia-v3`
-  pasa de 761 a 935 ficheros, con el límite de `make rollout-verify` en 1.000.
-  Antes de generar el siguiente derivado hay que subir ese límite o mover
-  material secundario, según `JURISPRUDENCE_ARTIFACT_POLICY.md`.
+- **El presupuesto de artefactos medía el síntoma.** `knowledge/jurisprudencia-v3`
+  pasó de 761 a 935 ficheros —el 93 % del límite de 1.000— con el árbol todavía
+  al 36 % de su presupuesto de peso. El recuento total solo decía cuántas
+  sentencias hay; el gate pasa ahora a vigilar **derivados por documento** (hoy
+  9 de 10 permitidos), que es lo que se multiplica al añadir uno nuevo o un
+  segundo corpus. Detalle en `JURISPRUDENCE_ARTIFACT_POLICY.md`.
 
 ### Lo que sigue pendiente
 

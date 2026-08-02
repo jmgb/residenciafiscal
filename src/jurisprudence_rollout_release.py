@@ -13,7 +13,24 @@ from jurisprudence_rollout import load_rollout_manifest, load_rollout_state
 from jurisprudence_rollout_models import RolloutExecutionStatus
 from okf_provenance import sha256_file
 
-MAX_ARTIFACT_FILES = 1_000
+# Presupuesto de artefactos versionados. Son tres límites y cada uno vigila algo
+# distinto, porque un recuento total a secas no mide lo que encarece el
+# repositorio:
+#
+# - `MAX_ARTIFACT_BYTES` es el que de verdad protege el clon: pesa lo que pesa.
+# - `MAX_ARTIFACT_FILES_PER_DOCUMENT` vigila la **causa** del crecimiento. Cada
+#   sentencia deja hoy nueve derivados; añadir un décimo multiplica por 106, y
+#   ese es el momento en el que hay que decidirlo a conciencia, no cuando el
+#   total redondo salte por haber incorporado sentencias.
+# - `MAX_ARTIFACT_FILES` queda como backstop de lo que no crece por documento
+#   —los informes agregados, por ejemplo— y con sitio para el segundo corpus
+#   jurisprudencial de la fase E, que duplicará el árbol sin cambiar su forma.
+#
+# El límite anterior era de 1.000 ficheros y se quedó al 93 % al incorporar los
+# sidecars de roles y las proyecciones públicas de la fase A/C1, con el árbol
+# todavía al 36 % de su presupuesto de bytes: medía el síntoma, no la causa.
+MAX_ARTIFACT_FILES = 2_500
+MAX_ARTIFACT_FILES_PER_DOCUMENT = 10
 MAX_ARTIFACT_BYTES = 50_000_000
 
 
@@ -30,6 +47,51 @@ class RolloutReleaseVerification:
 def _require_hash(path: Path, expected: str | None, label: str) -> None:
     if expected is None or not path.is_file() or sha256_file(path) != expected:
         raise ValueError(f"hash no coincide: {label}")
+
+
+def artifact_files_per_document(verification: RolloutReleaseVerification) -> float:
+    """Derivados versionados por sentencia del rollout."""
+    if verification.document_count == 0:
+        return 0.0
+    return verification.artifact_file_count / verification.document_count
+
+
+def comprobar_presupuesto(
+    output_root: Path,
+    *,
+    document_count: int,
+    max_files: int = MAX_ARTIFACT_FILES,
+    max_files_per_document: int = MAX_ARTIFACT_FILES_PER_DOCUMENT,
+    max_bytes: int = MAX_ARTIFACT_BYTES,
+) -> tuple[int, int]:
+    """Recuento y peso del árbol publicado, o error diciendo qué límite falla.
+
+    El mensaje nombra el límite concreto a propósito: con uno genérico había que
+    abrir el código para saber si sobraban ficheros, derivados por sentencia o
+    megabytes, y cada caso se arregla de una forma distinta.
+    """
+    files = tuple(path for path in output_root.rglob("*") if path.is_file())
+    artifact_bytes = sum(path.stat().st_size for path in files)
+
+    if artifact_bytes >= max_bytes:
+        raise ValueError(
+            f"el rollout excede el presupuesto de bytes versionados: {artifact_bytes} de "
+            f"{max_bytes}. Mueve el material secundario a un bundle de release u object "
+            "storage inmutable antes de seguir."
+        )
+    if document_count and len(files) / document_count >= max_files_per_document:
+        raise ValueError(
+            f"el rollout excede el presupuesto de artefactos por documento: "
+            f"{len(files) / document_count:.1f} de {max_files_per_document}. Un derivado nuevo "
+            f"por sentencia se multiplica por {document_count}; decídelo en la política antes "
+            "de generarlo."
+        )
+    if len(files) >= max_files:
+        raise ValueError(
+            f"el rollout excede el presupuesto total de ficheros versionados: {len(files)} de "
+            f"{max_files}."
+        )
+    return len(files), artifact_bytes
 
 
 def verify_rollout_release(
@@ -100,10 +162,9 @@ def verify_rollout_release(
             f"{source.judgment_id}.corpus-index",
         )
 
-    files = tuple(path for path in output_root.rglob("*") if path.is_file())
-    artifact_bytes = sum(path.stat().st_size for path in files)
-    if len(files) >= MAX_ARTIFACT_FILES or artifact_bytes >= MAX_ARTIFACT_BYTES:
-        raise ValueError("el rollout excede el presupuesto de artefactos versionados")
+    artifact_file_count, artifact_bytes = comprobar_presupuesto(
+        output_root, document_count=document_count
+    )
     expected = {
         "document_count": document_count,
         "retrieval_document_count": len({unit.judgment_id for unit in corpus.units}),
@@ -115,7 +176,7 @@ def verify_rollout_release(
     return RolloutReleaseVerification(
         **expected,
         publication_status=build["publication_status"],
-        artifact_file_count=len(files),
+        artifact_file_count=artifact_file_count,
         artifact_bytes=artifact_bytes,
     )
 
