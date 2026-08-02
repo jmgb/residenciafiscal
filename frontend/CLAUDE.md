@@ -173,6 +173,13 @@ Cuatro cosas que conviene saber antes de tocarlo:
 - **Un módulo que toque `window` al importarse rompe el build**, no la página:
   el árbol entero se ejecuta en Node. `tests/entry-server.test.tsx` lo detecta
   sin necesidad de build.
+- **El `preload` de las fuentes se inyecta antes de prerenderizar.** Las dos
+  familias se autoalojan (`@fontsource-variable/*` en `main.tsx`) y vite emite
+  sus woff2 con hash, así que `index.html` no puede declararlas a mano:
+  `scripts/inject-font-preload.mjs` las lee del CSS compilado y escribe las
+  etiquetas en `dist/index.html`. Va **antes** de `prerender.mjs` en el
+  `postbuild` porque cada copia por ruta se saca de esa shell; invertir el orden
+  deja las ~150 páginas sin `preload` y solo lo delata una auditoría de LCP.
 - **`vite.config.ts` desactiva el plugin de Sentry en el build SSR**
   (`isSsrBuild`): ese bundle no se despliega, así que subir sus sourcemaps sería
   publicar un artefacto que ningún error puede mencionar.

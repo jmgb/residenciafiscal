@@ -95,6 +95,12 @@ El monoespaciado marca **lo que el usuario puede ir a comprobar** contra el text
 original. Es un recurso de verificación, no de decoración. Jerarquía por peso y tamaño,
 nunca por color.
 
+Las dos familias se **autoalojan** en su versión variable
+(`@fontsource-variable/*`, importadas en `frontend/src/main.tsx`), así que en CSS
+se llaman `Space Grotesk Variable` e `Inter Variable` y los pesos de la tabla son
+instancias de un solo fichero por familia. El monoespaciado sigue siendo el del
+sistema: no se descarga ninguna tercera fuente.
+
 ## 5. Composición
 
 - **Dos superficies, no una:** el marco de la app (shell, barra superior, zona del
@@ -187,9 +193,11 @@ Antes de publicar cualquier pieza —interfaz, OG, copy, correo—:
   artefacto. Si el wordmark cambia más de una vez, este pendiente pasa a ser prioritario.
 - **Modo oscuro:** no existe. Si se añade, toda la tabla de contraste se recalcula sobre
   el nuevo fondo — ninguno de los ratios de §3 se conserva al invertir.
-- **Fuentes en CDN:** Space Grotesk e Inter se cargan desde Google Fonts (`index.html`),
-  lo que mete un tercero en la ruta crítica y una petición bloqueante. Auto-hospedarlas
-  es una mejora pendiente, no un problema abierto.
+- **Imagen OG con fuentes de CDN:** `frontend/og/*.html` sigue pidiendo Space Grotesk e
+  Inter a Google Fonts. Es el generador local del PNG (`npm run og`, Chrome headless con
+  red), no se sirve a nadie y no afecta a la CSP; el sitio ya no toca ese CDN. Migrarlo a
+  los woff2 del paquete haría el render independiente de la red, y obligaría a regenerar
+  los dos PNG en el mismo commit.
 - **Doble audiencia:** la narrativa habla al ciudadano; el corpus atrae también a
   abogados tributaristas. El claim de dos frases resuelve la convivencia en superficies
   grandes, pero cada pieza nueva decide a cuál habla primero. En superficies
@@ -197,6 +205,11 @@ Antes de publicar cualquier pieza —interfaz, OG, copy, correo—:
 
 ## Change log
 
+- **2026-08-02** — Space Grotesk e Inter pasan a autoalojarse en versión variable
+  (`@fontsource-variable/*`): los tokens tipográficos cambian de nombre de familia,
+  desaparecen las dos conexiones a Google Fonts de la ruta crítica y la CSP pierde sus
+  excepciones para el CDN. El diseño no cambia: mismos pesos, ahora interpolados de un
+  fichero por familia.
 - **2026-07-31** — Token `canvas` (`#f8fafc`, el mismo gris del `sidebar`) añadido para
   separar el marco de la aplicación de las superficies blancas de contenido. Tres pares
   nuevos en la tabla; `muted-foreground` sobre `canvas` se queda en 4.55:1, el par más

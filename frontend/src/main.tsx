@@ -6,6 +6,12 @@ import { installModulePreloadRecovery } from './lib/module-preload-recovery';
 import { PreceptoPreloadContext, readEmbeddedPreceptoPreload } from './lib/precepto-preload';
 import { initializeSentry, SentryErrorBoundary } from './lib/sentry';
 import { readEmbeddedTreatyPreload, TreatyPreloadContext } from './lib/treaty-preload';
+// Las dos familias se autoalojan: vite emite los woff2 con hash bajo `/assets`
+// y el navegador ya no abre conexión con Google Fonts (ver `index.html` y la
+// CSP de `netlify.toml`). Cada paquete declara los siete subconjuntos con su
+// `unicode-range`, así que solo se descarga el que la página necesita.
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
 import './index.css';
 
 // Antes de montar nada: si el HTML es de un deploy anterior, el primer chunk que

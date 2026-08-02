@@ -23,9 +23,23 @@
 >   JSON-LD `Legislation` + `BreadcrumbList`, y enlazadas desde las páginas de
 >   país y `/espana/fuentes`. El sitemap pasa de 38 a 149 URLs.
 >
-> Pendientes: Bing Webmaster Tools y enlace GSC ↔ GA4 (ambos manuales, UI),
-> `lastmod`, JSON-LD de sitio, fuentes self-host, países sin convenio y fichas
-> por sentencia (tras el gate de GSC).
+> - **Fuentes autoalojadas** (2 de agosto de 2026): Inter y Space Grotesk salen
+>   del mismo origen vía `@fontsource-variable/*`, con `preload` del subconjunto
+>   latino inyectado en el `postbuild`. La CSP pierde sus dos excepciones para
+>   Google Fonts (punto 8).
+>
+> - **Enlace GSC ↔ GA4 activo** (2 de agosto de 2026, manual en la UI con la
+>   cuenta administradora de GA4, que ya era propietaria delegada en GSC).
+> - **Vigilancia y quick wins** (2 de agosto de 2026): el informe semanal de
+>   Telegram añade la línea de Search Console —clicks, impresiones, CTR y
+>   posición media, con fallo declarado y nunca silencioso—; el sitemap emite
+>   `lastmod` en las fichas de precepto (la fecha de la redacción vigente,
+>   nunca la del build); el layout emite JSON-LD `WebSite` + `Organization` en
+>   todas las rutas; y la ofuscación de e-mails de Cloudflare está desactivada
+>   (los `mailto:` vuelven a ser legibles para bots).
+>
+> Pendientes: Bing Webmaster Tools (manual, cuenta de Miguel), países sin
+> convenio y fichas por sentencia (ambos tras el gate de GSC de 4-6 semanas).
 
 Revisión profunda del SEO de [residenciafiscal.org](https://residenciafiscal.org):
 repositorio (`frontend/`), HTML servido en producción, redirecciones, Cloudflare,
@@ -205,13 +219,40 @@ marca y al nombre del sitio en resultados. En `/espana/fuentes`, el corpus
 encaja como `Dataset` (es un dataset real, versionado y con licencia de fuente
 documentada) — mismo criterio de honestidad: solo campos que el corpus sabe.
 
-#### 8. Autoalojar las fuentes tipográficas
+#### 8. Autoalojar las fuentes tipográficas — **hecho** (2 de agosto de 2026)
 
-Inter y Space Grotesk se cargan desde `fonts.googleapis.com`/`fonts.gstatic.com`:
+Inter y Space Grotesk se cargaban desde `fonts.googleapis.com`/`fonts.gstatic.com`:
 dos conexiones externas y CSS render-blocking que penalizan LCP en móvil (Core
-Web Vitals es factor de ranking). Migrar a `@fontsource/*` (self-host, mismo
-origen, `font-display: swap`) permite además retirar dos entradas de la CSP y el
-`preconnect`.
+Web Vitals es factor de ranking).
+
+Ya se sirven desde el mismo origen con `@fontsource-variable/inter` y
+`@fontsource-variable/space-grotesk` (`src/main.tsx`), con `font-display: swap`
+heredado del paquete:
+
+- **Cero terceros en la ruta crítica.** Fuera los dos `preconnect` y el `<link>`
+  a la hoja de estilo del CDN; la CSP queda en `style-src 'self' 'unsafe-inline'`
+  y `font-src 'self'`, sin excepciones para Google.
+- **Una petición por familia en vez de una por peso.** Los ficheros son
+  variables (`wght` 100–900 y 300–700), así que los cuatro pesos de Inter y los
+  tres de Space Grotesk salen de 48 KB + 22 KB. Los siete subconjuntos viajan en
+  el deploy, pero el `unicode-range` deja sin pedir todo lo que no sea `latin`.
+- **`preload` de los dos subconjuntos latinos.** El nombre del woff2 emitido
+  lleva hash de contenido, así que no puede escribirse en `index.html`:
+  `scripts/inject-font-preload.mjs` lo lee del CSS ya compilado y lo inyecta en
+  el `postbuild` **antes** de `prerender.mjs`, de modo que las ~150 copias por
+  ruta heredan la etiqueta. Sin él, el navegador descubriría la fuente solo tras
+  aplicar el CSS: un viaje extra justo delante del texto que mide el LCP.
+- `tests/self-hosted-fonts.test.ts` impide la vuelta al CDN (HTML, CSS y CSP) y
+  cubre el inyector, que falla ruidosamente si el bundle deja de emitir una
+  fuente.
+
+Fuera de alcance a propósito: `frontend/og/*.html`, que sí siguen pidiendo
+Google Fonts. Son el generador local de la imagen OG (`npm run og`, Chrome
+headless con red), no se sirven a nadie y no tocan ni la CSP ni el LCP.
+
+Queda por medir: sin datos de campo de Core Web Vitals no se puede afirmar la
+mejora real de LCP, solo que desaparecen dos conexiones externas y una hoja de
+estilo bloqueante.
 
 #### 9. Ruido de Cloudflare en el HTML
 
@@ -256,7 +297,7 @@ apagado (interferiría con el bundle y la CSP).
 | 2 | `noindex` en la shell (mitiga el soft 404) | Muy bajo | Alto |
 | 3 | Contenido indexable en `/espana` + title/h1 | Medio | Muy alto |
 | 4 | Fallback 404 real en `netlify.toml` | Bajo | Medio |
-| 5 | `lastmod`, JSON-LD `WebSite`/`Organization`, fuentes self-host, e-mail obfuscation | Bajo | Bajo-medio |
+| 5 | `lastmod`, JSON-LD `WebSite`/`Organization`, e-mail obfuscation (fuentes self-host: hecho) | Bajo | Bajo-medio |
 | 6 | Diferenciar países sin convenio | Medio | Medio |
 | 7 | Fichas por sentencia y por precepto (diseño ya; ejecución tras el gate GSC) | Alto | El mayor a medio plazo |
 

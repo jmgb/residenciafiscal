@@ -2,9 +2,11 @@
 @import 'tw-animate-css';
 
 @theme {
-  /* Tipografías duales */
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  /* Tipografías duales. Las familias `… Variable` son las autoalojadas que
+     importa `main.tsx`; el nombre estático detrás cubre a quien las tenga
+     instaladas si el woff2 no llega. */
+  --font-heading: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
 
   /* Base */
   --color-background: #ffffff;

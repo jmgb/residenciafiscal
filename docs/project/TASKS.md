@@ -819,6 +819,30 @@ sola URL para poder encontrarse.
   (`isGoogleAnalyticsEnabled`) para las dos analíticas.
 - [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
   devuelven `200` desde `https://residenciafiscal.org/`.
+- [x] **Autoalojar Space Grotesk e Inter** (2 de agosto de 2026, punto 8 de
+  [`SEO_AUDIT.md`](../product/SEO_AUDIT.md)). Salían de Google Fonts: dos
+  conexiones a un tercero y una hoja de estilo bloqueante delante del primer
+  pintado, más dos excepciones en la CSP. Ahora vienen de
+  `@fontsource-variable/*` (`src/main.tsx`) y la CSP queda en `font-src 'self'`
+  y `style-src 'self' 'unsafe-inline'`.
+  - **Un fichero por familia, no uno por peso.** Son las versiones variables
+    (`wght` 100–900 y 300–700): 48 KB de Inter y 22 KB de Space Grotesk cubren
+    los siete pesos del brandbook. Los otros seis subconjuntos viajan en el
+    deploy, pero su `unicode-range` los deja sin pedir.
+  - **El `preload` no puede escribirse en `index.html`**: el woff2 emitido lleva
+    hash de contenido. Lo inyecta `scripts/inject-font-preload.mjs` leyendo el
+    CSS ya compilado, y va **antes** de `prerender.mjs` en el `postbuild` porque
+    de esa shell salen las ~150 copias por ruta. Solo precarga los dos
+    subconjuntos `latin`, que son los que pinta el castellano.
+  - **No se afirma mejora de LCP**: sin datos de campo de Core Web Vitals solo
+    consta que desaparecen las dos conexiones externas y el CSS bloqueante.
+    Comprobado en Chromium contra el build: 0 peticiones a Google Fonts y
+    exactamente los 2 woff2 precargados.
+  - Queda fuera a propósito `frontend/og/*.html`, que sí sigue pidiendo Google
+    Fonts: es el generador local del PNG (`npm run og`), no se sirve a nadie y no
+    toca la CSP. Migrarlo obligaría a regenerar los dos PNG en el mismo commit.
+  - **El cambio de CSP exige redeploy**; hasta entonces rige la anterior, que era
+    compatible por más permisiva.
 - [x] **Registrar el sitemap en Google Search Console** (1 de agosto de 2026).
   La propiedad `sc-domain:residenciafiscal.org` ya existía; el bloqueo era solo
   que la service account
