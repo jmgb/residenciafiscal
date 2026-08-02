@@ -892,6 +892,66 @@ sola URL para poder encontrarse.
 - [ ] Evaluar si merece la pena añadir tests de aislamiento que garanticen que cada país consulta
   únicamente su propio corpus cuando existan corpus nacionales adicionales.
 
+## Plan de arquitectura internacional y posts de sentencias (2026-08-02)
+
+El diseño vive en
+[`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md). Las
+fases **A** (fundación de datos) y **C1** (renderer jurisprudencial en preview)
+están **en ejecución desde el 2 de agosto de 2026** con otro agente. La fase
+**C2 está aplazada sin fecha** por falta de revisor humano; ninguna otra fase
+depende de ella y el gate de `HUMAN_APPROVED` no se rebaja. Lo pendiente, en el
+orden recomendado:
+
+- [ ] **Pedir indexación manual en la UI de GSC** (2026-08-03, ~15 min). Unas
+  diez URLs prioritarias: `/espana/normativa`, `lirpf-a9`, las fichas de CDI
+  con más demanda (Andorra, Portugal, Francia, Emiratos), `/colaborar` y dos o
+  tres páginas de país. La API no permite solicitar indexación; solo la
+  interfaz.
+- [ ] **Confirmar en el informe del lunes** (2026-08-03) que el sitemap
+  registra 149 URLs y no 38. Google descargó la versión antigua el 1 de agosto
+  a las 19:38 —antes del deploy de normativa— y el sitemap se reenvió por API
+  el 2 de agosto tras detectarlo.
+- [ ] **Materializar el 301 de la raíz** (semana del 2026-08-03). `/` →
+  `/espana` como `301!` generado por `build-netlify-redirects.mjs`, con test;
+  hoy es un `<Navigate>` de cliente que Google resuelve peor. Cambio
+  autocontenido: no espera al resto de la fase B (§5.1 del diseño).
+- [ ] **Primeros backlinks** (continuo desde 2026-08-03). Repositorio público
+  de GitHub, perfiles y comunidades de fiscalidad internacional o expats. Sin
+  autoridad entrante, la cola de indexación de un dominio nuevo seguirá lenta
+  con independencia de los ajustes técnicos.
+- [ ] **Gate A** (al cerrar la fase A en curso). Verificar contra §9 del
+  diseño: schemas válidos, cobertura completa, sin solapes de periodos, ningún
+  `countries` desconocido, diff vacío al regenerar dos veces.
+- [ ] **Gate C1** (al cerrar C1). Deploy Preview con `X-Robots-Tag: noindex`,
+  404 real de toda ruta `internal_preview` en producción, allowlist sin fugas.
+  Este gate no concede publicación.
+- [ ] **Decisión de producto: ficha documental sin análisis** (§6.3 del
+  diseño; decidir antes de arrancar la fase B, orientativo semana del
+  2026-08-10). Solo metadatos primarios y citas literales verificadas, sin
+  resultados ni resúmenes del agente. Es la única vía de contenido
+  jurisprudencial indexable mientras no haya revisor; exige su propia decisión
+  jurídica de alcance, pero no revisión caso a caso.
+- [ ] **Fase B — piloto de 3 bilaterales** (tras el Gate A; orientativo desde
+  la semana del 2026-08-10). `/espana/convenios`, tres bilaterales que cubran
+  convenio único, sucesión (Japón/Rumanía/China) y fuente del diario; sus
+  páginas de país se convierten en hubs en el mismo lote. Ampliar por lotes
+  solo si el Gate B pasa.
+- [ ] **Checkpoint GSC de las fichas de CDI** (2026-09-01). Si las 97 aparecen
+  de forma masiva como «Crawled – currently not indexed», activar la
+  diferenciación prevista; hasta entonces no podar el sitemap (§12.1 del
+  diseño y decisión del 2 de agosto de no reducir URLs).
+- [ ] **Actualizar los documentos de §13 del diseño con cada fase**, no al
+  final: `COUNTRY_PAGES.md`, `SEO_AUDIT.md`, `NORMATIVA.md`, `ARCHITECTURE.md`
+  y este backlog (las tareas absorbidas por el plan se marcan al implementarse).
+- [ ] **Opcional, sin fecha — Fase C2 (publicación con análisis).** Solo si
+  aparece un revisor humano comprometido: lote pequeño y diverso,
+  `HUMAN_APPROVED` por caso con identidad y fecha. No programar; no bloquea
+  nada.
+- [ ] **Limpieza menor de excepciones históricas.** Decidir si los dos ficheros
+  de `docs/superpowers/` versionados con `git add -f` (diseño y plan del chat
+  backend, ya ejecutados) se desversionan o se promocionan según la regla nueva
+  de `CLAUDE.md`; hoy son la única contradicción con ella.
+
 ## Criterio de cierre SEO
 
 - El home y `/metodologia` responden `200` y tienen canonical propia.

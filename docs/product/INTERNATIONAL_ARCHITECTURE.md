@@ -38,6 +38,12 @@ también en HTTP— (§5.5); el JSON-LD que **sí** emiten los posts (§6.3); y 
 medición por subárbol apoyada en la vigilancia semanal de Search Console que ya
 existe (§12.1).
 
+**Tercera pasada (misma fecha).** No hay revisor humano disponible, así que la
+fase C2 queda **aplazada sin fecha y marcada como opcional**: ninguna otra fase
+depende de ella y el gate de `HUMAN_APPROVED` no se rebaja — simplemente no se
+programa. La vía realista para contenido jurisprudencial indexable mientras
+tanto es la ficha documental sin análisis de §6.3.
+
 ---
 
 ## 1. Qué problema resuelve este plan
@@ -647,6 +653,12 @@ deberá diseñar otro tipo documental limitado a metadatos primarios y citas
 literales, y someter ese alcance a una decisión jurídica separada; no se llamará
 «post analizado» ni reutilizará resultados, criterios o resúmenes del agente.
 
+A fecha de esta revisión **no hay revisor humano disponible**, así que la
+publicación con análisis (fase C2) queda aplazada sin fecha y el resto del plan
+no depende de ella (§9). La ficha documental del párrafo anterior es la
+alternativa realista si se quiere contenido jurisprudencial indexable antes de
+contar con revisor.
+
 ### 6.4 Hubs de doctrina
 
 Seis hubs, uno por criterio con masa suficiente:
@@ -798,7 +810,18 @@ de la allowlist; Deploy Preview revisable y con `X-Robots-Tag: noindex`; toda
 ruta `internal_preview` devuelve 404 real en producción; accesibilidad y build
 frontend verificados. Este gate no concede publicación.
 
-### Fase C2 — Primer lote jurisprudencial público
+### Fase C2 — Primer lote jurisprudencial público (aplazada; opcional hasta que exista revisor)
+
+> **Estado (2 de agosto de 2026): sin revisor humano disponible.** Esta fase no
+> tiene fecha y ninguna otra depende de ella: A, B, C1 y D avanzan igual. El
+> aplazamiento **no** rebaja el gate — los 67 candidatos permanecen en
+> `internal_preview` indefinidamente hasta que una persona los apruebe; no se
+> publica análisis `AGENT_REVIEWED` por falta de revisor. Mientras tanto, la
+> palanca SEO del sitio son la normativa y las bilaterales (fase B). Si se
+> quiere contenido jurisprudencial público antes de tener revisor, la única vía
+> es la ficha documental sin análisis descrita en §6.3 —metadatos primarios y
+> citas literales verificadas—, que exige su propia decisión jurídica pero no
+> una revisión caso a caso del análisis del agente.
 
 - Una persona revisa casos completos siguiendo el orden de E0 y registra
   `HUMAN_APPROVED` con identidad y fecha.

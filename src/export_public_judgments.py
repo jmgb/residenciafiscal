@@ -51,7 +51,7 @@ def _judgment_ids_publicados() -> set[str]:
 def construir_manifiesto(casos: list[dict]) -> dict:
     """Manifiesto con el estado y el hash de cada proyección candidata."""
     publicados = _judgment_ids_publicados()
-    entradas = []
+    entradas: list[dict[str, object]] = []
     for caso in casos:
         if not caso["judgment"]["is_tax_residence_case"]:
             continue
@@ -93,7 +93,7 @@ def construir_manifiesto(casos: list[dict]) -> dict:
             }
         )
 
-    entradas.sort(key=lambda entrada: entrada["judgmentId"])
+    entradas.sort(key=lambda entrada: str(entrada["judgmentId"]))
     return {
         "schemaVersion": MANIFEST_SCHEMA_VERSION,
         # §7.1: ningún consumidor debe deducir la jurisdicción de la ruta física.
