@@ -831,14 +831,16 @@
         "residence_claimed",
         "treaty_applied"
       ],
-      "treatyBoeId": null
+      "treatyBoeIds": []
     },
     {
       "code": "fr",
       "roles": [
         "treaty_applied"
       ],
-      "treatyBoeId": "BOE-A-1997-12729"
+      "treatyBoeIds": [
+        "BOE-A-1997-12729"
+      ]
     }
   ],
   "publicationState": "internal_preview",

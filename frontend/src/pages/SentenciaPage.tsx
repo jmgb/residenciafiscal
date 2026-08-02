@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { jurisdictionName, jurisdictionPath } from '@/data/jurisdictions';
 import { loadNormativa } from '@/lib/normativa';
 import { fichaPath } from '@/lib/normativa-fichas';
+import { usePreceptoPreloadAll } from '@/lib/precepto-preload';
 import {
   entryDeSentencia,
   esBorrador,
@@ -114,12 +115,18 @@ export function SentenciaPage() {
   // construye: el BOE no lo hace uniforme —el artículo 4 es `a4` en Francia,
   // `ar-4` en el Reino Unido de 2013, y hay `ai-4` y `a1-5`— así que fabricarlo
   // produciría enlaces rotos. Se resuelve por `boeId` contra el índice.
-  const [preceptos, setPreceptos] = useState<PreceptoEntry[]>([]);
+  //
+  // La precarga es la que hace que el enlace exista en el HTML prerenderizado:
+  // en el build no corren los efectos, y sin ella el bot solo vería la ficha sin
+  // sus enlaces al convenio hasta que el navegador ejecutara JavaScript.
+  const precargados = usePreceptoPreloadAll();
+  const [cargados, setCargados] = useState<PreceptoEntry[]>([]);
+  const preceptos = cargados.length > 0 ? cargados : precargados.map((item) => item.entry);
 
   useEffect(() => {
     let vigente = true;
     loadNormativa().then((entradas) => {
-      if (vigente) setPreceptos(entradas);
+      if (vigente) setCargados(entradas);
     });
     return () => {
       vigente = false;
@@ -239,21 +246,24 @@ export function SentenciaPage() {
         <p className='mt-1 break-all text-muted-foreground text-xs'>
           SHA-256 del PDF: {judgment.sourceSha256}
         </p>
-        {sentencia.jurisdictions.map((jurisdiccion) => {
-          const ficha = preceptos.find((precepto) => precepto.boeId === jurisdiccion.treatyBoeId);
-          if (!ficha) return null;
-          return (
-            <p className='mt-2 text-sm' key={jurisdiccion.code}>
-              <Link
-                className='text-primary underline-offset-4 hover:underline'
-                to={fichaPath(ficha)}
-              >
-                Convenio de doble imposición España–{jurisdictionName(jurisdiccion.code)}:{' '}
-                {ficha.designacion}
-              </Link>
-            </p>
-          );
-        })}
+        {sentencia.jurisdictions.flatMap((jurisdiccion) =>
+          jurisdiccion.treatyBoeIds.map((boeId) => {
+            const ficha = preceptos.find((precepto) => precepto.boeId === boeId);
+            if (!ficha) return null;
+            return (
+              <p className='mt-2 text-sm' key={`${jurisdiccion.code}:${boeId}`}>
+                <Link
+                  className='text-primary underline-offset-4 hover:underline'
+                  to={fichaPath(ficha)}
+                >
+                  Convenio de doble imposición España–{jurisdictionName(jurisdiccion.code)}
+                  {ficha.derogada && ' (el aplicable al ejercicio, hoy derogado)'}:{' '}
+                  {ficha.designacion}
+                </Link>
+              </p>
+            );
+          })
+        )}
       </section>
 
       <Link

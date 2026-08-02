@@ -539,7 +539,7 @@
       "roles": [
         "residence_claimed"
       ],
-      "treatyBoeId": null
+      "treatyBoeIds": []
     }
   ],
   "publicationState": "internal_preview",

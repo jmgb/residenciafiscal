@@ -692,7 +692,7 @@
     },
     "JurisdiccionPublica": {
       "additionalProperties": false,
-      "description": "Jurisdicción con papel tipado y, si procede, su convenio con España.\n\nSolo salen los roles que autorizan enlace. Lo que únicamente aparece en\n`judgment.countries` no llega aquí: el enlazado se construye contra roles\ntipados, nunca contra el campo en bruto.",
+      "description": "Jurisdicción con papel tipado y el convenio que regía el caso.\n\nSolo salen los roles que autorizan enlace. Lo que únicamente aparece en\n`judgment.countries` no llega aquí: el enlazado se construye contra roles\ntipados, nunca contra el campo en bruto.\n\nLos convenios son **los que rigen los ejercicios enjuiciados**, no el\nvigente hoy. Un caso de 2011 con el Reino Unido aplica el convenio de 1975,\ny enlazar el de 2013 publicaría derecho que entonces no existía. Son varios\ncuando el caso cruza el cambio de convenio, como los ejercicios 2013-2014.",
       "properties": {
         "code": {
           "title": "Code",
@@ -705,17 +705,13 @@
           "title": "Roles",
           "type": "array"
         },
-        "treatyBoeId": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "title": "Treatyboeid"
+        "treatyBoeIds": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Treatyboeids",
+          "type": "array"
         }
       },
       "required": [

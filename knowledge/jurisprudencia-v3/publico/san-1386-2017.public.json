@@ -1093,7 +1093,9 @@
         "residence_claimed",
         "treaty_applied"
       ],
-      "treatyBoeId": "BOE-A-1967-3470"
+      "treatyBoeIds": [
+        "BOE-A-1967-3470"
+      ]
     },
     {
       "code": "es",
@@ -1101,7 +1103,7 @@
         "residence_claimed",
         "treaty_applied"
       ],
-      "treatyBoeId": null
+      "treatyBoeIds": []
     }
   ],
   "publicationState": "internal_preview",

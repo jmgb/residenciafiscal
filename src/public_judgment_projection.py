@@ -264,16 +264,21 @@ class CuestionPublica(ModeloPublico):
 
 
 class JurisdiccionPublica(ModeloPublico):
-    """Jurisdicción con papel tipado y, si procede, su convenio con España.
+    """Jurisdicción con papel tipado y el convenio que regía el caso.
 
     Solo salen los roles que autorizan enlace. Lo que únicamente aparece en
     `judgment.countries` no llega aquí: el enlazado se construye contra roles
     tipados, nunca contra el campo en bruto.
+
+    Los convenios son **los que rigen los ejercicios enjuiciados**, no el
+    vigente hoy. Un caso de 2011 con el Reino Unido aplica el convenio de 1975,
+    y enlazar el de 2013 publicaría derecho que entonces no existía. Son varios
+    cuando el caso cruza el cambio de convenio, como los ejercicios 2013-2014.
     """
 
     code: str
     roles: tuple[str, ...]
-    treaty_boe_id: str | None = None
+    treaty_boe_ids: tuple[str, ...] = ()
 
 
 class PublicJudgment(ModeloPublico):
@@ -302,19 +307,34 @@ def _por_cuestion(elementos: list[dict], issue_id: str, campo: str = "issue_ids"
     return [elemento for elemento in elementos if issue_id in (elemento.get(campo) or ())]
 
 
+def _convenios_del_caso(code: str, ejercicios: tuple[int, ...]) -> tuple[str, ...]:
+    """Convenios que rigieron esa relación en los ejercicios enjuiciados.
+
+    Sin ejercicios no se declara ninguno: elegir el vigente sería adivinar, y la
+    consecuencia de acertar mal es enlazar la sentencia con el derecho de otra
+    época.
+    """
+    identificadores = []
+    for ejercicio in ejercicios:
+        instrumento = instrumento_vigente(code, ejercicio)
+        if instrumento is not None:
+            identificadores.append(instrumento.boe_id)
+    return tuple(dict.fromkeys(identificadores))
+
+
 def _jurisdicciones(caso: dict) -> tuple[JurisdiccionPublica, ...]:
     sidecar = derivar_roles(caso)
+    ejercicios = tuple(caso["judgment"].get("tax_years") or ())
     publicas = []
     for entrada in sidecar.jurisdictions:
         roles = tuple(rol for rol in entrada.roles if rol in ROLES_ENLAZABLES)
         if not roles:
             continue
-        vigente = instrumento_vigente(entrada.code)
         publicas.append(
             JurisdiccionPublica(
                 code=entrada.code,
                 roles=tuple(str(rol) for rol in roles),
-                treaty_boe_id=vigente.boe_id if vigente else None,
+                treaty_boe_ids=_convenios_del_caso(entrada.code, ejercicios),
             )
         )
     return tuple(publicas)
@@ -531,6 +551,12 @@ def _anclajes_usados(cuestiones: tuple[CuestionPublica, ...]) -> set[str]:
         ):
             for elemento in grupo:
                 usados.update(elemento.anchor_ids)
+        # Un paso del desempate puede citar un anclaje que su análisis padre no
+        # repite. Sin recorrerlos, la ficha publicaría la conclusión del paso y
+        # se quedaría sin el extracto literal que la sostiene.
+        for analisis in cuestion.treaty_analyses:
+            for paso in analisis.steps:
+                usados.update(paso.anchor_ids)
         if cuestion.holding:
             usados.update(cuestion.holding.anchor_ids)
     return usados
@@ -557,6 +583,10 @@ def estado_de_publicacion(proyeccion: PublicJudgment) -> EstadoPublicacion:
             cuestion.treaty_analyses,
         ):
             revisiones.extend(elemento.review for elemento in grupo)
+        # Cada paso del desempate se publica con su propia conclusión jurídica y
+        # lleva revisión propia: aprobar el análisis padre no aprueba sus pasos.
+        for analisis in cuestion.treaty_analyses:
+            revisiones.extend(paso.review for paso in analisis.steps)
     revisiones.extend(anclaje.review for anclaje in proyeccion.anchors)
 
     if all(revision.legal == REVISION_APROBADA for revision in revisiones):
@@ -616,10 +646,12 @@ def preceptos_citados(proyeccion: PublicJudgment) -> tuple[str, ...]:
     resolver «art. 4.2 CDI» a una norma es trabajo del enlazador de citas, y
     aquí adivinarlo publicaría el convenio de otro Estado.
     """
-    identificadores = []
-    for jurisdiccion in proyeccion.jurisdictions:
-        if jurisdiccion.treaty_boe_id and contraparte_de(jurisdiccion.treaty_boe_id):
-            identificadores.append(jurisdiccion.treaty_boe_id)
+    identificadores = [
+        boe_id
+        for jurisdiccion in proyeccion.jurisdictions
+        for boe_id in jurisdiccion.treaty_boe_ids
+        if contraparte_de(boe_id)
+    ]
     return tuple(dict.fromkeys(identificadores))
 
 

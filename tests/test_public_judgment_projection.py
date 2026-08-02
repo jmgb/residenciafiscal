@@ -123,6 +123,10 @@ def test_publishable_exige_aprobacion_humana_en_todo_lo_proyectado(caso: dict) -
             for item in valor:
                 if isinstance(item, dict):
                     aprobar(item)
+                    # Los pasos del desempate llevan revisión propia y también
+                    # cuentan para el gate.
+                    for paso in item.get("steps") or ():
+                        aprobar(paso)
 
     assert estado_de_publicacion(proyectar(aprobado)) == EstadoPublicacion.PUBLISHABLE
 
@@ -164,8 +168,81 @@ def test_la_jurisdiccion_enlazada_trae_su_convenio_con_espana() -> None:
     proyeccion = proyectar(cargar("san-1386-2017"))
 
     suiza = next(j for j in proyeccion.jurisdictions if j.code == "ch")
-    assert suiza.treaty_boe_id == "BOE-A-1967-3470"
+    assert suiza.treaty_boe_ids == ("BOE-A-1967-3470",)
     assert preceptos_citados(proyeccion) == ("BOE-A-1967-3470",)
+
+
+def test_el_convenio_enlazado_es_el_que_regia_el_ejercicio_enjuiciado() -> None:
+    """El Reino Unido tiene convenio de 1975 y de 2013: el ejercicio decide.
+
+    Enlazar el vigente hoy en un caso de 2011 publicaría, bajo el nombre
+    correcto, derecho que entonces no existía.
+    """
+    proyeccion = proyectar(cargar("san-1226-2021"))
+
+    assert proyeccion.judgment.tax_years == (2011,)
+    reino_unido = next(j for j in proyeccion.jurisdictions if j.code == "gb")
+    assert reino_unido.treaty_boe_ids == ("BOE-A-1976-23347",)
+
+
+def test_un_caso_que_cruza_el_cambio_de_convenio_enlaza_los_dos() -> None:
+    caso = cargar("san-1226-2021")
+    caso["judgment"] = {**caso["judgment"], "tax_years": [2013, 2014]}
+
+    proyeccion = proyectar(caso)
+
+    reino_unido = next(j for j in proyeccion.jurisdictions if j.code == "gb")
+    assert reino_unido.treaty_boe_ids == ("BOE-A-1976-23347", "BOE-A-2014-5171")
+
+
+def test_sin_ejercicios_no_se_declara_ningun_convenio() -> None:
+    """Elegir el vigente sería adivinar la época del caso."""
+    caso = cargar("san-1226-2021")
+    caso["judgment"] = {**caso["judgment"], "tax_years": []}
+
+    proyeccion = proyectar(caso)
+
+    assert all(j.treaty_boe_ids == () for j in proyeccion.jurisdictions)
+
+
+def test_un_paso_del_convenio_sin_aprobar_bloquea_la_publicacion() -> None:
+    """Aprobar el análisis padre no aprueba las conclusiones de sus pasos."""
+    caso = cargar("san-1386-2017")
+    aprobado = json.loads(json.dumps(caso))
+
+    def aprobar(elemento: dict) -> None:
+        if isinstance(elemento.get("review"), dict):
+            elemento["review"]["legal"] = "HUMAN_APPROVED"
+
+    aprobar(aprobado["judgment"])
+    for valor in aprobado.values():
+        if isinstance(valor, list):
+            for item in valor:
+                if isinstance(item, dict):
+                    aprobar(item)
+                    for paso in item.get("steps") or ():
+                        aprobar(paso)
+    assert estado_de_publicacion(proyectar(aprobado)) == EstadoPublicacion.PUBLISHABLE
+
+    aprobado["treaty_analyses"][0]["steps"][0]["review"]["legal"] = "AGENT_REVIEWED"
+    assert estado_de_publicacion(proyectar(aprobado)) == EstadoPublicacion.INTERNAL_PREVIEW
+
+
+def test_se_publica_el_anclaje_que_solo_cita_un_paso_del_convenio() -> None:
+    """Sin él, la ficha publicaría una conclusión sin su extracto literal."""
+    proyeccion = proyectar(cargar("san-1386-2017"))
+
+    citados = {
+        anchor_id
+        for cuestion in proyeccion.issues
+        for analisis in cuestion.treaty_analyses
+        for paso in analisis.steps
+        for anchor_id in paso.anchor_ids
+    }
+    publicados = {anclaje.anchor_id for anclaje in proyeccion.anchors}
+
+    assert citados
+    assert citados <= publicados
 
 
 def test_la_proyeccion_declara_su_jurisdiccion_de_origen(caso: dict) -> None:

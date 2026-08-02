@@ -265,6 +265,25 @@ function preloadPreceptos(route) {
       NORMATIVA.map((entry) => [entry.slug, { entry: { ...entry, sentencias: [] }, texto: null }])
     );
   }
+  // La ficha de una sentencia enlaza el artículo de residencia del convenio que
+  // regía sus ejercicios, y resuelve el slug por `boeId` porque el BOE no lo
+  // numera igual en todos (`a4`, `ar-4`, `ai-4`, `a1-5`). Sin sembrarlo aquí,
+  // ese enlace solo aparecería después de ejecutar JavaScript, y es de los que
+  // Google debe poder seguir en el HTML.
+  if (route.judgmentId) {
+    const ficha = JSON.parse(
+      readFileSync(join(publicDir, 'data', 'sentencias', `${route.judgmentId}.json`), 'utf8')
+    );
+    const identificadores = new Set(
+      ficha.jurisdictions.flatMap((jurisdiccion) => jurisdiccion.treatyBoeIds ?? [])
+    );
+    return Object.fromEntries(
+      NORMATIVA.filter((entry) => identificadores.has(entry.boeId)).map((entry) => [
+        entry.slug,
+        { entry: { ...entry, sentencias: [] }, texto: null },
+      ])
+    );
+  }
   return {};
 }
 

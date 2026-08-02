@@ -182,7 +182,12 @@ export interface JurisdiccionSentencia {
   code: string;
   /** Solo roles que autorizan enlace: `mentioned_only` no llega hasta aquí. */
   roles: string[];
-  treatyBoeId?: string | null;
+  /**
+   * Convenios que regían los ejercicios enjuiciados, no el vigente hoy: un caso
+   * de 2011 con el Reino Unido aplica el de 1975. Son varios cuando el caso
+   * cruza el cambio de convenio.
+   */
+  treatyBoeIds: string[];
 }
 
 export interface SentenciaPublica {

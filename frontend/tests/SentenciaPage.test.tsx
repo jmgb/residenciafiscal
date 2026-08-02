@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { PreceptoPreloadContext, type PreceptoPreloadMap } from '@/lib/precepto-preload';
 import { SentenciaPreloadContext } from '@/lib/sentencia-preload';
 import { resetSentenciasCache } from '@/lib/sentencias';
 import { SentenciaPage } from '@/pages/SentenciaPage';
@@ -105,22 +106,49 @@ const SENTENCIA: SentenciaPublica = {
     },
   ],
   jurisdictions: [
-    { code: 'ch', roles: ['residence_claimed'], treatyBoeId: 'BOE-A-1967-3470' },
-    { code: 'es', roles: ['residence_claimed'], treatyBoeId: null },
+    { code: 'ch', roles: ['residence_claimed'], treatyBoeIds: ['BOE-A-1967-3470'] },
+    { code: 'es', roles: ['residence_claimed'], treatyBoeIds: [] },
   ],
 };
 
-function renderFicha(sentencia: SentenciaPublica = SENTENCIA) {
+/** Precepto tal como lo siembra `prerender.mjs` para la ficha de sentencia. */
+const CONVENIO_SUIZO: PreceptoPreloadMap = {
+  'cdi-boe-a-1967-3470-a4': {
+    entry: {
+      slug: 'cdi-boe-a-1967-3470-a4',
+      jurisdiccion: 'es',
+      titulo: 'Artículo 4 — Domicilio fiscal',
+      norma: 'Convenio entre España y la Confederación Suiza…',
+      designacion: 'Artículo 4',
+      epigrafe: 'Domicilio fiscal',
+      grupo: 'cdi',
+      boeId: 'BOE-A-1967-3470',
+      urlBoe: 'https://www.boe.es/buscar/act.php?id=BOE-A-1967-3470#a4',
+      derogada: false,
+      notaDerogacion: null,
+      vigenteDesde: '1967-03-02',
+      redacciones: 1,
+      parrafos: 4,
+      sentencias: [],
+      totalSentencias: 0,
+    },
+    texto: null,
+  },
+};
+
+function renderFicha(sentencia: SentenciaPublica = SENTENCIA, preceptos: PreceptoPreloadMap = {}) {
   return render(
-    <SentenciaPreloadContext.Provider
-      value={{ index: null, fichas: { [sentencia.judgment.judgmentId]: sentencia } }}
-    >
-      <MemoryRouter initialEntries={[`/espana/sentencias/${sentencia.judgment.judgmentId}`]}>
-        <Routes>
-          <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
-        </Routes>
-      </MemoryRouter>
-    </SentenciaPreloadContext.Provider>
+    <PreceptoPreloadContext.Provider value={preceptos}>
+      <SentenciaPreloadContext.Provider
+        value={{ index: null, fichas: { [sentencia.judgment.judgmentId]: sentencia } }}
+      >
+        <MemoryRouter initialEntries={[`/espana/sentencias/${sentencia.judgment.judgmentId}`]}>
+          <Routes>
+            <Route path='/espana/sentencias/:judgmentId' element={<SentenciaPage />} />
+          </Routes>
+        </MemoryRouter>
+      </SentenciaPreloadContext.Provider>
+    </PreceptoPreloadContext.Provider>
   );
 }
 
@@ -226,6 +254,26 @@ describe('SentenciaPage', () => {
       const id = seccion.getAttribute('aria-labelledby') ?? '';
       expect(container.querySelector(`#${id}`)).not.toBeNull();
     }
+  });
+
+  it('enlaza el convenio desde la precarga, sin esperar a JavaScript', () => {
+    // En el build no corren los efectos: si el enlace dependiera del `fetch`,
+    // el HTML prerenderizado saldría sin él y Google no podría seguirlo.
+    renderFicha(SENTENCIA, CONVENIO_SUIZO);
+
+    const enlace = screen.getByRole('link', { name: /Convenio de doble imposición España–Suiza/ });
+    expect(enlace).toHaveAttribute('href', '/espana/normativa/cdi-boe-a-1967-3470-a4');
+  });
+
+  it('no enlaza ningún convenio si la proyección no declara ninguno', () => {
+    const sinConvenio: SentenciaPublica = {
+      ...SENTENCIA,
+      jurisdictions: [{ code: 'ch', roles: ['residence_claimed'], treatyBoeIds: [] }],
+    };
+
+    renderFicha(sinConvenio, CONVENIO_SUIZO);
+
+    expect(screen.queryByRole('link', { name: /Convenio de doble imposición/ })).toBeNull();
   });
 
   it('avisa cuando la sentencia no está publicada, sin inventar contenido', async () => {
