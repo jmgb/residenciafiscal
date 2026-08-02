@@ -216,8 +216,13 @@ falta tocar: el renderizado, los tests de literalidad ni el frontend.
 
 El código ISO no coincide con las rutas del frontend (`/espana`) a propósito:
 aquellas son de presentación y admiten acentos, esta es la clave de máquina del
-dato. Unificarlas añadiendo un campo `code` a `countryRoutes.json` es un cambio
-de una línea para quien mantenga ese fichero.
+dato. Desde la fase A de la arquitectura internacional los dos están atados por
+el **catálogo compartido** (`src/jurisdiction_catalog.json`,
+[`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md) §4.1):
+cada jurisdicción declara `code`, `name` y `slug`, el frontend recibe una
+proyección generada y `countryRoutes.json` ya no guarda copia del nombre.
+Checoslovaquia y la URSS entran con su código **ISO 3166-3** —el estándar para
+Estados extintos— porque sus convenios siguen en el corpus.
 
 ## Enlace con la jurisprudencia
 
@@ -236,10 +241,20 @@ Tres reglas, todas para no inventar derecho:
 3. **La redacción es la del ejercicio enjuiciado**, no la de hoy. Es el pago de
    haber conservado todas las versiones.
 
-El país del convenio decide a qué texto se enlaza, y con Reino Unido y Argentina
-también el ejercicio, porque tienen convenio antiguo y moderno. El mapa
-país → convenio (`CONVENIOS_POR_PAIS`) es una tabla curada y corta a propósito:
-un país equivocado ahí enlazaría una sentencia con el derecho de otro Estado.
+El país del convenio decide a qué texto se enlaza, y con Reino Unido, Argentina,
+Japón, Rumanía y China también el ejercicio, porque tienen convenio antiguo y
+moderno. `CONVENIOS_POR_PAIS` era una tabla curada de diecisiete alias escrita a
+mano; hoy es una **proyección** de `src/treaty_relations_es.json`, que cubre las
+92 contrapartes con sus periodos y valida que no haya solapes ni huecos. La
+contraparte sigue siendo un dato curado y no se deduce del título: un país
+equivocado ahí enlazaría una sentencia con el derecho de otro Estado.
+
+Tres normas que el filtro por «doble imposición» arrastraba al grupo `cdi` no
+son convenios generales de renta —la Ley 10/1996 es derecho interno y los
+convenios con Venezuela de 1986 y Argentina de 1978 son de navegación marítima y
+aérea—, así que se reclasifican en `descargar_normativa.py` (`RECLASIFICACION`)
+y quedan fuera del registro bilateral. Ninguna publicaba precepto, de modo que
+los 110 no cambian.
 
 **Un caso puede cruzar un cambio de norma, y entonces se enlazan las dos.** Los
 ejercicios enjuiciados no siempre caen todos del mismo lado: `SAN 5630/2023`
