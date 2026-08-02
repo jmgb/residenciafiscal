@@ -164,6 +164,14 @@ en una llamada real porque incluye los tokens de razonamiento; 4.000 conserva
 margen sin volver al valor abierto de 6.000. Gemini File Search tiene un techo
 independiente de 2.000 tokens de salida.
 
+Cuando la consulta pide expresamente Tribunal Supremo o Audiencia Nacional, las
+dos estrategias restringen la recuperación a autoridad directa. A filtra el
+corpus estructurado por prefijo canónico `sts-` / `san-`; B usa el mismo prefijo
+en `metadata_filter` sobre `judgment_id`. Una cita de otro órgano que reproduzca
+doctrina ajena no se trata como autoridad directa: la respuesta completa se
+degrada a parcial y declara el límite. El filtro por una resolución identificada
+de forma exacta sigue teniendo prioridad sobre el filtro general de tribunal.
+
 ## Despliegue seguro de la V1
 
 1. Confirmar que `supabase migration list --linked` muestra las migraciones

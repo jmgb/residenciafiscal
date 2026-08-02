@@ -1,3 +1,4 @@
+import { judgmentAuthority, requestedJudicialAuthority } from './judicial-authority';
 import { caseSide, rankUnits } from './retrieval-lexical';
 import { analyzeQuery } from './retrieval-query-analysis';
 import type { Behavior, RetrievalCorpus } from './retrieval-types';
@@ -61,8 +62,13 @@ export const retrieveForChat = (
       right.unit.evidence_findings.length - left.unit.evidence_findings.length ||
       left.unit.unit_id.localeCompare(right.unit.unit_id)
   );
+  const authorityIntent = requestedJudicialAuthority(query);
+  const authorityRanked = authorityIntent
+    ? ranked.filter((item) => judgmentAuthority(item.unit.judgment_id) === authorityIntent)
+    : ranked;
+  const scopedRanked = authorityRanked.length ? authorityRanked : ranked;
   const bestByJudgment = new Map<string, (typeof ranked)[number]>();
-  for (const item of ranked) {
+  for (const item of scopedRanked) {
     if (!bestByJudgment.has(item.unit.judgment_id)) {
       bestByJudgment.set(item.unit.judgment_id, item);
     }

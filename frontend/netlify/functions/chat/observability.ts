@@ -21,6 +21,7 @@ export interface ChatFailureEvent {
   status?: 'failed' | 'timed_out';
   /** Nombre de la clase del error. Se sanea antes de salir del proceso. */
   errorName?: string;
+  latencyMs?: number;
 }
 
 export interface ChatCostStrategy {
@@ -34,12 +35,34 @@ export interface ChatCostStrategy {
   input_tokens: number | null;
   output_tokens: number | null;
   retrieved_document_tokens: number | null;
+  source_count: number;
+  limit_count: number;
+  judgment_ids: string[];
+  authority_counts: {
+    tribunal_supremo: number;
+    audiencia_nacional: number;
+    other: number;
+  };
+  authority_match: 'direct' | 'missing' | 'not_requested';
+  retrieval_filter: string | null;
+  citation_candidates: number;
+  citation_verified: number;
+  document_token_accounting: 'reported' | 'unavailable' | 'not_applicable';
+  failure_code: string | null;
+  error_name: string | null;
 }
 
 export interface ChatCostEvent {
   requestId: string;
   actualMicrousd: number;
   actualComplete: boolean;
+  authorityIntent: 'tribunal_supremo' | 'audiencia_nacional' | null;
+  timingsMs: {
+    record: number;
+    compare: number;
+    persistence: number;
+    total: number;
+  };
   strategies: readonly ChatCostStrategy[];
 }
 
@@ -86,6 +109,8 @@ export class ConsoleChatObservability implements ChatObservability {
         failure_code: event.failureCode,
         stage: event.stage,
         ...(event.status ? { status: event.status } : {}),
+        ...(event.errorName ? { error_name: sanitizeErrorName(event.errorName) } : {}),
+        ...(event.latencyMs !== undefined ? { latency_ms: event.latencyMs } : {}),
       })
     );
   }
@@ -95,8 +120,12 @@ export class ConsoleChatObservability implements ChatObservability {
       JSON.stringify({
         event: 'chat_cost_reconciled',
         request_id: event.requestId,
+        request_status: 'completed',
         actual_microusd: event.actualMicrousd,
         actual_complete: event.actualComplete,
+        cost_measurement_complete: event.actualComplete,
+        authority_intent: event.authorityIntent,
+        timings_ms: event.timingsMs,
         strategies: event.strategies,
       })
     );
@@ -149,7 +178,10 @@ export class SentryChatObservability implements ChatObservability {
         ...(event.status ? { status: event.status } : {}),
         error_name: sanitizeErrorName(event.errorName),
       },
-      extra: { request_id: event.requestId },
+      extra: {
+        request_id: event.requestId,
+        ...(event.latencyMs !== undefined ? { latency_ms: event.latencyMs } : {}),
+      },
     };
     return [
       JSON.stringify({ event_id: eventId, sent_at: new Date().toISOString() }),
@@ -192,7 +224,11 @@ export const createChatObservability = (
   return new SentryChatObservability({
     dsn,
     environment: environment.SENTRY_ENVIRONMENT?.trim() || 'production',
-    release: environment.SENTRY_RELEASE?.trim() || undefined,
+    release:
+      environment.SENTRY_RELEASE?.trim() ||
+      environment.COMMIT_REF?.trim() ||
+      environment.DEPLOY_ID?.trim() ||
+      undefined,
     inner: console,
   });
 };

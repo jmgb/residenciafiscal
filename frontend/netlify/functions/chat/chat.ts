@@ -2,6 +2,7 @@
 
 import { createProductionDependencies } from './composition';
 import type { ComparisonReport } from './contracts';
+import { type JudicialAuthorityIntent, requestedJudicialAuthority } from './judicial-authority';
 import type { ChatObservability } from './observability';
 import type { ChatRequestInput } from './supabase-chat-store';
 
@@ -24,6 +25,12 @@ export interface ChatFunctionDependencies {
     actualMicrousd: number;
     actualComplete: boolean;
     report: ComparisonReport;
+    authorityIntent: JudicialAuthorityIntent | null;
+    timingsMs: {
+      record: number;
+      compare: number;
+      beforePersistence: number;
+    };
   }): Promise<void>;
 }
 
@@ -135,13 +142,16 @@ export const serializeComparison = (report: ComparisonReport): string => {
 export const createChatHandler =
   (dependencies: ChatFunctionDependencies) =>
   async (request: Request): Promise<Response> => {
+    const requestStarted = performance.now();
     if (request.method !== 'POST') return jsonError(405, 'Método no permitido');
     if (!dependencies.enabled) return jsonError(503, 'Chat no habilitado');
     const parsed = await parseQuestion(request);
     if (!parsed) return jsonError(400, 'Petición inválida');
 
     const requestId = `chat-${crypto.randomUUID()}`;
+    const authorityIntent = requestedJudicialAuthority(parsed.question);
     let recordedRequest: { requestId: string };
+    const recordStarted = performance.now();
     try {
       recordedRequest = await dependencies.recordRequest({
         requestId,
@@ -156,12 +166,15 @@ export const createChatHandler =
         failureCode: 'record_error',
         stage: 'record',
         errorName: errorNameOf(error),
+        latencyMs: Math.round(performance.now() - requestStarted),
       });
       return jsonError(503, 'Registro de conversación no disponible');
     }
+    const recordLatencyMs = Math.round(performance.now() - recordStarted);
     const effectiveRequestId = recordedRequest.requestId;
 
     let report: ComparisonReport;
+    const compareStarted = performance.now();
     try {
       report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
     } catch (error) {
@@ -174,6 +187,7 @@ export const createChatHandler =
         stage: 'compare',
         status,
         errorName: errorNameOf(error),
+        latencyMs: Math.round(performance.now() - requestStarted),
       });
       try {
         await dependencies.failRequest({
@@ -186,6 +200,7 @@ export const createChatHandler =
       }
       return jsonError(503, 'Comparación no disponible');
     }
+    const compareLatencyMs = Math.round(performance.now() - compareStarted);
     const actualMicrousd = report.answers.reduce(
       (total, answer) => total + (answer.cost.cost_microusd ?? 0),
       0
@@ -197,6 +212,12 @@ export const createChatHandler =
         actualMicrousd,
         actualComplete,
         report,
+        authorityIntent,
+        timingsMs: {
+          record: recordLatencyMs,
+          compare: compareLatencyMs,
+          beforePersistence: Math.round(performance.now() - requestStarted),
+        },
       });
     } catch (error) {
       await dependencies.observability.recordFailure({
@@ -204,6 +225,7 @@ export const createChatHandler =
         failureCode: 'completion_error',
         stage: 'complete',
         errorName: errorNameOf(error),
+        latencyMs: Math.round(performance.now() - requestStarted),
       });
       return jsonError(503, 'Registro de coste no disponible');
     }

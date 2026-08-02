@@ -37,6 +37,23 @@ export interface StrategySource {
   verification: 'EXACT';
 }
 
+export interface StrategyDiagnostics {
+  authority_intent: 'tribunal_supremo' | 'audiencia_nacional' | null;
+  authority_match: 'direct' | 'missing' | 'not_requested';
+  retrieval_filter: string | null;
+  retrieved_judgment_ids: string[];
+  citation_candidates: number;
+  citation_verified: number;
+  failure_code:
+    | 'timeout'
+    | 'exception'
+    | 'strategy_contract'
+    | 'citation_verification'
+    | 'evidence_validation'
+    | null;
+  error_name: string | null;
+}
+
 export interface StrategyAnswer {
   strategy: StrategyId;
   status: AnswerStatus;
@@ -47,6 +64,7 @@ export interface StrategyAnswer {
   model: string;
   reasoning_effort: string | null;
   latency_ms: number;
+  diagnostics?: StrategyDiagnostics;
 }
 
 export interface ComparisonReport {

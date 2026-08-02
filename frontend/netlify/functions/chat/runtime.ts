@@ -4,6 +4,7 @@ import {
   type StrategyId,
   unknownCost,
 } from './contracts';
+import { requestedJudicialAuthority } from './judicial-authority';
 
 export type { StrategyAnswer } from './contracts';
 
@@ -35,7 +36,10 @@ class DeadlineExceeded extends Error {
 const errorAnswer = (
   strategy: StrategyId,
   timeout: boolean,
-  latencyMs: number
+  latencyMs: number,
+  question: string,
+  failureCode: 'timeout' | 'exception' | 'strategy_contract',
+  errorName: string | null
 ): StrategyAnswer => ({
   strategy,
   status: 'error',
@@ -46,7 +50,22 @@ const errorAnswer = (
   model: 'unavailable',
   reasoning_effort: null,
   latency_ms: latencyMs,
+  diagnostics: {
+    authority_intent: requestedJudicialAuthority(question),
+    authority_match: 'not_requested',
+    retrieval_filter: null,
+    retrieved_judgment_ids: [],
+    citation_candidates: 0,
+    citation_verified: 0,
+    failure_code: failureCode,
+    error_name: errorName,
+  },
 });
+
+const safeErrorName = (error: unknown): string | null => {
+  if (!(error instanceof Error)) return null;
+  return /^[A-Za-z][A-Za-z0-9_]{0,39}$/.test(error.name) ? error.name : 'unknown';
+};
 
 const abortable = async <T>(operation: Promise<T>, signal: AbortSignal): Promise<T> => {
   if (signal.aborted) throw signal.reason;
@@ -67,14 +86,25 @@ const runIsolated = async (
   try {
     const answer = await abortable(strategy.answer(question, context), context.signal);
     if (answer.strategy !== strategy.id) {
-      return errorAnswer(strategy.id, false, Math.round(performance.now() - started));
+      return errorAnswer(
+        strategy.id,
+        false,
+        Math.round(performance.now() - started),
+        question,
+        'strategy_contract',
+        null
+      );
     }
     return answer;
   } catch (error) {
+    const timeout = error instanceof DeadlineExceeded;
     return errorAnswer(
       strategy.id,
-      error instanceof DeadlineExceeded,
-      Math.round(performance.now() - started)
+      timeout,
+      Math.round(performance.now() - started),
+      question,
+      timeout ? 'timeout' : 'exception',
+      safeErrorName(error)
     );
   }
 };

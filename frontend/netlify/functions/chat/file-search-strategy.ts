@@ -4,6 +4,12 @@ import {
   verifyFileCitation,
 } from './citation-verification';
 import type { StrategyAnswer, StrategySource } from './contracts';
+import {
+  authorityLabel,
+  authorityMatch,
+  authorityMetadataFilter,
+  requestedJudicialAuthority,
+} from './judicial-authority';
 import { marginalCost } from './pricing';
 import { extractJudgmentIdentifiers } from './retrieval-lexical';
 import type { NetlifyChatStrategy, StrategyContext } from './runtime';
@@ -97,14 +103,24 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
   async answer(question: string, context: StrategyContext): Promise<StrategyAnswer> {
     const started = performance.now();
     const judgmentIds = [...extractJudgmentIdentifiers(question)];
+    const authorityIntent = requestedJudicialAuthority(question);
+    const metadataFilter =
+      judgmentIds.length === 1
+        ? `judgment_id="${judgmentIds[0]}"`
+        : (authorityMetadataFilter(authorityIntent) ?? undefined);
+    const authorityInstruction = authorityIntent
+      ? ` La pregunta pide ${authorityLabel(authorityIntent)}: usa autoridad directa de ese órgano y no presentes como propia doctrina contenida solo en una sentencia de otro tribunal.`
+      : '';
     const interaction = await this.options.interact(
       {
         model: this.model,
         storeName: this.options.storeName,
         requestId: context.requestId,
-        metadataFilter: judgmentIds.length === 1 ? `judgment_id="${judgmentIds[0]}"` : undefined,
+        metadataFilter,
         prompt:
-          'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Distingue hechos, valoración y resultado; no predigas el caso del usuario ni uses conocimiento externo. Si falta cobertura, responde parcial, pregunta o abstención.\n\nPregunta del usuario:\n' +
+          'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Distingue hechos, valoración y resultado; no predigas el caso del usuario ni uses conocimiento externo. Si falta cobertura, responde parcial, pregunta o abstención.' +
+          authorityInstruction +
+          '\n\nPregunta del usuario:\n' +
           question,
       },
       context.signal
@@ -117,7 +133,8 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
         .map((content) => content.text ?? '')
         .join('');
     const draft = parseDraft(output);
-    const verified = citations(interaction)
+    const citationCandidates = citations(interaction);
+    const verified = citationCandidates
       .map((citation) => verifyFileCitation(citation, this.options.artifacts))
       .filter((source): source is StrategySource => source !== null)
       .filter(
@@ -146,18 +163,47 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
         model: this.model,
         reasoning_effort: null,
         latency_ms: Math.round(performance.now() - started),
+        diagnostics: {
+          authority_intent: authorityIntent,
+          authority_match: authorityMatch(authorityIntent, []),
+          retrieval_filter: metadataFilter ?? null,
+          retrieved_judgment_ids: [],
+          citation_candidates: citationCandidates.length,
+          citation_verified: 0,
+          failure_code: 'citation_verification',
+          error_name: null,
+        },
       };
     }
+    const directAuthority = authorityMatch(
+      authorityIntent,
+      verified.map((source) => source.judgment_id)
+    );
+    const authorityLimit =
+      authorityIntent && directAuthority === 'missing'
+        ? `Las citas verificadas no proceden directamente del ${authorityLabel(authorityIntent)}.`
+        : null;
+    const finalStatus = authorityLimit && draft.status === 'completa' ? 'parcial' : draft.status;
     return {
       strategy: this.id,
-      status: draft.status,
+      status: finalStatus,
       text: draft.answer,
       sources: verified,
-      limits: draft.limits,
+      limits: [...draft.limits, ...(authorityLimit ? [authorityLimit] : [])],
       cost,
       model: this.model,
       reasoning_effort: null,
       latency_ms: Math.round(performance.now() - started),
+      diagnostics: {
+        authority_intent: authorityIntent,
+        authority_match: directAuthority,
+        retrieval_filter: metadataFilter ?? null,
+        retrieved_judgment_ids: [...new Set(verified.map((source) => source.judgment_id))],
+        citation_candidates: citationCandidates.length,
+        citation_verified: verified.length,
+        failure_code: null,
+        error_name: null,
+      },
     };
   }
 }

@@ -73,4 +73,15 @@ describe('recuperación estructurada Netlify V1', () => {
       unitId: 'sts-107-2018-residencia-fiscal',
     });
   });
+
+  it('limita la recuperación a autoridad directa cuando se pregunta por el Tribunal Supremo', () => {
+    const result = retrieveForChat(
+      rolloutCorpus,
+      '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
+      5
+    );
+
+    expect(result.hits.length).toBeGreaterThan(0);
+    expect(result.hits.every((hit) => hit.judgmentId.startsWith('sts-'))).toBe(true);
+  });
 });

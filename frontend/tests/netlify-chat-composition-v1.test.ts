@@ -135,16 +135,39 @@ describe('composition root de la Function con Supabase', () => {
       actualMicrousd: 2_000,
       actualComplete: false,
       report,
+      authorityIntent: 'tribunal_supremo',
+      timingsMs: { record: 10, compare: 1_500, beforePersistence: 1_520 },
     });
 
     const serialized = String(log.mock.calls[0]?.[0]);
     expect(JSON.parse(serialized)).toMatchObject({
       event: 'chat_cost_reconciled',
       request_id: 'chat-request-1',
+      request_status: 'completed',
       actual_microusd: 2_000,
+      cost_measurement_complete: false,
+      authority_intent: 'tribunal_supremo',
+      timings_ms: {
+        record: 10,
+        compare: 1_500,
+        persistence: expect.any(Number),
+        total: expect.any(Number),
+      },
       strategies: [
-        { strategy: 'current_structured', cost_microusd: 1_200, input_tokens: 100 },
-        { strategy: 'gemini_file_search', cost_microusd: 800, input_tokens: 80 },
+        {
+          strategy: 'current_structured',
+          cost_microusd: 1_200,
+          input_tokens: 100,
+          source_count: 0,
+          document_token_accounting: 'not_applicable',
+        },
+        {
+          strategy: 'gemini_file_search',
+          cost_microusd: 800,
+          input_tokens: 80,
+          source_count: 0,
+          document_token_accounting: 'reported',
+        },
       ],
     });
     expect(serialized).not.toContain('Dato fiscal');

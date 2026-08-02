@@ -183,7 +183,26 @@ describe('estrategia B Gemini File Search', () => {
       artifacts: { 'sentencia-1': artifact },
       interact: async () => ({
         output_text: JSON.stringify({ status: 'completa', answer: 'Sin respaldo.', limits: [] }),
-        steps: [],
+        steps: [
+          {
+            type: 'model_output',
+            content: [
+              {
+                annotations: [
+                  {
+                    type: 'file_citation',
+                    page_number: 1,
+                    source: 'Texto que no existe en el PDF.',
+                    custom_metadata: {
+                      judgment_id: 'sentencia-1',
+                      source_sha256: 'a'.repeat(64),
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
         usage: {
           total_input_tokens: 5,
           total_output_tokens: 5,
@@ -196,7 +215,12 @@ describe('estrategia B Gemini File Search', () => {
     const answer = await strategy.answer('¿Qué valoró la Sala?', context);
 
     expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
-    expect(answer.limits.join(' ')).toContain('no devolvió citas verificables');
+    expect(answer.limits.join(' ')).toContain('citas no verificables');
+    expect(answer.diagnostics).toMatchObject({
+      citation_candidates: 1,
+      citation_verified: 0,
+      failure_code: 'citation_verification',
+    });
   });
 
   it('filtra por metadata cuando la pregunta identifica una única sentencia', async () => {
@@ -222,5 +246,92 @@ describe('estrategia B Gemini File Search', () => {
       expect.objectContaining({ metadataFilter: 'judgment_id="san-2132-2025"' }),
       context.signal
     );
+  });
+
+  it('filtra por metadata de autoridad cuando se pide doctrina del Tribunal Supremo', async () => {
+    const interact = vi.fn(async () => ({
+      output_text: JSON.stringify({ status: 'abstención', answer: '', limits: [] }),
+      steps: [],
+      usage: {
+        total_input_tokens: 5,
+        total_output_tokens: 5,
+        total_thought_tokens: 0,
+        input_tokens_by_modality: [],
+      },
+    }));
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    await strategy.answer(
+      '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
+      context
+    );
+
+    expect(interact).toHaveBeenCalledWith(
+      expect.objectContaining({ metadataFilter: 'judgment_id="sts-*"' }),
+      context.signal
+    );
+  });
+
+  it('degrada una respuesta completa si no cita directamente la autoridad solicitada', async () => {
+    const sanArtifact = {
+      judgment_id: 'san-1-2024',
+      source_sha256: 'b'.repeat(64),
+      pages: [{ page_index: 1, raw_page_text: 'La Audiencia Nacional valora la prueba.' }],
+    };
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'san-1-2024': sanArtifact },
+      interact: async () => ({
+        output_text: JSON.stringify({
+          status: 'completa',
+          answer: 'El Tribunal Supremo acepta esta prueba.',
+          limits: [],
+        }),
+        steps: [
+          {
+            type: 'model_output',
+            content: [
+              {
+                annotations: [
+                  {
+                    type: 'file_citation',
+                    page_number: 1,
+                    source: 'La Audiencia Nacional valora la prueba.',
+                    custom_metadata: {
+                      judgment_id: 'san-1-2024',
+                      source_sha256: 'b'.repeat(64),
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        usage: {
+          total_input_tokens: 20,
+          total_output_tokens: 10,
+          input_tokens_by_modality: [{ modality: 'document', tokens: 10 }],
+        },
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
+      context
+    );
+
+    expect(answer.status).toBe('parcial');
+    expect(answer.limits.join(' ')).toContain('Tribunal Supremo');
+    expect(answer.diagnostics).toMatchObject({
+      authority_intent: 'tribunal_supremo',
+      authority_match: 'missing',
+      citation_candidates: 1,
+      citation_verified: 1,
+      failure_code: null,
+    });
   });
 });

@@ -93,6 +93,10 @@ describe('runtime comparativo Netlify V1', () => {
         cost_microusd: null,
         measurement: 'UNAVAILABLE',
       },
+      diagnostics: {
+        failure_code: 'exception',
+        error_name: 'Error',
+      },
     });
     expect(JSON.stringify(report)).not.toContain('secreto');
     expect(report.answers[1].text).toBe('respuesta disponible');
@@ -124,5 +128,12 @@ describe('runtime comparativo Netlify V1', () => {
       true
     );
     expect(report.answers.every((item) => item.latency_ms > 0)).toBe(true);
+    expect(
+      report.answers.every(
+        (item) =>
+          item.diagnostics?.failure_code === 'timeout' &&
+          item.diagnostics.error_name === 'DeadlineExceeded'
+      )
+    ).toBe(true);
   });
 });

@@ -115,14 +115,14 @@ describe('Netlify Function /api/chat V1', () => {
 
     expect(response.status).toBe(503);
     expect(deps.compare).not.toHaveBeenCalled();
-    expect(errorLog).toHaveBeenCalledWith(
-      JSON.stringify({
-        event: 'chat_request_failed',
-        request_id: attemptedRequestId,
-        failure_code: 'record_error',
-        stage: 'record',
-      })
-    );
+    expect(JSON.parse(String(errorLog.mock.calls[0]?.[0]))).toMatchObject({
+      event: 'chat_request_failed',
+      request_id: attemptedRequestId,
+      failure_code: 'record_error',
+      stage: 'record',
+      error_name: 'Error',
+      latency_ms: expect.any(Number),
+    });
   });
 
   it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
@@ -215,7 +215,35 @@ describe('Netlify Function /api/chat V1', () => {
     );
     expect(body).toContain('event: done');
     expect(deps.completeRequest).toHaveBeenCalledWith(
-      expect.objectContaining({ actualMicrousd: 3, actualComplete: true })
+      expect.objectContaining({
+        actualMicrousd: 3,
+        actualComplete: true,
+        authorityIntent: null,
+        timingsMs: {
+          record: expect.any(Number),
+          compare: expect.any(Number),
+          beforePersistence: expect.any(Number),
+        },
+      })
+    );
+  });
+
+  it('propaga la autoridad judicial solicitada sin registrar la pregunta en telemetría', async () => {
+    const deps = dependencies();
+
+    await createChatHandler(deps)(
+      request({
+        messages: [
+          {
+            role: 'user',
+            content: '¿Qué pruebas acepta el Tribunal Supremo para desvirtuar los 183 días?',
+          },
+        ],
+      })
+    );
+
+    expect(deps.completeRequest).toHaveBeenCalledWith(
+      expect.objectContaining({ authorityIntent: 'tribunal_supremo' })
     );
   });
 

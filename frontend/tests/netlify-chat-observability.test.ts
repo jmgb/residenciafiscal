@@ -13,6 +13,8 @@ const costEvent = {
   requestId: 'chat-1',
   actualMicrousd: 4542,
   actualComplete: true,
+  authorityIntent: 'tribunal_supremo' as const,
+  timingsMs: { record: 120, compare: 20_230, persistence: 80, total: 20_430 },
   strategies: [
     {
       strategy: 'current_structured',
@@ -25,6 +27,17 @@ const costEvent = {
       input_tokens: 10,
       output_tokens: 20,
       retrieved_document_tokens: 0,
+      source_count: 1,
+      limit_count: 0,
+      judgment_ids: ['sts-107-2018'],
+      authority_counts: { tribunal_supremo: 1, audiencia_nacional: 0, other: 0 },
+      authority_match: 'direct' as const,
+      retrieval_filter: 'judgment_id="sts-*"',
+      citation_candidates: 1,
+      citation_verified: 1,
+      document_token_accounting: 'not_applicable' as const,
+      failure_code: null,
+      error_name: null,
     },
   ],
 };
@@ -57,6 +70,7 @@ describe('ConsoleChatObservability', () => {
       stage: 'compare',
       status: 'failed',
       errorName: 'TypeError',
+      latencyMs: 321,
     });
 
     expect(errorLog).toHaveBeenCalledWith(
@@ -66,6 +80,8 @@ describe('ConsoleChatObservability', () => {
         failure_code: 'comparison_error',
         stage: 'compare',
         status: 'failed',
+        error_name: 'TypeError',
+        latency_ms: 321,
       })
     );
   });
@@ -96,8 +112,12 @@ describe('ConsoleChatObservability', () => {
       JSON.stringify({
         event: 'chat_cost_reconciled',
         request_id: 'chat-1',
+        request_status: 'completed',
         actual_microusd: 4542,
         actual_complete: true,
+        cost_measurement_complete: true,
+        authority_intent: 'tribunal_supremo',
+        timings_ms: costEvent.timingsMs,
         strategies: costEvent.strategies,
       })
     );
@@ -319,5 +339,27 @@ describe('createChatObservability', () => {
     expect(
       createChatObservability({ CHAT_SENTRY_ENABLED: 'true', CHAT_SENTRY_DSN: DSN })
     ).toBeInstanceOf(SentryChatObservability);
+  });
+
+  it('usa el commit de Netlify como release de Sentry si no hay override', async () => {
+    const fetchMock = vi.fn(async () => new Response('', { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    const observability = createChatObservability({
+      CHAT_SENTRY_ENABLED: 'true',
+      CHAT_SENTRY_DSN: DSN,
+      COMMIT_REF: 'abc123deploy',
+    });
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    await observability.recordFailure({
+      requestId: 'chat-1',
+      failureCode: 'comparison_error',
+      stage: 'compare',
+    });
+
+    const [, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    const body = String(init.body);
+    expect(JSON.parse(body.trim().split('\n')[2]).release).toBe('abc123deploy');
+    vi.unstubAllGlobals();
   });
 });
