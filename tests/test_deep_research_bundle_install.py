@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import sys
 import zipfile
 from pathlib import Path
 
@@ -36,7 +37,7 @@ def test_reintento_reutiliza_un_bundle_identico_sin_sobrescribirlo(tmp_path: Pat
     assert (second / "verbatim/case.pages.json").read_bytes() == payload
 
 
-def test_instalador_publica_schema_y_runtime_en_una_unica_release_atomica(tmp_path, monkeypatch):
+def test_instalador_publica_schema_y_runtime_en_el_host_como_release_atomica(tmp_path):
     installer = load_installer()
     corpus = tmp_path / "deep_research_corpus.py"
     server = tmp_path / "deep_research_corpus_mcp.py"
@@ -48,34 +49,197 @@ def test_instalador_publica_schema_y_runtime_en_una_unica_release_atomica(tmp_pa
     runtime.write_text("# runtime\n", encoding="utf-8")
     verifier.write_text("# verifier\n", encoding="utf-8")
     schema.write_text('{"type":"object"}\n', encoding="utf-8")
-    calls = []
-    monkeypatch.setattr(
-        installer.subprocess, "run", lambda command, **kwargs: calls.append(command)
-    )
-
-    installer.copy_runtime(
+    destination = tmp_path / "installed-runtime"
+    release = installer.install_runtime(
         [corpus, server, runtime, verifier],
         schema,
+        destination,
+    )
+
+    assert release.parent == destination / "releases"
+    assert {path.name for path in release.iterdir()} == {
+        "deep_research_codex_runtime.py",
+        "deep_research_corpus.py",
+        "deep_research_corpus_mcp.py",
+        "deep_research_verifier.py",
+        "output.schema.json",
+    }
+    assert (release / "output.schema.json").read_text(encoding="utf-8") == '{"type":"object"}\n'
+    assert (destination / "current").is_symlink()
+    assert (destination / "current").readlink() == Path("releases") / release.name
+    assert (destination / "current").resolve() == release.resolve()
+
+
+def test_reintento_del_runtime_reutiliza_la_release_inmutable(tmp_path):
+    installer = load_installer()
+    names = {
+        "deep_research_codex_runtime.py",
+        "deep_research_corpus.py",
+        "deep_research_corpus_mcp.py",
+        "deep_research_verifier.py",
+    }
+    sources = []
+    for name in names:
+        source = tmp_path / name
+        source.write_text(f"# {name}\n", encoding="utf-8")
+        sources.append(source)
+    schema = tmp_path / "draft.schema.json"
+    schema.write_text('{"type":"object"}\n', encoding="utf-8")
+    destination = tmp_path / "installed-runtime"
+
+    first = installer.install_runtime(sources, schema, destination)
+    second = installer.install_runtime(sources, schema, destination)
+
+    assert second == first
+    assert len(list((destination / "releases").iterdir())) == 1
+
+
+def test_instalador_rechaza_un_runtime_inmutable_que_se_haya_hecho_escribible(tmp_path):
+    installer = load_installer()
+    names = {
+        "deep_research_codex_runtime.py",
+        "deep_research_corpus.py",
+        "deep_research_corpus_mcp.py",
+        "deep_research_verifier.py",
+    }
+    sources = []
+    for name in names:
+        source = tmp_path / name
+        source.write_text(f"# {name}\n", encoding="utf-8")
+        sources.append(source)
+    schema = tmp_path / "draft.schema.json"
+    schema.write_text('{"type":"object"}\n', encoding="utf-8")
+    destination = tmp_path / "installed-runtime"
+    release = installer.install_runtime(sources, schema, destination)
+    (release / "deep_research_corpus.py").chmod(0o644)
+
+    try:
+        installer.install_runtime(sources, schema, destination)
+    except FileExistsError as exc:
+        assert "immutable runtime release" in str(exc)
+    else:
+        raise AssertionError("an altered immutable runtime must be rejected")
+
+
+def test_instalador_atestigua_el_mount_antes_de_activar_el_runtime(tmp_path, monkeypatch):
+    installer = load_installer()
+    calls = []
+    bundle = tmp_path / "bundle.zip"
+    schema = tmp_path / "schema.json"
+    sources = []
+    for name in (
+        "deep_research_codex_runtime.py",
+        "deep_research_corpus.py",
+        "deep_research_corpus_mcp.py",
+        "deep_research_verifier.py",
+    ):
+        source = tmp_path / name
+        source.write_text(name, encoding="utf-8")
+        sources.extend(["--runtime-source", str(source)])
+    bundle.write_bytes(b"bundle")
+    schema.write_text("{}", encoding="utf-8")
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            str(SCRIPT),
+            "--bundle",
+            str(bundle),
+            "--root",
+            str(tmp_path / "installed"),
+            "--bundle-id",
+            "rollout-106/2",
+            "--container",
+            "alfredo-codex-agent",
+            "--schema",
+            str(schema),
+            *sources,
+        ],
+    )
+    monkeypatch.setattr(
+        installer,
+        "install_bundle",
+        lambda *args: calls.append("bundle") or tmp_path / "installed" / "rollout-106/2",
+    )
+    monkeypatch.setattr(
+        installer,
+        "verify_container_runtime_mount",
+        lambda *args: calls.append("verify"),
+    )
+    monkeypatch.setattr(
+        installer,
+        "install_runtime",
+        lambda *args: calls.append("runtime") or tmp_path / "installed" / "runtime-release",
+    )
+
+    installer.main()
+
+    assert calls == ["bundle", "verify", "runtime"]
+
+
+def test_atestacion_exige_rootfs_y_mount_del_runtime_en_solo_lectura(tmp_path, monkeypatch):
+    installer = load_installer()
+    destination = tmp_path / "runtime"
+    destination.mkdir()
+    inspection = [
+        {
+            "HostConfig": {"ReadonlyRootfs": True},
+            "Mounts": [
+                {
+                    "Source": str(destination),
+                    "Destination": "/opt/residenciafiscal/deep-research/runtime",
+                    "RW": False,
+                }
+            ],
+        }
+    ]
+
+    monkeypatch.setattr(
+        installer.subprocess,
+        "run",
+        lambda *args, **kwargs: type(
+            "Result", (), {"stdout": json.dumps(inspection)}
+        )(),
+    )
+
+    installer.verify_container_runtime_mount(
         "alfredo-codex-agent",
+        destination,
         "/opt/residenciafiscal/deep-research/runtime",
     )
 
-    copy_calls = [call for call in calls if call[:2] == ["docker", "cp"]]
-    assert len(copy_calls) == 5
-    assert all("/releases/" in call[-1] for call in copy_calls)
-    copied_sources = {call[2] for call in copy_calls}
-    assert copied_sources == {str(runtime), str(corpus), str(server), str(verifier), str(schema)}
-    schema_copy = next(call for call in copy_calls if call[2] == str(schema))
-    assert schema_copy[-1].endswith("/output.schema.json")
-    assert any(
-        call[:3] == ["docker", "exec", "alfredo-codex-agent"] and "ln" in call for call in calls
+
+def test_atestacion_rechaza_mount_escribible(tmp_path, monkeypatch):
+    installer = load_installer()
+    destination = tmp_path / "runtime"
+    destination.mkdir()
+    inspection = [
+        {
+            "HostConfig": {"ReadonlyRootfs": True},
+            "Mounts": [
+                {
+                    "Source": str(destination),
+                    "Destination": "/opt/residenciafiscal/deep-research/runtime",
+                    "RW": True,
+                }
+            ],
+        }
+    ]
+    monkeypatch.setattr(
+        installer.subprocess,
+        "run",
+        lambda *args, **kwargs: type(
+            "Result", (), {"stdout": json.dumps(inspection)}
+        )(),
     )
-    assert any(
-        call[:3] == ["docker", "exec", "alfredo-codex-agent"] and "mv" in call for call in calls
-    )
-    assert not any(
-        call[-1].startswith(
-            "alfredo-codex-agent:/opt/residenciafiscal/deep-research/runtime/deep_research_"
+
+    try:
+        installer.verify_container_runtime_mount(
+            "alfredo-codex-agent",
+            destination,
+            "/opt/residenciafiscal/deep-research/runtime",
         )
-        for call in copy_calls
-    )
+    except RuntimeError as exc:
+        assert "read-only" in str(exc)
+    else:
+        raise AssertionError("a writable runtime mount must be rejected")

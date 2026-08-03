@@ -168,7 +168,7 @@ make deep-research-bundle-verify
 ```
 
 Transferir el bundle, el schema y los cuatro módulos allowlisted del perfil, sin
-clonar ninguno de los repositorios en el VPS:
+depender de ningún checkout para ejecutar jobs:
 
 ```bash
 bash scripts/deploy_deep_research_bundle.sh
@@ -176,15 +176,33 @@ bash scripts/deploy_deep_research_bundle.sh
 
 El instalador rechaza hashes incorrectos, entradas no declaradas, rutas
 inseguras y la sobrescritura de un bundle distinto. Bundle, schema, wrapper,
-MCP y verificador se dejan en solo lectura. Toda la instrucción jurídica y su QA
-viven en ese runtime del contenedor; el supervisor genérico de Alfredo se limita
-a validar el contrato, transportar `stdin`/JSONL y realizar el callback.
+MCP y verificador se instalan en el host bajo
+`/opt/residenciafiscal/deep-research`; el contenedor los ve mediante bind mounts
+de solo lectura. No se usa `docker cp`: el rootfs endurecido del contenedor es
+también de solo lectura. Toda la instrucción jurídica y su QA viven en ese
+runtime montado; el supervisor genérico de Alfredo se limita a validar el
+contrato, transportar `stdin`/JSONL y realizar el callback.
 
 Los cuatro módulos y su `output.schema.json` se copian primero a
 `runtime/releases/<sha256>/`; el hash de la release cubre los cinco archivos.
 Solo cuando la release está completa, el instalador cambia `runtime/current`
 mediante rename atómico; ningún job nuevo puede combinar runtime y schema de
-versiones distintas.
+versiones distintas. Antes de activar una release, el instalador inspecciona
+Docker y falla si el rootfs no es read-only o si el origen host exacto de
+`runtime` no está montado en la misma ruta del contenedor con `RW=false`. Un
+reintento valida también hashes y permisos `0555`/`0444` de la release existente.
+
+El contenedor dedicado debe conservar estos dos mounts separados:
+
+```text
+/opt/residenciafiscal/deep-research/rollout-106 -> misma ruta (read-only)
+/opt/residenciafiscal/deep-research/runtime     -> misma ruta (read-only)
+```
+
+Al recrearlo para añadir el segundo mount se mantiene el contenedor anterior,
+parado y renombrado, hasta superar el smoke. El rollback consiste en detener el
+nuevo, devolver al anterior su nombre original y reactivar el perfil v1; no se
+borra el volumen de autenticación de Codex.
 
 Después se despliega `app/` de Alfredo por su procedimiento habitual y se
 verifica que el unit tenga las variables anteriores. La bandera de aislamiento

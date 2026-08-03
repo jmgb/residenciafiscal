@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Install one verified C1 bundle into an Alfredo Codex container.
+"""Install one verified C1 bundle and runtime on an Alfredo VPS host.
 
 This script is intentionally stdlib-only so it can be copied to the VPS for a
-single deployment. It refuses to overwrite an existing bundle.
+single deployment. Immutable artifacts live on the host and the runtime mount
+into the hardened Codex container is attested as read-only.
 """
 
 from __future__ import annotations
@@ -12,6 +13,7 @@ import hashlib
 import json
 import os
 import secrets
+import stat
 import subprocess
 import tempfile
 import zipfile
@@ -104,7 +106,7 @@ def install_bundle(bundle: Path, destination_root: Path, expected_bundle_id: str
         return final
 
 
-def copy_runtime(sources: list[Path], schema: Path, container: str, destination: str) -> None:
+def runtime_release_files(sources: list[Path], schema: Path) -> list[tuple[str, Path, int]]:
     expected = {
         "deep_research_codex_runtime.py",
         "deep_research_corpus.py",
@@ -117,38 +119,102 @@ def copy_runtime(sources: list[Path], schema: Path, container: str, destination:
         raise ValueError("runtime sources must be the four allowlisted profile modules")
     if not schema.is_file():
         raise FileNotFoundError(schema)
-    release_files = [(source.name, source, "0555") for source in sources]
-    release_files.append(("output.schema.json", schema, "0444"))
+    release_files = [(source.name, source, 0o555) for source in sources]
+    release_files.append(("output.schema.json", schema, 0o444))
+    return sorted(release_files)
+
+
+def existing_runtime_matches(
+    release: Path, release_files: list[tuple[str, Path, int]]
+) -> bool:
+    if (
+        not release.is_dir()
+        or release.is_symlink()
+        or stat.S_IMODE(release.stat().st_mode) != 0o555
+    ):
+        return False
+    expected = {
+        target_name: (sha256(source), mode) for target_name, source, mode in release_files
+    }
+    actual: set[str] = set()
+    for path in release.iterdir():
+        if path.is_symlink() or not path.is_file():
+            return False
+        actual.add(path.name)
+        if path.name not in expected:
+            return False
+        expected_hash, expected_mode = expected[path.name]
+        if (
+            sha256(path) != expected_hash
+            or stat.S_IMODE(path.stat().st_mode) != expected_mode
+        ):
+            return False
+    return actual == set(expected)
+
+
+def install_runtime(sources: list[Path], schema: Path, destination: Path) -> Path:
+    """Publish an immutable host-side release and atomically select it."""
+    release_files = runtime_release_files(sources, schema)
     digest = hashlib.sha256()
     for target_name, source, _mode in sorted(release_files):
         digest.update(target_name.encode("utf-8"))
         digest.update(b"\0")
         digest.update(source.read_bytes())
     release_id = digest.hexdigest()
-    release = f"{destination.rstrip('/')}/releases/{release_id}"
-    subprocess.run(["docker", "inspect", container], check=True, stdout=subprocess.DEVNULL)
-    subprocess.run(["docker", "exec", container, "mkdir", "-p", release], check=True)
-    for target_name, source, mode in sorted(release_files):
-        target = f"{release}/{target_name}"
-        subprocess.run(["docker", "cp", str(source), f"{container}:{target}"], check=True)
-        subprocess.run(["docker", "exec", container, "chmod", mode, target], check=True)
-    temporary_link = f"{destination.rstrip('/')}/.current-{secrets.token_hex(8)}"
-    subprocess.run(
-        ["docker", "exec", container, "ln", "-s", f"releases/{release_id}", temporary_link],
+    releases = destination / "releases"
+    release = releases / release_id
+    releases.mkdir(parents=True, exist_ok=True)
+    if release.exists():
+        if not existing_runtime_matches(release, release_files):
+            raise FileExistsError(f"immutable runtime release was altered: {release}")
+    else:
+        with tempfile.TemporaryDirectory(prefix="runtime-", dir=releases) as raw_tmp:
+            temporary = Path(raw_tmp)
+            for target_name, source, mode in release_files:
+                target = temporary / target_name
+                target.write_bytes(source.read_bytes())
+                os.chmod(target, mode)
+            os.chmod(temporary, 0o555)
+            os.replace(temporary, release)
+
+    temporary_link = destination / f".current-{secrets.token_hex(8)}"
+    try:
+        os.symlink(Path("releases") / release_id, temporary_link)
+        os.replace(temporary_link, destination / "current")
+    finally:
+        temporary_link.unlink(missing_ok=True)
+    return release
+
+
+def verify_container_runtime_mount(
+    container: str, host_destination: Path, container_destination: str
+) -> None:
+    """Fail closed unless the hardened container sees this runtime read-only."""
+    result = subprocess.run(
+        ["docker", "inspect", container],
         check=True,
+        capture_output=True,
+        text=True,
     )
-    subprocess.run(
-        [
-            "docker",
-            "exec",
-            container,
-            "mv",
-            "-Tf",
-            temporary_link,
-            f"{destination.rstrip('/')}/current",
-        ],
-        check=True,
-    )
+    try:
+        inspection = json.loads(result.stdout)
+        config = inspection[0]
+    except (json.JSONDecodeError, IndexError, KeyError, TypeError) as exc:
+        raise RuntimeError("docker inspect returned an invalid container description") from exc
+    if config.get("HostConfig", {}).get("ReadonlyRootfs") is not True:
+        raise RuntimeError("Codex container root filesystem is not read-only")
+    expected_source = str(host_destination.resolve())
+    matching_mounts = [
+        mount
+        for mount in config.get("Mounts", [])
+        if mount.get("Destination") == container_destination
+        and str(Path(mount.get("Source", "")).resolve()) == expected_source
+    ]
+    if len(matching_mounts) != 1 or matching_mounts[0].get("RW") is not False:
+        raise RuntimeError(
+            f"Codex runtime must be mounted read-only from {expected_source} "
+            f"at {container_destination}"
+        )
 
 
 def main() -> None:
@@ -159,19 +225,30 @@ def main() -> None:
     parser.add_argument("--container", required=True)
     parser.add_argument("--schema", type=Path, required=True)
     parser.add_argument("--runtime-source", action="append", type=Path, required=True)
+    parser.add_argument("--runtime-destination", type=Path)
     parser.add_argument(
-        "--runtime-destination",
+        "--runtime-container-destination",
         default="/opt/residenciafiscal/deep-research/runtime",
     )
     args = parser.parse_args()
     installed = install_bundle(args.bundle.resolve(), args.root.resolve(), args.bundle_id)
-    copy_runtime(
+    runtime_destination = (
+        args.runtime_destination.resolve()
+        if args.runtime_destination
+        else args.root.resolve() / "runtime"
+    )
+    verify_container_runtime_mount(
+        args.container,
+        runtime_destination,
+        args.runtime_container_destination,
+    )
+    release = install_runtime(
         [source.resolve() for source in args.runtime_source],
         args.schema.resolve(),
-        args.container,
-        args.runtime_destination,
+        runtime_destination,
     )
     print(f"installed immutable deep-research bundle: {installed}")
+    print(f"installed immutable deep-research runtime: {release}")
 
 
 if __name__ == "__main__":
