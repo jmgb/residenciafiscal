@@ -69,8 +69,7 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
       </div>
 
       {isActive && (
-        <div className='flex items-center justify-between gap-3 px-4 py-3 text-xs text-muted-foreground'>
-          <span>La respuesta A/B sigue separada de esta investigación.</span>
+        <div className='flex justify-end px-4 py-3'>
           <Button
             type='button'
             variant='outline'

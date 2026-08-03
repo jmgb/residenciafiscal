@@ -46,6 +46,9 @@ describe('DeepResearchCard', () => {
     expect(
       screen.getByRole('button', { name: 'Cancelar investigación profunda' })
     ).toBeInTheDocument();
+    expect(
+      screen.queryByText('La respuesta A/B sigue separada de esta investigación.')
+    ).not.toBeInTheDocument();
     expect(screen.queryByText(/razonamiento|cadena de pensamiento/i)).not.toBeInTheDocument();
   });
 
