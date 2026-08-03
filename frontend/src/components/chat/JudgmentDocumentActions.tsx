@@ -1,4 +1,5 @@
 import { Download, ExternalLink, FileText } from 'lucide-react';
+import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import { getJudgmentDocument } from '@/lib/judgment-documents';
 
 interface JudgmentDocumentActionsProps {
@@ -15,6 +16,13 @@ export function JudgmentDocumentActions({ judgmentId, ecli }: JudgmentDocumentAc
 
   const reference = ecli?.startsWith('ECLI:') ? ecli : document.ecli;
   const officialUrl = `https://e-justice.europa.eu/ecli/${reference}`;
+  const trackAction = (event: string) => {
+    trackEvent(event, {
+      judgment_id: document.judgmentId,
+      roj: document.roj,
+      ecli: reference,
+    });
+  };
 
   return (
     <>
@@ -26,6 +34,7 @@ export function JudgmentDocumentActions({ judgmentId, ecli }: JudgmentDocumentAc
           target='_blank'
           rel='noreferrer noopener'
           aria-label={`Abrir sentencia ${document.roj}`}
+          onClick={() => trackAction('sentencia_pdf_abierta')}
         >
           <FileText className='h-3.5 w-3.5' aria-hidden='true' />
           Abrir sentencia
@@ -35,6 +44,7 @@ export function JudgmentDocumentActions({ judgmentId, ecli }: JudgmentDocumentAc
           href={document.pdfUrl}
           download={document.downloadName}
           aria-label={`Descargar PDF ${document.roj}`}
+          onClick={() => trackAction('sentencia_pdf_descargada')}
         >
           <Download className='h-3.5 w-3.5' aria-hidden='true' />
           Descargar PDF
@@ -45,6 +55,7 @@ export function JudgmentDocumentActions({ judgmentId, ecli }: JudgmentDocumentAc
           target='_blank'
           rel='noreferrer noopener'
           aria-label={`Fuente oficial ${document.roj}`}
+          onClick={() => trackAction('sentencia_fuente_oficial_abierta')}
         >
           <ExternalLink className='h-3.5 w-3.5' aria-hidden='true' />
           Fuente oficial

@@ -6,26 +6,12 @@ interface EditorialChatAnswerProps {
   message: ChatMessage;
 }
 
-const formatDate = (date: string) => {
-  const [year, month, day] = date.split('-').map(Number);
-  return new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium' }).format(
-    new Date(year, month - 1, day)
-  );
-};
-
 export const EditorialChatAnswer = ({ message }: EditorialChatAnswerProps) => {
   const editorial = message.editorial;
   if (!editorial) return null;
 
   return (
     <section aria-label='Respuesta editorial'>
-      <div className='mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3'>
-        <h3 className='font-heading text-sm font-semibold text-foreground'>Respuesta editorial</h3>
-        <span className='rounded-full bg-muted px-2.5 py-1 text-[0.6875rem] font-medium text-secondary-foreground'>
-          Actualizada el {formatDate(editorial.updatedAt)}
-        </span>
-      </div>
-
       <ChatMessageContent content={message.content} isUser={false} />
 
       <div className='mt-4 border-t border-border pt-3'>

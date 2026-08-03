@@ -13,7 +13,7 @@ export const TYPING_STATUS_MESSAGES = [
   'Redactando la respuesta con sus fuentes…',
 ] as const;
 
-export const TYPING_STATUS_ROTATION_MS = 5000;
+export const TYPING_STATUS_ROTATION_MS = 4000;
 
 export function TypingIndicator() {
   const [step, setStep] = useState(0);

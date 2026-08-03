@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -142,6 +142,7 @@ describe('ChatView', () => {
   afterEach(() => {
     vi.unstubAllEnvs();
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   it('solo la ruta canónica queda indexable en runtime', async () => {
@@ -230,8 +231,8 @@ describe('ChatView', () => {
     const banner = screen.getByRole('status', { name: /investigación jurídica/i });
     expect(banner).toHaveTextContent(/^Aviso:/i);
     expect(banner).not.toHaveTextContent(/respuestas.*simuladas/i);
-    expect(banner).toHaveTextContent(/no constituye asesoramiento jurídico/i);
-    expect(banner).toHaveTextContent(/consulta a un profesional antes de tomar decisiones/i);
+    expect(banner).toHaveTextContent(/no constituye asesoramiento legal ni jurídico/i);
+    expect(banner).toHaveTextContent(/consulta a un profesional/i);
     expect(within(banner).getByRole('link', { name: 'Privacidad' })).toHaveAttribute(
       'href',
       '/privacidad'
@@ -481,38 +482,73 @@ describe('ChatView', () => {
   ])(
     'el prompt editorial %s responde sin llamar al comparador',
     async (question, answerExcerpt, sourceLabel) => {
-      const user = userEvent.setup();
+      vi.useFakeTimers();
       const askQuestion = vi.fn(async function* () {
         yield { type: 'done' as const };
       });
       renderChat({ askQuestion });
 
-      await user.click(screen.getByRole('button', { name: question }));
+      fireEvent.click(screen.getByRole('button', { name: question }));
 
-      expect(await screen.findByText(question)).toBeInTheDocument();
+      expect(screen.getByText(question)).toBeInTheDocument();
+      await act(async () => vi.advanceTimersByTimeAsync(12_000));
       expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toHaveTextContent(
         answerExcerpt
       );
       expect(screen.getByText(sourceLabel)).toBeInTheDocument();
+      expect(screen.queryByText('Respuesta editorial')).not.toBeInTheDocument();
+      expect(screen.queryByText(/Actualizada el/)).not.toBeInTheDocument();
       expect(screen.queryByText(/SHA-256/)).not.toBeInTheDocument();
       expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
       expect(askQuestion).not.toHaveBeenCalled();
     }
   );
 
+  it('muestra la animación real durante 12 segundos antes de la respuesta editorial', async () => {
+    vi.useFakeTimers();
+    renderChat();
+    const question = '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?';
+
+    fireEvent.click(screen.getByRole('button', { name: question }));
+
+    expect(screen.getByText(question)).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Preparando la respuesta' })).toHaveTextContent(
+      'Comprobando sentencias sobre el tema…'
+    );
+    expect(screen.queryByRole('region', { name: 'Respuesta editorial' })).not.toBeInTheDocument();
+
+    act(() => vi.advanceTimersByTime(4000));
+    expect(screen.getByRole('status', { name: 'Preparando la respuesta' })).toHaveTextContent(
+      'Analizando los criterios aplicados por los tribunales…'
+    );
+
+    act(() => vi.advanceTimersByTime(7999));
+    expect(screen.getByRole('status', { name: 'Preparando la respuesta' })).toHaveTextContent(
+      'Seleccionando extractos relevantes…'
+    );
+    expect(screen.queryByRole('region', { name: 'Respuesta editorial' })).not.toBeInTheDocument();
+
+    await act(async () => vi.advanceTimersByTimeAsync(1));
+
+    expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('status', { name: 'Preparando la respuesta' })
+    ).not.toBeInTheDocument();
+  });
+
   it('sitúa el inicio de una respuesta editorial en la parte superior de lectura', async () => {
-    const user = userEvent.setup();
+    vi.useFakeTimers();
     renderChat();
     const container = screen.getByTestId('chat-scroll');
     fakeLayout(container, 300, () => 1200);
     fakeMessageGeometry(container, 260);
 
-    await user.click(
+    fireEvent.click(
       screen.getByRole('button', {
         name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
       })
     );
-    await screen.findByRole('region', { name: 'Respuesta editorial' });
+    await act(async () => vi.advanceTimersByTimeAsync(12_000));
 
     expect(screen.getByRole('link', { name: 'Abrir sentencia STS 115/2018' })).toHaveAttribute(
       'href',
@@ -523,9 +559,7 @@ describe('ChatView', () => {
       'STS_115_2018.pdf'
     );
 
-    await waitFor(() => {
-      expect(container.scrollTop).toBe(260);
-    });
+    expect(container.scrollTop).toBe(260);
   });
 
   it('el mismo texto escrito manualmente sigue siendo una consulta al motor', async () => {
@@ -545,13 +579,13 @@ describe('ChatView', () => {
 
   it('una respuesta editorial no consume el límite de consultas al motor', async () => {
     vi.stubEnv('VITE_CHAT_SESSION_MESSAGE_LIMIT', '1');
-    const user = userEvent.setup();
+    vi.useFakeTimers();
     const askQuestion = vi.fn(async function* () {
       yield { type: 'done' as const };
     });
     renderChat({ askQuestion });
 
-    await user.click(
+    fireEvent.click(
       screen.getByRole('button', {
         name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
       })
@@ -562,6 +596,8 @@ describe('ChatView', () => {
       screen.queryByRole('status', { name: /límite de mensajes de sesión/i })
     ).not.toBeInTheDocument();
     expect(askQuestion).not.toHaveBeenCalled();
+
+    await act(async () => vi.advanceTimersByTimeAsync(12_000));
   });
 
   it('guarda la conversación en el store', async () => {

@@ -20,7 +20,7 @@ describe('TypingIndicator', () => {
     expect(screen.getByRole('status', { name: /preparando la respuesta/i })).toBeInTheDocument();
   });
 
-  it('avanza por los textos de estado cada 5 segundos y se queda en el último', () => {
+  it('avanza por los textos de estado cada 4 segundos y se queda en el último', () => {
     render(<TypingIndicator />);
     const indicator = screen.getByRole('status');
 
@@ -43,6 +43,6 @@ describe('TypingIndicator', () => {
 
   it('el primer texto habla de comprobar sentencias', () => {
     expect(TYPING_STATUS_MESSAGES[0]).toMatch(/comprobando sentencias/i);
-    expect(TYPING_STATUS_ROTATION_MS).toBe(5000);
+    expect(TYPING_STATUS_ROTATION_MS).toBe(4000);
   });
 });

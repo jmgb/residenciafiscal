@@ -55,8 +55,8 @@ function SafetyBanner() {
     >
       <AlertTriangle className='mt-0.5 h-4 w-4 shrink-0' aria-hidden='true' />
       <p>
-        <strong>Aviso:</strong> no constituye asesoramiento jurídico. Consulta a un profesional
-        antes de tomar decisiones.
+        <strong>Aviso:</strong> no constituye asesoramiento legal ni jurídico. Consulta a un
+        profesional.
         <a className='ml-1 underline' href='/privacidad'>
           Privacidad
         </a>
@@ -219,10 +219,22 @@ export function ChatView({
 
   const handleEditorialPrompt = useCallback(
     (answer: Parameters<typeof showEditorialAnswer>[0]) => {
+      if (isStreaming) return;
       isPinnedToBottomRef.current = true;
-      showEditorialAnswer(answer);
+      const controller = new AbortController();
+      const run = showEditorialAnswer(answer, controller.signal);
+      abortRef.current = controller;
+      streamOwnerRef.current = run.conversationId;
+      setIsStreaming(true);
+
+      void run.completion.finally(() => {
+        if (abortRef.current !== controller) return;
+        abortRef.current = null;
+        streamOwnerRef.current = null;
+        setIsStreaming(false);
+      });
     },
-    [showEditorialAnswer]
+    [isStreaming, showEditorialAnswer]
   );
 
   const handleSend = useCallback(
