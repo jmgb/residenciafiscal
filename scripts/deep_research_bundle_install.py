@@ -11,10 +11,10 @@ import argparse
 import hashlib
 import json
 import os
-from pathlib import Path, PurePosixPath
 import subprocess
 import tempfile
 import zipfile
+from pathlib import Path, PurePosixPath
 
 
 def sha256(path: Path) -> str:

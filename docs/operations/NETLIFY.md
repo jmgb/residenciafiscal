@@ -30,6 +30,29 @@ El build usa `output/analisis_*.jsonl` si existe en el checkout. Como `output/`
 se ignora por contener resultados generados, el prebuild conserva el corpus
 versionado cuando Netlify construye desde un clon limpio.
 
+## Configurar el sitio desde la CLI
+
+Hay un `netlify-cli` **global** con sesión iniciada: la configuración del sitio
+se hace por CLI, sin pedirla por la web.
+
+```bash
+netlify status                                    # usuario, proyecto y site id
+netlify env:list --context production --json      # variables reales
+netlify env:set CLAVE valor --context production
+netlify api createSiteBuild --data '{"site_id":"<id>"}'   # redeploy desde git
+```
+
+- **`env:list` sin `--context` engaña**: devuelve una variable; las 20 reales
+  están en `production`. Imprime los valores en claro, así que para inventariar
+  hay que quedarse solo con las claves.
+- **Nunca `netlify deploy --prod` desde local**: sube el working tree, incluido
+  lo que esté a medias. Para redesplegar, `createSiteBuild` construye desde git.
+- Un `env:set` **no se aplica solo**: exige redeploy.
+
+No contradice a [`frontend/CLAUDE.md`](../../frontend/CLAUDE.md), que prohíbe
+`netlify-cli` en `package.json`: esa regla es sobre la dependencia del proyecto,
+no sobre el binario global.
+
 ## Function del chat
 
 La V1 expone `/api/chat` mediante una Function estándar autosuficiente. Ejecuta

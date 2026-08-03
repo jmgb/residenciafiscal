@@ -46,23 +46,8 @@ Contrato y fases: [`docs/product/INTERNATIONAL_ARCHITECTURE.md`](docs/product/IN
 
 ## Quick Start
 
-El proyecto usa **uv** (no pip/venv a mano) y un **Makefile** como interfaz única.
-
-```bash
-# Instalar dependencias (crea .venv con Python 3.13 e instala desde uv.lock)
-make setup
-
-# Ver todos los comandos disponibles
-make help
-
-# Regenerar el piloto offline (sin llamadas LLM)
-make export-verbatim
-make export-case-v3
-
-# Levantar API + frontend (API en http://127.0.0.1:8010/docs,
-# frontend en http://127.0.0.1:5174)
-make dev
-```
+El proyecto usa **uv** (no pip/venv a mano) y un **Makefile** como interfaz única:
+`make help` lista y describe todos los comandos.
 
 > Cualquier comando suelto se lanza con `uv run` (p. ej. `uv run python src/export_jurisprudence_case.py --help`).
 > Nunca hace falta activar el entorno: `uv run` lo resuelve solo.
@@ -433,67 +418,19 @@ afirmación→código, riesgo asumido y lo que sigue abierto —consentimiento p
 de la analítica, contratos de encargo y validación jurídica del texto— en
 [`docs/operations/PRIVACY_AND_LEGAL.md`](docs/operations/PRIVACY_AND_LEGAL.md).
 
-## Backups de la base de datos
+## Operación: backups, tráfico y Netlify
 
-`scripts/backup/` respalda a diario el proyecto Supabase en el bucket R2
-`residenciafiscal-backup` mediante tres `systemd timer` del VPS `alfredo`:
-backup, check de frescura independiente y simulacro mensual no destructivo. Los
-scripts **no** llevan credenciales y **nunca** hacen `source` del `.env` —lo
-parsean con `lib-read-env.sh`—, y las units ejecutan `/bin/bash <script>` para no
-depender del bit executable del checkout.
+Estas tres guías se cargan solo donde aplican, no en cada sesión:
 
-El dump cubre `private`, `public`, `auth` y `supabase_migrations`: **el dato del
-chat vive en `private`**, así que un dump de `public` saldría verde y vacío. Al
-crear un schema nuevo hay que añadirlo a `BACKUP_SCHEMAS` en `vps-backup.sh`; el
-guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan
-si alguien lo olvida. Cada snapshot valida tablas, bloques `COPY` y las tres RPC
-vigentes antes de subirlo; el simulacro mensual compara ese contrato con
-Supabase. El checkout operativo del VPS quedó reconciliado con `origin/main` el
-2 de agosto de 2026 y **sigue sin actualizarse solo**: tras cambiar un script
-hay que hacer `git pull` allí, y relanzar `install-backup-timer.sh` si cambió
-una unit, porque systemd ejecuta su propia copia. Que eso se olvide ya no pasa
-en silencio: `check-operational-drift.sh` compara a diario el checkout, las
-units instaladas y `origin/main`, y alerta por Telegram. Nunca reconcilia solo.
-Arquitectura, operativa, límites y consecuencias de privacidad:
-[`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
-
-## Informe semanal de tráfico
-
-Cada lunes a las 09:00 (Europe/Madrid) un `systemd --user` timer manda a Telegram
-las visitas, los usuarios únicos y los recurrentes de `residenciafiscal.org`,
-igual que hacen Presupuestor, Doctor y Comunicador con su propio timer. Lo
-ejecuta `scripts/weekly_ga4_telegram.py` a través de `scripts/agentic/`.
-
-Publica **una línea por analítica** —GA4 y PostHog— y no las promedia: en la
-primera semana GA4 vio 81 usuarios y PostHog 1, porque GA4 registra bots que
-ejecutan JavaScript y PostHog apenas los ve. Presentarlas juntas es lo que hace
-visible ese sesgo; no se debe sustituir por una cifra única. El histórico se
-escribe en `reports/`, que está en `.gitignore` porque el repositorio es público.
-Métricas, trampas de la API y por qué divergen:
-[`docs/operations/WEEKLY_TRAFFIC_REPORT.md`](docs/operations/WEEKLY_TRAFFIC_REPORT.md).
-
-## Configurar Netlify desde la CLI
-
-Hay un `netlify-cli` **global** con sesión iniciada: la configuración del sitio
-se hace por CLI, sin pedirla por la web.
-
-```bash
-netlify status                                    # usuario, proyecto y site id
-netlify env:list --context production --json      # variables reales
-netlify env:set CLAVE valor --context production
-netlify api createSiteBuild --data '{"site_id":"<id>"}'   # redeploy desde git
-```
-
-- **`env:list` sin `--context` engaña**: devuelve una variable; las 20 reales
-  están en `production`. Imprime los valores en claro, así que para inventariar
-  hay que quedarse solo con las claves.
-- **Nunca `netlify deploy --prod` desde local**: sube el working tree, incluido
-  lo que esté a medias. Para redesplegar, `createSiteBuild` construye desde git.
-- Un `env:set` **no se aplica solo**: exige redeploy.
-
-No contradice a [`frontend/CLAUDE.md`](frontend/CLAUDE.md), que prohíbe
-`netlify-cli` en `package.json`: esa regla es sobre la dependencia del proyecto,
-no sobre el binario global.
+- **Backups de Supabase en R2** (tres `systemd timer` del VPS `alfredo`, schema
+  `private`, checkout que no se actualiza solo): [`scripts/backup/CLAUDE.md`](scripts/backup/CLAUDE.md)
+  y [`docs/operations/BACKUPS.md`](docs/operations/BACKUPS.md).
+- **Informe semanal de tráfico a Telegram** (una línea por analítica, GA4 y
+  PostHog nunca se promedian): [`scripts/CLAUDE.md`](scripts/CLAUDE.md) y
+  [`docs/operations/WEEKLY_TRAFFIC_REPORT.md`](docs/operations/WEEKLY_TRAFFIC_REPORT.md).
+- **Configurar Netlify por CLI** (variables por contexto, redeploy desde git,
+  **nunca `netlify deploy --prod` desde local**):
+  [`docs/operations/NETLIFY.md`](docs/operations/NETLIFY.md).
 
 ## Errores en producción (Sentry)
 
@@ -544,16 +481,6 @@ La fuente de verdad es `pyproject.toml`; `uv.lock` fija las versiones exactas y 
 versiona en git**. No hay `requirements.txt` en el repo (se genera bajo demanda con
 `make export-requirements` si algún consumidor externo lo necesita).
 
-```bash
-uv add paquete         # añadir una dependencia (actualiza pyproject + lock)
-uv add --dev pytest    # dependencia solo de desarrollo
-uv remove groq         # quitarla
-make lock              # regenerar el lock tras editar pyproject a mano
-make upgrade           # subir versiones dentro de los rangos declarados
-```
-
-Runtime: Python **3.13** (fijado en `.python-version`; `uv` lo instala solo).
-
 ## Calidad de código
 
 ruff, mypy y pytest están configurados en `pyproject.toml`. La suite ordinaria
@@ -562,13 +489,8 @@ no realiza llamadas LLM. Los experimentos conversacionales de pago exigen
 
 Gate antes de commitear: `make fast-check`.
 
-En CI hay tres workflows, todos en push y PR contra `main`:
-
-| Workflow | Cubre | Pasos |
-|----------|-------|-------|
-| `.github/workflows/ci.yml` | Python (todo salvo `docs/`, `sentencias/`, `*.md`) | ruff → mypy → pytest |
-| `.github/workflows/frontend.yml` | `frontend/**` | biome → tsc → vitest → build |
-| `.github/workflows/gitleaks.yml` | todo el repo, con historia completa | gitleaks |
+En CI hay tres workflows (`ci.yml`, `frontend.yml`, `gitleaks.yml`), todos en push
+y PR contra `main`.
 
 **Ninguno usa secrets configurados, a propósito**: la suite Python por defecto no
 llama a ningún LLM. La única credencial que aparece es el `secrets.GITHUB_TOKEN`
