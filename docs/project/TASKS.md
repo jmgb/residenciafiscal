@@ -442,7 +442,10 @@ contra el dominio público después de cada deploy.
           Alfredo y validada allí; bundle y schema se montan en solo lectura.
         - [x] Construir `rollout-106/2` solo con JSON (sin copias PDF o Markdown),
           añadir el MCP allowlisted de lectura y verificar localmente el bundle.
-          Su instalación y smoke E2E en el VPS siguen pendientes.
+          Instalado en Alfredo y validado E2E el 2026-08-04 con el job
+          `deep-1b556373-3e2b-4deb-a160-c4b67d24226b`: salida v2, cita literal
+          de SAN 1210/2023 página 8, callback enviado y mensaje de asistente
+          persistido con `gpt-5.6-luna` y esfuerzo `high`.
       - [ ] **C2 — piloto controlado con Codex.** Ejecutar una muestra pequeña de
         preguntas difíciles, separada del holdout A/B, en un contenedor o
         microVM con usuario sin privilegios, filesystem de solo lectura, red de

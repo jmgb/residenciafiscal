@@ -228,6 +228,11 @@ obsoleto rebaje las garantías del verificador determinista. Los resultados v1
 históricos ya persistidos siguen siendo legibles, pero no pueden volver a entrar
 por el callback.
 
+El schema de borrador usa únicamente el subconjunto estricto admitido por la
+salida estructurada de Codex. En particular no declara `uniqueItems`; la
+unicidad de `evidence_indexes` se sigue exigiendo en el verificador
+determinista antes de publicar cualquier texto.
+
 ## Verificación operativa tras un cambio
 
 1. Comprobar el manifiesto instalado: bundle `rollout-106/2`, formato
@@ -241,6 +246,9 @@ por el callback.
 5. Probar una cita alterada y comprobar que Alfredo falla cerrado sin publicar
    la respuesta.
 
-El smoke histórico del 2026-08-03 validó el recorrido v1. No acredita por sí
-solo esta versión v2: tras desplegarla debe repetirse el smoke anterior antes de
-abrirla a tráfico general.
+El smoke v2 del 2026-08-04, job
+`deep-1b556373-3e2b-4deb-a160-c4b67d24226b`, completó el recorrido real en
+29,6 s: `gpt-5.6-luna`, esfuerzo `high`, salida v2, cita EXACT de SAN 1210/2023
+página 8, callback en el primer intento y fila `assistant`/`deep_research` en
+`private.chat_messages`. El smoke del 2026-08-03 queda como evidencia histórica
+del transporte v1.
