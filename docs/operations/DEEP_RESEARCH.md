@@ -84,8 +84,9 @@ determinista:
 - que `text_sha256` de cada página y `pages_sha256` del documento coincidan con
   el contenido JSON exacto; esta misma validación bloquea también la creación
   del bundle si un artefacto verbatim fue editado o truncado;
-- que cada cita sea una subcadena literal de `raw_page_text`, sin normalizar,
-  corregir, unir ni completar texto;
+- que cada cita, después de retirar únicamente whitespace exterior accidental
+  del borrador, sea una subcadena literal de `raw_page_text`; el whitespace
+  interior no se normaliza y el texto nunca se corrige, une ni completa;
 - que una cita contenga al menos 20 caracteres sustantivos y que cada
   `claim.text` sea exactamente la cita de su primera evidencia;
 - que no se usen más de cinco sentencias.
@@ -215,6 +216,13 @@ La UI muestra `En cola`, `Buscando en el corpus`, `Leyendo fuentes`,
 `Verificando evidencias`, `Completada`, `Cancelada` o `Error`. La cancelación
 remota cubre jobs aún en cola; un job ya reclamado devuelve conflicto y no se
 marca falsamente como cancelado.
+
+Una respuesta completada se representa desde la estructura verificada, no como
+un bloque continuo: cada `claim` ocupa su propio párrafo, cada evidencia conserva
+sus saltos de línea dentro de una tarjeta con sentencia y página visibles, y los
+límites aparecen en una sección de alcance separada. La tarjeta usa todo el ancho
+disponible del chat para evitar una superficie anidada y mantener las citas
+legibles también en móvil.
 
 El callback valida HMAC, `job_id`, modelo, esfuerzo, versión y forma completa
 del resultado. Luego actualiza el job y crea en la misma transacción la fila de

@@ -29,6 +29,7 @@ export function ChatBubble({
 }: ChatBubbleProps) {
   const isUser = message.role === 'user';
   const isComparison = !isUser && (message.answers?.length ?? 0) > 1;
+  const isDeepResearch = !isUser && message.deepResearch !== undefined;
 
   return (
     <div
@@ -37,11 +38,17 @@ export function ChatBubble({
     >
       <div
         data-testid={isUser ? 'chat-bubble-user' : 'chat-bubble-assistant'}
-        className={`relative rounded-xl px-3.5 py-2.5 shadow-sm ${
-          isComparison ? 'w-[96%]' : 'max-w-[92%]'
-        } ${
-          isUser ? 'rounded-tr-none bg-primary-100' : 'rounded-tl-none bg-card border border-border'
-        }`}
+        className={
+          isDeepResearch
+            ? 'relative w-full max-w-full'
+            : `relative rounded-xl px-3.5 py-2.5 shadow-sm ${
+                isComparison ? 'w-[96%]' : 'max-w-[92%]'
+              } ${
+                isUser
+                  ? 'rounded-tr-none bg-primary-100'
+                  : 'rounded-tl-none border border-border bg-card'
+              }`
+        }
       >
         {!isUser && message.deepResearch ? (
           <DeepResearchCard

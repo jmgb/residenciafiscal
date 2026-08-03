@@ -1,4 +1,4 @@
-import { CheckCircle2, CircleAlert, LoaderCircle, Search, Square } from 'lucide-react';
+import { CheckCircle2, CircleAlert, FileText, LoaderCircle, Search, Square } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
 import type { DeepResearchJob, DeepResearchOutput } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
@@ -40,7 +40,7 @@ const latencyLabel = (latencyMs: number): string =>
 const judgmentLabel = (judgmentId: string): string => {
   const [prefix, ...rest] = judgmentId.split('-');
   const title = rest.join(' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
-  return prefix?.toLowerCase() === 'sts' ? `STS ${title}` : `${prefix ?? ''} ${title}`.trim();
+  return `${prefix?.toUpperCase() ?? ''} ${title}`.trim();
 };
 
 export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCardProps) {
@@ -88,33 +88,70 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
       )}
 
       {job.status === 'completed' && result && (
-        <div className='space-y-4 p-4'>
-          <ChatMessageContent content={result.text} isUser={false} />
+        <div className='space-y-5 p-4 sm:p-5'>
+          <section className='space-y-3'>
+            <h3 className='font-heading text-sm font-semibold text-foreground'>
+              Respuesta verificada
+            </h3>
+            {result.claims.length > 0 ? (
+              <div className='space-y-4'>
+                {result.claims.map((claim) => (
+                  <p
+                    key={`${claim.text}-${claim.evidenceIndexes.join('-')}`}
+                    data-testid='deep-research-claim'
+                    className='whitespace-pre-line text-[0.9375rem] leading-7 text-foreground'
+                  >
+                    {claim.text}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <ChatMessageContent content={result.text} isUser={false} />
+            )}
+          </section>
+
           {result.evidence.length > 0 && (
-            <section className='rounded-lg bg-muted p-3'>
-              <h3 className='mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground'>
+            <section className='space-y-3'>
+              <h3 className='font-heading text-sm font-semibold text-foreground'>
                 Evidencias verificadas
               </h3>
-              <ul className='space-y-2'>
+              <ul className='space-y-3'>
                 {result.evidence.map((evidence) => (
                   <li
                     key={`${evidence.judgmentId}-${evidence.page}-${evidence.sourceSha256}-${evidence.quote}`}
-                    className='text-xs leading-relaxed'
+                    data-testid='deep-research-evidence'
+                    className='rounded-lg border border-border bg-card p-3'
                   >
-                    <p className='font-semibold text-primary'>
-                      {judgmentLabel(evidence.judgmentId)} · página {evidence.page}
-                    </p>
-                    <p className='mt-0.5 text-muted-foreground'>“{evidence.quote}”</p>
+                    <div className='flex items-center gap-2 text-xs font-semibold text-primary'>
+                      <FileText className='h-3.5 w-3.5 shrink-0' aria-hidden='true' />
+                      <span className='font-mono'>
+                        {judgmentLabel(evidence.judgmentId)} · página {evidence.page}
+                      </span>
+                    </div>
+                    <blockquote className='mt-2 whitespace-pre-line border-l-4 border-accent-500 bg-accent px-3 py-2.5 text-sm leading-6 text-accent-foreground'>
+                      {evidence.quote}
+                    </blockquote>
                   </li>
                 ))}
               </ul>
             </section>
           )}
+
           {result.limits.length > 0 && (
-            <p className='text-xs leading-relaxed text-muted-foreground'>
-              <strong>Límites:</strong> {result.limits.join(' ')}
-            </p>
+            <section className='rounded-lg border border-border bg-muted/60 p-3'>
+              <h3 className='font-heading text-xs font-semibold text-foreground'>
+                Alcance del análisis
+              </h3>
+              <ul className='mt-2 space-y-1.5 text-xs leading-5 text-secondary-foreground'>
+                {result.limits.map((limit) => (
+                  <li key={limit} className='whitespace-pre-line'>
+                    {limit}
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
+
           <div className='flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-3 text-xs text-muted-foreground'>
             <span>{costLabel(result.costMicrousd, result.costMeasurement)}</span>
             <span>{latencyLabel(result.latencyMs)}</span>

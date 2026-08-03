@@ -192,6 +192,45 @@ def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes
     assert final["reasoning_effort"] == "high"
 
 
+def test_finalizer_trims_only_exterior_whitespace_before_exact_evidence_checks(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = "\n  La residencia exige prueba exacta. \t"
+    draft["evidence"][0]["quote"] = "\n  La residencia exige prueba exacta. \t"
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["text"] == "La residencia exige prueba exacta."
+    assert final["claims"][0]["text"] == "La residencia exige prueba exacta."
+    assert final["evidence"][0]["quote"] == "La residencia exige prueba exacta."
+
+
+def test_finalizer_does_not_normalize_internal_evidence_whitespace(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = "La residencia exige  prueba exacta."
+    draft["evidence"][0]["quote"] = "La residencia exige  prueba exacta."
+
+    with pytest.raises(ValueError, match="exact raw_page_text substring"):
+        finalize_deep_research_output(
+            json.dumps(draft, ensure_ascii=False),
+            job_id="deep-job-1",
+            bundle_path=_bundle(tmp_path),
+            model="gpt-5.6-luna",
+            reasoning_effort="high",
+            latency_ms=1,
+            usage=None,
+            tool_audit=_audit(),
+        )
+
+
 def test_finalizer_rejects_duplicate_evidence_indexes(tmp_path):
     draft = json.loads(_draft())
     draft["claims"][0]["evidence_indexes"] = [1, 1]

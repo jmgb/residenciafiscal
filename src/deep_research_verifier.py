@@ -111,6 +111,7 @@ def finalize_deep_research_output(
     tool_audit: list[dict[str, str]] | None,
 ) -> dict[str, Any]:
     draft = _parse_draft(draft_text)
+    _trim_exterior_evidence_whitespace(draft)
     _verify_tool_audit(draft["status"], tool_audit)
     _verify_evidence_graph(draft, bundle_path.resolve())
     pricing = load_model_pricing(bundle_path, model)
@@ -133,6 +134,21 @@ def finalize_deep_research_output(
         "reasoning_effort": reasoning_effort,
         "latency_ms": max(0, latency_ms),
     }
+
+
+def _trim_exterior_evidence_whitespace(draft: dict[str, Any]) -> None:
+    """Canonicalize harmless model formatting before strict corpus checks.
+
+    Internal whitespace remains untouched: every normalized quote must still be
+    an exact substring of the immutable verbatim page.
+    """
+
+    for claim in draft["claims"]:
+        if isinstance(claim, dict) and isinstance(claim.get("text"), str):
+            claim["text"] = claim["text"].strip()
+    for item in draft["evidence"]:
+        if isinstance(item, dict) and isinstance(item.get("quote"), str):
+            item["quote"] = item["quote"].strip()
 
 
 def _verified_text(draft: dict[str, Any]) -> str:
@@ -351,12 +367,7 @@ def _verify_evidence(item: object, bundle_path: Path, rollout_sources: dict[str,
         raise ValueError("invalid evidence judgment_id")
     if not isinstance(page, int) or isinstance(page, bool) or page < 1:
         raise ValueError("invalid evidence page")
-    if (
-        not isinstance(quote, str)
-        or quote != quote.strip()
-        or len(quote) < 20
-        or len(quote) > _MAX_QUOTE_CHARS
-    ):
+    if not isinstance(quote, str) or len(quote) < 20 or len(quote) > _MAX_QUOTE_CHARS:
         raise ValueError("invalid evidence literal")
     document_path = (bundle_path / "verbatim" / f"{judgment_id}.pages.json").resolve()
     if not document_path.is_relative_to(bundle_path):

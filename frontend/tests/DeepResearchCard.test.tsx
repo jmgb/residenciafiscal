@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { ChatBubble } from '@/components/chat/ChatBubble';
 import { DeepResearchCard } from '@/components/chat/DeepResearchCard';
 import type { DeepResearchJob } from '@/types/chat';
 
@@ -12,15 +13,25 @@ const completed: DeepResearchJob = {
     jobId: 'deep-1',
     requestId: 'deep-1',
     status: 'completa',
-    text: 'Conclusión con respaldo documental.',
+    text: 'La prueba debe ser coherente.\n\nLa valoración depende del conjunto probatorio.',
     limits: ['No sustituye asesoramiento profesional.'],
-    claims: [{ text: 'La prueba debe ser coherente.', evidenceIndexes: [1] }],
+    claims: [
+      { text: 'La prueba debe ser\ncoherente.', evidenceIndexes: [1] },
+      { text: 'La valoración depende del conjunto probatorio.', evidenceIndexes: [2] },
+    ],
     evidence: [
       {
         judgmentId: 'sts-1',
         page: 3,
         sourceSha256: 'a'.repeat(64),
-        quote: 'Cita literal verificable.',
+        quote: 'La prueba debe ser\ncoherente.',
+        verification: 'EXACT',
+      },
+      {
+        judgmentId: 'san-2',
+        page: 8,
+        sourceSha256: 'b'.repeat(64),
+        quote: 'La valoración depende del conjunto probatorio.',
         verification: 'EXACT',
       },
     ],
@@ -52,7 +63,7 @@ describe('DeepResearchCard', () => {
     expect(screen.queryByText(/razonamiento|cadena de pensamiento/i)).not.toBeInTheDocument();
   });
 
-  it('renders the completed answer, evidence, limits, cost and latency', () => {
+  it('renders conclusions, evidence and scope as separate readable blocks', () => {
     render(
       <DeepResearchCard
         job={{ ...completed, comparisonId: 'chat-comparison-1' }}
@@ -62,11 +73,43 @@ describe('DeepResearchCard', () => {
     );
 
     expect(screen.getByRole('status')).toHaveTextContent('Investigación profunda completada');
-    expect(screen.getByText('Conclusión con respaldo documental.')).toBeInTheDocument();
-    expect(screen.getByText('STS 1 · página 3')).toBeInTheDocument();
-    expect(screen.getByText(/Cita literal verificable\./)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Respuesta verificada' })).toBeInTheDocument();
+    const claims = screen.getAllByTestId('deep-research-claim');
+    expect(claims).toHaveLength(2);
+    expect(claims[0]).toHaveTextContent('La prueba debe ser coherente.');
+    expect(claims[0]).toHaveClass('whitespace-pre-line');
+    expect(claims[1]).toHaveTextContent('La valoración depende del conjunto probatorio.');
+
+    expect(screen.getByRole('heading', { name: 'Evidencias verificadas' })).toBeInTheDocument();
+    expect(screen.getAllByTestId('deep-research-evidence')).toHaveLength(2);
+    expect(screen.getByText('STS 1 · página 3')).toHaveClass('font-mono');
+    expect(screen.getByText('SAN 2 · página 8')).toBeInTheDocument();
+    const scopeHeading = screen.getByRole('heading', { name: 'Alcance del análisis' });
+    expect(scopeHeading).toBeInTheDocument();
+    expect(scopeHeading.closest('section')?.querySelector('ul')).toHaveClass(
+      'text-secondary-foreground'
+    );
+    expect(screen.getByText('No sustituye asesoramiento profesional.')).toBeInTheDocument();
     expect(screen.getByText(/Coste real: 0,0012 USD/)).toBeInTheDocument();
     expect(screen.getByText(/Respuesta en: 4,2 s/)).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Opción C' })).toBeInTheDocument();
+  });
+
+  it('uses the full chat width without nesting the research card in another surface', () => {
+    render(
+      <ChatBubble
+        message={{
+          id: 'assistant-deep-1',
+          role: 'assistant',
+          content: completed.result?.text ?? '',
+          createdAt: '2026-08-04T10:00:00.000Z',
+          deepResearch: completed,
+        }}
+      />
+    );
+
+    const bubble = screen.getByTestId('chat-bubble-assistant');
+    expect(bubble).toHaveClass('w-full', 'max-w-full');
+    expect(bubble).not.toHaveClass('border', 'px-3.5', 'py-2.5', 'shadow-sm');
   });
 });
