@@ -160,10 +160,11 @@ estable A → B. La Function cancela antes de alcanzar los 60 s del runtime y
 mantiene Luna con esfuerzo `high`. Latencia, percentiles, timeouts, tokens,
 coste y calidad deben decidir cualquier cambio posterior de esfuerzo o modelo.
 
-### 5.1. Opción C futura: investigación agentiva
+### 5.1. Opción C: investigación agentiva en piloto controlado
 
-Se documenta una tercera estrategia posible, **no implementada ni autorizada
-para producción**. C permitiría que un agente planificase búsquedas sucesivas,
+La implementación técnica de esta tercera estrategia está desplegada bajo una
+bandera explícita, pero **no está autorizada para promoción jurídica general**.
+C permitiría que un agente planificase búsquedas sucesivas,
 leyese datos estructurados y páginas verbatim, contrastase resoluciones y
 revisase sus propios candidatos antes de redactar. Su finalidad sería medir el
 techo de calidad de una investigación con más tiempo y herramientas, y actuar
@@ -173,13 +174,16 @@ cobertura suficiente.
 C no sería una variante aislada del recuperador: compararía un stack completo
 —modelo, planificación, herramientas y presupuesto—. Tampoco debe ejecutarse
 dentro de la Function síncrona actual ni recibir acceso general al repositorio.
-Un piloto tendría que usar un worker asíncrono, entorno efímero, corpus montado
-en solo lectura, red deshabilitada, herramientas acotadas y el mismo gate
-determinista de citas que A y B. La salida permanecería separada como
-«Investigación profunda»; nunca reemplazaría silenciosamente otra respuesta.
+El piloto usa un worker asíncrono, entorno efímero, corpus montado en solo
+lectura y el mismo gate determinista de citas que A y B. El contenedor Docker de
+Alfredo es la frontera efectiva; conserva únicamente el egress HTTPS necesario
+para el proveedor autenticado de Codex. La sustitución por herramientas
+jurídicas acotadas y la separación estricta del egress siguen siendo objetivos
+de la fase C4, no afirmaciones del runtime actual. La salida permanece separada
+como «Investigación profunda» y nunca reemplaza silenciosamente otra respuesta.
 
 Pros, contras, límites operativos, UX y gates de promoción:
-[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#posible-estrategia-futura-c-investigación-agentiva).
+[`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#plan-de-opción-c-investigación-agentiva).
 
 El prototipo FastAPI no se elimina. Se conserva como arquitectura futura más
 robusta si el producto acaba necesitando llamadas de más de 60 s, reintentos

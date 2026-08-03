@@ -11,9 +11,9 @@ React → Netlify /api/deep-research
      → callback HMAC → Supabase privado → polling de React
 ```
 
-La funcionalidad está cerrada por configuración hasta completar el piloto C2,
-la comprobación de aislamiento y la decisión de promoción. C nunca entra en la
-comparación síncrona ni retrasa A/B.
+La implementación está desplegada bajo una bandera explícita para un piloto
+controlado. La promoción general sigue pendiente de completar C2, C3 y C6; C
+nunca entra en la comparación síncrona ni retrasa A/B.
 
 ## Estado operativo (2026-08-03)
 
@@ -28,6 +28,13 @@ La compuerta efectiva está abierta en Alfredo tras verificación operativa:
 solo lectura, sin Docker socket ni capacidades, límites de CPU/memoria/PIDs,
 workspace efímero en tmpfs y únicamente el estado de Codex como volumen
 persistentemente writable. El bundle y el schema se montan como solo lectura.
+
+El smoke E2E del 2026-08-03 completó correctamente el recorrido completo con el
+job `deep-7a2a8fc2-2cd3-44ac-9e3f-14206a6d3ea8`: estado `completed`, salida
+`completa`, modelo `gpt-5-codex`, 5 afirmaciones, 7 evidencias y callback HMAC
+reconciliado en Supabase. Es evidencia de integración operativa, no sustituye
+la muestra de calidad C2 ni la evaluación comparativa C3. El coste de esa
+ejecución quedó como no disponible y no se presenta como cero.
 
 ## Variables de Netlify
 
@@ -90,6 +97,13 @@ read-only/tmpfs, el usuario sin privilegios y la ausencia de socket; la red
 conserva salida porque Codex necesita contactar con su proveedor. El schema
 declara `type` junto a cada `const` para ser compatible con la validación de
 structured output de Codex 0.146.0.
+
+La separación de red documentada para el piloto local (`bwrap` con red
+deshabilitada) no es la frontera del runtime de Alfredo: allí el contenedor
+Docker endurecido protege filesystem, capacidades, mounts y socket, mientras
+conserva egress HTTPS para que Codex contacte con su proveedor autenticado.
+Por tanto, la attestation confirma aislamiento del contenedor y del bundle,
+pero no equivale a afirmar que el proceso Codex carezca de red de proveedor.
 
 ## Estados y cancelación
 

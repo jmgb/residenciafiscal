@@ -489,13 +489,15 @@ Hasta entonces:
 
 ## Plan de opción C: investigación agentiva
 
-**Estado de decisión:** arquitectura de piloto acordada; no implementada,
-presupuestada ni autorizada para tráfico real. No cambia el contrato A/B vigente.
+**Estado de decisión:** arquitectura de piloto acordada e implementación técnica
+desplegada bajo bandera controlada; todavía no está evaluada, presupuestada ni
+autorizada para tráfico jurídico general. No cambia el contrato A/B vigente.
 
-La fundación C0/C1 ya está implementada localmente: contratos ejecutables para
-job, límites, progreso, salida, claims y evidencias, más un builder/verificador
-de snapshots ZIP deterministas. La provisión del VPS de Alfredo, la
-transferencia del bundle y el piloto siguen pendientes.
+La fundación C0/C1 ya está implementada: contratos ejecutables para job, límites,
+progreso, salida, claims y evidencias, más un builder/verificador de snapshots
+ZIP deterministas. El bundle `rollout-106/1` está transferido y validado en el
+VPS de Alfredo, y el worker autenticado ya supera un smoke E2E. Sigue pendiente
+la muestra de calidad C2 y la decisión de promoción C3/C6.
 
 C será una investigación de mayor profundidad en la que un agente pueda iterar
 sobre el corpus: formular búsquedas, leer unidades v3, abrir páginas verbatim,
@@ -548,10 +550,13 @@ pregunta
 ```
 
 El worker será asíncrono, autenticado, cancelable y limitado por tiempo, turnos,
-herramientas, documentos, páginas y coste. El entorno de herramientas tendrá
-filesystem de solo lectura, directorio temporal efímero y red deshabilitada.
-Si el controlador necesita llamar al proveedor LLM, ese egress quedará aislado
-y estrictamente permitido fuera del entorno de herramientas.
+herramientas, documentos, páginas y coste. La arquitectura objetivo del worker
+de producto exige un entorno de herramientas con filesystem de solo lectura,
+directorio temporal efímero y red deshabilitada; si el controlador necesita
+llamar al proveedor LLM, ese egress debe quedar aislado y estrictamente
+permitido fuera del entorno de herramientas. El piloto actual de Alfredo aún
+usa Codex como explorador dentro de un contenedor Docker endurecido y conserva
+egress HTTPS del proveedor, por lo que no debe confundirse con C4.
 
 ### Secuencia de ejecución
 
@@ -565,11 +570,11 @@ y estrictamente permitido fuera del entorno de herramientas.
    JSON Schema; no es aún el runtime jurídico definitivo. La muestra congelada
    `c2-2026-08-03` se valida por hashes y el target `make
    deep-research-pilot-run` queda como lanzamiento explícito, nunca automático.
-   El runner local usa `bwrap` como frontera externa de filesystem: Codex solo
-   ve el bundle en `/workspace`, el schema y la salida efímera; no ve
-   credenciales, el repo ni configuración, y la red queda deshabilitada. El
-   runner falla cerrado hasta que el worker/broker autenticado de Alfredo
-   separe el egress del proveedor del entorno de herramientas.
+   El runner local usa `bwrap` como frontera externa de filesystem. En Alfredo,
+   el contenedor Docker endurecido es la frontera efectiva: Codex solo ve el
+   bundle y schema read-only, no ve credenciales, repo ni configuración, y el
+   egress HTTPS del proveedor queda disponible para completar la ejecución.
+   El smoke E2E ya pasó; la muestra de calidad C2 sigue pendiente.
 4. **C3 — evaluación:** no ejecutar antes de cerrar el baseline jurídico ciego
    A/B. Mantener constantes corpus, fecha, ausencia de internet, contrato,
    presupuesto, modelo, herramientas e instrucciones; medir utilidad, cobertura,
@@ -578,10 +583,10 @@ y estrictamente permitido fuera del entorno de herramientas.
    herramientas jurídicas acotadas: `buscar_sentencias`,
    `buscar_en_sentencia`, `leer_paginas`, `leer_unidad_v3`,
    `comparar_resoluciones` y `verificar_cita`.
-6. **C5/C6 — UX y promoción:** ofrecer C bajo demanda sin retrasar A/B, mostrar
-   estados objetivos y un bloque independiente con fuentes, límites, coste y
-   latencia. Promover a tráfico real solo tras revisar autenticación, retención,
-   tratamiento, observabilidad, rollback y presupuesto.
+6. **C5/C6 — UX y promoción:** la UX bajo demanda, los estados objetivos y el
+   bloque independiente están implementados y probados como piloto. Promover a
+   tráfico real solo tras revisar autenticación, retención, tratamiento,
+   observabilidad, rollback y presupuesto; esa decisión C6 sigue pendiente.
 
 ### Ventajas y desventajas
 

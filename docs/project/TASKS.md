@@ -408,11 +408,13 @@ contra el dominio público después de cada deploy.
     - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
       contrato actual es deliberadamente single-turn: el historial se muestra
       localmente, pero solo la última pregunta autosuficiente sale del navegador.
-    - [ ] **Futuro, no autorizado — plan de opción C agentiva.** C queda separada
-      de las respuestas rápidas A/B y no se activa por defecto ni entra en el
-      runtime Netlify síncrono. La arquitectura acordada es un worker asíncrono
-      privado en el VPS de Alfredo, con job autenticado, timeout, cancelación y
-      resultado reconciliable con el mismo contrato privado de retención.
+    - [ ] **Piloto controlado — opción C agentiva; promoción general pendiente.**
+      C queda separada de las respuestas rápidas A/B y se activa únicamente bajo
+      una bandera explícita; nunca entra en el runtime Netlify síncrono. La
+      implementación técnica del worker asíncrono privado en Alfredo está
+      desplegada, con job autenticado, timeout, cancelación y resultado
+      reconciliable con el mismo contrato privado de retención. El piloto no
+      equivale todavía a una autorización de tráfico jurídico general.
       El VPS no recibirá un clon completo del repositorio: cada ejecución usará
       un bundle inmutable y versionado del corpus permitido, con manifiesto y
       hashes, montado en solo lectura. El bundle excluirá `.env`, credenciales,
@@ -428,17 +430,17 @@ contra el dominio público después de cada deploy.
         nunca en el entorno de herramientas.
         - [x] Añadir contratos Pydantic ejecutables para job, límites, progreso,
           salida, claims y evidencias, sin campo de razonamiento.
-      - [ ] **C1 — construir el bundle de investigación.** Exportar únicamente
+      - [x] **C1 — construir el bundle de investigación.** Exportar únicamente
         casos v3, verbatim, PDF permitidos e índices jurídicos necesarios desde
         una versión congelada del corpus. Validar manifiesto, hashes, límites
         de tamaño y ausencia de secretos antes de copiarlo al VPS.
         - [x] Implementar `deep-research-bundle.py` y los targets
           `make deep-research-bundle` / `make deep-research-bundle-verify`.
           El builder produce ZIP determinista, no sobrescribe snapshots y el
-          verificador comprueba la allowlist y todos los hashes. La primera
-          instantánea local del rollout 106 queda validada; la transferencia y
-          validación en Alfredo siguen pendientes.
-      - [ ] **C2 — piloto offline con Codex.** Ejecutar una muestra pequeña de
+          verificador comprueba la allowlist y todos los hashes. La instantánea
+          `rollout-106/1` quedó validada localmente, transferida al VPS de
+          Alfredo y validada allí; bundle y schema se montan en solo lectura.
+      - [ ] **C2 — piloto controlado con Codex.** Ejecutar una muestra pequeña de
         preguntas difíciles, separada del holdout A/B, en un contenedor o
         microVM con usuario sin privilegios, filesystem de solo lectura, red de
         herramientas deshabilitada y directorio temporal efímero. Codex CLI/SDK
@@ -446,15 +448,17 @@ contra el dominio público después de cada deploy.
         ejecución no interactiva y salida JSON Schema; esto será un piloto
         interno de calidad, no el runtime jurídico definitivo.
         - [x] Congelar el piloto `c2-2026-08-03` fuera del holdout E y añadir
-          preflight por hashes, jobs JSON, workspace temporal, `codex exec
-          --sandbox read-only --ephemeral --json` y salida JSON Schema. El
-          runner CLI se envuelve por defecto en `bwrap`: solo monta el bundle
-          en `/workspace`, el schema y una salida efímera, sin credenciales,
-          repo ni configuración. Además deshabilita la red y falla cerrado
-          hasta que exista el worker/broker autenticado de Alfredo.
-          El target `make deep-research-pilot-run` queda explícito y no se lanza
-          automáticamente; la ejecución en Alfredo sigue pendiente de
-          desplegar el worker autenticado y comprobar el aislamiento de red.
+          preflight por hashes, jobs JSON, workspace temporal y salida JSON
+          Schema. El runner local conserva `bwrap` como preflight de
+          filesystem; el runtime de Alfredo usa el contenedor Docker dedicado
+          como frontera externa porque el sandbox `bwrap` anidado no puede crear
+          namespaces bajo la política del VPS.
+        - [x] Desplegar y verificar el worker autenticado en Alfredo. El smoke
+          E2E del 2026-08-03 completó un job real con el bundle `rollout-106/1`,
+          callback HMAC y salida estructurada válida.
+        - [ ] Ejecutar la muestra completa de preguntas difíciles y registrar
+          calidad, cobertura, claridad, latencia, coste y cancelaciones; el
+          smoke E2E no sustituye esa evaluación.
       - [ ] **C3 — evaluar y decidir.** Ejecutar C solo después de cerrar el
         baseline jurídico ciego A/B. Mantener constantes corpus, fecha de corte,
         ausencia de internet, contrato, presupuesto, versión de agente/modelo,
@@ -472,7 +476,7 @@ contra el dominio público después de cada deploy.
         evidencias; pasar toda cita por el verificador determinista y retirar
         cualquier afirmación sin apoyo válido. No persistir ni mostrar cadena
         de pensamiento; conservar solo trazas operativas seguras.
-      - [ ] **C5 — integrar la experiencia bajo demanda.** Desde A/B mostrar
+      - [x] **C5 — integrar la experiencia bajo demanda.** Desde A/B mostrar
         únicamente un botón explícito «Iniciar investigación profunda» o una
         oferta tras respuestas parciales, abstenciones o discrepancias. No
         añadir C a la comparación síncrona ni retrasar A/B. Mostrar estados de
@@ -480,16 +484,20 @@ contra el dominio público después de cada deploy.
         C independiente con fuentes, límites, coste y latencia; permitir votar
         A, B, C o empate sin declarar automáticamente una ganadora.
       - [ ] **C6 — promoción controlada.** Antes de tráfico real revisar
-        autenticación del worker, retención, tratamiento de datos, observabilidad,
-        rollback y presupuesto. La promoción requiere decisión explícita y
-        documentada; si C no compensa su coste o pierde reproducibilidad,
-        permanece como diagnóstico offline o herramienta interna de evaluación.
+          autenticación del worker, retención, tratamiento de datos, observabilidad,
+          rollback y presupuesto. La promoción requiere decisión explícita y
+          documentada; si C no compensa su coste o pierde reproducibilidad,
+          permanece como diagnóstico offline o herramienta interna de evaluación.
         - [x] Implementar el recorrido detrás de `DEEP_RESEARCH_ENABLED`: botón
           explícito fuera de A/B, job firmado Netlify → Alfredo, polling de
           estados, callback reconciliable, cancelación de jobs en cola y bloque
           C independiente con fuentes, límites, coste y «Respuesta en:».
           El bloque permite valorar A, B, C, empate o ambas insuficientes mediante
-          el mismo catálogo ciego; la bandera permanece cerrada hasta validar C2/C3/C6.
+          el mismo catálogo ciego. La implementación está activa bajo bandera
+          de piloto; la promoción general sigue bloqueada hasta cerrar C2, C3 y C6.
+        - [ ] Completar la revisión formal de promoción y decidir explícitamente
+          si la bandera permanece limitada al piloto o se desactiva hasta cerrar
+          los gates de calidad, presupuesto, retención, observabilidad y rollback.
       - Contrato, seguridad, UX y gates:
         [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#plan-de-opción-c-investigación-agentiva).
   - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están
