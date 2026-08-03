@@ -101,6 +101,15 @@ class DeepResearchOutput(JurisprudenceCaseModel):
             for index in claim.evidence_indexes
         ):
             raise ValueError("claims contiene referencias fuera de la lista evidence")
+        if self.status in {"completa", "parcial"} and (not self.claims or not self.evidence):
+            raise ValueError("una respuesta sustantiva exige claims y evidence")
+        referenced_indexes = {index for claim in self.claims for index in claim.evidence_indexes}
+        if referenced_indexes != set(range(1, evidence_count + 1)):
+            raise ValueError("toda evidence debe estar referenciada por un claim")
+        if self.cost_measurement == "UNAVAILABLE" and self.cost_microusd is not None:
+            raise ValueError("un coste no disponible no puede tener importe")
+        if self.cost_measurement != "UNAVAILABLE" and self.cost_microusd is None:
+            raise ValueError("un coste medido exige importe")
         return self
 
 

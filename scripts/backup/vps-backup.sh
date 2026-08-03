@@ -35,9 +35,17 @@ BACKUP_SCHEMAS=(public private auth supabase_migrations)
 #                       infraestructura gestionada por Supabase, sin dato de negocio
 IGNORED_SCHEMAS=(storage realtime vault extensions graphql graphql_public pgbouncer net cron supabase_functions)
 
-# Contrato público que consume la Netlify Function. No incluye RPC históricas:
-# si alguna de estas tres desaparece, el dump falla antes de llegar a R2.
-REQUIRED_PUBLIC_FUNCTIONS=(public.create_chat_request public.complete_chat_request public.fail_chat_request)
+# Contrato público que consumen las Netlify Functions. No incluye RPC históricas:
+# si alguna desaparece, el dump falla antes de llegar a R2.
+REQUIRED_PUBLIC_FUNCTIONS=(
+    public.create_chat_request
+    public.complete_chat_request
+    public.fail_chat_request
+    public.create_deep_research_job
+    public.get_deep_research_job
+    public.update_deep_research_job
+    public.cancel_deep_research_job
+)
 VERIFY_SCRIPT="$SCRIPT_DIR/verify-backup-contract.sh"
 
 cleanup() {

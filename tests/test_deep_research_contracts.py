@@ -63,3 +63,43 @@ def test_el_resultado_exige_evidencia_tipada_y_no_expone_razonamiento() -> None:
 
     assert result.claims[0].evidence_indexes == (1,)
     assert "reasoning" not in DeepResearchOutput.model_fields
+
+
+def test_el_resultado_sustantivo_no_admite_afirmaciones_sin_evidencia() -> None:
+    from deep_research_contracts import DeepResearchOutput
+
+    with pytest.raises(ValidationError):
+        DeepResearchOutput(
+            schema_version="residenciafiscal-deep-research-output/1",
+            job_id="job-1",
+            request_id="request-1",
+            status="completa",
+            text="Respuesta sin respaldo.",
+            limits=(),
+            claims=(),
+            evidence=(),
+        )
+
+
+@pytest.mark.parametrize(
+    ("cost_microusd", "measurement"),
+    [(None, "ACTUAL"), (1_000, "UNAVAILABLE")],
+)
+def test_el_resultado_exige_coherencia_entre_coste_y_medicion(
+    cost_microusd: int | None, measurement: str
+) -> None:
+    from deep_research_contracts import DeepResearchOutput
+
+    with pytest.raises(ValidationError):
+        DeepResearchOutput(
+            schema_version="residenciafiscal-deep-research-output/1",
+            job_id="job-1",
+            request_id="request-1",
+            status="pregunta",
+            text="Falta concretar los hechos.",
+            limits=(),
+            claims=(),
+            evidence=(),
+            cost_microusd=cost_microusd,
+            cost_measurement=measurement,
+        )

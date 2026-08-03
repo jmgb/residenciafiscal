@@ -35,10 +35,30 @@ def safe_target(root: Path, name: str) -> Path:
     return target
 
 
+def existing_bundle_matches(final: Path, manifest_bytes: bytes, files: dict[str, str]) -> bool:
+    manifest_path = final / "MANIFEST.json"
+    if not final.is_dir() or not manifest_path.is_file():
+        return False
+    if manifest_path.read_bytes() != manifest_bytes:
+        return False
+    actual_files: set[str] = set()
+    for path in final.rglob("*"):
+        if path.is_symlink():
+            return False
+        if not path.is_file() or path == manifest_path:
+            continue
+        relative = path.relative_to(final).as_posix()
+        actual_files.add(relative)
+        if relative not in files or sha256(path) != files[relative]:
+            return False
+    return actual_files == set(files)
+
+
 def install_bundle(bundle: Path, destination_root: Path, expected_bundle_id: str) -> Path:
     with zipfile.ZipFile(bundle) as archive:
         try:
-            manifest = json.loads(archive.read("MANIFEST.json"))
+            manifest_bytes = archive.read("MANIFEST.json")
+            manifest = json.loads(manifest_bytes)
         except (KeyError, json.JSONDecodeError) as exc:
             raise ValueError("bundle has no valid MANIFEST.json") from exc
         if manifest.get("bundle_id") != expected_bundle_id:
@@ -49,6 +69,8 @@ def install_bundle(bundle: Path, destination_root: Path, expected_bundle_id: str
 
         final = safe_target(destination_root, expected_bundle_id)
         if final.exists():
+            if existing_bundle_matches(final, manifest_bytes, files):
+                return final
             raise FileExistsError(f"immutable bundle already exists: {final}")
         final.parent.mkdir(parents=True, exist_ok=True)
         with tempfile.TemporaryDirectory(prefix="deep-research-", dir=final.parent) as raw_tmp:
@@ -73,7 +95,7 @@ def install_bundle(bundle: Path, destination_root: Path, expected_bundle_id: str
             if seen_files != set(files):
                 missing = ", ".join(sorted(set(files) - seen_files))
                 raise ValueError(f"manifest file missing from bundle: {missing}")
-            (temporary / "MANIFEST.json").write_bytes(archive.read("MANIFEST.json"))
+            (temporary / "MANIFEST.json").write_bytes(manifest_bytes)
             for path in temporary.rglob("*"):
                 os.chmod(path, 0o444 if path.is_file() else 0o555)
             os.replace(temporary, final)

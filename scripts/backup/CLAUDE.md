@@ -11,7 +11,7 @@ El dump cubre `private`, `public`, `auth` y `supabase_migrations`: **el dato del
 chat vive en `private`**, así que un dump de `public` saldría verde y vacío. Al
 crear un schema nuevo hay que añadirlo a `BACKUP_SCHEMAS` en `vps-backup.sh`; el
 guardián de cobertura del propio script y `tests/test_backup_scripts.py` avisan
-si alguien lo olvida. Cada snapshot valida tablas, bloques `COPY` y las tres RPC
+si alguien lo olvida. Cada snapshot valida tablas, bloques `COPY` y las siete RPC
 vigentes antes de subirlo; el simulacro mensual compara ese contrato con
 Supabase. El checkout operativo del VPS quedó reconciliado con `origin/main` el
 2 de agosto de 2026 y **sigue sin actualizarse solo**: tras cambiar un script

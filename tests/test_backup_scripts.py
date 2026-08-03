@@ -190,6 +190,20 @@ def test_el_dump_cubre_todos_los_schemas_del_contrato_de_persistencia() -> None:
         )
 
 
+def test_backup_y_restore_exigen_las_rpc_de_investigacion_profunda() -> None:
+    required = {
+        "public.create_deep_research_job",
+        "public.get_deep_research_job",
+        "public.update_deep_research_job",
+        "public.cancel_deep_research_job",
+    }
+
+    for name in ("vps-backup.sh", "restore-from-r2.sh"):
+        content = (BACKUP_DIR / name).read_text("utf-8")
+        for function in required:
+            assert function in content, f"{name}: falta {function}"
+
+
 def _dump_sql_de_prueba() -> str:
     return """\
 -- Residencia Fiscal Full Backup

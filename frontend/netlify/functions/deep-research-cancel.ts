@@ -40,7 +40,8 @@ export const createDeepResearchCancelHandler =
     try {
       const remoteAccepted = await cancelRemote(env, value.job_id);
       if (!remoteAccepted) return errorResponse(503, 'Alfredo no ha aceptado la cancelación');
-      await store.cancel(value.job_id, value.conversation_id);
+      const cancelled = await store.cancel(value.job_id, value.conversation_id);
+      if (!cancelled) return errorResponse(409, 'La investigación ya ha terminado');
       return Response.json(
         { job_id: value.job_id, status: 'cancelled' },
         { status: 202, headers: { 'cache-control': 'no-store' } }

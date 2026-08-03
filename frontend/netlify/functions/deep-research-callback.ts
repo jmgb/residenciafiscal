@@ -28,6 +28,16 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const validHash = (value: unknown): value is string =>
   typeof value === 'string' && /^[0-9a-f]{64}$/i.test(value);
 
+const validMeasuredCost = (cost: unknown, measurement: unknown): boolean => {
+  if (measurement === 'UNAVAILABLE') return cost === null || cost === undefined;
+  return (
+    (measurement === 'ACTUAL' || measurement === 'ESTIMATED') &&
+    typeof cost === 'number' &&
+    cost >= 0 &&
+    Number.isSafeInteger(cost)
+  );
+};
+
 const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null => {
   if (!isRecord(value)) return null;
   if (
@@ -40,7 +50,9 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     !Array.isArray(value.claims) ||
     !Array.isArray(value.evidence) ||
     !['ACTUAL', 'ESTIMATED', 'UNAVAILABLE'].includes(String(value.cost_measurement)) ||
+    !validMeasuredCost(value.cost_microusd, value.cost_measurement) ||
     typeof value.model !== 'string' ||
+    value.model.trim().length < 1 ||
     typeof value.latency_ms !== 'number' ||
     value.latency_ms < 0 ||
     !Number.isSafeInteger(value.latency_ms)
@@ -90,7 +102,20 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     return null;
   }
   if (
+    (value.status === 'completa' || value.status === 'parcial') &&
+    (claims.length === 0 || evidence.length === 0)
+  ) {
+    return null;
+  }
+  if (
     claims.some((claim) => claim?.evidenceIndexes.some((index) => index > evidence.length) === true)
+  ) {
+    return null;
+  }
+  const referencedEvidence = new Set(claims.flatMap((claim) => claim?.evidenceIndexes ?? []));
+  if (
+    referencedEvidence.size !== evidence.length ||
+    evidence.some((_, index) => !referencedEvidence.has(index + 1))
   ) {
     return null;
   }
@@ -103,14 +128,7 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     limits: value.limits as string[],
     claims: claims as DeepResearchOutput['claims'],
     evidence: evidence as DeepResearchOutput['evidence'],
-    costMicrousd:
-      value.cost_microusd === null || value.cost_microusd === undefined
-        ? null
-        : typeof value.cost_microusd === 'number' &&
-            value.cost_microusd >= 0 &&
-            Number.isSafeInteger(value.cost_microusd)
-          ? value.cost_microusd
-          : null,
+    costMicrousd: typeof value.cost_microusd === 'number' ? value.cost_microusd : null,
     costMeasurement: value.cost_measurement as DeepResearchOutput['costMeasurement'],
     model: value.model,
     latencyMs: value.latency_ms,
@@ -121,6 +139,10 @@ export const createDeepResearchCallbackHandler =
   ({ secret, store, verifySignature }: CallbackDependencies) =>
   async (request: Request): Promise<Response> => {
     if (request.method !== 'POST') return errorResponse(405, 'Método no permitido');
+    const declaredLength = Number(request.headers.get('content-length'));
+    if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+      return errorResponse(413, 'Payload demasiado grande');
+    }
     const body = await request.text();
     if (new TextEncoder().encode(body).byteLength > MAX_BODY_BYTES)
       return errorResponse(413, 'Payload demasiado grande');
@@ -140,6 +162,7 @@ export const createDeepResearchCallbackHandler =
     if (
       !isRecord(payload) ||
       typeof payload.job_id !== 'string' ||
+      !/^[\w-]{1,128}$/.test(payload.job_id) ||
       typeof payload.status !== 'string'
     ) {
       return errorResponse(400, 'Callback inválido');
@@ -153,15 +176,17 @@ export const createDeepResearchCallbackHandler =
       }
     }
     const status =
-      payload.status === 'completed'
-        ? output
-          ? 'completed'
-          : 'error'
-        : payload.status === 'cancelled' || payload.status === 'canceled'
-          ? 'cancelled'
-          : payload.status === 'running'
-            ? 'running'
-            : 'error';
+      payload.status === 'completed' && output?.status === 'error'
+        ? 'error'
+        : payload.status === 'completed'
+          ? output
+            ? 'completed'
+            : 'error'
+          : payload.status === 'cancelled' || payload.status === 'canceled'
+            ? 'cancelled'
+            : payload.status === 'running'
+              ? 'running'
+              : 'error';
     const callbackStage = isRecord(payload.runtime) ? payload.runtime.stage : null;
     const stage =
       status === 'completed'
@@ -179,7 +204,7 @@ export const createDeepResearchCallbackHandler =
       jobId: payload.job_id,
       status,
       stage,
-      result: output,
+      result: status === 'completed' ? output : null,
       error: status === 'error' ? 'La salida de Alfredo no superó el contrato verificable.' : null,
     });
     return new Response(null, { status: 204, headers: { 'cache-control': 'no-store' } });

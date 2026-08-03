@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createDeepResearchHandler } from '../netlify/functions/deep-research';
+import { verifyAlfredoSignature } from '../netlify/functions/deep-research/alfredo-client';
 import type {
   DeepResearchJobRecord,
   DeepResearchStore,
@@ -40,7 +41,10 @@ afterEach(() => vi.restoreAllMocks());
 describe('deep research HTTP contract', () => {
   it('creates an authenticated Codex job without adding it to A/B', async () => {
     const store = createStore();
-    const submit = vi.fn(async () => ({ jobId: 'deep-job-1', status: 'queued' }));
+    const submit = vi.fn(async (payload: { job_id: string }) => ({
+      jobId: payload.job_id,
+      status: 'queued',
+    }));
     const handler = createDeepResearchHandler({ env, store, submit });
 
     const response = await handler(
@@ -73,6 +77,38 @@ describe('deep research HTTP contract', () => {
           output_schema: 'residenciafiscal-deep-research-output/1',
         }),
       })
+    );
+    const submitted = submit.mock.calls[0][0] as {
+      job_id: string;
+      task: string;
+    };
+    expect(submitted.task).toContain(`job_id: ${submitted.job_id}`);
+    expect(submitted.task).toContain(`request_id: ${submitted.job_id}`);
+  });
+
+  it('fails closed if Alfredo acknowledges a different job identifier', async () => {
+    const store = createStore();
+    const handler = createDeepResearchHandler({
+      env,
+      store,
+      submit: vi.fn(async () => ({ jobId: 'different-job', status: 'queued' })),
+    });
+
+    const response = await handler(
+      new Request('https://residenciafiscal.example/api/deep-research', {
+        method: 'POST',
+        body: JSON.stringify({
+          conversation_id: 'conversation-1',
+          comparison_id: null,
+          country_path: '/espana',
+          question: '¿Cómo se acredita la residencia fiscal?',
+        }),
+      })
+    );
+
+    expect(response.status).toBe(503);
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'error', stage: 'error' })
     );
   });
 
@@ -211,6 +247,83 @@ describe('deep research HTTP contract', () => {
     );
   });
 
+  it('rejects a substantive completed callback without claims or evidence', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-1',
+      status: 'completed',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-1',
+        request_id: 'deep-job-1',
+        status: 'completa',
+        text: 'Respuesta sin respaldo.',
+        limits: [],
+        claims: [],
+        evidence: [],
+        cost_microusd: 1200,
+        cost_measurement: 'ACTUAL',
+        model: 'gpt-5.6',
+        latency_ms: 4200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    const response = await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(response.status).toBe(204);
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'error', result: null })
+    );
+  });
+
+  it('rejects a callback whose cost contradicts its measurement', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-1',
+      status: 'completed',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-1',
+        request_id: 'deep-job-1',
+        status: 'pregunta',
+        text: 'Faltan hechos.',
+        limits: [],
+        claims: [],
+        evidence: [],
+        cost_microusd: null,
+        cost_measurement: 'ACTUAL',
+        model: 'gpt-5.6',
+        latency_ms: 4200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'error', result: null })
+    );
+  });
+
   it('cancels a queued job through Alfredo and records the terminal state', async () => {
     const store = createStore();
     const cancelRemote = vi.fn(async () => true);
@@ -230,5 +343,31 @@ describe('deep research HTTP contract', () => {
     expect(response.status).toBe(202);
     expect(cancelRemote).toHaveBeenCalledWith(env, 'deep-job-1');
     expect(store.cancel).toHaveBeenCalledWith('deep-job-1', 'conversation-1');
+  });
+
+  it('does not report cancellation when completion wins the persistence race', async () => {
+    const store = createStore();
+    store.cancel = vi.fn(async () => false);
+    const handler = createDeepResearchCancelHandler({
+      env,
+      store,
+      cancelRemote: vi.fn(async () => true),
+    });
+
+    const response = await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-cancel', {
+        method: 'POST',
+        body: JSON.stringify({ job_id: 'deep-job-1', conversation_id: 'conversation-1' }),
+      })
+    );
+
+    expect(response.status).toBe(409);
+  });
+
+  it('never accepts callback signatures made with an empty secret', async () => {
+    const body = '{}';
+    const timestamp = String(Math.floor(Date.now() / 1000));
+
+    expect(await verifyAlfredoSignature('', timestamp, '0'.repeat(64), body)).toBe(false);
   });
 });

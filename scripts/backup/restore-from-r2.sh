@@ -26,7 +26,15 @@ R2_BUCKET="${BACKUP_R2_BUCKET:-residenciafiscal-backup}"
 POOLER_HOST="${BACKUP_POOLER_HOST:-aws-0-eu-west-1.pooler.supabase.com}"
 TEMP_DIR="/tmp/residenciafiscal-restore-$$"
 VERIFY_SCRIPT="$SCRIPT_DIR/verify-backup-contract.sh"
-REQUIRED_PUBLIC_FUNCTIONS=(public.create_chat_request public.complete_chat_request public.fail_chat_request)
+REQUIRED_PUBLIC_FUNCTIONS=(
+    public.create_chat_request
+    public.complete_chat_request
+    public.fail_chat_request
+    public.create_deep_research_job
+    public.get_deep_research_job
+    public.update_deep_research_job
+    public.cancel_deep_research_job
+)
 
 # NO usar `source` sobre el .env (ver lib-read-env.sh).
 ENV_FILE="${BACKUP_ENV_FILE:-$PROJECT_ROOT/.env}"

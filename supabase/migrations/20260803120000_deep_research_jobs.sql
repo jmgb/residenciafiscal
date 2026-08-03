@@ -164,22 +164,130 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION private.purge_expired_deep_research_jobs(p_cutoff timestamptz)
-RETURNS integer
+-- La supresión por derechos debe cubrir también C, aunque el job no estuviera
+-- asociado a una comparación A/B.
+CREATE OR REPLACE FUNCTION private.delete_chat_conversation(p_conversation_id text)
+RETURNS jsonb
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = pg_catalog, private
 AS $$
 DECLARE
-    v_deleted integer;
+    v_deep_research bigint;
+    v_messages bigint;
+    v_requests bigint;
+    v_conversations bigint;
 BEGIN
-    IF p_cutoff IS NULL THEN
+    IF p_conversation_id IS NULL
+        OR length(p_conversation_id) NOT BETWEEN 1 AND 128
+        OR p_conversation_id !~ '^[A-Za-z0-9_-]+$'
+    THEN
+        RAISE EXCEPTION 'invalid conversation identifier';
+    END IF;
+
+    PERFORM 1
+      FROM private.chat_conversations
+     WHERE conversation_id = p_conversation_id
+       FOR UPDATE;
+
+    DELETE FROM private.deep_research_jobs
+     WHERE conversation_id = p_conversation_id;
+    GET DIAGNOSTICS v_deep_research = ROW_COUNT;
+
+    DELETE FROM private.chat_messages
+     WHERE conversation_id = p_conversation_id;
+    GET DIAGNOSTICS v_messages = ROW_COUNT;
+
+    DELETE FROM private.chat_requests
+     WHERE conversation_id = p_conversation_id;
+    GET DIAGNOSTICS v_requests = ROW_COUNT;
+
+    DELETE FROM private.chat_conversations
+     WHERE conversation_id = p_conversation_id;
+    GET DIAGNOSTICS v_conversations = ROW_COUNT;
+
+    RETURN jsonb_build_object(
+        'conversation_id', p_conversation_id,
+        'deep_research_deleted', v_deep_research,
+        'messages_deleted', v_messages,
+        'requests_deleted', v_requests,
+        'conversations_deleted', v_conversations
+    );
+END;
+$$;
+
+ALTER TABLE private.chat_retention_purge_audit
+    ADD COLUMN deep_research_candidates bigint NOT NULL DEFAULT 0
+        CHECK (deep_research_candidates >= 0),
+    ADD COLUMN deep_research_deleted bigint NOT NULL DEFAULT 0
+        CHECK (deep_research_deleted >= 0);
+
+CREATE OR REPLACE FUNCTION private.purge_expired_deep_research_jobs(
+    p_cutoff timestamptz,
+    p_dry_run boolean DEFAULT true,
+    p_batch_limit integer DEFAULT 500
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = pg_catalog, private
+AS $$
+DECLARE
+    v_candidates bigint := 0;
+    v_deleted bigint := 0;
+    v_status text;
+BEGIN
+    IF p_cutoff IS NULL OR p_cutoff >= clock_timestamp() THEN
         RAISE EXCEPTION 'invalid deep research retention cutoff';
     END IF;
-    DELETE FROM private.deep_research_jobs
-     WHERE expires_at < p_cutoff;
-    GET DIAGNOSTICS v_deleted = ROW_COUNT;
-    RETURN v_deleted;
+    IF p_dry_run IS NULL THEN
+        RAISE EXCEPTION 'invalid deep research retention dry-run flag';
+    END IF;
+    IF p_batch_limit IS NULL OR p_batch_limit NOT BETWEEN 1 AND 100000 THEN
+        RAISE EXCEPTION 'invalid deep research retention batch limit';
+    END IF;
+
+    SELECT count(*)
+      INTO v_candidates
+      FROM private.deep_research_jobs
+     WHERE created_at < p_cutoff;
+
+    IF v_candidates > p_batch_limit THEN
+        v_status := 'batch_overflow';
+    ELSIF p_dry_run THEN
+        v_status := 'dry_run';
+    ELSE
+        DELETE FROM private.deep_research_jobs
+         WHERE created_at < p_cutoff;
+        GET DIAGNOSTICS v_deleted = ROW_COUNT;
+        v_status := 'completed';
+    END IF;
+
+    INSERT INTO private.chat_retention_purge_audit (
+        cutoff,
+        dry_run,
+        batch_limit,
+        status,
+        deep_research_candidates,
+        deep_research_deleted
+    )
+    VALUES (
+        p_cutoff,
+        p_dry_run,
+        p_batch_limit,
+        v_status,
+        v_candidates,
+        v_deleted
+    );
+
+    RETURN jsonb_build_object(
+        'status', v_status,
+        'cutoff', p_cutoff,
+        'dry_run', p_dry_run,
+        'batch_limit', p_batch_limit,
+        'deep_research_candidates', v_candidates,
+        'deep_research_deleted', v_deleted
+    );
 END;
 $$;
 
@@ -199,10 +307,14 @@ REVOKE ALL ON FUNCTION public.cancel_deep_research_job(text, text)
     FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.cancel_deep_research_job(text, text)
     TO service_role;
-REVOKE ALL ON FUNCTION private.purge_expired_deep_research_jobs(timestamptz)
+REVOKE ALL ON FUNCTION private.delete_chat_conversation(text)
     FROM PUBLIC, anon, authenticated, service_role;
-GRANT EXECUTE ON FUNCTION private.purge_expired_deep_research_jobs(timestamptz)
+REVOKE ALL ON FUNCTION private.purge_expired_deep_research_jobs(timestamptz, boolean, integer)
+    FROM PUBLIC, anon, authenticated, service_role;
+GRANT EXECUTE ON FUNCTION private.purge_expired_deep_research_jobs(timestamptz, boolean, integer)
     TO service_role;
 
 COMMENT ON TABLE private.deep_research_jobs IS
     'Jobs C asíncronos; backend-only, con retención máxima de 15 días y resultado estructurado sin cadena de pensamiento.';
+COMMENT ON FUNCTION private.purge_expired_deep_research_jobs(timestamptz, boolean, integer) IS
+    'Purgado C con el cutoff legal común, dry-run, límite de lote y auditoría sin contenido.';

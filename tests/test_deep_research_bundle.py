@@ -140,3 +140,12 @@ def test_bundle_falla_si_falta_un_artefacto_o_se_altera(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="hash"):
         verify_deep_research_bundle(tampered)
+
+
+def test_deploy_cita_argumentos_remotos_y_restringe_el_bundle_id() -> None:
+    script = (
+        Path(__file__).resolve().parents[1] / "scripts/deploy_deep_research_bundle.sh"
+    ).read_text("utf-8")
+
+    assert '[[ ! "$bundle_id" =~ ^[A-Za-z0-9]' in script
+    assert "printf -v REMOTE_INSTALL_COMMAND '%q '" in script

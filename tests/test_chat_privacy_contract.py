@@ -73,6 +73,35 @@ def test_la_automatizacion_exige_retencion_explicita_y_no_muestra_contenido() ->
     assert "content" not in purge.lower()
 
 
+def test_el_purgado_profundo_respeta_cutoff_dry_run_y_limite_de_lote() -> None:
+    migration = (
+        PROJECT_ROOT / "supabase/migrations/20260803120000_deep_research_jobs.sql"
+    ).read_text("utf-8")
+    purge = (PRIVACY_DIR / "purge-chat-data.sh").read_text("utf-8")
+
+    assert "purge_expired_deep_research_jobs(" in migration
+    assert "p_dry_run boolean" in migration
+    assert "p_batch_limit integer" in migration
+    assert "WHERE created_at < p_cutoff" in migration
+    assert "WHERE expires_at < p_cutoff" not in migration
+    assert (
+        "purge_expired_deep_research_jobs('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT})"
+        in purge
+    )
+    assert 'if [[ "$DRY_RUN_SQL" == "false" ]]' not in purge
+
+
+def test_la_supresion_de_conversacion_incluye_la_investigacion_profunda() -> None:
+    migration = (
+        PROJECT_ROOT / "supabase/migrations/20260803120000_deep_research_jobs.sql"
+    ).read_text("utf-8")
+
+    assert "CREATE OR REPLACE FUNCTION private.delete_chat_conversation" in migration
+    assert "FOR UPDATE" in migration
+    assert "DELETE FROM private.deep_research_jobs" in migration
+    assert "deep_research_deleted" in migration
+
+
 def test_la_supresion_operativa_exige_ticket_y_confirmacion() -> None:
     deletion = (PRIVACY_DIR / "delete-chat-conversation.sh").read_text("utf-8")
 

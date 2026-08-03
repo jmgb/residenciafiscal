@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatView } from '@/components/chat/ChatView';
+import { comparisonIdForLatestQuestion } from '@/components/chat/useDeepResearch';
 import { COUNTRY_ROUTES } from '@/data/countryRoutes';
 import { useConversations } from '@/stores/useConversations';
 import type { ChatChunk, ChatEngine, CorpusEntry } from '@/types/chat';
@@ -134,6 +135,38 @@ function seedShellRobotsMeta() {
 }
 
 describe('ChatView', () => {
+  it('no vincula C con una comparación anterior de otra pregunta', () => {
+    expect(
+      comparisonIdForLatestQuestion([
+        {
+          id: 'u1',
+          role: 'user',
+          content: 'primera pregunta',
+          createdAt: '2026-08-03T10:00:00Z',
+        },
+        {
+          id: 'a1',
+          role: 'assistant',
+          content: '',
+          comparisonId: 'chat-comparison-1',
+          createdAt: '2026-08-03T10:00:01Z',
+        },
+        {
+          id: 'u2',
+          role: 'user',
+          content: 'segunda pregunta',
+          createdAt: '2026-08-03T10:01:00Z',
+        },
+        {
+          id: 'a2',
+          role: 'assistant',
+          content: 'respuesta no comparativa',
+          createdAt: '2026-08-03T10:01:01Z',
+        },
+      ])
+    ).toBeUndefined();
+  });
+
   beforeEach(() => {
     window.localStorage.clear();
     useConversations.setState({ conversations: [] });

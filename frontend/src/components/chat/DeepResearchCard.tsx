@@ -1,6 +1,6 @@
 import { CheckCircle2, CircleAlert, LoaderCircle, Search, Square } from 'lucide-react';
 import { Button } from '@/shared/components/ui/button';
-import type { DeepResearchJob } from '@/types/chat';
+import type { DeepResearchJob, DeepResearchOutput } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
 import { ChatMessageContent } from './ChatMessageContent';
 
@@ -19,9 +19,13 @@ const stageLabel: Record<DeepResearchJob['stage'], string> = {
   error: 'No se ha podido completar la investigación',
 };
 
-const costLabel = (microusd: number | null): string => {
-  if (microusd === null) return 'Coste: no disponible';
-  return `Coste: ${new Intl.NumberFormat('es-ES', {
+const costLabel = (
+  microusd: number | null,
+  measurement: DeepResearchOutput['costMeasurement']
+): string => {
+  if (microusd === null || measurement === 'UNAVAILABLE') return 'Coste: no disponible';
+  const label = measurement === 'ACTUAL' ? 'Coste real' : 'Coste estimado';
+  return `${label}: ${new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 4,
   }).format(microusd / 1_000_000)} USD`;
@@ -95,7 +99,7 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
               <ul className='space-y-2'>
                 {result.evidence.map((evidence) => (
                   <li
-                    key={`${evidence.judgmentId}-${evidence.page}`}
+                    key={`${evidence.judgmentId}-${evidence.page}-${evidence.sourceSha256}-${evidence.quote}`}
                     className='text-xs leading-relaxed'
                   >
                     <p className='font-semibold text-primary'>
@@ -113,7 +117,7 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
             </p>
           )}
           <div className='flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-3 text-xs text-muted-foreground'>
-            <span>{costLabel(result.costMicrousd)}</span>
+            <span>{costLabel(result.costMicrousd, result.costMeasurement)}</span>
             <span>{latencyLabel(result.latencyMs)}</span>
             <span>Modelo: {result.model}</span>
           </div>

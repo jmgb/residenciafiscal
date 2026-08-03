@@ -31,7 +31,15 @@ BEGIN
         OR p_question IS NULL OR length(trim(p_question)) NOT BETWEEN 1 AND 500
         OR p_bundle_id IS NULL OR length(p_bundle_id) NOT BETWEEN 1 AND 128
         OR (p_comparison_id IS NOT NULL AND NOT EXISTS (
-            SELECT 1 FROM private.chat_requests WHERE request_id = p_comparison_id
+            SELECT 1
+              FROM private.chat_requests AS requests
+              JOIN private.chat_messages AS messages
+                ON messages.request_id = requests.request_id
+               AND messages.role = 'user'
+             WHERE requests.request_id = p_comparison_id
+               AND requests.conversation_id = p_conversation_id
+               AND requests.country_path = p_country_path
+               AND messages.content = trim(p_question)
         ))
     THEN
         RAISE EXCEPTION 'invalid deep research job';
@@ -61,7 +69,36 @@ BEGIN
 END;
 $$;
 
-DROP FUNCTION public.create_deep_research_job(text, text, text, text, text);
+-- Compatibilidad blue/green: la Function anterior puede seguir viva durante el
+-- drain y llama todavía a la firma sin comparación.
+CREATE OR REPLACE FUNCTION public.create_deep_research_job(
+    p_job_id text,
+    p_conversation_id text,
+    p_country_path text,
+    p_question text,
+    p_bundle_id text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = pg_catalog, public
+AS $$
+BEGIN
+    RETURN public.create_deep_research_job(
+        p_job_id => p_job_id,
+        p_conversation_id => p_conversation_id,
+        p_comparison_id => NULL,
+        p_country_path => p_country_path,
+        p_question => p_question,
+        p_bundle_id => p_bundle_id
+    );
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.create_deep_research_job(text, text, text, text, text)
+    FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.create_deep_research_job(text, text, text, text, text)
+    TO service_role;
 REVOKE ALL ON FUNCTION public.create_deep_research_job(text, text, text, text, text, text)
     FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.create_deep_research_job(text, text, text, text, text, text)
@@ -134,9 +171,18 @@ BEGIN
 
     INSERT INTO private.chat_comparison_votes (request_id, verdict, reason)
     SELECT request_id, p_verdict, p_reason
-      FROM private.chat_requests
+     FROM private.chat_requests
      WHERE request_id = p_request_id
        AND status = 'completed'
+       AND (
+           p_verdict <> 'c'
+           OR EXISTS (
+               SELECT 1
+                 FROM private.deep_research_jobs AS jobs
+                WHERE jobs.comparison_id = p_request_id
+                  AND jobs.status = 'completed'
+           )
+       )
     ON CONFLICT (request_id) DO NOTHING;
 
     GET DIAGNOSTICS v_inserted = ROW_COUNT;

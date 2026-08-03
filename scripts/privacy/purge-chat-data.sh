@@ -86,13 +86,11 @@ RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
     -v ON_ERROR_STOP=1 \
     -c "SELECT private.purge_expired_chat_data('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT});")"
 echo "$RESULT"
-if [[ "$DRY_RUN_SQL" == "false" ]]; then
-    DEEP_RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
-        "$DB_URL" \
-        --no-password \
-        --no-align \
-        --tuples-only \
-        -v ON_ERROR_STOP=1 \
-        -c "SELECT private.purge_expired_deep_research_jobs('$CUTOFF'::timestamptz);")"
-    echo "$DEEP_RESULT"
-fi
+DEEP_RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
+    "$DB_URL" \
+    --no-password \
+    --no-align \
+    --tuples-only \
+    -v ON_ERROR_STOP=1 \
+    -c "SELECT private.purge_expired_deep_research_jobs('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT});")"
+echo "$DEEP_RESULT"

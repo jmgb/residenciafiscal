@@ -426,7 +426,11 @@ def test_run_rechaza_un_plan_editado_despues_del_preflight(tmp_path: Path) -> No
 
 
 def test_evidencia_sin_verbatim_no_puede_pasar_el_gate(tmp_path: Path) -> None:
-    from deep_research_contracts import DeepResearchEvidence, DeepResearchOutput
+    from deep_research_contracts import (
+        DeepResearchClaim,
+        DeepResearchEvidence,
+        DeepResearchOutput,
+    )
     from deep_research_pilot import validate_output_evidence
 
     output = DeepResearchOutput(
@@ -436,7 +440,7 @@ def test_evidencia_sin_verbatim_no_puede_pasar_el_gate(tmp_path: Path) -> None:
         status="completa",
         text="Respuesta",
         limits=(),
-        claims=(),
+        claims=(DeepResearchClaim(text="Afirmación", evidence_indexes=(1,)),),
         evidence=(
             DeepResearchEvidence(
                 judgment_id="san-1-2020",
@@ -453,19 +457,17 @@ def test_evidencia_sin_verbatim_no_puede_pasar_el_gate(tmp_path: Path) -> None:
     assert not validate_output_evidence(output, tmp_path)
 
 
-def test_salida_sustantiva_sin_evidencia_no_puede_pasar_el_gate(tmp_path: Path) -> None:
+def test_salida_sustantiva_sin_evidencia_no_puede_pasar_el_gate() -> None:
     from deep_research_contracts import DeepResearchOutput
-    from deep_research_pilot import validate_output_evidence
 
-    output = DeepResearchOutput(
-        schema_version="residenciafiscal-deep-research-output/1",
-        job_id="c2-job-01",
-        request_id="c2-job-01",
-        status="completa",
-        text="Respuesta jurídica sin respaldo",
-        limits=(),
-        claims=(),
-        evidence=(),
-    )
-
-    assert not validate_output_evidence(output, tmp_path)
+    with pytest.raises(ValueError, match="sustantiva exige claims y evidence"):
+        DeepResearchOutput(
+            schema_version="residenciafiscal-deep-research-output/1",
+            job_id="c2-job-01",
+            request_id="c2-job-01",
+            status="completa",
+            text="Respuesta jurídica sin respaldo",
+            limits=(),
+            claims=(),
+            evidence=(),
+        )

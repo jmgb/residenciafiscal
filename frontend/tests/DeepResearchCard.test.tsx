@@ -60,7 +60,7 @@ describe('DeepResearchCard', () => {
     expect(screen.getByText('Conclusión con respaldo documental.')).toBeInTheDocument();
     expect(screen.getByText('STS 1 · página 3')).toBeInTheDocument();
     expect(screen.getByText(/Cita literal verificable\./)).toBeInTheDocument();
-    expect(screen.getByText(/Coste: 0,0012 USD/)).toBeInTheDocument();
+    expect(screen.getByText(/Coste real: 0,0012 USD/)).toBeInTheDocument();
     expect(screen.getByText(/Respuesta en: 4,2 s/)).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Opción C' })).toBeInTheDocument();
   });

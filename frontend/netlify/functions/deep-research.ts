@@ -86,6 +86,7 @@ const taskFor = (input: StartInput, jobId: string, bundleId: string): string =>
     'No uses internet, web search, repositorios, credenciales ni otros directorios.',
     'No escribas archivos. No muestres razonamiento interno ni cadena de pensamiento.',
     'Devuelve únicamente JSON válido que cumpla el output_schema solicitado.',
+    `En el JSON final, usa exactamente job_id: ${jobId} y request_id: ${jobId}; no uses el bundle_id como request_id.`,
     'Cada afirmación sustantiva debe tener una evidencia literal verificable; si no basta, responde parcial, pregunta o abstención.',
   ].join('\n');
 
@@ -146,8 +147,11 @@ export const createDeepResearchHandler =
     };
     try {
       const accepted = await submit(payload);
+      if (accepted.jobId !== jobId || accepted.status !== 'queued') {
+        throw new Error('Alfredo ha devuelto una aceptación incoherente');
+      }
       return Response.json(
-        { job_id: accepted.jobId || jobId, status: accepted.status },
+        { job_id: jobId, status: accepted.status },
         { status: 202, headers: { 'cache-control': 'no-store' } }
       );
     } catch {

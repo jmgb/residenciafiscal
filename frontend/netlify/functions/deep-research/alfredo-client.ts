@@ -27,7 +27,7 @@ export async function verifyAlfredoSignature(
   body: string,
   nowMs = Date.now()
 ): Promise<boolean> {
-  if (!timestamp || !signature || !/^\d+$/.test(timestamp)) return false;
+  if (!secret || !timestamp || !signature || !/^\d+$/.test(timestamp)) return false;
   const seconds = Number(timestamp);
   if (!Number.isSafeInteger(seconds) || Math.abs(nowMs / 1000 - seconds) > 300) return false;
   const expected = await hmacSha256(secret, `${timestamp}.${body}`);

@@ -89,11 +89,13 @@ parcial nunca se publica como si fuera un backup válido y el snapshot anterior
 permanece disponible.
 
 Cada dump lleva además un manifiesto con las tablas actuales de `public` y
-`private` y las RPC públicas requeridas: `create_chat_request`,
-`complete_chat_request` y `fail_chat_request`. `verify-backup-contract.sh`
-comprueba que el SQL contiene exactamente esas tablas, un bloque `COPY` para
-cada una y la definición de las tres funciones. Las RPC económicas históricas
-no forman parte del contrato.
+`private` y las RPC públicas requeridas: las tres del chat síncrono
+(`create_chat_request`, `complete_chat_request`, `fail_chat_request`) y las
+cuatro del job C (`create_deep_research_job`, `get_deep_research_job`,
+`update_deep_research_job`, `cancel_deep_research_job`).
+`verify-backup-contract.sh` comprueba que el SQL contiene exactamente esas
+tablas, un bloque `COPY` para cada una y la definición de las siete funciones.
+Las RPC económicas históricas no forman parte del contrato.
 
 Quedan fuera a propósito, con su motivo en el propio script: `storage` (Supabase
 Storage no se usa: los PDF son estáticos del build), `realtime` (efímero), `vault`
