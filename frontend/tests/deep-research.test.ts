@@ -71,12 +71,14 @@ describe('deep research HTTP contract', () => {
         target_id: 'codex',
         callback_url: env.callbackUrl,
         runtime: expect.objectContaining({
-          profile: 'residenciafiscal-deep-research-v1',
+          profile: 'residenciafiscal-deep-research-v2',
           model: 'gpt-5.6-luna',
           reasoning_effort: 'high',
           sandbox: 'read-only',
           mode: 'exec_json',
-          output_schema: 'residenciafiscal-deep-research-output/1',
+          output_schema: 'residenciafiscal-deep-research-draft/2',
+          allowed_tools: ['corpus.search_corpus', 'corpus.read_case', 'corpus.read_verbatim_page'],
+          egress: 'provider-only',
         }),
       })
     );
@@ -84,11 +86,12 @@ describe('deep research HTTP contract', () => {
       job_id: string;
       task: string;
     };
-    expect(submitted.task).toContain(`job_id: ${submitted.job_id}`);
-    expect(submitted.task).toContain(`request_id: ${submitted.job_id}`);
-    expect(submitted.task).toContain(
-      'No incluyas ninguna evidencia que no esté referenciada por al menos una afirmación'
-    );
+    expect(JSON.parse(submitted.task)).toEqual({
+      schema_version: 'residenciafiscal-deep-research-request/2',
+      job_id: submitted.job_id,
+      request_id: submitted.job_id,
+      question: '¿Cómo se acredita la residencia fiscal?',
+    });
   });
 
   it('fails closed if Alfredo acknowledges a different job identifier', async () => {
@@ -140,7 +143,8 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
+        pricing_version: 'test-catalog',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -158,7 +162,8 @@ describe('deep research HTTP contract', () => {
         ],
         cost_microusd: 1200,
         cost_measurement: 'ACTUAL',
-        model: 'modelo declarado por el agente',
+        model: 'gpt-5.6-luna',
+        reasoning_effort: 'high',
         latency_ms: 4200,
       }),
     });
@@ -192,7 +197,52 @@ describe('deep research HTTP contract', () => {
         result: expect.objectContaining({
           model: 'gpt-5.6-luna',
           reasoningEffort: 'high',
+          pricingVersion: 'test-catalog',
         }),
+      })
+    );
+  });
+
+  it('rejects authenticated v1 callbacks instead of downgrading v2 verification', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-v1',
+      status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-v1',
+        request_id: 'deep-job-v1',
+        status: 'pregunta',
+        text: 'Faltan hechos.',
+        limits: ['Contrato anterior en drenaje.'],
+        claims: [],
+        evidence: [],
+        cost_microusd: null,
+        cost_measurement: 'UNAVAILABLE',
+        model: 'gpt-5.6-luna',
+        latency_ms: 1200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    const response = await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(response.status).toBe(204);
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'error',
+        result: null,
       })
     );
   });
@@ -205,7 +255,8 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
+        pricing_version: 'test-catalog',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -237,7 +288,8 @@ describe('deep research HTTP contract', () => {
         ],
         cost_microusd: null,
         cost_measurement: 'UNAVAILABLE',
-        model: 'gpt-5-codex',
+        model: 'gpt-5.6-luna',
+        reasoning_effort: 'high',
         latency_ms: 4200,
       }),
     });
@@ -277,7 +329,7 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.5',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -325,7 +377,7 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -387,7 +439,7 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -440,7 +492,7 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'completa',
@@ -481,7 +533,7 @@ describe('deep research HTTP contract', () => {
       model: 'gpt-5.6-luna',
       reasoning_effort: 'high',
       final_text: JSON.stringify({
-        schema_version: 'residenciafiscal-deep-research-output/1',
+        schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
         request_id: 'deep-job-1',
         status: 'pregunta',

@@ -431,7 +431,7 @@ contra el dominio público después de cada deploy.
         - [x] Añadir contratos Pydantic ejecutables para job, límites, progreso,
           salida, claims y evidencias, sin campo de razonamiento.
       - [x] **C1 — construir el bundle de investigación.** Exportar únicamente
-        casos v3, verbatim, PDF permitidos e índices jurídicos necesarios desde
+        casos v3, verbatim e índices jurídicos JSON necesarios desde
         una versión congelada del corpus. Validar manifiesto, hashes, límites
         de tamaño y ausencia de secretos antes de copiarlo al VPS.
         - [x] Implementar `deep-research-bundle.py` y los targets
@@ -440,6 +440,9 @@ contra el dominio público después de cada deploy.
           verificador comprueba la allowlist y todos los hashes. La instantánea
           `rollout-106/1` quedó validada localmente, transferida al VPS de
           Alfredo y validada allí; bundle y schema se montan en solo lectura.
+        - [x] Construir `rollout-106/2` solo con JSON (sin copias PDF o Markdown),
+          añadir el MCP allowlisted de lectura y verificar localmente el bundle.
+          Su instalación y smoke E2E en el VPS siguen pendientes.
       - [ ] **C2 — piloto controlado con Codex.** Ejecutar una muestra pequeña de
         preguntas difíciles, separada del holdout A/B, en un contenedor o
         microVM con usuario sin privilegios, filesystem de solo lectura, red de
@@ -467,15 +470,17 @@ contra el dominio público después de cada deploy.
         afirmaciones sustantivas sin apoyo verificable. Medir utilidad, cobertura,
         claridad, latencia, coste y cancelaciones; promover solo una mejora
         relevante, repetible y proporcional al coste operativo.
-      - [ ] **C4 — sustituir el explorador por herramientas jurídicas.** Si el
-        piloto supera los gates, implementar el worker de producto con
-        herramientas estrechas (`buscar_sentencias`, `buscar_en_sentencia`,
-        `leer_paginas`, `leer_unidad_v3`, `comparar_resoluciones` y
-        `verificar_cita`), sin shell ni acceso general al repositorio. Exigir
+      - [x] **C4 — sustituir el explorador por herramientas jurídicas.** El
+        perfil v2 expone solo `search_corpus`, `read_case` y
+        `read_verbatim_page` mediante un MCP local, sin shell, navegador,
+        internet accesible al modelo ni acceso general al repositorio. Exigir
         salida estructurada con estado, respuesta, límites, afirmaciones y
         evidencias; pasar toda cita por el verificador determinista y retirar
-        cualquier afirmación sin apoyo válido. No persistir ni mostrar cadena
-        de pensamiento; conservar solo trazas operativas seguras.
+        cualquier afirmación sin apoyo válido. El texto visible se deriva solo
+        de los claims verificados. Prompt, MCP y verificador viven en el runtime
+        del perfil dentro del contenedor; Alfredo solo transporta y entrega el
+        resultado. No persistir ni mostrar cadena de pensamiento; conservar
+        solo trazas operativas seguras.
       - [x] **C5 — integrar la experiencia bajo demanda.** Desde A/B mostrar
         únicamente un botón explícito «Iniciar investigación profunda» o una
         oferta tras respuestas parciales, abstenciones o discrepancias. No

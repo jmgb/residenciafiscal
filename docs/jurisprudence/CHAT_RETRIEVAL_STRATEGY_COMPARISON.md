@@ -495,22 +495,24 @@ autorizada para tráfico jurídico general. No cambia el contrato A/B vigente.
 
 La fundación C0/C1 ya está implementada: contratos ejecutables para job, límites,
 progreso, salida, claims y evidencias, más un builder/verificador de snapshots
-ZIP deterministas. El bundle `rollout-106/1` está transferido y validado en el
-VPS de Alfredo, y el worker autenticado ya supera un smoke E2E. Sigue pendiente
-la muestra de calidad C2 y la decisión de promoción C3/C6.
+ZIP deterministas. El bundle v1 está transferido y validado en el VPS de
+Alfredo, y el worker autenticado ya supera un smoke E2E histórico. El bundle
+`rollout-106/2`, solo JSON y con herramientas acotadas, está validado localmente
+pero todavía requiere instalación y smoke E2E. Siguen pendientes la muestra de
+calidad C2 y la decisión de promoción C3/C6.
 
 C será una investigación de mayor profundidad en la que un agente pueda iterar
 sobre el corpus: formular búsquedas, leer unidades v3, abrir páginas verbatim,
 ampliar o descartar candidatos, contrastar varias resoluciones y verificar si la
-evidencia sostiene cada afirmación antes de responder. El piloto podrá usar
-Codex como explorador de archivos; una eventual versión de producto deberá
-exponer herramientas jurídicas estrechas en lugar de shell y acceso general al
-repositorio.
+evidencia sostiene cada afirmación antes de responder. El perfil v2 mantiene
+Codex como orquestador, pero sustituye la exploración de archivos por tres
+herramientas jurídicas locales: buscar en el índice, leer un caso estructurado
+y leer una página verbatim. No expone shell ni acceso general al repositorio.
 
 El host previsto es el VPS privado de Alfredo, pero no se clonará allí el
 repositorio completo. Cada ejecución recibirá un bundle inmutable y versionado
-con manifiesto y hashes que contendrá únicamente casos v3, verbatim, PDF e
-índices permitidos. Quedan fuera `.env`, credenciales, configuración de
+con manifiesto y hashes que contendrá únicamente casos v3, verbatim e índices
+JSON permitidos. Quedan fuera PDF y Markdown duplicados, `.env`, credenciales, configuración de
 despliegue, historial Git, frontend, scripts y cualquier otro repositorio.
 
 La documentación oficial permite controlar Codex desde servidor mediante el
@@ -549,14 +551,12 @@ pregunta
                                   └── verificador determinista
 ```
 
-El worker será asíncrono, autenticado, cancelable y limitado por tiempo, turnos,
-herramientas, documentos, páginas y coste. La arquitectura objetivo del worker
-de producto exige un entorno de herramientas con filesystem de solo lectura,
-directorio temporal efímero y red deshabilitada; si el controlador necesita
-llamar al proveedor LLM, ese egress debe quedar aislado y estrictamente
-permitido fuera del entorno de herramientas. El piloto actual de Alfredo aún
-usa Codex como explorador dentro de un contenedor Docker endurecido y conserva
-egress HTTPS del proveedor, por lo que no debe confundirse con C4.
+El worker es asíncrono, autenticado, cancelable y limitado por tiempo,
+herramientas, documentos, páginas y coste. El perfil v2 vive dentro del
+contenedor Codex endurecido, con filesystem de solo lectura y directorio
+temporal efímero. El agente no recibe ninguna herramienta de red; el proceso
+padre conserva únicamente el egress HTTPS necesario para llamar al proveedor.
+Prompt, MCP y verificador pertenecen al perfil, no al supervisor de Alfredo.
 
 ### Secuencia de ejecución
 
@@ -579,10 +579,10 @@ egress HTTPS del proveedor, por lo que no debe confundirse con C4.
    A/B. Mantener constantes corpus, fecha, ausencia de internet, contrato,
    presupuesto, modelo, herramientas e instrucciones; medir utilidad, cobertura,
    claridad, latencia, coste y cancelaciones.
-5. **C4 — worker de producto:** si supera los gates, sustituir el explorador por
-   herramientas jurídicas acotadas: `buscar_sentencias`,
-   `buscar_en_sentencia`, `leer_paginas`, `leer_unidad_v3`,
-   `comparar_resoluciones` y `verificar_cita`.
+5. **C4 — worker acotado:** implementado en el perfil v2 con
+   `search_corpus`, `read_case` y `read_verbatim_page`; las citas pasan después
+   por un verificador determinista fuera del modelo pero dentro del mismo
+   runtime aislado. El texto visible se recompone solo desde claims verificados.
 6. **C5/C6 — UX y promoción:** la UX bajo demanda, los estados objetivos y el
    bloque independiente están implementados y probados como piloto. Promover a
    tráfico real solo tras revisar autenticación, retención, tratamiento,
@@ -607,22 +607,23 @@ Un piloto aceptable debe cumplir simultáneamente:
 - ejecutarse fuera de la Netlify Function síncrona, en un worker asíncrono con
   timeout y cancelación;
 - crear un entorno efímero por petición y montar en solo lectura únicamente los
-  PDF, verbatim, casos e índices permitidos;
+  verbatim, casos e índices JSON permitidos;
 - excluir `.env`, credenciales, configuración de despliegue, historial Git y
   cualquier otro repositorio;
-- deshabilitar red y escritura, salvo un directorio temporal desechable;
+- deshabilitar todas las herramientas de red y la escritura del agente, salvo
+  un directorio temporal desechable; el cliente conserva solo el transporte al
+  proveedor del modelo;
 - tratar todo texto recuperado como datos, nunca como instrucciones;
-- ofrecer herramientas acotadas como `buscar_sentencias`,
-  `buscar_en_sentencia`, `leer_paginas`, `leer_unidad_v3`,
-  `comparar_resoluciones` y `verificar_cita`;
+- ofrecer únicamente las herramientas acotadas `search_corpus`, `read_case` y
+  `read_verbatim_page`;
 - fijar límites de tiempo, turnos, llamadas de herramienta, documentos, páginas
   y coste antes de iniciar la ejecución;
 - exigir JSON Schema con estado, respuesta, límites, afirmaciones y evidencias;
-- resolver citas contra el verbatim/PDF mediante código determinista y retirar
+- resolver citas contra `raw_page_text` mediante código determinista y retirar
   cualquier afirmación sustantiva sin apoyo válido;
 - no persistir ni mostrar cadena de pensamiento. La traza operativa conserva
-  solo herramientas invocadas, IDs de sentencia/página, métricas, estados y
-  códigos de fallo seguros.
+  solo nombre de servidor/herramienta, estado, métricas y códigos de fallo
+  seguros; no conserva argumentos, preguntas, páginas ni citas en el audit.
 
 La pregunta fiscal y la respuesta seguirían bajo el mismo contrato privado de
 retención que A/B. Antes de tráfico real deben revisarse además el mecanismo de

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "residenciafiscal-deep-research-draft/2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "text", "limits", "claims", "evidence"],
+  "properties": {
+    "status": { "enum": ["completa", "parcial", "pregunta", "abstención", "error"] },
+    "text": { "type": "string", "maxLength": 4000 },
+    "limits": {
+      "type": "array",
+      "maxItems": 8,
+      "items": { "type": "string", "maxLength": 200 }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text", "evidence_indexes"],
+        "properties": {
+          "text": { "type": "string", "minLength": 20, "maxLength": 400 },
+          "evidence_indexes": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true,
+            "items": { "type": "integer", "minimum": 1, "maximum": 12 }
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["judgment_id", "page", "source_sha256", "quote", "verification"],
+        "properties": {
+          "judgment_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$" },
+          "page": { "type": "integer", "minimum": 1 },
+          "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "quote": { "type": "string", "minLength": 20, "maxLength": 400 },
+          "verification": { "type": "string", "const": "EXACT" }
+        }
+      }
+    }
+  }
+}

@@ -81,6 +81,26 @@ def test_el_resultado_sustantivo_no_admite_afirmaciones_sin_evidencia() -> None:
         )
 
 
+def test_el_contrato_python_acepta_la_salida_v2_con_esfuerzo_fijado() -> None:
+    from deep_research_contracts import DeepResearchOutput
+
+    result = DeepResearchOutput(
+        schema_version="residenciafiscal-deep-research-output/2",
+        job_id="job-1",
+        request_id="request-1",
+        status="pregunta",
+        text="Falta concretar los hechos.",
+        limits=(),
+        claims=(),
+        evidence=(),
+        reasoning_effort="high",
+        pricing_version="test-catalog",
+    )
+
+    assert result.schema_version.endswith("/2")
+    assert result.reasoning_effort == "high"
+
+
 @pytest.mark.parametrize(
     ("cost_microusd", "measurement"),
     [(None, "ACTUAL"), (1_000, "UNAVAILABLE")],

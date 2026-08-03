@@ -9,7 +9,7 @@ describe('deep research assistant message', () => {
       status: 'completed',
       stage: 'completed',
       result: {
-        schemaVersion: 'residenciafiscal-deep-research-output/1',
+        schemaVersion: 'residenciafiscal-deep-research-output/2',
         jobId: 'deep-job-1',
         requestId: 'deep-job-1',
         status: 'completa',
@@ -19,6 +19,7 @@ describe('deep research assistant message', () => {
         evidence: [],
         costMicrousd: null,
         costMeasurement: 'UNAVAILABLE',
+        pricingVersion: 'test-catalog',
         model: 'gpt-5-codex',
         reasoningEffort: 'high',
         latencyMs: 4200,

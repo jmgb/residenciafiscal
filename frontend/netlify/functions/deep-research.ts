@@ -1,7 +1,8 @@
 import { submitDeepResearchJob } from './deep-research/alfredo-client';
 import {
+  DEEP_RESEARCH_ALLOWED_TOOLS,
+  DEEP_RESEARCH_DRAFT_SCHEMA,
   DEEP_RESEARCH_MODEL,
-  DEEP_RESEARCH_OUTPUT_SCHEMA,
   DEEP_RESEARCH_PROFILE,
   DEEP_RESEARCH_REASONING_EFFORT,
   type DeepResearchAlfredoPayload,
@@ -77,21 +78,13 @@ async function questionHash(question: string): Promise<string> {
   return [...new Uint8Array(digest)].map((value) => value.toString(16).padStart(2, '0')).join('');
 }
 
-const taskFor = (input: StartInput, jobId: string, bundleId: string): string =>
-  [
-    'Ejecuta una investigación jurídica profunda offline para residencia fiscal española.',
-    `job_id: ${jobId}`,
-    `bundle_id: ${bundleId}`,
-    `Pregunta del usuario: <pregunta>${input.question}</pregunta>`,
-    '',
-    'Usa exclusivamente el bundle inmutable indicado en el runtime.',
-    'No uses internet, web search, repositorios, credenciales ni otros directorios.',
-    'No escribas archivos. No muestres razonamiento interno ni cadena de pensamiento.',
-    'Devuelve únicamente JSON válido que cumpla el output_schema solicitado.',
-    `En el JSON final, usa exactamente job_id: ${jobId} y request_id: ${jobId}; no uses el bundle_id como request_id.`,
-    'Cada afirmación sustantiva debe tener una evidencia literal verificable; si no basta, responde parcial, pregunta o abstención.',
-    'No incluyas ninguna evidencia que no esté referenciada por al menos una afirmación; los evidence_indexes deben ser contiguos y empezar en 1.',
-  ].join('\n');
+const taskFor = (input: StartInput, jobId: string): string =>
+  JSON.stringify({
+    schema_version: 'residenciafiscal-deep-research-request/2',
+    job_id: jobId,
+    request_id: jobId,
+    question: input.question,
+  });
 
 export const createDeepResearchHandler =
   ({ env, store, submit }: StartDependencies) =>
@@ -121,7 +114,7 @@ export const createDeepResearchHandler =
       user_phone: `residenciafiscal:${input.conversationId}`,
       source_message_id: jobId,
       task_hash: await questionHash(input.question),
-      task: taskFor(input, jobId, env.bundleId),
+      task: taskFor(input, jobId),
       target_id: 'codex',
       target_label: 'Codex',
       runtime: {
@@ -132,10 +125,10 @@ export const createDeepResearchHandler =
         reasoning_effort: DEEP_RESEARCH_REASONING_EFFORT,
         sandbox: 'read-only',
         mode: 'exec_json',
-        allowed_tools: [],
-        output_schema: DEEP_RESEARCH_OUTPUT_SCHEMA,
+        allowed_tools: [...DEEP_RESEARCH_ALLOWED_TOOLS],
+        output_schema: DEEP_RESEARCH_DRAFT_SCHEMA,
         bundle_id: env.bundleId,
-        egress: 'controller-only',
+        egress: 'provider-only',
       },
       session_scope: 'job',
       session_id_to_resume: null,

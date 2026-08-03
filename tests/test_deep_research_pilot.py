@@ -97,7 +97,7 @@ def test_prepare_materializa_jobs_y_bloquea_el_holdout(tmp_path: Path) -> None:
         output_dir=output,
     )
 
-    assert plan.bundle_id == "rollout-106/1"
+    assert plan.bundle_id == "rollout-106/2"
     assert [item.question_id for item in plan.questions] == ["GEN-01", "DAY-01"]
     assert [item.job_id for item in plan.jobs] == ["c2-2026-08-03-01", "c2-2026-08-03-02"]
     assert json.loads((output / "PLAN.json").read_text()) == plan.model_dump(mode="json")
@@ -455,6 +455,63 @@ def test_evidencia_sin_verbatim_no_puede_pasar_el_gate(tmp_path: Path) -> None:
     )
 
     assert not validate_output_evidence(output, tmp_path)
+
+
+def test_evidencia_literal_pasa_con_bundle_json_sin_pdf(tmp_path: Path) -> None:
+    from deep_research_contracts import (
+        DeepResearchClaim,
+        DeepResearchEvidence,
+        DeepResearchOutput,
+    )
+    from deep_research_pilot import validate_output_evidence
+    from verbatim_hashing import sha256_canonical_pages, sha256_utf8
+
+    raw_page_text = "La cita literal pertenece a la sentencia."
+    page = {
+        "page_index": 1,
+        "printed_page": "1",
+        "extraction_status": "TEXT_EXTRACTED",
+        "raw_page_text": raw_page_text,
+        "text_sha256": sha256_utf8(raw_page_text),
+    }
+    verbatim = {
+        "schema_version": "residenciafiscal-verbatim/1",
+        "document_id": "san-1-2020",
+        "source_file": "sentencias/SAN_1_2020.pdf",
+        "source_sha256": "a" * 64,
+        "extractor": {"name": "pypdf", "version": "6.14.2"},
+        "status": "COMPLETE",
+        "page_count": 1,
+        "pages": [page],
+        "pages_sha256": sha256_canonical_pages([page]),
+    }
+    _write(
+        tmp_path / "verbatim/san-1-2020.pages.json",
+        json.dumps(verbatim, ensure_ascii=False),
+    )
+    output = DeepResearchOutput(
+        schema_version="residenciafiscal-deep-research-output/1",
+        job_id="c2-job-01",
+        request_id="c2-job-01",
+        status="completa",
+        text="Respuesta",
+        limits=(),
+        claims=(DeepResearchClaim(text="Afirmación", evidence_indexes=(1,)),),
+        evidence=(
+            DeepResearchEvidence(
+                judgment_id="san-1-2020",
+                page=1,
+                source_sha256="a" * 64,
+                quote="cita literal pertenece",
+                verification="EXACT",
+            ),
+        ),
+        cost_microusd=100,
+        cost_measurement="ESTIMATED",
+    )
+
+    assert validate_output_evidence(output, tmp_path)
+    assert not (tmp_path / "pdf").exists()
 
 
 def test_salida_sustantiva_sin_evidencia_no_puede_pasar_el_gate() -> None:

@@ -79,7 +79,10 @@ class DeepResearchClaim(JurisprudenceCaseModel):
 class DeepResearchOutput(JurisprudenceCaseModel):
     """Salida estructurada de C; deliberadamente no tiene campo de razonamiento."""
 
-    schema_version: Literal["residenciafiscal-deep-research-output/1"]
+    schema_version: Literal[
+        "residenciafiscal-deep-research-output/1",
+        "residenciafiscal-deep-research-output/2",
+    ]
     job_id: Identifier
     request_id: NonEmptyText
     status: DeepResearchAnswerStatus
@@ -89,11 +92,17 @@ class DeepResearchOutput(JurisprudenceCaseModel):
     evidence: tuple[DeepResearchEvidence, ...]
     cost_microusd: Annotated[int, Field(ge=0)] | None = None
     cost_measurement: CostMeasurement = "UNAVAILABLE"
+    pricing_version: NonEmptyText | None = None
     model: NonEmptyText = "unavailable"
+    reasoning_effort: Literal["high"] | None = None
     latency_ms: Annotated[int, Field(ge=0)] = 0
 
     @model_validator(mode="after")
     def validate_claim_references(self) -> DeepResearchOutput:
+        if self.schema_version.endswith("/2") and self.reasoning_effort != "high":
+            raise ValueError("la salida v2 exige reasoning_effort high")
+        if self.schema_version.endswith("/2") and self.pricing_version is None:
+            raise ValueError("la salida v2 exige pricing_version")
         evidence_count = len(self.evidence)
         if any(
             index < 1 or index > evidence_count
@@ -116,12 +125,12 @@ class DeepResearchOutput(JurisprudenceCaseModel):
 class DeepResearchBundleManifest(JurisprudenceCaseModel):
     """Manifiesto reproducible de los archivos que puede leer el worker."""
 
-    schema_version: Literal["residenciafiscal-deep-research-bundle/1"]
+    schema_version: Literal["residenciafiscal-deep-research-bundle/2"]
     bundle_id: NonEmptyText
     source_manifest_path: NonEmptyText
     source_manifest_sha256: Sha256
     files: dict[NonEmptyText, Sha256]
-    scope: dict[NonEmptyText, Annotated[int, Field(ge=0)]]
+    scope: dict[NonEmptyText, Annotated[int, Field(ge=0)] | NonEmptyText]
 
 
 class DeepResearchPilotQuestion(JurisprudenceCaseModel):

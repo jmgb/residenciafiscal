@@ -53,8 +53,12 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     !Array.isArray(value.evidence) ||
     !['ACTUAL', 'ESTIMATED', 'UNAVAILABLE'].includes(String(value.cost_measurement)) ||
     !validMeasuredCost(value.cost_microusd, value.cost_measurement) ||
+    typeof value.pricing_version !== 'string' ||
+    value.pricing_version.trim().length < 1 ||
     typeof value.model !== 'string' ||
     value.model.trim().length < 1 ||
+    value.model !== DEEP_RESEARCH_MODEL ||
+    value.reasoning_effort !== DEEP_RESEARCH_REASONING_EFFORT ||
     typeof value.latency_ms !== 'number' ||
     value.latency_ms < 0 ||
     !Number.isSafeInteger(value.latency_ms)
@@ -138,6 +142,7 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     evidence: reconciledEvidence as DeepResearchOutput['evidence'],
     costMicrousd: typeof value.cost_microusd === 'number' ? value.cost_microusd : null,
     costMeasurement: value.cost_measurement as DeepResearchOutput['costMeasurement'],
+    pricingVersion: value.pricing_version,
     model: DEEP_RESEARCH_MODEL,
     reasoningEffort: DEEP_RESEARCH_REASONING_EFFORT,
     latencyMs: value.latency_ms,

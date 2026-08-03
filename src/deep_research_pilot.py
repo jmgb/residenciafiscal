@@ -668,7 +668,7 @@ def _error_output(job: DeepResearchJob, limit: str) -> DeepResearchOutput:
 
 
 def validate_output_evidence(output: DeepResearchOutput, workspace: Path) -> bool:
-    """Comprueba cada evidencia contra verbatim y PDF del workspace efímero."""
+    """Comprueba cada evidencia contra el JSON verbatim del workspace efímero."""
 
     if output.status in {"completa", "parcial"} and (not output.claims or not output.evidence):
         return False
@@ -677,8 +677,7 @@ def validate_output_evidence(output: DeepResearchOutput, workspace: Path) -> boo
         return False
     for evidence in output.evidence:
         verbatim_path = workspace / "verbatim" / f"{evidence.judgment_id}.pages.json"
-        pdf_path = workspace / "pdf" / f"{evidence.judgment_id}.pdf"
-        if not verbatim_path.is_file() or not pdf_path.is_file():
+        if not verbatim_path.is_file():
             return False
         try:
             corpus = load_verbatim_corpus(verbatim_path.read_bytes())
@@ -687,8 +686,6 @@ def validate_output_evidence(output: DeepResearchOutput, workspace: Path) -> boo
         if corpus.document_id != evidence.judgment_id:
             return False
         if evidence.source_sha256 != corpus.source_sha256:
-            return False
-        if sha256_file(pdf_path) != corpus.source_sha256:
             return False
         page = next((item for item in corpus.pages if item.page_index == evidence.page), None)
         if page is None or evidence.quote not in page.raw_page_text:

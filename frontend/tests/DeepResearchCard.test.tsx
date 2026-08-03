@@ -8,7 +8,7 @@ const completed: DeepResearchJob = {
   status: 'completed',
   stage: 'completed',
   result: {
-    schemaVersion: 'residenciafiscal-deep-research-output/1',
+    schemaVersion: 'residenciafiscal-deep-research-output/2',
     jobId: 'deep-1',
     requestId: 'deep-1',
     status: 'completa',
@@ -26,6 +26,7 @@ const completed: DeepResearchJob = {
     ],
     costMicrousd: 1200,
     costMeasurement: 'ACTUAL',
+    pricingVersion: 'test-catalog',
     model: 'gpt-5.6-luna',
     reasoningEffort: 'high',
     latencyMs: 4200,

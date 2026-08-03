@@ -1,7 +1,14 @@
-export const DEEP_RESEARCH_PROFILE = 'residenciafiscal-deep-research-v1';
-export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
+export const DEEP_RESEARCH_PROFILE = 'residenciafiscal-deep-research-v2';
+export const DEEP_RESEARCH_DRAFT_SCHEMA = 'residenciafiscal-deep-research-draft/2';
+export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/2';
+export const DEEP_RESEARCH_LEGACY_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
 export const DEEP_RESEARCH_MODEL = 'gpt-5.6-luna';
 export const DEEP_RESEARCH_REASONING_EFFORT = 'high';
+export const DEEP_RESEARCH_ALLOWED_TOOLS = [
+  'corpus.search_corpus',
+  'corpus.read_case',
+  'corpus.read_verbatim_page',
+] as const;
 
 export type DeepResearchStatus = 'queued' | 'running' | 'completed' | 'cancelled' | 'error';
 export type DeepResearchStage =
@@ -26,7 +33,7 @@ export interface DeepResearchClaim {
 }
 
 export interface DeepResearchOutput {
-  schemaVersion: typeof DEEP_RESEARCH_OUTPUT_SCHEMA;
+  schemaVersion: typeof DEEP_RESEARCH_OUTPUT_SCHEMA | typeof DEEP_RESEARCH_LEGACY_OUTPUT_SCHEMA;
   jobId: string;
   requestId: string;
   status: 'completa' | 'parcial' | 'pregunta' | 'abstención' | 'error';
@@ -36,6 +43,7 @@ export interface DeepResearchOutput {
   evidence: DeepResearchEvidence[];
   costMicrousd: number | null;
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
+  pricingVersion: string;
   model: string;
   reasoningEffort: typeof DEEP_RESEARCH_REASONING_EFFORT;
   latencyMs: number;
@@ -97,10 +105,10 @@ export interface DeepResearchAlfredoPayload {
     reasoning_effort: typeof DEEP_RESEARCH_REASONING_EFFORT;
     sandbox: 'read-only';
     mode: 'exec_json';
-    allowed_tools: [];
-    output_schema: typeof DEEP_RESEARCH_OUTPUT_SCHEMA;
+    allowed_tools: [...typeof DEEP_RESEARCH_ALLOWED_TOOLS];
+    output_schema: typeof DEEP_RESEARCH_DRAFT_SCHEMA;
     bundle_id: string;
-    egress: 'controller-only';
+    egress: 'provider-only';
   };
   session_scope: 'job';
   session_id_to_resume: null;

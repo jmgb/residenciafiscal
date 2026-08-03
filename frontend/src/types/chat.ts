@@ -82,7 +82,9 @@ export interface DeepResearchClaim {
 }
 
 export interface DeepResearchOutput {
-  schemaVersion: 'residenciafiscal-deep-research-output/1';
+  schemaVersion:
+    | 'residenciafiscal-deep-research-output/2'
+    | 'residenciafiscal-deep-research-output/1';
   jobId: string;
   requestId: string;
   status: 'completa' | 'parcial' | 'pregunta' | 'abstención' | 'error';
@@ -92,6 +94,7 @@ export interface DeepResearchOutput {
   evidence: DeepResearchEvidence[];
   costMicrousd: number | null;
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
+  pricingVersion: string;
   model: string;
   reasoningEffort: 'high';
   latencyMs: number;

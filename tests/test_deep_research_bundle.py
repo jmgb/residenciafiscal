@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib
 import json
 import zipfile
 from pathlib import Path
@@ -10,9 +11,55 @@ from pathlib import Path
 import pytest
 
 
+def test_bundle_pricing_does_not_follow_the_independent_ab_chat_model(monkeypatch) -> None:
+    import chat_model_policy
+    import deep_research_bundle
+
+    try:
+        monkeypatch.setattr(chat_model_policy, "CHAT_MODEL", "gpt-future-chat-only")
+        reloaded = importlib.reload(deep_research_bundle)
+
+        pricing = json.loads(reloaded._render_model_pricing())
+
+        assert pricing["model"] == "gpt-5.6-luna"
+    finally:
+        monkeypatch.undo()
+        importlib.reload(deep_research_bundle)
+
+
 def _write(path: Path, content: bytes | str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(content if isinstance(content, bytes) else content.encode())
+
+
+def _verbatim_document(judgment_id: str, source_sha256: str) -> dict[str, object]:
+    text = "La residencia exige prueba exacta."
+    pages = [
+        {
+            "page_index": 1,
+            "printed_page": "1",
+            "raw_page_text": text,
+            "text_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "extraction_status": "TEXT_EXTRACTED",
+        }
+    ]
+    pages_payload = json.dumps(
+        pages,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return {
+        "schema_version": "residenciafiscal-verbatim/1",
+        "document_id": judgment_id,
+        "source_file": "sentencias/SAN_1_2020.pdf",
+        "source_sha256": source_sha256,
+        "extractor": {"name": "pypdf", "version": "6.14.2"},
+        "page_count": 1,
+        "pages_sha256": hashlib.sha256(pages_payload).hexdigest(),
+        "status": "COMPLETE",
+        "pages": pages,
+    }
 
 
 def _project(tmp_path: Path) -> tuple[Path, Path]:
@@ -20,8 +67,12 @@ def _project(tmp_path: Path) -> tuple[Path, Path]:
     pdf = project / "sentencias" / "SAN_1_2020.pdf"
     _write(pdf, b"pdf de prueba")
     judgment_id = "san-1-2020"
+    source_sha256 = hashlib.sha256(pdf.read_bytes()).hexdigest()
     _write(project / "knowledge/jurisprudencia-v3/cases/san-1-2020.case.json", "{}\n")
-    _write(project / "knowledge/jurisprudencia-v3/verbatim/san-1-2020.pages.json", "{}\n")
+    _write(
+        project / "knowledge/jurisprudencia-v3/verbatim/san-1-2020.pages.json",
+        json.dumps(_verbatim_document(judgment_id, source_sha256)),
+    )
     _write(project / "knowledge/jurisprudencia-v3/retrieval/san-1-2020.issues.json", "{}\n")
     _write(project / "knowledge/jurisprudencia-v3/jurisdicciones/san-1-2020.roles.json", "{}\n")
     _write(
@@ -38,7 +89,7 @@ def _project(tmp_path: Path) -> tuple[Path, Path]:
             {
                 "judgment_id": judgment_id,
                 "source_file": "sentencias/SAN_1_2020.pdf",
-                "source_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
+                "source_sha256": source_sha256,
                 "proposal_path": "knowledge/jurisprudence-case-proposals/san-1-2020.proposal.json",
                 "evaluation_path": "knowledge/jurisprudencia-v3/evaluations/san-1-2020.questions.json",
                 "batch_id": "batch-001",
@@ -76,12 +127,26 @@ def test_bundle_contiene_solo_material_permitido_y_hashes_verificables(tmp_path:
         assert set(names) == {
             "MANIFEST.json",
             "metadata/rollout-manifest.json",
+            "metadata/model-pricing.json",
             "cases/san-1-2020.case.json",
             "verbatim/san-1-2020.pages.json",
             "retrieval/san-1-2020.issues.json",
             "retrieval/rollout-106.corpus.json",
             "jurisdicciones/san-1-2020.roles.json",
-            "pdf/san-1-2020.pdf",
+        }
+        assert archived_manifest["bundle_id"] == "rollout-106/2"
+        assert archived_manifest["scope"]["format"] == "json-only"
+        pricing = json.loads(archive.read("metadata/model-pricing.json"))
+        from llm_gateway.models import CATALOG_VERSION, lookup_model
+
+        model = lookup_model("gpt-5.6-luna")
+        assert model is not None
+        assert pricing == {
+            "schema_version": "residenciafiscal-model-pricing/1",
+            "catalog_version": CATALOG_VERSION,
+            "model": "gpt-5.6-luna",
+            "input_usd_per_mtok": str(model.input_usd_per_mtok),
+            "output_usd_per_mtok": str(model.output_usd_per_mtok),
         }
 
 
@@ -135,11 +200,80 @@ def test_bundle_falla_si_falta_un_artefacto_o_se_altera(tmp_path: Path) -> None:
     tampered = tmp_path / "tampered-copy.bundle.zip"
     with zipfile.ZipFile(original) as source, zipfile.ZipFile(tampered, "w") as target:
         for item in source.infolist():
-            payload = b"alterado" if item.filename == "pdf/san-1-2020.pdf" else source.read(item)
+            payload = (
+                b"alterado"
+                if item.filename == "verbatim/san-1-2020.pages.json"
+                else source.read(item)
+            )
             target.writestr(item, payload)
 
     with pytest.raises(ValueError, match="hash"):
         verify_deep_research_bundle(tampered)
+
+
+def test_bundle_rechaza_verbatim_no_vinculado_a_la_fuente_canonica(tmp_path: Path) -> None:
+    from deep_research_bundle import build_deep_research_bundle
+
+    project, manifest_path = _project(tmp_path)
+    verbatim = project / "knowledge/jurisprudencia-v3/verbatim/san-1-2020.pages.json"
+    document = json.loads(verbatim.read_text("utf-8"))
+    document["document_id"] = "san-otro-2020"
+    verbatim.write_text(json.dumps(document), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="verbatim"):
+        build_deep_research_bundle(
+            project_root=project,
+            rollout_manifest_path=manifest_path,
+            output_path=tmp_path / "invalid.bundle.zip",
+        )
+
+
+def test_bundle_rechaza_verbatim_con_hashes_internos_corruptos(tmp_path: Path) -> None:
+    from deep_research_bundle import build_deep_research_bundle
+
+    project, manifest_path = _project(tmp_path)
+    verbatim = project / "knowledge/jurisprudencia-v3/verbatim/san-1-2020.pages.json"
+    document = json.loads(verbatim.read_text("utf-8"))
+    document["pages"][0]["raw_page_text"] += " Alterado."
+    verbatim.write_text(json.dumps(document), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="verbatim integrity"):
+        build_deep_research_bundle(
+            project_root=project,
+            rollout_manifest_path=manifest_path,
+            output_path=tmp_path / "invalid-hash.bundle.zip",
+        )
+
+
+def test_bundle_verify_rechaza_hash_manifest_recalculado_sobre_verbatim_corrupto(
+    tmp_path: Path,
+) -> None:
+    from deep_research_bundle import build_deep_research_bundle, verify_deep_research_bundle
+
+    project, manifest_path = _project(tmp_path)
+    original = tmp_path / "original.bundle.zip"
+    corrupted = tmp_path / "corrupted.bundle.zip"
+    build_deep_research_bundle(
+        project_root=project,
+        rollout_manifest_path=manifest_path,
+        output_path=original,
+    )
+
+    with zipfile.ZipFile(original) as source:
+        payloads = {info.filename: source.read(info) for info in source.infolist()}
+    verbatim_name = "verbatim/san-1-2020.pages.json"
+    verbatim = json.loads(payloads[verbatim_name])
+    verbatim["pages"][0]["raw_page_text"] += " Alterado."
+    payloads[verbatim_name] = json.dumps(verbatim).encode("utf-8")
+    manifest = json.loads(payloads["MANIFEST.json"])
+    manifest["files"][verbatim_name] = hashlib.sha256(payloads[verbatim_name]).hexdigest()
+    payloads["MANIFEST.json"] = json.dumps(manifest).encode("utf-8")
+    with zipfile.ZipFile(corrupted, "w") as archive:
+        for name, payload in payloads.items():
+            archive.writestr(name, payload)
+
+    with pytest.raises(ValueError, match="verbatim integrity"):
+        verify_deep_research_bundle(corrupted)
 
 
 def test_deploy_cita_argumentos_remotos_y_restringe_el_bundle_id() -> None:
@@ -149,3 +283,8 @@ def test_deploy_cita_argumentos_remotos_y_restringe_el_bundle_id() -> None:
 
     assert '[[ ! "$bundle_id" =~ ^[A-Za-z0-9]' in script
     assert "printf -v REMOTE_INSTALL_COMMAND '%q '" in script
+    assert "deep_research_corpus.py" in script
+    assert "deep_research_corpus_mcp.py" in script
+    assert "deep_research_codex_runtime.py" in script
+    assert "deep_research_verifier.py" in script
+    assert "--runtime-source" in script
