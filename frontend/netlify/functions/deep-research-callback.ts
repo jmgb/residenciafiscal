@@ -1,6 +1,8 @@
 import { verifyAlfredoSignature } from './deep-research/alfredo-client';
 import {
+  DEEP_RESEARCH_MODEL,
   DEEP_RESEARCH_OUTPUT_SCHEMA,
+  DEEP_RESEARCH_REASONING_EFFORT,
   type DeepResearchOutput,
   type DeepResearchStore,
 } from './deep-research/contracts';
@@ -97,6 +99,7 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
   if (
     claims.some((claim) => claim === null) ||
     evidence.some((item) => item === null) ||
+    claims.some((claim) => claim?.evidenceIndexes.length === 0) ||
     !value.limits.every((limit) => typeof limit === 'string')
   ) {
     return null;
@@ -113,12 +116,17 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     return null;
   }
   const referencedEvidence = new Set(claims.flatMap((claim) => claim?.evidenceIndexes ?? []));
-  if (
-    referencedEvidence.size !== evidence.length ||
-    evidence.some((_, index) => !referencedEvidence.has(index + 1))
-  ) {
-    return null;
-  }
+  const remappedIndexes = new Map<number, number>();
+  const reconciledEvidence = evidence.flatMap((item, index) => {
+    const originalIndex = index + 1;
+    if (!referencedEvidence.has(originalIndex)) return [];
+    remappedIndexes.set(originalIndex, remappedIndexes.size + 1);
+    return [item];
+  });
+  const reconciledClaims = claims.map((claim) => ({
+    ...claim,
+    evidenceIndexes: claim?.evidenceIndexes.map((index) => remappedIndexes.get(index) as number),
+  }));
   return {
     schemaVersion: DEEP_RESEARCH_OUTPUT_SCHEMA,
     jobId,
@@ -126,11 +134,12 @@ const parseOutput = (value: unknown, jobId: string): DeepResearchOutput | null =
     status: value.status as DeepResearchOutput['status'],
     text: value.text,
     limits: value.limits as string[],
-    claims: claims as DeepResearchOutput['claims'],
-    evidence: evidence as DeepResearchOutput['evidence'],
+    claims: reconciledClaims as DeepResearchOutput['claims'],
+    evidence: reconciledEvidence as DeepResearchOutput['evidence'],
     costMicrousd: typeof value.cost_microusd === 'number' ? value.cost_microusd : null,
     costMeasurement: value.cost_measurement as DeepResearchOutput['costMeasurement'],
-    model: value.model,
+    model: DEEP_RESEARCH_MODEL,
+    reasoningEffort: DEEP_RESEARCH_REASONING_EFFORT,
     latencyMs: value.latency_ms,
   };
 };
@@ -168,7 +177,12 @@ export const createDeepResearchCallbackHandler =
       return errorResponse(400, 'Callback inválido');
     }
     let output: DeepResearchOutput | null = null;
-    if (payload.status === 'completed' && typeof payload.final_text === 'string') {
+    if (
+      payload.status === 'completed' &&
+      payload.model === DEEP_RESEARCH_MODEL &&
+      payload.reasoning_effort === DEEP_RESEARCH_REASONING_EFFORT &&
+      typeof payload.final_text === 'string'
+    ) {
       try {
         output = parseOutput(JSON.parse(payload.final_text), payload.job_id);
       } catch {

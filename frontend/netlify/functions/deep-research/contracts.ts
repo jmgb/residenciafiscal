@@ -1,5 +1,7 @@
 export const DEEP_RESEARCH_PROFILE = 'residenciafiscal-deep-research-v1';
 export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
+export const DEEP_RESEARCH_MODEL = 'gpt-5.6-luna';
+export const DEEP_RESEARCH_REASONING_EFFORT = 'high';
 
 export type DeepResearchStatus = 'queued' | 'running' | 'completed' | 'cancelled' | 'error';
 export type DeepResearchStage =
@@ -35,6 +37,7 @@ export interface DeepResearchOutput {
   costMicrousd: number | null;
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
   model: string;
+  reasoningEffort: typeof DEEP_RESEARCH_REASONING_EFFORT;
   latencyMs: number;
 }
 
@@ -90,6 +93,8 @@ export interface DeepResearchAlfredoPayload {
     target_id: 'codex';
     target_label: 'Codex';
     profile: typeof DEEP_RESEARCH_PROFILE;
+    model: typeof DEEP_RESEARCH_MODEL;
+    reasoning_effort: typeof DEEP_RESEARCH_REASONING_EFFORT;
     sandbox: 'read-only';
     mode: 'exec_json';
     allowed_tools: [];

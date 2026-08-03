@@ -15,6 +15,11 @@ La implementación está desplegada bajo una bandera explícita para un piloto
 controlado. La promoción general sigue pendiente de completar C2, C3 y C6; C
 nunca entra en la comparación síncrona ni retrasa A/B.
 
+El contrato versionado de C fija el modelo efectivo `gpt-5.6-luna` y el esfuerzo
+`high` tanto en el payload como en el perfil de Alfredo. El perfil falla cerrado
+si recibe otros valores, y el callback solo publica una salida final cuando los
+metadatos autenticados de Alfredo confirman esa misma combinación.
+
 ## Estado operativo (2026-08-03)
 
 Las variables de C están activas en el `.env` local y en el contexto
@@ -119,3 +124,10 @@ el mismo RPC ciego registra como máximo un voto y no declara una ganadora autom
 El resultado no contiene razonamiento interno. Solo se persisten durante quince
 días la pregunta, el estado y la salida estructurada; las RPC privadas incluyen
 el purgado correspondiente.
+
+Al completar, el callback reconcilia de forma determinista cualquier evidencia
+no usada: la retira y renumera sus referencias sin modificar citas ni
+afirmaciones. Después actualiza el job y crea, en la misma transacción, una fila
+idempotente `assistant`/`deep_research` en `private.chat_messages`. El navegador
+recibe esa salida mediante el polling de estado y copia el texto al `content` del
+mensaje local de asistente.

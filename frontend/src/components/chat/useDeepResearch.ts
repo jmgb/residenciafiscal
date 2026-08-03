@@ -7,7 +7,14 @@ import {
   startDeepResearch,
 } from '@/lib/deep-research-client';
 import { useConversations } from '@/stores/useConversations';
-import type { ChatMessage } from '@/types/chat';
+import type { ChatMessage, DeepResearchJob } from '@/types/chat';
+
+export const messagePatchForDeepResearchStatus = (
+  job: DeepResearchJob
+): Pick<ChatMessage, 'deepResearch'> & Partial<Pick<ChatMessage, 'content'>> => {
+  if (job.status !== 'completed' || !job.result) return { deepResearch: job };
+  return { content: job.result.text, deepResearch: job };
+};
 
 export const comparisonIdForLatestQuestion = (messages: ChatMessage[]): string | undefined => {
   const latestQuestionIndex = messages.reduce(
@@ -149,7 +156,9 @@ export const useDeepResearch = ({
         const message = [...(current?.messages ?? [])]
           .reverse()
           .find((candidate) => candidate.deepResearch?.jobId === activeJobId);
-        if (message) updateMessage(conversationId, message.id, { deepResearch: next });
+        if (message) {
+          updateMessage(conversationId, message.id, messagePatchForDeepResearchStatus(next));
+        }
         if (next.status === 'completed' || next.status === 'cancelled' || next.status === 'error') {
           trackEvent('investigacion_profunda_respondida', {
             pais: countryPath,

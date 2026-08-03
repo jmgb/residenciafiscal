@@ -26,7 +26,8 @@ const completed: DeepResearchJob = {
     ],
     costMicrousd: 1200,
     costMeasurement: 'ACTUAL',
-    model: 'gpt-5.6',
+    model: 'gpt-5.6-luna',
+    reasoningEffort: 'high',
     latencyMs: 4200,
   },
 };

@@ -1,7 +1,9 @@
 import { submitDeepResearchJob } from './deep-research/alfredo-client';
 import {
+  DEEP_RESEARCH_MODEL,
   DEEP_RESEARCH_OUTPUT_SCHEMA,
   DEEP_RESEARCH_PROFILE,
+  DEEP_RESEARCH_REASONING_EFFORT,
   type DeepResearchAlfredoPayload,
   type DeepResearchEnvironment,
   type DeepResearchStore,
@@ -88,6 +90,7 @@ const taskFor = (input: StartInput, jobId: string, bundleId: string): string =>
     'Devuelve únicamente JSON válido que cumpla el output_schema solicitado.',
     `En el JSON final, usa exactamente job_id: ${jobId} y request_id: ${jobId}; no uses el bundle_id como request_id.`,
     'Cada afirmación sustantiva debe tener una evidencia literal verificable; si no basta, responde parcial, pregunta o abstención.',
+    'No incluyas ninguna evidencia que no esté referenciada por al menos una afirmación; los evidence_indexes deben ser contiguos y empezar en 1.',
   ].join('\n');
 
 export const createDeepResearchHandler =
@@ -125,6 +128,8 @@ export const createDeepResearchHandler =
         target_id: 'codex',
         target_label: 'Codex',
         profile: DEEP_RESEARCH_PROFILE,
+        model: DEEP_RESEARCH_MODEL,
+        reasoning_effort: DEEP_RESEARCH_REASONING_EFFORT,
         sandbox: 'read-only',
         mode: 'exec_json',
         allowed_tools: [],

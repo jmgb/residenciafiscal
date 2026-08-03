@@ -93,6 +93,7 @@ export interface DeepResearchOutput {
   costMicrousd: number | null;
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
   model: string;
+  reasoningEffort: 'high';
   latencyMs: number;
 }
 

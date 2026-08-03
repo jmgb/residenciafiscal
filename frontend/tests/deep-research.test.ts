@@ -72,6 +72,8 @@ describe('deep research HTTP contract', () => {
         callback_url: env.callbackUrl,
         runtime: expect.objectContaining({
           profile: 'residenciafiscal-deep-research-v1',
+          model: 'gpt-5.6-luna',
+          reasoning_effort: 'high',
           sandbox: 'read-only',
           mode: 'exec_json',
           output_schema: 'residenciafiscal-deep-research-output/1',
@@ -84,6 +86,9 @@ describe('deep research HTTP contract', () => {
     };
     expect(submitted.task).toContain(`job_id: ${submitted.job_id}`);
     expect(submitted.task).toContain(`request_id: ${submitted.job_id}`);
+    expect(submitted.task).toContain(
+      'No incluyas ninguna evidencia que no esté referenciada por al menos una afirmación'
+    );
   });
 
   it('fails closed if Alfredo acknowledges a different job identifier', async () => {
@@ -132,6 +137,8 @@ describe('deep research HTTP contract', () => {
     const body = JSON.stringify({
       job_id: 'deep-job-1',
       status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/1',
         job_id: 'deep-job-1',
@@ -151,7 +158,7 @@ describe('deep research HTTP contract', () => {
         ],
         cost_microusd: 1200,
         cost_measurement: 'ACTUAL',
-        model: 'gpt-5.6',
+        model: 'modelo declarado por el agente',
         latency_ms: 4200,
       }),
     });
@@ -180,6 +187,182 @@ describe('deep research HTTP contract', () => {
         result: expect.objectContaining({ text: 'Respuesta verificada.' }),
       })
     );
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        result: expect.objectContaining({
+          model: 'gpt-5.6-luna',
+          reasoningEffort: 'high',
+        }),
+      })
+    );
+  });
+
+  it('prunes orphan evidence and remaps claim indexes before persisting a completed callback', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-1',
+      status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-1',
+        request_id: 'deep-job-1',
+        status: 'completa',
+        text: 'Respuesta verificada.',
+        limits: [],
+        claims: [{ text: 'Afirmación', evidence_indexes: [1, 3] }],
+        evidence: [
+          {
+            judgment_id: 'sts-1',
+            page: 3,
+            source_sha256: 'a'.repeat(64),
+            quote: 'Primera cita utilizada',
+            verification: 'EXACT',
+          },
+          {
+            judgment_id: 'sts-2',
+            page: 4,
+            source_sha256: 'b'.repeat(64),
+            quote: 'Cita huérfana',
+            verification: 'EXACT',
+          },
+          {
+            judgment_id: 'sts-3',
+            page: 5,
+            source_sha256: 'c'.repeat(64),
+            quote: 'Tercera cita utilizada',
+            verification: 'EXACT',
+          },
+        ],
+        cost_microusd: null,
+        cost_measurement: 'UNAVAILABLE',
+        model: 'gpt-5-codex',
+        latency_ms: 4200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    const response = await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(response.status).toBe(204);
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: 'completed',
+        result: expect.objectContaining({
+          claims: [{ text: 'Afirmación', evidenceIndexes: [1, 2] }],
+          evidence: [
+            expect.objectContaining({ quote: 'Primera cita utilizada' }),
+            expect.objectContaining({ quote: 'Tercera cita utilizada' }),
+          ],
+        }),
+      })
+    );
+  });
+
+  it('rejects a completed callback if Alfredo reports a different effective model', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-1',
+      status: 'completed',
+      model: 'gpt-5.5',
+      reasoning_effort: 'high',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-1',
+        request_id: 'deep-job-1',
+        status: 'completa',
+        text: 'Respuesta.',
+        limits: [],
+        claims: [{ text: 'Afirmación', evidence_indexes: [1] }],
+        evidence: [
+          {
+            judgment_id: 'sts-1',
+            page: 3,
+            source_sha256: 'a'.repeat(64),
+            quote: 'Cita literal',
+            verification: 'EXACT',
+          },
+        ],
+        cost_microusd: null,
+        cost_measurement: 'UNAVAILABLE',
+        model: 'gpt-5.5',
+        latency_ms: 4200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'error', result: null })
+    );
+  });
+
+  it('rejects a substantive claim without any evidence references', async () => {
+    const store = createStore();
+    const body = JSON.stringify({
+      job_id: 'deep-job-1',
+      status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
+      final_text: JSON.stringify({
+        schema_version: 'residenciafiscal-deep-research-output/1',
+        job_id: 'deep-job-1',
+        request_id: 'deep-job-1',
+        status: 'completa',
+        text: 'Respuesta.',
+        limits: [],
+        claims: [{ text: 'Afirmación', evidence_indexes: [] }],
+        evidence: [
+          {
+            judgment_id: 'sts-1',
+            page: 3,
+            source_sha256: 'a'.repeat(64),
+            quote: 'Cita huérfana',
+            verification: 'EXACT',
+          },
+        ],
+        cost_microusd: null,
+        cost_measurement: 'UNAVAILABLE',
+        model: 'gpt-5.6-luna',
+        latency_ms: 4200,
+      }),
+    });
+    const handler = createDeepResearchCallbackHandler({
+      secret: 'secret',
+      store,
+      verifySignature: vi.fn(async () => true),
+    });
+
+    await handler(
+      new Request('https://residenciafiscal.example/api/deep-research-callback', {
+        method: 'POST',
+        body,
+      })
+    );
+
+    expect(store.update).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'error', result: null })
+    );
   });
 
   it('does not reveal a job belonging to another conversation', async () => {
@@ -201,6 +384,8 @@ describe('deep research HTTP contract', () => {
     const body = JSON.stringify({
       job_id: 'deep-job-1',
       status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/1',
         job_id: 'deep-job-1',
@@ -252,6 +437,8 @@ describe('deep research HTTP contract', () => {
     const body = JSON.stringify({
       job_id: 'deep-job-1',
       status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/1',
         job_id: 'deep-job-1',
@@ -291,6 +478,8 @@ describe('deep research HTTP contract', () => {
     const body = JSON.stringify({
       job_id: 'deep-job-1',
       status: 'completed',
+      model: 'gpt-5.6-luna',
+      reasoning_effort: 'high',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/1',
         job_id: 'deep-job-1',

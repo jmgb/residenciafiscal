@@ -6,7 +6,8 @@ de 2026.
 
 Supabase es la persistencia privada de la V1 Netlify-only. No participa en la
 recuperación jurisprudencial ni sustituye al corpus: se usa para registrar las
-consultas y guardar los mensajes y costes del comparador A/B.
+consultas y guardar los mensajes y costes del comparador A/B y los resultados
+asíncronos de investigación profunda C.
 
 ## Decisión de datos
 
@@ -19,12 +20,18 @@ La revisión de los proyectos de referencia mostró dos patrones útiles:
   modelo y coste/tokens, y además mantiene un ledger append-only para sumar el
   gasto sin recorrer artefactos heterogéneos.
 
-Residencia Fiscal adapta esos patrones al experimento real: una consulta aceptada
-produce tres mensajes persistidos con el mismo `request_id` y `conversation_id`:
+Residencia Fiscal adapta esos patrones al experimento real: una consulta A/B
+aceptada produce tres mensajes persistidos con el mismo `request_id` y
+`conversation_id`:
 
 1. pregunta del usuario;
 2. respuesta `current_structured` (A);
 3. respuesta `gemini_file_search` (B).
+
+Si el usuario lanza investigación profunda, su resultado añade de forma
+asíncrona un cuarto mensaje de asistente `deep_research` (C). Este mensaje queda
+enlazado al job mediante `deep_research_job_id`; el vínculo con la comparación
+A/B vive en el propio job, por lo que C no altera el ledger ni las métricas A/B.
 
 No se guarda IP, user-agent, cookies, credenciales ni el diagnóstico bruto de los
 proveedores. El historial completo del navegador tampoco se reenvía: Supabase
@@ -40,7 +47,7 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 |---|---|
 | `private.chat_conversations` | Agrupa turnos mediante un UUID aleatorio local y jurisdicción |
 | `private.chat_requests` | Registro idempotente de consulta, coste, estado y versión del experimento |
-| `private.chat_messages` | Pregunta y respuestas A/B con contenido, fuentes, claims, diagnóstico acotado, límites y uso |
+| `private.chat_messages` | Pregunta y respuestas A/B/C con contenido, fuentes, claims, diagnóstico acotado, límites y uso |
 | `private.chat_comparison_votes` | Un voto ciego cerrado por petición completada |
 | `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
@@ -67,6 +74,9 @@ La Function no escribe tablas directamente. Solo puede invocar con
   en una sola transacción;
 - `complete_chat_request`: guarda A/B, el coste real y completa la petición en
   una sola transacción;
+- `update_deep_research_job`: actualiza el estado de C y, cuando completa,
+  persiste idempotentemente su salida como mensaje de asistente en la misma
+  transacción;
 - `fail_chat_request`: marca una consulta como `failed` o `timed_out` con un
   código técnico acotado, sin guardar el diagnóstico del proveedor;
 - `record_chat_vote`: acepta una sola preferencia por petición completada, con
