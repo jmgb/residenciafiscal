@@ -1,4 +1,4 @@
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Search } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { trackEvent } from '@/components/layout/PostHogAnalytics';
@@ -7,6 +7,11 @@ import {
   type ChatSessionMessageUsage,
   consumeChatSessionMessage,
 } from '@/lib/chat-session-message-limit';
+import {
+  cancelDeepResearch,
+  getDeepResearchStatus,
+  startDeepResearch,
+} from '@/lib/deep-research-client';
 import { useEditorialChatAnswer } from '@/lib/useEditorialChatAnswer';
 import { usePageTitle } from '@/lib/usePageTitle';
 import { useConversations } from '@/stores/useConversations';
@@ -32,6 +37,7 @@ function newMessageId(): string {
  * Absorbe el redondeo subpíxel del navegador y los últimos píxeles de inercia.
  */
 const STICK_TO_BOTTOM_THRESHOLD_PX = 48;
+const isDeepResearchUiEnabled = () => import.meta.env.VITE_DEEP_RESEARCH_ENABLED === 'true';
 
 /**
  * ¿Es el placeholder del asistente aún sin nada que enseñar? Mientras lo sea,
@@ -169,6 +175,13 @@ export function ChatView({
   }, []);
 
   const lastMessage = messages.at(-1);
+  const deepResearchMessage = [...messages].reverse().find((message) => message.deepResearch);
+  const deepResearchJob = deepResearchMessage?.deepResearch;
+  const latestComparisonId = [...messages]
+    .reverse()
+    .find((message) => message.role === 'assistant' && message.comparisonId)?.comparisonId;
+  const activeDeepResearch =
+    deepResearchJob?.status === 'queued' || deepResearchJob?.status === 'running';
   // El contenido del último mensaje es lo único que cambia mientras llegan tokens:
   // sin él el autoscroll se quedaría congelado en la respuesta larga en curso.
   const lastMessageContent = `${lastMessage?.content ?? ''}${
@@ -216,6 +229,131 @@ export function ChatView({
     streamOwnerRef.current = null;
     setIsStreaming(false);
   }, []);
+
+  const handleStartDeepResearch = useCallback(async () => {
+    if (isStreaming || activeDeepResearch) return;
+    const latestQuestion = [...messages].reverse().find((message) => message.role === 'user');
+    if (!latestQuestion) return;
+    const existing = conversationId
+      ? useConversations.getState().getConversation(conversationId)
+      : undefined;
+    const targetId = existing?.id ?? createConversation();
+    if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
+    const messageId = newMessageId();
+    appendMessage(targetId, {
+      id: messageId,
+      role: 'assistant',
+      content: '',
+      createdAt: new Date().toISOString(),
+      deepResearch: {
+        jobId: 'pending',
+        comparisonId: latestComparisonId ?? null,
+        status: 'queued',
+        stage: 'searching',
+        result: null,
+      },
+    });
+    try {
+      const accepted = await startDeepResearch({
+        conversationId: targetId,
+        comparisonId: latestComparisonId ?? null,
+        countryPath: country.path,
+        question: latestQuestion.content,
+      });
+      updateMessage(targetId, messageId, {
+        deepResearch: {
+          jobId: accepted.jobId,
+          comparisonId: latestComparisonId ?? null,
+          status: 'queued',
+          stage: 'searching',
+          result: null,
+        },
+      });
+      trackEvent('investigacion_profunda_iniciada', { pais: country.path });
+    } catch {
+      updateMessage(targetId, messageId, {
+        deepResearch: {
+          jobId: 'pending',
+          status: 'error',
+          stage: 'error',
+          result: null,
+          error: 'No se ha podido poner la investigación en cola.',
+        },
+      });
+    }
+  }, [
+    activeDeepResearch,
+    appendMessage,
+    conversationId,
+    country.path,
+    createConversation,
+    isStreaming,
+    latestComparisonId,
+    messages,
+    navigate,
+    updateMessage,
+  ]);
+
+  const handleCancelDeepResearch = useCallback(
+    async (jobId: string) => {
+      if (!conversationId || !jobId || jobId === 'pending') return;
+      try {
+        await cancelDeepResearch(jobId, conversationId);
+        const message = [
+          ...(useConversations.getState().getConversation(conversationId)?.messages ?? []),
+        ]
+          .reverse()
+          .find((candidate) => candidate.deepResearch?.jobId === jobId);
+        if (message) {
+          updateMessage(conversationId, message.id, {
+            deepResearch: {
+              jobId,
+              status: 'cancelled',
+              stage: 'cancelled',
+              result: null,
+            },
+          });
+        }
+      } catch {
+        // El siguiente polling conserva el estado vigente y permite reintentar.
+      }
+    },
+    [conversationId, updateMessage]
+  );
+
+  const activeDeepResearchJobId = activeDeepResearch ? deepResearchJob?.jobId : undefined;
+  useEffect(() => {
+    if (!conversationId || !activeDeepResearchJobId || activeDeepResearchJobId === 'pending')
+      return;
+    let disposed = false;
+    let timer: number | undefined;
+    const poll = async () => {
+      try {
+        const next = await getDeepResearchStatus(activeDeepResearchJobId, conversationId);
+        if (disposed) return;
+        const current = useConversations.getState().getConversation(conversationId);
+        const message = [...(current?.messages ?? [])]
+          .reverse()
+          .find((candidate) => candidate.deepResearch?.jobId === activeDeepResearchJobId);
+        if (message) updateMessage(conversationId, message.id, { deepResearch: next });
+        if (next.status === 'completed' || next.status === 'cancelled' || next.status === 'error') {
+          trackEvent('investigacion_profunda_respondida', {
+            pais: country.path,
+            resultado: next.status,
+          });
+          return;
+        }
+      } catch {
+        // A transient Netlify/Supabase failure must not erase the visible job.
+      }
+      if (!disposed) timer = window.setTimeout(poll, 2500);
+    };
+    timer = window.setTimeout(poll, 1200);
+    return () => {
+      disposed = true;
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+  }, [activeDeepResearchJobId, conversationId, country.path, updateMessage]);
 
   const handleEditorialPrompt = useCallback(
     (answer: Parameters<typeof showEditorialAnswer>[0]) => {
@@ -440,7 +578,18 @@ export function ChatView({
             {messages
               .filter((message) => !isEmptyStreamingPlaceholder(message))
               .map((message) => (
-                <ChatBubble key={message.id} message={message} />
+                <ChatBubble
+                  key={message.id}
+                  message={message}
+                  hideComparisonVote={Boolean(
+                    message.comparisonId &&
+                      message.comparisonId === deepResearchJob?.comparisonId &&
+                      (deepResearchJob.status === 'queued' ||
+                        deepResearchJob.status === 'running' ||
+                        deepResearchJob.status === 'completed')
+                  )}
+                  onCancelDeepResearch={handleCancelDeepResearch}
+                />
               ))}
             {showTypingIndicator && <TypingIndicator />}
           </div>
@@ -459,6 +608,21 @@ export function ChatView({
           {sessionMessageLimit.limit === 1 ? 'mensaje' : 'mensajes'} de esta sesión. Podrás volver a
           consultar cuando se renueve la ventana de 24 horas.
         </p>
+      )}
+      {isDeepResearchUiEnabled() && hasMessages && !isStreaming && !activeDeepResearch && (
+        <div className='mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 pb-1'>
+          <p className='text-xs text-muted-foreground'>
+            ¿Necesitas contrastar la respuesta con más fuentes del corpus?
+          </p>
+          <button
+            type='button'
+            onClick={() => void handleStartDeepResearch()}
+            className='inline-flex shrink-0 items-center gap-2 rounded-lg border border-primary/30 bg-card px-3 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary-50 control-focus'
+          >
+            <Search className='h-4 w-4' aria-hidden='true' />
+            Iniciar investigación profunda
+          </button>
+        </div>
       )}
       <ChatComposer
         onSend={handleSend}

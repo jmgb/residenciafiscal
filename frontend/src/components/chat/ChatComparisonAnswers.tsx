@@ -7,11 +7,18 @@ import { ChatStrategyAnswerPanel } from './ChatStrategyAnswerPanel';
 interface ChatComparisonAnswersProps {
   answers: ChatStrategyAnswer[];
   comparisonId?: string;
+  includeDeepResearchVote?: boolean;
+  showVote?: boolean;
 }
 
 const optionName = (index: number) => `Opción ${String.fromCharCode(65 + index)}`;
 
-export const ChatComparisonAnswers = ({ answers, comparisonId }: ChatComparisonAnswersProps) => {
+export const ChatComparisonAnswers = ({
+  answers,
+  comparisonId,
+  includeDeepResearchVote = false,
+  showVote = true,
+}: ChatComparisonAnswersProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabs = useRef<Array<HTMLButtonElement | null>>([]);
   const componentId = useId().replace(/:/g, '');
@@ -107,7 +114,12 @@ export const ChatComparisonAnswers = ({ answers, comparisonId }: ChatComparisonA
         })}
       </div>
 
-      {canVote && <ChatComparisonVote comparisonId={comparisonId} />}
+      {canVote && showVote && (
+        <ChatComparisonVote
+          comparisonId={comparisonId}
+          includeDeepResearch={includeDeepResearchVote}
+        />
+      )}
     </div>
   );
 };

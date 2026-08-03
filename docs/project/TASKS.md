@@ -484,6 +484,12 @@ contra el dominio público después de cada deploy.
         rollback y presupuesto. La promoción requiere decisión explícita y
         documentada; si C no compensa su coste o pierde reproducibilidad,
         permanece como diagnóstico offline o herramienta interna de evaluación.
+        - [x] Implementar el recorrido detrás de `DEEP_RESEARCH_ENABLED`: botón
+          explícito fuera de A/B, job firmado Netlify → Alfredo, polling de
+          estados, callback reconciliable, cancelación de jobs en cola y bloque
+          C independiente con fuentes, límites, coste y «Respuesta en:».
+          El bloque permite valorar A, B, C, empate o ambas insuficientes mediante
+          el mismo catálogo ciego; la bandera permanece cerrada hasta validar C2/C3/C6.
       - Contrato, seguridad, UX y gates:
         [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#plan-de-opción-c-investigación-agentiva).
   - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están

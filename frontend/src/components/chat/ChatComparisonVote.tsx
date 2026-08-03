@@ -20,6 +20,7 @@ type SubmissionState = 'idle' | 'submitting' | 'recorded' | 'already_recorded' |
 
 interface ChatComparisonVoteProps {
   comparisonId: string;
+  includeDeepResearch?: boolean;
 }
 
 const automaticReason = (verdict: ChatVoteVerdict): ChatVoteReason | '' => {
@@ -28,7 +29,13 @@ const automaticReason = (verdict: ChatVoteVerdict): ChatVoteReason | '' => {
   return '';
 };
 
-export const ChatComparisonVote = ({ comparisonId }: ChatComparisonVoteProps) => {
+export const ChatComparisonVote = ({
+  comparisonId,
+  includeDeepResearch = false,
+}: ChatComparisonVoteProps) => {
+  const verdicts = includeDeepResearch
+    ? [...VERDICTS.slice(0, 2), { value: 'c' as const, label: 'Opción C' }, ...VERDICTS.slice(2)]
+    : VERDICTS;
   const [verdict, setVerdict] = useState<ChatVoteVerdict | ''>('');
   const [reason, setReason] = useState<ChatVoteReason | ''>('');
   const [submission, setSubmission] = useState<SubmissionState>('idle');
@@ -65,15 +72,17 @@ export const ChatComparisonVote = ({ comparisonId }: ChatComparisonVoteProps) =>
       {submission === 'recorded' || submission === 'already_recorded' ? (
         <p role='status' className='mt-3 rounded-lg bg-background px-3 py-2 text-sm font-medium'>
           {submission === 'recorded'
-            ? 'Valoración registrada. Gracias por comparar las dos opciones.'
+            ? 'Valoración registrada. Gracias por comparar las opciones.'
             : 'Esta comparación ya tenía una valoración registrada.'}
         </p>
       ) : (
         <>
           <fieldset className='mt-3'>
             <legend className='sr-only'>Respuesta preferida</legend>
-            <div className='grid grid-cols-2 gap-2 sm:grid-cols-4'>
-              {VERDICTS.map((item) => (
+            <div
+              className={`grid grid-cols-2 gap-2 ${includeDeepResearch ? 'sm:grid-cols-5' : 'sm:grid-cols-4'}`}
+            >
+              {verdicts.map((item) => (
                 <label
                   key={item.value}
                   className='flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium has-checked:border-primary has-checked:bg-primary-100'
@@ -92,7 +101,7 @@ export const ChatComparisonVote = ({ comparisonId }: ChatComparisonVoteProps) =>
             </div>
           </fieldset>
 
-          {(verdict === 'a' || verdict === 'b') && (
+          {(verdict === 'a' || verdict === 'b' || verdict === 'c') && (
             <label className='mt-3 block text-xs font-medium text-secondary-foreground'>
               Motivo
               <select

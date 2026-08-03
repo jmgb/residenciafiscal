@@ -249,6 +249,50 @@ describe('ChatView', () => {
     expect(await screen.findByText('¿Y los 183 días?')).toBeInTheDocument();
   });
 
+  it('ofrece investigación profunda fuera de A/B y encola el job al pulsar el botón', async () => {
+    vi.stubEnv('VITE_DEEP_RESEARCH_ENABLED', 'true');
+    const user = userEvent.setup();
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, _init?: RequestInit) => {
+      if (String(input) === '/api/deep-research') {
+        return Response.json({ job_id: 'deep-ui-1', status: 'queued' }, { status: 202 });
+      }
+      return Response.json({
+        job_id: 'deep-ui-1',
+        status: 'queued',
+        stage: 'searching',
+        result: null,
+        error: null,
+      });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    renderChat();
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta para C');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    const deepResearchButton = await screen.findByRole('button', {
+      name: 'Iniciar investigación profunda',
+    });
+    expect(deepResearchButton).toBeInTheDocument();
+
+    await user.click(deepResearchButton);
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        '/api/deep-research',
+        expect.objectContaining({
+          method: 'POST',
+          body: expect.stringContaining('consulta para C'),
+        })
+      );
+    });
+    const startCall = fetchMock.mock.calls.find(
+      ([input]) => String(input) === '/api/deep-research'
+    );
+    expect(JSON.parse(String(startCall?.[1]?.body))).toMatchObject({
+      comparison_id: null,
+    });
+    expect(screen.getByText('Investigación profunda en cola')).toBeInTheDocument();
+  });
+
   it('bloquea el chat al alcanzar el límite configurable de la sesión', async () => {
     vi.stubEnv('VITE_CHAT_SESSION_MESSAGE_LIMIT', '1');
     const user = userEvent.setup();

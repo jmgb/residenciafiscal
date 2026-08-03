@@ -8,7 +8,7 @@ import {
 } from './chat/supabase-chat-store';
 
 const MAX_BODY_BYTES = 2_000;
-const VERDICTS = new Set<ChatVoteVerdict>(['a', 'b', 'tie', 'both_bad']);
+const VERDICTS = new Set<ChatVoteVerdict>(['a', 'b', 'c', 'tie', 'both_bad']);
 const REASONS = new Set<ChatVoteReason>([
   'better_grounding',
   'clearer',

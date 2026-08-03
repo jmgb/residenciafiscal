@@ -2,6 +2,7 @@ import type { ChatMessage } from '@/types/chat';
 import { ChatComparisonAnswers } from './ChatComparisonAnswers';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatSources } from './ChatSources';
+import { DeepResearchCard } from './DeepResearchCard';
 import { EditorialChatAnswer } from './EditorialChatAnswer';
 
 function formatTime(isoString: string): string {
@@ -17,9 +18,15 @@ function formatTime(isoString: string): string {
 
 interface ChatBubbleProps {
   message: ChatMessage;
+  hideComparisonVote?: boolean;
+  onCancelDeepResearch?: (jobId: string) => void;
 }
 
-export function ChatBubble({ message }: ChatBubbleProps) {
+export function ChatBubble({
+  message,
+  hideComparisonVote = false,
+  onCancelDeepResearch,
+}: ChatBubbleProps) {
   const isUser = message.role === 'user';
   const isComparison = !isUser && (message.answers?.length ?? 0) > 1;
 
@@ -36,10 +43,20 @@ export function ChatBubble({ message }: ChatBubbleProps) {
           isUser ? 'rounded-tr-none bg-primary-100' : 'rounded-tl-none bg-card border border-border'
         }`}
       >
-        {!isUser && message.editorial ? (
+        {!isUser && message.deepResearch ? (
+          <DeepResearchCard
+            job={message.deepResearch}
+            comparisonId={message.deepResearch.comparisonId}
+            onCancel={() => onCancelDeepResearch?.(message.deepResearch?.jobId ?? '')}
+          />
+        ) : !isUser && message.editorial ? (
           <EditorialChatAnswer message={message} />
         ) : !isUser && message.answers ? (
-          <ChatComparisonAnswers answers={message.answers} comparisonId={message.comparisonId} />
+          <ChatComparisonAnswers
+            answers={message.answers}
+            comparisonId={message.comparisonId}
+            showVote={!hideComparisonVote}
+          />
         ) : (
           <ChatMessageContent content={message.content} isUser={isUser} />
         )}

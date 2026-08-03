@@ -68,6 +68,52 @@ export type ChatSource = ChatSourceV2 | LegacyChatSource;
 
 export type ChatRole = 'user' | 'assistant';
 
+export interface DeepResearchEvidence {
+  judgmentId: string;
+  page: number;
+  sourceSha256: string;
+  quote: string;
+  verification: 'EXACT';
+}
+
+export interface DeepResearchClaim {
+  text: string;
+  evidenceIndexes: number[];
+}
+
+export interface DeepResearchOutput {
+  schemaVersion: 'residenciafiscal-deep-research-output/1';
+  jobId: string;
+  requestId: string;
+  status: 'completa' | 'parcial' | 'pregunta' | 'abstención' | 'error';
+  text: string;
+  limits: string[];
+  claims: DeepResearchClaim[];
+  evidence: DeepResearchEvidence[];
+  costMicrousd: number | null;
+  costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
+  model: string;
+  latencyMs: number;
+}
+
+export type DeepResearchJobStatus = 'queued' | 'running' | 'completed' | 'cancelled' | 'error';
+export type DeepResearchStage =
+  | 'searching'
+  | 'reading'
+  | 'verifying'
+  | 'completed'
+  | 'cancelled'
+  | 'error';
+
+export interface DeepResearchJob {
+  jobId: string;
+  comparisonId?: string | null;
+  status: DeepResearchJobStatus;
+  stage: DeepResearchStage;
+  result?: DeepResearchOutput | null;
+  error?: string | null;
+}
+
 /** Contexto nacional que debe acompañar cada consulta al motor. */
 export interface ChatRequestContext {
   countryPath: string;
@@ -91,6 +137,8 @@ export interface ChatMessage {
   comparisonId?: string;
   /** Contenido editorial elegido desde la home; no procede del motor ni tiene coste. */
   editorial?: EditorialChatAttribution;
+  /** Resultado C independiente; nunca se mezcla con las respuestas A/B. */
+  deepResearch?: DeepResearchJob;
 }
 
 export interface EditorialChatSource {

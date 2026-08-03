@@ -53,7 +53,7 @@ interface ChatFailureInput {
   failureCode: 'comparison_error' | 'timeout' | 'aborted' | 'unknown';
 }
 
-export type ChatVoteVerdict = 'a' | 'b' | 'tie' | 'both_bad';
+export type ChatVoteVerdict = 'a' | 'b' | 'c' | 'tie' | 'both_bad';
 export type ChatVoteReason =
   | 'better_grounding'
   | 'clearer'

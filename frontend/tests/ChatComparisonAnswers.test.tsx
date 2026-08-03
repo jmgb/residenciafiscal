@@ -129,6 +129,35 @@ describe('ChatComparisonAnswers', () => {
     expect(screen.queryByRole('region', { name: 'Valorar comparación' })).not.toBeInTheDocument();
   });
 
+  it('incluye C en la valoración cuando la investigación profunda ha terminado', async () => {
+    const user = userEvent.setup();
+    const fetch = vi.fn(
+      async (_input: RequestInfo | URL, _init?: RequestInit) => new Response(null, { status: 204 })
+    );
+    vi.stubGlobal('fetch', fetch);
+    render(
+      <ChatComparisonAnswers
+        answers={[answer('current_structured'), answer('gemini_file_search')]}
+        comparisonId='chat-comparison-1'
+        includeDeepResearchVote
+      />
+    );
+
+    const vote = screen.getByRole('region', { name: 'Valorar comparación' });
+    await user.click(within(vote).getByRole('radio', { name: 'Opción C' }));
+    await user.selectOptions(
+      within(vote).getByRole('combobox', { name: 'Motivo' }),
+      'better_grounding'
+    );
+    await user.click(within(vote).getByRole('button', { name: 'Enviar valoración' }));
+
+    expect(JSON.parse(String(fetch.mock.calls[0]?.[1]?.body))).toMatchObject({
+      request_id: 'chat-comparison-1',
+      verdict: 'c',
+      reason: 'better_grounding',
+    });
+  });
+
   it('presenta un coste desconocido como no disponible, nunca como cero', () => {
     render(
       <ChatComparisonAnswers

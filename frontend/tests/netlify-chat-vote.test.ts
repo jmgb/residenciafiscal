@@ -45,6 +45,24 @@ describe('Netlify Function /api/chat-vote', () => {
     });
   });
 
+  it('acepta C como opción cerrada del experimento ampliado', async () => {
+    const deps = dependencies();
+    const response = await createChatVoteHandler(deps)(
+      request({
+        request_id: 'chat-123e4567-e89b-12d3-a456-426614174000',
+        verdict: 'c',
+        reason: 'better_grounding',
+      })
+    );
+
+    expect(response.status).toBe(204);
+    expect(deps.vote).toHaveBeenCalledWith({
+      requestId: 'chat-123e4567-e89b-12d3-a456-426614174000',
+      verdict: 'c',
+      reason: 'better_grounding',
+    });
+  });
+
   it('rechaza texto libre y valores fuera del catálogo', async () => {
     const deps = dependencies();
     const response = await createChatVoteHandler(deps)(
