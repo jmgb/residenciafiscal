@@ -15,6 +15,21 @@ La funcionalidad está cerrada por configuración hasta completar el piloto C2,
 la comprobación de aislamiento y la decisión de promoción. C nunca entra en la
 comparación síncrona ni retrasa A/B.
 
+## Estado operativo (2026-08-03)
+
+Las variables de C están activas en el `.env` local y en el contexto
+`production` de Netlify. El secreto HMAC está configurado como secreto de
+Netlify y coincide con el secreto del supervisor de Alfredo. La variable
+`VITE_DEEP_RESEARCH_ENABLED` se incorporará al frontend publicado en el
+próximo deploy.
+
+La compuerta efectiva sigue cerrada en Alfredo: `ALFREDO_DEEP_RESEARCH_ISOLATION_ATTESTED`
+no está acreditada; su valor efectivo es `false` porque el container Codex
+actual aún no acredita el aislamiento requerido. Por tanto, el supervisor rechaza los jobs C hasta que
+se prepare y verifique el container dedicado descrito abajo. No activar esa
+attestation manualmente ni publicar el botón en producción antes de esa
+verificación.
+
 ## Variables de Netlify
 
 Configurar en `production`, sin prefijo `VITE_`, y redeployar:
