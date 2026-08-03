@@ -55,17 +55,20 @@ STATS = {
 
 class ResumenDiarioTest(unittest.TestCase):
     def test_resume_consultas_coste_y_estrategias(self) -> None:
-        mensaje = MODULE.build_message(STATS, None)
+        mensaje = MODULE.build_message({**STATS, "by_failure_code": {}}, None)
 
-        self.assertIn("[RESIDENCIAFISCAL]", mensaje)
+        self.assertEqual(
+            mensaje.splitlines()[0],
+            "<b>[RESIDENCIAFISCAL] 💬 Chat · 2026-08-01</b>",
+        )
         self.assertIn("2026-08-01", mensaje)
         self.assertIn("12 (11 completadas, 1 fallidas)", mensaje)
-        self.assertIn("$0,048231", mensaje)
+        self.assertIn("Coste: $0,05 ·", mensaje)
         self.assertIn("10 con coste ACTUAL completo", mensaje)
         self.assertIn("A · corpus v3", mensaje)
         self.assertIn("B · file search", mensaje)
-        self.assertIn("p50 18,2 s", mensaje)
-        self.assertIn("p95 19,4 s", mensaje)
+        self.assertIn("Respuesta en: 18,2 s", mensaje)
+        self.assertNotIn("p95", mensaje)
         self.assertIn("ACTUAL 11 · ESTIMATED 11", mensaje)
 
     def test_un_dia_sin_consultas_no_finge_actividad(self) -> None:

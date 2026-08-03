@@ -18,6 +18,7 @@ import pathlib
 import sys
 import urllib.error
 import urllib.request
+from decimal import ROUND_HALF_UP, Decimal
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
@@ -70,7 +71,10 @@ def fetch_stats(day: dt.date, env: dict[str, str]) -> dict:
 
 
 def format_usd(microusd: int) -> str:
-    return f"${microusd / 1_000_000:,.6f}".replace(",", "@").replace(".", ",").replace("@", ".")
+    amount = (Decimal(microusd) / Decimal(1_000_000)).quantize(
+        Decimal("0.01"), rounding=ROUND_HALF_UP
+    )
+    return f"${amount:,.2f}".replace(",", "@").replace(".", ",").replace("@", ".")
 
 
 def format_seconds(milliseconds: object) -> str:
@@ -90,7 +94,7 @@ def build_message(stats: dict, alert_usd: float | None) -> str:
 
     exceeded = alert_usd is not None and total_microusd / 1_000_000 > alert_usd
     icon = "⚠️" if exceeded or by_failure else "💬"
-    lines = [f"{HEADER_PREFIX} {icon} Chat · {day}", ""]
+    lines = [f"<b>{HEADER_PREFIX} {icon} Chat · {day}</b>", ""]
 
     if requests == 0:
         lines.append("Sin consultas registradas.")
@@ -119,8 +123,7 @@ def build_message(stats: dict, alert_usd: float | None) -> str:
             lines.append(
                 f"· {label} — {detail.get('answers', 0)} resp · "
                 f"{format_usd(int(detail.get('cost_microusd') or 0))} · "
-                f"p50 {format_seconds(detail.get('p50_latency_ms'))} · "
-                f"p95 {format_seconds(detail.get('p95_latency_ms'))}"
+                f"Respuesta en: {format_seconds(detail.get('p50_latency_ms'))}"
             )
 
     if by_measurement:
