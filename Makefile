@@ -18,6 +18,7 @@ SHELL := /bin/bash
 	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
 	rollout-bootstrap rollout-finalize rollout-verify rollout-reproducibility \
 	deep-research-bundle deep-research-bundle-verify \
+	deep-research-pilot-prepare deep-research-pilot-run \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
 	validate-chat-absences-candidate compile-chat-f03-results \
@@ -105,6 +106,13 @@ CASE_ROLLOUT_AUDIT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-ris
 CASE_ROLLOUT_AUDIT_MD ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.md
 CASE_ROLLOUT_HOLDOUT_COVERAGE ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.holdout-coverage.json
 DEEP_RESEARCH_BUNDLE ?= ./output/deep-research/rollout-106.bundle.zip
+DEEP_RESEARCH_PILOT_SPEC ?= ./docs/experiments/CHAT_DEEP_RESEARCH_C2_PILOT.json
+DEEP_RESEARCH_PILOT_SOURCE ?= ./docs/experiments/CHAT_STRATEGY_F02_DEV_SET.json
+DEEP_RESEARCH_PILOT_HOLDOUT ?= ./docs/experiments/CHAT_QUESTION_HOLDOUT_E.json
+DEEP_RESEARCH_PILOT_OUTPUT ?= ./output/deep-research/c2-2026-08-03
+DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION ?=
+DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION ?=
+DEEP_RESEARCH_PILOT_SANDBOX_BINARY ?= bwrap
 ROLLOUT_RETRY ?=
 
 # =============================================================================
@@ -149,6 +157,8 @@ help:
 	@echo "  make rollout-verify       Verifica hashes, agregados y presupuesto de artefactos"
 	@echo "  make deep-research-bundle  Construye el snapshot C1 sin secretos ni clon del repo"
 	@echo "  make deep-research-bundle-verify  Verifica el snapshot C1 por allowlist y hashes"
+	@echo "  make deep-research-pilot-prepare  Valida C2 y prepara jobs sin llamar a Codex"
+	@echo "  make deep-research-pilot-run  Ejecuta C2 cuando está desplegado el worker autenticado"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -448,6 +458,30 @@ deep-research-bundle:
 
 deep-research-bundle-verify:
 	uv run python $(PYTHON_SOURCE)/deep_research_bundle.py verify $(DEEP_RESEARCH_BUNDLE)
+
+deep-research-pilot-prepare:
+	uv run python $(PYTHON_SOURCE)/deep_research_pilot.py prepare \
+		--project-root . \
+		--spec $(DEEP_RESEARCH_PILOT_SPEC) \
+		--source $(DEEP_RESEARCH_PILOT_SOURCE) \
+		--holdout $(DEEP_RESEARCH_PILOT_HOLDOUT) \
+		--bundle $(DEEP_RESEARCH_BUNDLE) \
+		--output $(DEEP_RESEARCH_PILOT_OUTPUT)
+
+deep-research-pilot-run:
+	@test -n "$(DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION)" || { echo "Falta DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION"; exit 2; }
+	@test -n "$(DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION)" || { echo "Falta DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION"; exit 2; }
+	uv run python $(PYTHON_SOURCE)/deep_research_pilot.py run \
+		--project-root . \
+		--spec $(DEEP_RESEARCH_PILOT_SPEC) \
+		--source $(DEEP_RESEARCH_PILOT_SOURCE) \
+		--holdout $(DEEP_RESEARCH_PILOT_HOLDOUT) \
+		--plan $(DEEP_RESEARCH_PILOT_OUTPUT)/PLAN.json \
+		--bundle $(DEEP_RESEARCH_BUNDLE) \
+		--output $(DEEP_RESEARCH_PILOT_OUTPUT) \
+		--sandbox-binary $(DEEP_RESEARCH_PILOT_SANDBOX_BINARY) \
+		--input-cost-microusd-per-million $(DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION) \
+		--output-cost-microusd-per-million $(DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION)
 
 evaluate-rollout-holdout:
 	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \

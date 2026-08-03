@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Self
 
 from pydantic import Field, model_validator
 
@@ -23,6 +23,7 @@ DeepResearchStage = Literal[
 ]
 DeepResearchAnswerStatus = Literal["completa", "parcial", "pregunta", "abstención", "error"]
 CostMeasurement = Literal["ACTUAL", "ESTIMATED", "UNAVAILABLE"]
+PilotResponseBehavior = Literal["responder", "parcial", "preguntar", "abstenerse"]
 
 
 class DeepResearchLimits(JurisprudenceCaseModel):
@@ -112,3 +113,55 @@ class DeepResearchBundleManifest(JurisprudenceCaseModel):
     source_manifest_sha256: Sha256
     files: dict[NonEmptyText, Sha256]
     scope: dict[NonEmptyText, Annotated[int, Field(ge=0)]]
+
+
+class DeepResearchPilotQuestion(JurisprudenceCaseModel):
+    """Pregunta de evaluación que nunca se envía con su anotación al agente."""
+
+    question_id: NonEmptyText
+    dimension: NonEmptyText
+    expected_behavior: PilotResponseBehavior
+    question: NonEmptyText
+
+
+class DeepResearchPilotSpec(JurisprudenceCaseModel):
+    """Lock de preguntas C2 y de los recursos que las separan del holdout."""
+
+    schema_version: Literal["residenciafiscal-deep-research-pilot/1"]
+    pilot_id: Identifier
+    source_resource: NonEmptyText
+    source_sha256: Sha256
+    holdout_resource: NonEmptyText
+    holdout_sha256: Sha256
+    question_ids: Annotated[tuple[NonEmptyText, ...], Field(min_length=1, max_length=20)]
+
+    @model_validator(mode="after")
+    def validate_question_ids(self) -> Self:
+        if len(self.question_ids) != len(set(self.question_ids)):
+            raise ValueError("question_ids contiene duplicados")
+        return self
+
+
+class DeepResearchPilotPlan(JurisprudenceCaseModel):
+    """Plan materializado antes de permitir cualquier llamada a Codex."""
+
+    schema_version: Literal["residenciafiscal-deep-research-plan/1"]
+    pilot_id: Identifier
+    source_resource: NonEmptyText
+    source_sha256: Sha256
+    holdout_resource: NonEmptyText
+    holdout_sha256: Sha256
+    bundle_id: NonEmptyText
+    bundle_sha256: Sha256
+    questions: Annotated[tuple[DeepResearchPilotQuestion, ...], Field(min_length=1, max_length=20)]
+    jobs: Annotated[tuple[DeepResearchJob, ...], Field(min_length=1, max_length=20)]
+
+    @model_validator(mode="after")
+    def validate_jobs(self) -> Self:
+        if len(self.questions) != len(self.jobs):
+            raise ValueError("questions y jobs deben tener la misma longitud")
+        if tuple(question.question for question in self.questions) != tuple(
+            job.question for job in self.jobs
+        ):
+            raise ValueError("jobs no conserva el orden ni el texto de questions")
+        return self

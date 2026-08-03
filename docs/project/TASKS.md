@@ -445,6 +445,16 @@ contra el dominio público después de cada deploy.
         podrá usarse aquí como explorador controlado, con sandbox `read_only`,
         ejecución no interactiva y salida JSON Schema; esto será un piloto
         interno de calidad, no el runtime jurídico definitivo.
+        - [x] Congelar el piloto `c2-2026-08-03` fuera del holdout E y añadir
+          preflight por hashes, jobs JSON, workspace temporal, `codex exec
+          --sandbox read-only --ephemeral --json` y salida JSON Schema. El
+          runner CLI se envuelve por defecto en `bwrap`: solo monta el bundle
+          en `/workspace`, el schema y una salida efímera, sin credenciales,
+          repo ni configuración. Además deshabilita la red y falla cerrado
+          hasta que exista el worker/broker autenticado de Alfredo.
+          El target `make deep-research-pilot-run` queda explícito y no se lanza
+          automáticamente; la ejecución en Alfredo sigue pendiente de
+          desplegar el worker autenticado y comprobar el aislamiento de red.
       - [ ] **C3 — evaluar y decidir.** Ejecutar C solo después de cerrar el
         baseline jurídico ciego A/B. Mantener constantes corpus, fecha de corte,
         ausencia de internet, contrato, presupuesto, versión de agente/modelo,

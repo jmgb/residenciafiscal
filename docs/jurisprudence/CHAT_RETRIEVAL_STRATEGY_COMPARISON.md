@@ -562,7 +562,14 @@ y estrictamente permitido fuera del entorno de herramientas.
 3. **C2 — piloto:** ejecutar preguntas difíciles separadas del holdout A/B en un
    contenedor o microVM con usuario sin privilegios. Codex CLI/SDK puede servir
    como explorador controlado en modo solo lectura, ejecución no interactiva y
-   JSON Schema; no es aún el runtime jurídico definitivo.
+   JSON Schema; no es aún el runtime jurídico definitivo. La muestra congelada
+   `c2-2026-08-03` se valida por hashes y el target `make
+   deep-research-pilot-run` queda como lanzamiento explícito, nunca automático.
+   El runner local usa `bwrap` como frontera externa de filesystem: Codex solo
+   ve el bundle en `/workspace`, el schema y la salida efímera; no ve
+   credenciales, el repo ni configuración, y la red queda deshabilitada. El
+   runner falla cerrado hasta que el worker/broker autenticado de Alfredo
+   separe el egress del proveedor del entorno de herramientas.
 4. **C3 — evaluación:** no ejecutar antes de cerrar el baseline jurídico ciego
    A/B. Mantener constantes corpus, fecha, ausencia de internet, contrato,
    presupuesto, modelo, herramientas e instrucciones; medir utilidad, cobertura,

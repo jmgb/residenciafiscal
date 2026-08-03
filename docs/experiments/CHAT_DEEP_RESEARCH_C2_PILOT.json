@@ -1,0 +1,15 @@
+{
+  "schema_version": "residenciafiscal-deep-research-pilot/1",
+  "pilot_id": "c2-2026-08-03",
+  "source_resource": "docs/experiments/CHAT_STRATEGY_F02_DEV_SET.json",
+  "source_sha256": "ba6f34068a9cef9e6cccc7f7d1c5f5f46c3969d3c003d01e8061ff717defdeec",
+  "holdout_resource": "docs/experiments/CHAT_QUESTION_HOLDOUT_E.json",
+  "holdout_sha256": "9c1d744923b45714a1aac36d686603af0d7d6981a66cea7f1c673b32ccef2730",
+  "question_ids": [
+    "GEN-01",
+    "DAY-01",
+    "FOR-02",
+    "CMP-04",
+    "SRC-02"
+  ]
+}
