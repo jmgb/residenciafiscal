@@ -6,9 +6,9 @@ La iteración real del 3 de agosto corrigió el filtro de autoridad de B, añadi
 trazabilidad por afirmación en A y versionó el ledger del experimento. La vista
 ciega con voto usa dos columnas en escritorio y pestañas en móvil cuando A y B
 están activas; si solo existe una respuesta conserva una única columna. La
-revisión jurídica y el banco conversacional de 40
-siguen pendientes. La opción C agentiva queda solo documentada como posibilidad
-futura.
+revisión jurídica y el banco conversacional de 40 siguen pendientes. La opción
+C agentiva tiene ya una arquitectura de piloto acordada, pero permanece sin
+implementar ni autorizada para tráfico real.
 **Alcance:** piloto inicial de cinco y runtime productivo sobre 106 sentencias.
 **Fecha de actualización:** 2026-08-03.
 
@@ -487,18 +487,29 @@ Hasta entonces:
 - no se usa File Search como autoridad jurídica;
 - no se activa la unión ni en el piloto ni en el runtime productivo de 106.
 
-## Posible estrategia futura C: investigación agentiva
+## Plan de opción C: investigación agentiva
 
-**Estado de decisión:** posibilidad documentada; no implementada, presupuestada
-ni autorizada para tráfico real. No cambia el contrato A/B vigente.
+**Estado de decisión:** arquitectura de piloto acordada; no implementada,
+presupuestada ni autorizada para tráfico real. No cambia el contrato A/B vigente.
 
-C sería una investigación de mayor profundidad en la que un agente pudiera
-iterar sobre el corpus: formular búsquedas, leer unidades v3, abrir páginas
-verbatim, ampliar o descartar candidatos, contrastar varias resoluciones y
-verificar si la evidencia sostiene cada afirmación antes de responder. Un
-piloto puede usar Codex como explorador de archivos; una eventual versión de
-producto debe exponer herramientas jurídicas estrechas en lugar de shell y
-acceso general al repositorio.
+La fundación C0/C1 ya está implementada localmente: contratos ejecutables para
+job, límites, progreso, salida, claims y evidencias, más un builder/verificador
+de snapshots ZIP deterministas. La provisión del VPS de Alfredo, la
+transferencia del bundle y el piloto siguen pendientes.
+
+C será una investigación de mayor profundidad en la que un agente pueda iterar
+sobre el corpus: formular búsquedas, leer unidades v3, abrir páginas verbatim,
+ampliar o descartar candidatos, contrastar varias resoluciones y verificar si la
+evidencia sostiene cada afirmación antes de responder. El piloto podrá usar
+Codex como explorador de archivos; una eventual versión de producto deberá
+exponer herramientas jurídicas estrechas en lugar de shell y acceso general al
+repositorio.
+
+El host previsto es el VPS privado de Alfredo, pero no se clonará allí el
+repositorio completo. Cada ejecución recibirá un bundle inmutable y versionado
+con manifiesto y hashes que contendrá únicamente casos v3, verbatim, PDF e
+índices permitidos. Quedan fuera `.env`, credenciales, configuración de
+despliegue, historial Git, frontend, scripts y cualquier otro repositorio.
 
 La documentación oficial permite controlar Codex desde servidor mediante el
 [Codex SDK](https://learn.chatgpt.com/docs/codex-sdk), ejecutarlo de forma
@@ -535,6 +546,35 @@ pregunta
                            └── salida estructurada
                                   └── verificador determinista
 ```
+
+El worker será asíncrono, autenticado, cancelable y limitado por tiempo, turnos,
+herramientas, documentos, páginas y coste. El entorno de herramientas tendrá
+filesystem de solo lectura, directorio temporal efímero y red deshabilitada.
+Si el controlador necesita llamar al proveedor LLM, ese egress quedará aislado
+y estrictamente permitido fuera del entorno de herramientas.
+
+### Secuencia de ejecución
+
+1. **C0 — contrato y amenazas:** fijar job, resultado, estados objetivos,
+   retención, autenticación, cancelación y presupuestos.
+2. **C1 — bundle:** exportar el corpus permitido desde una versión congelada y
+   validar manifiesto, hashes, tamaño y ausencia de secretos.
+3. **C2 — piloto:** ejecutar preguntas difíciles separadas del holdout A/B en un
+   contenedor o microVM con usuario sin privilegios. Codex CLI/SDK puede servir
+   como explorador controlado en modo solo lectura, ejecución no interactiva y
+   JSON Schema; no es aún el runtime jurídico definitivo.
+4. **C3 — evaluación:** no ejecutar antes de cerrar el baseline jurídico ciego
+   A/B. Mantener constantes corpus, fecha, ausencia de internet, contrato,
+   presupuesto, modelo, herramientas e instrucciones; medir utilidad, cobertura,
+   claridad, latencia, coste y cancelaciones.
+5. **C4 — worker de producto:** si supera los gates, sustituir el explorador por
+   herramientas jurídicas acotadas: `buscar_sentencias`,
+   `buscar_en_sentencia`, `leer_paginas`, `leer_unidad_v3`,
+   `comparar_resoluciones` y `verificar_cita`.
+6. **C5/C6 — UX y promoción:** ofrecer C bajo demanda sin retrasar A/B, mostrar
+   estados objetivos y un bloque independiente con fuentes, límites, coste y
+   latencia. Promover a tráfico real solo tras revisar autenticación, retención,
+   tratamiento, observabilidad, rollback y presupuesto.
 
 ### Ventajas y desventajas
 

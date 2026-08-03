@@ -17,6 +17,7 @@ SHELL := /bin/bash
 	evaluate-holdout-e0 evaluate-rollout-e rollout-init rollout-status rollout-next \
 	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
 	rollout-bootstrap rollout-finalize rollout-verify rollout-reproducibility \
+	deep-research-bundle deep-research-bundle-verify \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
 	validate-chat-absences-candidate compile-chat-f03-results \
@@ -103,6 +104,7 @@ CASE_ROLLOUT_DEVELOPMENT_REPORT ?= ./knowledge/jurisprudencia-v3/reports/rollout
 CASE_ROLLOUT_AUDIT ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.json
 CASE_ROLLOUT_AUDIT_MD ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.high-risk-audit.md
 CASE_ROLLOUT_HOLDOUT_COVERAGE ?= ./knowledge/jurisprudencia-v3/reports/rollout-106.holdout-coverage.json
+DEEP_RESEARCH_BUNDLE ?= ./output/deep-research/rollout-106.bundle.zip
 ROLLOUT_RETRY ?=
 
 # =============================================================================
@@ -145,6 +147,8 @@ help:
 	@echo "  make rollout-holdout-coverage  Diagnostica si la precisión del holdout es válida"
 	@echo "  make rollout-audit        Segunda pasada automática sobre los 42 casos HIGH"
 	@echo "  make rollout-verify       Verifica hashes, agregados y presupuesto de artefactos"
+	@echo "  make deep-research-bundle  Construye el snapshot C1 sin secretos ni clon del repo"
+	@echo "  make deep-research-bundle-verify  Verifica el snapshot C1 por allowlist y hashes"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
 	@echo "  make export-normativa     Genera los preceptos legales en Markdown (sin LLM)"
 	@echo "  make enlazar-normativa    Resuelve las citas de las sentencias a los preceptos"
@@ -435,6 +439,15 @@ rollout-reproducibility: rollout-finalize
 		$(CASE_ROLLOUT_OUTPUT)/rollout-build.json \
 		$(CASE_ROLLOUT_OUTPUT)/retrieval/rollout-106.corpus.json \
 		$(CASE_ROLLOUT_OUTPUT)/reports/rollout-106.quality.json
+
+deep-research-bundle:
+	uv run python $(PYTHON_SOURCE)/deep_research_bundle.py build \
+		--project-root . \
+		--rollout-manifest $(CASE_ROLLOUT_MANIFEST) \
+		--output $(DEEP_RESEARCH_BUNDLE)
+
+deep-research-bundle-verify:
+	uv run python $(PYTHON_SOURCE)/deep_research_bundle.py verify $(DEEP_RESEARCH_BUNDLE)
 
 evaluate-rollout-holdout:
 	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \

@@ -408,13 +408,74 @@ contra el dominio público después de cada deploy.
     - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
       contrato actual es deliberadamente single-turn: el historial se muestra
       localmente, pero solo la última pregunta autosuficiente sale del navegador.
-    - [ ] **Futuro, no autorizado — evaluar una opción C agentiva.** Solo después
-      de cerrar el baseline jurídico ciego de A/B, ejecutar un piloto offline y
-      acotado sobre preguntas difíciles. Debe usar worker asíncrono, corpus de
-      solo lectura, red deshabilitada, herramientas jurídicas estrechas, salida
-      estructurada y el verificador determinista de citas. No pertenece al
-      runtime Netlify síncrono ni se activa por defecto. Pros, contras, UX y gates:
-      [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#posible-estrategia-futura-c-investigación-agentiva).
+    - [ ] **Futuro, no autorizado — plan de opción C agentiva.** C queda separada
+      de las respuestas rápidas A/B y no se activa por defecto ni entra en el
+      runtime Netlify síncrono. La arquitectura acordada es un worker asíncrono
+      privado en el VPS de Alfredo, con job autenticado, timeout, cancelación y
+      resultado reconciliable con el mismo contrato privado de retención.
+      El VPS no recibirá un clon completo del repositorio: cada ejecución usará
+      un bundle inmutable y versionado del corpus permitido, con manifiesto y
+      hashes, montado en solo lectura. El bundle excluirá `.env`, credenciales,
+      configuración de despliegue, historial Git, frontend, scripts y cualquier
+      otro repositorio.
+      - [ ] **C0 — cerrar el modelo de amenazas y el contrato del piloto.**
+        Definir el esquema de job/resultado, estados objetivos (búsqueda,
+        lectura, verificación, completada, cancelada y error), presupuesto de
+        tiempo, turnos, herramientas, documentos, páginas y coste, además de
+        retención, autenticación y cancelación. Las herramientas no tendrán
+        red ni escritura; si el agente necesita llamar al proveedor LLM, ese
+        acceso quedará en el controlador con egress estrictamente permitido,
+        nunca en el entorno de herramientas.
+        - [x] Añadir contratos Pydantic ejecutables para job, límites, progreso,
+          salida, claims y evidencias, sin campo de razonamiento.
+      - [ ] **C1 — construir el bundle de investigación.** Exportar únicamente
+        casos v3, verbatim, PDF permitidos e índices jurídicos necesarios desde
+        una versión congelada del corpus. Validar manifiesto, hashes, límites
+        de tamaño y ausencia de secretos antes de copiarlo al VPS.
+        - [x] Implementar `deep-research-bundle.py` y los targets
+          `make deep-research-bundle` / `make deep-research-bundle-verify`.
+          El builder produce ZIP determinista, no sobrescribe snapshots y el
+          verificador comprueba la allowlist y todos los hashes. La primera
+          instantánea local del rollout 106 queda validada; la transferencia y
+          validación en Alfredo siguen pendientes.
+      - [ ] **C2 — piloto offline con Codex.** Ejecutar una muestra pequeña de
+        preguntas difíciles, separada del holdout A/B, en un contenedor o
+        microVM con usuario sin privilegios, filesystem de solo lectura, red de
+        herramientas deshabilitada y directorio temporal efímero. Codex CLI/SDK
+        podrá usarse aquí como explorador controlado, con sandbox `read_only`,
+        ejecución no interactiva y salida JSON Schema; esto será un piloto
+        interno de calidad, no el runtime jurídico definitivo.
+      - [ ] **C3 — evaluar y decidir.** Ejecutar C solo después de cerrar el
+        baseline jurídico ciego A/B. Mantener constantes corpus, fecha de corte,
+        ausencia de internet, contrato, presupuesto, versión de agente/modelo,
+        herramientas e instrucciones. Bloquear cualquier resultado con
+        identificadores inventados, autoridad incorrecta, citas no literales o
+        afirmaciones sustantivas sin apoyo verificable. Medir utilidad, cobertura,
+        claridad, latencia, coste y cancelaciones; promover solo una mejora
+        relevante, repetible y proporcional al coste operativo.
+      - [ ] **C4 — sustituir el explorador por herramientas jurídicas.** Si el
+        piloto supera los gates, implementar el worker de producto con
+        herramientas estrechas (`buscar_sentencias`, `buscar_en_sentencia`,
+        `leer_paginas`, `leer_unidad_v3`, `comparar_resoluciones` y
+        `verificar_cita`), sin shell ni acceso general al repositorio. Exigir
+        salida estructurada con estado, respuesta, límites, afirmaciones y
+        evidencias; pasar toda cita por el verificador determinista y retirar
+        cualquier afirmación sin apoyo válido. No persistir ni mostrar cadena
+        de pensamiento; conservar solo trazas operativas seguras.
+      - [ ] **C5 — integrar la experiencia bajo demanda.** Desde A/B mostrar
+        únicamente un botón explícito «Iniciar investigación profunda» o una
+        oferta tras respuestas parciales, abstenciones o discrepancias. No
+        añadir C a la comparación síncrona ni retrasar A/B. Mostrar estados de
+        búsqueda/lectura/verificación y, al terminar, añadir un bloque o pestaña
+        C independiente con fuentes, límites, coste y latencia; permitir votar
+        A, B, C o empate sin declarar automáticamente una ganadora.
+      - [ ] **C6 — promoción controlada.** Antes de tráfico real revisar
+        autenticación del worker, retención, tratamiento de datos, observabilidad,
+        rollback y presupuesto. La promoción requiere decisión explícita y
+        documentada; si C no compensa su coste o pierde reproducibilidad,
+        permanece como diagnóstico offline o herramienta interna de evaluación.
+      - Contrato, seguridad, UX y gates:
+        [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#plan-de-opción-c-investigación-agentiva).
   - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están
     activos en Production desde el 31 de julio de 2026. El rollback es volver a
     `stub` y deshabilitar el backend. La activación técnica no cierra privacidad,
