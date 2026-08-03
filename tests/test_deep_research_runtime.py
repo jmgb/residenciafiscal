@@ -192,6 +192,23 @@ def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes
     assert final["reasoning_effort"] == "high"
 
 
+def test_finalizer_rejects_duplicate_evidence_indexes(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["evidence_indexes"] = [1, 1]
+
+    with pytest.raises(ValueError, match="each claim requires evidence"):
+        finalize_deep_research_output(
+            json.dumps(draft),
+            job_id="deep-job-1",
+            bundle_path=_bundle(tmp_path),
+            model="gpt-5.6-luna",
+            reasoning_effort="high",
+            latency_ms=1,
+            usage=None,
+            tool_audit=_audit(),
+        )
+
+
 def test_openai_usage_subtracts_cached_tokens_from_base_input():
     usage = normalize_openai_usage(
         {"input_tokens": 100, "cached_input_tokens": 20, "output_tokens": 50}
@@ -531,3 +548,23 @@ def test_draft_schema_worst_case_fits_callback_envelope():
     callback = json.dumps({"job_id": "deep-job-1", "status": "completed", "final_text": final_text})
 
     assert len(callback.encode("utf-8")) <= 250_000
+
+
+def test_draft_schema_avoids_codex_unsupported_unique_items_keyword():
+    schema = json.loads(
+        (
+            __import__("pathlib").Path(__file__).parents[1]
+            / "schemas/residenciafiscal-deep-research-draft-v2.schema.json"
+        ).read_text("utf-8")
+    )
+
+    def contains_unique_items(value):
+        if isinstance(value, dict):
+            return "uniqueItems" in value or any(
+                contains_unique_items(item) for item in value.values()
+            )
+        if isinstance(value, list):
+            return any(contains_unique_items(item) for item in value)
+        return False
+
+    assert not contains_unique_items(schema)
