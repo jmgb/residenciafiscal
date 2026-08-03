@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import type { ChatFunctionDependencies } from './chat';
+import { sanitizeChatDiagnostic } from './chat-diagnostics';
 import type { StrategyAnswer } from './contracts';
 import {
   CurrentStructuredStrategy,
@@ -81,6 +82,7 @@ const observedStrategy = (
     document_token_accounting: documentTokenAccounting(answer),
     failure_code: answer.diagnostics?.failure_code ?? null,
     error_name: safeErrorName(answer.diagnostics?.error_name),
+    error_context: answer.diagnostics?.error_context ?? null,
   };
 };
 
@@ -100,6 +102,24 @@ export const createProductionDependencies = (
   const deadlineMs = deadline(environment.CHAT_DEADLINE_MS);
   const fileSearchModel = environment.CHAT_FILE_SEARCH_MODEL?.trim() || 'gemini-3.5-flash-lite';
   const enabled = environment.CHAT_COMPARISON_ENABLED === 'true';
+  const missingConfiguration = [
+    !enabled ? 'CHAT_COMPARISON_ENABLED' : null,
+    !openAIKey ? 'OPENAI_API_KEY' : null,
+    !geminiKey ? 'GEMINI_API_KEY' : null,
+    !supabaseUrl?.startsWith('https://') ? 'SUPABASE_URL' : null,
+    !supabaseSecretKey ? 'SUPABASE_SECRET_KEY' : null,
+    !storeName?.startsWith('fileSearchStores/') ? 'CHAT_FILE_SEARCH_STORE_NAME' : null,
+    !deadlineMs ? 'CHAT_DEADLINE_MS' : null,
+    !['gemini-3.5-flash-lite', 'gemini-3.6-flash'].includes(fileSearchModel)
+      ? 'CHAT_FILE_SEARCH_MODEL'
+      : null,
+  ].filter((name): name is string => name !== null);
+  const disabledDiagnostic = sanitizeChatDiagnostic({
+    dependency: 'configuration',
+    operation: 'createProductionDependencies',
+    kind: 'chat_disabled',
+    missing: missingConfiguration,
+  });
   const observability = createChatObservability(environment);
   if (
     !enabled ||
@@ -113,6 +133,7 @@ export const createProductionDependencies = (
   ) {
     return {
       enabled: false,
+      disabledDiagnostic,
       observability,
       async recordRequest() {
         throw new Error('Chat no configurado');
@@ -131,7 +152,7 @@ export const createProductionDependencies = (
   const rpcClient: SupabaseRpcClient = {
     async rpc(functionName, parameters) {
       const { data, error } = await supabase.rpc(functionName, parameters);
-      return { data, error: error ? { message: error.message } : null };
+      return { data, error: error ? { message: error.message, code: error.code } : null };
     },
   };
   const store = new SupabaseChatStore(rpcClient, {
@@ -195,6 +216,7 @@ export const createProductionDependencies = (
               failureCode: answer.diagnostics?.failure_code ?? 'unknown',
               errorName: answer.diagnostics?.error_name ?? undefined,
               latencyMs: answer.latency_ms,
+              errorContext: answer.diagnostics?.error_context,
             })
           )
       );

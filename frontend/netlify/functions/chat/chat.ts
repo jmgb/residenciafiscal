@@ -1,5 +1,6 @@
 /** Entrada HTTP de la Function Netlify V1. */
 
+import { type ChatDiagnostic, diagnosticFromError } from './chat-diagnostics';
 import { createProductionDependencies } from './composition';
 import type { ComparisonReport } from './contracts';
 import { type JudicialAuthorityIntent, requestedJudicialAuthority } from './judicial-authority';
@@ -12,6 +13,7 @@ const MAX_MESSAGE_CHARS = 500;
 
 export interface ChatFunctionDependencies {
   enabled: boolean;
+  disabledDiagnostic?: ChatDiagnostic;
   observability: ChatObservability;
   recordRequest(input: ChatRequestInput): Promise<{ requestId: string }>;
   compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
@@ -47,8 +49,17 @@ interface ParsedChatRequest {
   countryPath: string;
 }
 
-const jsonError = (status: number, message: string) =>
-  Response.json({ error: message }, { status, headers: { 'cache-control': 'no-store' } });
+const jsonError = (status: number, message: string, requestId?: string) =>
+  Response.json(
+    { error: message },
+    {
+      status,
+      headers: {
+        'cache-control': 'no-store',
+        ...(requestId ? { 'x-chat-request-id': requestId } : {}),
+      },
+    }
+  );
 
 const validIdentifier = (value: unknown): value is string =>
   typeof value === 'string' && value.length >= 1 && value.length <= 128 && /^[\w-]+$/.test(value);
@@ -145,11 +156,25 @@ export const createChatHandler =
   async (request: Request): Promise<Response> => {
     const requestStarted = performance.now();
     if (request.method !== 'POST') return jsonError(405, 'Método no permitido');
-    if (!dependencies.enabled) return jsonError(503, 'Chat no habilitado');
-    const parsed = await parseQuestion(request);
-    if (!parsed) return jsonError(400, 'Petición inválida');
-
     const requestId = `chat-${crypto.randomUUID()}`;
+    if (!dependencies.enabled) {
+      await dependencies.observability.recordFailure({
+        requestId,
+        failureCode: 'configuration_error',
+        stage: 'record',
+        errorName: 'ConfigurationError',
+        errorContext: dependencies.disabledDiagnostic ?? {
+          dependency: 'configuration',
+          operation: 'chat_handler',
+          kind: 'chat_disabled',
+        },
+        latencyMs: Math.round(performance.now() - requestStarted),
+      });
+      return jsonError(503, 'Chat no habilitado', requestId);
+    }
+    const parsed = await parseQuestion(request);
+    if (!parsed) return jsonError(400, 'Petición inválida', requestId);
+
     const authorityIntent = requestedJudicialAuthority(parsed.question);
     let recordedRequest: { requestId: string };
     const recordStarted = performance.now();
@@ -168,8 +193,9 @@ export const createChatHandler =
         stage: 'record',
         errorName: errorNameOf(error),
         latencyMs: Math.round(performance.now() - requestStarted),
+        errorContext: diagnosticFromError(error),
       });
-      return jsonError(503, 'Registro de conversación no disponible');
+      return jsonError(503, 'Registro de conversación no disponible', requestId);
     }
     const recordLatencyMs = Math.round(performance.now() - recordStarted);
     const effectiveRequestId = recordedRequest.requestId;
@@ -179,7 +205,7 @@ export const createChatHandler =
     try {
       report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
     } catch (error) {
-      // El fallo se registra sin exponer el diagnóstico del proveedor.
+      // Solo se registra el diagnóstico estructurado y saneado del proveedor.
       const status = request.signal.aborted ? 'timed_out' : 'failed';
       const failureCode = request.signal.aborted ? 'aborted' : 'comparison_error';
       await dependencies.observability.recordFailure({
@@ -189,6 +215,7 @@ export const createChatHandler =
         status,
         errorName: errorNameOf(error),
         latencyMs: Math.round(performance.now() - requestStarted),
+        errorContext: diagnosticFromError(error),
       });
       try {
         await dependencies.failRequest({
@@ -199,7 +226,7 @@ export const createChatHandler =
       } catch {
         // Mantener la respuesta cerrada si también falla el registro del fallo.
       }
-      return jsonError(503, 'Comparación no disponible');
+      return jsonError(503, 'Comparación no disponible', requestId);
     }
     const compareLatencyMs = Math.round(performance.now() - compareStarted);
     const actualMicrousd = report.answers.reduce(
@@ -227,8 +254,9 @@ export const createChatHandler =
         stage: 'complete',
         errorName: errorNameOf(error),
         latencyMs: Math.round(performance.now() - requestStarted),
+        errorContext: diagnosticFromError(error),
       });
-      return jsonError(503, 'Registro de coste no disponible');
+      return jsonError(503, 'Registro de coste no disponible', requestId);
     }
     return new Response(serializeComparison(report), {
       status: 200,

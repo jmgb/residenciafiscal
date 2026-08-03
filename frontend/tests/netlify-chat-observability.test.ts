@@ -71,6 +71,14 @@ describe('ConsoleChatObservability', () => {
       status: 'failed',
       errorName: 'TypeError',
       latencyMs: 321,
+      errorContext: {
+        dependency: 'supabase',
+        operation: 'complete_chat_request',
+        kind: 'rpc_error',
+        code: 'PGRST202',
+        status: 503,
+        retryable: true,
+      },
     });
 
     expect(errorLog).toHaveBeenCalledWith(
@@ -83,6 +91,14 @@ describe('ConsoleChatObservability', () => {
         status: 'failed',
         error_name: 'TypeError',
         latency_ms: 321,
+        error_context: {
+          dependency: 'supabase',
+          operation: 'complete_chat_request',
+          kind: 'rpc_error',
+          code: 'PGRST202',
+          status: 503,
+          retryable: true,
+        },
       })
     );
   });
@@ -180,6 +196,14 @@ describe('SentryChatObservability', () => {
       stage: 'compare',
       status: 'failed',
       errorName: 'TypeError',
+      errorContext: {
+        dependency: 'supabase',
+        operation: 'complete_chat_request',
+        kind: 'rpc_error',
+        code: 'PGRST202',
+        status: 503,
+        retryable: true,
+      },
     });
 
     const call = sentryCall(fetchMock);
@@ -194,10 +218,25 @@ describe('SentryChatObservability', () => {
       stage: 'compare',
       status: 'failed',
       error_name: 'TypeError',
+      dependency: 'supabase',
+      operation: 'complete_chat_request',
+      error_kind: 'rpc_error',
+      error_code: 'PGRST202',
+      provider_status: '503',
       component: 'netlify-function',
       service: 'residencia-fiscal',
     });
-    expect(call.payload.extra).toEqual({ request_id: 'chat-1' });
+    expect(call.payload.extra).toEqual({
+      request_id: 'chat-1',
+      error_context: {
+        dependency: 'supabase',
+        operation: 'complete_chat_request',
+        kind: 'rpc_error',
+        code: 'PGRST202',
+        status: 503,
+        retryable: true,
+      },
+    });
     expect(call.payload.fingerprint).toEqual([
       'chat_request_failed',
       'comparison_error',

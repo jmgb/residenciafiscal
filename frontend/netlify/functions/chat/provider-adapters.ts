@@ -1,5 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
+import { ChatDiagnosticError, providerDiagnostic } from './chat-diagnostics';
 import type {
   StructuredDraft,
   StructuredWriter,
@@ -73,37 +74,45 @@ export const createOpenAIWriter = (apiKey: string): StructuredWriter => {
   const client = new OpenAI({ apiKey, maxRetries: 0, timeout: 50_000 });
   return {
     async write(input): Promise<StructuredWriterResult> {
-      const response = await client.responses.create(
-        {
-          model: input.model,
-          instructions: input.systemPrompt,
-          input: input.userPrompt,
-          reasoning: { effort: input.reasoningEffort },
-          max_output_tokens: 4_000,
-          store: false,
-          metadata: { request_id: input.requestId },
-          text: {
-            format: {
-              type: 'json_schema',
-              name: 'structured_legal_answer',
-              strict: true,
-              schema: structuredDraftSchema,
+      try {
+        const response = await client.responses.create(
+          {
+            model: input.model,
+            instructions: input.systemPrompt,
+            input: input.userPrompt,
+            reasoning: { effort: input.reasoningEffort },
+            max_output_tokens: 4_000,
+            store: false,
+            metadata: { request_id: input.requestId },
+            text: {
+              format: {
+                type: 'json_schema',
+                name: 'structured_legal_answer',
+                strict: true,
+                schema: structuredDraftSchema,
+              },
             },
           },
-        },
-        { signal: input.signal }
-      );
-      const parsed = JSON.parse(response.output_text) as unknown;
-      if (!isStructuredDraft(parsed)) throw new Error('Salida OpenAI inválida');
-      return {
-        draft: parsed,
-        usage: {
-          input_tokens: response.usage?.input_tokens ?? 0,
-          output_tokens: response.usage?.output_tokens ?? 0,
-          complete: response.usage != null,
-        },
-        model: response.model,
-      };
+          { signal: input.signal }
+        );
+        const parsed = JSON.parse(response.output_text) as unknown;
+        if (!isStructuredDraft(parsed)) throw new Error('invalid structured response');
+        return {
+          draft: parsed,
+          usage: {
+            input_tokens: response.usage?.input_tokens ?? 0,
+            output_tokens: response.usage?.output_tokens ?? 0,
+            complete: response.usage != null,
+          },
+          model: response.model,
+        };
+      } catch (error) {
+        if (error instanceof ChatDiagnosticError) throw error;
+        throw new ChatDiagnosticError(
+          'OpenAI no disponible',
+          providerDiagnostic('openai', 'responses.create', error)
+        );
+      }
     },
   };
 };
@@ -116,24 +125,32 @@ export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions
       file_search_store_names: [input.storeName],
       ...(input.metadataFilter ? { metadata_filter: input.metadataFilter } : {}),
     };
-    return (await client.interactions.create(
-      {
-        model: input.model,
-        input: input.prompt,
-        tools: [fileSearchTool],
-        response_format: {
-          type: 'text',
-          mime_type: 'application/json',
-          schema: fileSearchDraftSchema,
+    try {
+      return (await client.interactions.create(
+        {
+          model: input.model,
+          input: input.prompt,
+          tools: [fileSearchTool],
+          response_format: {
+            type: 'text',
+            mime_type: 'application/json',
+            schema: fileSearchDraftSchema,
+          },
+          generation_config: { max_output_tokens: 2_000 },
+          store: false,
         },
-        generation_config: { max_output_tokens: 2_000 },
-        store: false,
-      },
-      {
-        maxRetries: 0,
-        timeout: 50_000,
-        fetchOptions: { signal },
-      }
-    )) as unknown as Interaction;
+        {
+          maxRetries: 0,
+          timeout: 50_000,
+          fetchOptions: { signal },
+        }
+      )) as unknown as Interaction;
+    } catch (error) {
+      if (error instanceof ChatDiagnosticError) throw error;
+      throw new ChatDiagnosticError(
+        'Gemini no disponible',
+        providerDiagnostic('gemini', 'interactions.create', error)
+      );
+    }
   };
 };

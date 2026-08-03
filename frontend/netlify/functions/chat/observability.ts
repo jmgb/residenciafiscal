@@ -12,6 +12,7 @@
  * exactamente lo que construye `sentry-envelope.ts`.
  */
 
+import { sanitizeChatDiagnostic } from './chat-diagnostics';
 import {
   CHAT_OBSERVABILITY_SCHEMA_VERSION,
   type ChatCostEvent,
@@ -48,6 +49,9 @@ export class ConsoleChatObservability implements ChatObservability {
         ...(event.status ? { status: event.status } : {}),
         ...(event.errorName ? { error_name: sanitizeErrorName(event.errorName) } : {}),
         ...(event.latencyMs !== undefined ? { latency_ms: event.latencyMs } : {}),
+        ...(event.errorContext
+          ? { error_context: sanitizeChatDiagnostic(event.errorContext) }
+          : {}),
       })
     );
   }
@@ -62,6 +66,9 @@ export class ConsoleChatObservability implements ChatObservability {
         failure_code: event.failureCode,
         error_name: sanitizeErrorName(event.errorName),
         latency_ms: event.latencyMs,
+        ...(event.errorContext
+          ? { error_context: sanitizeChatDiagnostic(event.errorContext) }
+          : {}),
       })
     );
   }
@@ -136,6 +143,7 @@ export class SentryChatObservability implements ChatObservability {
       fingerprint: ['chat_request_failed', event.failureCode, event.stage],
       errorName: event.errorName,
       latencyMs: event.latencyMs,
+      errorContext: event.errorContext,
       tags: event.status ? { status: event.status } : undefined,
     });
   }
@@ -151,6 +159,7 @@ export class SentryChatObservability implements ChatObservability {
       fingerprint: ['chat_strategy_failed', event.strategy, event.failureCode],
       errorName: event.errorName,
       latencyMs: event.latencyMs,
+      errorContext: event.errorContext,
     });
   }
 

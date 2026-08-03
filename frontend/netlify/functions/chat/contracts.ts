@@ -1,3 +1,5 @@
+import type { ChatDiagnostic } from './chat-diagnostics';
+
 export type StrategyId = 'current_structured' | 'gemini_file_search';
 export type AnswerStatus = 'completa' | 'parcial' | 'pregunta' | 'abstención' | 'error';
 
@@ -52,6 +54,7 @@ export interface StrategyDiagnostics {
     | 'evidence_validation'
     | null;
   error_name: string | null;
+  error_context?: ChatDiagnostic | null;
 }
 
 export interface StrategyClaim {

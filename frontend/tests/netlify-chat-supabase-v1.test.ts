@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { ChatDiagnosticError } from '../netlify/functions/chat/chat-diagnostics';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
 import { SupabaseChatStore } from '../netlify/functions/chat/supabase-chat-store';
 
@@ -164,6 +165,34 @@ describe('persistencia privada del chat en Supabase', () => {
         question: 'Pregunta',
       })
     ).rejects.toThrow('Supabase no disponible');
+  });
+
+  it('expone un diagnóstico técnico seguro cuando falla una RPC', async () => {
+    const rpc = vi.fn(async () => ({
+      data: null,
+      error: {
+        code: 'PGRST202',
+        message: 'Could not find the function public.complete_chat_request with secret prompt',
+      },
+    }));
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await expect(
+      store.complete({
+        requestId: 'chat-request-1',
+        actualMicrousd: 2_000,
+        actualComplete: false,
+        report,
+      })
+    ).rejects.toMatchObject({
+      constructor: ChatDiagnosticError,
+      diagnostic: {
+        dependency: 'supabase',
+        operation: 'complete_chat_request',
+        kind: 'rpc_not_found',
+        code: 'PGRST202',
+      },
+    });
   });
 
   it('registra un fallo técnico de la consulta', async () => {

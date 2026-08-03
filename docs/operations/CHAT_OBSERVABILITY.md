@@ -49,6 +49,12 @@ conserva por compatibilidad, pero el evento ya no describe solo coste:
 - `failure_code` distingue `timeout`, excepción, contrato de estrategia,
   verificación de citas y validación de evidencia. `error_name` solo admite un
   nombre de clase saneado; nunca sale el mensaje de la excepción.
+- `error_context`, cuando existe, añade diagnóstico técnico seguro: dependencia
+  (`supabase`, `openai`, `gemini`, `configuration` o `internal`), operación,
+  clasificación (`rpc_not_found`, `invalid_payload`, `provider_timeout`, etc.),
+  código/estado HTTP, si es reintentable y, para una configuración incompleta,
+  los nombres de las variables ausentes. Nunca incluye el mensaje bruto del
+  proveedor.
 
 El evento puede contener IDs públicos de sentencias, contadores y enums. No puede
 contener pregunta, respuesta, citas literales, `limits` ni diagnósticos brutos del
@@ -65,7 +71,12 @@ construye el envelope y `observability.ts` lo envía con `fetch`, así que lo qu
 sale está acotado por un contrato revisable.
 
 Viaja: `schema_version`, `failure_code`, `stage` o `strategy`, `status` cuando
-existe, `request_id`, `error_name`, latencia, entorno y fingerprint.
+existe, `request_id`, `error_name`, `error_context` seguro, latencia, entorno y
+fingerprint.
+
+Las respuestas de error del endpoint incluyen `x-chat-request-id`, que permite
+cruzar la consola del navegador con Netlify/Sentry sin devolver al cliente el
+diagnóstico interno ni el contenido de la consulta.
 
 No viaja, nunca: la pregunta, la respuesta, el `message` de la excepción del
 proveedor, cabeceras, cookies ni cuerpo de la petición. El motivo es concreto: un

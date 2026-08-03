@@ -1,4 +1,9 @@
-import { CHAT_OBSERVABILITY_SCHEMA_VERSION, sanitizeErrorName } from './observability-contracts';
+import { sanitizeChatDiagnostic } from './chat-diagnostics';
+import {
+  CHAT_OBSERVABILITY_SCHEMA_VERSION,
+  type ChatFailureEvent,
+  sanitizeErrorName,
+} from './observability-contracts';
 
 export interface SentryDsnParts {
   endpoint: string;
@@ -15,6 +20,7 @@ export interface SyntheticFailureEvent {
   errorName?: string;
   latencyMs?: number;
   tags?: Record<string, string>;
+  errorContext?: ChatFailureEvent['errorContext'];
 }
 
 interface SentryEnvelopeOptions {
@@ -43,6 +49,7 @@ export const buildSentryEnvelope = (
   event: SyntheticFailureEvent
 ): string => {
   const eventId = crypto.randomUUID().replace(/-/g, '');
+  const errorContext = event.errorContext ? sanitizeChatDiagnostic(event.errorContext) : undefined;
   const payload = {
     event_id: eventId,
     timestamp: Date.now() / 1000,
@@ -62,11 +69,26 @@ export const buildSentryEnvelope = (
       failure_code: event.failureCode,
       [event.qualifierKey]: event.qualifierValue,
       error_name: sanitizeErrorName(event.errorName),
+      ...(errorContext
+        ? {
+            dependency: errorContext.dependency,
+            operation: errorContext.operation,
+            error_kind: errorContext.kind,
+            ...(errorContext.code ? { error_code: errorContext.code } : {}),
+            ...(errorContext.status !== undefined
+              ? { provider_status: String(errorContext.status) }
+              : {}),
+            ...(errorContext.retryable !== undefined
+              ? { retryable: String(errorContext.retryable) }
+              : {}),
+          }
+        : {}),
       ...event.tags,
     },
     extra: {
       request_id: event.requestId,
       ...(event.latencyMs !== undefined ? { latency_ms: event.latencyMs } : {}),
+      ...(errorContext ? { error_context: errorContext } : {}),
     },
   };
   return [

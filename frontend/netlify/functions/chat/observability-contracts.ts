@@ -1,3 +1,5 @@
+import type { ChatDiagnostic } from './chat-diagnostics';
+
 export const CHAT_OBSERVABILITY_SCHEMA_VERSION = 'residenciafiscal-chat-observability/1' as const;
 
 export type ChatFailureStage = 'record' | 'compare' | 'complete';
@@ -10,6 +12,7 @@ export interface ChatFailureEvent {
   /** Nombre de la clase del error. Se sanea antes de salir del proceso. */
   errorName?: string;
   latencyMs?: number;
+  errorContext?: ChatDiagnostic | null;
 }
 
 export interface ChatStrategyFailureEvent {
@@ -18,6 +21,7 @@ export interface ChatStrategyFailureEvent {
   failureCode: string;
   errorName?: string;
   latencyMs: number;
+  errorContext?: ChatDiagnostic | null;
 }
 
 export interface ChatCostStrategy {

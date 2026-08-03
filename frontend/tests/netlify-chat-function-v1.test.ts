@@ -4,6 +4,7 @@ import {
   config,
   createChatHandler,
 } from '../netlify/functions/chat/chat';
+import { ChatDiagnosticError } from '../netlify/functions/chat/chat-diagnostics';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
 import { ConsoleChatObservability } from '../netlify/functions/chat/observability';
 import { parseChatEventStream } from '../src/lib/chat-sse-protocol';
@@ -94,11 +95,22 @@ describe('Netlify Function /api/chat V1', () => {
   });
 
   it('permanece cerrada sin activación server-side', async () => {
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const deps = dependencies({ enabled: false });
     const response = await createChatHandler(deps)(request({ messages: [] }));
 
     expect(response.status).toBe(503);
     expect(deps.compare).not.toHaveBeenCalled();
+    expect(JSON.parse(String(errorLog.mock.calls[0]?.[0]))).toMatchObject({
+      event: 'chat_request_failed',
+      failure_code: 'configuration_error',
+      stage: 'record',
+      error_context: {
+        dependency: 'configuration',
+        operation: 'chat_handler',
+        kind: 'chat_disabled',
+      },
+    });
   });
 
   it('falla cerrado si no puede registrar la consulta', async () => {
@@ -190,6 +202,7 @@ describe('Netlify Function /api/chat V1', () => {
     );
 
     expect(response.status).toBe(503);
+    expect(response.headers.get('x-chat-request-id')).toMatch(/^chat-/);
     const failedEvent = errorLog.mock.calls
       .map(([entry]) => JSON.parse(String(entry)) as Record<string, unknown>)
       .find((entry) => entry.event === 'chat_request_failed');
@@ -198,6 +211,39 @@ describe('Netlify Function /api/chat V1', () => {
       request_id: expect.stringMatching(/^chat-/),
       failure_code: 'completion_error',
       stage: 'complete',
+    });
+  });
+
+  it('registra la RPC y el código cuando falla la persistencia de coste', async () => {
+    const errorLog = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const deps = dependencies({
+      completeRequest: vi.fn(async () => {
+        throw new ChatDiagnosticError('Supabase no disponible', {
+          dependency: 'supabase',
+          operation: 'complete_chat_request',
+          kind: 'rpc_not_found',
+          code: 'PGRST202',
+        });
+      }),
+    });
+
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+
+    expect(response.status).toBe(503);
+    const failedEvent = errorLog.mock.calls
+      .map(([entry]) => JSON.parse(String(entry)) as Record<string, unknown>)
+      .find((entry) => entry.event === 'chat_request_failed');
+    expect(failedEvent).toMatchObject({
+      failure_code: 'completion_error',
+      stage: 'complete',
+      error_context: {
+        dependency: 'supabase',
+        operation: 'complete_chat_request',
+        kind: 'rpc_not_found',
+        code: 'PGRST202',
+      },
     });
   });
 

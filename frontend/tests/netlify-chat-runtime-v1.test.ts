@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ChatDiagnosticError } from '../netlify/functions/chat/chat-diagnostics';
 import {
   compareStrategiesInParallel,
   type NetlifyChatStrategy,
@@ -100,6 +101,47 @@ describe('runtime comparativo Netlify V1', () => {
     });
     expect(JSON.stringify(report)).not.toContain('secreto');
     expect(report.answers[1].text).toBe('respuesta disponible');
+  });
+
+  it('conserva el contexto técnico seguro del proveedor en el diagnóstico aislado', async () => {
+    const failing: NetlifyChatStrategy = {
+      id: 'current_structured',
+      async answer() {
+        throw new ChatDiagnosticError('Proveedor no disponible', {
+          dependency: 'openai',
+          operation: 'responses.create',
+          kind: 'provider_error',
+          code: 'rate_limit_exceeded',
+          status: 429,
+          retryable: true,
+        });
+      },
+    };
+    const working: NetlifyChatStrategy = {
+      id: 'gemini_file_search',
+      async answer() {
+        return answer('gemini_file_search', 'respuesta disponible');
+      },
+    };
+
+    const report = await compareStrategiesInParallel({
+      question: 'pregunta',
+      requestId: 'request-technical-diagnostic',
+      deadlineMs: 1_000,
+      strategies: [failing, working],
+    });
+
+    expect(report.answers[0].diagnostics).toMatchObject({
+      failure_code: 'exception',
+      error_context: {
+        dependency: 'openai',
+        operation: 'responses.create',
+        kind: 'provider_error',
+        code: 'rate_limit_exceeded',
+        status: 429,
+        retryable: true,
+      },
+    });
   });
 
   it('cancela ambas estrategias al alcanzar el deadline interno', async () => {

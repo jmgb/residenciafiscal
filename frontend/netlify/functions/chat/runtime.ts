@@ -1,3 +1,4 @@
+import { type ChatDiagnostic, diagnosticFromError } from './chat-diagnostics';
 import {
   type ComparisonReport,
   type StrategyAnswer,
@@ -39,7 +40,8 @@ const errorAnswer = (
   latencyMs: number,
   question: string,
   failureCode: 'timeout' | 'exception' | 'strategy_contract',
-  errorName: string | null
+  errorName: string | null,
+  errorContext: ChatDiagnostic | null
 ): StrategyAnswer => ({
   strategy,
   status: 'error',
@@ -59,6 +61,7 @@ const errorAnswer = (
     citation_verified: 0,
     failure_code: failureCode,
     error_name: errorName,
+    error_context: errorContext,
   },
 });
 
@@ -92,6 +95,7 @@ const runIsolated = async (
         Math.round(performance.now() - started),
         question,
         'strategy_contract',
+        null,
         null
       );
     }
@@ -104,7 +108,15 @@ const runIsolated = async (
       Math.round(performance.now() - started),
       question,
       timeout ? 'timeout' : 'exception',
-      safeErrorName(error)
+      safeErrorName(error),
+      timeout
+        ? {
+            dependency: 'internal',
+            operation: 'compareStrategiesInParallel',
+            kind: 'deadline_exceeded',
+            retryable: true,
+          }
+        : diagnosticFromError(error)
     );
   }
 };

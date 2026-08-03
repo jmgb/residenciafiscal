@@ -52,6 +52,24 @@ describe('composition root de la Function con Supabase', () => {
     expect(createClient).not.toHaveBeenCalled();
   });
 
+  it('explica qué comprobaciones de configuración fallaron sin incluir secretos', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_COMPARISON_ENABLED: 'false',
+      GEMINI_API_KEY: undefined,
+      CHAT_FILE_SEARCH_STORE_NAME: 'invalid-store',
+    });
+
+    expect(dependencies.enabled).toBe(false);
+    expect(dependencies.disabledDiagnostic).toMatchObject({
+      dependency: 'configuration',
+      operation: 'createProductionDependencies',
+      kind: 'chat_disabled',
+      missing: ['CHAT_COMPARISON_ENABLED', 'GEMINI_API_KEY', 'CHAT_FILE_SEARCH_STORE_NAME'],
+    });
+    expect(JSON.stringify(dependencies.disabledDiagnostic)).not.toContain('openai-test');
+  });
+
   it('crea un cliente exclusivamente server-side y conecta el registro privado', async () => {
     rpc.mockResolvedValueOnce({
       data: { request_id: 'chat-request-1', created: true },

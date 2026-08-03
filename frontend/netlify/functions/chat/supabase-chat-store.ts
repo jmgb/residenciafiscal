@@ -1,7 +1,10 @@
+import { ChatDiagnosticError, supabaseDiagnostic } from './chat-diagnostics';
 import type { ComparisonReport } from './contracts';
 
-interface RpcError {
+export interface RpcError {
   message: string;
+  code?: string | null;
+  status?: number | null;
 }
 
 export interface SupabaseRpcClient {
@@ -10,6 +13,14 @@ export interface SupabaseRpcClient {
     parameters: Record<string, unknown>
   ): PromiseLike<{ data: unknown; error: RpcError | null }>;
 }
+
+const supabaseFailure = (operation: string, error: RpcError | null, invalidResponse = false) =>
+  new ChatDiagnosticError(
+    'Supabase no disponible',
+    invalidResponse
+      ? { dependency: 'supabase', operation, kind: 'invalid_response' }
+      : supabaseDiagnostic(operation, error)
+  );
 
 export interface ChatRequestInput {
   requestId: string;
@@ -96,7 +107,9 @@ export class SupabaseChatVoteStore {
       p_verdict: input.verdict,
       p_reason: input.reason,
     });
-    if (error || typeof data !== 'boolean') throw new Error('Supabase no disponible');
+    if (error || typeof data !== 'boolean') {
+      throw supabaseFailure('record_chat_vote', error, !error && typeof data !== 'boolean');
+    }
     return data;
   }
 }
@@ -118,7 +131,9 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
       p_question: input.question,
       p_experiment: this.experiment,
     });
-    if (error || !isRequestRecordResult(data)) throw new Error('Supabase no disponible');
+    if (error || !isRequestRecordResult(data)) {
+      throw supabaseFailure('create_chat_request', error, !error && !isRequestRecordResult(data));
+    }
     return { requestId: data.request_id };
   }
 
@@ -129,7 +144,7 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
       p_actual_complete: input.actualComplete,
       p_answers: input.report.answers.map(answerForPersistence),
     });
-    if (error) throw new Error('Supabase no disponible');
+    if (error) throw supabaseFailure('complete_chat_request', error);
   }
 
   async fail(input: ChatFailureInput): Promise<void> {
@@ -138,6 +153,6 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
       p_status: input.status,
       p_failure_code: input.failureCode,
     });
-    if (error) throw new Error('Supabase no disponible');
+    if (error) throw supabaseFailure('fail_chat_request', error);
   }
 }
