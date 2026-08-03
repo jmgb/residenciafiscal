@@ -19,16 +19,15 @@ comparación síncrona ni retrasa A/B.
 
 Las variables de C están activas en el `.env` local y en el contexto
 `production` de Netlify. El secreto HMAC está configurado como secreto de
-Netlify y coincide con el secreto del supervisor de Alfredo. La variable
-`VITE_DEEP_RESEARCH_ENABLED` se incorporará al frontend publicado en el
-próximo deploy.
+Netlify y coincide con el secreto del supervisor de Alfredo. El deploy de
+producción incluye el frontend y las funciones de C.
 
-La compuerta efectiva sigue cerrada en Alfredo: `ALFREDO_DEEP_RESEARCH_ISOLATION_ATTESTED`
-no está acreditada; su valor efectivo es `false` porque el container Codex
-actual aún no acredita el aislamiento requerido. Por tanto, el supervisor rechaza los jobs C hasta que
-se prepare y verifique el container dedicado descrito abajo. No activar esa
-attestation manualmente ni publicar el botón en producción antes de esa
-verificación.
+La compuerta efectiva está abierta en Alfredo tras verificación operativa:
+`ALFREDO_DEEP_RESEARCH_ISOLATION_ATTESTED=true`. El contenedor dedicado
+`alfredo-codex-agent` ejecuta `codex-cli 0.146.0` con usuario 1000, rootfs de
+solo lectura, sin Docker socket ni capacidades, límites de CPU/memoria/PIDs,
+workspace efímero en tmpfs y únicamente el estado de Codex como volumen
+persistentemente writable. El bundle y el schema se montan como solo lectura.
 
 ## Variables de Netlify
 
@@ -59,8 +58,9 @@ JSON Schema y la forma de cada evidencia antes de hacer visible el resultado.
    - `ALFREDO_CONTAINER_ROUTING_ENABLED=true`
    - `ALFREDO_DEEP_RESEARCH_ENABLED=true`
    - `ALFREDO_DEEP_RESEARCH_ISOLATION_ATTESTED=true` solo después de verificar
-     un contenedor dedicado sin root, rootfs de solo lectura, sin herramientas
-     de agente y con egress del proveedor resuelto por el controlador/broker.
+     el contenedor dedicado sin root, rootfs de solo lectura, sin herramientas
+     de agente, bundle/schema read-only y egress HTTPS disponible para el
+     proveedor autenticado de Codex.
    - `ALFREDO_TARGET_CODEX_CONTAINER=alfredo-codex-agent`
    - `ALFREDO_DEEP_RESEARCH_BUNDLE_ROOT=/opt/residenciafiscal/deep-research`
    - `ALFREDO_DEEP_RESEARCH_SCHEMA_PATH=/opt/residenciafiscal/deep-research/output.schema.json`
@@ -82,8 +82,14 @@ El instalador rechaza hashes incorrectos, rutas inseguras y sobrescrituras. El
 bundle se deja con directorios `0555` y archivos `0444`; el schema se copia al
 container de Codex también como `0444`. La activación del flag del worker y la
 transferencia son pasos separados para poder verificar primero el aislamiento.
-La compuerta de attestation mantiene C cerrada aunque alguien active por error
-solo las flags de ejecución o routing.
+En Alfredo, el sandbox `bwrap` interno de Codex no puede crear namespaces bajo
+la política del VPS; por eso el runner usa
+`--dangerously-bypass-approvals-and-sandbox` únicamente dentro del contenedor
+Docker endurecido. El aislamiento efectivo lo proporcionan Docker, los mounts
+read-only/tmpfs, el usuario sin privilegios y la ausencia de socket; la red
+conserva salida porque Codex necesita contactar con su proveedor. El schema
+declara `type` junto a cada `const` para ser compatible con la validación de
+structured output de Codex 0.146.0.
 
 ## Estados y cancelación
 
