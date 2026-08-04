@@ -8,8 +8,7 @@ export const ChatSafetyBanner = () => (
   >
     <AlertTriangle className='mt-0.5 h-4 w-4 shrink-0' aria-hidden='true' />
     <p>
-      <strong>Aviso:</strong> no constituye asesoramiento legal ni jurídico. Consulta a un
-      profesional.
+      <strong>Aviso:</strong> respuestas experimentales, no constituye asesoramiento jurídico.
       <a className='ml-1 underline' href='/privacidad'>
         Privacidad
       </a>
