@@ -114,8 +114,9 @@ describe('DeepResearchCard', () => {
       'text-secondary-foreground'
     );
     expect(screen.getByText('No sustituye asesoramiento profesional.')).toBeInTheDocument();
-    expect(screen.getByText(/Coste real: 0,0012 USD/)).toBeInTheDocument();
-    expect(screen.getByText(/Respuesta en: 4,2 s/)).toBeInTheDocument();
+    expect(screen.getByText(/Coste real: 0,00 USD/)).toBeInTheDocument();
+    expect(screen.getByText(/Respuesta en: 4 s/)).toBeInTheDocument();
+    expect(screen.getByText('Modelo: gpt-5.6-luna high')).toBeInTheDocument();
     expect(screen.getByRole('radio', { name: 'Opción C' })).toBeInTheDocument();
   });
 

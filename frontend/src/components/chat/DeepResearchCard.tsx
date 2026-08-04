@@ -27,14 +27,14 @@ const costLabel = (
   const label = measurement === 'ACTUAL' ? 'Coste real' : 'Coste estimado';
   return `${label}: ${new Intl.NumberFormat('es-ES', {
     minimumFractionDigits: 2,
-    maximumFractionDigits: 4,
+    maximumFractionDigits: 2,
   }).format(microusd / 1_000_000)} USD`;
 };
 
 const latencyLabel = (latencyMs: number): string =>
   `Respuesta en: ${new Intl.NumberFormat('es-ES', {
-    minimumFractionDigits: latencyMs % 1000 === 0 ? 0 : 1,
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(latencyMs / 1000)} s`;
 
 const judgmentLabel = (judgmentId: string): string => {
@@ -162,7 +162,9 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
           <div className='flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-3 text-xs text-muted-foreground'>
             <span>{costLabel(result.costMicrousd, result.costMeasurement)}</span>
             <span>{latencyLabel(result.latencyMs)}</span>
-            <span>Modelo: {result.model}</span>
+            <span>
+              Modelo: {result.model} {result.reasoningEffort}
+            </span>
           </div>
           {comparisonId && <ChatComparisonVote comparisonId={comparisonId} includeDeepResearch />}
         </div>
