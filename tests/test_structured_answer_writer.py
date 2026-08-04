@@ -104,7 +104,7 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
     assert result.text.splitlines() == [
         f"- {claim.text} [{claim.source_indexes[0]}]" for claim in result.claims
     ]
-    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+    from chat_model_policy import CHAT_FALLBACK_MODELS, CHAT_MODEL, CHAT_REASONING_EFFORT
 
     assert all(source.verification == "EXACT" for source in result.sources)
     # 120 de entrada y 30 de salida a la tarifa de Luna (0,20 y 1,20 USD/Mtok),
@@ -120,7 +120,7 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
     # no cambiaría nada, porque saldría el valor por defecto del proveedor.
     assert request.reasoning_effort == CHAT_REASONING_EFFORT
     assert request.temperature == 0
-    assert request.fallback_policy == "disabled"
+    assert request.fallback_models == CHAT_FALLBACK_MODELS
     assert request.response_schema["title"] == "StructuredChatAnswerDraft"
     context = json.loads(request.evidence_context)
     assert len(context["evidence"]) <= 12

@@ -32,7 +32,8 @@ Al terminar la migración:
   soporte esa tool;
 - Supabase conservará exactamente la misma reserva, persistencia, coste,
   diagnósticos e idempotencia visibles en la V1;
-- no habrá fallback de modelo ni cruce de contexto entre A y B;
+- A podrá declarar una cadena ordenada de modelos en el gateway; nunca habrá
+  fallback cruzado ni cruce de contexto entre A y B;
 - la implementación TypeScript del dominio se retirará después de una ventana
   de rollback, evitando dos runtimes activos a largo plazo.
 
@@ -110,7 +111,8 @@ límites de CPU, memoria, cola o ciclo de vida con los jobs agentivos.
 4. Una respuesta sustantiva sin evidencia verificable no se publica.
 5. El coste incurrido se registra incluso si el proveedor o un gate posterior
    falla.
-6. No existe fallback cruzado ni fallback silencioso a otro modelo.
+6. No existe fallback cruzado ni fallback silencioso: A solo usa los modelos
+   explícitamente declarados en su cadena de `FallbackPolicy`.
 7. El retry de B usa como máximo un segundo intento con el mismo modelo y store,
    bajo un presupuesto global, y suma ambos consumos.
 8. Solo sale del navegador la última pregunta autosuficiente; el historial
@@ -138,7 +140,7 @@ límites de CPU, memoria, cola o ciclo de vida con los jobs agentivos.
 ## 4. Fuera de alcance
 
 - cambiar Luna, Gemini o sus esfuerzos por motivos de calidad;
-- activar fallback de modelo;
+- cambiar la cadena de fallback o sus modelos por motivos de calidad;
 - mezclar el piloto Deep Research C con las respuestas rápidas A/B;
 - rediseñar la experiencia visual o el voto ciego;
 - añadir contexto multi-turn;
@@ -398,7 +400,7 @@ aplique los mismos cierres de seguridad.
 - el verbo genérico «apunta» no activa términos de gimnasio;
 - una cita no literal se retira;
 - el coste del primer intento se conserva si falla el retry;
-- un `401` en A no ejecuta fallback y no elimina B;
+- un `401` en A deja que el gateway aplique la cadena declarada y no elimina B;
 - la ausencia de una credencial tiene el comportamiento decidido en el ADR.
 
 **Gate F2**

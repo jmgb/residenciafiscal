@@ -44,11 +44,34 @@ class FakeProviderAdapter:
         )
 
 
+class FallbackProviderAdapter(FakeProviderAdapter):
+    def __init__(self) -> None:
+        super().__init__()
+        self.models: list[str] = []
+
+    async def generate(self, request: Any, *, model: str) -> Any:
+        from llm_gateway import ProviderResponse, TokenUsage
+
+        self.requests.append(request)
+        self.models.append(model)
+        return ProviderResponse(
+            output_text="esto no es json"
+            if model.endswith("maverick-17b-128e-instruct")
+            else DRAFT_JSON,
+            usage=TokenUsage(120, 30),
+            finish_reason="stop",
+            model_used=model,
+        )
+
+
 def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
     from llm_gateway import LLMGateway, ProviderRegistry
 
     registry = ProviderRegistry()
-    prefixes = ("gpt-",) if adapter.name == "openai" else ("gemini",)
+    prefixes = {
+        "openai": ("gpt-",),
+        "groq": ("meta-llama/",),
+    }.get(adapter.name, ("gemini",))
     registry.register(adapter, model_prefixes=prefixes)
     return GatewayChatWriter(LLMGateway(registry=registry))
 
@@ -56,6 +79,7 @@ def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
 def _request(**kwargs: Any) -> ChatWriterRequest:
     defaults: dict[str, Any] = {
         "model": "gemini-3.5-flash-lite",
+        "fallback_models": (),
         "system_prompt": "Responde solo desde la evidencia.",
         "user_prompt": "¿Qué valor se dio al certificado?",
         "evidence_context": "[E1] Fragmento literal.",
@@ -147,13 +171,21 @@ class TestPolicies:
 
         assert adapter.requests[0].reasoning_effort == CHAT_REASONING_EFFORT
 
-    async def test_model_fallback_stays_disabled(self) -> None:
-        """A no puede responder con un modelo distinto del que declara."""
+    async def test_model_fallback_is_passed_to_the_gateway(self) -> None:
+        """El gateway decide cuándo ejecutar el modelo alternativo."""
         adapter = FakeProviderAdapter()
+        adapter.name = "groq"
 
-        await _writer(adapter).write(_request())
+        await _writer(adapter).write(
+            _request(
+                model="meta-llama/llama-4-maverick-17b-128e-instruct",
+                fallback_models=("meta-llama/llama-4-scout-17b-16e-instruct",),
+            )
+        )
 
-        assert adapter.requests[0].fallback_policy.models == ()
+        assert adapter.requests[0].fallback_policy.models == (
+            "meta-llama/llama-4-scout-17b-16e-instruct",
+        )
 
     async def test_the_requested_model_is_pinned(self) -> None:
         adapter = FakeProviderAdapter()
@@ -214,6 +246,23 @@ class TestFailures:
         assert isinstance(fallo.value.__cause__, OutputError)
         assert fallo.value.attempts
         assert all(intento.billable for intento in fallo.value.attempts)
+
+    async def test_gateway_executes_the_declared_model_fallback(self) -> None:
+        adapter = FallbackProviderAdapter()
+        adapter.name = "groq"
+
+        result = await _writer(adapter).write(
+            _request(
+                model="meta-llama/llama-4-maverick-17b-128e-instruct",
+                fallback_models=("meta-llama/llama-4-scout-17b-16e-instruct",),
+            )
+        )
+
+        assert result.model_used == "meta-llama/llama-4-scout-17b-16e-instruct"
+        assert adapter.models == [
+            "meta-llama/llama-4-maverick-17b-128e-instruct",
+            "meta-llama/llama-4-scout-17b-16e-instruct",
+        ]
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:
         """Las credenciales son de la aplicación, no del redactor."""

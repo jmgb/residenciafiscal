@@ -40,10 +40,11 @@ def test_config_expone_enums(client: TestClient) -> None:
     # `/config` publica la política, así que se compara con ella: fijar aquí el
     # esfuerzo obligaría a tocar el test justo cuando debe comprobar que el
     # endpoint no se ha quedado anunciando una configuración que ya no rige.
-    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+    from chat_model_policy import CHAT_FALLBACK_MODELS, CHAT_MODEL, CHAT_REASONING_EFFORT
 
     assert body["chat_model"] == CHAT_MODEL
     assert body["chat_reasoning_effort"] == CHAT_REASONING_EFFORT
+    assert body["chat_fallback_models"] == list(CHAT_FALLBACK_MODELS)
     # La lista sí es literal: son los esfuerzos que el catálogo declara para
     # Luna, y que cambien es una noticia del paquete, no de este proyecto.
     assert body["chat_reasoning_efforts_permitidos"] == [

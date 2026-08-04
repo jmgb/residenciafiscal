@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Literal, Protocol
+from typing import Any, Protocol
 
 from llm_gateway import Cost, ReasoningEffort
 from pydantic import Field
@@ -21,7 +21,7 @@ class ChatWriterRequest:
     response_schema: dict[str, Any]
     temperature: float = 0
     reasoning_effort: ReasoningEffort | None = None
-    fallback_policy: Literal["disabled"] = "disabled"
+    fallback_models: tuple[str, ...] = ()
 
 
 class ChatWriterUsage(JurisprudenceCaseModel):

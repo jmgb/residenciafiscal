@@ -10,10 +10,12 @@ Frente al adaptador anterior aporta tres cosas que el comparador necesita:
 * uso ausente marcado como incompleto en lugar de contado como cero, que es lo
   que permite que el coste se rotule `ESTIMATED` y no `ACTUAL`;
 * reintento acotado y visible ante errores transitorios;
-* async nativo, sin `asyncio.to_thread` alrededor de un cliente síncrono.
+* async nativo, sin `asyncio.to_thread` alrededor de un cliente síncrono;
+* fallback de modelo declarado por la aplicación y ejecutado por el gateway.
 
-El fallback de modelo queda desactivado: si A respondiera con un modelo distinto
-del que declara, la comparación con B dejaría de ser una comparación.
+Este módulo no crea clientes de proveedor ni decide cómo se reintenta o se
+selecciona el siguiente modelo. Solo traduce el contrato jurídico local al
+contrato neutral de `llm_gateway`.
 """
 
 from __future__ import annotations
@@ -62,7 +64,7 @@ WRITER_MAX_ATTEMPTS = 2
 
 
 class GatewayChatWriter:
-    """Una generación estructurada, sin tools, sin persistencia y sin fallback."""
+    """Una generación estructurada delegada por completo al gateway."""
 
     def __init__(self, gateway: LLMGateway) -> None:
         self._gateway = gateway
@@ -82,7 +84,7 @@ class GatewayChatWriter:
                     per_attempt_seconds_override=WRITER_ATTEMPT_TIMEOUT_SECONDS,
                 ),
                 retry_policy=RetryPolicy.transient(max_attempts=WRITER_MAX_ATTEMPTS),
-                fallback_policy=FallbackPolicy.disabled(),
+                fallback_policy=FallbackPolicy.models_in_order(*request.fallback_models),
                 source="f0.2-redactor-a",
             )
         )

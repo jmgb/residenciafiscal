@@ -33,7 +33,7 @@ ejecutable.
 
 | Pieza | Responsabilidad |
 |---|---|
-| `src/chat_model_policy.py` | Modelo y esfuerzo del chat: Luna + `high` |
+| `src/chat_model_policy.py` | Modelo primario, esfuerzo y cadena de fallbacks del chat |
 | `src/gateway_setup.py` | Clientes, credenciales, singleton y sinks de uso/alerta |
 | `src/gateway_chat_writer.py` | Adaptador del redactor estructurado del chat |
 | `src/current_structured_strategy.py` | Recuperación y respuesta A del comparador |
@@ -68,7 +68,7 @@ dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
 
 | Estrategia | Modelo | De dónde sale |
 |---|---|---|
-| A, respuesta estructurada | `chat_model_policy.CHAT_MODEL` + `CHAT_REASONING_EFFORT` | Política del chat |
+| A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Política del chat; la cadena se entrega al gateway |
 | B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
 
 El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
@@ -129,17 +129,38 @@ la regla de los dos consumidores y ese transporte deberá extraerse a un paquete
 neutral; si vuelven a necesitarse llamadas largas, la arquitectura FastAPI usa
 ya `neutral-llm-gateway` sin duplicación.
 
-En la V1 A ejecuta OpenAI una sola vez. B fuerza File Search y permite un
-segundo y último intento con el mismo modelo y store únicamente cuando la
-primera respuesta sustantiva carece de citas verificables; uso, coste y latencia
-acumulan ambos intentos bajo la misma señal de cancelación de 52 s. No existe
-fallback de modelo ni fallback cruzado. Lo siguiente describe el prototipo
-Python conservado:
+La respuesta determinista de A para `pregunta` o `abstención` termina antes de
+construir una petición y no consume ningún modelo. En una respuesta sustantiva,
+`GatewayChatWriter` construye un único `LLMRequest`; no llama a un SDK ni
+mantiene un adaptador local.
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
-de 200 s y máximo de 90 s por intento. El fallback de modelo está desactivado:
-si respondiera un modelo distinto, el coste y la comparación quedarían mal
-atribuidos.
+de 200 s y máximo de 90 s por intento. La estrategia pasa
+`FallbackPolicy.models_in_order(*CHAT_FALLBACK_MODELS)` al paquete. El gateway
+resuelve el modelo primario, agota sus reintentos y, si la respuesta es fallida,
+malformada o no cumple el esquema, prueba automáticamente cada fallback en el
+orden declarado. Registra los intentos, el modelo que respondió y el coste
+acumulado; la aplicación solo publica el resultado estructurado validado.
+
+La política se puede cambiar sin tocar el adaptador:
+
+```bash
+CHAT_MODEL=meta-llama/llama-4-maverick-17b-128e-instruct
+CHAT_FALLBACK_MODELS=meta-llama/llama-4-scout-17b-16e-instruct,gpt-5.6-terra
+```
+
+Los identificadores deben existir en el catálogo instalado del gateway. La
+versión `0.9.0` conoce los dos modelos Llama de Groq, pero no declara
+`reasoning_efforts` ni entrada de ficheros inline para ellos; por tanto, una
+petición de visión o un esfuerzo `high` para Llama requiere una versión del
+paquete cuyo catálogo y contrato lo soporten. La aplicación falla al arrancar
+si el modelo configurado no admite el esfuerzo declarado, en vez de afirmar que
+se ejecutó `high` cuando el paquete habría tenido que descartarlo.
+
+La V1 Netlify-only sigue siendo un runtime anterior: sus adaptadores TypeScript
+son directos porque aún no se ha completado el corte de tráfico a FastAPI. No
+se amplían ni se usan desde la ruta Python canónica; el objetivo de la
+migración es que A quede servido únicamente por este gateway.
 
 La cifra sigue al esfuerzo declarado, porque **la latencia la manda el
 razonamiento y no el tamaño de la pregunta**. Las mismas dos preguntas del
@@ -188,9 +209,11 @@ correcto y el único síntoma estaba en la factura. La misma versión evita que
 `ResponseFormat.JSON_OBJECT` falle con HTTP 400 en Groq, que rechaza ese modo si
 los mensajes no citan «json».
 
-El chat de este proyecto usa Gemini y OpenAI, que sí imponen esquema, así que su
-contabilidad no se mueve; el mínimo sube igualmente para que nadie herede el
-fallo al enrutar una estrategia a Groq u OpenRouter.
+La configuración histórica del chat usa Gemini y OpenAI, que sí imponen
+esquema. A puede enrutar también a Groq u OpenRouter si el catálogo y sus
+credenciales están configurados; en esos proveedores el gateway valida el JSON
+después de la respuesta y contabiliza cada intento, incluido el que provoque un
+fallback.
 
 No hay techo por decisión explícita. El contrapeso conviene tenerlo presente:
 el propio paquete recomienda fijar una versión exacta, y sin máximo una futura

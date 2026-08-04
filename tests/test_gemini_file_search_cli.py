@@ -125,12 +125,16 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
             str(tmp_path / "result.json"),
             "--model",
             "gemini-3.6-flash",
+            "--chat-model",
+            "gpt-5.6-luna",
+            "--chat-fallback-model",
+            "gpt-5.6-terra",
             "--confirm-paid",
         ]
     )
 
     assert result == 0
-    from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+    from chat_model_policy import CHAT_REASONING_EFFORT
     from gateway_chat_writer import GatewayChatWriter
 
     assert isinstance(captured["structured"]._writer, GatewayChatWriter)
@@ -142,6 +146,7 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
     assert captured["file_search"]._gateway is gateway
     assert captured["file_search"]._model == "gemini-3.6-flash"
 
-    assert captured["structured"]._model == CHAT_MODEL
+    assert captured["structured"]._model == "gpt-5.6-luna"
     assert captured["structured"]._reasoning_effort == CHAT_REASONING_EFFORT
+    assert captured["structured"]._fallback_models == ("gpt-5.6-terra",)
     assert captured["structured"]._model != captured["file_search"]._model

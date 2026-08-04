@@ -13,7 +13,7 @@ from chat_answer_prompt import (
     STRUCTURED_ANSWER_INSTRUCTIONS,
     structured_answer_prompt,
 )
-from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+from chat_model_policy import CHAT_FALLBACK_MODELS, CHAT_MODEL, CHAT_REASONING_EFFORT
 from chat_strategy_costs import PRICING_VERSION, unknown_failure_cost, zero_marginal_cost
 from chat_strategy_models import MarginalCost, StrategyAnswer, StrategyClaim
 from claim_evidence_relevance import claim_has_lexical_evidence
@@ -44,6 +44,7 @@ class CurrentStructuredStrategy:
         writer: StructuredAnswerWriter,
         model: str = CHAT_MODEL,
         reasoning_effort: ReasoningEffort | None = CHAT_REASONING_EFFORT,
+        fallback_models: tuple[str, ...] = CHAT_FALLBACK_MODELS,
         verbatim_artifacts: Mapping[str, Path] | None = None,
     ) -> None:
         """A corre sobre el modelo del chat, no sobre el de File Search.
@@ -62,6 +63,7 @@ class CurrentStructuredStrategy:
         self._writer = writer
         self._model = model
         self._reasoning_effort = reasoning_effort
+        self._fallback_models = fallback_models
         # Sin las páginas verbatim, cada cita se publica como la línea suelta
         # del anclaje, sin el contexto que permite comprobar de qué habla.
         self._verbatim_artifacts = verbatim_artifacts
@@ -108,6 +110,7 @@ class CurrentStructuredStrategy:
                 evidence_context=bundle.context_json,
                 response_schema=StructuredChatAnswerDraft.model_json_schema(),
                 reasoning_effort=self._reasoning_effort,
+                fallback_models=self._fallback_models,
             )
         )
         cost = _as_marginal_cost(writer_result)

@@ -28,6 +28,7 @@ from api.chat import router as chat_router
 from api.chat_rate_limit import require_quota_when_exposed, require_single_process_state
 from api.sentry_config import init_sentry
 from chat_model_policy import (
+    CHAT_FALLBACK_MODELS,
     CHAT_MODEL,
     CHAT_REASONING_EFFORT,
     CHAT_SUPPORTED_REASONING_EFFORTS,
@@ -115,6 +116,7 @@ async def get_config() -> dict[str, Any]:
     return {
         "chat_model": CHAT_MODEL,
         "chat_reasoning_effort": CHAT_REASONING_EFFORT,
+        "chat_fallback_models": list(CHAT_FALLBACK_MODELS),
         "chat_reasoning_efforts_permitidos": list(CHAT_SUPPORTED_REASONING_EFFORTS),
         "criterios": sorted(VALID_CRITERIOS),
         "categorias_prueba": sorted(VALID_CATEGORIAS_PRUEBA),

@@ -25,6 +25,23 @@ def test_no_existe_una_fachada_llm_para_analizar_sentencias() -> None:
     assert not (SOURCE_ROOT / "ai_service_adapter.py").exists()
 
 
+def test_la_ruta_a_no_reimplementa_llamadas_de_proveedor() -> None:
+    """A solo traduce el contrato al gateway; los SDK viven en la librería."""
+    source = (SOURCE_ROOT / "gateway_chat_writer.py").read_text(encoding="utf-8")
+
+    assert "LLMGateway" in source
+    assert "self._gateway.generate" in source
+    assert not any(
+        call in source
+        for call in (
+            "responses.create",
+            "chat.completions.create",
+            "interactions.create",
+            "generate_content",
+        )
+    )
+
+
 def test_el_pipeline_v3_no_importa_el_gateway() -> None:
     forbidden = ("llm_gateway", "gateway_setup", "chat_model_policy")
     corpus_modules = sorted(SOURCE_ROOT.glob("jurisprudence_*.py")) + [

@@ -13,7 +13,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from pydantic import BaseModel
 
-from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
+from chat_model_policy import CHAT_FALLBACK_MODELS, CHAT_MODEL, CHAT_REASONING_EFFORT
 from chat_strategy_comparison import compare_strategies
 from chat_strategy_costs import (
     DEFAULT_FILE_SEARCH_MODEL,
@@ -56,6 +56,21 @@ def _parser() -> argparse.ArgumentParser:
         help=(
             "Modelo de la estrategia B (File Search). No afecta a A, que usa "
             f"la política del chat: {CHAT_MODEL} con esfuerzo {CHAT_REASONING_EFFORT}."
+        ),
+    )
+    compare.add_argument(
+        "--chat-model",
+        default=CHAT_MODEL,
+        help="Modelo primario de A; la llamada la ejecuta neutral-llm-gateway.",
+    )
+    compare.add_argument(
+        "--chat-fallback-model",
+        dest="chat_fallback_models",
+        action="append",
+        default=None,
+        help=(
+            "Modelo alternativo de A. Se puede repetir; el gateway los prueba en "
+            "el orden indicado. Por defecto usa la política del chat."
         ),
     )
     compare.add_argument("--confirm-paid", action="store_true")
@@ -144,8 +159,13 @@ def _compare(args: argparse.Namespace) -> int:
             # A usa la política del chat; B, el modelo de File Search. Pasar el
             # mismo `--model` a las dos ataba A a una capacidad que no usa.
             writer=GatewayChatWriter(get_gateway()),
-            model=CHAT_MODEL,
+            model=args.chat_model,
             reasoning_effort=CHAT_REASONING_EFFORT,
+            fallback_models=(
+                tuple(args.chat_fallback_models)
+                if args.chat_fallback_models is not None
+                else CHAT_FALLBACK_MODELS
+            ),
             verbatim_artifacts={
                 source.judgment_id: (
                     PROJECT_ROOT
