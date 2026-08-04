@@ -286,43 +286,19 @@ def _parse_draft(draft_text: str) -> dict[str, Any]:
 def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> None:
     evidence = draft["evidence"]
     rollout_sources = _rollout_sources(bundle_path)
-    referenced: set[int] = set()
-    for claim in draft["claims"]:
-        if not isinstance(claim, dict) or set(claim) != {"text", "evidence_indexes"}:
-            raise ValueError("invalid claim")
-        indexes = claim.get("evidence_indexes")
-        if (
-            not isinstance(claim.get("text"), str)
-            or not claim["text"].strip()
-            or len(claim["text"]) > _MAX_CLAIM_CHARS
-        ):
-            raise ValueError("invalid claim text")
-        if (
-            not isinstance(indexes, list)
-            or not indexes
-            or len(indexes) > 8
-            or len(indexes) != len(set(indexes))
-        ):
-            raise ValueError("each claim requires evidence")
-        for index in indexes:
-            if (
-                not isinstance(index, int)
-                or isinstance(index, bool)
-                or not 1 <= index <= len(evidence)
-            ):
-                raise ValueError("claim references evidence out of range")
-            referenced.add(index)
-        first_evidence = evidence[indexes[0] - 1]
-        if not isinstance(first_evidence, dict) or claim["text"] != first_evidence.get("quote"):
-            raise ValueError("claim text must equal its first literal evidence quote")
-    if referenced != set(range(1, len(evidence) + 1)):
-        raise ValueError("cada evidencia debe estar referenciada de forma contigua")
     judgments: set[str] = set()
     for item in evidence:
         _verify_evidence(item, bundle_path, rollout_sources)
         judgments.add(item["judgment_id"])
     if len(judgments) > 5:
         raise ValueError("at most five judgments are allowed")
+    derived_claims: list[dict[str, Any]] = []
+    for index, item in enumerate(evidence, start=1):
+        if len(derived_claims) < _MAX_CLAIMS:
+            derived_claims.append({"text": item["quote"], "evidence_indexes": [index]})
+        else:
+            derived_claims[-1]["evidence_indexes"].append(index)
+    draft["claims"] = derived_claims
 
 
 def _rollout_sources(bundle_path: Path) -> dict[str, str]:
@@ -399,8 +375,51 @@ def _verify_evidence(item: object, bundle_path: Path, rollout_sources: dict[str,
     if source_page is None:
         raise ValueError("evidence página does not exist")
     raw_text = source_page.get("raw_page_text")
-    if not isinstance(raw_text, str) or quote not in raw_text:
+    exact_quote = (
+        _unique_raw_whitespace_match(raw_text, quote) if isinstance(raw_text, str) else None
+    )
+    if exact_quote is None and isinstance(raw_text, str):
+        exact_quote = _unique_raw_token_match(raw_text, quote)
+    if exact_quote is None or len(exact_quote) > _MAX_QUOTE_CHARS:
         raise ValueError("evidence página/literal is not an exact raw_page_text substring")
+    item["quote"] = exact_quote
+
+
+def _unique_raw_whitespace_match(raw_text: str, quote: str) -> str | None:
+    """Return corpus text only when a whitespace-only variant has one source span."""
+
+    if quote in raw_text:
+        return quote
+    tokens = re.split(r"\s+", quote)
+    if len(tokens) < 2 or any(not token for token in tokens):
+        return None
+    pattern = r"\s+".join(re.escape(token) for token in tokens)
+    matches = list(re.finditer(pattern, raw_text))
+    if len(matches) != 1:
+        return None
+    return matches[0].group(0)
+
+
+def _unique_raw_token_match(raw_text: str, quote: str) -> str | None:
+    """Locate one identical word sequence and return only its raw source span."""
+
+    quote_tokens = [match.group(0).casefold() for match in re.finditer(r"\w+", quote)]
+    raw_tokens = list(re.finditer(r"\w+", raw_text))
+    if not quote_tokens or len(quote_tokens) > len(raw_tokens):
+        return None
+    starts = [
+        index
+        for index in range(len(raw_tokens) - len(quote_tokens) + 1)
+        if [token.group(0).casefold() for token in raw_tokens[index : index + len(quote_tokens)]]
+        == quote_tokens
+    ]
+    if len(starts) != 1:
+        return None
+    start = raw_tokens[starts[0]].start()
+    end = raw_tokens[starts[0] + len(quote_tokens) - 1].end()
+    while end < len(raw_text) and not raw_text[end].isalnum() and not raw_text[end].isspace():
+        end += 1
+    return raw_text[start:end]
 
 
 def estimated_cost_microusd(usage: dict[str, int] | None, pricing: ModelPricing) -> int | None:

@@ -27,10 +27,10 @@ Usa primero corpus.search_corpus, después corpus.read_case solo para los candid
 Trabaja únicamente con JSON del corpus. No uses Internet, conocimiento externo, PDF, Markdown, credenciales ni rutas distintas del bundle.
 Selecciona como máximo cinco sentencias. Copia cada cita carácter por carácter desde raw_page_text y conserva su page y source_sha256.
 No normalices, corrijas, unas ni completes citas. Si una cita no es literal, omite la afirmación. Si la evidencia no basta, usa parcial, pregunta o abstención.
-Cada claim.text debe ser exactamente, carácter por carácter, la evidence.quote de su primer evidence_index; no sintetices ni parafrasees afirmaciones.
-No generes evidencia huérfana y numérala de forma contigua desde 1. Cada cita debe contener al menos 20 caracteres sustantivos y no tener espacio exterior.
-Para completa o parcial, text debe ser exactamente los textos literales de claims, en el mismo orden y separados por dos saltos de línea. No añadas prosa paralela.
-Devuelve siempre limits vacío. Para pregunta, abstención o error devuelve también text vacío; el verificador sustituye esos campos por mensajes fijos y seguros.
+Cada cita debe contener al menos 20 caracteres sustantivos y no tener espacio exterior.
+Para completa o parcial, añade por compatibilidad un claim mecánico por evidence: copia quote en claim.text y usa como único evidence_index su posición desde 1.
+No sintetices conclusiones: el verificador descarta text, limits y claims, valida evidence y deriva toda la respuesta visible desde las citas exactas.
+Devuelve text y limits vacíos. Para pregunta, abstención o error devuelve también claims y evidence vacíos; el verificador usa mensajes fijos y seguros.
 Devuelve únicamente el JSON del schema solicitado. No incluyas modelo, coste, tokens, latencia, razonamiento interno ni cadena de pensamiento."""
 
 _DISABLED_FEATURES = (

@@ -99,7 +99,7 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
                   <p
                     key={`${claim.text}-${claim.evidenceIndexes.join('-')}`}
                     data-testid='deep-research-claim'
-                    className='whitespace-pre-line text-[0.9375rem] leading-7 text-foreground'
+                    className='whitespace-normal text-[0.9375rem] leading-7 text-foreground'
                   >
                     {claim.text}
                   </p>
@@ -128,7 +128,7 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
                         {judgmentLabel(evidence.judgmentId)} · página {evidence.page}
                       </span>
                     </div>
-                    <blockquote className='mt-2 whitespace-pre-line border-l-4 border-accent-500 bg-accent px-3 py-2.5 text-sm leading-6 text-accent-foreground'>
+                    <blockquote className='mt-2 whitespace-normal border-l-4 border-accent-500 bg-accent px-3 py-2.5 text-sm leading-6 text-accent-foreground'>
                       {evidence.quote}
                     </blockquote>
                   </li>

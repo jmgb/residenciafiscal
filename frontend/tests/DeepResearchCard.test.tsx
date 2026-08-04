@@ -77,11 +77,13 @@ describe('DeepResearchCard', () => {
     const claims = screen.getAllByTestId('deep-research-claim');
     expect(claims).toHaveLength(2);
     expect(claims[0]).toHaveTextContent('La prueba debe ser coherente.');
-    expect(claims[0]).toHaveClass('whitespace-pre-line');
+    expect(claims[0]).toHaveClass('whitespace-normal');
     expect(claims[1]).toHaveTextContent('La valoración depende del conjunto probatorio.');
 
     expect(screen.getByRole('heading', { name: 'Evidencias verificadas' })).toBeInTheDocument();
-    expect(screen.getAllByTestId('deep-research-evidence')).toHaveLength(2);
+    const evidence = screen.getAllByTestId('deep-research-evidence');
+    expect(evidence).toHaveLength(2);
+    expect(evidence[0].querySelector('blockquote')).toHaveClass('whitespace-normal');
     expect(screen.getByText('STS 1 · página 3')).toHaveClass('font-mono');
     expect(screen.getByText('SAN 2 · página 8')).toBeInTheDocument();
     const scopeHeading = screen.getByRole('heading', { name: 'Alcance del análisis' });

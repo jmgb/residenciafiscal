@@ -77,18 +77,22 @@ determinista:
 
 - que solo se hayan usado las tres herramientas MCP permitidas;
 - que una respuesta sustantiva haya buscado el corpus y leído páginas verbatim;
-- que cada afirmación tenga evidencias y no existan evidencias huérfanas;
+- que exista evidencia verificable para toda respuesta sustantiva;
 - que cada sentencia, página y SHA-256 existan en el bundle;
 - que `document_id` y SHA-256 coincidan también con el manifiesto canónico del
   rollout, no solo con el propio JSON verbatim;
 - que `text_sha256` de cada página y `pages_sha256` del documento coincidan con
   el contenido JSON exacto; esta misma validación bloquea también la creación
   del bundle si un artefacto verbatim fue editado o truncado;
-- que cada cita, después de retirar únicamente whitespace exterior accidental
-  del borrador, sea una subcadena literal de `raw_page_text`; el whitespace
-  interior no se normaliza y el texto nunca se corrige, une ni completa;
-- que una cita contenga al menos 20 caracteres sustantivos y que cada
-  `claim.text` sea exactamente la cita de su primera evidencia;
+- que cada cita publicada sea una subcadena literal de `raw_page_text`; si el
+  borrador difiere solo en whitespace o puntuación, el verificador puede usar
+  la secuencia completa de palabras para localizar una única coincidencia y
+  sustituye el borrador por la subcadena cruda del corpus. Una coincidencia
+  ambigua o cualquier palabra añadida, omitida o cambiada falla cerrado: el
+  texto nunca se corrige, une ni completa;
+- que una cita contenga al menos 20 caracteres sustantivos; `claims`, su texto
+  y sus índices se tratan como campos redundantes no confiables y se regeneran
+  mecánicamente desde las evidencias exactas;
 - que no se usen más de cinco sentencias.
 
 Además, el texto que ve el usuario no se toma del canal libre `text` del
