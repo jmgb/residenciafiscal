@@ -2,7 +2,12 @@
 
 **Estado:** propuesta ejecutable; no autoriza todavía el corte de producción.
 **Fecha:** 2026-08-04.
-**Baseline de aplicación:** `34fe334` (`fix(chat): harden A/B evidence responses`).
+**Baseline de aplicación:** pendiente de congelar en la fase 0. `34fe334`
+(`fix(chat): harden A/B evidence responses`) es el punto de partida del análisis,
+no un baseline válido: hay trabajo posterior sobre los propios ficheros que la
+migración porta —`composition.ts`, `contracts.ts`, `runtime.ts` y
+`chat-sse-protocol.ts`—. El baseline se fija sobre un commit ya en `main`, con
+árbol limpio, y se registra junto al deploy de Netlify que lo sirve.
 **Alcance:** mover el runtime síncrono de `POST /api/chat` desde una Netlify
 Function TypeScript a un servicio FastAPI aislado en el VPS Alfredo.
 
@@ -17,8 +22,9 @@ rutas privadas del host, inventario de red o material de autenticación.
 Al terminar la migración:
 
 - el navegador seguirá llamando al mismo endpoint `/api/chat`;
-- una fachada same-origin limitará tráfico, firmará la petición y transmitirá
-  el stream, pero no contendrá lógica jurídica ni credenciales de proveedores;
+- una fachada same-origin descartará abuso evidente, firmará la petición y
+  transmitirá el stream, pero no contendrá lógica jurídica, cuota autoritativa
+  ni credenciales de proveedores;
 - FastAPI en Alfredo será el único composition root del chat A/B;
 - A redactará mediante `GatewayChatWriter(get_gateway())` y
   `neutral-llm-gateway`;
@@ -38,7 +44,7 @@ Navegador
         │
         ▼
 Proxy same-origin fino
-  rate limit + validación de tamaño + firma HMAC + streaming
+  descarte de abuso + tamaño + firma HMAC + streaming
         │
         ▼
 Alfredo / residenciafiscal-chat
@@ -54,10 +60,24 @@ Alfredo / residenciafiscal-chat
   persistencia terminal → SSE protocolo 2 → navegador
 ```
 
-La primera opción de proxy será la Edge Function ya prototipada. La fase 0 debe
-demostrar en Deploy Preview que mantiene un stream sintético de 90 segundos. Si
-ese gate falla, se usará un Cloudflare Worker o Tunnel para `/api/chat`; no se
-reducirá el timeout del backend para encajar artificialmente en Netlify.
+La primera opción de proxy será la Edge Function ya prototipada en
+`frontend/netlify/prototypes/chat-fastapi-edge.ts`. La fase 0 debe demostrar en
+Deploy Preview que mantiene un stream sintético de 90 segundos. Si ese gate
+falla, se usará un Cloudflare Worker o Tunnel para `/api/chat`; no se reducirá el
+timeout del backend para encajar artificialmente en Netlify.
+
+### Frontera de propiedad
+
+Este repositorio es público y el inventario de Alfredo no lo es. La migración
+mantiene la misma separación que ya usa Deep Research:
+
+- **Aquí** viven el código del runtime, el corpus derivado, los tests, el
+  contrato del protocolo, el runbook parametrizado y el instalador reproducible.
+- **En el registro operativo privado** viven hostname, DNS, rutas del host,
+  unidades reales, reglas de red y localización de secretos.
+
+El artefacto que cruza esa frontera se verifica por hash antes de activarse, y
+el host no ejecuta nada que no proceda de un artefacto declarado.
 
 ## 2. Motivo de la migración
 
@@ -71,8 +91,11 @@ ha creado una segunda frontera de proveedor:
 - el límite de 60 segundos restringe razonamiento, reintentos y evolución;
 - el plan Legacy de Netlify no permite limitar las credenciales al scope de
   Functions;
-- el fallo productivo `invalid_json_schema` mostró un coste real de esta
-  duplicación.
+- un fallo de contrato de schema en producción mostró un coste real de esta
+  duplicación. La fase 0 debe enlazar la incidencia concreta —commit de
+  corrección y fecha— o retirar la afirmación: hoy no está registrada en ningún
+  documento ni test de este repositorio, y un motivo sin evidencia no sostiene
+  una migración.
 
 Alfredo ya dispone de ejecución autenticada, Docker, callbacks HMAC y operación
 para Deep Research. Eso reduce el trabajo de infraestructura, pero el chat
@@ -99,6 +122,18 @@ límites de CPU, memoria, cola o ciclo de vida con los jobs agentivos.
 11. El protocolo público continúa siendo `X-Chat-Protocol: 2` y mantiene los
     eventos y shapes vigentes.
 12. El corte no exige una migración destructiva de base de datos.
+13. El artefacto desplegado no contiene los PDF del CENDOJ ni ningún otro corpus
+    de fuente con condiciones de reutilización propias. El runtime necesita el
+    caso v3 y las páginas verbatim derivadas, no los originales; los PDF solo
+    intervienen en operaciones offline —store de File Search y verificación de
+    citas— y su redistribución dentro de una imagen sería una decisión legal
+    distinta, no un detalle de empaquetado.
+14. El contrato del ledger de coste no cambia. Los timers diarios que resumen y
+    vigilan la frescura del coste leen Supabase y no saben quién escribió la
+    fila; si la migración altera nombres, unidades o momento de escritura, deja
+    de haber vigilancia de coste.
+15. Alfredo nunca abre una conexión directa con el navegador ni aparece en
+    ninguna respuesta, cabecera o error visible desde el cliente.
 
 ## 4. Fuera de alcance
 
@@ -130,7 +165,11 @@ decidirá después del corte de `/api/chat`.
 | Errores | aislamiento y texto público seguro | error terminal más genérico | Paridad exacta |
 | Observabilidad | Sentry + eventos + Supabase | logs JSONL | Instrumentar FastAPI sin PII |
 | Deadline | 52 s por límite de plataforma | sin presupuesto canónico | Definir presupuesto y cancelación |
-| Despliegue | Netlify desde Git | proceso local | Imagen inmutable y rollback |
+| Despliegue | Netlify desde Git | proceso local | Artefacto verificado por hash y rollback |
+| Rate limit | en la Function, mismo runtime | inexistente | Decidir dónde es autoritativo (D5) |
+| Errores en producción | tres runtimes Sentry declarados | sin Sentry | Declarar el cuarto runtime y su autofix |
+| Vigilancia externa | UptimeRobot sobre home y corpus | ninguna | Monitor del health del backend |
+| Desarrollo local | `netlify dev` o build del frontend | `make dev` | Definir topología local (D8) |
 
 ## 6. Decisiones previas obligatorias
 
@@ -138,12 +177,35 @@ Estas decisiones deben quedar escritas en un ADR antes de tocar producción.
 
 ### D1. Proxy público
 
-**Propuesta:** reutilizar primero la Edge Function, porque mantiene same-origin,
-rate limit y contrato ya probado. Gate: stream sintético de 90 segundos en
-Deploy Preview, tres veces consecutivas.
+**Propuesta:** reutilizar primero la Edge Function, porque mantiene same-origin y
+contrato ya probado. Gate: stream sintético de 90 segundos en Deploy Preview,
+tres veces consecutivas.
 
-Si falla, elegir Cloudflare Worker/Tunnel. El navegador nunca llamará a un
-hostname de Alfredo ni conocerá secretos internos.
+Parte del trabajo ya está medida y no debe repetirse a ciegas.
+[`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) registra el
+spike del 2026-07-29 contra un Deploy Preview real: cabeceras en 0,30 s —muy por
+debajo del límite de 40 s— y un stream completo de 19,87 s, imposible en una
+Function estándar. Lo que **no** está medido es el tramo de 20 a 90 segundos, que
+es exactamente lo que esta migración necesita. El gate se limita a eso.
+
+Dos hallazgos de aquel spike cambian de signo en esta arquitectura y hay que
+declararlo:
+
+- El p95 de CPU de 15,3 ms se midió con un corpus de 891 KB embebido. Aquí la
+  Edge Function no lleva corpus, así que el límite de 50 ms de CPU deja de ser la
+  restricción dominante.
+- El compare-and-swap de Netlify Blobs **no es atómico**: cinco escrituras
+  concurrentes dejaron el contador en 2. Eso invalida cualquier cuota
+  autoritativa en el borde y obliga a decidir D5 antes de escribir la fachada.
+
+Si el gate falla, elegir Cloudflare Worker/Tunnel; el dominio ya está en
+Cloudflare, así que la alternativa no introduce un proveedor nuevo. El navegador
+nunca llamará a un hostname de Alfredo ni conocerá secretos internos.
+
+**Trampa operativa conocida:** `netlify dev` y `netlify deploy --build` no
+arrancan en este árbol por un choque de `ts-api-utils` con el TypeScript
+hoisteado. El workaround documentado —instalar el CLI fuera del proyecto— es
+requisito de cualquier tarea de fases 0, 5 y 6 que despliegue un preview.
 
 ### D2. Credencial de Supabase
 
@@ -175,6 +237,51 @@ después del spike de proxy y del banco pagado.
 alcanzar 100 % de tráfico en Alfredo. Solo sirve como rollback; no recibe nuevas
 features. Después se retira junto con las credenciales de proveedor en Netlify.
 
+### D5. Dónde es autoritativo el límite de tráfico
+
+El spike demuestra que el borde no puede contar bien. **Propuesta:** el límite
+autoritativo vive en FastAPI, con la misma semántica que hoy aplica la Function,
+y el borde conserva solo un descarte barato de abuso evidente, declarado como
+best-effort y sin pretensión de exactitud. Ninguna petición rechazada en el borde
+puede haber iniciado ya una llamada pagada.
+
+La alternativa —mantener la cuota en el borde con una clave por petición y
+recuento por prefijo— está medida y funciona, pero añade 130–420 ms antes del
+primer token y sigue sin ser transaccional. No se elige por defecto: el backend
+ya tiene una base de datos transaccional para lo mismo.
+
+### D6. Distribución del artefacto
+
+**Propuesta:** reutilizar el patrón ya validado de Deep Research —artefacto
+construido aquí, verificado por hash en el host, instalado en un directorio de
+release y activado por rename atómico— en lugar de introducir un registro de
+imágenes nuevo. Publicar una imagen en un registro público añadiría un canal de
+distribución con implicaciones de licencia para los corpus de fuente y una
+credencial más que rotar.
+
+Si aun así se elige imagen con digest, el ADR debe decir en qué registro vive,
+quién la construye, cómo se verifica su procedencia y por qué el corpus incluido
+puede redistribuirse. En cualquiera de las dos formas rige el invariante 13: los
+PDF no viajan.
+
+### D7. Comportamiento cuando Alfredo no responde
+
+**Propuesta:** fallo cerrado con error público seguro y sin coste, más vuelta
+manual a `CHAT_BACKEND_PERCENT=0`. Un enrutado automático a la Function
+congelada es defendible durante la ventana de rollback y **no** viola el
+invariante 6, porque es fallback de infraestructura y no de modelo; pero duplica
+la superficie viva y exige demostrar que no puede ejecutar las dos estrategias
+dos veces para la misma petición. El ADR elige una de las dos y lo justifica.
+
+### D8. Desarrollo local
+
+**Propuesta:** `make dev` sigue levantando FastAPI y Vite, y el frontend apunta a
+la API local sin pasar por proxy ni firma; la firma HMAC solo se ejerce en
+preview y producción, con su propio test de contrato. Hay que decidirlo
+explícitamente: si el camino local no atraviesa la fachada, la fachada solo se
+prueba desplegada, y eso debe ser una elección consciente y no un descubrimiento
+de la fase 6.
+
 ## 7. Fases de ejecución
 
 Cada fase termina en un gate. No se empieza la siguiente si el gate anterior
@@ -184,8 +291,11 @@ falla o si el rollback de esa fase no está probado.
 
 Objetivo: convertir las suposiciones de infraestructura en evidencia.
 
+- [ ] Integrar o descartar el trabajo en curso sobre los ficheros del chat y
+      congelar el baseline sobre un commit de `main` con árbol limpio.
 - [ ] Registrar commit, deploy de Netlify, versiones de prompts, modelo, store,
       schema de Supabase y hashes del corpus de producción.
+- [ ] Enlazar la incidencia de schema citada en la sección 2 o retirarla.
 - [ ] Congelar un banco de regresión que incluya:
   - gimnasio + teléfono;
   - ausencias esporádicas;
@@ -195,9 +305,15 @@ Objetivo: convertir las suposiciones de infraestructura en evidencia.
   - fallo de clave y fallo transitorio de cada proveedor.
 - [ ] Medir en la V1 al menos p50/p95 de latencia, tasa de error por estrategia,
       coste, tokens y porcentaje de respuestas sustantivas con cita verificada.
-- [ ] Ejecutar el spike de stream de 90 segundos a través del proxy candidato.
+- [ ] Ejecutar el spike de stream de 90 segundos a través del proxy candidato,
+      partiendo del procedimiento y las cifras ya publicadas del spike de
+      2026-07-29 y midiendo solo el tramo aún desconocido.
 - [ ] Verificar cancelación del navegador y cierre de conexión aguas arriba.
-- [ ] Crear el ADR con D1–D4 y la decisión de continuar o parar.
+- [ ] Comprobar si el proveedor del VPS ya trata datos personales por el piloto
+      de investigación profunda y no figura entre los encargados publicados. Si
+      es así, es un incumplimiento vigente e independiente de esta migración: se
+      corrige por su cuenta y no se arrastra al plan.
+- [ ] Crear el ADR con D1–D8 y la decisión de continuar o parar.
 - [ ] Abrir la matriz documental de la sección 12 y asignar a cada entrega sus
       documentos públicos afectados.
 - [ ] Crear un inventario operativo privado, fuera del repositorio, para IP,
@@ -290,11 +406,14 @@ Objetivo: mover el composition root sin perder garantías económicas ni datos.
       hará consultas directas.
 - [ ] Reutilizar las RPC vigentes para reservar, completar y fallar peticiones.
 - [ ] Mantener la deduplicación por conversación y mensaje.
-- [ ] Persistir versiones de experimento, prompts, commit/imagen y store.
+- [ ] Persistir versiones de experimento, prompts, commit/artefacto y store.
 - [ ] Persistir A y B aunque una de las dos falle.
 - [ ] Conservar coste `ACTUAL`, `ESTIMATED` o `UNAVAILABLE` sin convertir lo
       desconocido en cero.
 - [ ] Garantizar que una cancelación terminal reconcilia la reserva.
+- [ ] Verificar que el resumen diario de coste y su comprobación de frescura
+      siguen leyendo las mismas filas y produciendo el mismo mensaje con
+      peticiones originadas en el nuevo runtime.
 - [ ] Crear y probar el rol restringido descrito en D2.
 - [ ] Ejecutar advisors de Supabase y tests de privilegios negativos.
 - [ ] Actualizar el contrato público de persistencia, retención y privacidad sin
@@ -311,9 +430,13 @@ Objetivo: mover el composition root sin perder garantías económicas ni datos.
 
 Objetivo: convertir el prototipo en un servicio operable y recuperable.
 
-- [ ] Crear una imagen mínima e inmutable fijada por digest.
-- [ ] Incluir solo código de runtime, corpus y verbatim necesarios; excluir
-      `.git`, `.env`, frontend, credenciales, output histórico y otros repos.
+- [ ] Construir el artefacto según D6, con inventario declarado y verificación
+      de hashes en el host antes de activarlo.
+- [ ] Incluir solo código de runtime, corpus derivado y verbatim necesarios;
+      excluir `.git`, `.env`, frontend, credenciales, output histórico, los PDF
+      de fuente y otros repos.
+- [ ] Activar la release por rename atómico, de forma que ningún arranque pueda
+      combinar código y corpus de versiones distintas.
 - [ ] Ejecutar como usuario sin privilegios, rootfs de solo lectura y `tmpfs`
       acotado.
 - [ ] Eliminar capabilities, privilegios adicionales y acceso al socket Docker.
@@ -323,9 +446,12 @@ Objetivo: convertir el prototipo en un servicio operable y recuperable.
 - [ ] Exponer únicamente el puerto interno detrás de TLS/Caddy o del ingress ya
       autorizado de Alfredo.
 - [ ] Implementar `/health/live` y `/health/ready` sin llamadas pagadas.
-- [ ] Configurar Sentry del backend y logs JSON sin contenido fiscal.
-- [ ] Guardar secretos en un env file `0600` del servicio, no en la imagen ni en
-      el checkout.
+- [ ] Configurar Sentry del backend y logs JSON sin contenido fiscal. Es el
+      cuarto runtime del proyecto: hay que decidir si reutiliza el proyecto del
+      chat o abre uno propio, y declararlo además en `.autofix.yml` y en el
+      registro del control plane. Instrumentarlo no lo hace resoluble.
+- [ ] Guardar secretos en un env file `0600` del servicio, no en el artefacto
+      ni en el checkout.
 - [ ] Restringir egress a OpenAI, Gemini, Supabase/Supavisor, Sentry y DNS/NTP
       indispensables.
 - [ ] Añadir al runbook público comandos parametrizados con placeholders; los
@@ -336,7 +462,7 @@ Objetivo: convertir el prototipo en un servicio operable y recuperable.
 
 **Gate F4**
 
-- escaneo de imagen y de secretos limpio;
+- escaneo del artefacto y de secretos limpio;
 - health checks, restart y shutdown verificados;
 - saturación controlada devuelve `429/503` sin iniciar llamadas pagadas extra;
 - caída del worker Deep Research no afecta al chat y viceversa.
@@ -347,9 +473,13 @@ Objetivo: mantener el VPS fuera del contrato público.
 
 - [ ] Promover el prototipo a una fachada soportada sin lógica jurídica.
 - [ ] Mantener validación de método, bytes y content type en el borde.
-- [ ] Conservar rate limit por IP/dominio.
+- [ ] Aplicar el límite de tráfico según D5, sin presentar como cuota exacta un
+      recuento que la plataforma no puede garantizar.
 - [ ] Sustituir el secreto estático simple por firma HMAC de timestamp,
-      request-id y hash del body, reutilizando el patrón de Alfredo.
+      request-id y hash del body, reutilizando el patrón ya validado con Alfredo.
+- [ ] Usar un secreto y una ruta distintos de los del canal de jobs agentivos.
+      Compartir el secreto convertiría una filtración del chat en capacidad para
+      encolar trabajos, y el chat no necesita esa autoridad.
 - [ ] Rechazar firmas antiguas, bodies alterados y request-id inválidos.
 - [ ] No seguir redirects del backend.
 - [ ] Propagar cancelación, `cache-control`, protocolo y content type.
@@ -363,7 +493,8 @@ Objetivo: mantener el VPS fuera del contrato público.
 **Gate F5**
 
 - ataques de replay y firma inválida rechazados antes del dominio;
-- rate limit y máximo de body verificados;
+- descarte de abuso y máximo de body verificados en el borde, y cuota
+  autoritativa verificada en el backend;
 - stream/cancelación E2E verdes;
 - `CHAT_BACKEND_PERCENT=0` devuelve todo el tráfico al runtime anterior.
 
@@ -396,6 +527,17 @@ Objetivo: validar el recorrido completo sin tocar usuarios de producción.
 
 Objetivo: aumentar tráfico sin salto irreversible.
 
+**Prerrequisito bloqueante.** La primera petición de un usuario real que se
+ejecute en Alfredo cambia dónde y por quién se tratan sus datos. La página de
+privacidad enumera hoy ocho encargados con su ubicación y atribuye a Netlify la
+ejecución del endpoint del chat; en cuanto el canary supere el 0 %, esa
+enumeración deja de ser cierta. El proveedor de alojamiento del VPS y su
+ubicación deben estar publicados **en el mismo cambio** que enruta al primer
+usuario, no en la limpieza documental posterior. La regla del proyecto es que la
+lista describe lo que ocurre hoy, y una lista incompleta es peor que ninguna.
+
+- [ ] Publicar el encargado y la ubicación nuevos y actualizar el flujo técnico
+      descrito en la página de privacidad.
 - [ ] Empezar en 0 % y verificar únicamente health/readiness.
 - [ ] Pasar a 5 % con routing estable por conversación.
 - [ ] Observar al menos 24 horas o el mínimo de solicitudes acordado.
@@ -414,7 +556,9 @@ Objetivo: aumentar tráfico sin salto irreversible.
 - coste cobrado pero registrado como cero;
 - aumento material de `5xx`, timeouts o errores por estrategia;
 - saturación que afecte Deep Research, backups u otros servicios de Alfredo;
-- imposibilidad de cancelar una petición desconectada.
+- imposibilidad de cancelar una petición desconectada;
+- el resumen diario de coste o su comprobación de frescura dejan de reflejar el
+  tráfico real.
 
 ### Fase 8 — Consolidación y retirada de la V1 TypeScript
 
@@ -427,6 +571,9 @@ Objetivo: terminar con una sola implementación del dominio.
       necesita.
 - [ ] Añadir un test de arquitectura que impida nuevas llamadas directas de A a
       proveedores fuera del gateway Python.
+- [ ] Conservar los fixtures de contrato de la fase 1 como regresión permanente
+      del protocolo, aunque desaparezca el serializador TypeScript del dominio:
+      el navegador sigue consumiendo el mismo contrato.
 - [ ] Retirar `OPENAI_API_KEY` y `GEMINI_API_KEY` de Netlify.
 - [ ] Conservar en Netlify únicamente URL/clave del proxy y configuración
       pública necesaria.
@@ -467,9 +614,13 @@ Comandos finales mínimos antes de cada promoción:
 ```bash
 make fast-check
 cd frontend && npm run fast-check
-docker build --pull --no-cache -f <dockerfile-chat> .
-docker inspect <imagen>          # usuario, mounts, health y límites esperados
+gitleaks git --log-opts="--all --remotes"
+docker inspect <contenedor-chat>   # usuario, mounts, health y límites esperados
 ```
+
+El comando de construcción del artefacto depende de D6 y se documentará con
+placeholders cuando la decisión esté tomada; no se fija aquí una forma de
+empaquetado antes de elegirla.
 
 Los tests pagados requerirán simultáneamente `CONFIRM_PAID=1` y una bandera
 específica del smoke. Nunca formarán parte del gate ordinario ni de CI.
@@ -478,7 +629,7 @@ específica del smoke. Nunca formarán parte del gate ordinario ni de CI.
 
 El servicio debe emitir, sin contenido fiscal:
 
-- `request_id`, versión de imagen y experimento;
+- `request_id`, versión del artefacto desplegado y experimento;
 - estrategia, modelo efectivo, versión de prompt y store;
 - latencia por reserva, A, B, persistencia y total;
 - tokens y coste por intento y estrategia;
@@ -494,11 +645,16 @@ Alertas mínimas:
 - respuesta sustantiva retirada por citas;
 - reserva sin reconciliar;
 - p95, timeouts, `5xx`, memoria o CPU por encima del umbral;
-- imagen desplegada distinta del digest autorizado.
+- artefacto desplegado distinto del hash autorizado.
 
 Alfredo se convierte en dependencia productiva del chat. Debe añadirse un
 monitor externo del endpoint de health y un smoke sintético sin proveedor. La
 disponibilidad del frontend no debe ocultar una caída del backend.
+
+El monitor se crea a mano en la interfaz de UptimeRobot: la API v2 rechaza toda
+escritura en el plan contratado, así que no hay forma automatizada de darlo de
+alta ni de versionar su configuración. Debe quedar registrado en el inventario
+operativo privado como cualquier otro monitor.
 
 ## 10. Riesgos principales
 
@@ -514,7 +670,12 @@ disponibilidad del frontend no debe ocultar una caída del backend.
 | Retry duplica coste | presupuesto global y suma por intento |
 | Desconexión sigue gastando | cancelación propagada y reconciliación terminal |
 | Logs capturan PII fiscal | allowlist de campos y tests de observabilidad |
-| Checkout o imagen quedan atrás | despliegue por digest y readiness con versión |
+| Checkout o artefacto quedan atrás | activación por hash y readiness que declara la versión |
+| La página de privacidad deja de ser cierta al abrir el canary | publicarla en el mismo cambio que enruta al primer usuario |
+| El límite de tráfico se cree exacto y tiene fugas | límite autoritativo en el backend (D5) |
+| La migración rompe en silencio la vigilancia de coste | verificar timers de coste y frescura en F3 y F6 |
+| Un secreto compartido convierte el chat en encolador de jobs | secreto y ruta propios para la fachada |
+| El plan se ejecuta con un baseline que ya no existe | congelar sobre commit limpio de `main` en F0 |
 
 ## 11. Orden recomendado de entregas
 
@@ -522,11 +683,12 @@ disponibilidad del frontend no debe ocultar una caída del backend.
 2. Fixtures de contrato y caracterización.
 3. Paridad del dominio Python.
 4. Persistencia y rol restringido de Supabase.
-5. Imagen y servicio aislado en Alfredo.
+5. Artefacto y servicio aislado en Alfredo.
 6. Proxy firmado y routing de canary.
 7. Deploy Preview y banco pagado.
-8. Canary gradual y observación.
-9. Retirada del dominio TypeScript y secretos de Netlify.
+8. Actualización de la página de privacidad y del monitor externo.
+9. Canary gradual y observación.
+10. Retirada del dominio TypeScript y secretos de Netlify.
 
 Cada entrega debe ser reversible y no mezclar cambios de modelo, prompt o corpus
 ajenos a la migración. Un fallo de gate detiene el plan; no se compensa
@@ -546,10 +708,13 @@ afirmación, según esta matriz:
 | ADR aprobado | `docs/ARCHITECTURE.md` | Añadir la decisión futura y sus gates, sin presentarla como desplegada |
 | Contrato | `docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md` | Mantener invariantes A/B, protocolo, evidencia y coste |
 | Persistencia | `docs/operations/SUPABASE_CHAT.md` | Explicar el nuevo consumidor y privilegio mínimo |
-| Imagen/VPS | `docs/REPOSITORY_STRUCTURE.md` | Registrar código, artefactos y frontera de despliegue |
+| Artefacto/VPS | `docs/REPOSITORY_STRUCTURE.md` | Registrar código, artefactos y frontera de despliegue |
 | Preview | `docs/operations/CHAT_DEPLOYMENT.md` | Añadir preflight, promoción y rollback parametrizados |
 | Observabilidad | `docs/operations/CHAT_OBSERVABILITY.md` | Añadir health, métricas, Sentry y alertas del backend |
+| Antes del primer usuario real | `frontend/src/pages/PrivacyPage.tsx` | Publicar el encargado y la ubicación nuevos; bloquea el canary |
 | Tratamiento de datos | `docs/operations/PRIVACY_AND_LEGAL.md` | Reflejar ubicación, flujo, acceso y retención sin datos internos |
+| Errores | `.autofix.yml`, `docs/operations/AUTOFIX.md` | Declarar el cuarto runtime de Sentry o no será resoluble |
+| Vigilancia | `docs/operations/UPTIMEROBOT.md` | Registrar el monitor manual del health del backend |
 | Canary | `docs/experiments/` | Publicar metodología y métricas agregadas, nunca conversaciones |
 | Corte | `README.md`, `docs/README.md`, `CLAUDE.md`, `frontend/CLAUDE.md` | Cambiar el runtime vigente y los comandos operativos |
 | Cierre | `docs/project/TASKS.md` | Cerrar gates, registrar pendientes y enlazar evidencia |
@@ -594,7 +759,8 @@ Cada PR o commit de la migración debe responder explícitamente:
 Antes de promover una fase:
 
 - comprobar enlaces Markdown y rutas citadas;
-- ejecutar el detector de secretos del repositorio;
+- ejecutar `gitleaks git --log-opts="--all --remotes"` sobre todas las refs, no
+  solo sobre `main`;
 - revisar `.env.example`, fixtures, logs y capturas;
 - buscar afirmaciones obsoletas como `Netlify-only`, `prototipo FastAPI` o
   límites de 60 segundos y conservarlas solo donde sean historia;
