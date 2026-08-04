@@ -142,6 +142,9 @@ describe('runtime comparativo Netlify V1', () => {
         retryable: true,
       },
     });
+    expect(report.answers[0].limits).toEqual([
+      'El proveedor de esta opción ha fallado; la otra respuesta se conserva de forma independiente.',
+    ]);
   });
 
   it('cancela ambas estrategias al alcanzar el deadline interno', async () => {

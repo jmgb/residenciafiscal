@@ -83,6 +83,16 @@ const terms = (text: string) =>
     ).filter((token) => !stopwords.has(token))
   );
 
+const queryTerms = (query: string) => {
+  const result = terms(query);
+  if (/\b(?:gym|gimnasio|gimnasios)\b/i.test(query)) {
+    for (const term of ['gimnasio', 'gimnasios', 'cuota', 'cuotas', 'clubs', 'deportivos']) {
+      result.add(term);
+    }
+  }
+  return result;
+};
+
 const selectFragments = (unit: EvidenceUnit, queryTerms: Set<string>) =>
   unit.source_anchors
     .flatMap((anchor, anchorIndex) =>
@@ -178,7 +188,7 @@ export const buildEvidenceBundle = (
   const contextUnits: unknown[] = [];
   const evidence: unknown[] = [];
   const sourcesByEvidenceId = new Map<string, StrategySource>();
-  const queryTerms = terms(query);
+  const selectedQueryTerms = queryTerms(query);
   let evidenceNumber = 1;
 
   for (const hit of retrieval.hits) {
@@ -191,7 +201,7 @@ export const buildEvidenceBundle = (
       judgment_id: unit.judgment_id,
       role: hit.role,
     };
-    for (const { anchor, fragment } of selectFragments(unit, queryTerms)) {
+    for (const { anchor, fragment } of selectFragments(unit, selectedQueryTerms)) {
       const evidenceId = `E${evidenceNumber}`;
       const quote = expandedQuote(unit.judgment_id, anchor, fragment, artifacts);
       const evidenceItem = {

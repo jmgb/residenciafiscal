@@ -122,9 +122,12 @@ la regla de los dos consumidores y ese transporte deberá extraerse a un paquete
 neutral; si vuelven a necesitarse llamadas largas, la arquitectura FastAPI usa
 ya `neutral-llm-gateway` sin duplicación.
 
-En la V1 ambos SDK se ejecutan una sola vez, sin reintentos ni fallback, bajo la
-misma señal de cancelación de 52 s. Lo siguiente describe el prototipo Python
-conservado:
+En la V1 A ejecuta OpenAI una sola vez. B fuerza File Search y permite un
+segundo y último intento con el mismo modelo y store únicamente cuando la
+primera respuesta sustantiva carece de citas verificables; uso, coste y latencia
+acumulan ambos intentos bajo la misma señal de cancelación de 52 s. No existe
+fallback de modelo ni fallback cruzado. Lo siguiente describe el prototipo
+Python conservado:
 
 El redactor A aplica dos intentos para errores transitorios, presupuesto total
 de 200 s y máximo de 90 s por intento. El fallback de modelo está desactivado:

@@ -98,9 +98,9 @@ describe('composition root de la Function con Supabase', () => {
       'create_chat_request',
       expect.objectContaining({
         p_experiment: expect.objectContaining({
-          experiment_version: 'ab-2026-08-03-v3',
-          structured_prompt_version: 'structured-claims-v3',
-          file_search_prompt_version: 'file-search-authority-v6',
+          experiment_version: 'ab-2026-08-04-v5',
+          structured_prompt_version: 'structured-claims-v4',
+          file_search_prompt_version: 'file-search-authority-v8',
         }),
       })
     );

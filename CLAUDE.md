@@ -85,23 +85,28 @@ chat recupera evidencia y llama al gateway para redactar una respuesta.
 Arquitectura, capas de autoridad, comparador A/B y handoff:
 [`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).
 
-### Llamadas a modelos: el paquete `llm_gateway`
+### Llamadas a modelos: V1 Node y prototipo Python
 
-Las respuestas del chat pasan por **`neutral-llm-gateway`**, fijado a una
+La V1 de producción es la Netlify Function TypeScript autosuficiente. Sus
+adaptadores Node llaman directamente a OpenAI Responses para A y a Gemini
+Interactions + File Search para B. A se ejecuta una sola vez; B permite un
+segundo y último intento con el mismo modelo únicamente cuando una respuesta
+sustantiva no aporta ninguna cita verificable. No existe fallback de modelo ni
+`gpt_request` en este runtime.
+
+El prototipo Python conservado fuera del despliegue V1 sí usa
+`GatewayChatWriter(get_gateway())` sobre **`neutral-llm-gateway`**, fijado a una
 referencia inmutable. `src/chat_model_policy.py` declara Luna + `high`, y
-`src/gateway_setup.py` construye el gateway bajo demanda con las credenciales,
-uso, alertas y coste. Preparar o validar el corpus nunca importa este gateway.
-
-El comparador A usa `GatewayChatWriter(get_gateway())`; B conserva Gemini File
-Search directo porque el paquete no ofrece tools ni ficheros. Los límites y
-tests del composition root están en
+`src/gateway_setup.py` construye el gateway bajo demanda con credenciales, uso,
+alertas y coste. También mantiene desactivado el fallback de modelo para no
+falsear la atribución de modelo, coste y calidad del experimento. Los límites y
+tests de ambos composition roots están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
-**No hay tabla de precios ni de enrutado local**: las tarifas y el proveedor de
-cada modelo salen del catálogo versionado del paquete, que es el mismo que
-consulta su registro. Tampoco se reimplementan aquí el esquema estricto de
-OpenAI ni la exclusión de `temperature` en modelos de razonamiento: desde la
-`v0.7.0` los resuelve el paquete.
+En el prototipo Python no hay tabla de precios ni de enrutado local: las tarifas
+y el proveedor salen del catálogo versionado del paquete. En la V1 Node, los
+adaptadores mínimos y sus esquemas pertenecen al runtime del producto; no deben
+crecer con routing ni fallback.
 
 En el chat, un coste no calculable nunca se presenta como cero y la medición
 distingue `ACTUAL`, `ESTIMATED` y `UNAVAILABLE`.

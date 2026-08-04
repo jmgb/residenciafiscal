@@ -47,7 +47,13 @@ const errorAnswer = (
   status: 'error',
   text: '',
   sources: [],
-  limits: [timeout ? 'Tiempo de respuesta agotado.' : 'No se ha podido completar esta estrategia.'],
+  limits: [
+    timeout
+      ? 'Tiempo de respuesta agotado.'
+      : errorContext?.kind === 'provider_error'
+        ? 'El proveedor de esta opción ha fallado; la otra respuesta se conserva de forma independiente.'
+        : 'No se ha podido completar esta estrategia.',
+  ],
   cost: unknownCost(),
   model: 'unavailable',
   reasoning_effort: null,

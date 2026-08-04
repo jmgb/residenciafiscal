@@ -40,6 +40,12 @@ describe('estrategia A estructurada', () => {
     if (!writerInput) throw new Error('El redactor no recibió contexto');
     expect(writerInput.systemPrompt).toContain('La primera claim debe contestar directamente');
     expect(writerInput.systemPrompt).toContain('Si la pregunta contiene varias partes');
+    expect(writerInput.systemPrompt).toContain(
+      'no equivale por sí solo a presencia física en una fecha'
+    );
+    expect(writerInput.systemPrompt).toContain(
+      'una parte carece de respaldo, no crees una claim para esa parte'
+    );
     expect(
       new TextEncoder().encode(`${writerInput.systemPrompt}\n${writerInput.userPrompt}`).byteLength
     ).toBeLessThanOrEqual(48 * 1024);
@@ -390,6 +396,93 @@ describe('estrategia B Gemini File Search', () => {
     });
   });
 
+  it('reintenta una vez con el mismo proveedor si la primera cita no es verificable', async () => {
+    const usage = {
+      total_input_tokens: 5,
+      total_output_tokens: 5,
+      total_thought_tokens: 0,
+      input_tokens_by_modality: [],
+    };
+    const interact = vi
+      .fn()
+      .mockResolvedValueOnce({
+        output_text: JSON.stringify({ status: 'parcial', answer: 'Primer intento.', limits: [] }),
+        steps: [],
+        usage,
+      })
+      .mockResolvedValueOnce({
+        output_text: JSON.stringify({ status: 'parcial', answer: 'Segundo intento.', limits: [] }),
+        steps: [
+          {
+            type: 'model_output',
+            content: [
+              {
+                annotations: [
+                  {
+                    type: 'file_citation',
+                    page_number: 1,
+                    source: 'valora conjuntamente toda la prueba',
+                    custom_metadata: {
+                      judgment_id: 'sentencia-1',
+                      source_sha256: 'a'.repeat(64),
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        usage,
+      });
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    const answer = await strategy.answer('¿Qué valoró la Sala?', context);
+
+    expect(interact).toHaveBeenCalledTimes(2);
+    expect(interact.mock.calls[1]?.[0].prompt).toContain('segundo y último intento');
+    expect(answer).toMatchObject({
+      status: 'parcial',
+      text: 'Segundo intento.',
+      sources: [{ judgment_id: 'sentencia-1' }],
+      cost: { input_tokens: 10, output_tokens: 10 },
+    });
+  });
+
+  it('conserva el coste del primer intento si el reintento del proveedor falla', async () => {
+    const interact = vi
+      .fn()
+      .mockResolvedValueOnce({
+        output_text: JSON.stringify({ status: 'parcial', answer: 'Sin cita.', limits: [] }),
+        steps: [],
+        usage: {
+          total_input_tokens: 7,
+          total_output_tokens: 3,
+          total_thought_tokens: 0,
+          input_tokens_by_modality: [],
+        },
+      })
+      .mockRejectedValueOnce(new Error('fallo del segundo intento'));
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    const answer = await strategy.answer('¿Qué valoró la Sala?', context);
+
+    expect(interact).toHaveBeenCalledTimes(2);
+    expect(answer).toMatchObject({
+      status: 'error',
+      text: '',
+      cost: { input_tokens: 7, output_tokens: 3 },
+      diagnostics: { failure_code: 'citation_verification' },
+    });
+  });
+
   it('filtra por metadata cuando la pregunta identifica una única sentencia', async () => {
     const interact = vi.fn(async () => ({
       output_text: JSON.stringify({ status: 'abstención', answer: '', limits: [] }),
@@ -464,6 +557,44 @@ describe('estrategia B Gemini File Search', () => {
     expect(JSON.stringify(interact.mock.calls)).toContain(
       'expresa de forma explícita la condición y sus excepciones'
     );
+  });
+
+  it('distingue alta o cuota de uso efectivo en preguntas sobre gimnasio y móvil', async () => {
+    const interact = vi.fn(async () => ({
+      output_text: JSON.stringify({
+        status: 'abstención',
+        answer: '',
+        limits: ['No se recuperó evidencia suficiente.'],
+      }),
+      steps: [],
+      usage: {
+        total_input_tokens: 5,
+        total_output_tokens: 5,
+        total_thought_tokens: 0,
+        input_tokens_by_modality: [],
+      },
+    }));
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    await strategy.answer(
+      'si una persona se apunta al gym o si usa su teléfono movil en españa, ¿la AEAT lo tiene en cuenta para los 183 días?',
+      context
+    );
+
+    const serializedCall = JSON.stringify(interact.mock.calls);
+    expect(serializedCall).toContain('al menos un pasaje citado por File Search');
+    expect(serializedCall).toContain('alta, titularidad o pago de una cuota');
+    expect(serializedCall).toContain('uso efectivo atribuible al contribuyente');
+    expect(serializedCall).toContain('cada parte por separado');
+    expect(serializedCall).toContain('gym” equivale a “gimnasio”');
+    expect(serializedCall).toContain('cuotas de clubs deportivos');
+    expect(serializedCall).toContain('busca por separado la frase exacta');
+    expect(serializedCall).toContain('responde de forma parcial sobre el gimnasio');
+    expect(serializedCall).toContain('no presupone geolocalización');
   });
 
   it('degrada una respuesta completa si no cita directamente la autoridad solicitada', async () => {

@@ -58,6 +58,9 @@ const partialPatterns = [
   'interactuan cdi',
   'convenio y',
   'diferencia los casos con sancion',
+  'gym',
+  'gimnasio',
+  'telefono movil',
 ];
 const askPatterns = [
   'se parece mas a mi',

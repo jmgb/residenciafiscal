@@ -37,6 +37,11 @@ const expansions: Record<string, string[]> = {
   ingresos: ['rentas', 'economicos', 'actividad'],
   extranjero: ['exterior', 'fiscal', 'certificado'],
   certificado: ['documentacion', 'fiscal', 'extranjera'],
+  gym: ['gimnasio', 'gimnasios', 'cuota', 'cuotas', 'clubs', 'deportivos'],
+  gimnasio: ['gimnasios', 'cuota', 'cuotas', 'clubs', 'deportivos'],
+  gimnasios: ['gimnasio', 'cuota', 'cuotas', 'clubs', 'deportivos'],
+  telefono: ['movil'],
+  movil: ['telefono'],
   sancion: ['culpabilidad', 'infraccion'],
 };
 const tokens = (text: string, expand: boolean): string[] => {

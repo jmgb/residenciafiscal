@@ -46,6 +46,7 @@ describe('adaptador OpenAI de la Function', () => {
     });
 
     expect(createResponse.mock.calls[0]?.[0]).toMatchObject({ max_output_tokens: 4_000 });
+    expect(JSON.stringify(createResponse.mock.calls[0]?.[0])).not.toContain('uniqueItems');
   });
 
   it('clasifica los errores HTTP de OpenAI sin conservar el mensaje del proveedor', async () => {
@@ -97,7 +98,7 @@ describe('adaptador Gemini de la Function', () => {
 
     expect(createInteraction.mock.calls[0]?.[0]).not.toHaveProperty('labels');
     expect(createInteraction.mock.calls[0]?.[0]).toMatchObject({
-      generation_config: { max_output_tokens: 2_000 },
+      generation_config: { max_output_tokens: 2_000, tool_choice: 'any' },
       tools: [expect.objectContaining({ metadata_filter: 'judgment_id="san-2132-2025"' })],
     });
   });

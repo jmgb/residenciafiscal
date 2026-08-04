@@ -29,7 +29,6 @@ const structuredDraftSchema = {
           text: { type: 'string' },
           evidence_ids: {
             type: 'array',
-            uniqueItems: true,
             items: { type: 'string', pattern: '^E[0-9]+$' },
           },
         },
@@ -136,7 +135,7 @@ export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions
             mime_type: 'application/json',
             schema: fileSearchDraftSchema,
           },
-          generation_config: { max_output_tokens: 2_000 },
+          generation_config: { max_output_tokens: 2_000, tool_choice: 'any' },
           store: false,
         },
         {

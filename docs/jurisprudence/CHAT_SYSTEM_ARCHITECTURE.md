@@ -147,6 +147,9 @@ Reglas de comparabilidad:
 - A usa IDs opacos `E<n>`; B obtiene fuentes de las anotaciones del proveedor;
 - ninguna recibe candidatos, puntuaciones, fuentes ni prosa de la otra;
 - no existe fallback cruzado;
+- B puede repetir una sola vez con el mismo modelo y store si su primera
+  respuesta sustantiva carece de citas verificables; el coste suma ambos
+  intentos y la señal de cancelación sigue siendo única;
 - una respuesta sustantiva sin fuentes verificables se retira como `error`;
 - un `error` público conserva estado y coste, pero no el texto bruto de la
   excepción del proveedor;

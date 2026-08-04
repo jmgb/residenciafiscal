@@ -156,7 +156,7 @@ export const createProductionDependencies = (
     },
   };
   const store = new SupabaseChatStore(rpcClient, {
-    experiment_version: 'ab-2026-08-03-v3',
+    experiment_version: 'ab-2026-08-04-v5',
     deployed_commit:
       environment.COMMIT_REF?.trim() || environment.DEPLOY_ID?.trim() || 'local-development',
     comparison_schema_version: 'residenciafiscal-chat-comparison/1',

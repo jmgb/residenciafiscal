@@ -105,4 +105,35 @@ describe('recuperación estructurada Netlify V1', () => {
     expect(source?.quote).toContain('consumos efectuados con las tarjetas virtuales');
     expect(source?.quote.length).toBeGreaterThan(250);
   });
+
+  it('recupera el indicio de cuotas de gimnasio para la pregunta real de producción', () => {
+    const question =
+      'si una persona se apunta al gym o si usa su teléfono movil en españa, esto la agencia tributaria lo tiene en cuenta para el computo de los 183 días?';
+    const retrieval = retrieveForChat(rolloutCorpus, question, 5);
+
+    expect(retrieval.behavior).toBe('parcial');
+    expect(retrieval.hits.map((hit) => hit.judgmentId)).toContain('san-2347-2022');
+
+    const bundle = buildEvidenceBundle(
+      rolloutCorpus,
+      retrieval,
+      question,
+      productionVerbatimArtifacts
+    );
+    const gymSource = [...bundle.sourcesByEvidenceId.values()].find(
+      (source) => source.judgment_id === 'san-2347-2022' && /gimnasios/i.test(source.quote)
+    );
+
+    expect(gymSource?.quote).toContain('cuotas de clubs deportivos');
+    expect(gymSource?.quote).toContain('gimnasios');
+  });
+
+  it('no interpreta el verbo genérico apunta como una alta en el gimnasio', () => {
+    const ranked = rankUnits(
+      rolloutCorpus,
+      '¿Qué apunta el tribunal sobre el cómputo de los 183 días?'
+    );
+
+    expect(ranked[0]?.unit.judgment_id).not.toBe('san-2347-2022');
+  });
 });
