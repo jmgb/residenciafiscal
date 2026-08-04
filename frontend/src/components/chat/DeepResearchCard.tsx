@@ -103,13 +103,13 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
             {result.claims.length > 0 ? (
               <div className='space-y-4'>
                 {result.claims.map((claim) => (
-                  <p
+                  <div
                     key={`${claim.text}-${claim.evidenceIndexes.join('-')}`}
                     data-testid='deep-research-claim'
-                    className='whitespace-normal text-[0.9375rem] leading-7 text-foreground'
+                    className='whitespace-normal'
                   >
-                    {claim.text}
-                  </p>
+                    <ChatMessageContent content={claim.text} isUser={false} />
+                  </div>
                 ))}
               </div>
             ) : (

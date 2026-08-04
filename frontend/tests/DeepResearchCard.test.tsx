@@ -120,6 +120,34 @@ describe('DeepResearchCard', () => {
     expect(screen.getByRole('radio', { name: 'Opción C' })).toBeInTheDocument();
   });
 
+  it('renders Markdown formatting inside verified conclusions', () => {
+    const result = completed.result;
+    if (!result) throw new Error('Expected a completed deep-research result');
+
+    render(
+      <DeepResearchCard
+        job={{
+          ...completed,
+          result: {
+            ...result,
+            claims: [
+              {
+                text: '**Respuesta breve.** La conclusión está verificada.',
+                evidenceIndexes: [1],
+              },
+            ],
+          },
+        }}
+        onCancel={() => undefined}
+      />
+    );
+
+    const claim = screen.getByTestId('deep-research-claim');
+    expect(claim).toHaveTextContent('Respuesta breve. La conclusión está verificada.');
+    expect(claim).not.toHaveTextContent('**');
+    expect(claim.querySelector('strong')).toHaveTextContent('Respuesta breve.');
+  });
+
   it('uses the full chat width without nesting the research card in another surface', () => {
     render(
       <ChatBubble
