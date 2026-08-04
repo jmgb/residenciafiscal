@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import time
+from collections.abc import Mapping
+from pathlib import Path
 
 from llm_gateway import CostMeasurement, ReasoningEffort
 
@@ -42,6 +44,7 @@ class CurrentStructuredStrategy:
         writer: StructuredAnswerWriter,
         model: str = CHAT_MODEL,
         reasoning_effort: ReasoningEffort | None = CHAT_REASONING_EFFORT,
+        verbatim_artifacts: Mapping[str, Path] | None = None,
     ) -> None:
         """A corre sobre el modelo del chat, no sobre el de File Search.
 
@@ -59,6 +62,9 @@ class CurrentStructuredStrategy:
         self._writer = writer
         self._model = model
         self._reasoning_effort = reasoning_effort
+        # Sin las páginas verbatim, cada cita se publica como la línea suelta
+        # del anclaje, sin el contexto que permite comprobar de qué habla.
+        self._verbatim_artifacts = verbatim_artifacts
 
     async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
         started = time.perf_counter()
@@ -92,6 +98,7 @@ class CurrentStructuredStrategy:
             retrieval,
             self._units,
             question,
+            self._verbatim_artifacts,
         )
         writer_result = await self._writer.write(
             ChatWriterRequest(

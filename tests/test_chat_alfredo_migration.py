@@ -442,6 +442,28 @@ def test_la_pregunta_de_gimnasio_recupera_su_sentencia_declarada() -> None:
     ]
     assert any("clubs deportivos" in source.quote for source in anclajes)
 
+    # Y con las páginas verbatim la cita llega con su contexto: el anclaje corta
+    # en «clubs deportivos» y se pierde justo la palabra por la que se pregunta.
+    verbatim = {
+        source.judgment_id: Path(
+            f"knowledge/jurisprudencia-v3/verbatim/{source.judgment_id}.pages.json"
+        )
+        for source in corpus.sources
+    }
+    if all(path.is_file() for path in verbatim.values()):
+        ampliado = build_structured_evidence_bundle(
+            gimnasio,
+            {unit.unit_id: unit for unit in corpus.units},
+            "¿Sirve la cuota de un gimnasio como prueba de presencia en España?",
+            verbatim,
+        )
+        citas = [
+            source.quote
+            for source in ampliado.sources_by_evidence_id.values()
+            if source.judgment_id == "san-2347-2022" and source.page == 7
+        ]
+        assert any("gimnasios" in quote for quote in citas)
+
 
 def test_el_limitador_no_acumula_claves_muertas() -> None:
     from api.chat_rate_limit import SlidingWindowRateLimiter

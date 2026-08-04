@@ -5,13 +5,17 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
+from collections.abc import Mapping
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
 
 from chat_strategy_models import StrategySource
 from jurisprudence_case_catalogs import AnchorPurpose
 from jurisprudence_case_retrieval_models import RetrievalUnit
 from jurisprudence_case_source import SourceAnchor, SourceFragment
 from jurisprudence_phase_d_retrieval import ChatRetrievalResult
+from verbatim_models import VerbatimCorpus
 
 EVIDENCE_PER_UNIT = 2
 _PURPOSE_WEIGHT = {
@@ -23,12 +27,15 @@ _PURPOSE_WEIGHT = {
     AnchorPurpose.LEGAL_RULE: 3,
     AnchorPurpose.FACT: 2,
 }
+# Las palabras se comparan contra texto ya plegado, así que se declaran sin
+# diacríticos: «españa» con eñe nunca coincidía con el token «espana» y el
+# término se colaba en la puntuación de anclajes.
 _STOPWORDS = {
     "como",
     "cual",
     "cuando",
     "donde",
-    "españa",
+    "espana",
     "fiscal",
     "hacienda",
     "para",
@@ -162,6 +169,54 @@ def _query_terms(query: str) -> set[str]:
     return terms
 
 
+QUOTE_CONTEXT_BEFORE = 240
+QUOTE_CONTEXT_AFTER = 360
+
+
+@lru_cache(maxsize=32)
+def _verbatim_corpus(path: Path) -> VerbatimCorpus:
+    return VerbatimCorpus.model_validate_json(path.read_bytes())
+
+
+def _expanded_quote(
+    judgment_id: str,
+    anchor: SourceAnchor,
+    fragment: SourceFragment,
+    artifacts: Mapping[str, Path] | None,
+) -> str:
+    """Amplía la cita con su contexto literal de la misma página.
+
+    Un anclaje aislado suele ser una línea suelta que no permite comprobar de
+    qué habla. La ampliación sale de `raw_page_text`, así que sigue siendo una
+    subcadena exacta del PDF; si el resultado no contiene el anclaje original,
+    se devuelve el anclaje sin tocar.
+    """
+    path = (artifacts or {}).get(judgment_id)
+    if path is None or not path.is_file():
+        return fragment.verbatim_text
+    try:
+        corpus = _verbatim_corpus(path)
+    except (OSError, ValueError):
+        return fragment.verbatim_text
+    if corpus.source_sha256 != anchor.source_sha256:
+        return fragment.verbatim_text
+    page = next(
+        (item for item in corpus.pages if item.page_index == fragment.page_index),
+        None,
+    )
+    if page is None:
+        return fragment.verbatim_text
+    text = page.raw_page_text
+    raw_start = max(0, fragment.start_offset - QUOTE_CONTEXT_BEFORE)
+    raw_end = min(len(text), fragment.end_offset + QUOTE_CONTEXT_AFTER)
+    first_space = text.find(" ", raw_start)
+    last_space = text.rfind(" ", 0, raw_end)
+    start = first_space + 1 if 0 <= first_space < fragment.start_offset else raw_start
+    end = last_space if last_space > fragment.end_offset else raw_end
+    quote = text[start:end].strip()
+    return quote if fragment.verbatim_text in quote else fragment.verbatim_text
+
+
 def _selected_fragments(
     unit: RetrievalUnit,
     query_terms: set[str],
@@ -184,6 +239,7 @@ def build_structured_evidence_bundle(
     retrieval: ChatRetrievalResult,
     units_by_id: dict[str, RetrievalUnit],
     query: str,
+    verbatim_artifacts: Mapping[str, Path] | None = None,
 ) -> StructuredEvidenceBundle:
     units: list[dict[str, object]] = []
     evidence: list[dict[str, object]] = []
@@ -197,6 +253,7 @@ def build_structured_evidence_bundle(
         for anchor, fragment in _selected_fragments(unit, query_terms):
             evidence_id = f"E{evidence_number}"
             evidence_number += 1
+            quote = _expanded_quote(unit.judgment_id, anchor, fragment, verbatim_artifacts)
             evidence.append(
                 {
                     "evidence_id": evidence_id,
@@ -207,7 +264,7 @@ def build_structured_evidence_bundle(
                     "purpose": anchor.purpose.value,
                     "page": fragment.page_index,
                     "printed_page": fragment.printed_page,
-                    "quote": fragment.verbatim_text,
+                    "quote": quote,
                 }
             )
             sources[evidence_id] = StrategySource(
@@ -215,7 +272,7 @@ def build_structured_evidence_bundle(
                 judgment_id=unit.judgment_id,
                 page=fragment.page_index,
                 source_sha256=anchor.source_sha256,
-                quote=fragment.verbatim_text,
+                quote=quote,
                 verification="EXACT",
             )
 

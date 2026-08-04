@@ -138,6 +138,19 @@ def get_production_chat_runner() -> ProductionChatRunner:
         raise HTTPException(status_code=503, detail="Faltan artefactos del chat")
 
     corpus = load_retrieval_corpus(corpus_path.read_bytes()) if structured_enabled else None
+    # A también necesita las páginas verbatim: sin ellas publica el anclaje
+    # suelto en lugar de la cita con su contexto de la misma página.
+    structured_verbatim: dict[str, Path] = (
+        {
+            source.judgment_id: (
+                PROJECT_ROOT
+                / f"knowledge/jurisprudencia-v3/verbatim/{source.judgment_id}.pages.json"
+            )
+            for source in corpus.sources
+        }
+        if corpus is not None
+        else {}
+    )
     receipt = None
     file_search_model = DEFAULT_FILE_SEARCH_MODEL
     google_gateway = None
@@ -192,7 +205,11 @@ def get_production_chat_runner() -> ProductionChatRunner:
 
     return ProductionChatRunner(
         structured=(
-            CurrentStructuredStrategy(corpus, writer=GatewayChatWriter(get_gateway()))
+            CurrentStructuredStrategy(
+                corpus,
+                writer=GatewayChatWriter(get_gateway()),
+                verbatim_artifacts=structured_verbatim,
+            )
             if structured_enabled and corpus is not None
             else None
         ),

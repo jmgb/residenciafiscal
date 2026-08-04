@@ -369,7 +369,9 @@ aplique los mismos cierres de seguridad.
       incluida la tabla de sinónimos y la expansión de términos al elegir
       anclajes. Sin ambas, la pregunta de gimnasio no alcanzaba
       `san-2347-2022` y el redactor se abstenía por falta de extracto.
-- [ ] Portar la selección y expansión de anclajes verbatim.
+- [x] Portar la selección y expansión de anclajes verbatim. La cita se
+      amplía con su contexto de la misma página bruta y se comprueba que
+      sigue conteniendo el anclaje; sin ello se publicaba la línea suelta.
 - [x] Portar `structured-claims-v4` y su gate de relevancia literal.
 - [ ] Configurar A exclusivamente mediante `GatewayChatWriter(get_gateway())`.
 - [ ] Mantener `FallbackPolicy.disabled()` para A.

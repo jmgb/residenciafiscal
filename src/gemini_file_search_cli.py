@@ -138,13 +138,21 @@ def _compare(args: argparse.Namespace) -> int:
     structured = None
     file_search = None
     if run_structured:
+        corpus = load_retrieval_corpus(args.corpus.read_bytes())
         structured = CurrentStructuredStrategy(
-            load_retrieval_corpus(args.corpus.read_bytes()),
+            corpus,
             # A usa la política del chat; B, el modelo de File Search. Pasar el
             # mismo `--model` a las dos ataba A a una capacidad que no usa.
             writer=GatewayChatWriter(get_gateway()),
             model=CHAT_MODEL,
             reasoning_effort=CHAT_REASONING_EFFORT,
+            verbatim_artifacts={
+                source.judgment_id: (
+                    PROJECT_ROOT
+                    / f"knowledge/jurisprudencia-v3/verbatim/{source.judgment_id}.pages.json"
+                )
+                for source in corpus.sources
+            },
         )
     if run_file_search:
         receipt = _load_store(args.state)

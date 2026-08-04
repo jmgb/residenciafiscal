@@ -33,11 +33,14 @@ sintéticas y de banco.
 | Verificación de citas de B | 12 candidatas, 3 literales publicadas |
 | Coste | `ACTUAL` con importe y tokens; `ESTIMATED` cuando el proveedor no desglosa |
 | Regresión de gimnasio | `san-2347-2022`, página 7, en la respuesta |
+| Citas con contexto | el extracto publicado incluye la frase completa del PDF, no la línea del anclaje |
 
-El smoke destapó dos huecos del port que estaban abiertos y ya están cerrados:
-la tabla de sinónimos léxicos y la expansión de términos al elegir anclajes. Sin
-ellas la recuperación no alcanzaba la sentencia declarada en el plan y el
-redactor se abstenía por falta de extracto.
+El smoke destapó cuatro huecos del port, todos cerrados: la tabla de sinónimos
+léxicos, la expansión de términos al elegir anclajes, la ampliación de la cita
+con su contexto de página y las tres facetas que fuerzan comportamiento
+`parcial`. Sin las dos primeras la recuperación no alcanzaba la sentencia
+declarada en el plan; sin la tercera se publicaba la línea suelta del anclaje en
+lugar de la frase del PDF.
 
 Ninguna variable pública del frontend contiene un secreto. El inventario del
 host, las rutas reales, DNS, grants, unidades systemd y valores de entorno

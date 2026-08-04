@@ -69,7 +69,7 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
 
     gateway = object()
     shared_llm_gateway = object()
-    corpus = SimpleNamespace(units=[])
+    corpus = SimpleNamespace(units=[], sources=[])
     captured: dict[str, Any] = {}
     corpus_path = tmp_path / "corpus.json"
     corpus_path.write_bytes(b"{}")

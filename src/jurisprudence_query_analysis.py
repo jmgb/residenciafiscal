@@ -101,6 +101,12 @@ _PARTIAL_PATTERNS = (
     "interactuan cdi",
     "convenio y",
     "diferencia los casos con sancion",
+    # El corpus habla de cuotas de clubs deportivos y de contratos de telefonía,
+    # nunca de un uso que acredite presencia en una fecha. Publicar `completa`
+    # sobre ese material afirmaría más de lo que el material sostiene.
+    "gym",
+    "gimnasio",
+    "telefono movil",
 )
 _ASK_PATTERNS = (
     "se parece mas a mi",
