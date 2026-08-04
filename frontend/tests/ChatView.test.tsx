@@ -461,7 +461,7 @@ describe('ChatView', () => {
     });
     const fileSearch = screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' });
     expect(structured).toHaveTextContent('Respuesta estructurada.');
-    expect(structured).toHaveTextContent('USD 0.012345');
+    expect(structured).toHaveTextContent('Coste: 0.012 USD');
     expect(structured).toHaveTextContent('Cita literal A.');
     expect(within(structured).queryByText(/SHA-256/)).not.toBeInTheDocument();
     expect(
@@ -471,7 +471,7 @@ describe('ChatView', () => {
       within(structured).getByRole('link', { name: 'Descargar PDF STS 107/2018' })
     ).toHaveAttribute('download', 'STS_107_2018.pdf');
     expect(fileSearch).toHaveTextContent('Respuesta File Search.');
-    expect(fileSearch).toHaveTextContent('USD 0.020000');
+    expect(fileSearch).toHaveTextContent('Coste: 0.020 USD');
     expect(fileSearch).toHaveTextContent('Cobertura limitada.');
     expect(screen.getByText(/comparación experimental/i)).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Valorar comparación' })).toBeInTheDocument();

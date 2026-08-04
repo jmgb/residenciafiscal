@@ -94,17 +94,13 @@ export const ChatStrategyAnswerPanel = ({
     {answer.cost && (
       <div className='mt-4 border-t border-border pt-3 text-xs text-muted-foreground'>
         <p>
-          Coste de esta respuesta:{' '}
           <strong>
-            {answer.cost.measurement === 'UNAVAILABLE'
+            Coste:{' '}
+            {answer.cost.measurement === 'UNAVAILABLE' || answer.cost.amountUsd === null
               ? 'no disponible'
-              : `USD ${answer.cost.amountUsd}`}
+              : `${Number(answer.cost.amountUsd).toFixed(3)} ${answer.cost.currency}`}
           </strong>
-          {answer.cost.measurement !== 'UNAVAILABLE' && (
-            <> · {answer.cost.measurement === 'ACTUAL' ? 'uso medido' : 'estimación'}</>
-          )}
         </p>
-        <p className='mt-0.5'>No incluye la preparación previa del corpus.</p>
       </div>
     )}
   </section>

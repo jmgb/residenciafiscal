@@ -18,8 +18,8 @@ const answer = (
   latencyMs: 100,
   cost: {
     currency: 'USD',
-    amountUsd: '0.001000',
-    costMicrousd: 1_000,
+    amountUsd: '0.002425',
+    costMicrousd: 2_425,
     measurement: 'ACTUAL',
     scope: 'REQUEST_MARGINAL',
     pricingVersion: 'test',
@@ -41,9 +41,11 @@ describe('ChatComparisonAnswers', () => {
 
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
     expect(screen.getByTestId('comparison-grid')).not.toHaveClass('md:grid-cols-2');
-    expect(screen.getByRole('region', { name: 'Respuesta única' })).toHaveTextContent(
-      'Contenido de A.'
-    );
+    const response = screen.getByRole('region', { name: 'Respuesta única' });
+    expect(response).toHaveTextContent('Contenido de A.');
+    expect(response).toHaveTextContent('Coste: 0.002 USD');
+    expect(response).not.toHaveTextContent('Coste de esta respuesta');
+    expect(response).not.toHaveTextContent('No incluye la preparación previa del corpus.');
     expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
   });
@@ -185,7 +187,7 @@ describe('ChatComparisonAnswers', () => {
       />
     );
 
-    expect(screen.getByText('no disponible')).toBeInTheDocument();
+    expect(screen.getByText('Coste: no disponible')).toBeInTheDocument();
     expect(screen.queryByText(/USD 0\.000000/)).not.toBeInTheDocument();
   });
 });
