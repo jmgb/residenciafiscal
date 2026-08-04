@@ -62,6 +62,10 @@ class ModelPricing:
     output_microusd_per_token: Decimal
 
 
+class UnmatchedEvidenceQuote(ValueError):
+    """A model quote that cannot be localized uniquely in its declared page."""
+
+
 def load_model_pricing(bundle_path: Path, model: str) -> ModelPricing:
     path = (bundle_path.resolve() / "metadata/model-pricing.json").resolve()
     if not path.is_relative_to(bundle_path.resolve()):
@@ -287,13 +291,22 @@ def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> None:
     evidence = draft["evidence"]
     rollout_sources = _rollout_sources(bundle_path)
     judgments: set[str] = set()
+    verified_evidence: list[dict[str, Any]] = []
     for item in evidence:
-        _verify_evidence(item, bundle_path, rollout_sources)
+        try:
+            _verify_evidence(item, bundle_path, rollout_sources)
+        except UnmatchedEvidenceQuote:
+            continue
+        assert isinstance(item, dict)
+        verified_evidence.append(item)
         judgments.add(item["judgment_id"])
     if len(judgments) > 5:
         raise ValueError("at most five judgments are allowed")
+    if len(verified_evidence) != len(evidence):
+        draft["status"] = "parcial" if verified_evidence else "abstención"
+    draft["evidence"] = verified_evidence
     derived_claims: list[dict[str, Any]] = []
-    for index, item in enumerate(evidence, start=1):
+    for index, item in enumerate(verified_evidence, start=1):
         if len(derived_claims) < _MAX_CLAIMS:
             derived_claims.append({"text": item["quote"], "evidence_indexes": [index]})
         else:
@@ -381,7 +394,9 @@ def _verify_evidence(item: object, bundle_path: Path, rollout_sources: dict[str,
     if exact_quote is None and isinstance(raw_text, str):
         exact_quote = _unique_raw_token_match(raw_text, quote)
     if exact_quote is None or len(exact_quote) > _MAX_QUOTE_CHARS:
-        raise ValueError("evidence página/literal is not an exact raw_page_text substring")
+        raise UnmatchedEvidenceQuote(
+            "evidence página/literal is not an exact raw_page_text substring"
+        )
     item["quote"] = exact_quote
 
 

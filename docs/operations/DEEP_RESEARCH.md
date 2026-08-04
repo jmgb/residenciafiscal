@@ -88,8 +88,9 @@ determinista:
   borrador difiere solo en whitespace o puntuación, el verificador puede usar
   la secuencia completa de palabras para localizar una única coincidencia y
   sustituye el borrador por la subcadena cruda del corpus. Una coincidencia
-  ambigua o cualquier palabra añadida, omitida o cambiada falla cerrado: el
-  texto nunca se corrige, une ni completa;
+  ambigua o cualquier palabra añadida, omitida o cambiada se descarta. Si aún
+  queda evidencia exacta, el resultado baja a `parcial`; si no queda ninguna,
+  se convierte en `abstención`. El texto nunca se corrige, une ni completa;
 - que una cita contenga al menos 20 caracteres sustantivos; `claims`, su texto
   y sus índices se tratan como campos redundantes no confiables y se regeneran
   mecánicamente desde las evidencias exactas;

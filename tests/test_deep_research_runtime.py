@@ -159,6 +159,8 @@ def test_runtime_command_has_only_corpus_tools_and_receives_request_over_stdin(t
     assert 'web_search="disabled"' in joined
     assert "features.shell_tool=false" in joined
     assert "features.skill_search=false" in joined
+    assert "Prefiere una o dos citas cortas" in joined
+    assert "No uses elipsis" in joined
     assert (
         'mcp_servers.corpus.enabled_tools=["search_corpus","read_case","read_verbatim_page"]'
         in joined
@@ -253,25 +255,59 @@ def test_finalizer_recovers_unique_exact_raw_quote_from_punctuation_variant(tmp_
     assert final["evidence"][0]["quote"] == "La residencia exige prueba exacta."
 
 
-def test_finalizer_does_not_recover_non_whitespace_quote_changes(tmp_path):
+def test_finalizer_abstains_when_no_quote_can_be_verified(tmp_path):
     draft = json.loads(_draft())
     draft["claims"][0]["text"] = "La residencia exige una prueba exacta."
     draft["evidence"][0]["quote"] = "La residencia exige una prueba exacta."
 
-    with pytest.raises(ValueError, match="exact raw_page_text substring"):
-        finalize_deep_research_output(
-            json.dumps(draft, ensure_ascii=False),
-            job_id="deep-job-1",
-            bundle_path=_bundle(tmp_path),
-            model="gpt-5.6-luna",
-            reasoning_effort="high",
-            latency_ms=1,
-            usage=None,
-            tool_audit=_audit(),
-        )
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "abstención"
+    assert final["claims"] == []
+    assert final["evidence"] == []
+    assert (
+        final["text"]
+        == "No hay evidencia suficiente en el corpus de sentencias para responder a la consulta."
+    )
 
 
-def test_finalizer_rejects_ambiguous_whitespace_variant(tmp_path):
+def test_finalizer_keeps_verified_quotes_and_drops_only_unmatched_quotes(tmp_path):
+    draft = json.loads(_draft())
+    draft["evidence"].append(
+        {
+            **draft["evidence"][0],
+            "quote": "Esta cita contiene palabras que no aparecen en la fuente.",
+        }
+    )
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "parcial"
+    assert final["claims"] == [
+        {"text": "La residencia exige prueba exacta.", "evidence_indexes": [1]}
+    ]
+    assert len(final["evidence"]) == 1
+
+
+def test_finalizer_abstains_from_ambiguous_whitespace_variant(tmp_path):
     bundle = _bundle(tmp_path)
     verbatim = bundle / "verbatim/san-1-2020.pages.json"
     document = json.loads(verbatim.read_text("utf-8"))
@@ -284,17 +320,19 @@ def test_finalizer_rejects_ambiguous_whitespace_variant(tmp_path):
     draft["claims"][0]["text"] = "La residencia exige\nprueba exacta."
     draft["evidence"][0]["quote"] = "La residencia exige\nprueba exacta."
 
-    with pytest.raises(ValueError, match="exact raw_page_text substring"):
-        finalize_deep_research_output(
-            json.dumps(draft, ensure_ascii=False),
-            job_id="deep-job-1",
-            bundle_path=bundle,
-            model="gpt-5.6-luna",
-            reasoning_effort="high",
-            latency_ms=1,
-            usage=None,
-            tool_audit=_audit(),
-        )
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=bundle,
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "abstención"
+    assert final["evidence"] == []
 
 
 def test_finalizer_derives_claim_indexes_instead_of_trusting_model_indexes(tmp_path):
