@@ -92,15 +92,15 @@ adaptadores Node llaman directamente a OpenAI Responses para A y a Gemini
 Interactions + File Search para B. A se ejecuta una sola vez; B permite un
 segundo y último intento con el mismo modelo únicamente cuando una respuesta
 sustantiva no aporta ninguna cita verificable. No existe fallback de modelo ni
-`gpt_request` en este runtime.
+`gpt_request` en este runtime Node legado.
 
-El prototipo Python conservado fuera del despliegue V1 sí usa
-`GatewayChatWriter(get_gateway())` sobre **`neutral-llm-gateway`**, fijado a una
-referencia inmutable. `src/chat_model_policy.py` declara Luna + `high`, y
-`src/gateway_setup.py` construye el gateway bajo demanda con credenciales, uso,
-alertas y coste. También mantiene desactivado el fallback de modelo para no
-falsear la atribución de modelo, coste y calidad del experimento. Los límites y
-tests de ambos composition roots están en
+El prototipo Python conservado fuera del despliegue V1 sí usa la fachada
+funcional `gpt_request` de `src/llm_gateway_facade.py`: mantiene el contrato de
+entrada y traduce a **`neutral-llm-gateway`**, fijado a una referencia
+inmutable. `src/chat_model_policy.py` declara `gpt-5.6-luna` + `high` por
+defecto y `gpt-5.6-terra` como fallback explícito; el gateway registra el
+modelo efectivo, uso, alertas y coste. Los límites y tests de ambos composition
+roots están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).
 
 En el prototipo Python no hay tabla de precios ni de enrutado local: las tarifas

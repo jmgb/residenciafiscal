@@ -35,6 +35,7 @@ ejecutable.
 |---|---|
 | `src/chat_model_policy.py` | Modelo primario, esfuerzo y cadena de fallbacks del chat |
 | `src/gateway_setup.py` | Clientes, credenciales, singleton y sinks de uso/alerta |
+| `src/llm_gateway_facade.py` | Fachada `gpt_request`: traduce el contrato estable a `LLMRequest` |
 | `src/gateway_chat_writer.py` | Adaptador del redactor estructurado del chat |
 | `src/current_structured_strategy.py` | Recuperación y respuesta A del comparador |
 | `src/google_genai_file_search.py` | File Search B, fuera del paquete porque usa ficheros/tools |
@@ -68,7 +69,7 @@ dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
 
 | Estrategia | Modelo | De dónde sale |
 |---|---|---|
-| A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Política del chat; la cadena se entrega al gateway |
+| A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Por defecto `gpt-5.6-luna` + `high`; la cadena se entrega al gateway |
 | B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
 
 El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
@@ -142,25 +143,40 @@ malformada o no cumple el esquema, prueba automáticamente cada fallback en el
 orden declarado. Registra los intentos, el modelo que respondió y el coste
 acumulado; la aplicación solo publica el resultado estructurado validado.
 
-La política se puede cambiar sin tocar el adaptador:
+La política vigente de A es:
 
 ```bash
-CHAT_MODEL=meta-llama/llama-4-maverick-17b-128e-instruct
-CHAT_FALLBACK_MODELS=meta-llama/llama-4-scout-17b-16e-instruct,gpt-5.6-terra
+CHAT_MODEL=gpt-5.6-luna
+CHAT_FALLBACK_MODELS=gpt-5.6-terra
 ```
 
-Los identificadores deben existir en el catálogo instalado del gateway. La
-versión `0.9.0` conoce los dos modelos Llama de Groq, pero no declara
-`reasoning_efforts` ni entrada de ficheros inline para ellos; por tanto, una
-petición de visión o un esfuerzo `high` para Llama requiere una versión del
-paquete cuyo catálogo y contrato lo soporten. La aplicación falla al arrancar
-si el modelo configurado no admite el esfuerzo declarado, en vez de afirmar que
-se ejecutó `high` cuando el paquete habría tenido que descartarlo.
+El modelo y la cadena se pueden cambiar sin tocar el adaptador, pero los
+identificadores deben existir en el catálogo instalado del gateway. El smoke
+pagado de A debe fijar explícitamente los mismos valores para que la prueba sea
+reproducible:
+
+```bash
+uv run python src/gemini_file_search_cli.py compare \
+  "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?" \
+  --only a --chat-model gpt-5.6-luna \
+  --chat-fallback-model gpt-5.6-terra --confirm-paid
+```
+
+La versión `0.9.0` conoce los IDs Llama 4, pero la API de Groq ya no los ofrece
+en el entorno validado y el catálogo no declara `reasoning_efforts` ni entrada
+de ficheros inline para ellos. Por eso no se usan como configuración de A.
 
 La V1 Netlify-only sigue siendo un runtime anterior: sus adaptadores TypeScript
 son directos porque aún no se ha completado el corte de tráfico a FastAPI. No
 se amplían ni se usan desde la ruta Python canónica; el objetivo de la
 migración es que A quede servido únicamente por este gateway.
+
+La fachada Python equivalente a `gpt_request` vive en
+`src/llm_gateway_facade.py`. Conserva un punto de entrada funcional con modelo,
+prompt de sistema, mensaje de usuario, `request_id`, `source` y resultado
+`LLMResult`; no crea clientes ni aplana el resultado por su cuenta. La
+aplicación puede adaptar ese resultado al contrato de dominio después, mientras
+que uso, coste y alertas siguen centralizados en los sinks del gateway.
 
 La cifra sigue al esfuerzo declarado, porque **la latencia la manda el
 razonamiento y no el tamaño de la pregunta**. Las mismas dos preguntas del

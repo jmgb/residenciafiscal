@@ -116,11 +116,12 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
 
     request = writer.requests[0]
     assert request.model == CHAT_MODEL
-    # El esfuerzo viaja con la petición: sin él, declarar `max` en la política
+    # El esfuerzo viaja con la petición: sin él, declarar `high` en la política
     # no cambiaría nada, porque saldría el valor por defecto del proveedor.
     assert request.reasoning_effort == CHAT_REASONING_EFFORT
     assert request.temperature == 0
     assert request.fallback_models == CHAT_FALLBACK_MODELS
+    assert request.request_id == "req-writer"
     assert request.response_schema["title"] == "StructuredChatAnswerDraft"
     context = json.loads(request.evidence_context)
     assert len(context["evidence"]) <= 12

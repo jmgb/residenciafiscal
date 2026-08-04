@@ -11,16 +11,18 @@ La única fuente de verdad es `src/chat_model_policy.py`:
 | Campo | Valor |
 |---|---|
 | Modelo del chat | `gpt-5.6-luna` |
-| Esfuerzo | `max` |
+| Esfuerzo | `high` |
 | Valores admitidos | Derivados de `reasoning_efforts` en el catálogo del gateway |
 
 `GET /config` publica `chat_model`, `chat_reasoning_effort` y
 `chat_reasoning_efforts_permitidos`. Los valores actuales son `none`, `low`,
 `medium`, `high`, `xhigh` y `max`.
 
-## Qué significa `max`
+## Qué significa `high`
 
-Es una decisión de producto que prioriza la calidad de la respuesta jurídica.
+Es una decisión de producto que prioriza la calidad de la respuesta jurídica
+manteniendo una latencia compatible con el chat. Es el esfuerzo que viaja por
+defecto en A junto a `gpt-5.6-luna`.
 No garantiza por sí sola mayor precisión. Puede aumentar razonamiento, latencia
 y coste, por lo que cada respuesta debe mostrar y registrar:
 

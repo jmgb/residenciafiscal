@@ -103,24 +103,19 @@ Cloudflare sobre un subdominio propio, no eliminarla. Conserva las cuatro
 ventajas y desaparece el límite de stream. Llamar directo solo tendría sentido
 con usuarios autenticados y coste atado a una cuenta.
 
-## 6. Deuda documental abierta
+## 6. Política de modelo de A
 
-El commit `f2e7633` delega el fallback de modelo en el gateway y deja
-`gpt-5.6-terra` como alternativa **activa por defecto** en la estrategia A;
-además `CHAT_MODEL` pasa a ser configurable por entorno. Eso contradice cuatro
-afirmaciones vigentes:
+La deuda documental del commit `f2e7633` está cerrada. La configuración vigente
+del runtime Python es:
 
-- `CLAUDE.md`, en las dos menciones al fallback desactivado;
-- el invariante 6 de [`CHAT_ALFREDO_MIGRATION_PLAN.md`](CHAT_ALFREDO_MIGRATION_PLAN.md);
-- su tarea de fase 2, que pide mantener `FallbackPolicy.disabled()` para A;
-- [`CHAT_SYSTEM_ARCHITECTURE.md`](../jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md),
-  que declara que no existe fallback cruzado.
+- primario: `gpt-5.6-luna`;
+- esfuerzo: `high`;
+- fallback explícito: `gpt-5.6-terra`;
+- ejecución y atribución de todos los intentos: `neutral-llm-gateway`.
 
-El motivo documentado para desactivarlo era no falsear la atribución de modelo,
-coste y calidad del experimento A/B. Mientras no se escriba el motivo del
-cambio, esas cuatro afirmaciones son falsas y la comparación A/B publicada deja
-de ser reproducible. **Es lo primero que hay que cerrar al retomar**, y no
-depende de infraestructura.
+`CHAT_MODEL` y `CHAT_FALLBACK_MODELS` permiten cambiar la política sin tocar el
+adaptador, y `GET /config` la publica. El fallback nunca cruza entre A y B ni
+se elige silenciosamente: solo usa los modelos declarados en la cadena.
 
 ## 7. Orden de reanudación
 

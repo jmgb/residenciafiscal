@@ -9,6 +9,7 @@ from llm_gateway.models import lookup_model
 load_dotenv()
 
 CHAT_MODEL = os.getenv("CHAT_MODEL", "gpt-5.6-luna").strip()
+# Luna 5.6 es el modelo primario de A por defecto; el entorno permite cambiarlo.
 CHAT_REASONING_EFFORT: ReasoningEffort = "high"
 """Tipado con el literal del paquete: un esfuerzo inválido se ve al comprobar
 tipos, no al recibir un 400 del proveedor.

@@ -28,11 +28,13 @@ def test_no_existe_una_fachada_llm_para_analizar_sentencias() -> None:
 def test_la_ruta_a_no_reimplementa_llamadas_de_proveedor() -> None:
     """A solo traduce el contrato al gateway; los SDK viven en la librería."""
     source = (SOURCE_ROOT / "gateway_chat_writer.py").read_text(encoding="utf-8")
+    facade = (SOURCE_ROOT / "llm_gateway_facade.py").read_text(encoding="utf-8")
 
-    assert "LLMGateway" in source
-    assert "self._gateway.generate" in source
+    assert "gpt_request" in source
+    assert "LLMRequest" in facade
+    assert "gateway.generate" in facade
     assert not any(
-        call in source
+        call in source + facade
         for call in (
             "responses.create",
             "chat.completions.create",

@@ -29,8 +29,8 @@ Al terminar la migración:
   transmitirá el stream, pero no contendrá lógica jurídica, cuota autoritativa
   ni credenciales de proveedores;
 - FastAPI en Alfredo será el único composition root del chat A/B;
-- A redactará mediante `GatewayChatWriter(get_gateway())` y
-  `neutral-llm-gateway`;
+- A redactará mediante la fachada `gpt_request` →
+  `GatewayChatWriter(get_gateway())` → `neutral-llm-gateway`;
 - B seguirá usando Gemini File Search directamente mientras el gateway no
   soporte esa tool;
 - Supabase conservará exactamente la misma reserva, persistencia, coste,
@@ -378,8 +378,8 @@ aplique los mismos cierres de seguridad.
       amplía con su contexto de la misma página bruta y se comprueba que
       sigue conteniendo el anclaje; sin ello se publicaba la línea suelta.
 - [x] Portar `structured-claims-v4` y su gate de relevancia literal.
-- [ ] Configurar A exclusivamente mediante `GatewayChatWriter(get_gateway())`.
-- [ ] Mantener `FallbackPolicy.disabled()` para A.
+- [x] Configurar A exclusivamente mediante `GatewayChatWriter(get_gateway())`.
+- [x] Configurar A con `gpt-5.6-luna` + `high` y fallback explícito en el gateway.
 - [ ] Activar el store con metadata exacta de autoridad y verificar 106/106 PDF.
 - [x] Portar `file-search-authority-v8`, con pistas terminológicas y filtro por sentencia.
 - [ ] Forzar File Search en B cuando el SDK Python lo permita; si el SDK no

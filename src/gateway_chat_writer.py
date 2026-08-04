@@ -23,16 +23,14 @@ from __future__ import annotations
 from typing import Any
 
 from llm_gateway import (
-    FallbackPolicy,
     LLMGateway,
-    LLMRequest,
-    Message,
     ResponseFormat,
     RetryPolicy,
     TimeoutPolicy,
 )
 
 from chat_answer_contract import StructuredChatAnswerDraft
+from llm_gateway_facade import gpt_request
 from structured_answer_writer import (
     ChatWriterRequest,
     ChatWriterResult,
@@ -70,23 +68,23 @@ class GatewayChatWriter:
         self._gateway = gateway
 
     async def write(self, request: ChatWriterRequest) -> ChatWriterResult:
-        result = await self._gateway.generate(
-            LLMRequest(
-                model=request.model,
-                system_prompt=request.system_prompt,
-                messages=(Message("user", request.user_prompt),),
-                response_format=ResponseFormat.JSON_SCHEMA,
-                response_schema=StructuredChatAnswerDraft,
-                temperature=request.temperature,
-                reasoning_effort=request.reasoning_effort,
-                timeout_policy=TimeoutPolicy(
-                    total_seconds=WRITER_TIMEOUT_SECONDS,
-                    per_attempt_seconds_override=WRITER_ATTEMPT_TIMEOUT_SECONDS,
-                ),
-                retry_policy=RetryPolicy.transient(max_attempts=WRITER_MAX_ATTEMPTS),
-                fallback_policy=FallbackPolicy.models_in_order(*request.fallback_models),
-                source="f0.2-redactor-a",
-            )
+        result = await gpt_request(
+            ai_model=request.model,
+            system_prompt=request.system_prompt,
+            user_message=request.user_prompt,
+            gateway=self._gateway,
+            response_format=ResponseFormat.JSON_SCHEMA,
+            response_schema=StructuredChatAnswerDraft,
+            temperature=request.temperature,
+            reasoning_effort=request.reasoning_effort,
+            fallback_models=request.fallback_models,
+            timeout_policy=TimeoutPolicy(
+                total_seconds=WRITER_TIMEOUT_SECONDS,
+                per_attempt_seconds_override=WRITER_ATTEMPT_TIMEOUT_SECONDS,
+            ),
+            retry_policy=RetryPolicy.transient(max_attempts=WRITER_MAX_ATTEMPTS),
+            request_id=request.request_id,
+            source="f0.2-redactor-a",
         )
         return ChatWriterResult(
             draft=_as_draft(result.output),

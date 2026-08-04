@@ -6,6 +6,7 @@ El dominio jurídico no cambia: `CurrentStructuredStrategy` sigue recibiendo un
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -80,6 +81,7 @@ def _request(**kwargs: Any) -> ChatWriterRequest:
     defaults: dict[str, Any] = {
         "model": "gemini-3.5-flash-lite",
         "fallback_models": (),
+        "request_id": "req-writer",
         "system_prompt": "Responde solo desde la evidencia.",
         "user_prompt": "¿Qué valor se dio al certificado?",
         "evidence_context": "[E1] Fragmento literal.",
@@ -200,6 +202,44 @@ class TestPolicies:
         await _writer(adapter).write(_request())
 
         assert adapter.requests[0].retry_policy.max_attempts == 2
+
+
+class TestFacadeBoundary:
+    async def test_writer_uses_the_stable_gpt_request_facade(self, monkeypatch: Any) -> None:
+        from types import SimpleNamespace
+        from typing import cast
+
+        from llm_gateway import Cost, CostMeasurement, TokenUsage
+
+        import gateway_chat_writer
+        from chat_answer_contract import StructuredChatAnswerDraft
+
+        captured: dict[str, Any] = {}
+
+        async def fake_gpt_request(**kwargs: Any) -> Any:
+            captured.update(kwargs)
+            return SimpleNamespace(
+                output=StructuredChatAnswerDraft.model_validate(json.loads(DRAFT_JSON)),
+                usage=TokenUsage(120, 30),
+                execution=SimpleNamespace(model_used="gemini-3.5-flash-lite"),
+                cost=Cost(
+                    measurement=CostMeasurement.ACTUAL,
+                    microusd=60,
+                    pricing_version="2026-07-31",
+                ),
+            )
+
+        monkeypatch.setattr(gateway_chat_writer, "gpt_request", fake_gpt_request)
+        request = _request()
+
+        await gateway_chat_writer.GatewayChatWriter(cast(Any, object())).write(request)
+
+        assert captured["ai_model"] == request.model
+        assert captured["system_prompt"] == request.system_prompt
+        assert captured["user_message"] == request.user_prompt
+        assert captured["response_schema"] is StructuredChatAnswerDraft
+        assert captured["fallback_models"] == request.fallback_models
+        assert captured["request_id"] == request.request_id
 
 
 class TestPortFidelity:

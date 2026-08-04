@@ -22,6 +22,7 @@ class ChatWriterRequest:
     temperature: float = 0
     reasoning_effort: ReasoningEffort | None = None
     fallback_models: tuple[str, ...] = ()
+    request_id: str | None = None
 
 
 class ChatWriterUsage(JurisprudenceCaseModel):

@@ -1307,11 +1307,11 @@ en [`ADR-20260804-chat-alfredo.md`](../decisions/ADR-20260804-chat-alfredo.md).
 en el host de operaciones pero **cerrado**: sin credenciales, sin persistencia,
 solo en loopback, y `POST /chat` responde `503`. No atiende usuarios ni gasta.
 
-- [ ] **Cerrar la deuda documental del fallback de modelo, o revertirlo.** El
-  commit `f2e7633` deja `gpt-5.6-terra` activo por defecto en la estrategia A y
-  hace `CHAT_MODEL` configurable por entorno. Eso contradice `CLAUDE.md`, el
-  invariante 6 del plan, su tarea de fase 2 y `CHAT_SYSTEM_ARCHITECTURE.md`. No
-  depende de infraestructura y es lo primero al retomar.
+- [x] **Cerrar la deuda documental del fallback de modelo.** El commit
+  `f2e7633` deja `gpt-5.6-luna` + `high` como configuración primaria de A,
+  `gpt-5.6-terra` como fallback explícito y `CHAT_MODEL` configurable por
+  entorno. La cadena la ejecuta `neutral-llm-gateway`; no existe fallback
+  cruzado entre A y B.
 - [ ] **Materializar el banco de regresión congelado de la fase 0.** Las cuatro
   divergencias del port que destapó el smoke real aparecieron comparando
   constantes a mano; sin banco, la paridad seguirá dependiendo de eso.

@@ -56,7 +56,7 @@ class CurrentStructuredStrategy:
         llegaba a ninguna llamada.
 
         El esfuerzo también viaja: sin él la petición salía con el valor por
-        defecto del proveedor, así que declarar `max` no habría cambiado nada.
+        defecto del proveedor, así que declarar `high` no habría cambiado nada.
         """
         self._corpus = corpus
         self._units = {unit.unit_id: unit for unit in corpus.units}
@@ -111,6 +111,7 @@ class CurrentStructuredStrategy:
                 response_schema=StructuredChatAnswerDraft.model_json_schema(),
                 reasoning_effort=self._reasoning_effort,
                 fallback_models=self._fallback_models,
+                request_id=request_id,
             )
         )
         cost = _as_marginal_cost(writer_result)
