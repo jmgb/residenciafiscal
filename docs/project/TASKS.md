@@ -595,8 +595,10 @@ contra el dominio público después de cada deploy.
     [`docs/jurisprudence/VERBATIM_CORPUS.md`](../jurisprudence/VERBATIM_CORPUS.md)
     como JSON canónico y decidir en E0 su almacenamiento para la futura
     expansión. El Markdown verbatim sigue siendo una vista humana opcional.
-- [ ] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
+- [x] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
   ASCII (`/espana`, `/portugal`, etc.) y redirecciones para variantes con caracteres especiales.
+  Cerrado el 2 de agosto de 2026 con `countryRoutes.json`, constructores compartidos,
+  prerender, sitemap y redirects generados; el enriquecimiento editorial queda separado.
 - [x] Definir el contrato del endpoint de chat, manejo de errores, cancelación de peticiones,
   límites de uso y estrategia de fallback del proveedor LLM. Cerrado en las secciones 5 y 6
   del diseño: eventos SSE, los dos `429` (el del limitador nativo llega sin ejecutar la
@@ -644,17 +646,18 @@ comprueban párrafo a párrafo contra la fuente.
     ejercicios de `ConvenioPais` es lo que decide cuál aplica. Reino Unido y
     Argentina ya están así; comprueba si hay más al ampliar.
 
-- [ ] **Guardarraíl contra la pérdida silenciosa de una norma al redescargar.**
+- [x] **Guardarraíl contra la pérdida silenciosa de una norma al redescargar.**
   `descargar_normativa.py` reescribe `manifest.json` desde cero y descubre los
   convenios vigentes filtrando por título el índice del BOE. Si España denuncia
   un convenio, la siguiente descarga simplemente lo omite, `export_normativa`
   publica un precepto menos y **el test de «corpus al día» pasa**, porque compara
   la salida con la entrada nueva. La pérdida no la ve nadie.
-  - Comparar el manifiesto nuevo con el anterior y **fallar ante una desaparición
-    no declarada**, con una vía explícita para aceptarla (declararla en
-    `CDI_DEROGADO` si sigue citándose, o registrarla como baja).
-  - Misma lógica que el error que ya salta cuando el XML del diario no delimita
-    ningún precepto: una omisión silenciosa es peor que un fallo ruidoso.
+  - Implementado el 4 de agosto de 2026: una descarga completa compara el
+    manifiesto anterior y falla antes de sobrescribirlo ante cualquier
+    desaparición no declarada. Si la norma sigue citándose se añade a
+    `CDI_DEROGADO`; si deja de ser necesaria se registra con motivo en
+    `BAJAS_DECLARADAS`.
+  - Cubierto por `tests/test_descargar_normativa.py` (10 tests verdes).
 
 - [ ] **Recoger en el schema v3 las normas que cita la sentencia, como campo
   propio.** Es el techo del enlazado: de las 106 sentencias, **41 no citan ningún
@@ -684,7 +687,7 @@ comprueban párrafo a párrafo contra la fuente.
   - El contrato de qué necesita una jurisdicción nueva está en
     [`NORMATIVA.md`](../normativa/NORMATIVA.md#una-jurisdicción-por-directorio) y en
     [`CONTRIBUTING.md`](../../CONTRIBUTING.md#aportar-la-jurisprudencia-de-otro-país).
-  - [x] Clave de jurisdicción unificada (1 de agosto de 2026): las 29 entradas de
+  - [x] Clave de jurisdicción unificada (1 de agosto de 2026): las 34 entradas de
     `frontend/src/data/countryRoutes.json` llevan `code` con el ISO 3166-1 alfa-2
     en minúscula, el mismo que usan `normativa/es/` y el campo `jurisdiccion` del
     corpus. Validado por zod y por `tests/country-routes.test.ts`, que exige
@@ -748,9 +751,9 @@ comprueban párrafo a párrafo contra la fuente.
   el fichero existe y Netlify lo serviría antes que la redirección;
   `tests/test_frontend_cache_policy.py` lo fija junto al orden respecto al
   fallback `/*`.
-  - **Verificar tras el deploy** que el monitor `803628459` de UptimeRobot sigue
-    en verde: apunta a la raíz y ahora depende de que siga la redirección
-    ([`UPTIMEROBOT.md`](../operations/UPTIMEROBOT.md)).
+  - [x] **Verificado el 4 de agosto de 2026**: el monitor `803628459` de
+    UptimeRobot está `UP` y la raíz responde `301` hacia `/espana` con el
+    User-Agent del monitor ([`UPTIMEROBOT.md`](../operations/UPTIMEROBOT.md)).
 - [x] Marcar con `BreadcrumbList` las rutas estáticas indexables `/manifiesto`,
   `/metodologia` y `/colaborar`, además de `/espana/fuentes`, que cuelga de
   España. `/privacidad` queda fuera por ser `noindex`: los datos estructurados
@@ -759,8 +762,8 @@ comprueban párrafo a párrafo contra la fuente.
 
 - [x] Añadir metadatos, canonical, Open Graph y enlaces internos específicos para cada
   landing de país (1 de agosto de 2026): `title` y `description` propios en
-  `countryRoutes.json`, prerenderizados por ruta y con las 29 en el sitemap.
-  **Falta `schema.org`**, que era la otra mitad de esta tarea.
+  `countryRoutes.json`, prerenderizados por ruta y con las 34 en el sitemap.
+  El marcado `schema.org` queda cerrado en la tarea siguiente.
 - [x] Marcar cada landing de país con datos estructurados (`schema.org`) (1 de agosto de
   2026): `BreadcrumbList` en `CountryPage` y en `SpainPage` —`/espana` monta el chat y
   no la plantilla compartida, así que se quedaba fuera siendo la landing de mayor
@@ -912,10 +915,12 @@ sola URL para poder encontrarse.
   redirige a `/login` a quien no tiene sesión, conservando íntegra la query
   —incluido `pais`— en el `return_to`. Falta abrirla **con sesión iniciada** y
   confirmar que el campo `pais` llega relleno al formulario.
-- [ ] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
-  `labels:` de la plantilla. Hoy usa `help wanted` porque GitHub solo aplica
-  etiquetas que ya existen. Con varias propuestas de país a la vez, una etiqueta
-  por país ordena el backlog.
+  - [x] Comprobación anónima realizada: GitHub conserva `template`, `title` y
+    `pais` íntegros en el `return_to`; queda pendiente únicamente la comprobación
+    visual con una sesión iniciada.
+- [x] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
+  `labels:` de la plantilla (4 de agosto de 2026). La plantilla aplica ahora
+  `help wanted` y `corpus`; cambio publicado en `f39ba835a64dab7a4901b17213238b1b5949901e`.
 - [ ] **Difundir `/colaborar` fuera de GitHub.** Desde que las landings de país son
   indexables, el descubrimiento ya no depende de una sola URL, pero sigue
   necesitando canales externos (colegios de abogados, asociaciones de fiscalistas,
@@ -1085,7 +1090,10 @@ sola URL para poder encontrarse.
 
 ## SEO y operación
 
-- [ ] Crear una landing específica por país (`/españa`, `/portugal`, etc.) con información detallada sobre la residencia fiscal, criterios, obligaciones y particularidades de cada país.
+- [ ] **Enriquecer editorialmente las landings de país** (`/espana`, `/portugal`, etc.)
+  con información detallada sobre residencia fiscal, criterios, obligaciones y
+  particularidades de cada país. La superficie técnica reutilizable, las URLs canónicas
+  y las redirecciones ya están cerradas arriba; queda contenido diferencial y verificable.
 - [x] Configurar Sentry para la API y el frontend y documentar sus variables de
   entorno (`c0fb582`), reflejado en `README.md` y `CLAUDE.md` el 1 de agosto de
   2026 con la tabla de variables. El límite que describía esta entrada —«la
@@ -1217,6 +1225,12 @@ orden recomendado:
   con más demanda (Andorra, Portugal, Francia, Emiratos), `/colaborar` y dos o
   tres páginas de país. La API no permite solicitar indexación; solo la
   interfaz.
+  - [ ] Intento pendiente: la sesión de navegador disponible no está autenticada
+    en Search Console; no se puede solicitar indexación con la service account
+    ni mediante la API de inspección. Requiere abrir la UI con una cuenta con
+    permisos sobre `sc-domain:residenciafiscal.org`.
+  - [x] La inspección API sí funciona y confirma para `/espana/normativa`
+    `Discovered - currently not indexed`; no sustituye la solicitud manual.
 - [x] **Confirmado que el sitemap registra 149 URLs y no 38** (2 de agosto de
   2026, por la API de Search Console, sin esperar al informe del lunes). Google
   descargó la versión antigua el 1 de agosto a las 19:38 —antes del deploy de

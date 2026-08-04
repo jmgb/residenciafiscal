@@ -1,9 +1,7 @@
 name: Aportar la jurisprudencia de un país / Contribute a country's case law
 description: Proponer el corpus de residencia fiscal de tu jurisdicción / Propose the tax residence corpus of your jurisdiction
 title: 'Aportar jurisprudencia: '
-# GitHub solo aplica etiquetas que ya existen en el repositorio: `help wanted`
-# existe, `corpus` todavía no. Si se crea, añadirla aquí.
-labels: ["help wanted"]
+labels: ["help wanted", "corpus"]
 body:
   - type: markdown
     attributes:

@@ -104,6 +104,11 @@ CDI_DEROGADO: dict[str, str] = {
     "BOE-A-1976-23347": "CDI España-Reino Unido de 1975, sustituido por el de 2013",
 }
 
+# Normas que ya no deben formar parte del inventario porque han dejado de ser
+# necesarias y no siguen citándose. Una baja exige motivo y evita que la
+# protección del manifiesto convierta una decisión deliberada en un silencio.
+BAJAS_DECLARADAS: dict[str, str] = {}
+
 
 def _fetch(url: str, reintentos: int = 3) -> bytes:
     peticion = urllib.request.Request(url, headers={"Accept": "application/xml"})
@@ -261,6 +266,15 @@ def fusionar_manifiesto(
     return fusionados + list(nuevos.values())
 
 
+def desapariciones_no_declaradas(
+    previo: dict, registros: list[dict[str, object]], bajas: set[str] | None = None
+) -> list[str]:
+    """Devuelve las normas del manifiesto previo que faltan sin una baja explícita."""
+    anteriores = {str(registro["id"]) for registro in previo.get("normas", [])}
+    actuales = {str(registro["id"]) for registro in registros}
+    return sorted(anteriores - actuales - (bajas or set()))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=Path("normativa/es"))
@@ -327,6 +341,17 @@ def main() -> int:
     if args.solo and manifiesto_path.exists():
         previo = json.loads(manifiesto_path.read_text(encoding="utf-8"))
         registros = fusionar_manifiesto(previo, registros)
+    elif manifiesto_path.exists():
+        previo = json.loads(manifiesto_path.read_text(encoding="utf-8"))
+        desaparecidas = desapariciones_no_declaradas(
+            previo, registros, bajas=set(BAJAS_DECLARADAS)
+        )
+        if desaparecidas:
+            raise RuntimeError(
+                "La descarga eliminaría normas del manifiesto sin declaración: "
+                f"{', '.join(desaparecidas)}. Si siguen citándose, añádelas a "
+                "CDI_DEROGADO; si no, regístralas en BAJAS_DECLARADAS con su motivo."
+            )
 
     manifiesto_path.write_text(
         json.dumps(
@@ -335,6 +360,10 @@ def main() -> int:
                 "endpoint_consolidada": API_CONSOLIDADA,
                 "endpoint_diario": API_DIARIO,
                 "normas": registros,
+                "bajas": [
+                    {"id": boe_id, "motivo": motivo}
+                    for boe_id, motivo in sorted(BAJAS_DECLARADAS.items())
+                ],
                 "fallos": fallos,
             },
             ensure_ascii=False,

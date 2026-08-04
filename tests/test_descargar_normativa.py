@@ -17,6 +17,7 @@ from descargar_normativa import (
     NUCLEO,
     RECLASIFICACION,
     cdis_del_indice,
+    desapariciones_no_declaradas,
     fusionar_manifiesto,
     grupo_declarado,
     grupo_del_indice,
@@ -81,6 +82,25 @@ def test_descargar_una_norma_no_borra_el_inventario_de_las_demas() -> None:
     assert [registro["id"] for registro in fusionado] == ["BOE-A-1", "BOE-A-2", "BOE-A-3"]
     # El registro repetido se sustituye por el recién descargado, no se duplica.
     assert fusionado[1]["texto_sha256"] == "nuevo"
+
+
+def test_detecta_normas_que_desaparecen_en_una_descarga_completa() -> None:
+    previo = {
+        "normas": [
+            {"id": "BOE-A-1", "grupo": "cdi"},
+            {"id": "BOE-A-2", "grupo": "cdi"},
+        ]
+    }
+    nuevos = [{"id": "BOE-A-1", "grupo": "cdi"}]
+
+    assert desapariciones_no_declaradas(previo, nuevos) == ["BOE-A-2"]
+
+
+def test_permite_baja_explicita_al_comparar_manifiestos() -> None:
+    previo = {"normas": [{"id": "BOE-A-1", "grupo": "cdi"}]}
+    nuevos: list[dict[str, object]] = []
+
+    assert desapariciones_no_declaradas(previo, nuevos, bajas={"BOE-A-1"}) == []
 
 
 def test_el_filtro_por_titulo_arrastra_normas_que_no_son_un_cdi_general() -> None:
