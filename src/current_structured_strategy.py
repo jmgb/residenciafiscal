@@ -13,8 +13,16 @@ from chat_answer_prompt import (
 )
 from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
 from chat_strategy_costs import PRICING_VERSION, unknown_failure_cost, zero_marginal_cost
-from chat_strategy_models import MarginalCost, StrategyAnswer
-from jurisprudence_phase_d_retrieval import retrieve_for_chat
+from chat_strategy_models import MarginalCost, StrategyAnswer, StrategyClaim
+from claim_evidence_relevance import claim_has_lexical_evidence
+from judicial_authority import (
+    JudicialAuthorityIntent,
+    authority_label,
+    authority_match,
+    local_authority_filter,
+    requested_judicial_authority,
+)
+from jurisprudence_phase_d_retrieval import ChatRetrievalResult, retrieve_for_chat
 from jurisprudence_retrieval_corpus_models import RetrievalCorpus
 from structured_answer_writer import (
     ChatWriterRequest,
@@ -54,6 +62,7 @@ class CurrentStructuredStrategy:
 
     async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
         started = time.perf_counter()
+        authority_intent = requested_judicial_authority(question)
         retrieval = retrieve_for_chat(self._corpus, question, limit=5)
         status = {
             "responder": "completa",
@@ -95,45 +104,144 @@ class CurrentStructuredStrategy:
             )
         )
         cost = _as_marginal_cost(writer_result)
-        evidence_ids = tuple(dict.fromkeys(writer_result.draft.evidence_ids))
+        effort = str(self._reasoning_effort) if self._reasoning_effort else None
+        drafted_claims = writer_result.draft.claims
+        candidate_evidence_ids = tuple(
+            dict.fromkeys(
+                evidence_id for claim in drafted_claims for evidence_id in claim.evidence_ids
+            )
+        )
         unknown = tuple(
             evidence_id
-            for evidence_id in evidence_ids
+            for evidence_id in candidate_evidence_ids
             if evidence_id not in bundle.sources_by_evidence_id
         )
-        if unknown:
-            return _grounding_error(
-                f"El redactor devolvió evidencias desconocidas: {', '.join(unknown)}.",
-                cost=cost,
-                model=writer_result.model_used,
-                started=started,
+        empty_claims = tuple(
+            claim for claim in drafted_claims if not claim.text.strip() or not claim.evidence_ids
+        )
+        substantive = writer_result.draft.status in {"completa", "parcial"}
+        # El gate léxico solo puede evaluarse si todos los IDs resuelven a una
+        # fuente; con un ID desconocido la respuesta ya está descartada.
+        irrelevant_positions = (
+            frozenset()
+            if unknown
+            else frozenset(
+                position
+                for position, claim in enumerate(drafted_claims)
+                if not claim_has_lexical_evidence(
+                    claim.text,
+                    [bundle.sources_by_evidence_id[e] for e in claim.evidence_ids],
+                )
             )
-        if writer_result.draft.status in {"completa", "parcial"} and not evidence_ids:
+        )
+        if (
+            unknown
+            or empty_claims
+            or (substantive and not candidate_evidence_ids)
+            or (substantive and drafted_claims and len(irrelevant_positions) == len(drafted_claims))
+        ):
             return _grounding_error(
-                "El redactor no vinculó ninguna evidencia a la respuesta sustantiva.",
+                _grounding_reason(unknown, empty_claims, candidate_evidence_ids),
                 cost=cost,
                 model=writer_result.model_used,
+                reasoning_effort=effort,
                 started=started,
+                diagnostics=_retrieval_diagnostics(
+                    retrieval,
+                    authority_intent=authority_intent,
+                    authority_match="not_requested",
+                    citation_candidates=len(candidate_evidence_ids),
+                    failure_code="evidence_validation",
+                ),
             )
 
+        relevant_claims = tuple(
+            claim
+            for position, claim in enumerate(drafted_claims)
+            if position not in irrelevant_positions
+        )
+        evidence_ids = tuple(
+            dict.fromkeys(
+                evidence_id for claim in relevant_claims for evidence_id in claim.evidence_ids
+            )
+        )
+        sources = tuple(bundle.sources_by_evidence_id[evidence_id] for evidence_id in evidence_ids)
+        source_index = {evidence_id: index for index, evidence_id in enumerate(evidence_ids, 1)}
+        claims = tuple(
+            StrategyClaim(
+                text=claim.text.strip(),
+                source_indexes=tuple(
+                    source_index[evidence_id] for evidence_id in dict.fromkeys(claim.evidence_ids)
+                ),
+            )
+            for claim in relevant_claims
+        )
+        direct_authority = authority_match(
+            authority_intent, tuple(source.judgment_id for source in sources)
+        )
+        authority_limit = _authority_limit(authority_intent, direct_authority)
+        relevance_limit = (
+            f"Se retiró {len(irrelevant_positions)} afirmación sin respaldo literal suficiente."
+            if irrelevant_positions
+            else None
+        )
         final_status = writer_result.draft.status
         if retrieval.behavior == "parcial" and final_status == "completa":
             final_status = "parcial"
-        sources = tuple(
-            dict.fromkeys(
-                bundle.sources_by_evidence_id[evidence_id] for evidence_id in evidence_ids
-            )
-        )
+        if (authority_limit or relevance_limit) and final_status == "completa":
+            final_status = "parcial"
         return StrategyAnswer(
             strategy="current_structured",
             status=final_status,
-            text=writer_result.draft.answer,
+            text=_claims_text(claims),
             sources=sources,
-            limits=(*limits, *writer_result.draft.limits),
+            limits=(
+                *limits,
+                *writer_result.draft.limits,
+                *([relevance_limit] if relevance_limit else []),
+                *([authority_limit] if authority_limit else []),
+            ),
             cost=cost,
             model=writer_result.model_used,
+            reasoning_effort=effort,
             latency_ms=round((time.perf_counter() - started) * 1000),
+            claims=claims,
+            diagnostics=_retrieval_diagnostics(
+                retrieval,
+                authority_intent=authority_intent,
+                authority_match=direct_authority,
+                citation_candidates=len(candidate_evidence_ids),
+                citation_verified=len(sources),
+            ),
         )
+
+
+def _grounding_reason(
+    unknown: tuple[str, ...],
+    empty_claims: tuple[object, ...],
+    candidate_evidence_ids: tuple[str, ...],
+) -> str:
+    if unknown:
+        return f"El redactor devolvió evidencias desconocidas: {', '.join(unknown)}."
+    if empty_claims:
+        return "El redactor devolvió al menos una afirmación vacía o sin evidencia."
+    if not candidate_evidence_ids:
+        return "El redactor no vinculó ninguna evidencia a la respuesta sustantiva."
+    return "Al menos una afirmación no guarda relación suficiente con sus extractos literales."
+
+
+def _authority_limit(intent: JudicialAuthorityIntent | None, match: str) -> str | None:
+    if intent is None or match != "missing":
+        return None
+    return f"Las citas verificadas no proceden directamente del {authority_label(intent)}."
+
+
+def _claims_text(claims: tuple[StrategyClaim, ...]) -> str:
+    """Compone la prosa pública solo desde afirmaciones verificadas."""
+    return "\n".join(
+        f"- {claim.text} " + "".join(f"[{index}]" for index in claim.source_indexes)
+        for claim in claims
+    )
 
 
 def _as_marginal_cost(writer_result: ChatWriterResult) -> MarginalCost:
@@ -166,7 +274,9 @@ def _grounding_error(
     *,
     cost: MarginalCost,
     model: str,
+    reasoning_effort: str | None,
     started: float,
+    diagnostics: dict[str, object],
 ) -> StrategyAnswer:
     return StrategyAnswer(
         strategy="current_structured",
@@ -176,8 +286,31 @@ def _grounding_error(
         limits=(reason,),
         cost=cost,
         model=model,
+        reasoning_effort=reasoning_effort,
         latency_ms=round((time.perf_counter() - started) * 1000),
+        diagnostics=diagnostics,
     )
+
+
+def _retrieval_diagnostics(
+    retrieval: ChatRetrievalResult,
+    *,
+    authority_intent: JudicialAuthorityIntent | None,
+    authority_match: str,
+    citation_candidates: int = 0,
+    citation_verified: int = 0,
+    failure_code: str | None = None,
+) -> dict[str, object]:
+    return {
+        "authority_intent": authority_intent,
+        "authority_match": authority_match,
+        "retrieval_filter": local_authority_filter(authority_intent),
+        "retrieved_judgment_ids": list(dict.fromkeys(hit.judgment_id for hit in retrieval.hits)),
+        "citation_candidates": citation_candidates,
+        "citation_verified": citation_verified,
+        "failure_code": failure_code,
+        "error_name": None,
+    }
 
 
 def _non_answer_text(

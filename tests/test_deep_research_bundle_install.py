@@ -156,10 +156,15 @@ def test_instalador_atestigua_el_mount_antes_de_activar_el_runtime(tmp_path, mon
             *sources,
         ],
     )
+
+    def record(name: str, value: Path) -> Path:
+        calls.append(name)
+        return value
+
     monkeypatch.setattr(
         installer,
         "install_bundle",
-        lambda *args: calls.append("bundle") or tmp_path / "installed" / "rollout-106/2",
+        lambda *args: record("bundle", tmp_path / "installed" / "rollout-106/2"),
     )
     monkeypatch.setattr(
         installer,
@@ -169,7 +174,7 @@ def test_instalador_atestigua_el_mount_antes_de_activar_el_runtime(tmp_path, mon
     monkeypatch.setattr(
         installer,
         "install_runtime",
-        lambda *args: calls.append("runtime") or tmp_path / "installed" / "runtime-release",
+        lambda *args: record("runtime", tmp_path / "installed" / "runtime-release"),
     )
 
     installer.main()
@@ -197,9 +202,7 @@ def test_atestacion_exige_rootfs_y_mount_del_runtime_en_solo_lectura(tmp_path, m
     monkeypatch.setattr(
         installer.subprocess,
         "run",
-        lambda *args, **kwargs: type(
-            "Result", (), {"stdout": json.dumps(inspection)}
-        )(),
+        lambda *args, **kwargs: type("Result", (), {"stdout": json.dumps(inspection)})(),
     )
 
     installer.verify_container_runtime_mount(
@@ -228,9 +231,7 @@ def test_atestacion_rechaza_mount_escribible(tmp_path, monkeypatch):
     monkeypatch.setattr(
         installer.subprocess,
         "run",
-        lambda *args, **kwargs: type(
-            "Result", (), {"stdout": json.dumps(inspection)}
-        )(),
+        lambda *args, **kwargs: type("Result", (), {"stdout": json.dumps(inspection)})(),
     )
 
     try:

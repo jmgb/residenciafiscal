@@ -1,0 +1,99 @@
+{
+  "schema_version": "residenciafiscal-chat-protocol/2",
+  "purpose": "Contrato SSE compartido por el serializador TypeScript y el Python. Datos sintéticos: ninguna pregunta, respuesta ni cita procede de una conversación real.",
+  "cases": [
+    {
+      "name": "dos respuestas sustantivas con claims y coste medido",
+      "report": {
+        "request_id": "chat-00000000-0000-4000-8000-000000000001",
+        "answers": [
+          {
+            "strategy": "current_structured",
+            "status": "completa",
+            "text": "- Afirmación sintética de ejemplo [1]",
+            "sources": [
+              {
+                "strategy": "current_structured",
+                "judgment_id": "san-0000-2000",
+                "page": 7,
+                "source_sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+                "quote": "Extracto sintético de ejemplo.",
+                "verification": "EXACT"
+              }
+            ],
+            "limits": [],
+            "cost": {
+              "currency": "USD",
+              "amount_usd": "0.012345",
+              "cost_microusd": 12345,
+              "measurement": "ACTUAL",
+              "scope": "REQUEST_MARGINAL",
+              "pricing_version": "2026-07-31",
+              "input_tokens": 100,
+              "output_tokens": 20,
+              "retrieved_document_tokens": 0,
+              "excludes_corpus_preparation": true
+            },
+            "model": "modelo-sintetico-a",
+            "latency_ms": 100,
+            "claims": [{ "text": "Afirmación sintética de ejemplo", "source_indexes": [1] }]
+          },
+          {
+            "strategy": "gemini_file_search",
+            "status": "parcial",
+            "text": "Respuesta sintética parcial.",
+            "sources": [],
+            "limits": ["Límite sintético declarado."],
+            "cost": {
+              "currency": "USD",
+              "amount_usd": null,
+              "cost_microusd": null,
+              "measurement": "UNAVAILABLE",
+              "scope": "REQUEST_MARGINAL",
+              "pricing_version": "2026-07-31",
+              "input_tokens": null,
+              "output_tokens": null,
+              "retrieved_document_tokens": null,
+              "excludes_corpus_preparation": true
+            },
+            "model": "modelo-sintetico-b",
+            "latency_ms": 200,
+            "claims": []
+          }
+        ]
+      },
+      "expected_sse": "event: answer_start\ndata: {\"strategy\":\"current_structured\"}\n\nevent: token\ndata: {\"strategy\":\"current_structured\",\"text\":\"- Afirmación sintética de ejemplo [1]\"}\n\nevent: sources\ndata: {\"strategy\":\"current_structured\",\"sources\":[{\"strategy\":\"current_structured\",\"judgment_id\":\"san-0000-2000\",\"page\":7,\"source_sha256\":\"0000000000000000000000000000000000000000000000000000000000000001\",\"quote\":\"Extracto sintético de ejemplo.\",\"verification\":\"EXACT\"}]}\n\nevent: answer_done\ndata: {\"strategy\":\"current_structured\",\"status\":\"completa\",\"claims\":[{\"text\":\"Afirmación sintética de ejemplo\",\"source_indexes\":[1]}],\"limits\":[],\"cost\":{\"currency\":\"USD\",\"amount_usd\":\"0.012345\",\"cost_microusd\":12345,\"measurement\":\"ACTUAL\",\"scope\":\"REQUEST_MARGINAL\",\"pricing_version\":\"2026-07-31\",\"input_tokens\":100,\"output_tokens\":20,\"retrieved_document_tokens\":0,\"excludes_corpus_preparation\":true},\"model\":\"modelo-sintetico-a\",\"latency_ms\":100}\n\nevent: answer_start\ndata: {\"strategy\":\"gemini_file_search\"}\n\nevent: token\ndata: {\"strategy\":\"gemini_file_search\",\"text\":\"Respuesta sintética parcial.\"}\n\nevent: sources\ndata: {\"strategy\":\"gemini_file_search\",\"sources\":[]}\n\nevent: answer_done\ndata: {\"strategy\":\"gemini_file_search\",\"status\":\"parcial\",\"claims\":[],\"limits\":[\"Límite sintético declarado.\"],\"cost\":{\"currency\":\"USD\",\"amount_usd\":null,\"cost_microusd\":null,\"measurement\":\"UNAVAILABLE\",\"scope\":\"REQUEST_MARGINAL\",\"pricing_version\":\"2026-07-31\",\"input_tokens\":null,\"output_tokens\":null,\"retrieved_document_tokens\":null,\"excludes_corpus_preparation\":true},\"model\":\"modelo-sintetico-b\",\"latency_ms\":200}\n\nevent: done\ndata: {\"request_id\":\"chat-00000000-0000-4000-8000-000000000001\"}\n\n"
+    },
+    {
+      "name": "una estrategia en error conserva su motivo público",
+      "report": {
+        "request_id": "chat-00000000-0000-4000-8000-000000000002",
+        "answers": [
+          {
+            "strategy": "current_structured",
+            "status": "error",
+            "text": "",
+            "sources": [],
+            "limits": ["El redactor devolvió evidencias desconocidas: E999."],
+            "cost": {
+              "currency": "USD",
+              "amount_usd": "0.000060",
+              "cost_microusd": 60,
+              "measurement": "ACTUAL",
+              "scope": "REQUEST_MARGINAL",
+              "pricing_version": "2026-07-31",
+              "input_tokens": 120,
+              "output_tokens": 30,
+              "retrieved_document_tokens": 0,
+              "excludes_corpus_preparation": true
+            },
+            "model": "modelo-sintetico-a",
+            "latency_ms": 50,
+            "claims": []
+          }
+        ]
+      },
+      "expected_sse": "event: answer_start\ndata: {\"strategy\":\"current_structured\"}\n\nevent: sources\ndata: {\"strategy\":\"current_structured\",\"sources\":[]}\n\nevent: answer_done\ndata: {\"strategy\":\"current_structured\",\"status\":\"error\",\"claims\":[],\"limits\":[\"El redactor devolvió evidencias desconocidas: E999.\"],\"cost\":{\"currency\":\"USD\",\"amount_usd\":\"0.000060\",\"cost_microusd\":60,\"measurement\":\"ACTUAL\",\"scope\":\"REQUEST_MARGINAL\",\"pricing_version\":\"2026-07-31\",\"input_tokens\":120,\"output_tokens\":30,\"retrieved_document_tokens\":0,\"excludes_corpus_preparation\":true},\"model\":\"modelo-sintetico-a\",\"latency_ms\":50}\n\nevent: done\ndata: {\"request_id\":\"chat-00000000-0000-4000-8000-000000000002\"}\n\n"
+    }
+  ]
+}

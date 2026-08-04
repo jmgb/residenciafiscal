@@ -13,6 +13,7 @@ git:
 incident_sources:
   sentry_projects:
     - residencia-fiscal-backend
+    - residencia-fiscal-chat-backend
     - residencia-fiscal-frontend
     - residencia-fiscal-chat
 

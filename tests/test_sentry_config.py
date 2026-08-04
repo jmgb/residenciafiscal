@@ -81,6 +81,15 @@ def test_before_send_removes_request_secrets_and_adds_service_tags() -> None:
     }
 
 
+def test_before_send_permita_declarar_el_runtime_chat_backend(monkeypatch) -> None:
+    monkeypatch.setenv("SENTRY_COMPONENT", "chat-backend")
+    event = cast(Event, {})
+
+    result = sentry_config.before_send(event, {})
+
+    assert result["tags"]["component"] == "chat-backend"
+
+
 def test_importar_la_app_no_activa_telemetria_en_la_suite() -> None:
     # Regresión: `api.main` llama a `load_dotenv()` + `init_sentry()` al
     # importarse, así que un `.env` con `SENTRY_ENABLED=true` mandaba al Sentry

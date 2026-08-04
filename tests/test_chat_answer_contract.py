@@ -23,7 +23,7 @@ def test_las_salvedades_y_la_evidencia_son_obligatorias() -> None:
     """
     obligatorios = set(StructuredChatAnswerDraft.model_json_schema()["required"])
 
-    assert {"limits", "evidence_ids"} <= obligatorios
+    assert {"limits", "claims"} <= obligatorios
 
 
 def test_el_prompt_pide_los_campos_que_el_contrato_exige() -> None:

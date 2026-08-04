@@ -14,23 +14,25 @@ from jurisprudence_case_catalogs import (
     Sha256,
 )
 
+PUBLIC_STRATEGY_ERROR_LIMIT = "No se ha podido completar esta estrategia."
+
 StrategyId = Literal["current_structured", "gemini_file_search"]
 AnswerStatus = Literal["completa", "parcial", "pregunta", "abstención", "error"]
-CostMeasurement = Literal["ACTUAL", "ESTIMATED"]
+CostMeasurement = Literal["ACTUAL", "ESTIMATED", "UNAVAILABLE"]
 
 
 class MarginalCost(JurisprudenceCaseModel):
     """Coste marginal auditable de una respuesta, sin preparación de corpus."""
 
     currency: Literal["USD"] = "USD"
-    amount_usd: Annotated[Decimal, Field(ge=0, decimal_places=6)]
-    cost_microusd: Annotated[int, Field(ge=0)]
+    amount_usd: Annotated[Decimal | None, Field(ge=0, decimal_places=6)]
+    cost_microusd: Annotated[int | None, Field(ge=0)]
     measurement: CostMeasurement
     scope: Literal["REQUEST_MARGINAL"] = "REQUEST_MARGINAL"
     pricing_version: NonEmptyText
-    input_tokens: Annotated[int, Field(ge=0)]
-    output_tokens: Annotated[int, Field(ge=0)]
-    retrieved_document_tokens: Annotated[int, Field(ge=0)]
+    input_tokens: Annotated[int | None, Field(ge=0)]
+    output_tokens: Annotated[int | None, Field(ge=0)]
+    retrieved_document_tokens: Annotated[int | None, Field(ge=0)]
     excludes_corpus_preparation: Literal[True] = True
 
 
@@ -45,6 +47,13 @@ class StrategySource(JurisprudenceCaseModel):
     verification: Literal["EXACT"]
 
 
+class StrategyClaim(JurisprudenceCaseModel):
+    """Afirmación pública enlazada a fuentes 1-based de la misma respuesta."""
+
+    text: NonEmptyText
+    source_indexes: tuple[Annotated[int, Field(gt=0)], ...]
+
+
 class StrategyAnswer(JurisprudenceCaseModel):
     """Una respuesta terminal e independiente del comparador."""
 
@@ -55,7 +64,10 @@ class StrategyAnswer(JurisprudenceCaseModel):
     limits: tuple[str, ...]
     cost: MarginalCost
     model: NonEmptyText
+    reasoning_effort: str | None = None
     latency_ms: Annotated[int, Field(ge=0)]
+    claims: tuple[StrategyClaim, ...] = ()
+    diagnostics: dict[str, object] | None = None
 
 
 class ComparisonReport(JurisprudenceCaseModel):
@@ -66,4 +78,4 @@ class ComparisonReport(JurisprudenceCaseModel):
     )
     request_id: NonEmptyText
     experimental: Literal[True] = True
-    answers: Annotated[tuple[StrategyAnswer, StrategyAnswer], Field(min_length=2, max_length=2)]
+    answers: Annotated[tuple[StrategyAnswer, ...], Field(min_length=1, max_length=2)]

@@ -18,6 +18,7 @@ SHELL := /bin/bash
 	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
 	rollout-bootstrap rollout-finalize rollout-verify rollout-reproducibility \
 	deep-research-bundle deep-research-bundle-verify \
+	build-chat-runtime-artifact verify-chat-runtime-artifact \
 	deep-research-pilot-prepare deep-research-pilot-run \
 	file-search-prepare compare-chat-strategies build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
@@ -114,6 +115,8 @@ DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION ?=
 DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION ?=
 DEEP_RESEARCH_PILOT_SANDBOX_BINARY ?= bwrap
 ROLLOUT_RETRY ?=
+CHAT_RUNTIME_ARTIFACT ?= ./output/chat-runtime/chat-runtime.tar.gz
+CHAT_RUNTIME_VERSION ?= local
 
 # =============================================================================
 # 1. ESENCIAL
@@ -157,6 +160,8 @@ help:
 	@echo "  make rollout-verify       Verifica hashes, agregados y presupuesto de artefactos"
 	@echo "  make deep-research-bundle  Construye el snapshot C1 sin secretos ni clon del repo"
 	@echo "  make deep-research-bundle-verify  Verifica el snapshot C1 por allowlist y hashes"
+	@echo "  make build-chat-runtime-artifact  Empaqueta el runtime sin PDF ni secretos"
+	@echo "  make verify-chat-runtime-artifact Verifica allowlist y hashes del artefacto"
 	@echo "  make deep-research-pilot-prepare  Valida C2 y prepara jobs sin llamar a Codex"
 	@echo "  make deep-research-pilot-run  Ejecuta C2 cuando está desplegado el worker autenticado"
 	@echo "  make descargar-normativa  Baja del BOE el XML de las normas (con red, ~3 min)"
@@ -482,6 +487,13 @@ deep-research-pilot-run:
 		--sandbox-binary $(DEEP_RESEARCH_PILOT_SANDBOX_BINARY) \
 		--input-cost-microusd-per-million $(DEEP_RESEARCH_PILOT_INPUT_COST_MICROUSD_PER_MILLION) \
 		--output-cost-microusd-per-million $(DEEP_RESEARCH_PILOT_OUTPUT_COST_MICROUSD_PER_MILLION)
+
+build-chat-runtime-artifact:
+	uv run python -m chat_runtime_artifact . $(CHAT_RUNTIME_ARTIFACT) \
+		--version $(CHAT_RUNTIME_VERSION)
+
+verify-chat-runtime-artifact:
+	uv run python -c 'from pathlib import Path; from chat_runtime_artifact import verify_artifact; m=verify_artifact(Path("$(CHAT_RUNTIME_ARTIFACT)")); print("artefacto verificado: release={} · archivos={}".format(m["release_version"], len(m["files"])))'
 
 evaluate-rollout-holdout:
 	uv run python $(PYTHON_SOURCE)/jurisprudence_holdout_evaluation.py \

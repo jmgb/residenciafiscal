@@ -120,14 +120,20 @@ def zero_marginal_cost() -> MarginalCost:
 
 
 def unknown_failure_cost() -> MarginalCost:
-    """Límite inferior estimado cuando un fallo no devuelve uso facturable."""
+    """Coste no disponible cuando un fallo no devuelve uso facturable."""
+
+    return unavailable_cost()
+
+
+def unavailable_cost() -> MarginalCost:
+    """Representa una ausencia de medición, nunca un coste cero."""
 
     return MarginalCost(
-        amount_usd=Decimal("0.000000"),
-        cost_microusd=0,
-        measurement="ESTIMATED",
+        amount_usd=None,
+        cost_microusd=None,
+        measurement="UNAVAILABLE",
         pricing_version=PRICING_VERSION,
-        input_tokens=0,
-        output_tokens=0,
-        retrieved_document_tokens=0,
+        input_tokens=None,
+        output_tokens=None,
+        retrieved_document_tokens=None,
     )

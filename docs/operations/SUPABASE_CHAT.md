@@ -4,7 +4,8 @@
 aplicadas y verificadas, y persistencia conectada a producción el 31 de julio
 de 2026.
 
-Supabase es la persistencia privada de la V1 Netlify-only. No participa en la
+Supabase es la persistencia privada de la V1 Netlify-only y del runtime FastAPI
+cuando la migración supere sus gates. No participa en la
 recuperación jurisprudencial ni sustituye al corpus: se usa para registrar las
 consultas y guardar los mensajes y costes del comparador A/B y los resultados
 asíncronos de investigación profunda C.
@@ -66,8 +67,8 @@ versiones de ambos prompts. La columna `diagnostics` de
 públicos de sentencias; no guarda mensajes de error ni payloads de proveedor.
 En A, `claims` enlaza cada afirmación con los índices de sus citas exactas.
 
-La Function no escribe tablas directamente. Solo puede invocar con
-`SUPABASE_SECRET_KEY` estas RPC de `public`, todas `SECURITY DEFINER`, con
+La Function no escribe tablas directamente. Solo puede invocar estas RPC de
+`public`, todas `SECURITY DEFINER`, con
 `search_path` fijo y `EXECUTE` revocado a `PUBLIC`, `anon` y `authenticated`:
 
 - `create_chat_request`: registra de forma idempotente la consulta y la pregunta
@@ -108,6 +109,14 @@ serializan el borrado. Tras aplicar las dos migraciones del experimento, los
 advisors de seguridad no devolvieron incidencias.
 
 ## Credenciales y fronteras
+
+El runtime FastAPI no debe copiar `SUPABASE_SECRET_KEY`. Usa
+`SUPABASE_CHAT_RUNTIME_KEY`, un rol de operación representado públicamente por
+`<chat-runtime-role>`, con `EXECUTE` únicamente sobre las tres RPC de ciclo de
+vida (`create_chat_request`, `complete_chat_request` y `fail_chat_request`). El
+rol no puede leer, insertar, actualizar ni borrar tablas directamente ni crear
+objetos. Los grants efectivos y el DSN se verifican en el entorno privado, no se
+publican aquí.
 
 La Function necesita `SUPABASE_URL` y `SUPABASE_SECRET_KEY`. La segunda es un
 secreto de backend que omite siempre el prefijo `VITE_`; nunca se importa desde

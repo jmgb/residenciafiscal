@@ -89,5 +89,7 @@ async def test_un_fallo_no_impide_ejecutar_y_conservar_la_otra_estrategia(
 
     assert report.answers[0].strategy == "current_structured"
     assert report.answers[0].status == "error"
-    assert report.answers[0].cost.measurement == "ESTIMATED"
+    assert report.answers[0].cost.measurement == "UNAVAILABLE"
     assert report.answers[1].text == "Respuesta B"
+    serialized = (tmp_path / "comparison.json").read_text(encoding="utf-8")
+    assert "fallo aislado" not in serialized

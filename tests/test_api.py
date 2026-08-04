@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from decimal import Decimal
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
-from api.chat import ChatComparisonRunner, get_chat_comparison_runner
+from api.chat import ChatComparisonRunner, comparison_events, get_chat_comparison_runner
 from api.chat_runtime import get_production_chat_runner
 from api.main import app
 from chat_strategy_models import ComparisonReport, MarginalCost, StrategyAnswer, StrategySource
@@ -141,7 +142,10 @@ def test_chat_expone_comparacion_sse_sin_mezclar_estrategias(client: TestClient)
     assert '"strategy":"current_structured"' in response.text
     assert '"strategy":"gemini_file_search"' in response.text
     assert '"amount_usd":"0.012345"' in response.text
-    assert "event: done\ndata: {}\n\n" in response.text
+    # El terminal transporta el `request_id`: es lo que permite votar la
+    # comparación después de recibirla.
+    request_id = runner.calls[0][1]
+    assert f'event: done\ndata: {{"request_id":"{request_id}"}}\n\n' in response.text
 
 
 def test_chat_rechaza_una_conversacion_sin_pregunta_de_usuario(client: TestClient) -> None:
@@ -222,48 +226,34 @@ def test_chat_convierte_un_fallo_del_runner_en_error_sse_aislado(client: TestCli
     assert "pregunta privada" not in response.text
 
 
-def test_chat_no_expone_el_detalle_interno_de_una_estrategia_fallida(
-    client: TestClient,
-) -> None:
-    class StrategyFailureRunner(ChatComparisonRunner):
-        async def compare(self, question: str, *, request_id: str) -> ComparisonReport:
-            cost = MarginalCost(
-                amount_usd=Decimal("0.000000"),
-                cost_microusd=0,
-                measurement="ESTIMATED",
-                pricing_version="2026-07-31",
-                input_tokens=0,
-                output_tokens=0,
-                retrieved_document_tokens=0,
-            )
-            failed = StrategyAnswer(
-                strategy="current_structured",
-                status="error",
-                text="",
-                sources=(),
-                limits=("ProviderError: Authorization: Bearer secreto-interno",),
-                cost=cost,
-                model="unavailable",
-                latency_ms=0,
-            )
-            return ComparisonReport(
-                request_id=request_id,
-                answers=(
-                    failed,
-                    failed.model_copy(update={"strategy": "gemini_file_search"}),
-                ),
-            )
+async def test_una_excepcion_de_proveedor_nunca_llega_a_los_limites_publicos() -> None:
+    """La garantía vive donde nace la respuesta, no en la serialización.
 
-    app.dependency_overrides[get_chat_comparison_runner] = lambda: StrategyFailureRunner()
-    try:
-        response = client.post(
-            "/chat",
-            json={"messages": [{"role": "user", "content": "pregunta"}]},
-        )
-    finally:
-        app.dependency_overrides.clear()
+    El serializador emite `limits` tal cual porque son el motivo real que la V1
+    muestra —qué evidencia se retiró, por ejemplo—. Sustituirlos por un genérico
+    borraría esa información; lo que no puede ocurrir es que un mensaje de
+    proveedor llegue hasta ahí, y eso lo cierra el aislamiento de cada estrategia.
+    """
+    from chat_strategy_comparison import compare_strategies
 
-    assert response.status_code == 200
-    assert "secreto-interno" not in response.text
-    assert "ProviderError" not in response.text
-    assert "No se ha podido completar esta estrategia." in response.text
+    class ExplodingStrategy:
+        async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
+            raise RuntimeError("Authorization: Bearer secreto-interno")
+
+    report = await compare_strategies(
+        question="pregunta",
+        structured=ExplodingStrategy(),
+        file_search=None,
+        output_path=Path("/tmp/chat-api-failure-report.json"),
+        log_path=Path("/tmp/chat-api-failure-log.jsonl"),
+        request_id="chat-failure",
+    )
+    serialized = b"".join(comparison_events(report)).decode("utf-8")
+
+    assert report.answers[0].limits == ("No se ha podido completar esta estrategia.",)
+    assert "secreto-interno" not in serialized
+    assert "Authorization" not in serialized
+    assert report.answers[0].diagnostics == {
+        "failure_code": "exception",
+        "error_name": "RuntimeError",
+    }

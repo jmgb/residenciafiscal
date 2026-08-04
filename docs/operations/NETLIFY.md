@@ -72,7 +72,7 @@ El modelo privado de mensajes y costes se documenta en
 [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md).
 
 El antiguo proxy Edge → FastAPI vive fuera del camino productivo en
-`frontend/netlify/prototypes/chat-fastapi-edge.ts`. Sus límites reales —CPU,
+`frontend/netlify/prototypes/chat-fastapi-edge-v2.ts`. Sus límites reales —CPU,
 streaming y Blobs— están **medidos**, no leídos de la documentación, en
 [`NETLIFY_EDGE.md`](NETLIFY_EDGE.md). Léelo antes de escribir una edge function
 en este proyecto: incluye tres trampas que cuestan un deploy cada una (los

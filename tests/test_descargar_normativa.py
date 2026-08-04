@@ -91,7 +91,7 @@ def test_detecta_normas_que_desaparecen_en_una_descarga_completa() -> None:
             {"id": "BOE-A-2", "grupo": "cdi"},
         ]
     }
-    nuevos = [{"id": "BOE-A-1", "grupo": "cdi"}]
+    nuevos: list[dict[str, object]] = [{"id": "BOE-A-1", "grupo": "cdi"}]
 
     assert desapariciones_no_declaradas(previo, nuevos) == ["BOE-A-2"]
 

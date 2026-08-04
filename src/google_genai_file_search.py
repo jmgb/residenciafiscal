@@ -73,16 +73,18 @@ class GoogleGenAIFileSearchGateway:
         store_name: str,
         prompt: str,
         response_schema: dict[str, Any],
+        metadata_filter: str | None = None,
     ) -> Any:
+        file_search_tool: dict[str, Any] = {
+            "type": "file_search",
+            "file_search_store_names": [store_name],
+        }
+        if metadata_filter:
+            file_search_tool["metadata_filter"] = metadata_filter
         return self._client.interactions.create(
             model=model,
             input=prompt,
-            tools=[
-                {
-                    "type": "file_search",
-                    "file_search_store_names": [store_name],
-                }
-            ],
+            tools=[file_search_tool],
             response_format={
                 "type": "text",
                 "mime_type": "application/json",

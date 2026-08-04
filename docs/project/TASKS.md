@@ -362,8 +362,9 @@ contra el dominio público después de cada deploy.
       consulta ni respuesta. Se conserva como referencia y posible runtime
       futuro; no es el target de despliegue V1.
     - [x] Implementar el proxy FastAPI como Edge Function fina con rate limit y
-      transmisión del stream; se conserva fuera del camino V1 en
-      `netlify/prototypes/chat-fastapi-edge.ts`.
+      transmisión del stream. El prototipo original con secreto estático se
+      retiró al sustituirlo la fachada firmada
+      `netlify/prototypes/chat-fastapi-edge-v2.ts`.
     - [x] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
       portar solo el runtime online de A/B, sin trasladar a TypeScript el
       pipeline Python de preparación del corpus.

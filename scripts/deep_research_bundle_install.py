@@ -124,18 +124,14 @@ def runtime_release_files(sources: list[Path], schema: Path) -> list[tuple[str, 
     return sorted(release_files)
 
 
-def existing_runtime_matches(
-    release: Path, release_files: list[tuple[str, Path, int]]
-) -> bool:
+def existing_runtime_matches(release: Path, release_files: list[tuple[str, Path, int]]) -> bool:
     if (
         not release.is_dir()
         or release.is_symlink()
         or stat.S_IMODE(release.stat().st_mode) != 0o555
     ):
         return False
-    expected = {
-        target_name: (sha256(source), mode) for target_name, source, mode in release_files
-    }
+    expected = {target_name: (sha256(source), mode) for target_name, source, mode in release_files}
     actual: set[str] = set()
     for path in release.iterdir():
         if path.is_symlink() or not path.is_file():
@@ -144,10 +140,7 @@ def existing_runtime_matches(
         if path.name not in expected:
             return False
         expected_hash, expected_mode = expected[path.name]
-        if (
-            sha256(path) != expected_hash
-            or stat.S_IMODE(path.stat().st_mode) != expected_mode
-        ):
+        if sha256(path) != expected_hash or stat.S_IMODE(path.stat().st_mode) != expected_mode:
             return False
     return actual == set(expected)
 

@@ -18,8 +18,8 @@ from gateway_chat_writer import GatewayChatWriter  # noqa: E402
 from structured_answer_writer import ChatWriterRequest  # noqa: E402
 
 DRAFT_JSON = (
-    '{"status": "completa", "answer": "La sentencia valora la permanencia.",'
-    ' "limits": [], "evidence_ids": ["E1"]}'
+    '{"status": "completa", "limits": [],'
+    ' "claims": [{"text": "La sentencia valora la permanencia.", "evidence_ids": ["E1"]}]}'
 )
 
 
@@ -71,7 +71,7 @@ class TestContractParity:
         result = await _writer(FakeProviderAdapter()).write(_request())
 
         assert result.draft.status == "completa"
-        assert result.draft.evidence_ids == ("E1",)
+        assert result.draft.claims[0].evidence_ids == ("E1",)
         assert result.model_used == "gemini-3.5-flash-lite"
 
     async def test_it_maps_usage(self) -> None:

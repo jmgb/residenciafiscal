@@ -24,7 +24,7 @@ def before_send(event: Event, _hint: dict[str, Any]) -> Event:
 
     tags = event.setdefault("tags", {})
     tags["service"] = "residencia-fiscal"
-    tags["component"] = "fastapi"
+    tags["component"] = os.getenv("SENTRY_COMPONENT", "fastapi").strip() or "fastapi"
     return event
 
 

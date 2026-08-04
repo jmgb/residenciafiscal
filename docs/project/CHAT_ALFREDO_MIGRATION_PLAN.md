@@ -61,7 +61,7 @@ Alfredo / residenciafiscal-chat
 ```
 
 La primera opción de proxy será la Edge Function ya prototipada en
-`frontend/netlify/prototypes/chat-fastapi-edge.ts`. La fase 0 debe demostrar en
+`frontend/netlify/prototypes/chat-fastapi-edge-v2.ts`. La fase 0 debe demostrar en
 Deploy Preview que mantiene un stream sintético de 90 segundos. Si ese gate
 falla, se usará un Cloudflare Worker o Tunnel para `/api/chat`; no se reducirá el
 timeout del backend para encajar artificialmente en Netlify.

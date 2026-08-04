@@ -14,6 +14,12 @@ comparador Python futuro. El rollout técnico a 106 está autorizado y conectado
 no sustituye los gates de revisión jurídica de
 [`TASKS.md`](../project/TASKS.md).
 
+La migración a Alfredo ya tiene implementados los contratos locales, la fachada
+HMAC, el adaptador RPC y el artefacto verificable, pero sigue en estado
+**preview-only**. La decisión y los gates pendientes están en
+[`ADR-20260804-chat-alfredo.md`](../decisions/ADR-20260804-chat-alfredo.md) y en
+[`CHAT_ALFREDO_DELIVERY_MATRIX.md`](../project/CHAT_ALFREDO_DELIVERY_MATRIX.md).
+
 ## Decisión de runtime para la V1
 
 La primera versión se desplegará íntegramente en una **Netlify Function
@@ -109,7 +115,7 @@ no token a token desde el proveedor.
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
 | Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro de consulta, coste y serialización de mensajes A/B |
 | Migraciones | `supabase/migrations/` | Tablas privadas de conversaciones, peticiones y mensajes; RPC atómicas |
-| Proxy futuro | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Prototipo FastAPI fuera del camino productivo |
+| Proxy migración | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` | Fachada HMAC fuera de producción hasta superar gates |
 | HTTP Python | `src/api/chat.py` | Entrada acotada, autenticación y serialización SSE |
 | Runtime | `src/api/chat_runtime.py` | Construcción perezosa de A, B, corpus, store y logs |
 
@@ -230,12 +236,18 @@ comparación provisional de calidad, latencia y coste están en
 | Variable | Obligatoria al activar | Uso |
 |---|---:|---|
 | `CHAT_COMPARISON_ENABLED` | sí | Debe ser exactamente `true`; en otro caso `/chat` responde `503` |
-| `CHAT_PROXY_SECRET` | sí | Secreto aleatorio largo compartido solo con Netlify |
+| `CHAT_HMAC_SECRET` | sí en preview/producción | Secreto HMAC propio del chat, solo en Netlify y Alfredo |
+| `CHAT_PROXY_HMAC_REQUIRED` | sí en preview/producción | Debe ser `true`; local permanece `false` por D8 |
+| `CHAT_RATE_LIMIT_ENABLED` | sí al activar tráfico | Habilita la cuota autoritativa en FastAPI |
+| `SUPABASE_CHAT_RUNTIME_KEY` | sí al activar persistencia | Rol RPC restringido; no es la clave global de Supabase |
 | `OPENAI_API_KEY` | sí para Luna | Credencial de la estrategia A mediante el gateway |
 | `GEMINI_API_KEY` | sí | Credencial de File Search B |
 | `CHAT_FILE_SEARCH_MODEL` | no | Por defecto `gemini-3.5-flash-lite`; debe estar en la lista permitida |
 | `CHAT_RETRIEVAL_CORPUS` | no | Corpus v3; usa la ruta versionada por defecto |
 | `CHAT_FILE_SEARCH_STORE_STATE` | no | Recibo local del store; por defecto `output/file-search/rollout-106-store.json` |
+| `CHAT_RUNTIME_HASH_REQUIRED` | sí en el host de Alfredo | Exige el manifiesto y verifica sus hashes antes de aceptar tráfico |
+| `CHAT_RUNTIME_MANIFEST` | no | Ruta del manifiesto; por defecto `chat-runtime-manifest.json` en la raíz del artefacto |
+| `CHAT_BACKEND_PERCENT` | sí en Netlify | Porcentaje enrutado al backend nuevo; `0` devuelve todo el tráfico a la Function y es la palanca de rollback |
 | `CHAT_COMPARISON_OUTPUT_DIR` | no | Informes por `request_id`; conviene un volumen persistente |
 | `CHAT_COMPARISON_LOG` | no | JSONL sin consulta ni respuesta; conviene un volumen persistente |
 
@@ -249,7 +261,14 @@ y del store no coinciden exactamente.
 Configurar con alcance **Functions**:
 
 - `CHAT_BACKEND_URL`: origen HTTPS del servicio FastAPI, sin `/chat`;
-- `CHAT_PROXY_SECRET`: exactamente el mismo secreto del backend.
+- `CHAT_HMAC_SECRET`: exactamente el mismo secreto del backend, sin exponerlo al navegador;
+- `CHAT_BACKEND_PERCENT`: porcentaje del canary, estable por conversación.
+
+El servicio se ejecuta con **un solo proceso**. La cuota autoritativa y el
+anti-replay viven en memoria, así que `main.py` falla al arrancar si
+`WEB_CONCURRENCY`, `UVICORN_WORKERS` o `GUNICORN_WORKERS` declaran más de uno:
+repartirlos entre workers los volvería decorativos. Escalar exige antes un
+contador transaccional en Supabase.
 
 Configurar con alcance **Builds**:
 
@@ -262,24 +281,30 @@ las necesita.
 
 ## Despliegue seguro de la arquitectura futura
 
-Estos pasos quedan conservados para una reevaluación posterior; no son el
-procedimiento de despliegue de la V1 Netlify-only.
+Estos pasos son el procedimiento parametrizado de la migración, pero no son un
+corte autorizado de producción.
 
-1. Desplegar FastAPI en un runtime Python 3.13 con `CHAT_COMPARISON_ENABLED=false`.
-2. Verificar `/health` y que `POST /chat` devuelve `503`; no se incurre en coste.
-3. Montar los 106 artefactos verbatim y un almacenamiento persistente para
+1. Construir `make build-chat-runtime-artifact CHAT_RUNTIME_VERSION=<release>` y
+   verificarlo con `make verify-chat-runtime-artifact`. El tar no puede contener
+   PDF, `.env`, frontend ni credenciales.
+2. Desplegar FastAPI en un runtime Python 3.13 con
+   `CHAT_COMPARISON_ENABLED=false` y `CHAT_BACKEND_PERCENT=0`.
+3. Verificar `/health/live`, `/health/ready` y que `POST /chat` devuelve `503`;
+   no se incurre en coste.
+4. Montar los 106 artefactos verbatim y un almacenamiento persistente para
    informes y logs. Confirmar que el File Search Store sigue existiendo y que
    sus IDs coinciden exactamente con el corpus.
-4. Configurar credenciales y el secreto en el backend; configurar URL y el
-   mismo secreto en Netlify con alcance Functions.
-5. Habilitar el backend y desplegar un **Deploy Preview** con
+5. Configurar el rol RPC restringido y `CHAT_HMAC_SECRET` en el backend; la
+   fachada recibe el mismo secreto solo como variable de runtime. Activar
+   `CHAT_PROXY_HMAC_REQUIRED=true`.
+6. Habilitar el backend y desplegar un **Deploy Preview** con
    `VITE_CHAT_MODE=live`. No cambiar todavía el contexto Production.
-6. Enviar una única pregunta del banco. Deben aparecer, en orden, «Corpus
+7. Enviar una única pregunta del banco. Deben aparecer, en orden, «Corpus
    estructurado» y «Gemini File Search», cada uno con estado, fuentes propias y
    coste USD. El JSONL debe contener dos registros con el mismo `request_id` y
    no debe contener la pregunta ni la respuesta.
-7. Probar error aislado de una estrategia, `429`, cancelación y rollback.
-8. Volver a `stub` hasta cerrar los gates de producto. La puesta en producción
+8. Probar error aislado de una estrategia, `429`, cancelación y rollback.
+9. Volver a `stub` hasta cerrar los gates de producto. La puesta en producción
    exige una decisión explícita separada.
 
 ## Seguridad, privacidad y coste

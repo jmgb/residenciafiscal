@@ -217,7 +217,7 @@ El runbook de despliegue está en
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
 | Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta las estrategias A/B activas en paralelo y falla cerrado |
 | Mensajes, presupuesto y costes V1 | `supabase-chat-store.ts`, `supabase/migrations/` |
-| Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` |
+| Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
 | UI y persistencia de una o dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
 

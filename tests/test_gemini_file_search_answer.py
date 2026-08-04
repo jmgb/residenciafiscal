@@ -65,6 +65,21 @@ class FakeGoogleClient:
         self.interactions = FakeInteractions(response)
 
 
+class SequencedInteractions(FakeInteractions):
+    def __init__(self, responses: list[Any]) -> None:
+        self.responses = responses
+        self.requests: list[dict[str, Any]] = []
+
+    def create(self, **kwargs: Any) -> Any:
+        self.requests.append(kwargs)
+        return self.responses[len(self.requests) - 1]
+
+
+class SequencedGoogleClient:
+    def __init__(self, responses: list[Any]) -> None:
+        self.interactions = SequencedInteractions(responses)
+
+
 def _write_verbatim(path: Path, text: str, source_sha256: str = "a" * 64) -> None:
     from verbatim_hashing import sha256_canonical_pages, sha256_utf8
 
@@ -229,3 +244,68 @@ async def test_permite_promocion_manual_explicita_a_gemini_36_flash(
 
     assert result.model == "gemini-3.6-flash"
     assert client.interactions.requests[0]["model"] == "gemini-3.6-flash"
+
+
+async def test_reintenta_una_vez_si_la_respuesta_sustantiva_no_tiene_cita_verificable(
+    tmp_path: Path,
+) -> None:
+    from gemini_file_search_answer import GeminiFileSearchResponder
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    quote = "La Sala valoró la permanencia efectiva en territorio español."
+    artifact = tmp_path / "san-1210-2023.pages.json"
+    _write_verbatim(artifact, quote)
+    first = _interaction(
+        {"status": "completa", "answer": "Respuesta sin respaldo.", "limits": []},
+        [],
+    )
+    second = _interaction(
+        {"status": "completa", "answer": "Respuesta respaldada.", "limits": []},
+        [_annotation(quote=quote)],
+    )
+    client = SequencedGoogleClient([first, second])
+    responder = GeminiFileSearchResponder(
+        gateway=GoogleGenAIFileSearchGateway(client),
+        store_name="fileSearchStores/f0",
+        verbatim_artifacts={"san-1210-2023": artifact},
+    )
+
+    result = await responder.answer("Pregunta", request_id="req-retry")
+
+    assert result.text == "Respuesta respaldada."
+    assert result.sources
+    assert len(client.interactions.requests) == 2
+    assert result.cost.cost_microusd is not None
+
+
+async def test_reintento_fallido_conserva_la_respuesta_y_el_coste_del_primer_intento() -> None:
+    from gemini_file_search_answer import GeminiFileSearchResponder
+    from google_genai_file_search import GoogleGenAIFileSearchGateway
+
+    first = _interaction(
+        {"status": "completa", "answer": "Respuesta sin respaldo.", "limits": []},
+        [],
+    )
+
+    class FailingInteractions:
+        def __init__(self) -> None:
+            self.requests: list[dict[str, Any]] = []
+
+        def create(self, **kwargs: Any) -> Any:
+            self.requests.append(kwargs)
+            if len(self.requests) > 1:
+                raise RuntimeError("detalle del proveedor")
+            return first
+
+    client = SimpleNamespace(interactions=FailingInteractions())
+    responder = GeminiFileSearchResponder(
+        gateway=GoogleGenAIFileSearchGateway(client),
+        store_name="fileSearchStores/f0",
+        verbatim_artifacts={},
+    )
+
+    result = await responder.answer("Pregunta", request_id="req-retry-failure")
+
+    assert result.status == "error"
+    assert result.cost.cost_microusd is not None
+    assert "detalle del proveedor" not in result.model_dump_json()

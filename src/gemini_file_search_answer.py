@@ -4,18 +4,26 @@ from __future__ import annotations
 
 import asyncio
 import time
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
 from chat_answer_contract import ChatAnswerDraft
 from chat_answer_prompt import file_search_answer_prompt
+from chat_error_names import safe_error_name
 from chat_strategy_costs import (
     DEFAULT_FILE_SEARCH_MODEL,
     SUPPORTED_FILE_SEARCH_MODELS,
     GeminiUsage,
     calculate_gemini_file_search_cost,
 )
-from chat_strategy_models import AnswerStatus, StrategyAnswer, StrategySource
+from chat_strategy_models import AnswerStatus, MarginalCost, StrategyAnswer, StrategySource
+from judicial_authority import (
+    authority_label,
+    authority_match,
+    authority_metadata_filter,
+    requested_judicial_authority,
+)
 from legal_text_matching import extract_verbatim_fragment, normalize_legal_text
 from verbatim_models import VerbatimCorpus
 
@@ -144,13 +152,42 @@ class GeminiFileSearchResponder:
         self._model = model
 
     async def answer(self, question: str, *, request_id: str) -> StrategyAnswer:
+        first, retry = await self._answer_once(question, request_id=request_id)
+        if not retry:
+            return first
+        try:
+            second, _ = await self._answer_once(question, request_id=request_id)
+        except Exception as error:
+            return first.model_copy(
+                update={
+                    "limits": (*first.limits, "El segundo intento no pudo completarse."),
+                    "diagnostics": {
+                        **(first.diagnostics or {}),
+                        "failure_code": "citation_verification",
+                        "retry_error_name": safe_error_name(error),
+                    },
+                }
+            )
+        return second.model_copy(update={"cost": _sum_costs(first.cost, second.cost)})
+
+    async def _answer_once(self, question: str, *, request_id: str) -> tuple[StrategyAnswer, bool]:
         started = time.perf_counter()
+        authority_intent = requested_judicial_authority(question)
+        metadata_filter = authority_metadata_filter(authority_intent)
+        authority_instruction = (
+            f" La pregunta pide {authority_label(authority_intent)}: usa autoridad directa de ese "
+            "órgano y no presentes como propia doctrina contenida solo en una sentencia de otro "
+            "tribunal."
+            if authority_intent
+            else ""
+        )
         interaction = await asyncio.to_thread(
             self._gateway.query,
             model=self._model,
             store_name=self._store_name,
-            prompt=file_search_answer_prompt(question),
+            prompt=file_search_answer_prompt(question, authority_instruction=authority_instruction),
             response_schema=ChatAnswerDraft.model_json_schema(),
+            metadata_filter=metadata_filter,
         )
         raw_output = getattr(interaction, "output_text", None)
         if not raw_output:
@@ -166,6 +203,9 @@ class GeminiFileSearchResponder:
         status: AnswerStatus = provider_answer.status
         limits = provider_answer.limits
         answer_text = provider_answer.answer
+        had_substantive_response = provider_answer.status in {"completa", "parcial"} and bool(
+            answer_text
+        )
         if status in {"completa", "parcial"} and answer_text and not sources:
             status = "error"
             answer_text = ""
@@ -178,7 +218,28 @@ class GeminiFileSearchResponder:
                 reason,
                 *limits,
             )
-        return StrategyAnswer(
+        direct_authority = authority_match(
+            authority_intent, tuple(source.judgment_id for source in sources)
+        )
+        if authority_intent and direct_authority == "missing" and status != "error":
+            limits = (
+                *limits,
+                "Las citas verificadas no proceden directamente del "
+                f"{authority_label(authority_intent)}.",
+            )
+            if status == "completa":
+                status = "parcial"
+        diagnostics = {
+            "authority_intent": authority_intent,
+            "authority_match": direct_authority,
+            "retrieval_filter": metadata_filter,
+            "retrieved_judgment_ids": list(dict.fromkeys(source.judgment_id for source in sources)),
+            "citation_candidates": citation_count,
+            "citation_verified": len(sources),
+            "failure_code": "citation_verification" if status == "error" else None,
+            "error_name": None,
+        }
+        result = StrategyAnswer(
             strategy="gemini_file_search",
             status=status,
             text=answer_text,
@@ -189,8 +250,60 @@ class GeminiFileSearchResponder:
                 model=self._model,
             ),
             model=self._model,
+            reasoning_effort=None,
             latency_ms=round((time.perf_counter() - started) * 1000),
+            diagnostics=diagnostics,
         )
+        should_retry = had_substantive_response and not sources
+        return result, should_retry
+
+
+def _sum_costs(first: MarginalCost, second: MarginalCost) -> MarginalCost:
+    """Suma los dos intentos conservando lo que sí se midió.
+
+    Descartar el importe del primer intento porque el segundo no trajo uso
+    facturable convertiría gasto real en `UNAVAILABLE`, y el resumen diario lo
+    leería como cero. Se suma lo conocido y la medición baja a `ESTIMATED`:
+    hubo coste, y el total es un mínimo, no una incógnita.
+    """
+    measurements = {first.measurement, second.measurement}
+    known = [cost for cost in (first, second) if cost.cost_microusd is not None]
+    if not known:
+        return first.model_copy(
+            update={
+                "amount_usd": None,
+                "cost_microusd": None,
+                "measurement": "UNAVAILABLE",
+                "input_tokens": None,
+                "output_tokens": None,
+                "retrieved_document_tokens": None,
+            }
+        )
+    measurement = "ACTUAL" if measurements == {"ACTUAL"} else "ESTIMATED"
+
+    def total(name: str) -> int | None:
+        values = [getattr(cost, name) for cost in known]
+        return (
+            sum(value for value in values if value is not None)
+            if any(value is not None for value in values)
+            else None
+        )
+
+    return first.model_copy(
+        update={
+            "amount_usd": sum(
+                (cost.amount_usd for cost in known if cost.amount_usd is not None),
+                Decimal("0"),
+            ),
+            "cost_microusd": sum(
+                cost.cost_microusd for cost in known if cost.cost_microusd is not None
+            ),
+            "measurement": measurement,
+            "input_tokens": total("input_tokens"),
+            "output_tokens": total("output_tokens"),
+            "retrieved_document_tokens": total("retrieved_document_tokens"),
+        }
+    )
 
 
 def _model_output_text(interaction: Any) -> str:

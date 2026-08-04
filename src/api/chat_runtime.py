@@ -6,12 +6,14 @@ tests o servir `/health` no inicializa clientes ni exige credenciales.
 
 from __future__ import annotations
 
+import json
 import os
 from functools import lru_cache
 from pathlib import Path
 
 from fastapi import HTTPException
 
+from chat_runtime_artifact import verify_runtime_directory
 from chat_strategy_comparison import compare_strategies
 from chat_strategy_costs import DEFAULT_FILE_SEARCH_MODEL, SUPPORTED_FILE_SEARCH_MODELS
 from chat_strategy_models import ComparisonReport
@@ -22,6 +24,7 @@ from gemini_file_search_answer import GeminiFileSearchResponder
 from gemini_file_search_store import StoreReceipt
 from google_genai_file_search import create_google_genai_gateway
 from jurisprudence_retrieval_corpus import load_retrieval_corpus
+from verbatim_models import VerbatimCorpus
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CORPUS = PROJECT_ROOT / "knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json"
@@ -30,8 +33,8 @@ DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output/file-search/live"
 DEFAULT_LOG = PROJECT_ROOT / "output/logs/chat-strategy-comparison.jsonl"
 
 
-def _enabled(name: str) -> bool:
-    return os.getenv(name, "false").strip().lower() in {"1", "true", "yes"}
+def _enabled(name: str, *, default: bool = False) -> bool:
+    return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes"}
 
 
 def _path_from_env(name: str, default: Path) -> Path:
@@ -39,12 +42,59 @@ def _path_from_env(name: str, default: Path) -> Path:
     return Path(value).resolve() if value else default
 
 
+def chat_artifacts_ready() -> tuple[bool, dict[str, bool]]:
+    """Comprueba los artefactos de las estrategias activas, sin abrir clientes.
+
+    Comparte con el constructor del runner las rutas y los interruptores por
+    estrategia: una readiness con su propia copia acabaría declarando `ok`
+    justo donde el runner responde `503`.
+    """
+    structured_enabled = _enabled("CHAT_STRATEGY_A_ENABLED", default=True)
+    file_search_enabled = _enabled("CHAT_STRATEGY_B_ENABLED", default=True)
+    corpus_ready = (
+        not structured_enabled or _path_from_env("CHAT_RETRIEVAL_CORPUS", DEFAULT_CORPUS).is_file()
+    )
+    store_ready = (
+        not file_search_enabled
+        or _path_from_env("CHAT_FILE_SEARCH_STORE_STATE", DEFAULT_STORE_STATE).is_file()
+    )
+    detail = {
+        "strategy_a": structured_enabled,
+        "strategy_b": file_search_enabled,
+        "corpus": corpus_ready,
+        "file_search_store": store_ready,
+    }
+    ready = (structured_enabled or file_search_enabled) and corpus_ready and store_ready
+    return ready, detail
+
+
+def _verify_runtime_hashes() -> None:
+    manifest_value = os.getenv("CHAT_RUNTIME_MANIFEST", "").strip()
+    manifest_path = (
+        Path(manifest_value).resolve()
+        if manifest_value
+        else PROJECT_ROOT / "chat-runtime-manifest.json"
+    )
+    required = _enabled("CHAT_RUNTIME_HASH_REQUIRED")
+    if not manifest_path.is_file():
+        if required:
+            raise HTTPException(status_code=503, detail="Falta el manifiesto del runtime")
+        return
+    try:
+        manifest = verify_runtime_directory(PROJECT_ROOT, manifest_path)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        raise HTTPException(status_code=503, detail="Hashes del runtime no verificados") from error
+    expected_version = os.getenv("CHAT_RUNTIME_VERSION", "").strip()
+    if expected_version and manifest.get("release_version") != expected_version:
+        raise HTTPException(status_code=503, detail="Versión del runtime no autorizada")
+
+
 class ProductionChatRunner:
     def __init__(
         self,
         *,
-        structured: CurrentStructuredStrategy,
-        file_search: GeminiFileSearchResponder,
+        structured: CurrentStructuredStrategy | None,
+        file_search: GeminiFileSearchResponder | None,
         output_dir: Path,
         log_path: Path,
     ) -> None:
@@ -74,45 +124,87 @@ def get_production_chat_runner() -> ProductionChatRunner:
     if not _enabled("CHAT_COMPARISON_ENABLED"):
         raise HTTPException(status_code=503, detail="Chat comparativo no habilitado")
 
-    api_key = os.getenv("GEMINI_API_KEY", "").strip()
-    if not api_key:
-        raise HTTPException(status_code=503, detail="Falta la credencial de Gemini")
+    structured_enabled = _enabled("CHAT_STRATEGY_A_ENABLED", default=True)
+    file_search_enabled = _enabled("CHAT_STRATEGY_B_ENABLED", default=True)
+    if not structured_enabled and not file_search_enabled:
+        raise HTTPException(status_code=503, detail="No hay estrategias activas")
 
+    _verify_runtime_hashes()
     corpus_path = _path_from_env("CHAT_RETRIEVAL_CORPUS", DEFAULT_CORPUS)
     store_state_path = _path_from_env("CHAT_FILE_SEARCH_STORE_STATE", DEFAULT_STORE_STATE)
-    if not corpus_path.is_file() or not store_state_path.is_file():
+    if structured_enabled and not corpus_path.is_file():
+        raise HTTPException(status_code=503, detail="Falta el corpus del chat")
+    if file_search_enabled and not store_state_path.is_file():
         raise HTTPException(status_code=503, detail="Faltan artefactos del chat")
 
-    file_search_model = os.getenv("CHAT_FILE_SEARCH_MODEL", DEFAULT_FILE_SEARCH_MODEL).strip()
-    if file_search_model not in SUPPORTED_FILE_SEARCH_MODELS:
-        raise HTTPException(status_code=503, detail="Modelo File Search no permitido")
-
-    receipt = StoreReceipt.model_validate_json(store_state_path.read_bytes())
-    corpus = load_retrieval_corpus(corpus_path.read_bytes())
-    receipt_ids = {document.judgment_id for document in receipt.documents}
-    corpus_ids = {source.judgment_id for source in corpus.sources}
-    if receipt.status != "ACTIVE" or receipt_ids != corpus_ids:
-        raise HTTPException(status_code=503, detail="Store y corpus del chat no coinciden")
-    google_gateway = create_google_genai_gateway(api_key)
-    verbatim_artifacts = {
-        document.judgment_id: (
-            PROJECT_ROOT / f"knowledge/jurisprudencia-v3/verbatim/{document.judgment_id}.pages.json"
-        )
-        for document in receipt.documents
-    }
-    if any(not path.is_file() for path in verbatim_artifacts.values()):
-        raise HTTPException(status_code=503, detail="Faltan textos literales para validar citas")
+    corpus = load_retrieval_corpus(corpus_path.read_bytes()) if structured_enabled else None
+    receipt = None
+    file_search_model = DEFAULT_FILE_SEARCH_MODEL
+    google_gateway = None
+    verbatim_artifacts: dict[str, Path] = {}
+    if file_search_enabled:
+        api_key = os.getenv("GEMINI_API_KEY", "").strip()
+        if not api_key:
+            raise HTTPException(status_code=503, detail="Falta la credencial de Gemini")
+        file_search_model = os.getenv("CHAT_FILE_SEARCH_MODEL", DEFAULT_FILE_SEARCH_MODEL).strip()
+        if file_search_model not in SUPPORTED_FILE_SEARCH_MODELS:
+            raise HTTPException(status_code=503, detail="Modelo File Search no permitido")
+        try:
+            receipt = StoreReceipt.model_validate_json(store_state_path.read_bytes())
+        except (OSError, ValueError) as error:
+            raise HTTPException(status_code=503, detail="Recibo del store no válido") from error
+        receipt_ids = {document.judgment_id for document in receipt.documents}
+        corpus_ids = {source.judgment_id for source in corpus.sources} if corpus else set()
+        if (
+            receipt.schema_version != "residenciafiscal-file-search-store/2"
+            or receipt.status != "ACTIVE"
+            or receipt.expected_documents != 106
+            or len(receipt.documents) != 106
+            or (structured_enabled and receipt_ids != corpus_ids)
+        ):
+            raise HTTPException(status_code=503, detail="Store y corpus del chat no coinciden")
+        google_gateway = create_google_genai_gateway(api_key)
+        verbatim_artifacts = {
+            document.judgment_id: (
+                PROJECT_ROOT
+                / f"knowledge/jurisprudencia-v3/verbatim/{document.judgment_id}.pages.json"
+            )
+            for document in receipt.documents
+        }
+        if any(not path.is_file() for path in verbatim_artifacts.values()):
+            raise HTTPException(
+                status_code=503, detail="Faltan textos literales para validar citas"
+            )
+        for document in receipt.documents:
+            try:
+                verbatim = VerbatimCorpus.model_validate_json(
+                    verbatim_artifacts[document.judgment_id].read_bytes()
+                )
+            except ValueError as error:
+                raise HTTPException(
+                    status_code=503, detail="Verbatim del chat no válido"
+                ) from error
+            if (
+                verbatim.document_id != document.judgment_id
+                or verbatim.source_sha256 != document.source_sha256
+            ):
+                raise HTTPException(status_code=503, detail="Verbatim y store no coinciden")
 
     return ProductionChatRunner(
-        structured=CurrentStructuredStrategy(
-            corpus,
-            writer=GatewayChatWriter(get_gateway()),
+        structured=(
+            CurrentStructuredStrategy(corpus, writer=GatewayChatWriter(get_gateway()))
+            if structured_enabled and corpus is not None
+            else None
         ),
-        file_search=GeminiFileSearchResponder(
-            gateway=google_gateway,
-            store_name=receipt.store_name,
-            verbatim_artifacts=verbatim_artifacts,
-            model=file_search_model,
+        file_search=(
+            GeminiFileSearchResponder(
+                gateway=google_gateway,
+                store_name=receipt.store_name if receipt is not None else "",
+                verbatim_artifacts=verbatim_artifacts,
+                model=file_search_model,
+            )
+            if file_search_enabled and google_gateway is not None and receipt is not None
+            else None
         ),
         output_dir=_path_from_env("CHAT_COMPARISON_OUTPUT_DIR", DEFAULT_OUTPUT_DIR),
         log_path=_path_from_env("CHAT_COMPARISON_LOG", DEFAULT_LOG),

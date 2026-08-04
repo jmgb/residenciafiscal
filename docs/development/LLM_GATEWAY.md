@@ -95,10 +95,17 @@ los dos envejezca sin que nadie lo note.
 | Qué proveedor sirve cada id | `resolve_provider` y el registro; aquí no hay tabla de enrutado |
 
 Lo único que se conserva de aquellos parches es lo que **no** es del proveedor:
-`StructuredChatAnswerDraft` sigue exigiendo `limits` y `evidence_ids` porque un
-campo omitido no puede significar «no hay», y el prompt los pide explícitamente.
-Esa garantía es jurídica y ningún proveedor la da por nosotros;
+`StructuredChatAnswerDraft` sigue exigiendo `limits` y `claims` porque un campo
+omitido no puede significar «no hay», y el prompt los pide explícitamente. Esa
+garantía es jurídica y ningún proveedor la da por nosotros;
 `tests/test_chat_answer_contract.py` la comprueba sin red ni coste.
+
+Desde el contrato `structured-claims-v4`, A no devuelve prosa libre: devuelve
+afirmaciones atómicas con **sus** `evidence_ids`. El texto público se compone
+después, solo con las claims que superan el gate léxico contra sus propios
+extractos. Una sola afirmación con toda la respuesta enlazada a todas las
+fuentes declararía un respaldo que nadie ha comprobado, y por eso el esquema ya
+no admite esa forma.
 
 La clase base `ChatAnswerDraft` no cambia: la usa B contra File Search, y
 endurecerla convertiría en fallo respuestas hoy válidas en un camino que ya

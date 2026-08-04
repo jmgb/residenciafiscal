@@ -6,7 +6,7 @@ qué hay que configurar para que funcione. Estado: implementado y verificado el
 se reforzó el ledger privado porque los logs de Netlify no bastan por sí solos
 para reconstruir el experimento A/B.
 
-## Dos canales, por naturaleza distinta
+## Cuatro runtimes, por naturaleza distinta
 
 | Señal | Canal | Por qué |
 |-------|-------|---------|
@@ -15,6 +15,18 @@ para reconstruir el experimento A/B.
 | Coste (`chat_cost_reconciled`) | Resumen diario a Telegram | No es un error; Sentry lo mide mal |
 | Eventos operativos, best effort | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
 | Ejecución de estrategias activas | Supabase privado | Fuente de verdad por petición: versión, respuestas, recuperación, citas y coste |
+
+Durante la migración se añade `residencia-fiscal-chat-backend` para el servicio
+FastAPI de Alfredo. Comparte el contrato saneado de Sentry solo si el inventario
+operativo lo autoriza; en ningún caso se mezclan sus logs con Deep Research.
+El backend emite `request_id`, release/hash de artefacto, estrategia, modelo,
+prompt/store, latencias, tokens, coste, citas verificadas, estado terminal,
+saturación y cancelaciones. Nunca emite pregunta, respuesta, cita literal,
+body, cabeceras o secreto.
+
+El monitor externo debe comprobar `/health/live` y `/health/ready` desde
+UptimeRobot. La creación del monitor es manual y sus valores reales permanecen
+en el inventario privado.
 
 Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
 

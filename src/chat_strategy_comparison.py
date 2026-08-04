@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 from pathlib import Path
 from typing import Protocol
 
+from chat_error_names import safe_error_name
 from chat_strategy_costs import unknown_failure_cost
 from chat_strategy_logging import StrategyLogRecord, append_strategy_log
 from chat_strategy_models import (
+    PUBLIC_STRATEGY_ERROR_LIMIT,
     ComparisonReport,
     StrategyAnswer,
     StrategyId,
@@ -25,9 +28,13 @@ def _error_answer(strategy: StrategyId, error: Exception) -> StrategyAnswer:
         status="error",
         text="",
         sources=(),
-        limits=(f"{type(error).__name__}: {error}",),
+        limits=(PUBLIC_STRATEGY_ERROR_LIMIT,),
         cost=unknown_failure_cost(),
         model="unavailable",
+        diagnostics={
+            "failure_code": "exception",
+            "error_name": safe_error_name(error),
+        },
         latency_ms=0,
     )
 
@@ -50,18 +57,22 @@ async def _run_isolated(
 async def compare_strategies(
     *,
     question: str,
-    structured: ChatStrategy,
-    file_search: ChatStrategy,
+    structured: ChatStrategy | None,
+    file_search: ChatStrategy | None,
     output_path: Path,
     log_path: Path,
     request_id: str,
 ) -> ComparisonReport:
-    """Ejecuta y persiste A después B, sin compartir resultados entre ambas."""
+    """Ejecuta A y B en paralelo y conserva siempre el orden público A → B."""
 
-    answers = (
-        await _run_isolated("current_structured", structured, question, request_id),
-        await _run_isolated("gemini_file_search", file_search, question, request_id),
-    )
+    tasks = []
+    if structured is not None:
+        tasks.append(_run_isolated("current_structured", structured, question, request_id))
+    if file_search is not None:
+        tasks.append(_run_isolated("gemini_file_search", file_search, question, request_id))
+    if not tasks:
+        raise ValueError("no hay estrategias activas")
+    answers = tuple(await asyncio.gather(*tasks))
     report = ComparisonReport(request_id=request_id, answers=answers)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

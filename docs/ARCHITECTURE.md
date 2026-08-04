@@ -94,7 +94,7 @@ flowchart LR
 | Persistencia web V1 | `supabase/migrations/`, `supabase-chat-store.ts` | Reserva atómica y mensajes A/B con citas, uso y coste en schema privado |
 | Rutas por jurisdicción | `frontend/src/data/jurisdictions.ts` | Construir el hub y los cinco subárboles SEO desde el slug canónico compartido |
 | Renderer de sentencias | `frontend/src/pages/Sentencias*.tsx`, `frontend/scripts/build-sentencias.mjs` | Renderizar por jurisdicción índice y fichas; España es la primera instancia, producción falla cerrada y la preview permanece `noindex` |
-| Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` | Proxy del prototipo FastAPI; opción futura, no target V1 |
+| Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` | Fachada HMAC Edge → FastAPI; preview-only hasta superar los gates |
 | Evaluación ciega | `src/chat_blind_review.py` | Sanear, equilibrar y materializar X/Y con hashes y clave separada |
 | Contratos serializados | `schemas/` | JSON Schema versionados |
 | Pruebas | `tests/` | Gates deterministas; las llamadas LLM reales están excluidas por defecto |

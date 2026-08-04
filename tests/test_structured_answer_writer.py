@@ -6,30 +6,60 @@ from pathlib import Path
 from typing import Any
 
 
+def _claim_from_quote(quote: str) -> str:
+    """Afirmación que sí comparte vocabulario con su extracto.
+
+    El gate de relevancia compara términos de la claim con los de sus citas; un
+    texto inventado se retiraría, que es justo lo que debe pasar en producción.
+    """
+    return " ".join(quote.split()[:20])
+
+
 class RecordingWriter:
     def __init__(
         self,
         *,
         evidence_ids: tuple[str, ...] = ("E1",),
         status: str = "completa",
+        unrelated_claim: bool = False,
     ) -> None:
         self.evidence_ids = evidence_ids
         self.status = status
+        self.unrelated_claim = unrelated_claim
         self.requests: list[Any] = []
 
     async def write(self, request: Any) -> Any:
         from llm_gateway import Cost, CostMeasurement
 
-        from chat_answer_contract import StructuredChatAnswerDraft
+        from chat_answer_contract import StructuredChatAnswerDraft, StructuredClaim
         from structured_answer_writer import ChatWriterResult, ChatWriterUsage
 
         self.requests.append(request)
+        quotes = {
+            item["evidence_id"]: item["quote"]
+            for item in json.loads(request.evidence_context)["evidence"]
+        }
+        claims = tuple(
+            StructuredClaim(
+                text=_claim_from_quote(quotes.get(evidence_id, ""))
+                or "Afirmación redactada sin ningún respaldo literal comprobable.",
+                evidence_ids=(evidence_id,),
+            )
+            for evidence_id in self.evidence_ids
+        )
+        if self.unrelated_claim:
+            claims = (
+                *claims,
+                StructuredClaim(
+                    text="Zanahorias bicicletas taxonomías inventadas completamente ajenas.",
+                    evidence_ids=(self.evidence_ids[0],),
+                ),
+            )
         return ChatWriterResult(
             draft=StructuredChatAnswerDraft(
                 status=self.status,
-                answer="La muestra valora conjuntamente presencia, intereses y pruebas.",
                 limits=(),
-                evidence_ids=self.evidence_ids,
+                claims=claims,
             ),
             usage=ChatWriterUsage(
                 input_tokens=120,
@@ -67,8 +97,13 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
 
     assert result.strategy == "current_structured"
     assert result.status == "completa"
-    assert result.text == "La muestra valora conjuntamente presencia, intereses y pruebas."
     assert len(result.sources) == 2
+    # Cada afirmación enlaza sus propias citas: una sola claim con toda la
+    # respuesta y todas las fuentes afirmaría un respaldo que nadie comprobó.
+    assert [claim.source_indexes for claim in result.claims] == [(1,), (2,)]
+    assert result.text.splitlines() == [
+        f"- {claim.text} [{claim.source_indexes[0]}]" for claim in result.claims
+    ]
     from chat_model_policy import CHAT_MODEL, CHAT_REASONING_EFFORT
 
     assert all(source.verification == "EXACT" for source in result.sources)
@@ -175,6 +210,40 @@ async def test_pregunta_de_recuperacion_pide_los_hechos_ausentes_sin_llm() -> No
     assert result.cost.amount_usd == Decimal("0")
 
 
+async def test_una_afirmacion_sin_respaldo_literal_se_retira() -> None:
+    from current_structured_strategy import CurrentStructuredStrategy
+
+    result = await CurrentStructuredStrategy(
+        _corpus(),
+        writer=RecordingWriter(evidence_ids=("E1",), unrelated_claim=True),
+    ).answer(
+        "¿Qué tiene en cuenta Hacienda para demostrar la residencia fiscal en España?",
+        request_id="req-irrelevant-claim",
+    )
+
+    assert len(result.claims) == 1
+    assert "Zanahorias" not in result.text
+    # Retirar una afirmación degrada la respuesta: publicarla como completa
+    # ocultaría que parte de lo redactado no se pudo respaldar.
+    assert result.status == "parcial"
+    assert any("sin respaldo literal suficiente" in limit for limit in result.limits)
+
+
+async def test_una_pregunta_por_el_supremo_declara_la_autoridad_indirecta() -> None:
+    from current_structured_strategy import CurrentStructuredStrategy
+
+    result = await CurrentStructuredStrategy(_corpus(), writer=RecordingWriter()).answer(
+        "¿Qué prueba exige el Tribunal Supremo para acreditar la residencia fiscal en España?",
+        request_id="req-authority",
+    )
+
+    assert result.diagnostics is not None
+    assert result.diagnostics["authority_intent"] == "tribunal_supremo"
+    if result.status != "error" and result.diagnostics["authority_match"] == "missing":
+        assert any("Tribunal Supremo" in limit for limit in result.limits)
+        assert result.status != "completa"
+
+
 def test_contrato_comun_permite_citas_externas_de_file_search() -> None:
     from chat_answer_contract import ChatAnswerDraft, StructuredChatAnswerDraft
 
@@ -186,6 +255,8 @@ def test_contrato_comun_permite_citas_externas_de_file_search() -> None:
         }
     )
 
-    assert "evidence_ids" not in draft.model_dump()
-    assert "evidence_ids" not in ChatAnswerDraft.model_json_schema()["properties"]
-    assert "evidence_ids" in StructuredChatAnswerDraft.model_json_schema()["properties"]
+    assert "claims" not in draft.model_dump()
+    assert "claims" not in ChatAnswerDraft.model_json_schema()["properties"]
+    assert "claims" in StructuredChatAnswerDraft.model_json_schema()["properties"]
+    # A ya no emite prosa libre: el texto público se compone desde las claims.
+    assert "answer" not in StructuredChatAnswerDraft.model_json_schema()["properties"]

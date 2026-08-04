@@ -15,6 +15,7 @@ def test_autofix_covers_every_sentry_runtime() -> None:
 
     assert contract["incident_sources"]["sentry_projects"] == [
         "residencia-fiscal-backend",
+        "residencia-fiscal-chat-backend",
         "residencia-fiscal-frontend",
         "residencia-fiscal-chat",
     ]

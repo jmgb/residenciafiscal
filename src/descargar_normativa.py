@@ -343,9 +343,7 @@ def main() -> int:
         registros = fusionar_manifiesto(previo, registros)
     elif manifiesto_path.exists():
         previo = json.loads(manifiesto_path.read_text(encoding="utf-8"))
-        desaparecidas = desapariciones_no_declaradas(
-            previo, registros, bajas=set(BAJAS_DECLARADAS)
-        )
+        desaparecidas = desapariciones_no_declaradas(previo, registros, bajas=set(BAJAS_DECLARADAS))
         if desaparecidas:
             raise RuntimeError(
                 "La descarga eliminaría normas del manifiesto sin declaración: "

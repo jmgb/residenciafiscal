@@ -17,13 +17,15 @@ Python + agente, sin llamadas del repositorio a un LLM.
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from api.chat import router as chat_router
+from api.chat_rate_limit import require_single_process_state
 from api.sentry_config import init_sentry
 from chat_model_policy import (
     CHAT_MODEL,
@@ -38,6 +40,7 @@ from config import (
 
 load_dotenv()
 init_sentry()
+require_single_process_state()
 
 app = FastAPI(
     title="Residencia Fiscal API",
@@ -60,6 +63,35 @@ async def health() -> dict[str, Any]:
         "corpus_pipeline": "python_agent_offline",
         "paid_sentence_analysis": False,
     }
+
+
+@app.get("/health/live")
+async def health_live() -> dict[str, str]:
+    """Liveness sin filesystem, red ni inicialización de proveedores."""
+    return {"status": "ok"}
+
+
+@app.get("/health/ready", response_model=None)
+async def health_ready() -> dict[str, Any] | JSONResponse:
+    """Readiness barata para el monitor externo, sin llamadas pagadas."""
+    enabled = os.getenv("CHAT_COMPARISON_ENABLED", "false").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+    }
+    if not enabled:
+        return {"status": "ok", "chat_enabled": False, "paid_calls": False}
+
+    from api.chat_runtime import chat_artifacts_ready
+
+    ready, detail = chat_artifacts_ready()
+    body: dict[str, Any] = {
+        "status": "ok" if ready else "not_ready",
+        "chat_enabled": True,
+        "paid_calls": False,
+        "artifacts": detail,
+    }
+    return body if ready else JSONResponse(status_code=503, content=body)
 
 
 @app.get("/config")

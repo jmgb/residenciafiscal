@@ -19,10 +19,35 @@ class ChatAnswerDraft(JurisprudenceCaseModel):
     limits: tuple[str, ...] = Field(default_factory=tuple)
 
 
-class StructuredChatAnswerDraft(ChatAnswerDraft):
-    """Extensión de A para resolver anclajes opacos del corpus local.
+class StructuredClaim(JurisprudenceCaseModel):
+    """Afirmación atómica de A con los extractos que permiten comprobarla.
 
-    `limits` se redeclara sin valor por defecto, y `evidence_ids` tampoco lo
+    El enlace afirmación→evidencia lo declara el modelo, no la aplicación. Una
+    respuesta entera atada a todas las fuentes recuperadas afirmaría un respaldo
+    que nadie ha comprobado; por eso el contrato exige la unidad mínima.
+    """
+
+    text: str
+    evidence_ids: tuple[str, ...]
+
+    @field_validator("evidence_ids")
+    @classmethod
+    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
+        for value in values:
+            if not value.startswith("E") or not value[1:].isdigit():
+                raise ValueError("evidence_ids exige identificadores E<n>")
+        return values
+
+
+class StructuredChatAnswerDraft(JurisprudenceCaseModel):
+    """Contrato `structured-claims-v4` de A: claims atómicas y límites.
+
+    No hereda `answer` a propósito: el texto público se compone después desde
+    las claims que superan la verificación, de modo que una frase sin respaldo
+    no puede colarse en la prosa. La estrategia B sigue usando
+    `ChatAnswerDraft`, porque su evidencia llega por anotaciones del proveedor.
+
+    `limits` se redeclara sin valor por defecto, y `claims` tampoco lo
     tiene. La razón es jurídica, no técnica: un `limits` ausente se convertía en
     tupla vacía, y eso hace indistinguible «el modelo no encontró salvedades» de
     «el modelo no se pronunció». Es el mismo error que el proyecto persigue en
@@ -46,13 +71,6 @@ class StructuredChatAnswerDraft(ChatAnswerDraft):
     revisión ya generados.
     """
 
+    status: DraftStatus
     limits: tuple[str, ...]
-    evidence_ids: tuple[str, ...]
-
-    @field_validator("evidence_ids")
-    @classmethod
-    def validate_evidence_ids(cls, values: tuple[str, ...]) -> tuple[str, ...]:
-        for value in values:
-            if not value.startswith("E") or not value[1:].isdigit():
-                raise ValueError("evidence_ids exige identificadores E<n>")
-        return values
+    claims: tuple[StructuredClaim, ...]
