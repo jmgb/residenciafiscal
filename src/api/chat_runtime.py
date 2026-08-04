@@ -58,35 +58,63 @@ def chat_artifacts_ready() -> tuple[bool, dict[str, bool]]:
         not file_search_enabled
         or _path_from_env("CHAT_FILE_SEARCH_STORE_STATE", DEFAULT_STORE_STATE).is_file()
     )
+    # Sin esto, una release manipulada solo se detectaría en la primera
+    # petición: el monitor externo diría `ok` hasta que llegara tráfico.
+    try:
+        runtime_release()
+        hashes_ready = True
+    except HTTPException:
+        hashes_ready = False
     detail = {
         "strategy_a": structured_enabled,
         "strategy_b": file_search_enabled,
         "corpus": corpus_ready,
         "file_search_store": store_ready,
+        "runtime_hashes": hashes_ready,
     }
-    ready = (structured_enabled or file_search_enabled) and corpus_ready and store_ready
+    ready = (
+        (structured_enabled or file_search_enabled)
+        and corpus_ready
+        and store_ready
+        and hashes_ready
+    )
     return ready, detail
 
 
-def _verify_runtime_hashes() -> None:
-    manifest_value = os.getenv("CHAT_RUNTIME_MANIFEST", "").strip()
+@lru_cache(maxsize=1)
+def _verified_release(manifest_key: str, required: bool, expected_version: str) -> str | None:
+    """Verifica la release una vez por proceso y devuelve su versión.
+
+    Se cachea porque también la consulta la readiness, y recorrer los 263
+    ficheros en cada sonda del monitor sería gasto puro. Un artefacto no cambia
+    bajo un proceso vivo: activar una release nueva recrea el contenedor.
+    """
     manifest_path = (
-        Path(manifest_value).resolve()
-        if manifest_value
+        Path(manifest_key).resolve()
+        if manifest_key
         else PROJECT_ROOT / "chat-runtime-manifest.json"
     )
-    required = _enabled("CHAT_RUNTIME_HASH_REQUIRED")
     if not manifest_path.is_file():
         if required:
             raise HTTPException(status_code=503, detail="Falta el manifiesto del runtime")
-        return
+        return None
     try:
         manifest = verify_runtime_directory(PROJECT_ROOT, manifest_path)
     except (OSError, ValueError, json.JSONDecodeError) as error:
         raise HTTPException(status_code=503, detail="Hashes del runtime no verificados") from error
-    expected_version = os.getenv("CHAT_RUNTIME_VERSION", "").strip()
-    if expected_version and manifest.get("release_version") != expected_version:
+    release = manifest.get("release_version")
+    if expected_version and release != expected_version:
         raise HTTPException(status_code=503, detail="Versión del runtime no autorizada")
+    return str(release) if release is not None else None
+
+
+def runtime_release() -> str | None:
+    """Release verificada, o `None` cuando no se exige manifiesto."""
+    return _verified_release(
+        os.getenv("CHAT_RUNTIME_MANIFEST", "").strip(),
+        _enabled("CHAT_RUNTIME_HASH_REQUIRED"),
+        os.getenv("CHAT_RUNTIME_VERSION", "").strip(),
+    )
 
 
 class ProductionChatRunner:
@@ -129,7 +157,7 @@ def get_production_chat_runner() -> ProductionChatRunner:
     if not structured_enabled and not file_search_enabled:
         raise HTTPException(status_code=503, detail="No hay estrategias activas")
 
-    _verify_runtime_hashes()
+    runtime_release()
     corpus_path = _path_from_env("CHAT_RETRIEVAL_CORPUS", DEFAULT_CORPUS)
     store_state_path = _path_from_env("CHAT_FILE_SEARCH_STORE_STATE", DEFAULT_STORE_STATE)
     if structured_enabled and not corpus_path.is_file():

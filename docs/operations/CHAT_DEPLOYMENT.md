@@ -287,6 +287,13 @@ corte autorizado de producción.
 1. Construir `make build-chat-runtime-artifact CHAT_RUNTIME_VERSION=<release>` y
    verificarlo con `make verify-chat-runtime-artifact`. El tar no puede contener
    PDF, `.env`, frontend ni credenciales.
+1b. Instalar con `bash scripts/deploy_chat_runtime.sh`. Copia el tar al host,
+   verifica cada hash antes de escribir, instala la release en su propio
+   directorio, la deja en `0555`/`0444` y solo entonces mueve `current` con un
+   rename atómico. Después construye la imagen desde `current` y recrea el
+   contenedor con usuario sin privilegios, rootfs de solo lectura, `tmpfs`
+   acotado, sin capabilities, con memoria, CPU y PIDs propios y escuchando
+   **solo en loopback**. El env file del host no se sobrescribe nunca.
 2. Desplegar FastAPI en un runtime Python 3.13 con
    `CHAT_COMPARISON_ENABLED=false` y `CHAT_BACKEND_PERCENT=0`.
 3. Verificar `/health/live`, `/health/ready` y que `POST /chat` devuelve `503`;
@@ -306,6 +313,16 @@ corte autorizado de producción.
 8. Probar error aislado de una estrategia, `429`, cancelación y rollback.
 9. Volver a `stub` hasta cerrar los gates de producto. La puesta en producción
    exige una decisión explícita separada.
+
+El rollback a la release anterior es repuntar `current`, reconstruir la imagen y
+recrear el contenedor; medido en 9 segundos. Las releases anteriores se
+conservan en `releases/<id>`, así que volver no depende de reconstruir el tar.
+
+`/health/ready` verifica los hashes de la release **también con el chat
+cerrado**: un servicio desplegado y en espera es justo donde una manipulación
+pasaría inadvertida hasta abrir tráfico. La respuesta declara la release
+verificada, de modo que el monitor externo distingue una versión no autorizada
+de una caída.
 
 ## Seguridad, privacidad y coste
 

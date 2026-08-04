@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from decimal import Decimal
@@ -463,6 +464,37 @@ def test_la_pregunta_de_gimnasio_recupera_su_sentencia_declarada() -> None:
             if source.judgment_id == "san-2347-2022" and source.page == 7
         ]
         assert any("gimnasios" in quote for quote in citas)
+
+
+def test_una_release_manipulada_tumba_la_readiness(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """El monitor externo debe enterarse sin esperar a que llegue tráfico."""
+    import api.chat_runtime as runtime_module
+    from chat_runtime_artifact import build_chat_runtime_artifact
+
+    release = tmp_path / "release"
+    (release / "src").mkdir(parents=True)
+    (release / "src" / "modulo.py").write_text("valor = 1\n", encoding="utf-8")
+    (release / "pyproject.toml").write_text("[project]\nname='x'\n", encoding="utf-8")
+    declarado = build_chat_runtime_artifact(release, tmp_path / "artefacto.tar.gz", version="test")
+    manifest = release / "chat-runtime-manifest.json"
+    manifest.write_text(json.dumps(declarado), encoding="utf-8")
+
+    monkeypatch.setattr(runtime_module, "PROJECT_ROOT", release)
+    monkeypatch.setenv("CHAT_RUNTIME_MANIFEST", str(manifest))
+    monkeypatch.setenv("CHAT_RUNTIME_HASH_REQUIRED", "true")
+    runtime_module._verified_release.cache_clear()
+
+    assert runtime_module.runtime_release() == "test"
+
+    (release / "src" / "modulo.py").write_text("valor = 2\n", encoding="utf-8")
+    runtime_module._verified_release.cache_clear()
+
+    with pytest.raises(HTTPException) as error:
+        runtime_module.runtime_release()
+    assert error.value.status_code == 503
+    runtime_module._verified_release.cache_clear()
 
 
 def test_el_limitador_no_acumula_claves_muertas() -> None:

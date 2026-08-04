@@ -75,23 +75,37 @@ async def health_live() -> dict[str, str]:
 @app.get("/health/ready", response_model=None)
 async def health_ready() -> dict[str, Any] | JSONResponse:
     """Readiness barata para el monitor externo, sin llamadas pagadas."""
+    from fastapi import HTTPException
+
+    from api.chat_runtime import chat_artifacts_ready, runtime_release
+
     enabled = os.getenv("CHAT_COMPARISON_ENABLED", "false").strip().lower() in {
         "1",
         "true",
         "yes",
     }
-    if not enabled:
-        return {"status": "ok", "chat_enabled": False, "paid_calls": False}
+    # La integridad de la release se comprueba también con el chat cerrado: un
+    # servicio desplegado y en espera es justo donde una release manipulada
+    # pasaría inadvertida hasta abrir tráfico.
+    try:
+        release = runtime_release()
+        hashes_ready = True
+    except HTTPException:
+        release, hashes_ready = None, False
 
-    from api.chat_runtime import chat_artifacts_ready
+    body: dict[str, Any] = {
+        "status": "ok" if hashes_ready else "not_ready",
+        "chat_enabled": enabled,
+        "paid_calls": False,
+        "runtime_release": release,
+        "runtime_hashes": hashes_ready,
+    }
+    if not enabled:
+        return body if hashes_ready else JSONResponse(status_code=503, content=body)
 
     ready, detail = chat_artifacts_ready()
-    body: dict[str, Any] = {
-        "status": "ok" if ready else "not_ready",
-        "chat_enabled": True,
-        "paid_calls": False,
-        "artifacts": detail,
-    }
+    body["status"] = "ok" if ready else "not_ready"
+    body["artifacts"] = detail
     return body if ready else JSONResponse(status_code=503, content=body)
 
 

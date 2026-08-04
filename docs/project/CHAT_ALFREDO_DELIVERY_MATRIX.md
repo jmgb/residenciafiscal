@@ -14,7 +14,8 @@ implementado en el repositorio, no lo que está desplegado.
 | Stream largo | `scripts/chat_stream_spike.py` | Gate F0 sin medir |
 | Persistencia | `src/api/chat_persistence.py` sobre RPC vigentes | Requiere rol privado |
 | Artefacto | `chat_runtime_artifact.py`, `make build-chat-runtime-artifact` | Verificable localmente |
-| Salud | `/health/live`, `/health/ready` | Monitor pendiente |
+| Instalación | `scripts/deploy_chat_runtime.sh`, `scripts/install_chat_runtime.py`, `docker/chat-runtime.Dockerfile` | Instalado y verificado en el host |
+| Salud | `/health/live`, `/health/ready` con verificación de hashes | Monitor pendiente |
 | Privacidad/canary | ADR y gates documentados | Bloqueante antes de usuarios |
 
 ## Smoke real del 4 de agosto de 2026
@@ -41,6 +42,29 @@ con su contexto de página y las tres facetas que fuerzan comportamiento
 `parcial`. Sin las dos primeras la recuperación no alcanzaba la sentencia
 declarada en el plan; sin la tercera se publicaba la línea suelta del anclaje en
 lugar de la frase del PDF.
+
+## Despliegue cerrado del 4 de agosto de 2026
+
+El runtime está instalado en el host y **cerrado**: sin credenciales de
+proveedor, sin persistencia y escuchando solo en loopback. No atiende tráfico de
+usuarios ni incurre en coste. Verificado en el propio host:
+
+| Comprobación | Resultado |
+|---|---|
+| Instalación por hash | 263 ficheros verificados antes de activar la release |
+| Activación | rename atómico; una release a medias no puede quedar activa |
+| Aislamiento | usuario 10001, rootfs de solo lectura, sin capabilities, sin socket Docker, sin mounts |
+| Cuotas propias | memoria, CPU y PIDs por contenedor, independientes de los jobs agentivos |
+| Exposición | escucha en loopback; no hay vhost ni DNS |
+| `POST /chat` | responde `503` sin llamar a ningún proveedor |
+| Caída del proceso | el contenedor vuelve solo y responde |
+| Parada ordenada | código de salida `0` |
+| Release manipulada | los hashes no cuadran y la readiness lo declara |
+| Rollback | 9 segundos a la release anterior, con su código |
+
+El despliegue destapó dos defectos propios ya corregidos: la readiness cortaba
+antes de verificar los hashes cuando el chat estaba cerrado, y reinstalar una
+release ya endurecida fallaba a medias dejando `current` en la anterior.
 
 Ninguna variable pública del frontend contiene un secreto. El inventario del
 host, las rutas reales, DNS, grants, unidades systemd y valores de entorno
