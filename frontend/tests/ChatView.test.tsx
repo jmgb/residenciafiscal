@@ -481,7 +481,7 @@ describe('ChatView', () => {
     expect(assistant?.comparisonId).toBe('chat-comparison-1');
   });
 
-  it('conserva A y muestra el fallo de B si se corta el stream comparativo', async () => {
+  it('conserva solo A si el stream se corta antes de iniciar B', async () => {
     const user = userEvent.setup();
     const engine: ChatEngine = {
       async *askQuestion(): AsyncIterable<ChatChunk> {
@@ -516,11 +516,11 @@ describe('ChatView', () => {
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
     expect(
-      await screen.findByRole('tabpanel', { name: 'Respuesta de la opción A' })
+      await screen.findByRole('region', { name: 'Respuesta de la opción A' })
     ).toHaveTextContent('Respuesta A conservada.');
-    expect(screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' })).toHaveTextContent(
-      /no se ha podido completar esta estrategia/i
-    );
+    expect(
+      screen.queryByRole('tabpanel', { name: 'Respuesta de la opción B' })
+    ).not.toBeInTheDocument();
   });
 
   it('despliega el extracto de una fuente al pulsarla', async () => {

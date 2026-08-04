@@ -355,19 +355,17 @@ export function ChatView({
         if (!controller.signal.aborted) {
           const errorMessage = 'No se ha podido completar la consulta. Inténtalo de nuevo.';
           if (answers) {
-            const strategies: ChatStrategyId[] = ['current_structured', 'gemini_file_search'];
-            answers = strategies.map((strategy) => {
-              const existing = answerFor(strategy);
-              if (existing?.status) return existing;
-              return {
-                strategy,
-                status: 'error',
-                content: existing?.content || 'No se ha podido completar esta estrategia.',
-                sources: existing?.sources ?? [],
-                limits: [errorMessage],
-                isStreaming: false,
-              };
-            });
+            answers = answers.map((answer) =>
+              answer.status
+                ? answer
+                : {
+                    ...answer,
+                    status: 'error' as const,
+                    content: answer.content || 'No se ha podido completar esta estrategia.',
+                    limits: [errorMessage],
+                    isStreaming: false,
+                  }
+            );
           } else {
             buffer = buffer ? `${buffer}\n\n_${errorMessage}_` : errorMessage;
           }

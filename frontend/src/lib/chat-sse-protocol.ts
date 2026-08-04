@@ -287,6 +287,7 @@ export async function* parseChatEventStream(
   let comparative = false;
   let activeStrategy: ChatStrategyId | null = null;
   const completedStrategies = new Set<ChatStrategyId>();
+  let lastStrategyIndex = -1;
 
   try {
     for (;;) {
@@ -314,11 +315,11 @@ export async function* parseChatEventStream(
 
         if (event.name === 'answer_start') {
           const chunk = parseAnswerStart(event.data);
-          const expected = STRATEGIES[completedStrategies.size];
+          const strategyIndex = STRATEGIES.indexOf(chunk.strategy);
           if (
             activeStrategy ||
             completedStrategies.has(chunk.strategy) ||
-            chunk.strategy !== expected
+            strategyIndex <= lastStrategyIndex
           ) {
             throw new ChatEngineError(
               'El servidor alteró el orden de estrategias.',
@@ -327,6 +328,7 @@ export async function* parseChatEventStream(
           }
           comparative = true;
           activeStrategy = chunk.strategy;
+          lastStrategyIndex = strategyIndex;
           yield chunk;
           continue;
         }
@@ -375,7 +377,7 @@ export async function* parseChatEventStream(
           continue;
         }
         if (event.name === 'done') {
-          if (comparative && (activeStrategy || completedStrategies.size !== STRATEGIES.length)) {
+          if (comparative && (activeStrategy || completedStrategies.size === 0)) {
             throw new ChatEngineError('La comparación llegó incompleta.', 'stream_truncated', true);
           }
           terminalSeen = true;

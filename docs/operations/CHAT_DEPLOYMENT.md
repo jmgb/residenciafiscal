@@ -3,7 +3,8 @@
 **Estado:** la V1 Netlify-only y su persistencia Supabase están implementadas y
 desplegadas en producción. El proyecto remoto, las migraciones, RLS, RPC
 transaccionales y una consulta A/B productiva están verificados. El endpoint conserva
-los cierres independientes `CHAT_COMPARISON_ENABLED` y `VITE_CHAT_MODE`; siguen
+los cierres independientes `CHAT_COMPARISON_ENABLED`, los flags de estrategia y
+`VITE_CHAT_MODE`; C tiene sus propios flags de UI y backend. Siguen
 pendientes los requisitos legales indicados en `TASKS.md`. El recorrido Edge →
 FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
 **Fecha de corte:** 2026-08-01.
@@ -27,9 +28,9 @@ Netlify Function TypeScript
   validación + cuota + protocolo SSE 2
         │
         ├── A: corpus v3 + redactor LLM ──────────┐
-        └── B: Gemini File Search sobre los PDF ──┤ en paralelo
-                                                  ▼
-                                      dos respuestas independientes
+        └── B: Gemini File Search sobre los PDF ──┤ en paralelo si ambas están activas
+                                             ▼
+                                      una o dos respuestas independientes
                                                   │
                                                   ▼
                          Supabase: pregunta + A/B + citas + coste
@@ -37,8 +38,8 @@ Netlify Function TypeScript
 
 Restricciones deliberadas de la V1:
 
-- A y B empiezan en paralelo y no comparten resultados ni contexto;
-- la presentación sigue siendo A → B, aunque B termine antes;
+- Las estrategias activas empiezan en paralelo y no comparten resultados ni contexto;
+- la presentación conserva el orden A → B, aunque B termine antes;
 - el deadline interno debe dejar margen al límite no configurable de 60 s de
   Netlify; objetivo inicial: terminar o cancelar antes de 50–55 s;
 - A mantendrá Luna con esfuerzo `high` durante la primera observación en uso;
@@ -102,8 +103,8 @@ no token a token desde el proveedor.
 |---|---|---|
 | Selector | `frontend/src/lib/chat-engine.ts` | `stub` seguro por defecto; `live` solo con `VITE_CHAT_MODE=live` |
 | Cliente | `frontend/src/lib/chat-engine.live.ts` | POST same-origin, validación HTTP y protocolo |
-| Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto |
-| UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos columnas/pestañas para A/B; una columna si solo hay una respuesta; fuentes, límites, coste y voto ciego |
+| Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto; admite una o dos estrategias |
+| UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos columnas/pestañas para A/B; una columna identificada si solo hay una activa; fuentes, límites, coste y voto ciego |
 | Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, registro y protocolo bufferizado |
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
 | Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro de consulta, coste y serialización de mensajes A/B |
@@ -124,11 +125,13 @@ convertirlas a secretos Functions y rotarlas.
 
 | Variable | Uso |
 |---|---|
-| `CHAT_COMPARISON_ENABLED` | Debe ser exactamente `true`; cualquier otro valor cierra el endpoint |
-| `OPENAI_API_KEY` | Redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
-| `GEMINI_API_KEY` | Gemini File Search |
-| `CHAT_FILE_SEARCH_STORE_NAME` | Nombre remoto `fileSearchStores/...` del rollout de 106 PDF; la versión con autoridad explícita es `fileSearchStores/residenciafiscalrollout106a-zwmb28labwje` |
-| `CHAT_FILE_SEARCH_MODEL` | `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
+| `CHAT_COMPARISON_ENABLED` | Interruptor maestro; debe ser exactamente `true` para habilitar A o B |
+| `CHAT_STRATEGY_A_ENABLED` | Activa/desactiva A (`current_structured`). Si se omite, hereda `true` cuando el maestro está activo |
+| `CHAT_STRATEGY_B_ENABLED` | Activa/desactiva B (`gemini_file_search`). Si se omite, hereda `true` cuando el maestro está activo |
+| `OPENAI_API_KEY` | Obligatoria solo si A está activa; redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
+| `GEMINI_API_KEY` | Obligatoria solo si B está activa; Gemini File Search |
+| `CHAT_FILE_SEARCH_STORE_NAME` | Obligatoria solo si B está activa; nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
+| `CHAT_FILE_SEARCH_MODEL` | Solo se valida si B está activa; `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
 | `SUPABASE_URL` | URL del proyecto Supabase; solo backend |
 | `SUPABASE_SECRET_KEY` | Clave secreta de servidor; sin ella el endpoint falla cerrado |
@@ -193,9 +196,12 @@ El store anterior se conserva durante la observación inicial para rollback.
 3. Desplegar y comprobar que `POST /api/chat` responde `503` y que no se realiza
    ninguna llamada de proveedor.
 4. En **Deploy Preview**, configurar `VITE_CHAT_MODE=live`,
-   `VITE_CHAT_SESSION_MESSAGE_LIMIT=10` y `CHAT_COMPARISON_ENABLED=true`.
-5. Hacer una sola consulta del banco con autorización de coste. Comprobar dos
-   respuestas A → B, citas verificadas, tokens/coste visibles, duración menor de
+   `VITE_CHAT_SESSION_MESSAGE_LIMIT=10`, `CHAT_COMPARISON_ENABLED=true` y los
+   flags A/B que correspondan. Para comparar ambas, dejar los dos overrides
+   omitidos o poner ambos en `true`.
+5. Hacer una sola consulta del banco con autorización de coste. Comprobar una o
+   dos respuestas A → B según la configuración, citas verificadas,
+   tokens/coste visibles, duración menor de
    60 s, tres filas en `private.chat_messages` y una petición registrada.
 6. Cuadrar tokens y coste con los paneles de OpenAI y Gemini; probar después
    timeout, fallo aislado, límite por IP y límite blando de sesión.
@@ -304,6 +310,21 @@ procedimiento de despliegue de la V1 Netlify-only.
 1. Poner `VITE_CHAT_MODE=stub` en Netlify y redesplegar.
 2. Poner `CHAT_COMPARISON_ENABLED=false` en el backend.
 3. Conservar informes y logs para reconciliar llamadas ya iniciadas.
+
+Para apagar solo una estrategia manteniendo la otra, conservar el interruptor
+maestro en `true` y poner a `false` su flag correspondiente:
+
+```dotenv
+# Solo A
+CHAT_COMPARISON_ENABLED=true
+CHAT_STRATEGY_A_ENABLED=true
+CHAT_STRATEGY_B_ENABLED=false
+
+# Solo B
+CHAT_COMPARISON_ENABLED=true
+CHAT_STRATEGY_A_ENABLED=false
+CHAT_STRATEGY_B_ENABLED=true
+```
 
 Ambas barreras son independientes: si una configuración queda rezagada, la
 otra mantiene cerrado el gasto.

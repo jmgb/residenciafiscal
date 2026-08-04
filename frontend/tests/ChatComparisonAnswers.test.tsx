@@ -36,18 +36,26 @@ afterEach(() => {
 });
 
 describe('ChatComparisonAnswers', () => {
-  it('mantiene una sola columna sin pestañas ni voto cuando solo existe una opción', () => {
+  it('mantiene una sola columna e identifica A cuando solo A está activa', () => {
     render(<ChatComparisonAnswers answers={[answer('current_structured')]} />);
 
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
     expect(screen.getByTestId('comparison-grid')).not.toHaveClass('md:grid-cols-2');
-    const response = screen.getByRole('region', { name: 'Respuesta única' });
+    const response = screen.getByRole('region', { name: 'Respuesta de la opción A' });
     expect(response).toHaveTextContent('Contenido de A.');
     expect(response).toHaveTextContent('Coste: 0.002 USD');
     expect(response).not.toHaveTextContent('Coste de esta respuesta');
     expect(response).not.toHaveTextContent('No incluye la preparación previa del corpus.');
     expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
+  });
+
+  it('identifica B cuando solo B está activa', () => {
+    render(<ChatComparisonAnswers answers={[answer('gemini_file_search')]} />);
+
+    expect(screen.getByRole('region', { name: 'Respuesta de la opción B' })).toHaveTextContent(
+      'Contenido de B.'
+    );
   });
 
   it('muestra dos columnas en escritorio y pestañas ciegas en móvil', async () => {

@@ -29,6 +29,54 @@ async function collect(stream: ReadableStream<Uint8Array>): Promise<ChatChunk[]>
 }
 
 describe('parseChatEventStream', () => {
+  it('acepta un stream con solo la estrategia B activa', async () => {
+    const cost = {
+      currency: 'USD',
+      amount_usd: '0.012345',
+      cost_microusd: 12345,
+      measurement: 'ACTUAL',
+      scope: 'REQUEST_MARGINAL',
+      pricing_version: '2026-07-31',
+      input_tokens: 8421,
+      output_tokens: 631,
+      retrieved_document_tokens: 500,
+      excludes_corpus_preparation: true,
+    };
+
+    await expect(
+      collect(
+        streamFromText([
+          event('answer_start', { strategy: 'gemini_file_search' }),
+          event('token', { strategy: 'gemini_file_search', text: 'Respuesta B.' }),
+          event('sources', { strategy: 'gemini_file_search', sources: [] }),
+          event('answer_done', {
+            strategy: 'gemini_file_search',
+            status: 'completa',
+            limits: [],
+            cost,
+            model: 'gemini-3.5-flash-lite',
+            latency_ms: 900,
+          }),
+          event('done', { request_id: 'chat-single-b' }),
+        ])
+      )
+    ).resolves.toEqual([
+      { type: 'answer_start', strategy: 'gemini_file_search' },
+      { type: 'token', strategy: 'gemini_file_search', text: 'Respuesta B.' },
+      { type: 'strategy_sources', strategy: 'gemini_file_search', sources: [] },
+      {
+        type: 'answer_done',
+        strategy: 'gemini_file_search',
+        status: 'completa',
+        limits: [],
+        cost: expect.objectContaining({ amountUsd: '0.012345' }),
+        model: 'gemini-3.5-flash-lite',
+        latencyMs: 900,
+      },
+      { type: 'done', requestId: 'chat-single-b' },
+    ]);
+  });
+
   it('mantiene separadas las dos estrategias con sus fuentes, estado y coste', async () => {
     const cost = {
       currency: 'USD',

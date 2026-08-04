@@ -81,7 +81,8 @@ export interface ComparisonReport {
   schema_version: 'residenciafiscal-chat-comparison/1';
   request_id: string;
   experimental: true;
-  answers: [StrategyAnswer, StrategyAnswer];
+  /** Una o dos respuestas, según las estrategias habilitadas en el runtime. */
+  answers: StrategyAnswer[];
 }
 
 export const unknownCost = (): MarginalCost => ({

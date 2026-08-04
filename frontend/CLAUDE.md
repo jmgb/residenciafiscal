@@ -114,24 +114,26 @@ UI los rotula como fuentes históricas sin anclaje v2. El stub solo produce ese
 tipo legado porque sus extractos son resúmenes simulados.
 
 El protocolo 2 conserva compatibilidad con la respuesta individual anterior y
-añade el modo comparativo estricto A → B: `answer_start`, tokens y fuentes con
-`strategy`, `answer_done` con coste decimal y un único terminal global. Las
-fuentes comparativas usan `ChatStrategySource` —estrategia, sentencia, página,
-hash y cita exacta—; no se convierten artificialmente en `ChatSourceV2` porque B
+añade el modo comparativo A → B configurable: `answer_start`, tokens y fuentes
+con `strategy`, `answer_done` con coste decimal y un único terminal global.
+Puede devolver A, B o ambas en ese orden. Las fuentes comparativas usan
+`ChatStrategySource` —estrategia, sentencia, página, hash y cita exacta—; no se
+convierten artificialmente en `ChatSourceV2` porque B
 no dispone de cuestión y anclaje canónicos. `ChatMessage.answers` mantiene los
-dos bloques y el schema 3 apaga cualquier streaming huérfano al rehidratar.
+bloques activos y el schema 3 apaga cualquier streaming huérfano al rehidratar.
 
 El runtime V1 implementado es una Netlify Function TypeScript autosuficiente.
-Ejecuta A y B en paralelo, conserva el orden visual A → B, mantiene Luna `high`
-y cancela antes del límite de 60 s. Python sigue preparando el corpus offline.
+Ejecuta en paralelo las estrategias activas, conserva el orden visual A → B,
+mantiene Luna `high` cuando A está activa y cancela antes del límite de 60 s.
+Python sigue preparando el corpus offline.
 El prototipo Edge → FastAPI no se borra y se conserva como evolución futura si
 hacen falta llamadas de más de 60 s o mayor control operativo. Código y operación:
 [`docs/operations/CHAT_DEPLOYMENT.md`](../docs/operations/CHAT_DEPLOYMENT.md).
 
-La estrategia de recuperación se debe medir con dos respuestas independientes:
-la actual, basada en el corpus v3 estructurado, y Gemini File Search sobre los
-PDF de la muestra. Cada respuesta mantiene sus propias fuentes, errores,
-métricas y coste visible en USD. No se ha adoptado `pgvector`; una unión futura
+La estrategia de recuperación se debe medir con una o dos respuestas
+independientes: la actual, basada en el corpus v3 estructurado, y Gemini File
+Search sobre los PDF de la muestra. Cada respuesta mantiene sus propias fuentes,
+errores, métricas y coste visible en USD. No se ha adoptado `pgvector`; una unión futura
 de candidatos con reranking local solo se evaluará después de esta comparación.
 
 - Diseño: `docs/development/CHAT_BACKEND_DESIGN.md`

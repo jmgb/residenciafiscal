@@ -63,6 +63,29 @@ describe('runtime comparativo Netlify V1', () => {
     });
   });
 
+  it('ejecuta una sola estrategia cuando solo una está activa', async () => {
+    const started: string[] = [];
+    const structured: NetlifyChatStrategy = {
+      id: 'current_structured',
+      async answer() {
+        started.push('current_structured');
+        return answer('current_structured');
+      },
+    };
+
+    const comparison = await compareStrategiesInParallel({
+      question: '¿Qué tiene en cuenta Hacienda?',
+      requestId: 'request-single-strategy',
+      deadlineMs: 1_000,
+      strategies: [structured],
+    });
+
+    expect(started).toEqual(['current_structured']);
+    expect(comparison.answers).toEqual([
+      expect.objectContaining({ strategy: 'current_structured' }),
+    ]);
+  });
+
   it('aísla el fallo de una estrategia y conserva la otra', async () => {
     const failing: NetlifyChatStrategy = {
       id: 'current_structured',

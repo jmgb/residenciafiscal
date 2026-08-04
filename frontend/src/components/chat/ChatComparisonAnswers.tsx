@@ -1,6 +1,6 @@
 import { FlaskConical } from 'lucide-react';
 import { type KeyboardEvent, useId, useRef, useState } from 'react';
-import type { ChatStrategyAnswer } from '@/types/chat';
+import type { ChatStrategyAnswer, ChatStrategyId } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
 import { ChatStrategyAnswerPanel } from './ChatStrategyAnswerPanel';
 
@@ -11,7 +11,8 @@ interface ChatComparisonAnswersProps {
   showVote?: boolean;
 }
 
-const optionName = (index: number) => `Opción ${String.fromCharCode(65 + index)}`;
+const optionLetter = (strategy: ChatStrategyId) => (strategy === 'current_structured' ? 'A' : 'B');
+const optionName = (strategy: ChatStrategyId) => `Opción ${optionLetter(strategy)}`;
 
 export const ChatComparisonAnswers = ({
   answers,
@@ -81,7 +82,7 @@ export const ChatComparisonAnswers = ({
                   selected ? 'bg-background text-primary shadow-sm' : 'text-muted-foreground'
                 }`}
               >
-                {optionName(index)}
+                {optionName(answer.strategy)}
               </button>
             );
           })}
@@ -95,17 +96,13 @@ export const ChatComparisonAnswers = ({
         }`}
       >
         {answers.map((answer, index) => {
-          const label = isComparison ? optionName(index) : 'Respuesta';
+          const label = optionName(answer.strategy);
           return (
             <ChatStrategyAnswerPanel
               key={answer.strategy}
               answer={answer}
               label={label}
-              ariaLabel={
-                isComparison
-                  ? `Respuesta de la opción ${String.fromCharCode(65 + index)}`
-                  : 'Respuesta única'
-              }
+              ariaLabel={`Respuesta de la opción ${optionLetter(answer.strategy)}`}
               id={isComparison ? `${componentId}-panel-${index}` : undefined}
               tabPanel={isComparison}
               className={isComparison && index !== selectedIndex ? 'hidden md:block' : undefined}

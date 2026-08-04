@@ -63,7 +63,9 @@ configurable de mensajes por ventana móvil de 24 horas. Por la limitación del 
 proveedor y Supabase están configuradas como variables ordinarias de todos los
 scopes, limitadas al contexto `production`; ninguna lleva prefijo `VITE_` ni se
 incluye en el cliente. `VITE_CHAT_MODE` es únicamente el selector público de
-build. El endpoint y el frontend se pueden cerrar por separado. Variables,
+build. `CHAT_STRATEGY_A_ENABLED` y `CHAT_STRATEGY_B_ENABLED` permiten activar
+por separado las dos respuestas dentro del interruptor maestro. El endpoint y
+el frontend se pueden cerrar por separado. Variables,
 migración, activación, riesgo aceptado y rollback están en
 [`CHAT_DEPLOYMENT.md`](CHAT_DEPLOYMENT.md).
 El modelo privado de mensajes y costes se documenta en

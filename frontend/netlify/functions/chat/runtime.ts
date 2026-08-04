@@ -23,7 +23,7 @@ interface ComparisonInput {
   question: string;
   requestId: string;
   deadlineMs: number;
-  strategies: [NetlifyChatStrategy, NetlifyChatStrategy];
+  strategies: readonly NetlifyChatStrategy[];
   signal?: AbortSignal;
 }
 
@@ -134,6 +134,7 @@ export const compareStrategiesInParallel = async ({
   strategies,
   signal,
 }: ComparisonInput): Promise<ComparisonReport> => {
+  if (strategies.length === 0) throw new Error('No hay estrategias de chat habilitadas');
   const controller = new AbortController();
   const abortFromParent = () => controller.abort(signal?.reason);
   signal?.addEventListener('abort', abortFromParent, { once: true });
@@ -141,10 +142,9 @@ export const compareStrategiesInParallel = async ({
   const context = { requestId, signal: controller.signal };
 
   try {
-    const answers = await Promise.all([
-      runIsolated(strategies[0], question, context),
-      runIsolated(strategies[1], question, context),
-    ]);
+    const answers = await Promise.all(
+      strategies.map((strategy) => runIsolated(strategy, question, context))
+    );
     return {
       schema_version: 'residenciafiscal-chat-comparison/1',
       request_id: requestId,

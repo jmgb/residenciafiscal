@@ -17,7 +17,10 @@ vi.mock('openai', () => ({
   },
 }));
 
-import { createProductionDependencies } from '../netlify/functions/chat/composition';
+import {
+  createProductionDependencies,
+  resolveEnabledStrategyIds,
+} from '../netlify/functions/chat/composition';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
 
 const environment = {
@@ -42,6 +45,56 @@ afterEach(() => {
 });
 
 describe('composition root de la Function con Supabase', () => {
+  it('resuelve A y B de forma independiente bajo el interruptor maestro', () => {
+    expect(
+      resolveEnabledStrategyIds({
+        CHAT_COMPARISON_ENABLED: 'true',
+        CHAT_STRATEGY_A_ENABLED: 'true',
+        CHAT_STRATEGY_B_ENABLED: 'false',
+      })
+    ).toEqual(['current_structured']);
+    expect(
+      resolveEnabledStrategyIds({
+        CHAT_COMPARISON_ENABLED: 'true',
+        CHAT_STRATEGY_A_ENABLED: 'false',
+        CHAT_STRATEGY_B_ENABLED: 'true',
+      })
+    ).toEqual(['gemini_file_search']);
+  });
+
+  it('permite activar solo A sin exigir la configuración de B', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_STRATEGY_A_ENABLED: 'true',
+      CHAT_STRATEGY_B_ENABLED: 'false',
+      GEMINI_API_KEY: undefined,
+      CHAT_FILE_SEARCH_STORE_NAME: undefined,
+    });
+
+    expect(dependencies.enabled).toBe(true);
+  });
+
+  it('permite activar solo B sin exigir la configuración de A', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_STRATEGY_A_ENABLED: 'false',
+      CHAT_STRATEGY_B_ENABLED: 'true',
+      OPENAI_API_KEY: undefined,
+    });
+
+    expect(dependencies.enabled).toBe(true);
+  });
+
+  it('permanece cerrado si A y B están desactivadas', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_STRATEGY_A_ENABLED: 'false',
+      CHAT_STRATEGY_B_ENABLED: 'false',
+    });
+
+    expect(dependencies.enabled).toBe(false);
+  });
+
   it('permanece cerrado si falta la clave secreta de Supabase', () => {
     const dependencies = createProductionDependencies({
       ...environment,

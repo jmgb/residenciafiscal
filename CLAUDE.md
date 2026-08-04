@@ -393,8 +393,8 @@ catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
 falla cerrado salvo activación y autenticación explícitas. Es el prototipo local
 y se conserva como posible arquitectura futura para peticiones de más de 60 s;
 no es el target de la V1. El runtime conversacional ya está portado a una
-Netlify Function TypeScript: ejecuta A y B en paralelo, usa un deadline global
-y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
+Netlify Function TypeScript: ejecuta las estrategias activas en paralelo, usa un
+deadline global y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
 en Supabase, y mantiene Luna `high`. El coste nunca decide la admisión; el schema
 es privado y el navegador no accede directamente. Contrato y operación:
 [`docs/operations/SUPABASE_CHAT.md`](docs/operations/SUPABASE_CHAT.md). Producción

@@ -135,7 +135,7 @@ export interface ChatMessage {
   sources?: ChatSource[];
   /** true mientras se están recibiendo tokens. */
   isStreaming?: boolean;
-  /** Dos respuestas independientes del experimento A/B. */
+  /** Una o dos respuestas independientes según las estrategias activas. */
   answers?: ChatStrategyAnswer[];
   /** Petición privada asociada, usada para registrar un único voto A/B. */
   comparisonId?: string;

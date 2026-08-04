@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { ChatFunctionDependencies } from './chat';
 import { sanitizeChatDiagnostic } from './chat-diagnostics';
-import type { StrategyAnswer } from './contracts';
+import type { StrategyAnswer, StrategyId } from './contracts';
 import {
   CurrentStructuredStrategy,
   STRUCTURED_PROMPT_VERSION,
@@ -19,6 +19,7 @@ import {
   productionVerbatimArtifacts,
 } from './production-corpus';
 import { createGeminiInteraction, createOpenAIWriter } from './provider-adapters';
+import type { NetlifyChatStrategy } from './runtime';
 import { compareStrategiesInParallel } from './runtime';
 import { SupabaseChatStore, type SupabaseRpcClient } from './supabase-chat-store';
 
@@ -91,6 +92,25 @@ const deadline = (raw: string | undefined) => {
   return Number.isInteger(value) && value >= 1_000 && value <= 55_000 ? value : null;
 };
 
+const comparisonEnabled = (environment: NodeJS.ProcessEnv): boolean =>
+  environment.CHAT_COMPARISON_ENABLED === 'true';
+
+export const resolveEnabledStrategyIds = (environment: NodeJS.ProcessEnv): StrategyId[] => {
+  if (!comparisonEnabled(environment)) return [];
+
+  const structuredEnabled =
+    environment.CHAT_STRATEGY_A_ENABLED === undefined ||
+    environment.CHAT_STRATEGY_A_ENABLED === 'true';
+  const fileSearchEnabled =
+    environment.CHAT_STRATEGY_B_ENABLED === undefined ||
+    environment.CHAT_STRATEGY_B_ENABLED === 'true';
+
+  return [
+    ...(structuredEnabled ? (['current_structured'] as const) : []),
+    ...(fileSearchEnabled ? (['gemini_file_search'] as const) : []),
+  ];
+};
+
 export const createProductionDependencies = (
   environment: NodeJS.ProcessEnv = process.env
 ): ChatFunctionDependencies => {
@@ -101,18 +121,27 @@ export const createProductionDependencies = (
   const supabaseSecretKey = environment.SUPABASE_SECRET_KEY?.trim();
   const deadlineMs = deadline(environment.CHAT_DEADLINE_MS);
   const fileSearchModel = environment.CHAT_FILE_SEARCH_MODEL?.trim() || 'gemini-3.5-flash-lite';
-  const enabled = environment.CHAT_COMPARISON_ENABLED === 'true';
+  const masterEnabled = comparisonEnabled(environment);
+  const enabledStrategyIds = resolveEnabledStrategyIds(environment);
+  const structuredEnabled = enabledStrategyIds.includes('current_structured');
+  const fileSearchEnabled = enabledStrategyIds.includes('gemini_file_search');
+  const validFileSearchModel = ['gemini-3.5-flash-lite', 'gemini-3.6-flash'].includes(
+    fileSearchModel
+  );
+  const needsStructuredConfiguration = structuredEnabled || !masterEnabled;
+  const needsFileSearchConfiguration = fileSearchEnabled || !masterEnabled;
   const missingConfiguration = [
-    !enabled ? 'CHAT_COMPARISON_ENABLED' : null,
-    !openAIKey ? 'OPENAI_API_KEY' : null,
-    !geminiKey ? 'GEMINI_API_KEY' : null,
+    !masterEnabled ? 'CHAT_COMPARISON_ENABLED' : null,
+    enabledStrategyIds.length === 0 && masterEnabled ? 'CHAT_NO_ACTIVE_STRATEGY' : null,
+    needsStructuredConfiguration && !openAIKey ? 'OPENAI_API_KEY' : null,
+    needsFileSearchConfiguration && !geminiKey ? 'GEMINI_API_KEY' : null,
     !supabaseUrl?.startsWith('https://') ? 'SUPABASE_URL' : null,
     !supabaseSecretKey ? 'SUPABASE_SECRET_KEY' : null,
-    !storeName?.startsWith('fileSearchStores/') ? 'CHAT_FILE_SEARCH_STORE_NAME' : null,
-    !deadlineMs ? 'CHAT_DEADLINE_MS' : null,
-    !['gemini-3.5-flash-lite', 'gemini-3.6-flash'].includes(fileSearchModel)
-      ? 'CHAT_FILE_SEARCH_MODEL'
+    needsFileSearchConfiguration && !storeName?.startsWith('fileSearchStores/')
+      ? 'CHAT_FILE_SEARCH_STORE_NAME'
       : null,
+    !deadlineMs ? 'CHAT_DEADLINE_MS' : null,
+    needsFileSearchConfiguration && !validFileSearchModel ? 'CHAT_FILE_SEARCH_MODEL' : null,
   ].filter((name): name is string => name !== null);
   const disabledDiagnostic = sanitizeChatDiagnostic({
     dependency: 'configuration',
@@ -122,14 +151,14 @@ export const createProductionDependencies = (
   });
   const observability = createChatObservability(environment);
   if (
-    !enabled ||
-    !openAIKey ||
-    !geminiKey ||
+    enabledStrategyIds.length === 0 ||
+    (structuredEnabled && !openAIKey) ||
+    (fileSearchEnabled && !geminiKey) ||
     !supabaseUrl?.startsWith('https://') ||
     !supabaseSecretKey ||
-    !storeName?.startsWith('fileSearchStores/') ||
+    (fileSearchEnabled && !storeName?.startsWith('fileSearchStores/')) ||
     !deadlineMs ||
-    !['gemini-3.5-flash-lite', 'gemini-3.6-flash'].includes(fileSearchModel)
+    (fileSearchEnabled && !validFileSearchModel)
   ) {
     return {
       enabled: false,
@@ -162,20 +191,29 @@ export const createProductionDependencies = (
     comparison_schema_version: 'residenciafiscal-chat-comparison/1',
     structured_corpus_version: productionCorpusReadiness.sampleId,
     structured_prompt_version: STRUCTURED_PROMPT_VERSION,
-    file_search_store: storeName,
+    file_search_store: storeName ?? 'disabled',
     file_search_prompt_version: FILE_SEARCH_PROMPT_VERSION,
   });
-  const structured = new CurrentStructuredStrategy(
-    productionCorpus,
-    createOpenAIWriter(openAIKey),
-    productionVerbatimArtifacts
-  );
-  const fileSearch = new GeminiFileSearchStrategy({
-    storeName,
-    artifacts: productionVerbatimArtifacts,
-    interact: createGeminiInteraction(geminiKey),
-    model: fileSearchModel,
-  });
+  const strategies: NetlifyChatStrategy[] = [];
+  if (structuredEnabled && openAIKey) {
+    strategies.push(
+      new CurrentStructuredStrategy(
+        productionCorpus,
+        createOpenAIWriter(openAIKey),
+        productionVerbatimArtifacts
+      )
+    );
+  }
+  if (fileSearchEnabled && geminiKey && storeName) {
+    strategies.push(
+      new GeminiFileSearchStrategy({
+        storeName,
+        artifacts: productionVerbatimArtifacts,
+        interact: createGeminiInteraction(geminiKey),
+        model: fileSearchModel,
+      })
+    );
+  }
 
   return {
     enabled: true,
@@ -187,7 +225,7 @@ export const createProductionDependencies = (
         requestId,
         signal,
         deadlineMs,
-        strategies: [structured, fileSearch],
+        strategies,
       }),
     failRequest: (input) => store.fail(input),
     completeRequest: async ({
