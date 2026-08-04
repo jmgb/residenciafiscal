@@ -69,17 +69,24 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
       </div>
 
       {isActive && (
-        <div className='flex justify-end px-4 py-3'>
-          <Button
-            type='button'
-            variant='outline'
-            size='sm'
-            onClick={onCancel}
-            aria-label='Cancelar investigación profunda'
-          >
-            <Square className='h-3.5 w-3.5' aria-hidden='true' />
-            Cancelar
-          </Button>
+        <div className='space-y-2 px-4 py-3'>
+          {job.error && (
+            <p role='alert' className='text-sm text-destructive'>
+              {job.error}
+            </p>
+          )}
+          <div className='flex justify-end'>
+            <Button
+              type='button'
+              variant='outline'
+              size='sm'
+              onClick={onCancel}
+              aria-label='Cancelar investigación profunda'
+            >
+              <Square className='h-3.5 w-3.5' aria-hidden='true' />
+              Cancelar
+            </Button>
+          </div>
         </div>
       )}
 

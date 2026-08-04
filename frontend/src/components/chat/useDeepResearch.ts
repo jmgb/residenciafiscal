@@ -16,6 +16,20 @@ export const messagePatchForDeepResearchStatus = (
   return { content: job.result.text, deepResearch: job };
 };
 
+export const withDeepResearchCancelError = (job: DeepResearchJob): DeepResearchJob => ({
+  ...job,
+  error: 'No se ha podido cancelar la investigación.',
+});
+
+export const mergeDeepResearchPoll = (
+  previous: DeepResearchJob,
+  next: DeepResearchJob
+): DeepResearchJob => {
+  const nextIsActive = next.status === 'queued' || next.status === 'running';
+  if (!nextIsActive || next.error || !previous.error) return next;
+  return { ...next, error: previous.error };
+};
+
 export const comparisonIdForLatestQuestion = (messages: ChatMessage[]): string | undefined => {
   const latestQuestionIndex = messages.reduce(
     (latest, message, index) => (message.role === 'user' ? index : latest),
@@ -119,13 +133,13 @@ export const useDeepResearch = ({
   const cancel = useCallback(
     async (jobId: string) => {
       if (!conversationId || !jobId || jobId === 'pending') return;
+      const message = [
+        ...(useConversations.getState().getConversation(conversationId)?.messages ?? []),
+      ]
+        .reverse()
+        .find((candidate) => candidate.deepResearch?.jobId === jobId);
       try {
         await cancelDeepResearch(jobId, conversationId);
-        const message = [
-          ...(useConversations.getState().getConversation(conversationId)?.messages ?? []),
-        ]
-          .reverse()
-          .find((candidate) => candidate.deepResearch?.jobId === jobId);
         if (message) {
           updateMessage(conversationId, message.id, {
             deepResearch: {
@@ -137,7 +151,11 @@ export const useDeepResearch = ({
           });
         }
       } catch {
-        // El siguiente polling conserva el estado vigente y permite reintentar.
+        if (message?.deepResearch) {
+          updateMessage(conversationId, message.id, {
+            deepResearch: withDeepResearchCancelError(message.deepResearch),
+          });
+        }
       }
     },
     [conversationId, updateMessage]
@@ -157,7 +175,10 @@ export const useDeepResearch = ({
           .reverse()
           .find((candidate) => candidate.deepResearch?.jobId === activeJobId);
         if (message) {
-          updateMessage(conversationId, message.id, messagePatchForDeepResearchStatus(next));
+          const visibleNext = message.deepResearch
+            ? mergeDeepResearchPoll(message.deepResearch, next)
+            : next;
+          updateMessage(conversationId, message.id, messagePatchForDeepResearchStatus(visibleNext));
         }
         if (next.status === 'completed' || next.status === 'cancelled' || next.status === 'error') {
           trackEvent('investigacion_profunda_respondida', {

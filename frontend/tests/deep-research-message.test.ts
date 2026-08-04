@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { messagePatchForDeepResearchStatus } from '@/components/chat/useDeepResearch';
+import {
+  mergeDeepResearchPoll,
+  messagePatchForDeepResearchStatus,
+  withDeepResearchCancelError,
+} from '@/components/chat/useDeepResearch';
 import type { DeepResearchJob } from '@/types/chat';
 
 describe('deep research assistant message', () => {
@@ -41,5 +45,27 @@ describe('deep research assistant message', () => {
     };
 
     expect(messagePatchForDeepResearchStatus(job)).toEqual({ deepResearch: job });
+  });
+
+  it('keeps a cancellation error visible until cancellation succeeds or the job finishes', () => {
+    const running: DeepResearchJob = {
+      jobId: 'deep-job-1',
+      status: 'running',
+      stage: 'reading',
+      result: null,
+    };
+    const failedCancellation = withDeepResearchCancelError(running);
+
+    expect(failedCancellation.error).toBe('No se ha podido cancelar la investigación.');
+    expect(mergeDeepResearchPoll(failedCancellation, running).error).toBe(
+      'No se ha podido cancelar la investigación.'
+    );
+    expect(
+      mergeDeepResearchPoll(failedCancellation, {
+        ...running,
+        status: 'cancelled',
+        stage: 'cancelled',
+      }).error
+    ).toBeUndefined();
   });
 });

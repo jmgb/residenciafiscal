@@ -63,6 +63,28 @@ describe('DeepResearchCard', () => {
     expect(screen.queryByText(/razonamiento|cadena de pensamiento/i)).not.toBeInTheDocument();
   });
 
+  it('shows a cancellation failure without hiding the active job or retry button', () => {
+    render(
+      <DeepResearchCard
+        job={{
+          jobId: 'deep-1',
+          status: 'running',
+          stage: 'reading',
+          result: null,
+          error: 'No se ha podido cancelar la investigación.',
+        }}
+        onCancel={() => undefined}
+      />
+    );
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'No se ha podido cancelar la investigación.'
+    );
+    expect(
+      screen.getByRole('button', { name: 'Cancelar investigación profunda' })
+    ).toBeInTheDocument();
+  });
+
   it('renders conclusions, evidence and scope as separate readable blocks', () => {
     render(
       <DeepResearchCard
