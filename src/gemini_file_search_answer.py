@@ -22,6 +22,7 @@ from judicial_authority import (
     authority_label,
     authority_match,
     authority_metadata_filter,
+    extract_judgment_identifiers,
     requested_judicial_authority,
 )
 from legal_text_matching import extract_verbatim_fragment, normalize_legal_text
@@ -173,7 +174,14 @@ class GeminiFileSearchResponder:
     async def _answer_once(self, question: str, *, request_id: str) -> tuple[StrategyAnswer, bool]:
         started = time.perf_counter()
         authority_intent = requested_judicial_authority(question)
-        metadata_filter = authority_metadata_filter(authority_intent)
+        # Una pregunta sobre una sentencia concreta filtra por ella; la
+        # autoridad solo decide cuando no hay un identificador inequívoco.
+        judgment_ids = extract_judgment_identifiers(question)
+        metadata_filter = (
+            f'judgment_id="{judgment_ids[0]}"'
+            if len(judgment_ids) == 1
+            else authority_metadata_filter(authority_intent)
+        )
         authority_instruction = (
             f" La pregunta pide {authority_label(authority_intent)}: usa autoridad directa de ese "
             "órgano y no presentes como propia doctrina contenida solo en una sentencia de otro "

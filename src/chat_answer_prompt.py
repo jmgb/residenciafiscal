@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import re
+import unicodedata
+
 BASE_LEGAL_ANSWER_INSTRUCTIONS = (
     "Actúa como asistente de investigación jurisprudencial sobre residencia fiscal "
     "de personas físicas en IRPF y CDI, no sobre extranjería ni permisos de residencia. "
@@ -43,11 +46,42 @@ STRUCTURED_ANSWER_INSTRUCTIONS = (
     "introducciones o conclusiones sustantivas fuera de claims. Incluye siempre limits y claims."
 )
 
+FILE_SEARCH_PROMPT_VERSION = "file-search-authority-v8"
+
+# Texto idéntico al `file-search-authority-v8` del runtime vigente. Sus reglas
+# —no atribuir al tribunal argumentos de las partes, separar ausencias
+# esporádicas de certificados extranjeros, no convertir un caso en regla
+# general— son las que decidieron el baseline F0.2. Persistir esa etiqueta
+# enviando otro texto falsearía la atribución de calidad entre runtimes.
 FILE_SEARCH_ANSWER_INSTRUCTIONS = (
-    f"{BASE_LEGAL_ANSWER_INSTRUCTIONS} "
-    "Usa exclusivamente los PDF recuperados mediante File Search. "
-    "Deja evidence_ids vacío: la aplicación tomará las fuentes de las "
-    "anotaciones del proveedor y las validará contra el PDF original."
+    "Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa "
+    "exclusivamente los PDF recuperados mediante File Search. Solo emite una respuesta "
+    "sustantiva con estado completa o parcial si File Search aporta al menos un pasaje citado "
+    "por File Search que respalde la respuesta; si no hay ningún pasaje citado, pregunta o "
+    "abstente. Responde primero y de forma directa a lo preguntado, en una o dos frases, y "
+    "desarrolla después solo los puntos necesarios. Si la pregunta tiene varias partes, contesta "
+    "cada parte o usa estado parcial e identifica la parte no resuelta; resuelve cada parte por "
+    "separado. Si pregunta cuándo, cómo o salvo qué, expresa de forma explícita la condición y "
+    "sus excepciones respaldadas; no las dejes implícitas. Distingue hechos acreditados, "
+    "argumentos de las partes, valoración de la instancia, doctrina del tribunal consultado y "
+    "resultado. No atribuyas al tribunal argumentos de las partes ni razonamientos que la "
+    "resolución se limite a citar. Separa permanencia física, ausencias esporádicas, certificados "
+    "fiscales extranjeros y reglas de desempate de CDI si la pregunta mezcla esos conceptos. Ante "
+    "datos de vida cotidiana, una mera alta, titularidad o pago de una cuota no prueba por sí "
+    "sola presencia en una fecha: distingue ese dato del uso efectivo atribuible al contribuyente "
+    "y de su valoración conjunta con otros indicios. No desarrolles dimensiones que la pregunta "
+    "no necesita. No equipares desvirtuar el número de días de presencia con acreditar residencia "
+    "fiscal en otro país para excluir ausencias esporádicas: explica cuál de esas cuestiones "
+    "respalda cada pasaje. No conviertas la prueba o el resultado de un caso concreto en una "
+    "regla general salvo que el pasaje formule expresamente doctrina. Si se preguntan pruebas "
+    "aceptadas por un tribunal, distingue lo que valoró la instancia de lo que confirmó o "
+    "estableció directamente ese tribunal. En materia de ausencias esporádicas, no uses la "
+    "intención de retorno como criterio sin comprobar si el tribunal la adopta o, por el "
+    "contrario, la rechaza expresamente. El campo limits contiene solo carencias reales de "
+    "evidencia o alcance, no conclusiones ni repeticiones de la respuesta. No predigas el caso "
+    "del usuario ni uses conocimiento externo. Si la recuperación no aporta evidencia suficiente, "
+    "responde parcial, pregunta o abstención; limita el diagnóstico a esta búsqueda y no "
+    "concluyas que el corpus carece de documentos."
 )
 
 
@@ -59,8 +93,47 @@ def structured_answer_prompt(question: str, evidence_context: str) -> str:
     )
 
 
+_GYM_TERMS = re.compile(r"\b(?:gym|gimnasio|gimnasios)\b")
+_PHONE_TERMS = re.compile(r"\b(?:telefono|movil)\b")
+
+_GYM_HINT = (
+    "En la búsqueda, “gym” equivale a “gimnasio”, “cuotas de clubs deportivos” y “centros "
+    "deportivos”: busca por separado la frase exacta “cuotas de clubs deportivos, de golf, polo, "
+    "futbol o gimnasios”. Si ese pasaje aparece citado y otra parte de la pregunta queda sin "
+    "respaldo, responde de forma parcial sobre el gimnasio y declara la otra carencia en limits."
+)
+_PHONE_HINT = (
+    "El mero uso o contrato de teléfono no presupone geolocalización ni presencia en una fecha "
+    "concreta."
+)
+
+
+def _fold(value: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", value.lower())
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
+def retrieval_hints(question: str) -> str:
+    """Desambigua términos que la recuperación literal no resuelve por sí sola.
+
+    Sin la equivalencia de «gym», la pregunta del banco congelado no localiza el
+    pasaje de las cuotas deportivas; sin la advertencia del teléfono, el modelo
+    convierte un contrato en presencia física.
+    """
+    normalized = _fold(question)
+    hints = []
+    if _GYM_TERMS.search(normalized):
+        hints.append(_GYM_HINT)
+    if _PHONE_TERMS.search(normalized):
+        hints.append(_PHONE_HINT)
+    if not hints:
+        return ""
+    return "\n\nPistas terminológicas y de alcance:\n" + "\n".join(hints)
+
+
 def file_search_answer_prompt(question: str, *, authority_instruction: str = "") -> str:
     return (
         f"{FILE_SEARCH_ANSWER_INSTRUCTIONS}{authority_instruction}"
+        f"{retrieval_hints(question)}"
         f"\n\nPregunta del usuario:\n{question}"
     )

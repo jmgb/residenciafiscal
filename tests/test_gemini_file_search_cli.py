@@ -80,6 +80,9 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
             strategy="current_structured",
             status="completa",
             cost=SimpleNamespace(amount_usd="0.000001", measurement="ACTUAL"),
+            claims=(),
+            sources=(),
+            limits=(),
         )
         return SimpleNamespace(answers=[answer, answer])
 

@@ -238,7 +238,7 @@ comparación provisional de calidad, latencia y coste están en
 | `CHAT_COMPARISON_ENABLED` | sí | Debe ser exactamente `true`; en otro caso `/chat` responde `503` |
 | `CHAT_HMAC_SECRET` | sí en preview/producción | Secreto HMAC propio del chat, solo en Netlify y Alfredo |
 | `CHAT_PROXY_HMAC_REQUIRED` | sí en preview/producción | Debe ser `true`; local permanece `false` por D8 |
-| `CHAT_RATE_LIMIT_ENABLED` | sí al activar tráfico | Habilita la cuota autoritativa en FastAPI |
+| `CHAT_RATE_LIMIT_ENABLED` | sí al activar tráfico | Habilita la cuota autoritativa en FastAPI; con `CHAT_PROXY_HMAC_REQUIRED=true` el arranque falla sin ella |
 | `SUPABASE_CHAT_RUNTIME_KEY` | sí al activar persistencia | Rol RPC restringido; no es la clave global de Supabase |
 | `OPENAI_API_KEY` | sí para Luna | Credencial de la estrategia A mediante el gateway |
 | `GEMINI_API_KEY` | sí | Credencial de File Search B |

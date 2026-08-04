@@ -80,3 +80,23 @@ def require_single_process_state() -> None:
             "la cuota y el anti-replay del chat viven en memoria de un proceso: "
             f"{workers} workers los harían inefectivos"
         )
+
+
+def _flag(name: str) -> bool:
+    return os.getenv(name, "").strip().lower() in {"1", "true", "yes"}
+
+
+def require_quota_when_exposed() -> None:
+    """Impide servir tráfico expuesto sin cuota autoritativa.
+
+    Con la fachada firmando peticiones, el borde solo descarta abuso evidente.
+    Si además el backend arranca con el limitador apagado, no queda ninguna
+    capa que proteja el gasto, y el runbook la declara obligatoria al abrir
+    tráfico. Local no se ve afectado: allí no se exige firma.
+    """
+    if _flag("CHAT_COMPARISON_ENABLED") and _flag("CHAT_PROXY_HMAC_REQUIRED"):
+        if not _flag("CHAT_RATE_LIMIT_ENABLED"):
+            raise RuntimeError(
+                "CHAT_RATE_LIMIT_ENABLED es obligatoria cuando el chat sirve "
+                "tráfico firmado: sin ella no hay cuota autoritativa"
+            )

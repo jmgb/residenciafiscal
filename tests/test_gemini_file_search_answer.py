@@ -157,9 +157,12 @@ async def test_respuesta_file_search_solo_publica_cita_literal_verificada(
     ]
     assert request["response_format"]["mime_type"] == "application/json"
     assert request["response_format"]["schema"]["title"] == "ChatAnswerDraft"
-    assert "No predigas el resultado" in request["input"]
-    assert "residencia fiscal" in request["input"]
-    assert "no sobre extranjería" in request["input"]
+    # B envía exactamente el prompt que declara persistir. Repetir frases aquí
+    # dejaba pasar un texto distinto del `file-search-authority-v8` etiquetado.
+    from chat_answer_prompt import file_search_answer_prompt
+
+    assert request["input"] == file_search_answer_prompt("¿Qué hechos valoró la Sala?")
+    assert "No predigas el caso del usuario" in request["input"]
 
 
 async def test_descarta_respuesta_sustantiva_si_no_queda_ninguna_cita_verificada(

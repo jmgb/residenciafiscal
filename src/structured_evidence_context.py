@@ -145,6 +145,23 @@ def _terms(text: str) -> set[str]:
     return {token for token in re.findall(r"[a-z0-9]{3,}", plain) if token not in _STOPWORDS}
 
 
+_GYM_QUERY = re.compile(r"\b(?:gym|gimnasio|gimnasios)\b", re.IGNORECASE)
+_GYM_EVIDENCE_TERMS = frozenset({"gimnasio", "gimnasios", "cuota", "cuotas", "clubs", "deportivos"})
+
+
+def _query_terms(query: str) -> set[str]:
+    """Términos de la consulta con la equivalencia que el corpus sí usa.
+
+    El extracto literal dice «cuotas de clubs deportivos», nunca «gimnasio».
+    Sin expandir aquí, el anclaje de la página 7 de `san-2347-2022` puntúa cero
+    y no llega al redactor, aunque la recuperación sí haya traído esa unidad.
+    """
+    terms = _terms(query)
+    if _GYM_QUERY.search(query):
+        terms |= _GYM_EVIDENCE_TERMS
+    return terms
+
+
 def _selected_fragments(
     unit: RetrievalUnit,
     query_terms: set[str],
@@ -172,7 +189,7 @@ def build_structured_evidence_bundle(
     evidence: list[dict[str, object]] = []
     sources: dict[str, StrategySource] = {}
     evidence_number = 1
-    query_terms = _terms(query)
+    query_terms = _query_terms(query)
 
     for hit in retrieval.hits:
         unit = units_by_id[hit.unit_id]

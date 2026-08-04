@@ -17,6 +17,22 @@ JudicialAuthorityMatch = Literal["direct", "missing", "not_requested"]
 
 _SUPREME = re.compile(r"\b(tribunal supremo|supremo|sts)\b")
 _NATIONAL_COURT = re.compile(r"\b(audiencia nacional|san)\b")
+_JUDGMENT_IDENTIFIER = re.compile(r"\b(san|sts)\s*[- ]?\s*(\d+)\s*[/_-]\s*(\d{4})\b", re.I)
+
+
+def extract_judgment_identifiers(text: str) -> tuple[str, ...]:
+    """Normaliza referencias como ``SAN 2132/2025`` al identificador interno.
+
+    Vive aquí, junto a la intención de órgano, porque es la otra lectura de la
+    pregunta que decide qué se recupera. No transporta corpus ni candidatos, así
+    que no cruza la frontera entre estrategias.
+    """
+    return tuple(
+        dict.fromkeys(
+            f"{court.lower()}-{number}-{year}"
+            for court, number, year in _JUDGMENT_IDENTIFIER.findall(text)
+        )
+    )
 
 
 def _fold(value: str) -> str:

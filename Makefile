@@ -20,7 +20,7 @@ SHELL := /bin/bash
 	deep-research-bundle deep-research-bundle-verify \
 	build-chat-runtime-artifact verify-chat-runtime-artifact \
 	deep-research-pilot-prepare deep-research-pilot-run \
-	file-search-prepare compare-chat-strategies build-chat-f03-review \
+	file-search-prepare compare-chat-strategies smoke-chat-schema build-chat-f03-review \
 	build-chat-f03-legal-bundle validate-chat-f03-review \
 	validate-chat-absences-candidate compile-chat-f03-results \
 	file-search-delete \
@@ -142,6 +142,7 @@ help:
 	@echo "  make evaluate-holdout-e0  Mide el holdout congelado sin ajustar el router"
 	@echo "  make file-search-prepare CONFIRM_PAID=1  Crea el store F0 y sube los 5 PDF"
 	@echo "  make compare-chat-strategies CONFIRM_PAID=1 CHAT_QUESTION='...'  Ejecuta F0 con $(FILE_SEARCH_MODEL)"
+	@echo "  make smoke-chat-schema    Una llamada real a A para validar el esquema v4"
 	@echo "  make build-chat-f03-review  Regenera el paquete ciego F0.3 (sin LLM)"
 	@echo "  make build-chat-f03-legal-bundle  Crea el ZIP seguro para el revisor"
 	@echo "  make validate-chat-f03-review  Valida el formulario jurídico F0.3 cerrado"
@@ -337,6 +338,17 @@ compare-chat-strategies:
 		--state $(FILE_SEARCH_STATE) \
 		--log $(FILE_SEARCH_LOG) \
 		--model $(FILE_SEARCH_MODEL) \
+		--confirm-paid
+
+smoke-chat-schema:
+	@test "$(CONFIRM_PAID)" = "1" || \
+		(echo "CONFIRM_PAID=1 es obligatorio: el smoke genera coste" >&2; exit 2)
+	@test "$(CONFIRM_SMOKE)" = "1" || \
+		(echo "CONFIRM_SMOKE=1 es obligatorio: una llamada real a la estrategia A" >&2; exit 2)
+	uv run python $(PYTHON_SOURCE)/gemini_file_search_cli.py compare \
+		"$(CHAT_QUESTION)" \
+		--only a \
+		--log $(FILE_SEARCH_LOG) \
 		--confirm-paid
 
 build-chat-f03-review:

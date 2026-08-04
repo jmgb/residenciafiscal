@@ -305,9 +305,11 @@ Objetivo: convertir las suposiciones de infraestructura en evidencia.
   - fallo de clave y fallo transitorio de cada proveedor.
 - [ ] Medir en la V1 al menos p50/p95 de latencia, tasa de error por estrategia,
       coste, tokens y porcentaje de respuestas sustantivas con cita verificada.
-- [ ] Ejecutar el spike de stream de 90 segundos a través del proxy candidato,
-      partiendo del procedimiento y las cifras ya publicadas del spike de
-      2026-07-29 y midiendo solo el tramo aún desconocido.
+- [ ] Ejecutar el spike de stream de 90 segundos a través del proxy candidato
+      con `uv run python scripts/chat_stream_spike.py <url-preview> --repeat 3`,
+      partiendo de las cifras ya publicadas del spike de 2026-07-29 y midiendo
+      solo el tramo aún desconocido. El cliente cuenta latidos, evento terminal
+      y duración; no envía preguntas reales.
 - [ ] Verificar cancelación del navegador y cierre de conexión aguas arriba.
 - [ ] Comprobar si el proveedor del VPS ya trata datos personales por el piloto
       de investigación profunda y no figura entre los encargados publicados. Si
@@ -363,20 +365,26 @@ Objetivo: impedir que el port cambie silenciosamente el producto.
 Objetivo: hacer que FastAPI produzca las mismas respuestas publicables y
 aplique los mismos cierres de seguridad.
 
-- [ ] Portar la recuperación léxica y el análisis de facetas vigentes.
+- [x] Portar la recuperación léxica y el análisis de facetas vigentes,
+      incluida la tabla de sinónimos y la expansión de términos al elegir
+      anclajes. Sin ambas, la pregunta de gimnasio no alcanzaba
+      `san-2347-2022` y el redactor se abstenía por falta de extracto.
 - [ ] Portar la selección y expansión de anclajes verbatim.
-- [ ] Portar `structured-claims-v4` y su gate de relevancia literal.
+- [x] Portar `structured-claims-v4` y su gate de relevancia literal.
 - [ ] Configurar A exclusivamente mediante `GatewayChatWriter(get_gateway())`.
 - [ ] Mantener `FallbackPolicy.disabled()` para A.
 - [ ] Activar el store con metadata exacta de autoridad y verificar 106/106 PDF.
-- [ ] Portar `file-search-authority-v8`.
+- [x] Portar `file-search-authority-v8`, con pistas terminológicas y filtro por sentencia.
 - [ ] Forzar File Search en B cuando el SDK Python lo permita; si el SDK no
       expone el control, caracterizarlo y documentar la alternativa.
 - [ ] Portar el segundo y último intento de B solo ante respuesta sustantiva sin
       cita verificable.
 - [ ] Sumar uso y coste de todos los intentos, incluso si el último falla.
 - [ ] Igualar diagnósticos públicos y privados sin guardar mensajes de proveedor.
-- [ ] Añadir el smoke opt-in con doble confirmación de coste.
+- [x] Añadir el smoke opt-in con doble confirmación de coste:
+      `make smoke-chat-schema CONFIRM_PAID=1 CONFIRM_SMOKE=1 CHAT_QUESTION=...`
+      ejecuta una sola llamada de A. Su gate offline —que el contrato v4
+      sobrevive al modo estricto— está en `tests/test_chat_schema_strict_mode.py`.
 - [ ] Actualizar la documentación del gateway y de estrategias en el mismo
       cambio, manteniendo el runtime vigente descrito como Netlify-only hasta
       que se autorice el corte.

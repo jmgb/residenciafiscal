@@ -59,6 +59,15 @@ def _parser() -> argparse.ArgumentParser:
         ),
     )
     compare.add_argument("--confirm-paid", action="store_true")
+    compare.add_argument(
+        "--only",
+        choices=("a", "b"),
+        help=(
+            "Ejecuta una sola estrategia. Sirve para el smoke de esquema, que "
+            "solo necesita comprobar que A sobrevive al modo estricto sin pagar "
+            "también la llamada de B."
+        ),
+    )
 
     delete = subcommands.add_parser("delete-store")
     delete.add_argument("--state", type=Path, default=DEFAULT_STORE_STATE)
@@ -67,7 +76,6 @@ def _parser() -> argparse.ArgumentParser:
 
 
 def _api_key() -> str:
-    load_dotenv(PROJECT_ROOT / ".env")
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise SystemExit("Falta GEMINI_API_KEY")
@@ -124,30 +132,35 @@ def _verbatim_artifacts(receipt: StoreReceipt) -> dict[str, Path]:
 
 def _compare(args: argparse.Namespace) -> int:
     _require_paid_confirmation(args.confirm_paid)
-    receipt = _load_store(args.state)
-    api_key = _api_key()
-    gateway = create_google_genai_gateway(api_key)
-    writer = GatewayChatWriter(get_gateway())
-    corpus = load_retrieval_corpus(args.corpus.read_bytes())
+    only = getattr(args, "only", None)
+    run_structured = only in (None, "a")
+    run_file_search = only in (None, "b")
+    structured = None
+    file_search = None
+    if run_structured:
+        structured = CurrentStructuredStrategy(
+            load_retrieval_corpus(args.corpus.read_bytes()),
+            # A usa la política del chat; B, el modelo de File Search. Pasar el
+            # mismo `--model` a las dos ataba A a una capacidad que no usa.
+            writer=GatewayChatWriter(get_gateway()),
+            model=CHAT_MODEL,
+            reasoning_effort=CHAT_REASONING_EFFORT,
+        )
+    if run_file_search:
+        receipt = _load_store(args.state)
+        file_search = GeminiFileSearchResponder(
+            gateway=create_google_genai_gateway(_api_key()),
+            store_name=receipt.store_name,
+            verbatim_artifacts=_verbatim_artifacts(receipt),
+            model=args.model,
+        )
     request_id = f"f0-{uuid.uuid4()}"
     output = args.output or PROJECT_ROOT / f"output/file-search/{request_id}.json"
     report = asyncio.run(
         compare_strategies(
             question=args.question,
-            # A usa la política del chat; B, el modelo de File Search. Pasar el
-            # mismo `--model` a las dos ataba A a una capacidad que no usa.
-            structured=CurrentStructuredStrategy(
-                corpus,
-                writer=writer,
-                model=CHAT_MODEL,
-                reasoning_effort=CHAT_REASONING_EFFORT,
-            ),
-            file_search=GeminiFileSearchResponder(
-                gateway=gateway,
-                store_name=receipt.store_name,
-                verbatim_artifacts=_verbatim_artifacts(receipt),
-                model=args.model,
-            ),
+            structured=structured,
+            file_search=file_search,
             output_path=output,
             log_path=args.log,
             request_id=request_id,
@@ -156,8 +169,11 @@ def _compare(args: argparse.Namespace) -> int:
     for answer in report.answers:
         print(
             f"{answer.strategy}: {answer.status} — "
-            f"USD {answer.cost.amount_usd} ({answer.cost.measurement})"
+            f"USD {answer.cost.amount_usd} ({answer.cost.measurement}) — "
+            f"{len(answer.claims)} afirmaciones sobre {len(answer.sources)} citas"
         )
+        for limit in answer.limits:
+            print(f"  límite: {limit}")
     print(f"Comparación: {output}")
     return 0
 
@@ -175,6 +191,9 @@ def _delete(args: argparse.Namespace) -> int:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    # El entorno se carga una vez por invocación. Hacerlo dentro del lector de
+    # la clave de Gemini ataba las credenciales de A a que B se ejecutara.
+    load_dotenv(PROJECT_ROOT / ".env")
     args = _parser().parse_args(argv)
     if args.command == "prepare-store":
         return _prepare(args)

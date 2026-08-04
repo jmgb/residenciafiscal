@@ -26,6 +26,42 @@ def test_las_salvedades_y_la_evidencia_son_obligatorias() -> None:
     assert {"limits", "claims"} <= obligatorios
 
 
+def test_los_prompts_declaran_la_version_que_se_persiste() -> None:
+    """Etiquetar una fila con una versión y enviar otro texto falsea el experimento.
+
+    La versión de prompt viaja a Supabase por petición y decide con qué se
+    comparan las métricas. Si el texto no es el que la etiqueta nombra, las dos
+    ejecuciones dejan de ser comparables sin que nada avise.
+    """
+    from chat_answer_prompt import (
+        FILE_SEARCH_ANSWER_INSTRUCTIONS,
+        FILE_SEARCH_PROMPT_VERSION,
+        STRUCTURED_ANSWER_INSTRUCTIONS,
+        STRUCTURED_PROMPT_VERSION,
+    )
+
+    assert STRUCTURED_PROMPT_VERSION == "structured-claims-v4"
+    assert FILE_SEARCH_PROMPT_VERSION == "file-search-authority-v8"
+    # Las reglas que el baseline F0.2 midió y que distinguen v8 de un prompt
+    # genérico: si desaparecen, la etiqueta deja de describir el texto.
+    for regla in (
+        "No atribuyas al tribunal argumentos de las partes",
+        "ausencias esporádicas",
+        "no conviertas la prueba o el resultado de un caso concreto en una regla general".lower(),
+    ):
+        assert regla.lower() in FILE_SEARCH_ANSWER_INSTRUCTIONS.lower()
+    for regla in ("claims", "afirmaciones jurídicas atómicas", "judgment_id"):
+        assert regla.lower() in STRUCTURED_ANSWER_INSTRUCTIONS.lower()
+
+
+def test_las_pistas_terminologicas_solo_aparecen_cuando_procede() -> None:
+    from chat_answer_prompt import retrieval_hints
+
+    assert "gimnasios" in retrieval_hints("¿Sirve la cuota del gym como prueba?")
+    assert "geolocalización" in retrieval_hints("¿Y el teléfono móvil?")
+    assert retrieval_hints("¿Qué son las ausencias esporádicas?") == ""
+
+
 def test_el_prompt_pide_los_campos_que_el_contrato_exige() -> None:
     """Exigir en el esquema lo que las instrucciones callan es una trampa.
 

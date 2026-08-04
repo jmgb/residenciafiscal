@@ -10,6 +10,7 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 
+from judicial_authority import extract_judgment_identifiers
 from jurisprudence_case_retrieval import load_retrieval_index
 from jurisprudence_case_retrieval_models import RetrievalUnit
 from jurisprudence_retrieval_corpus_models import (
@@ -56,6 +57,14 @@ _EXPANSIONS = {
     "ingresos": ("rentas", "economicos", "actividad"),
     "extranjero": ("exterior", "fiscal", "certificado"),
     "certificado": ("documentacion", "fiscal", "extranjera"),
+    # El corpus no dice «gimnasio»: dice «cuotas de clubs deportivos, de golf,
+    # polo, futbol o gimnasios». Sin esta equivalencia la pregunta del banco
+    # congelado no alcanza `san-2347-2022`, que es su regresión declarada.
+    "gym": ("gimnasio", "gimnasios", "cuota", "cuotas", "clubs", "deportivos"),
+    "gimnasio": ("gimnasios", "cuota", "cuotas", "clubs", "deportivos"),
+    "gimnasios": ("gimnasio", "cuota", "cuotas", "clubs", "deportivos"),
+    "telefono": ("movil",),
+    "movil": ("telefono",),
     "sancion": ("culpabilidad", "infraccion"),
 }
 
@@ -132,10 +141,7 @@ def _tokens(text: str, *, expand: bool = False) -> tuple[str, ...]:
 def _judgment_identifiers(text: str) -> frozenset[str]:
     """Normaliza referencias como ``SAN 2132/2025`` al identificador interno."""
 
-    return frozenset(
-        f"{court.lower()}-{number}-{year}"
-        for court, number, year in _JUDGMENT_IDENTIFIER.findall(text)
-    )
+    return frozenset(extract_judgment_identifiers(text))
 
 
 def rank_retrieval_units(

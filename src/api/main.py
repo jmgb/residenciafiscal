@@ -25,7 +25,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse, RedirectResponse
 
 from api.chat import router as chat_router
-from api.chat_rate_limit import require_single_process_state
+from api.chat_rate_limit import require_quota_when_exposed, require_single_process_state
 from api.sentry_config import init_sentry
 from chat_model_policy import (
     CHAT_MODEL,
@@ -41,6 +41,7 @@ from config import (
 load_dotenv()
 init_sentry()
 require_single_process_state()
+require_quota_when_exposed()
 
 app = FastAPI(
     title="Residencia Fiscal API",

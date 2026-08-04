@@ -352,6 +352,97 @@ def test_rate_limit_autoritativo_vive_en_fastapi_y_expira_por_ventana() -> None:
     assert limiter.allow("client-a", now=161.0) is True
 
 
+@pytest.mark.asyncio
+async def test_el_stream_late_mientras_el_comparador_trabaja() -> None:
+    """Sin latido, un intermediario cierra una conexión inactiva de 90 s.
+
+    El comparador no emite tokens: entre la primera cabecera y el primer evento
+    puede no salir un solo byte durante todo el presupuesto.
+    """
+    import api.chat as chat_module
+
+    async def slow() -> Any:
+        await asyncio.sleep(0.25)
+        return "listo"
+
+    comparison = asyncio.ensure_future(slow())
+    monkey = chat_module.HEARTBEAT_SECONDS
+    chat_module.HEARTBEAT_SECONDS = 0.05
+    try:
+        beats = [beat async for beat in chat_module._heartbeats(comparison, 5.0)]
+    finally:
+        chat_module.HEARTBEAT_SECONDS = monkey
+
+    assert beats
+    assert all(beat == b": keep-alive\n\n" for beat in beats)
+    assert comparison.result() == "listo"
+
+
+@pytest.mark.asyncio
+async def test_el_latido_no_sobrevive_al_presupuesto_global() -> None:
+    import api.chat as chat_module
+
+    async def never() -> Any:
+        await asyncio.sleep(30)
+
+    comparison = asyncio.ensure_future(never())
+    monkey = chat_module.HEARTBEAT_SECONDS
+    chat_module.HEARTBEAT_SECONDS = 0.02
+    try:
+        with pytest.raises(TimeoutError):
+            async for _ in chat_module._heartbeats(comparison, 0.1):
+                pass
+    finally:
+        chat_module.HEARTBEAT_SECONDS = monkey
+
+    # La cancelación se propaga al proveedor: agotar el presupuesto no puede
+    # dejar una llamada de pago corriendo sin nadie esperándola.
+    with pytest.raises(asyncio.CancelledError):
+        await comparison
+    assert comparison.cancelled()
+
+
+def test_la_pregunta_de_gimnasio_recupera_su_sentencia_declarada() -> None:
+    """Regresión obligatoria del plan, comprobada contra el corpus real.
+
+    El corpus no dice «gimnasio»: dice «cuotas de clubs deportivos, de golf,
+    polo, futbol o gimnasios». Sin la equivalencia léxica, la recuperación de A
+    no llega a `san-2347-2022` y la respuesta se construye sobre otra sentencia
+    sin que nada falle.
+    """
+    from jurisprudence_phase_d_retrieval import retrieve_for_chat
+    from jurisprudence_retrieval_corpus import load_retrieval_corpus
+
+    corpus_path = Path("knowledge/jurisprudencia-v3/retrieval/rollout-106.corpus.json")
+    if not corpus_path.is_file():  # pragma: no cover - el rollout no está en todos los checkouts
+        pytest.skip("el corpus del rollout no está disponible")
+    corpus = load_retrieval_corpus(corpus_path.read_bytes())
+
+    gimnasio = retrieve_for_chat(
+        corpus, "¿Sirve la cuota de un gimnasio como prueba de presencia en España?", limit=5
+    )
+    telefono = retrieve_for_chat(corpus, "¿Y el teléfono móvil prueba la presencia?", limit=5)
+
+    assert "san-2347-2022" in [hit.judgment_id for hit in gimnasio.hits]
+    assert "san-2347-2022" in [hit.judgment_id for hit in telefono.hits]
+
+    # Recuperar la sentencia no basta: el anclaje literal de la página 7 tiene
+    # que llegar al redactor, o la respuesta se abstiene por falta de extracto.
+    from structured_evidence_context import build_structured_evidence_bundle
+
+    bundle = build_structured_evidence_bundle(
+        gimnasio,
+        {unit.unit_id: unit for unit in corpus.units},
+        "¿Sirve la cuota de un gimnasio como prueba de presencia en España?",
+    )
+    anclajes = [
+        source
+        for source in bundle.sources_by_evidence_id.values()
+        if source.judgment_id == "san-2347-2022" and source.page == 7
+    ]
+    assert any("clubs deportivos" in source.quote for source in anclajes)
+
+
 def test_el_limitador_no_acumula_claves_muertas() -> None:
     from api.chat_rate_limit import SlidingWindowRateLimiter
 
