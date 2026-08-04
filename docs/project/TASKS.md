@@ -1295,3 +1295,37 @@ orden recomendado:
 - El sitemap sólo contiene URLs públicas, canónicas y rastreables.
 - `/c/` permanece fuera del índice por ser contenido de conversación dinámico.
 - El WAF no bloquea Googlebot, crawlers LLM ni monitores autorizados.
+
+## Migración del chat a Alfredo (2026-08-04) — pausada y mapeada
+
+Estado, inventario de lo que quedó corriendo y ruta de reanudación en
+[`CHAT_ALFREDO_STATE.md`](CHAT_ALFREDO_STATE.md). Contrato y gates en
+[`CHAT_ALFREDO_MIGRATION_PLAN.md`](CHAT_ALFREDO_MIGRATION_PLAN.md); decisiones
+en [`ADR-20260804-chat-alfredo.md`](../decisions/ADR-20260804-chat-alfredo.md).
+
+**Producción sigue en la Netlify Function.** El runtime FastAPI está instalado
+en el host de operaciones pero **cerrado**: sin credenciales, sin persistencia,
+solo en loopback, y `POST /chat` responde `503`. No atiende usuarios ni gasta.
+
+- [ ] **Cerrar la deuda documental del fallback de modelo, o revertirlo.** El
+  commit `f2e7633` deja `gpt-5.6-terra` activo por defecto en la estrategia A y
+  hace `CHAT_MODEL` configurable por entorno. Eso contradice `CLAUDE.md`, el
+  invariante 6 del plan, su tarea de fase 2 y `CHAT_SYSTEM_ARCHITECTURE.md`. No
+  depende de infraestructura y es lo primero al retomar.
+- [ ] **Materializar el banco de regresión congelado de la fase 0.** Las cuatro
+  divergencias del port que destapó el smoke real aparecieron comparando
+  constantes a mano; sin banco, la paridad seguirá dependiendo de eso.
+- [ ] **Medir el gate F0** con `scripts/chat_stream_spike.py` contra un Deploy
+  Preview. Si falla, mover la fachada a Cloudflare —no llamar al VPS directo:
+  el porqué está en la sección 5 del estado.
+- [ ] **Crear el rol restringido de Postgres (D2)** con `EXECUTE` solo sobre las
+  tres RPC de ciclo de vida y tests de privilegios negativos. Bloquea abrir la
+  persistencia y, con ella, el contenedor del host.
+- [ ] **Dar de alta el monitor externo del health** (alta manual: UptimeRobot
+  rechaza escrituras por API en este plan) y el **DSN de Sentry** del cuarto
+  runtime, hoy declarado en `.autofix.yml` pero sin recibir eventos.
+- [ ] **Actualizar `/privacidad`** en el mismo cambio que enrute al primer
+  usuario real. Es prerrequisito bloqueante del canary, no limpieza posterior.
+- [ ] **Decidir si se retira.** Si la migración se abandona, el paso único es
+  eliminar el contenedor y su directorio de releases del host y registrar la
+  decisión.

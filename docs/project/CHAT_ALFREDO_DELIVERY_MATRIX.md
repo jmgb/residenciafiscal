@@ -1,7 +1,9 @@
 # Entregas de la migración del chat a Alfredo
 
-Este registro acompaña a `CHAT_ALFREDO_MIGRATION_PLAN.md`. Describe lo que está
-implementado en el repositorio, no lo que está desplegado.
+Este registro acompaña a [`CHAT_ALFREDO_MIGRATION_PLAN.md`](CHAT_ALFREDO_MIGRATION_PLAN.md).
+Describe lo que está implementado en el repositorio, no lo que está desplegado.
+El estado de la migración y su ruta de reanudación están en
+[`CHAT_ALFREDO_STATE.md`](CHAT_ALFREDO_STATE.md).
 
 | Entrega | Implementado aquí | Estado operativo |
 |---|---|---|

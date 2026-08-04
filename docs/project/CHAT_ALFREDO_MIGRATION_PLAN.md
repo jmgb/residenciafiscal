@@ -1,6 +1,9 @@
 # Plan de migración del chat A/B a Alfredo
 
 **Estado:** propuesta ejecutable; no autoriza todavía el corte de producción.
+La ejecución está **pausada por prioridad** desde el 4 de agosto de 2026: el
+estado real, lo que quedó corriendo y la ruta de reanudación están en
+[`CHAT_ALFREDO_STATE.md`](CHAT_ALFREDO_STATE.md).
 **Fecha:** 2026-08-04.
 **Baseline de aplicación:** pendiente de congelar en la fase 0. `34fe334`
 (`fix(chat): harden A/B evidence responses`) es el punto de partida del análisis,
