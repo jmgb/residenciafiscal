@@ -14,6 +14,7 @@ from llm_gateway import (
     RetryPolicy,
     TimeoutPolicy,
 )
+from llm_gateway.models import lookup_model
 from pydantic import BaseModel
 
 
@@ -21,6 +22,21 @@ class GatewayPort(Protocol):
     """Puerto mínimo que necesita la fachada; lo implementa `LLMGateway`."""
 
     async def generate(self, request: LLMRequest) -> LLMResult: ...
+
+
+def _validate_cross_provider_fallbacks(
+    ai_model: str,
+    fallback_models: tuple[str, ...],
+) -> None:
+    primary = lookup_model(ai_model)
+    if primary is None:
+        return
+    for fallback_model in fallback_models:
+        fallback = lookup_model(fallback_model)
+        if fallback is not None and fallback.provider == primary.provider:
+            raise ValueError(
+                f"El fallback {fallback_model} debe pertenecer a otro proveedor que {ai_model}"
+            )
 
 
 async def gpt_request(
@@ -47,6 +63,7 @@ async def gpt_request(
     uso, coste y alertas de fallback; el resultado conserva la forma neutral del
     paquete para que cada consumidor lo adapte a su contrato de dominio.
     """
+    _validate_cross_provider_fallbacks(ai_model, fallback_models)
     if gateway is None:
         from gateway_setup import get_gateway
 

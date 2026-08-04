@@ -7,7 +7,10 @@ SOURCE_ROOT = PROJECT_ROOT / "src"
 
 
 def test_la_politica_del_modelo_pertenece_al_chat() -> None:
+    from llm_gateway.models import lookup_model
+
     from chat_model_policy import (
+        CHAT_FALLBACK_MODELS,
         CHAT_MODEL,
         CHAT_REASONING_EFFORT,
         CHAT_SUPPORTED_REASONING_EFFORTS,
@@ -16,6 +19,12 @@ def test_la_politica_del_modelo_pertenece_al_chat() -> None:
     assert CHAT_MODEL == "gpt-5.6-luna"
     assert CHAT_REASONING_EFFORT == "high"
     assert CHAT_REASONING_EFFORT in CHAT_SUPPORTED_REASONING_EFFORTS
+    assert CHAT_FALLBACK_MODELS == ("gemini-3.6-flash",)
+    fallback_info = lookup_model(CHAT_FALLBACK_MODELS[0])
+    primary_info = lookup_model(CHAT_MODEL)
+    assert fallback_info is not None
+    assert primary_info is not None
+    assert fallback_info.provider != primary_info.provider
 
 
 def test_no_existe_una_fachada_llm_para_analizar_sentencias() -> None:

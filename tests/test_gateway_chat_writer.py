@@ -56,9 +56,7 @@ class FallbackProviderAdapter(FakeProviderAdapter):
         self.requests.append(request)
         self.models.append(model)
         return ProviderResponse(
-            output_text="esto no es json"
-            if model.endswith("maverick-17b-128e-instruct")
-            else DRAFT_JSON,
+            output_text="esto no es json" if model == "gpt-5.6-luna" else DRAFT_JSON,
             usage=TokenUsage(120, 30),
             finish_reason="stop",
             model_used=model,
@@ -70,7 +68,7 @@ def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
 
     registry = ProviderRegistry()
     prefixes = {
-        "openai": ("gpt-",),
+        "openai": ("gpt-", "gemini"),
         "groq": ("meta-llama/",),
     }.get(adapter.name, ("gemini",))
     registry.register(adapter, model_prefixes=prefixes)
@@ -176,18 +174,16 @@ class TestPolicies:
     async def test_model_fallback_is_passed_to_the_gateway(self) -> None:
         """El gateway decide cuándo ejecutar el modelo alternativo."""
         adapter = FakeProviderAdapter()
-        adapter.name = "groq"
+        adapter.name = "openai"
 
         await _writer(adapter).write(
             _request(
-                model="meta-llama/llama-4-maverick-17b-128e-instruct",
-                fallback_models=("meta-llama/llama-4-scout-17b-16e-instruct",),
+                model="gpt-5.6-luna",
+                fallback_models=("gemini-3.6-flash",),
             )
         )
 
-        assert adapter.requests[0].fallback_policy.models == (
-            "meta-llama/llama-4-scout-17b-16e-instruct",
-        )
+        assert adapter.requests[0].fallback_policy.models == ("gemini-3.6-flash",)
 
     async def test_the_requested_model_is_pinned(self) -> None:
         adapter = FakeProviderAdapter()
@@ -289,19 +285,19 @@ class TestFailures:
 
     async def test_gateway_executes_the_declared_model_fallback(self) -> None:
         adapter = FallbackProviderAdapter()
-        adapter.name = "groq"
+        adapter.name = "openai"
 
         result = await _writer(adapter).write(
             _request(
-                model="meta-llama/llama-4-maverick-17b-128e-instruct",
-                fallback_models=("meta-llama/llama-4-scout-17b-16e-instruct",),
+                model="gpt-5.6-luna",
+                fallback_models=("gemini-3.6-flash",),
             )
         )
 
-        assert result.model_used == "meta-llama/llama-4-scout-17b-16e-instruct"
+        assert result.model_used == "gemini-3.6-flash"
         assert adapter.models == [
-            "meta-llama/llama-4-maverick-17b-128e-instruct",
-            "meta-llama/llama-4-scout-17b-16e-instruct",
+            "gpt-5.6-luna",
+            "gemini-3.6-flash",
         ]
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:

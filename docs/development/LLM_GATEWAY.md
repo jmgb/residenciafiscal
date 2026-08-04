@@ -143,11 +143,18 @@ malformada o no cumple el esquema, prueba automáticamente cada fallback en el
 orden declarado. Registra los intentos, el modelo que respondió y el coste
 acumulado; la aplicación solo publica el resultado estructurado validado.
 
+El paquete no selecciona un fallback por defecto: `LLMRequest` usa
+`FallbackPolicy.disabled()`. Su helper `FallbackPolicy.cheaper_than()` deriva
+modelos del mismo proveedor de forma deliberada. Como A necesita reducir el
+riesgo de caída de un proveedor, la aplicación declara explícitamente una
+cadena cross-provider (`gpt-5.6-luna` → `gemini-3.6-flash`) y la fachada rechaza
+fallbacks conocidos del mismo proveedor.
+
 La política vigente de A es:
 
 ```bash
 CHAT_MODEL=gpt-5.6-luna
-CHAT_FALLBACK_MODELS=gpt-5.6-terra
+CHAT_FALLBACK_MODELS=gemini-3.6-flash
 ```
 
 El modelo y la cadena se pueden cambiar sin tocar el adaptador, pero los
@@ -159,7 +166,7 @@ reproducible:
 uv run python src/gemini_file_search_cli.py compare \
   "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?" \
   --only a --chat-model gpt-5.6-luna \
-  --chat-fallback-model gpt-5.6-terra --confirm-paid
+  --chat-fallback-model gemini-3.6-flash --confirm-paid
 ```
 
 La versión `0.9.0` conoce los IDs Llama 4, pero la API de Groq ya no los ofrece

@@ -1309,7 +1309,7 @@ solo en loopback, y `POST /chat` responde `503`. No atiende usuarios ni gasta.
 
 - [x] **Cerrar la deuda documental del fallback de modelo.** El commit
   `f2e7633` deja `gpt-5.6-luna` + `high` como configuración primaria de A,
-  `gpt-5.6-terra` como fallback explícito y `CHAT_MODEL` configurable por
+  `gemini-3.6-flash` como fallback cross-provider explícito y `CHAT_MODEL` configurable por
   entorno. La cadena la ejecuta `neutral-llm-gateway`; no existe fallback
   cruzado entre A y B.
 - [ ] **Materializar el banco de regresión congelado de la fase 0.** Las cuatro

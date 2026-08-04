@@ -128,7 +128,7 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
             "--chat-model",
             "gpt-5.6-luna",
             "--chat-fallback-model",
-            "gpt-5.6-terra",
+            "gemini-3.6-flash",
             "--confirm-paid",
         ]
     )
@@ -148,5 +148,5 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
 
     assert captured["structured"]._model == "gpt-5.6-luna"
     assert captured["structured"]._reasoning_effort == CHAT_REASONING_EFFORT
-    assert captured["structured"]._fallback_models == ("gpt-5.6-terra",)
+    assert captured["structured"]._fallback_models == ("gemini-3.6-flash",)
     assert captured["structured"]._model != captured["file_search"]._model

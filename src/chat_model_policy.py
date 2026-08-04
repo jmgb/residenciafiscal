@@ -21,7 +21,7 @@ pagado a precio de salida. Nadie había medido qué calidad compraba a cambio.""
 
 
 def _fallback_models() -> tuple[str, ...]:
-    raw = os.getenv("CHAT_FALLBACK_MODELS", "gpt-5.6-terra")
+    raw = os.getenv("CHAT_FALLBACK_MODELS", "gemini-3.6-flash")
     return tuple(dict.fromkeys(model.strip() for model in raw.split(",") if model.strip()))
 
 
@@ -39,5 +39,11 @@ if CHAT_REASONING_EFFORT not in CHAT_SUPPORTED_REASONING_EFFORTS:
     )
 
 for _fallback_model in CHAT_FALLBACK_MODELS:
-    if lookup_model(_fallback_model) is None:
+    _fallback_info = lookup_model(_fallback_model)
+    if _fallback_info is None:
         raise RuntimeError(f"El catálogo del gateway no declara el fallback {_fallback_model}")
+    if _fallback_info.provider == _chat_model_info.provider:
+        raise RuntimeError(
+            f"El fallback {_fallback_model} debe pertenecer a un proveedor distinto de "
+            f"{CHAT_MODEL} ({_chat_model_info.provider})"
+        )
