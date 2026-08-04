@@ -142,6 +142,10 @@ La clave publicable, `SUPABASE_ACCESS_TOKEN`, `SUPABASE_REF` y
 `SUPABASE_DB_PASSWORD` no pertenecen al runtime. El contrato de almacenamiento,
 campos y permisos está en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md).
 
+`CHAT_STRATEGY_A_ENABLED` y `CHAT_STRATEGY_B_ENABLED` solo los consume la V1
+Netlify-only. El prototipo Python futuro mantiene su composition root A/B
+separado y no adopta automáticamente estos overrides.
+
 El precio TypeScript no es una tabla mantenida a mano. Se exporta del catálogo
 de `neutral-llm-gateway` con:
 
@@ -202,7 +206,7 @@ El store anterior se conserva durante la observación inicial para rollback.
 5. Hacer una sola consulta del banco con autorización de coste. Comprobar una o
    dos respuestas A → B según la configuración, citas verificadas,
    tokens/coste visibles, duración menor de
-   60 s, tres filas en `private.chat_messages` y una petición registrada.
+   60 s, dos o tres filas en `private.chat_messages` y una petición registrada.
 6. Cuadrar tokens y coste con los paneles de OpenAI y Gemini; probar después
    timeout, fallo aislado, límite por IP y límite blando de sesión.
 7. Volver a ambos cierres. Activar Production exige completar privacidad,

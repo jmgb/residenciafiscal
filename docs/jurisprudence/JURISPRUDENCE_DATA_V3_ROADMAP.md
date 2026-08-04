@@ -482,7 +482,8 @@ de revisar las mediciones iniciales; no cambia silenciosamente por alias.
 
 El backend se implementa después de validar el índice:
 
-- durante el experimento, muestra dos respuestas separadas por mensaje:
+- durante el experimento comparativo con A y B activas, muestra dos respuestas
+  separadas por mensaje; con una sola estrategia activa muestra una;
   sistema estructurado actual y Gemini File Search sobre los PDF;
 - mantiene independientes recuperación, redacción, fuentes, errores y métricas
   de cada estrategia;

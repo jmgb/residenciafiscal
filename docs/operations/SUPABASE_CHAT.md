@@ -29,14 +29,14 @@ aceptada produce tres mensajes persistidos con el mismo `request_id` y
 3. respuesta `gemini_file_search` (B).
 
 Si el usuario lanza investigación profunda, su resultado añade de forma
-asíncrona un cuarto mensaje de asistente `deep_research` (C). Este mensaje queda
+asíncrona un mensaje adicional de asistente `deep_research` (C). Este mensaje queda
 enlazado al job mediante `deep_research_job_id`; el vínculo con la comparación
 A/B vive en el propio job, por lo que C no altera el ledger ni las métricas A/B.
 
 No se guarda IP, user-agent, cookies, credenciales ni el diagnóstico bruto de los
 proveedores. El historial completo del navegador tampoco se reenvía: Supabase
-recibe solo la última pregunta autosuficiente y las dos respuestas generadas para
-ese turno.
+recibe solo la última pregunta autosuficiente y las respuestas de las estrategias
+activas para ese turno: una o dos respuestas A/B, más C si se solicita.
 
 ## Modelo
 

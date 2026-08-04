@@ -157,9 +157,9 @@ Reglas de comparabilidad:
 
 La misma comparación sigue disponible por CLI y el prototipo conserva FastAPI,
 un proxy fino de Netlify Edge y el frontend como referencia. Producción usa ya
-la **V1 Netlify-only**: una Function TypeScript autosuficiente ejecuta A y B en
-paralelo, conserva errores, fuentes y costes separados y los presenta en orden
-estable A → B. La Function cancela antes de alcanzar los 60 s del runtime y
+la **V1 Netlify-only**: una Function TypeScript autosuficiente ejecuta las
+estrategias A/B activas en paralelo, conserva errores, fuentes y costes separados
+y los presenta en orden estable A → B. La Function cancela antes de alcanzar los 60 s del runtime y
 mantiene Luna con esfuerzo `high`. Latencia, percentiles, timeouts, tokens,
 coste y calidad deben decidir cualquier cambio posterior de esfuerzo o modelo.
 
@@ -215,11 +215,11 @@ El runbook de despliegue está en
 | Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
-| Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta A y B en paralelo y falla cerrado |
+| Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta las estrategias A/B activas en paralelo y falla cerrado |
 | Mensajes, presupuesto y costes V1 | `supabase-chat-store.ts`, `supabase/migrations/` |
 | Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
-| UI y persistencia de dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
+| UI y persistencia de una o dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |
 
 A ya usa el paquete común sin cambiar el dominio, la selección de evidencias,
 el gate de grounding ni los contratos de coste. B conserva su integración
@@ -314,7 +314,8 @@ jurídica humana.
   separados varios anclajes de una sentencia y el almacenamiento v2 migra las
   fuentes antiguas como legado explícito, sin inventar trazabilidad.
 - El protocolo 2 valida status, `Content-Type`, versión, orden A → B, terminal,
-  JSON, fuentes exactas y costes decimales; tolera eventos y caracteres UTF-8
+  JSON, fuentes exactas y costes decimales; admite una o dos estrategias activas y
+  tolera eventos y caracteres UTF-8
   partidos. `VITE_CHAT_MODE=live` lo selecciona explícitamente y cualquier otro
   valor mantiene el stub.
 - Solo el chat comparativo A utiliza `neutral-llm-gateway` con sus sinks; el
@@ -330,7 +331,7 @@ jurídica humana.
   cubría, pero su respuesta `DAY-05` parece invertir el efecto de la excepción
   respecto del texto literal que publica. Es simultáneamente un gap de datos de
   A y un posible fallo crítico de redacción de B, pendiente del gate jurídico.
-- La Function Netlify-only y la interfaz de dos respuestas están activas. El
+- La Function Netlify-only y la interfaz de una o dos respuestas están activas. El
   prototipo FastAPI se conserva como alternativa futura fuera del runtime V1.
 - Las 106 están conectadas como borrador técnico `AGENT_REVIEWED_ONLY`. No
   existe aprobación para presentarlas como revisadas por una persona y las

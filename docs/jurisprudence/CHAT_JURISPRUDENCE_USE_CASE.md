@@ -89,17 +89,19 @@ Una respuesta sustantiva debería poder componerse con estas unidades:
 El modelo puede redactar y comparar. No puede inventar hechos, completar citas,
 convertir un resumen en texto judicial ni ocultar la procedencia.
 
-## Modo experimental de dos respuestas
+## Modo experimental A/B configurable
 
-Antes de seleccionar una estrategia productiva, cada mensaje del usuario
-generará dos respuestas consecutivas, independientes y claramente separadas:
+Antes de seleccionar una estrategia productiva, el modo comparativo puede generar
+una o dos respuestas consecutivas, independientes y claramente separadas. Cuando
+A y B están activas, el flujo contiene ambas:
 
 1. **Respuesta A — Sistema estructurado actual**, basada en las unidades v3 y
    el ranking local.
 2. **Respuesta B — Gemini File Search**, basada únicamente en la búsqueda sobre
    los PDF originales de la misma muestra.
 
-Las respuestas no comparten candidatos, puntuaciones, texto generado ni
+Si solo una estrategia está activa, se muestra únicamente su respuesta, sin
+pestañas ni voto comparativo. Las respuestas no comparten candidatos, puntuaciones, texto generado ni
 fuentes. Sí comparten los gates de seguridad: el PDF continúa siendo la
 autoridad y ningún extracto se presenta como judicial sin verificación literal.
 La interfaz no las fusiona ni declara automáticamente cuál es mejor. Cada

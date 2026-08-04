@@ -273,8 +273,8 @@ purgado real con 15 días de retención, cero candidatos y cero borrados.
 
 ## Privacidad
 
-El dump se lleva a R2 **las preguntas de los usuarios y las respuestas de ambas
-estrategias** (`private.chat_messages`), sin IP ni user-agent. Eso tiene tres
+El dump se lleva a R2 **las preguntas de los usuarios y las respuestas de las
+estrategias activas** (`private.chat_messages`), sin IP ni user-agent. Eso tiene tres
 consecuencias que hay que tener presentes al tocar la política de datos:
 
 - Los backups son una copia de datos personales con la vida propia definida por

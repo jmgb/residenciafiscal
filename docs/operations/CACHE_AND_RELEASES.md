@@ -75,7 +75,7 @@ Cuando hay versión nueva:
 - **con algo en curso** → `AppUpdateBanner` avisa y decide el usuario.
 
 «Algo en curso» lo define `hasWorkInProgress()`: una respuesta todavía llegando
-(`isStreaming`, incluidas las dos respuestas comparadas) o el foco en un campo
+(`isStreaming`, incluidas las respuestas comparadas activas) o el foco en un campo
 editable, porque el borrador del composer vive solo en su estado local.
 
 Todo fallo se traduce a «no hay nada nuevo»: una falsa alarma recarga la página

@@ -14,7 +14,7 @@ para reconstruir el experimento A/B.
 | Fallos aislados (`chat_strategy_failed`) | Sentry, proyecto `residencia-fiscal-chat` | Avisa aunque la otra estrategia permita completar la petición |
 | Coste (`chat_cost_reconciled`) | Resumen diario a Telegram | No es un error; Sentry lo mide mal |
 | Eventos operativos, best effort | Logs de Netlify | Eventos estructurados, correlacionados y sin contenido fiscal |
-| Ejecución A/B completa | Supabase privado | Fuente de verdad por petición: versión, respuestas, recuperación, citas y coste |
+| Ejecución de estrategias activas | Supabase privado | Fuente de verdad por petición: versión, respuestas, recuperación, citas y coste |
 
 Se descartó el **drenaje de logs de Netlify**: requiere plan Pro.
 

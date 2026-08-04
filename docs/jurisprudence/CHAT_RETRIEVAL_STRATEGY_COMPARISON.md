@@ -1,14 +1,15 @@
 # Comparación de estrategias de respuesta jurisprudencial
 
 **Estado:** F0.2 conserva el baseline de ocho consultas; F0.3 tiene rúbrica y
-paquete ciego listos; A/B está activo en producción sobre las 106 sentencias.
+paquete ciego listos; A/B está activo y configurable en producción sobre las 106
+sentencias.
 La iteración real del 3 de agosto corrigió el filtro de autoridad de B, añadió
 trazabilidad por afirmación en A y versionó el ledger del experimento. La vista
 ciega con voto usa dos columnas en escritorio y pestañas en móvil cuando A y B
 están activas; si solo existe una respuesta conserva una única columna. La
 revisión jurídica y el banco conversacional de 40 siguen pendientes. La opción
-C agentiva tiene ya una arquitectura de piloto acordada, pero permanece sin
-implementar ni autorizada para tráfico real.
+C agentiva tiene ya una arquitectura de piloto acordada y una implementación
+técnica desplegada bajo bandera, pero no está autorizada para tráfico real.
 **Alcance:** piloto inicial de cinco y runtime productivo sobre 106 sentencias.
 **Fecha de actualización:** 2026-08-03.
 
@@ -23,7 +24,7 @@ La fase F0 creó el comparador local que sigue disponible por CLI. El mismo
 dominio está expuesto en el prototipo por FastAPI, un proxy fino de Netlify Edge
 y el cliente comparativo. Ese recorrido se conserva como opción futura si se
 necesitan llamadas de más de 60 s. La V1 ya está portada a una Netlify Function
-TypeScript, con ambas estrategias en paralelo y deadline de 50–55 s, y
+TypeScript, con las estrategias activas en paralelo y deadline de 50–55 s, y
 `VITE_CHAT_MODE=live` está activo en producción desde el 31 de julio de 2026.
 B usa el
 SDK oficial `google-genai`, la Interactions API y un store basado en
@@ -173,8 +174,8 @@ defecto está en [`CHAT_DEPLOYMENT.md`](../operations/CHAT_DEPLOYMENT.md).
 
 ## Decisión
 
-Durante la fase experimental, cada mensaje del usuario producirá dos respuestas
-consecutivas y visualmente separadas:
+Durante la fase experimental, la configuración comparativa con A y B activas
+producirá dos respuestas consecutivas y visualmente separadas:
 
 1. **Respuesta A — Sistema estructurado actual.**
 2. **Respuesta B — Gemini File Search.**
@@ -276,8 +277,9 @@ presentación:
   2. Opción B
 ```
 
-La presentación es siempre A y después B. La V1 debe ejecutar ambas estrategias
-en paralelo para reducir latencia, pero debe almacenar y emitir
+La presentación conserva el orden A y después B cuando ambas están activas. La V1
+ejecuta en paralelo las estrategias activas para reducir latencia, pero debe
+almacenar y emitir
 cada resultado como una unidad independiente y nunca alimentar una estrategia
 con la salida de la otra.
 
@@ -301,12 +303,14 @@ Cada bloque debe mostrar:
 - coste marginal de esa respuesta en USD;
 - indicación `real` o `estimado` del coste;
 - nota de que no incluye la preparación previa del corpus;
-- aviso visible de que se trata de una comparación experimental.
+- aviso visible de que se trata de una comparación experimental cuando hay dos
+  estrategias activas.
 
-Al final se ofrece un único voto: A, B, empate o ambas insuficientes, con un
-motivo cerrado y sin texto libre. El backend acepta un voto por `request_id` y
-no permite sobrescribirlo. Esta preferencia sirve para UX y evaluación; nunca
-convierte por sí sola una respuesta en jurídicamente correcta.
+Cuando hay dos estrategias activas, al final se ofrece un único voto: A, B,
+empate o ambas insuficientes, con un motivo cerrado y sin texto libre. El backend
+acepta un voto por `request_id` y no permite sobrescribirlo. Esta preferencia
+sirve para UX y evaluación; nunca convierte por sí sola una respuesta en
+jurídicamente correcta.
 
 No se permite:
 
@@ -317,9 +321,9 @@ No se permite:
 - ocultar que una estrategia falló o no encontró cobertura;
 - sustituir automáticamente una respuesta fallida por la de la otra.
 
-Si A falla, B se sigue mostrando. Si B falla, A permanece disponible y el
-segundo bloque muestra su error de forma aislada. El cierre global ocurre cuando
-ambos bloques alcanzan un estado terminal.
+Si A falla, B se sigue mostrando cuando está activa. Si B falla, A permanece
+disponible cuando está activa y su error se muestra de forma aislada. El cierre
+global ocurre cuando todos los bloques activos alcanzan un estado terminal.
 
 ## Autoridad y citas
 
@@ -358,8 +362,8 @@ done
 
 La implementación debe evolucionar el protocolo actual antes de activar el
 modo comparativo. Los eventos `token` y `sources` nunca pueden carecer de
-`strategy`. El frontend debe persistir dos respuestas hermanas asociadas al
-mismo mensaje del usuario, no concatenarlas como si fueran una sola.
+`strategy`. El frontend debe persistir una o dos respuestas hermanas activas
+asociadas al mismo mensaje del usuario, no concatenarlas como si fueran una sola.
 `answer_done` incluye un objeto de coste:
 
 ```json
@@ -413,10 +417,10 @@ La decisión posterior exige un nuevo banco ciego congelado.
   store.
 - No se incorporan documentos privados del usuario.
 - El índice experimental debe poder eliminarse de forma explícita.
-- La reserva de presupuesto incluye el coste máximo de A y B antes de iniciar
+- La reserva de presupuesto incluye el coste máximo de las estrategias activas antes de iniciar
   la primera llamada facturable.
-- El rate limit cuenta una pregunta del usuario, aunque internamente produzca
-  dos respuestas.
+- El rate limit cuenta una pregunta del usuario, aunque internamente produzca una
+  o dos respuestas.
 
 El coste visible de A suma router y redacción. El de B suma la generación de
 Gemini y los tokens de documento recuperados facturados como contexto. Si una

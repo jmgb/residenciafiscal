@@ -56,15 +56,15 @@ no sobre el binario global.
 ## Function del chat
 
 La V1 expone `/api/chat` mediante una Function estándar autosuficiente. Ejecuta
-en paralelo la estrategia A estructurada y Gemini File Search B, aplica rate
-limit, registra la consulta y el coste real en Supabase y devuelve el protocolo
-SSE 2 como cuerpo bufferizado. El navegador aplica además un límite blando
+en paralelo las estrategias A/B activas según sus flags, aplica rate limit,
+registra la consulta y el coste real en Supabase y devuelve el protocolo SSE 2
+como cuerpo bufferizado. El navegador aplica además un límite blando
 configurable de mensajes por ventana móvil de 24 horas. Por la limitación del plan Legacy, las claves de
 proveedor y Supabase están configuradas como variables ordinarias de todos los
 scopes, limitadas al contexto `production`; ninguna lleva prefijo `VITE_` ni se
 incluye en el cliente. `VITE_CHAT_MODE` es únicamente el selector público de
 build. `CHAT_STRATEGY_A_ENABLED` y `CHAT_STRATEGY_B_ENABLED` permiten activar
-por separado las dos respuestas dentro del interruptor maestro. El endpoint y
+por separado cada respuesta dentro del interruptor maestro. El endpoint y
 el frontend se pueden cerrar por separado. Variables,
 migración, activación, riesgo aceptado y rollback están en
 [`CHAT_DEPLOYMENT.md`](CHAT_DEPLOYMENT.md).
@@ -117,8 +117,9 @@ En producción comprobar:
 3. `/data/corpus.json` contiene sentencias y no `[]`.
 4. DevTools → Network muestra `gtag/js` y peticiones de GA4.
 5. Con el chat cerrado, `POST /api/chat` responde `503` sin llamar a proveedores.
-6. En Deploy Preview live, una consulta devuelve A y B antes de 60 s y crea un
-   registro de coste sin pregunta, respuesta ni citas.
+6. En Deploy Preview live, una consulta devuelve una o dos respuestas según los
+   flags antes de 60 s y crea un registro de coste sin pregunta, respuesta ni
+   citas.
 
 Las rutas públicas sin barra final deben servir sus metadatos prerenderizados, no
 la shell de la home. `test_frontend_seo_assets.py` protege el orden de esos rewrites.

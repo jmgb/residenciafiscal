@@ -67,7 +67,7 @@ flowchart LR
     JURISDICTIONS --> KNOWLEDGE
     PUBLIC --> KNOWLEDGE
     KNOWLEDGE --> WEB["frontend/<br/>React"]
-    WEB --> FUNCTION["Netlify Function V1<br/>A y B en paralelo<br/>implementada y cerrada"]
+    WEB --> FUNCTION["Netlify Function V1<br/>estrategias activas en paralelo<br/>implementada y cerrada"]
     KNOWLEDGE --> FUNCTION
     FILESEARCH --> FUNCTION
     WEB -. prototipo conservado .-> EDGE["Netlify Edge"]
@@ -122,13 +122,14 @@ dominio y con una migración de imports independiente.
    pregunta a `/api/chat`.
 2. La V1 usa una Netlify Function TypeScript autosuficiente, con rate limit,
    presupuesto y un deadline global de 50–55 s.
-3. La Function inicia A y B en paralelo. A recupera unidades v3, limita el
-   contexto y redacta mediante IDs de evidencia que se resuelven localmente.
-4. B consulta de forma independiente un File Search Store con los 106 PDF
+3. La Function inicia las estrategias A/B activas en paralelo. A, si está activa,
+   recupera unidades v3, limita el contexto y redacta mediante IDs de evidencia
+   que se resuelven localmente.
+4. B, si está activa, consulta de forma independiente un File Search Store con los 106 PDF
    originales y devuelve anotaciones del proveedor.
-5. Ambas rutas verifican sus fuentes y retiran cualquier respuesta sustantiva
+5. Cada ruta activa verifica sus fuentes y retira cualquier respuesta sustantiva
    que quede sin respaldo.
-6. La Function serializa dos bloques con protocolo SSE 2 en orden visual A → B,
+6. La Function serializa uno o dos bloques con protocolo SSE 2 en orden visual A → B,
    pero devuelve el cuerpo completo de forma bufferizada para conservar el
    límite sincrónico estándar; el frontend conserva
    respuesta, estado, fuentes, latencia y coste por

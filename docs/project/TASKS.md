@@ -13,7 +13,7 @@ contra el dominio público después de cada deploy.
 > La fase 0 de plataforma ya está ejecutada y medida.
 >
 > **Decisión de runtime V1 (2026-07-31):** el chat se desplegará íntegramente en
-> una Netlify Function estándar, con A y B en paralelo y deadline interno
+> una Netlify Function estándar, con las estrategias A/B activas en paralelo y deadline interno
 > inferior a 60 s. El recorrido Edge → FastAPI ya implementado no se borra: se
 > conserva como alternativa futura si hacen falta llamadas más largas o mayor
 > control operativo, pero no debe desplegarse como V1.
@@ -365,9 +365,9 @@ contra el dominio público después de cada deploy.
       transmisión del stream; se conserva fuera del camino V1 en
       `netlify/prototypes/chat-fastapi-edge.ts`.
     - [x] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
-      portar solo el runtime online de A y B, sin trasladar a TypeScript el
+      portar solo el runtime online de A/B, sin trasladar a TypeScript el
       pipeline Python de preparación del corpus.
-    - [x] Ejecutar A y B en paralelo con aislamiento de errores, conservar el
+    - [x] Ejecutar las estrategias A/B activas en paralelo con aislamiento de errores, conservar el
       orden visual A → B y cancelar todo trabajo restante antes del deadline
       global de 50–55 s.
     - [x] Corregir la regresión de autoridad en B: el comodín
@@ -933,7 +933,7 @@ sola URL para poder encontrarse.
 ## Seguridad y datos
 
 - [x] **Cerrar la parte técnica de la persistencia productiva en Supabase.** La
-  V1 guarda una pregunta y sus dos respuestas por turno. Migraciones, RLS, RPC,
+  V1 guarda una pregunta y una o dos respuestas por turno. Migraciones, RLS, RPC,
   advisors, concurrencia, backup, fallos, dry-run, auditoría y una petición
   productiva están verificados. Queda la aprobación legal y algunos huecos
   operativos:
@@ -1067,7 +1067,7 @@ sola URL para poder encontrarse.
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última
     pregunta no vacía, no el historial local. Supabase guarda esa pregunta y las
-    dos respuestas A/B del turno, sin IP, user-agent ni diagnósticos brutos.
+    una o dos respuestas A/B activas del turno, sin IP, user-agent ni diagnósticos brutos.
 - [x] Añadir validación automática del schema del corpus, detección de duplicados y
   trazabilidad de cada criterio hasta su sentencia de origen.
 

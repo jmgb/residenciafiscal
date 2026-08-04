@@ -170,6 +170,11 @@ En Netlify `production`, sin prefijo `VITE_` salvo la bandera de build:
 `SUPABASE_URL` y `SUPABASE_SECRET_KEY` son obligatorias porque las RPC de jobs
 son privadas.
 
+C es independiente de A y B. `VITE_DEEP_RESEARCH_ENABLED=true` muestra el
+control en la interfaz; `DEEP_RESEARCH_ENABLED=true` abre el endpoint backend.
+Para el recorrido completo deben estar activas ambas banderas de C, sin cambiar
+los flags `CHAT_STRATEGY_A_ENABLED` o `CHAT_STRATEGY_B_ENABLED`.
+
 En Alfredo:
 
 ```text
