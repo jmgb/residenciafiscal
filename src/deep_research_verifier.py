@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import unicodedata
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
 from pathlib import Path, PurePosixPath
@@ -21,7 +22,64 @@ _MAX_LIMIT_CHARS = 200
 _MAX_CLAIMS = 10
 _MAX_CLAIM_CHARS = 400
 _MAX_EVIDENCE = 12
-_MAX_QUOTE_CHARS = 400
+_MAX_QUOTE_CHARS = 800
+_MIN_CLAIM_GROUNDING_RATIO = 0.4
+_COMPLETE_QUOTE_END = re.compile(r'[.!?](?:["”»’])?$')
+_CLAIM_GROUNDING_STOPWORDS = {
+    "acerca",
+    "alcance",
+    "breve",
+    "como",
+    "con",
+    "consecuencia",
+    "contra",
+    "cual",
+    "cuando",
+    "debe",
+    "del",
+    "desde",
+    "donde",
+    "el",
+    "ella",
+    "entre",
+    "esa",
+    "ese",
+    "esta",
+    "este",
+    "fiscal",
+    "las",
+    "limite",
+    "los",
+    "mediante",
+    "para",
+    "pero",
+    "por",
+    "puede",
+    "que",
+    "respuesta",
+    "residencia",
+    "ser",
+    "sin",
+    "sobre",
+    "sus",
+    "una",
+    "uno",
+}
+_NEGATION_TERMS = {"ni", "no", "nunca", "sin", "tampoco"}
+_REQUIRED_LITERAL_LEGAL_TERMS = {
+    "183 dias",
+    "ausencias esporadicas",
+    "competente para gravar",
+    "centro de intereses vitales",
+    "decision unilateral",
+    "derecho interno",
+    "morada habitual",
+    "nacionalidad",
+    "nucleo de intereses economicos",
+    "por si solo",
+    "renta mundial",
+    "vivienda permanente",
+}
 _VERBATIM_KEYS = {
     "schema_version",
     "document_id",
@@ -149,7 +207,7 @@ def _trim_exterior_evidence_whitespace(draft: dict[str, Any]) -> None:
 
     for claim in draft["claims"]:
         if isinstance(claim, dict) and isinstance(claim.get("text"), str):
-            claim["text"] = claim["text"].strip()
+            claim["text"] = " ".join(claim["text"].split())
     for item in draft["evidence"]:
         if isinstance(item, dict) and isinstance(item.get("quote"), str):
             item["quote"] = item["quote"].strip()
@@ -289,29 +347,131 @@ def _parse_draft(draft_text: str) -> dict[str, Any]:
 
 def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> None:
     evidence = draft["evidence"]
+    original_claim_count = len(draft["claims"])
     rollout_sources = _rollout_sources(bundle_path)
-    judgments: set[str] = set()
-    verified_evidence: list[dict[str, Any]] = []
-    for item in evidence:
+    verified_by_original_index: dict[int, dict[str, Any]] = {}
+    for original_index, item in enumerate(evidence, start=1):
         try:
             _verify_evidence(item, bundle_path, rollout_sources)
         except UnmatchedEvidenceQuote:
             continue
         assert isinstance(item, dict)
-        verified_evidence.append(item)
-        judgments.add(item["judgment_id"])
+        verified_by_original_index[original_index] = item
+
+    retained_claims: list[tuple[str, list[int]]] = []
+    for claim in draft["claims"]:
+        text, indexes = _validated_claim(claim, len(evidence))
+        claim_evidence = [verified_by_original_index.get(index) for index in indexes]
+        if any(item is None for item in claim_evidence):
+            continue
+        verified_items = [item for item in claim_evidence if item is not None]
+        if not _claim_is_grounded(text, verified_items):
+            continue
+        retained_claims.append((text, indexes))
+
+    used_original_indexes = {index for _text, indexes in retained_claims for index in indexes}
+    ordered_original_indexes = sorted(used_original_indexes)
+    index_map = {
+        original_index: new_index
+        for new_index, original_index in enumerate(ordered_original_indexes, start=1)
+    }
+    verified_evidence = [verified_by_original_index[index] for index in ordered_original_indexes]
+    judgments = {item["judgment_id"] for item in verified_evidence}
     if len(judgments) > 5:
         raise ValueError("at most five judgments are allowed")
-    if len(verified_evidence) != len(evidence):
-        draft["status"] = "parcial" if verified_evidence else "abstención"
+
+    draft["claims"] = [
+        {
+            "text": text,
+            "evidence_indexes": [index_map[index] for index in indexes],
+        }
+        for text, indexes in retained_claims
+    ]
     draft["evidence"] = verified_evidence
-    derived_claims: list[dict[str, Any]] = []
-    for index, item in enumerate(verified_evidence, start=1):
-        if len(derived_claims) < _MAX_CLAIMS:
-            derived_claims.append({"text": item["quote"], "evidence_indexes": [index]})
-        else:
-            derived_claims[-1]["evidence_indexes"].append(index)
-    draft["claims"] = derived_claims
+    graph_changed = (
+        len(verified_by_original_index) != len(evidence)
+        or len(retained_claims) != original_claim_count
+        or len(verified_evidence) != len(evidence)
+    )
+    if not draft["claims"]:
+        draft["status"] = "abstención"
+        draft["evidence"] = []
+    elif graph_changed:
+        draft["status"] = "parcial"
+
+
+def _validated_claim(claim: object, evidence_count: int) -> tuple[str, list[int]]:
+    if not isinstance(claim, dict) or set(claim) != {"text", "evidence_indexes"}:
+        raise ValueError("deep research claim has invalid fields")
+    text = claim.get("text")
+    raw_indexes = claim.get("evidence_indexes")
+    if isinstance(text, str):
+        text = unicodedata.normalize("NFKC", text)
+    if (
+        not isinstance(text, str)
+        or not 20 <= len(text) <= _MAX_CLAIM_CHARS
+        or not text.strip()
+        or not isinstance(raw_indexes, list)
+        or not raw_indexes
+        or len(raw_indexes) > 8
+        or any(
+            not isinstance(index, int)
+            or isinstance(index, bool)
+            or index < 1
+            or index > evidence_count
+            for index in raw_indexes
+        )
+    ):
+        raise ValueError("deep research claim is invalid")
+    indexes = list(dict.fromkeys(raw_indexes))
+    return " ".join(text.split()), indexes
+
+
+def _claim_is_grounded(text: str, evidence: list[dict[str, Any]]) -> bool:
+    claim_terms = _grounding_terms(text)
+    evidence_terms = {
+        term for item in evidence for term in _grounding_terms(str(item.get("quote") or ""))
+    }
+    if not claim_terms:
+        return False
+    shared_terms = claim_terms & evidence_terms
+    if len(shared_terms) < 2 or len(shared_terms) / len(claim_terms) < _MIN_CLAIM_GROUNDING_RATIO:
+        return False
+    claim_text = _normalized_phrase_text(text)
+    evidence_text = " ".join(
+        _normalized_phrase_text(str(item.get("quote") or "")) for item in evidence
+    )
+    claim_words = set(claim_text.split())
+    evidence_words = set(evidence_text.split())
+    if claim_words & _NEGATION_TERMS and not evidence_words & _NEGATION_TERMS:
+        return False
+    return all(
+        term not in claim_text or term in evidence_text for term in _REQUIRED_LITERAL_LEGAL_TERMS
+    )
+
+
+def _normalized_phrase_text(value: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", value.casefold())
+    without_accents = "".join(
+        character for character in decomposed if not unicodedata.combining(character)
+    )
+    return " ".join(re.findall(r"\w+", without_accents))
+
+
+def _grounding_terms(value: str) -> set[str]:
+    decomposed = unicodedata.normalize("NFKD", value.casefold())
+    normalized = "".join(
+        character for character in decomposed if not unicodedata.combining(character)
+    )
+    return {
+        token[:-2]
+        if token.endswith("es") and len(token) > 5
+        else token[:-1]
+        if token.endswith("s") and len(token) > 4
+        else token
+        for token in re.findall(r"\w+", normalized)
+        if len(token) > 2 and token not in _CLAIM_GROUNDING_STOPWORDS
+    }
 
 
 def _rollout_sources(bundle_path: Path) -> dict[str, str]:
@@ -358,6 +518,8 @@ def _verify_evidence(item: object, bundle_path: Path, rollout_sources: dict[str,
         raise ValueError("invalid evidence page")
     if not isinstance(quote, str) or len(quote) < 20 or len(quote) > _MAX_QUOTE_CHARS:
         raise ValueError("invalid evidence literal")
+    if not _COMPLETE_QUOTE_END.search(quote):
+        raise UnmatchedEvidenceQuote("evidence quote is not a complete sentence")
     document_path = (bundle_path / "verbatim" / f"{judgment_id}.pages.json").resolve()
     if not document_path.is_relative_to(bundle_path):
         raise ValueError("evidence path escapes bundle")

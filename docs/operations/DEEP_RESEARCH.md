@@ -55,7 +55,12 @@ para comprobar su SHA-256, pero no se incluye ni se ofrece a Codex.
 Codex solo ve un servidor MCP local con tres herramientas de lectura:
 
 1. `corpus.search_corpus(query, limit)` busca en el índice y devuelve candidatos
-   acotados, no el texto completo.
+   acotados, no el texto completo. El ranking elimina palabras vacías, normaliza
+   variantes ortográficas y plurales, pondera cuestión y conclusión por encima
+   del texto agregado, reduce el peso de repeticiones y prioriza doctrina del
+   Tribunal Supremo y resoluciones recientes cuando la relevancia es comparable.
+   Devuelve como máximo seis candidatos por búsqueda para evitar lecturas
+   dispersas y coste sin mejora de cobertura.
 2. `corpus.read_case(judgment_id)` abre el JSON estructurado de un candidato.
 3. `corpus.read_verbatim_page(judgment_id, page)` devuelve el `raw_page_text`,
    número de página y SHA-256 necesarios para una cita exacta.
@@ -91,19 +96,32 @@ determinista:
   ambigua o cualquier palabra añadida, omitida o cambiada se descarta. Si aún
   queda evidencia exacta, el resultado baja a `parcial`; si no queda ninguna,
   se convierte en `abstención`. El texto nunca se corrige, une ni completa;
-- que una cita contenga al menos 20 caracteres sustantivos; `claims`, su texto
-  y sus índices se tratan como campos redundantes no confiables y se regeneran
-  mecánicamente desde las evidencias exactas;
+- que una cita contenga al menos 20 caracteres sustantivos;
+- que cada `claim` sea una síntesis breve con índices válidos, conserve en sus
+  citas al menos el 40 % de su vocabulario sustantivo y no dependa de una cita
+  descartada. Una negación solo se admite si las citas contienen también una
+  negación. Los claims sin ese anclaje se eliminan; las evidencias no usadas
+  tampoco se publican y los índices restantes se recalculan. Conceptos jurídicos
+  especialmente sensibles —por ejemplo, los criterios concretos del desempate—
+  solo pueden aparecer si también figuran literalmente en las citas enlazadas;
+- que cada cita termine en un signo de puntuación de cierre y no supere 800
+  caracteres. Las citas cortadas a mitad de oración se descartan;
 - que no se usen más de cinco sentencias.
 
 Además, el texto que ve el usuario no se toma del canal libre `text` del
-borrador: se reconstruye exclusivamente, y en orden, a partir de pasajes
-literales del corpus. V2 es deliberadamente extractiva: Codex selecciona los
-fragmentos relevantes, pero no publica una paráfrasis jurídica que un
-verificador determinista no pueda validar semánticamente. `limits` tampoco se
-publica desde el borrador: queda vacío o se sustituye por el aviso fijo de
-resultado parcial. Para `pregunta`, `abstención` y `error`, el texto libre del
-modelo se descarta y se usa una plantilla fija sin contenido jurídico.
+borrador: se reconstruye exclusivamente, y en orden, a partir de los `claims`
+que sobreviven al grafo verificado. Codex redacta entre dos y cuatro párrafos
+breves —respuesta directa, alcance, consecuencia o límite— y cada párrafo debe
+señalar las citas exactas que lo sostienen. Las citas permanecen literales en
+sus tarjetas; la prosa visible se normaliza para no heredar los saltos de línea
+ni las ligaduras tipográficas del PDF. Esta comprobación no pretende demostrar
+automáticamente la corrección semántica completa de una paráfrasis, por lo que
+el prompt exige lenguaje prudente, preferencia por doctrina directa y estado
+`parcial` cuando no estén
+cubiertos la respuesta, el efecto y el límite principal. `limits` no se publica
+desde el borrador: queda vacío o se sustituye por el aviso fijo de resultado
+parcial. Para `pregunta`, `abstención` y `error`, el texto libre del modelo se
+descarta y se usa una plantilla fija sin contenido jurídico.
 
 Un fallo invalida toda la ejecución: el runtime termina con error y Alfredo no
 publica como respuesta jurídica el texto no verificable.

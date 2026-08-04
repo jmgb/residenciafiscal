@@ -21,7 +21,7 @@ _TOOLS = [
             "required": ["query"],
             "properties": {
                 "query": {"type": "string", "minLength": 3, "maxLength": 500},
-                "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 8},
+                "limit": {"type": "integer", "minimum": 1, "maximum": 6, "default": 6},
             },
         },
         "annotations": {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False},

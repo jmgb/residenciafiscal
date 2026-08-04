@@ -2,6 +2,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = PROJECT_ROOT / "supabase/migrations/20260803203000_deep_research_assistant_messages.sql"
+PRICING_VERSION_MIGRATION = (
+    PROJECT_ROOT / "supabase/migrations/20260804140000_deep_research_pricing_version.sql"
+)
 
 
 def migration_sql() -> str:
@@ -49,3 +52,12 @@ def test_deep_research_update_remains_backend_only() -> None:
     assert "SET search_path = pg_catalog, private" in sql
     assert "FROM PUBLIC, anon, authenticated" in sql
     assert "TO service_role" in sql
+
+
+def test_deep_research_message_persists_and_backfills_pricing_version() -> None:
+    assert PRICING_VERSION_MIGRATION.exists(), PRICING_VERSION_MIGRATION
+    sql = PRICING_VERSION_MIGRATION.read_text("utf-8")
+
+    assert "pricing_version" in sql
+    assert "v_job.result->>'pricingVersion'" in sql
+    assert "m.deep_research_job_id = j.job_id" in sql

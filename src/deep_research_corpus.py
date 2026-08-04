@@ -3,13 +3,48 @@
 from __future__ import annotations
 
 import json
+import math
 import re
+import unicodedata
 from pathlib import Path
 from typing import Any
 
 _SAFE_JUDGMENT_ID = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
 _MAX_QUERY_CHARS = 500
-_MAX_RESULTS = 20
+_MAX_RESULTS = 6
+_SEARCH_STOPWORDS = {
+    "como",
+    "con",
+    "cual",
+    "cuando",
+    "del",
+    "desde",
+    "donde",
+    "el",
+    "ella",
+    "en",
+    "entre",
+    "ese",
+    "esta",
+    "este",
+    "hay",
+    "las",
+    "los",
+    "para",
+    "pero",
+    "por",
+    "que",
+    "sin",
+    "sobre",
+    "sus",
+    "tiene",
+    "una",
+    "uno",
+}
+_SEARCH_EXPANSIONS = {
+    "probatorio": {"acreditar", "habil", "presumida", "probar", "prueba", "validez"},
+    "certificado": {"certificacion", "rechazar", "prescindir"},
+}
 
 
 class CorpusRepository:
@@ -20,28 +55,42 @@ class CorpusRepository:
         if not self.bundle_path.is_dir():
             raise ValueError("bundle directory does not exist")
 
-    def search(self, query: str, *, limit: int = 8) -> dict[str, Any]:
+    def search(self, query: str, *, limit: int = 6) -> dict[str, Any]:
         query = query.strip()
         if not 1 <= len(query) <= _MAX_QUERY_CHARS:
             raise ValueError("query must contain between 1 and 500 characters")
         if not 1 <= limit <= _MAX_RESULTS:
-            raise ValueError("limit must be between 1 and 20")
-        normalized_query = query.casefold()
-        tokens = {token for token in re.findall(r"\w+", normalized_query) if len(token) > 2}
-        if not tokens:
+            raise ValueError("limit must be between 1 and 6")
+        normalized_query = self._normalize(query)
+        query_tokens = set(self._tokens(query))
+        if not query_tokens:
             raise ValueError("query must contain at least one searchable token")
+        tokens = query_tokens | {
+            expanded for token in query_tokens for expanded in _SEARCH_EXPANSIONS.get(token, set())
+        }
         corpus = self._read_json(Path("retrieval/rollout-106.corpus.json"))
         units = corpus.get("units") if isinstance(corpus, dict) else None
         if not isinstance(units, list):
             raise ValueError("invalid retrieval corpus")
+        document_frequency = {
+            token: sum(
+                token in set(self._tokens(str(unit.get("search_text") or "")))
+                for unit in units
+                if isinstance(unit, dict)
+            )
+            for token in tokens
+        }
         ranked: list[tuple[int, dict[str, Any]]] = []
         for unit in units:
             if not isinstance(unit, dict):
                 continue
-            searchable = str(unit.get("search_text") or "").casefold()
-            score = sum(searchable.count(token) for token in tokens)
-            if normalized_query in searchable:
-                score += 10
+            score = self._score_unit(
+                unit,
+                tokens=tokens,
+                normalized_query=normalized_query,
+                document_frequency=document_frequency,
+                document_count=len(units),
+            )
             if score:
                 ranked.append((score, self._search_result(unit, score)))
         ranked.sort(key=lambda item: (-item[0], item[1]["judgment_id"], item[1]["issue_id"]))
@@ -108,3 +157,67 @@ class CorpusRepository:
     @staticmethod
     def _mapping(value: object) -> dict[str, Any]:
         return value if isinstance(value, dict) else {}
+
+    @staticmethod
+    def _normalize(value: str) -> str:
+        decomposed = unicodedata.normalize("NFKD", value.casefold())
+        return "".join(
+            character for character in decomposed if not unicodedata.combining(character)
+        )
+
+    @classmethod
+    def _tokens(cls, value: str) -> list[str]:
+        return [
+            cls._lexeme(token)
+            for token in re.findall(r"\w+", cls._normalize(value))
+            if len(token) > 2 and token not in _SEARCH_STOPWORDS
+        ]
+
+    @staticmethod
+    def _lexeme(token: str) -> str:
+        if token.endswith("es") and len(token) > 5:
+            return token[:-2]
+        if token.endswith("s") and len(token) > 4:
+            return token[:-1]
+        return token
+
+    @classmethod
+    def _score_unit(
+        cls,
+        unit: dict[str, Any],
+        *,
+        tokens: set[str],
+        normalized_query: str,
+        document_frequency: dict[str, int],
+        document_count: int,
+    ) -> int:
+        issue = cls._mapping(unit.get("issue"))
+        holding = cls._mapping(unit.get("holding"))
+        facets = cls._mapping(unit.get("facets"))
+        fields = (
+            (str(issue.get("question") or ""), 4, 1),
+            (str(holding.get("conclusion") or ""), 7, 2),
+            (json.dumps(facets, ensure_ascii=False), 2, 2),
+            (str(unit.get("search_text") or ""), 1, 3),
+        )
+        score = 0.0
+        for text, weight, frequency_cap in fields:
+            field_tokens = cls._tokens(text)
+            for token in tokens:
+                frequency = min(field_tokens.count(token), frequency_cap)
+                if not frequency:
+                    continue
+                inverse_frequency = (
+                    math.log((document_count + 1) / (document_frequency.get(token, 0) + 1)) + 1
+                )
+                score += weight * frequency * inverse_frequency
+        searchable = cls._normalize(str(unit.get("search_text") or ""))
+        if normalized_query in searchable:
+            score += 10
+        judgment_id = str(unit.get("judgment_id") or "")
+        if score and judgment_id.startswith("sts-"):
+            score += 8
+        year_match = re.search(r"-(\d{4})$", judgment_id)
+        if score and year_match:
+            score += max(0, int(year_match.group(1)) - 2017)
+        return max(0, round(score * 100))

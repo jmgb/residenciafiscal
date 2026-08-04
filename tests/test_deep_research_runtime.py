@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from pathlib import Path
 
 import pytest
 
@@ -16,7 +17,11 @@ from deep_research_codex_runtime import (
 )
 from deep_research_corpus import CorpusRepository
 from deep_research_corpus_mcp import dispatch_tool
-from deep_research_verifier import finalize_deep_research_output, load_model_pricing
+from deep_research_verifier import (
+    _claim_is_grounded,
+    finalize_deep_research_output,
+    load_model_pricing,
+)
 
 
 def _sha256_text(value: str) -> str:
@@ -161,6 +166,15 @@ def test_runtime_command_has_only_corpus_tools_and_receives_request_over_stdin(t
     assert "features.skill_search=false" in joined
     assert "Prefiere una o dos citas cortas" in joined
     assert "No uses elipsis" in joined
+    assert "Cada claim debe ser una síntesis jurídica" in joined
+    assert "Respuesta breve" in joined
+    assert "Lee como máximo seis candidatos" in joined
+    assert "qué acredita, bajo qué condiciones" in joined
+    assert "Estado de residencia a efectos del CDI" in joined
+    assert "No enumeres criterios" in joined
+    assert "conserva el vocabulario jurídico" in joined
+    assert "Nunca cortes una cita a mitad de oración" in joined
+    assert "No sintetices conclusiones" not in joined
     assert (
         'mcp_servers.corpus.enabled_tools=["search_corpus","read_case","read_verbatim_page"]'
         in joined
@@ -175,8 +189,12 @@ def test_runtime_resolves_schema_inside_its_immutable_release(tmp_path):
 
 
 def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes_cost(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = (
+        "**Respuesta breve.** La residencia debe acreditarse mediante prueba exacta."
+    )
     final = finalize_deep_research_output(
-        _draft(),
+        json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
         model="gpt-5.6-luna",
@@ -186,7 +204,9 @@ def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes
         tool_audit=_audit(),
     )
 
-    assert final["text"] == "La residencia exige prueba exacta."
+    assert final["text"] == (
+        "**Respuesta breve.** La residencia debe acreditarse mediante prueba exacta."
+    )
     assert "Texto paralelo" not in final["text"]
     assert final["cost_microusd"] == 80
     assert final["pricing_version"] == "test-catalog"
@@ -253,6 +273,61 @@ def test_finalizer_recovers_unique_exact_raw_quote_from_punctuation_variant(tmp_
 
     assert final["text"] == "La residencia exige prueba exacta."
     assert final["evidence"][0]["quote"] == "La residencia exige prueba exacta."
+
+
+def test_finalizer_accepts_complete_evidence_quote_over_400_chars(tmp_path):
+    bundle = _bundle(tmp_path)
+    verbatim = bundle / "verbatim/san-1-2020.pages.json"
+    document = json.loads(verbatim.read_text("utf-8"))
+    raw_text = " ".join(["La residencia exige prueba exacta y suficiente."] * 10)
+    document["pages"][0]["raw_page_text"] = raw_text
+    document["pages"][0]["text_sha256"] = _sha256_text(raw_text)
+    document["pages_sha256"] = _canonical_pages_sha256(document["pages"])
+    verbatim.write_text(json.dumps(document), encoding="utf-8")
+    draft = json.loads(_draft())
+    draft["evidence"][0]["quote"] = raw_text
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=bundle,
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "completa"
+    assert final["evidence"][0]["quote"] == raw_text
+
+
+def test_finalizer_rejects_quote_cut_mid_sentence(tmp_path):
+    bundle = _bundle(tmp_path)
+    verbatim = bundle / "verbatim/san-1-2020.pages.json"
+    document = json.loads(verbatim.read_text("utf-8"))
+    raw_text = "La residencia exige prueba exacta y la autoridad decide después."
+    document["pages"][0]["raw_page_text"] = raw_text
+    document["pages"][0]["text_sha256"] = _sha256_text(raw_text)
+    document["pages_sha256"] = _canonical_pages_sha256(document["pages"])
+    verbatim.write_text(json.dumps(document), encoding="utf-8")
+    draft = json.loads(_draft())
+    draft["evidence"][0]["quote"] = "La residencia exige prueba exacta y"
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=bundle,
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "abstención"
+    assert final["claims"] == []
+    assert final["evidence"] == []
 
 
 def test_finalizer_abstains_when_no_quote_can_be_verified(tmp_path):
@@ -414,9 +489,146 @@ def test_finalizer_discards_untrusted_claim_text_and_uses_exact_evidence(tmp_pat
         tool_audit=_audit(),
     )
 
-    assert final["text"] == "La residencia exige prueba exacta."
-    assert final["claims"][0]["text"] == "La residencia exige prueba exacta."
+    assert final["status"] == "abstención"
+    assert final["claims"] == []
+    assert final["evidence"] == []
     assert "Luna" not in json.dumps(final, ensure_ascii=False)
+
+
+def test_finalizer_drops_claim_when_one_of_its_evidence_items_is_unverified(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"] = [
+        {
+            "text": "La residencia debe acreditarse mediante una prueba exacta.",
+            "evidence_indexes": [1],
+        },
+        {
+            "text": "Una segunda conclusión depende de una cita que no existe.",
+            "evidence_indexes": [2],
+        },
+    ]
+    draft["evidence"].append(
+        {
+            **draft["evidence"][0],
+            "quote": "Esta cita contiene palabras que no aparecen en la fuente.",
+        }
+    )
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "parcial"
+    assert final["claims"] == [
+        {
+            "text": "La residencia debe acreditarse mediante una prueba exacta.",
+            "evidence_indexes": [1],
+        }
+    ]
+    assert len(final["evidence"]) == 1
+
+
+def test_finalizer_rejects_named_legal_criteria_absent_from_linked_quote(tmp_path):
+    bundle = _bundle(tmp_path)
+    verbatim = bundle / "verbatim/san-1-2020.pages.json"
+    document = json.loads(verbatim.read_text("utf-8"))
+    raw_text = "El desempate aplica primero la vivienda permanente."
+    document["pages"][0]["raw_page_text"] = raw_text
+    document["pages"][0]["text_sha256"] = _sha256_text(raw_text)
+    document["pages_sha256"] = _canonical_pages_sha256(document["pages"])
+    verbatim.write_text(json.dumps(document), encoding="utf-8")
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = (
+        "**Límite.** El desempate aplica vivienda permanente, morada habitual y nacionalidad."
+    )
+    draft["evidence"][0]["quote"] = raw_text
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=bundle,
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "abstención"
+    assert final["claims"] == []
+    assert final["evidence"] == []
+
+
+def test_finalizer_rejects_negation_absent_from_linked_quote(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = "La residencia no exige una prueba exacta."
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "abstención"
+    assert final["claims"] == []
+    assert final["evidence"] == []
+
+
+def test_grounding_allows_prudent_synthesis_over_direct_legal_quotes():
+    claim = (
+        "**Respuesta breve.** El certificado extranjero tiene valor probatorio cualificado "
+        "en el marco del CDI: cuando lo emiten las autoridades fiscales del otro Estado "
+        "contratante y se extiende a efectos del Convenio, su validez se presume y su "
+        "contenido no puede rechazarse por la sola suscripción del Convenio."
+    )
+    quote = (
+        "Los órganos administrativos o judiciales nacionales no son competentes para "
+        "enjuiciar las circunstancias en las que se ha expedido un certificado de residencia "
+        "fiscal por otro Estado ni pueden prescindir de su contenido cuando se ha extendido "
+        "a los efectos del Convenio. La validez de un certificado expedido por las autoridades "
+        "fiscales del otro Estado contratante debe ser presumida, no pudiendo ser su contenido "
+        "rechazado por haberse suscrito el referido Convenio."
+    )
+
+    assert _claim_is_grounded(claim, [{"quote": quote}])
+
+
+def test_grounding_rejects_unquoted_por_si_solo_conclusion():
+    claim = "El certificado no decide por sí solo el resultado final."
+    quote = "No se discute que el certificado decide el resultado final."
+
+    assert not _claim_is_grounded(claim, [{"quote": quote}])
+
+
+def test_finalizer_normalizes_pdf_ligatures_in_visible_claims(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"][0]["text"] = "La residencia ﬁscal exige una prueba exacta."
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["text"] == "La residencia fiscal exige una prueba exacta."
+    assert final["claims"][0]["text"] == "La residencia fiscal exige una prueba exacta."
 
 
 def test_finalizer_rejects_whitespace_only_claims(tmp_path):
@@ -550,6 +762,28 @@ def test_corpus_rejects_queries_without_searchable_tokens(tmp_path):
     for query in ("a", "UE"):
         with pytest.raises(ValueError, match="searchable token"):
             repository.search(query)
+
+
+def test_corpus_prioritizes_direct_supreme_court_certificate_doctrine():
+    repository = CorpusRepository(Path("knowledge/jurisprudencia-v3"))
+
+    result = repository.search(
+        "¿Qué valor probatorio tiene un certificado de residencia fiscal extranjero?",
+        limit=5,
+    )
+
+    first_results = [item["judgment_id"] for item in result["results"][:3]]
+    assert "sts-3498-2025" in first_results
+    assert "sts-2735-2023" in first_results
+    assert all(judgment_id.startswith("sts-") for judgment_id in first_results)
+
+
+def test_corpus_default_search_returns_at_most_six_candidates():
+    repository = CorpusRepository(Path("knowledge/jurisprudencia-v3"))
+
+    result = repository.search("residencia fiscal certificado")
+
+    assert len(result["results"]) == 6
 
 
 def test_mcp_exposes_case_and_verbatim_reads_but_no_generic_file_access(tmp_path):
