@@ -4,9 +4,11 @@ import { ChatMessageActions } from './ChatMessageActions';
 import { ChatMessageContent } from './ChatMessageContent';
 import { JudgmentDocumentActions } from './JudgmentDocumentActions';
 
+// `completa` no se rotula: el chat no puede certificar que una respuesta agote
+// la cuestión sobre un corpus sin revisión jurídica humana. Solo se avisa de los
+// límites, nunca de su ausencia.
 const STATUS_LABEL = {
-  completa: 'Respuesta completa',
-  parcial: 'Respuesta parcial',
+  parcial: 'Cobertura parcial',
   pregunta: 'Necesita más datos',
   abstención: 'Sin cobertura suficiente',
   error: 'Error aislado',
@@ -48,7 +50,7 @@ export const ChatStrategyAnswerPanel = ({
   >
     <div className='mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3'>
       <h3 className='font-heading text-sm font-semibold text-foreground'>{label}</h3>
-      {answer.status && (
+      {answer.status && answer.status !== 'completa' && (
         <span className='rounded-full bg-muted px-2.5 py-1 text-[0.6875rem] font-medium text-secondary-foreground'>
           {STATUS_LABEL[answer.status]}
         </span>

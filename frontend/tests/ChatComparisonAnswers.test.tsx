@@ -49,6 +49,20 @@ describe('ChatComparisonAnswers', () => {
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
   });
 
+  it('avisa de una cobertura parcial y no rotula una respuesta completa', () => {
+    const { rerender } = render(
+      <ChatComparisonAnswers answers={[answer('current_structured', { status: 'completa' })]} />
+    );
+
+    expect(screen.queryByText(/respuesta completa/i)).not.toBeInTheDocument();
+
+    rerender(
+      <ChatComparisonAnswers answers={[answer('current_structured', { status: 'parcial' })]} />
+    );
+
+    expect(screen.getByText('Cobertura parcial')).toBeInTheDocument();
+  });
+
   it('identifica B cuando solo B está activa', () => {
     render(<ChatComparisonAnswers answers={[answer('gemini_file_search')]} />);
 
