@@ -1,5 +1,6 @@
 import type { ChatMessage } from '@/types/chat';
 import { ChatComparisonAnswers } from './ChatComparisonAnswers';
+import { ChatMessageActions } from './ChatMessageActions';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatSources } from './ChatSources';
 import { DeepResearchCard } from './DeepResearchCard';
@@ -41,12 +42,8 @@ export function ChatBubble({
         className={
           isDeepResearch
             ? 'relative w-full max-w-full'
-            : `relative rounded-xl px-3.5 py-2.5 shadow-sm ${
-                isComparison ? 'w-[96%]' : 'max-w-[92%]'
-              } ${
-                isUser
-                  ? 'rounded-tr-none bg-primary-100'
-                  : 'rounded-tl-none border border-border bg-card'
+            : `relative px-3.5 py-2.5 ${isComparison ? 'w-[96%]' : 'max-w-[92%]'} ${
+                isUser ? 'rounded-3xl bg-black' : 'bg-transparent'
               }`
         }
       >
@@ -67,11 +64,28 @@ export function ChatBubble({
         ) : (
           <ChatMessageContent content={message.content} isUser={isUser} />
         )}
+        {!isUser &&
+          !isDeepResearch &&
+          !message.isStreaming &&
+          !message.answers &&
+          !message.editorial && (
+            <ChatMessageActions
+              content={message.content}
+              messageId={message.id}
+              sources={message.sources ?? []}
+            />
+          )}
         {message.isStreaming && !message.answers && (
           <span className='ml-0.5 animate-pulse text-muted-foreground'>▍</span>
         )}
-        {!isUser && message.sources && <ChatSources sources={message.sources} />}
-        <span className='mt-1 block text-right text-[0.6875rem] text-muted-foreground'>
+        {!isUser && message.sources && (
+          <ChatSources id={`chat-sources-${message.id}`} sources={message.sources} />
+        )}
+        <span
+          className={`mt-1 block text-right text-[0.6875rem] ${
+            isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'
+          }`}
+        >
           {formatTime(message.createdAt)}
         </span>
       </div>

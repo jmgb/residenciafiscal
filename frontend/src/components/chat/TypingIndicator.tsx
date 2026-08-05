@@ -27,7 +27,7 @@ export function TypingIndicator() {
 
   return (
     <div className='flex justify-start' role='status' aria-label='Preparando la respuesta'>
-      <div className='flex items-center gap-2.5 rounded-xl rounded-tl-none border border-border bg-card px-4 py-3 text-sm text-muted-foreground shadow-sm'>
+      <div className='flex items-center gap-2.5 px-4 py-3 text-sm text-muted-foreground'>
         <span aria-hidden='true' className='flex items-center gap-1'>
           {[0, 1, 2].map((i) => (
             <span

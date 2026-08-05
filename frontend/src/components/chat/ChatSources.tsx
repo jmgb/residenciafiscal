@@ -59,16 +59,17 @@ function reviewLabel(source: ChatSourceV2): string {
 }
 
 interface ChatSourcesProps {
+  id?: string;
   sources: ChatSource[];
 }
 
-export function ChatSources({ sources }: ChatSourcesProps) {
+export function ChatSources({ id, sources }: ChatSourcesProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (sources.length === 0) return null;
 
   return (
-    <section aria-label='Sentencias citadas' className='mt-3 border-t border-border pt-3'>
+    <section id={id} aria-label='Sentencias citadas' className='mt-3 border-t border-border pt-3'>
       <h3 className='mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground'>
         Sentencias citadas ({sources.length})
       </h3>

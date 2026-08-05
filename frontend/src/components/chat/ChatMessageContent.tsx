@@ -72,7 +72,7 @@ interface ChatMessageContentProps {
 export function ChatMessageContent({ content, isUser }: ChatMessageContentProps) {
   if (isUser) {
     return (
-      <p className='whitespace-pre-wrap break-words text-sm leading-relaxed text-foreground'>
+      <p className='whitespace-pre-wrap break-words text-sm leading-relaxed text-white'>
         {content}
       </p>
     );
