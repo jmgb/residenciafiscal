@@ -1,5 +1,5 @@
 {
-  "catalog_version": "2026-07-31",
+  "catalog_version": "2026-08-04.5",
   "models": {
     "gemini-3.5-flash-lite": {
       "input_usd_per_mtok": 0.3,

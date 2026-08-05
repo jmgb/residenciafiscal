@@ -173,9 +173,10 @@ uv run python src/gemini_file_search_cli.py compare \
   --chat-fallback-model gemini-3.6-flash --confirm-paid
 ```
 
-La versión `0.9.0` conoce los IDs Llama 4, pero la API de Groq ya no los ofrece
-en el entorno validado y el catálogo no declara `reasoning_efforts` ni entrada
-de ficheros inline para ellos. Por eso no se usan como configuración de A.
+El catálogo conoce los IDs Llama 4 —la `0.10.0` los marca *deprecated* y los
+mantiene enrutables—, pero la API de Groq ya no los ofrece en el entorno
+validado y el catálogo no declara `reasoning_efforts` ni entrada de ficheros
+inline para ellos. Por eso no se usan como configuración de A.
 
 La V1 Netlify-only sigue siendo un runtime anterior: sus adaptadores TypeScript
 son directos porque aún no se ha completado el corte de tráfico a FastAPI. No
@@ -214,18 +215,30 @@ latencia dominada por la salida, no por el tamaño de la pregunta.
 
 ## Versión
 
-El paquete se instala desde PyPI con un mínimo y sin techo:
+El paquete se instala desde PyPI con una versión exacta:
 
 ```toml
-dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]>=0.9.0"]
+dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.10.1"]
 ```
 
-El mínimo es `0.9.0`, y cada tramo aporta algo que aquí se da por hecho: la
+Cada tramo hasta aquí aporta algo que este proyecto da por hecho: la
 `0.7.0` normaliza el esquema estricto y declara `supports_temperature` —por
 debajo, este proyecto vuelve a necesitar los parches retirados—, la `0.8.0`
 hace que `Execution.model_used` respete el id que reporta el proveedor, que es
-el que el comparador publica como modelo de la respuesta, y la `0.9.0` hace que
-un `response_schema` llegue a los proveedores que no lo imponen.
+el que el comparador publica como modelo de la respuesta, la `0.9.0` hace que
+un `response_schema` llegue a los proveedores que no lo imponen, y la `0.10.0`
+retira las conjeturas por familia de proveedor y por namespace del enrutado de
+fallback: un modelo desconocido ya no se adivina, exige entrada explícita en el
+catálogo. La cadena vigente (`gpt-5.6-luna` → `gemini-3.6-flash`) está
+catalogada, así que ese cambio no la altera.
+
+La `0.10.0` mueve además el catálogo compartido a `2026-08-04.5` sin tocar las
+tarifas de los tres modelos del chat, y marca como *deprecated* —sin dejar de
+enrutarlas— identidades que este proyecto no usa (Gemini antiguos, DeepSeek,
+Llama de Groq y GPT-5.1/5.2). Lo que sí obliga es a regenerar
+`frontend/netlify/functions/chat/pricing.generated.json`, que publica esa
+versión de catálogo a la Function TypeScript. La `0.10.1` es solo determinismo
+de la CI del paquete.
 
 Ese último tramo es el aviso de esta sección cumpliéndose. Hasta la `0.9.0` los
 adaptadores de Groq y OpenRouter pedían `{"type": "json_object"}` y descartaban
@@ -242,12 +255,12 @@ credenciales están configurados; en esos proveedores el gateway valida el JSON
 después de la respuesta y contabiliza cada intento, incluido el que provoque un
 fallback.
 
-No hay techo por decisión explícita. El contrapeso conviene tenerlo presente:
-el propio paquete recomienda fijar una versión exacta, y sin máximo una futura
-versión con cambios de contabilidad de coste entraría al regenerar el lock —
-exactamente lo que trajo la `0.9.0`.
-`uv.lock` sigue clavando la versión resuelta y CI ejecuta `uv sync --locked`, así
-que el cambio solo se materializa cuando alguien corre `uv lock` — momento en el
-que conviene leer el `CHANGELOG`, que señala explícitamente lo que afecta al
-coste, y ejecutar `make fast-check`. Nunca se fija una rama mutable ni una ruta
-local.
+La versión es exacta por decisión explícita, como recomienda el propio paquete:
+una versión nueva con cambios de contabilidad de coste —exactamente lo que trajo
+la `0.9.0`— no debe entrar sola al regenerar el lock. Subir de versión es por
+tanto un cambio deliberado: se edita el pin de `pyproject.toml`, se corre
+`uv lock`, se lee el `CHANGELOG` del paquete —que señala explícitamente lo que
+afecta al coste—, se regenera el catálogo de precios de la Function y se ejecuta
+`make fast-check`. `uv.lock` clava la versión resuelta y CI ejecuta
+`uv sync --locked`, así que nada se mueve sin ese paso. Nunca se fija una rama
+mutable ni una ruta local.
