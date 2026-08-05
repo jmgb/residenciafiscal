@@ -46,7 +46,6 @@ describe('ChatComparisonAnswers', () => {
     expect(response).toHaveTextContent('Coste: 0.002 USD');
     expect(response).not.toHaveTextContent('Coste de esta respuesta');
     expect(response).not.toHaveTextContent('No incluye la preparación previa del corpus.');
-    expect(screen.queryByText(/comparación experimental/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
   });
 

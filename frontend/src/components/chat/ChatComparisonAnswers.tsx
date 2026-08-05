@@ -1,4 +1,3 @@
-import { FlaskConical } from 'lucide-react';
 import { type KeyboardEvent, useId, useRef, useState } from 'react';
 import type { ChatStrategyAnswer, ChatStrategyId } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
@@ -48,14 +47,6 @@ export const ChatComparisonAnswers = ({
 
   return (
     <div className='flex flex-col gap-4'>
-      {isComparison && (
-        <p className='flex items-start gap-2 rounded-lg border border-accent-500/30 bg-accent px-3 py-2.5 text-xs leading-relaxed text-accent-foreground'>
-          <FlaskConical className='mt-0.5 h-3.5 w-3.5 shrink-0' aria-hidden='true' />
-          Comparación experimental: las dos opciones se generan y fundamentan de forma
-          independiente.
-        </p>
-      )}
-
       {isComparison && (
         <div
           role='tablist'

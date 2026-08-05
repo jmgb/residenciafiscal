@@ -525,7 +525,6 @@ describe('ChatView', () => {
     expect(fileSearch).toHaveTextContent('Respuesta File Search.');
     expect(fileSearch).toHaveTextContent('Coste: 0.020 USD');
     expect(fileSearch).toHaveTextContent('Cobertura limitada.');
-    expect(screen.getByText(/comparación experimental/i)).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Valorar comparación' })).toBeInTheDocument();
     const assistant = useConversations
       .getState()
