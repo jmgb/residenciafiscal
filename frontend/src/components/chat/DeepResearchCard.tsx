@@ -45,6 +45,7 @@ const judgmentLabel = (judgmentId: string): string => {
 
 export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCardProps) {
   const isActive = job.status === 'queued' || job.status === 'running';
+  const isCancelling = isActive && job.cancellationRequested === true;
   const result = job.result;
   const statusIcon =
     job.status === 'completed' ? (
@@ -64,7 +65,11 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
         {statusIcon}
         <Search className='h-4 w-4 text-muted-foreground' aria-hidden='true' />
         <span>
-          {job.status === 'queued' ? 'Investigación profunda en cola' : stageLabel[job.stage]}
+          {isCancelling
+            ? 'Cancelando investigación profunda…'
+            : job.status === 'queued'
+              ? 'Investigación profunda en cola'
+              : stageLabel[job.stage]}
         </span>
       </div>
 
@@ -81,10 +86,19 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
               variant='outline'
               size='sm'
               onClick={onCancel}
-              aria-label='Cancelar investigación profunda'
+              disabled={isCancelling}
+              aria-label={
+                isCancelling
+                  ? 'Cancelando investigación profunda'
+                  : 'Cancelar investigación profunda'
+              }
             >
-              <Square className='h-3.5 w-3.5' aria-hidden='true' />
-              Cancelar
+              {isCancelling ? (
+                <LoaderCircle className='h-3.5 w-3.5 animate-spin' aria-hidden='true' />
+              ) : (
+                <Square className='h-3.5 w-3.5' aria-hidden='true' />
+              )}
+              {isCancelling ? 'Cancelando…' : 'Cancelar'}
             </Button>
           </div>
         </div>

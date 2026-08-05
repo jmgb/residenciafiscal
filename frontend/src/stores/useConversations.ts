@@ -197,11 +197,12 @@ function isStoredConversation(value: unknown): value is Conversation {
 }
 
 /**
- * Apaga el flag de streaming de todos los mensajes.
+ * Apaga los flags transitorios de todos los mensajes.
  *
  * Un mensaje solo está en streaming mientras vive el generador que lo alimenta, y ese
  * generador no sobrevive a una recarga. Rehidratar `isStreaming: true` deja un cursor
- * parpadeando para siempre y sin forma de recuperarse; el texto que alcanzó a llegar se
+ * parpadeando para siempre y sin forma de recuperarse. Del mismo modo, una petición de
+ * cancelación pendiente no sobrevive a una recarga. El texto que alcanzó a llegar se
  * conserva tal cual. Devuelve el mismo array si no había nada que sanear, para no
  * invalidar referencias sin motivo.
  */
@@ -214,7 +215,10 @@ export function clearStreamingFlags(conversations: unknown): Conversation[] {
   const sanitized = valid.map((conversation) => {
     if (
       !conversation.messages.some(
-        (message) => message.isStreaming || message.answers?.some((answer) => answer.isStreaming)
+        (message) =>
+          message.isStreaming ||
+          message.deepResearch?.cancellationRequested ||
+          message.answers?.some((answer) => answer.isStreaming)
       )
     ) {
       return conversation;
@@ -222,15 +226,29 @@ export function clearStreamingFlags(conversations: unknown): Conversation[] {
     changed = true;
     return {
       ...conversation,
-      messages: conversation.messages.map((message) =>
-        message.isStreaming || message.answers?.some((answer) => answer.isStreaming)
-          ? {
-              ...message,
-              isStreaming: false,
-              answers: message.answers?.map((answer) => ({ ...answer, isStreaming: false })),
-            }
-          : message
-      ),
+      messages: conversation.messages.map((message) => {
+        const hasStreamingFlag =
+          message.isStreaming || message.answers?.some((answer) => answer.isStreaming);
+        const hasCancellationFlag = message.deepResearch?.cancellationRequested;
+        if (!hasStreamingFlag && !hasCancellationFlag) return message;
+
+        let deepResearch = message.deepResearch;
+        if (deepResearch?.cancellationRequested) {
+          deepResearch = { ...deepResearch };
+          delete deepResearch.cancellationRequested;
+        }
+
+        return {
+          ...message,
+          ...(hasStreamingFlag
+            ? {
+                isStreaming: false,
+                answers: message.answers?.map((answer) => ({ ...answer, isStreaming: false })),
+              }
+            : {}),
+          ...(deepResearch ? { deepResearch } : {}),
+        };
+      }),
     };
   });
 

@@ -453,6 +453,36 @@ describe('useConversations', () => {
     expect(clearStreamingFlags(conversations)).toEqual([]);
   });
 
+  it('apaga una cancelación pendiente al rehidratar el historial', () => {
+    const conversations = [
+      {
+        id: 'cancellation-1',
+        title: 'cancelación pendiente',
+        createdAt: '2026-07-29T10:00:00.000Z',
+        updatedAt: '2026-07-29T10:00:05.000Z',
+        messages: [
+          {
+            id: 'a1',
+            role: 'assistant' as const,
+            content: '',
+            createdAt: '2026-07-29T10:00:05.000Z',
+            deepResearch: {
+              jobId: 'deep-1',
+              status: 'running' as const,
+              stage: 'reading' as const,
+              result: null,
+              cancellationRequested: true,
+            },
+          },
+        ],
+      },
+    ];
+
+    expect(clearStreamingFlags(conversations)[0]?.messages[0]?.deepResearch).not.toHaveProperty(
+      'cancellationRequested'
+    );
+  });
+
   it('ignora operaciones sobre una conversación inexistente', () => {
     const store = useConversations.getState();
     expect(() =>

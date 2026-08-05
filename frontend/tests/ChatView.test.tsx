@@ -325,6 +325,58 @@ describe('ChatView', () => {
     expect(screen.getByText('Investigación profunda en cola')).toBeInTheDocument();
   });
 
+  it('shows cancellation immediately and reconciles a 409 when the job finishes first', async () => {
+    vi.stubEnv('VITE_DEEP_RESEARCH_ENABLED', 'true');
+    const user = userEvent.setup();
+    let backendStatus: 'running' | 'completed' = 'running';
+    let resolveCancel!: (response: Response) => void;
+    const cancelResponse = new Promise<Response>((resolve) => {
+      resolveCancel = resolve;
+    });
+    const fetchMock = vi.fn(async (input: RequestInfo | URL, _init?: RequestInit) => {
+      const url = String(input);
+      if (url === '/api/deep-research') {
+        return Response.json({ job_id: 'deep-ui-1', status: 'queued' }, { status: 202 });
+      }
+      if (url === '/api/deep-research-cancel') return cancelResponse;
+      return Response.json({
+        job_id: 'deep-ui-1',
+        status: backendStatus,
+        stage: backendStatus === 'completed' ? 'completed' : 'reading',
+        result: null,
+        error: null,
+      });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    renderChat();
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'consulta para cancelar');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+    await user.click(await screen.findByRole('button', { name: 'Iniciar investigación profunda' }));
+    const cancelButton = await screen.findByRole('button', {
+      name: 'Cancelar investigación profunda',
+    });
+
+    await user.click(cancelButton);
+
+    const cancellingButton = screen.getByRole('button', {
+      name: 'Cancelando investigación profunda',
+    });
+    expect(cancellingButton).toBeDisabled();
+    await user.click(cancellingButton);
+    expect(
+      fetchMock.mock.calls.filter(([input]) => String(input) === '/api/deep-research-cancel')
+    ).toHaveLength(1);
+
+    backendStatus = 'completed';
+    resolveCancel(Response.json({ error: 'La investigación ya ha terminado' }, { status: 409 }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('status')).toHaveTextContent('Investigación profunda completada');
+    });
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  });
+
   it('bloquea el chat al alcanzar el límite configurable de la sesión', async () => {
     vi.stubEnv('VITE_CHAT_SESSION_MESSAGE_LIMIT', '1');
     const user = userEvent.setup();

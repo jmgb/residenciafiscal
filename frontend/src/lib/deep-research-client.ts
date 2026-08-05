@@ -14,12 +14,19 @@ interface StatusResponse {
   error: string | null;
 }
 
+export class DeepResearchRequestError extends Error {
+  constructor(readonly status: number) {
+    super('Investigación profunda no disponible');
+    this.name = 'DeepResearchRequestError';
+  }
+}
+
 const jsonRequest = async <T>(url: string, init: RequestInit): Promise<T> => {
   const response = await fetch(url, {
     ...init,
     headers: { 'content-type': 'application/json', ...(init.headers ?? {}) },
   });
-  if (!response.ok) throw new Error('Investigación profunda no disponible');
+  if (!response.ok) throw new DeepResearchRequestError(response.status);
   return (await response.json()) as T;
 };
 

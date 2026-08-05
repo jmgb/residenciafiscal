@@ -116,6 +116,8 @@ export interface DeepResearchJob {
   stage: DeepResearchStage;
   result?: DeepResearchOutput | null;
   error?: string | null;
+  /** Estado local: evita dobles cancelaciones mientras responde el backend. */
+  cancellationRequested?: boolean;
 }
 
 /** Contexto nacional que debe acompañar cada consulta al motor. */

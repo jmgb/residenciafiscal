@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { trackEvent } from '@/components/layout/PostHogAnalytics';
 import {
   cancelDeepResearch,
+  DeepResearchRequestError,
   getDeepResearchStatus,
   startDeepResearch,
 } from '@/lib/deep-research-client';
@@ -19,15 +20,24 @@ export const messagePatchForDeepResearchStatus = (
 export const withDeepResearchCancelError = (job: DeepResearchJob): DeepResearchJob => ({
   ...job,
   error: 'No se ha podido cancelar la investigación.',
+  cancellationRequested: false,
 });
+
+const withoutCancellationRequest = (job: DeepResearchJob): DeepResearchJob => {
+  const visibleJob = { ...job };
+  delete visibleJob.cancellationRequested;
+  return visibleJob;
+};
 
 export const mergeDeepResearchPoll = (
   previous: DeepResearchJob,
   next: DeepResearchJob
 ): DeepResearchJob => {
   const nextIsActive = next.status === 'queued' || next.status === 'running';
-  if (!nextIsActive || next.error || !previous.error) return next;
-  return { ...next, error: previous.error };
+  if (!nextIsActive) return withoutCancellationRequest(next);
+  const visibleNext = next.error || !previous.error ? next : { ...next, error: previous.error };
+  if (!previous.cancellationRequested && !next.cancellationRequested) return visibleNext;
+  return { ...visibleNext, cancellationRequested: true };
 };
 
 export const comparisonIdForLatestQuestion = (messages: ChatMessage[]): string | undefined => {
@@ -138,22 +148,51 @@ export const useDeepResearch = ({
       ]
         .reverse()
         .find((candidate) => candidate.deepResearch?.jobId === jobId);
+      const currentJob = message?.deepResearch;
+      if (!message || !currentJob || currentJob.cancellationRequested) return;
+
+      updateMessage(conversationId, message.id, {
+        deepResearch: { ...currentJob, cancellationRequested: true, error: null },
+      });
       try {
         await cancelDeepResearch(jobId, conversationId);
-        if (message) {
-          updateMessage(conversationId, message.id, {
-            deepResearch: {
-              jobId,
-              status: 'cancelled',
-              stage: 'cancelled',
-              result: null,
-            },
-          });
+        updateMessage(conversationId, message.id, {
+          deepResearch: {
+            ...currentJob,
+            jobId,
+            status: 'cancelled',
+            stage: 'cancelled',
+            result: null,
+            error: null,
+          },
+        });
+      } catch (error) {
+        if (error instanceof DeepResearchRequestError && error.status === 409) {
+          try {
+            const latest = await getDeepResearchStatus(jobId, conversationId);
+            updateMessage(
+              conversationId,
+              message.id,
+              messagePatchForDeepResearchStatus(
+                latest.status === 'queued' || latest.status === 'running'
+                  ? withDeepResearchCancelError(latest)
+                  : latest
+              )
+            );
+            return;
+          } catch {
+            // Si el estado tampoco está disponible, mostramos el error genérico abajo.
+          }
         }
-      } catch {
-        if (message?.deepResearch) {
+
+        const latestMessage = [
+          ...(useConversations.getState().getConversation(conversationId)?.messages ?? []),
+        ]
+          .reverse()
+          .find((candidate) => candidate.id === message.id);
+        if (latestMessage?.deepResearch) {
           updateMessage(conversationId, message.id, {
-            deepResearch: withDeepResearchCancelError(message.deepResearch),
+            deepResearch: withDeepResearchCancelError(latestMessage.deepResearch),
           });
         }
       }

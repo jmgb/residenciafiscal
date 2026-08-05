@@ -68,4 +68,29 @@ describe('deep research assistant message', () => {
       }).error
     ).toBeUndefined();
   });
+
+  it('keeps pending cancellation feedback while polling and clears it at a terminal state', () => {
+    const cancelling: DeepResearchJob = {
+      jobId: 'deep-job-1',
+      status: 'running',
+      stage: 'reading',
+      result: null,
+      cancellationRequested: true,
+    };
+
+    expect(
+      mergeDeepResearchPoll(cancelling, { ...cancelling, cancellationRequested: false })
+    ).toMatchObject({
+      status: 'running',
+      cancellationRequested: true,
+    });
+    expect(
+      mergeDeepResearchPoll(cancelling, {
+        ...cancelling,
+        status: 'completed',
+        stage: 'completed',
+        cancellationRequested: false,
+      }).cancellationRequested
+    ).toBeUndefined();
+  });
 });

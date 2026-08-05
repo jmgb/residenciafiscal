@@ -85,6 +85,26 @@ describe('DeepResearchCard', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows immediate cancellation feedback and blocks repeated clicks', () => {
+    render(
+      <DeepResearchCard
+        job={{
+          jobId: 'deep-1',
+          status: 'running',
+          stage: 'reading',
+          result: null,
+          cancellationRequested: true,
+        }}
+        onCancel={() => undefined}
+      />
+    );
+
+    expect(screen.getByRole('status')).toHaveTextContent('Cancelando investigación profunda');
+    const button = screen.getByRole('button', { name: 'Cancelando investigación profunda' });
+    expect(button).toBeDisabled();
+    expect(button).toHaveTextContent('Cancelando');
+  });
+
   it('renders conclusions, evidence and scope as separate readable blocks', () => {
     render(
       <DeepResearchCard
