@@ -199,6 +199,101 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "No tiene propiedades en Reino Unido, y si bien se dio de alta en el gas en la vivienda alquilada no lo hizo,\npor ejemplo, con el agua"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "la Administración\nno ha acreditado que el recurrente resida habitualmente en España"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "el recurrente ha acreditado que dispone de una vivienda que puede utilizar en Londres"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
     }
   ],
   "issues": [
@@ -213,9 +308,33 @@
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
-        "anchor-legacy-evidence-010"
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "El art.9.1 computa las ausencias esporádicas salvo que el contribuyente acredite residencia fiscal en otro país; por tanto correspondía al recurrente demostrar residencia en Reino Unido",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -448,7 +567,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.",
         "consequences": [],

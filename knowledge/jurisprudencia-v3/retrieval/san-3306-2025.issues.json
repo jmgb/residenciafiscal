@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-3306-2025.case.json",
-    "case_sha256": "34741dcee8f73af757f5532dc845cb4a917b375d7a967ae584456d70c87298c8",
+    "case_sha256": "5e2d9a5bfaecf2f09c4e7b2146dce3f66cb9c7f92965d7d82b15753ce726e8b6",
     "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La parte actora debía aportar pruebas de la condición exigida para la exención o de tributación en el país extranjero (no aportadas)",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -230,7 +254,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
         "consequences": [],
@@ -261,7 +285,14 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-004",
+          "anchor-legacy-reasoning-005"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -293,7 +324,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nAcuerdo liquidación provisional 26-03-2019\nAcuerdo de liquidación provisional dictado por la Oficina Nacional de Gestión Tributaria (devolución parcial denegada)\nAcreditar la sujeción de las percepciones al IRNR y la liquidación practicada\nACCEPTED\nActo administrativo vigente y base del procedimiento; la Sala confirma su adecuación al ordenamiento\nConvenio España-Rusia (art.20)\nAplicación del artículo 20 del Convenio entre España y la Federación Rusa (16/12/1998) que impide gravamen en Rusia\nDeterminar que la renta no puede gravarse en Rusia y, por tanto, debe considerarse obtenida en España\nACCEPTED\nLa Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR\nResolución TEAC 29-06-2020\nResolución confirmatoria del TEAC que desestimó la reclamación contra la liquidación\nConfirmar la valoración administrativa y la aplicación del IRNR\nACCEPTED\nResolución administrativa previa que la Sala estima adecuada y confirma\nDocumento 4 - Plan de Internacionalización 2014/2015\nPlan de Internacionalización de la Economía Española aportado por la parte actora como marco de las becas ICEX\nAcreditar que las becas se encuadran en un plan anual de cooperación internacional y son exentas (art.14.1.b TRLIRNR)\nREJECTED\nNo acreditó que el plan sea un \"plan anual de cooperación internacional aprobado en Consejo de Ministros\"; la Sala exige prueba de ese extremo y la considera insuficiente\nSentencias TS y otras (invocadas por la demanda)\nSTS 4306/2017, 4305/2017, 4307/2017 y 334/2018 invocadas por la parte actora como precedente de no tributación\nSostener trato diferenciado y fundamento para no sujeción o exención\nREJECTED\nLa Sala considera que esas sentencias no resuelven la misma cuestión litigiosa y no constituyen precedente obligatorio para el caso; por tanto no son aptas para fundamentar la pretensión\nConsultas vinculantes (NUM000, NUM001)\nConsultas tributarias invocadas por la parte actora sobre régimen de becas (una referida a Kuwait, otra a Plan 2011)\nAportar interpretación administrativa favorable a la no sujeción/exención\nREJECTED\nLa Sala estima que las consultas no son comparables por diferencia de supuestos (países, convenios y planes distintos) y no sirven para desvirtuar la aplicación del CDI aplicable\nLa Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.\nLa Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.\nNOT_DECIDED\n2015\nacuerdo de liquidación provisional de 26 de marzo de 2019\nel artículo 20 del CDI España-Rusia determina que dichos rendimientos no pueden gravarse en\nRusia\nresolución\ndel Tribunal Económico-Administrativo Central de 29 de junio de 2020\nno ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros\nno resuelven la misma cuestión litigiosa\nse refería a una beca para Kuwait, país con el que no existía Convenio",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nAcuerdo liquidación provisional 26-03-2019\nAcuerdo de liquidación provisional dictado por la Oficina Nacional de Gestión Tributaria (devolución parcial denegada)\nAcreditar la sujeción de las percepciones al IRNR y la liquidación practicada\nACCEPTED\nActo administrativo vigente y base del procedimiento; la Sala confirma su adecuación al ordenamiento\nConvenio España-Rusia (art.20)\nAplicación del artículo 20 del Convenio entre España y la Federación Rusa (16/12/1998) que impide gravamen en Rusia\nDeterminar que la renta no puede gravarse en Rusia y, por tanto, debe considerarse obtenida en España\nACCEPTED\nLa Sala considera determinante la aplicación del artículo 20 del CDI para excluir la tributación en Rusia y sostener la sujeción al IRNR\nResolución TEAC 29-06-2020\nResolución confirmatoria del TEAC que desestimó la reclamación contra la liquidación\nConfirmar la valoración administrativa y la aplicación del IRNR\nACCEPTED\nResolución administrativa previa que la Sala estima adecuada y confirma\nDocumento 4 - Plan de Internacionalización 2014/2015\nPlan de Internacionalización de la Economía Española aportado por la parte actora como marco de las becas ICEX\nAcreditar que las becas se encuadran en un plan anual de cooperación internacional y son exentas (art.14.1.b TRLIRNR)\nREJECTED\nNo acreditó que el plan sea un \"plan anual de cooperación internacional aprobado en Consejo de Ministros\"; la Sala exige prueba de ese extremo y la considera insuficiente\nSentencias TS y otras (invocadas por la demanda)\nSTS 4306/2017, 4305/2017, 4307/2017 y 334/2018 invocadas por la parte actora como precedente de no tributación\nSostener trato diferenciado y fundamento para no sujeción o exención\nREJECTED\nLa Sala considera que esas sentencias no resuelven la misma cuestión litigiosa y no constituyen precedente obligatorio para el caso; por tanto no son aptas para fundamentar la pretensión\nConsultas vinculantes (NUM000, NUM001)\nConsultas tributarias invocadas por la parte actora sobre régimen de becas (una referida a Kuwait, otra a Plan 2011)\nAportar interpretación administrativa favorable a la no sujeción/exención\nREJECTED\nLa Sala estima que las consultas no son comparables por diferencia de supuestos (países, convenios y planes distintos) y no sirven para desvirtuar la aplicación del CDI aplicable\nLa Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.\nLa Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.\nNOT_DECIDED\n2015\nLa parte actora debía aportar pruebas de la condición exigida para la exención o de tributación en el país extranjero (no aportadas)\nLa carga probatoria no se consideró cumplida.\nacuerdo de liquidación provisional de 26 de marzo de 2019\nel artículo 20 del CDI España-Rusia determina que dichos rendimientos no pueden gravarse en\nRusia\nresolución\ndel Tribunal Económico-Administrativo Central de 29 de junio de 2020\nno ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros\nno resuelven la misma cuestión litigiosa\nse refería a una beca para Kuwait, país con el que no existía Convenio\nno ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros\nno resuelven la misma cuestión litigiosa\nse refería a una beca para Kuwait, país con el que no existía Convenio\nEn cualquier caso, de haber tributado allí, la demanda lo habría aportado\nLa permanencia fuera del territorio\nnacional durante más de 183 días\nno puede considerarse como una ausencia esporádica\nEn cualquier caso, de haber tributado allí, la demanda lo habría aportado\nno resuelven la misma cuestión litigiosa, por lo que ni\nconstituían un precedente\nni, por no seguirlas, se produciría\nla vulneración",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -418,6 +449,174 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2999,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2857,
+              "verbatim_text": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 663,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 623,
+              "verbatim_text": "no resuelven la misma cuestión litigiosa"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4113,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4043,
+              "verbatim_text": "se refería a una beca para Kuwait, país con el que no existía Convenio"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1846,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1773,
+              "verbatim_text": "En cualquier caso, de haber tributado allí, la demanda lo habría aportado"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1771,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 1703,
+              "verbatim_text": "La permanencia fuera del territorio\nnacional durante más de 183 días"
+            },
+            {
+              "end_offset": 1905,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 1855,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1846,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1773,
+              "verbatim_text": "En cualquier caso, de haber tributado allí, la demanda lo habría aportado"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 704,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 623,
+              "verbatim_text": "no resuelven la misma cuestión litigiosa, por lo que ni\nconstituían un precedente"
+            },
+            {
+              "end_offset": 806,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 756,
+              "verbatim_text": "ni, por no seguirlas, se produciría\nla vulneración"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -19,7 +19,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-3477-2022.case.json",
-    "case_sha256": "d5cd9fea9a463561d75606307aa9db9e96791aebdb3ff83fdd60110d00c6f741",
+    "case_sha256": "fe6a3ee7a350aa96c05a9425853797facab5de4ba9ded51f852aba9da9f12f48",
     "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
   },
   "units": [
@@ -392,7 +392,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.",
         "consequences": [],
@@ -430,7 +430,13 @@
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
-          "anchor-legacy-evidence-012"
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-reasoning-004",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-005"
         ],
         "criterion_ids": [
           "CRIT_CENTRO_INTERESES_ECONOMICOS",
@@ -469,7 +475,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCRIT_183_DIAS\nBDC domicilio fiscal\nRegistro en la base de datos de la AEAT con domicilio fiscal en Fase I, Casa NUM001 URBANIZACION000 DIRECCION001 (Málaga); sin comunicación de cambio\nAcreditar domicilio fiscal y permanencia administrativa en España\nACCEPTED\nConsta en el expediente y no se comunicó cambio de domicilio, por lo que tiene valor probatorio\ninscripción como representante en registros\nConsta que en 2010-2011 era representante en España de múltiples entidades (lista y fechas de alta en expediente)\nAcreditar que el núcleo de intereses y gestión económica del interesado estaba en España\nACCEPTED\nLa constancia documental de cargos en sociedades españolas es indicio relevante del centro económico\ntitularidad inmuebles España\nTitular de inmueble en AVENIDA000 NUM003 DIRECCION001 (Málaga) y otro en DIRECCION002 (Barcelona)\nAcreditar inversiones y presencia patrimonial en España\nACCEPTED\nTitularidad de inmuebles en España es indicio del centro de intereses económicos\nsolicitud préstamo hipotecario 04-10-2010\nSolicitud de préstamo hipotecario identificado NUM005 al Banco Santander SA destinado a adquisición de vivienda habitual\nAcreditar intención de establecer vivienda habitual en España\nACCEPTED\nLa solicitud de hipoteca es indicio de radicación y proyecto de vivienda en España\nmodelo 296 entidad DIRECCION004\nEntidad DIRECCION004 declara en modelo 296 rentas de trabajo al interesado 138.333,32 € y retenciones 33.200 €, con baja 30-04-2010\nAcreditar percepción de rentas de trabajo en España y vinculación laboral previa\nACCEPTED\nDocumento fiscal que evidencia percepción y retención de rentas en España durante 2010\nno comunicado cambio domicilio fiscal\nConstancia de que no se comunicó cambio de domicilio fiscal, permitiendo que las actuaciones inspectoras se realizaran en el domicilio en BDC\nAcreditar mantenimiento del domicilio fiscal en España\nACCEPTED\nLa falta de comunicación de cambio de domicilio tiene valor probatorio frente a la afirmación de residencia en el extranjero\nnóminas marzo 2010 y ss\nNóminas de marzo 2010 y siguientes que, según el recurrente, muestran deducción y cotización a Hacienda francesa\nAcreditar tributación y residencia fiscal en Francia en 2010 y 2011\nREJECTED\nContradicho por la información francesa obrante en expediente que indica retenciones 0,00 €; tribunal considera insuficiente\ncertificado Dependencia Gestión Barcelona (art.93)\nCertificado emitido por la Dependencia de Gestión de Barcelona sobre opción artículo 93 (periodo 2008-2013) que el interesado aporta como prueba de no residente\nProbar condición de no residente en España durante 2010-2011\nREJECTED\nEl Tribunal/TEAC aprecia que el certificado acredita la opción del art.93 y, en realidad, prueba la titularidad de residencia fiscal en España; además requisitos del art.93 no cumplidos para 2010-2011\ncontrato arrendamiento vivienda París\nContrato de arrendamiento de inmueble en París que el recurrente alega como prueba de residencia en Francia\nAcreditar vivienda habitual en Francia\nREJECTED\nNo determinante ante los indicios de gestión económica en España y la falta de prueba de tributación en Francia\ninforme detective privado\nInforme de detective privado contratado por la ex esposa en procedimiento de divorcio que afirma que el demandante no residía en DIRECCION001 y tenía residencia en el extranjero\nAcreditar ausencia/ residencia en el extranjero\nREJECTED\nEl Tribunal considera que dicho informe no es determinante y no desvirtúa los indicios aportados por la Administración\nuso vehículo empresa y contratos arrendamiento París\nContratos de arrendamiento en París y uso particular de vehículo propiedad de la empresa alegados como prueba de actividad en Francia\nAcreditar que la actividad y vínculo económico principal estaba en Francia\nREJECTED\nNo suficientes para desvirtuar la información y los indicios de la AEAT; el Tribunal considera no probada la tributación en Francia\ncarta de cese baja voluntaria 2010; certificado empresa ante INEM; matriculación vehículo Francia; sentencia divorcio\nDocumentos varios aportados (carta cese baja voluntaria 2010, certificado ante INEM, certificado matriculación vehículo en Francia, sentencia divorcio 12-01-2010)\nAportar contexto laboral y personal que apoye residencia en Francia\nREJECTED\nConsiderados insuficientes y no desvirtuadores de los indicios administrativos y de la información francesa\nEl Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.\nEl Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.\nNOT_DECIDED\n2010\n2011\nTenía domicilio ﬁscal en España, en concreto, en Fase I, Casa  NUM001\nEl Sr.  Nemesio  en los años 2010 y 2011 es representante en territorio español de las siguientes entidades\nEs titular de un inmueble en  AVENIDA000\nMálaga), y otro en  DIRECCION002\nEl 4 de octubre de 2010, el interesado solicita un préstamo Hipotecario  NUM005\nla cantidad anual de 138.333,32 € y unas\nretenciones totales de 33.200,00\nEn ningún momento se ha comunicado cambio de domicilio ﬁscal\nnóminas de los meses correspondientes\nen las que consta la correspondiente deducción\ndicho certiﬁcado no indica lo que alega el interesado, sino\nque certiﬁca que se ha optado por la opción prevista en el artículo 93 LIRPF\ncontrato de arrendamiento de inmueble en París\nInforme en el que se llega a la conclusión de que este no residía en la localidad de\nDIRECCION001\ncontratos de arrendamiento\nasí como el uso\nparticular de un vehículo propiedad de la empresa\ncarta de\ncese de baja voluntaria de 2010, certiﬁcado de empresa\ncertiﬁcado de matriculación\nde vehículo en Francia",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCRIT_183_DIAS\nBDC domicilio fiscal\nRegistro en la base de datos de la AEAT con domicilio fiscal en Fase I, Casa NUM001 URBANIZACION000 DIRECCION001 (Málaga); sin comunicación de cambio\nAcreditar domicilio fiscal y permanencia administrativa en España\nACCEPTED\nConsta en el expediente y no se comunicó cambio de domicilio, por lo que tiene valor probatorio\ninscripción como representante en registros\nConsta que en 2010-2011 era representante en España de múltiples entidades (lista y fechas de alta en expediente)\nAcreditar que el núcleo de intereses y gestión económica del interesado estaba en España\nACCEPTED\nLa constancia documental de cargos en sociedades españolas es indicio relevante del centro económico\ntitularidad inmuebles España\nTitular de inmueble en AVENIDA000 NUM003 DIRECCION001 (Málaga) y otro en DIRECCION002 (Barcelona)\nAcreditar inversiones y presencia patrimonial en España\nACCEPTED\nTitularidad de inmuebles en España es indicio del centro de intereses económicos\nsolicitud préstamo hipotecario 04-10-2010\nSolicitud de préstamo hipotecario identificado NUM005 al Banco Santander SA destinado a adquisición de vivienda habitual\nAcreditar intención de establecer vivienda habitual en España\nACCEPTED\nLa solicitud de hipoteca es indicio de radicación y proyecto de vivienda en España\nmodelo 296 entidad DIRECCION004\nEntidad DIRECCION004 declara en modelo 296 rentas de trabajo al interesado 138.333,32 € y retenciones 33.200 €, con baja 30-04-2010\nAcreditar percepción de rentas de trabajo en España y vinculación laboral previa\nACCEPTED\nDocumento fiscal que evidencia percepción y retención de rentas en España durante 2010\nno comunicado cambio domicilio fiscal\nConstancia de que no se comunicó cambio de domicilio fiscal, permitiendo que las actuaciones inspectoras se realizaran en el domicilio en BDC\nAcreditar mantenimiento del domicilio fiscal en España\nACCEPTED\nLa falta de comunicación de cambio de domicilio tiene valor probatorio frente a la afirmación de residencia en el extranjero\nnóminas marzo 2010 y ss\nNóminas de marzo 2010 y siguientes que, según el recurrente, muestran deducción y cotización a Hacienda francesa\nAcreditar tributación y residencia fiscal en Francia en 2010 y 2011\nREJECTED\nContradicho por la información francesa obrante en expediente que indica retenciones 0,00 €; tribunal considera insuficiente\ncertificado Dependencia Gestión Barcelona (art.93)\nCertificado emitido por la Dependencia de Gestión de Barcelona sobre opción artículo 93 (periodo 2008-2013) que el interesado aporta como prueba de no residente\nProbar condición de no residente en España durante 2010-2011\nREJECTED\nEl Tribunal/TEAC aprecia que el certificado acredita la opción del art.93 y, en realidad, prueba la titularidad de residencia fiscal en España; además requisitos del art.93 no cumplidos para 2010-2011\ncontrato arrendamiento vivienda París\nContrato de arrendamiento de inmueble en París que el recurrente alega como prueba de residencia en Francia\nAcreditar vivienda habitual en Francia\nREJECTED\nNo determinante ante los indicios de gestión económica en España y la falta de prueba de tributación en Francia\ninforme detective privado\nInforme de detective privado contratado por la ex esposa en procedimiento de divorcio que afirma que el demandante no residía en DIRECCION001 y tenía residencia en el extranjero\nAcreditar ausencia/ residencia en el extranjero\nREJECTED\nEl Tribunal considera que dicho informe no es determinante y no desvirtúa los indicios aportados por la Administración\nuso vehículo empresa y contratos arrendamiento París\nContratos de arrendamiento en París y uso particular de vehículo propiedad de la empresa alegados como prueba de actividad en Francia\nAcreditar que la actividad y vínculo económico principal estaba en Francia\nREJECTED\nNo suficientes para desvirtuar la información y los indicios de la AEAT; el Tribunal considera no probada la tributación en Francia\ncarta de cese baja voluntaria 2010; certificado empresa ante INEM; matriculación vehículo Francia; sentencia divorcio\nDocumentos varios aportados (carta cese baja voluntaria 2010, certificado ante INEM, certificado matriculación vehículo en Francia, sentencia divorcio 12-01-2010)\nAportar contexto laboral y personal que apoye residencia en Francia\nREJECTED\nConsiderados insuficientes y no desvirtuadores de los indicios administrativos y de la información francesa\nEl Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.\nEl Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.\nNOT_DECIDED\n2010\n2011\nTenía domicilio ﬁscal en España, en concreto, en Fase I, Casa  NUM001\nEl Sr.  Nemesio  en los años 2010 y 2011 es representante en territorio español de las siguientes entidades\nEs titular de un inmueble en  AVENIDA000\nMálaga), y otro en  DIRECCION002\nEl 4 de octubre de 2010, el interesado solicita un préstamo Hipotecario  NUM005\nla cantidad anual de 138.333,32 € y unas\nretenciones totales de 33.200,00\nEn ningún momento se ha comunicado cambio de domicilio ﬁscal\nnóminas de los meses correspondientes\nen las que consta la correspondiente deducción\ndicho certiﬁcado no indica lo que alega el interesado, sino\nque certiﬁca que se ha optado por la opción prevista en el artículo 93 LIRPF\ncontrato de arrendamiento de inmueble en París\nInforme en el que se llega a la conclusión de que este no residía en la localidad de\nDIRECCION001\ncontratos de arrendamiento\nasí como el uso\nparticular de un vehículo propiedad de la empresa\ncarta de\ncese de baja voluntaria de 2010, certiﬁcado de empresa\ncertiﬁcado de matriculación\nde vehículo en Francia\ncon un importe retenido de 0,00\nel contrato de arrendamiento\no\nel vehículo\nno son determinantes\nel contrato de arrendamiento\nno son determinantes\ncon dicho certiﬁcado lo que está probando es que es residente\nen España\nQue radique en España el núcleo principal o la base de sus actividades o intereses económicos\nLa consideración del centro de intereses económicos",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -754,6 +760,159 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 580,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 549,
+              "verbatim_text": "con un importe retenido de 0,00"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 998,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 970,
+              "verbatim_text": "el contrato de arrendamiento"
+            },
+            {
+              "end_offset": 1027,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1014,
+              "verbatim_text": "o\nel vehículo"
+            },
+            {
+              "end_offset": 1085,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1065,
+              "verbatim_text": "no son determinantes"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 998,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 970,
+              "verbatim_text": "el contrato de arrendamiento"
+            },
+            {
+              "end_offset": 1085,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1065,
+              "verbatim_text": "no son determinantes"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3472,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3401,
+              "verbatim_text": "con dicho certiﬁcado lo que está probando es que es residente\nen España"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 111,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 18,
+              "verbatim_text": "Que radique en España el núcleo principal o la base de sus actividades o intereses económicos"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-005",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2672,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2621,
+              "verbatim_text": "La consideración del centro de intereses económicos"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

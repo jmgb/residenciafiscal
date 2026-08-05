@@ -144,7 +144,7 @@ misma instrucción jurídica base. Sus contratos de grounding son distintos por
 diseño: A devuelve IDs `E<n>` que el servidor resuelve a anclajes exactos; B
 solo publica las anotaciones de File Search verificadas localmente.
 
-A entrega al redactor un máximo de dos fragmentos por unidad recuperada. En dos
+A entregaba en F0.2 al redactor un máximo de dos fragmentos por unidad recuperada. En dos
 smokes sucesivos de la misma pregunta general, este límite redujo su entrada de
 31.038 a 8.954 tokens y el coste de USD 0,010731 a USD 0,003499, manteniendo
 representadas las cinco sentencias.
@@ -201,8 +201,9 @@ Usa el flujo propio del repositorio:
    holdings y facetas;
 3. aplica ranking auditable, diversificación y selección de casos de apoyo y
    contraste;
-4. entrega al redactor las unidades seleccionadas y como máximo dos fragmentos
-   verificables por unidad;
+4. entrega al redactor las unidades seleccionadas y hasta cuatro fragmentos
+   verificables por unidad: el mejor match léxico y, si existen, muestras de
+   resultado, razonamiento y carga de la prueba;
 5. resuelve cada cita contra los anclajes verbatim y el PDF original.
 
 Su fuente de recuperación son los casos canónicos y sus índices derivados, no

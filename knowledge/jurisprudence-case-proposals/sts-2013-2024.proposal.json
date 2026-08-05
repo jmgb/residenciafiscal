@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria se consideró cumplida.",
+      "fact_to_prove": "La prueba del cambio de punto de conexión provino de la actuación inspectora y de la documentación administrativa aportada por la Administración.",
+      "initial_bearer": "AEAT",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": "Desvirtuar los indicios y acreditar la residencia exterior.",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": "TAXPAYER",
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -106,7 +130,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.",
       "consequences": [],
@@ -180,7 +204,12 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -299,6 +328,116 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 13,
+          "verbatim_text": "la competencia"
+        },
+        {
+          "page_index": 13,
+          "verbatim_text": "depende de la correcta identiﬁcación del\npunto de conexión"
+        },
+        {
+          "page_index": 13,
+          "verbatim_text": "sin que resulte exigible una previa\nmodiﬁcación del domicilio ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 12,
+          "verbatim_text": "una vez constatada (tras la inspección"
+        },
+        {
+          "page_index": 12,
+          "verbatim_text": "y\nla aquiescencia de ambas Administraciones"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 11,
+          "verbatim_text": "Se considera producido en el territorio"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "que tengan su residencia habitual en dicho territorio"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 12,
+          "verbatim_text": "El concepto de residencia habitual es una cuestión fáctica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 13,
+          "verbatim_text": "no cabe invocar"
+        },
+        {
+          "page_index": 13,
+          "verbatim_text": "sentencias\ndictadas por la misma Sala y Sección"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

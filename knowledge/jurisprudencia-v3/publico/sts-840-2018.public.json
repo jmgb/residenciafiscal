@@ -114,6 +114,102 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "denegó la devolución"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "al no haber aportado certiﬁcado acreditativo de residencia"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "las circunstancias"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "permiten\ncaracterizar la residencia como \"ausencia esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "existió un hecho cierto y reconocido por la propia Administración"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "02a5f1ce2b9b83c64ba362abd20130fd4b3507988ced597b00d6875cc81a65e7"
     }
   ],
   "issues": [
@@ -123,9 +219,32 @@
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
-        "anchor-legacy-evidence-005"
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La LIRPF impone normalmente que para excluir ausencias se acredite residencia en otro Estado; no obstante, el Tribunal considera que el dato objetivo de permanencia (>183 días) puede ser suficiente y que la Administración no puede exigir en este caso prueba adicional de residencia fiscal extranjera.",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -240,7 +359,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el beneficiario disfrutó de la beca en Berlín y permaneció fuera de España más de 183 días; aplica el criterio objetivo del art.9 LIRPF y declara que dicha estancia no es ausencia esporádica, por lo que no procede exigir acreditación adicional de residencia fiscal en el país extranjero en este supuesto.",
         "consequences": [],

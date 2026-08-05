@@ -182,6 +182,180 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "La permanencia fuera"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "durante más de 183 días"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no puede considerarse"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "ausencia esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "ausencias esporádicas debe atender exclusivamente al dato objetivo"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "elemento volitivo"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "denegó la devolución"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "al no haber aportado certiﬁcado acreditativo de residencia"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "de otra jurisdicción tributaria"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "La permanencia fuera"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "durante más de 183 días"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no puede considerarse"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "ausencias esporádicas"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "exclusivamente"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "dato objetivo"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "elemento volitivo"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "en las sentencias de 28 de noviembre\nde 2017"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
     }
   ],
   "issues": [
@@ -193,9 +367,34 @@
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
-        "anchor-legacy-evidence-007"
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "El TS fija un criterio interpretativo sobre el concepto de «ausencias esporádicas» y no desarrolla una regla de carga probatoria; consta que la AEAT denegó por falta de certificado extranjero.",
+          "initialBearer": "OTHER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -362,7 +561,8 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).",
         "consequences": [],

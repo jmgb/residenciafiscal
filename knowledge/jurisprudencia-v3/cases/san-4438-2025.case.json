@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "Corresponde al actor probar la existencia de la tributación en el país de residencia (colindante con la excepción del artículo 19 del CDI) o aportar prueba que desvirtúe la calificación aplicable; la sentencia reprocha que \"el actor no haya probado lo contrario\".",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -162,7 +186,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El tribunal parte de que el recurrente fue residente en Colombia en 2015 y que prestó servicios en la Oficina Económica y Comercial en Colombia; aplica el artículo 19 del CDI España-Colombia para concluir que la beca no se gravó en Colombia y, por tanto, se califica como renta obtenida en territorio español sujeta al IRNR. Además, como doctrina interpretativa (previamente fijada), declara que las ausencias superiores a 183 días por beca no son ausencias esporádicas a efectos del art.9 LIRPF.",
       "consequences": [],
@@ -245,7 +269,13 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003",
+        "anchor-legacy-reasoning-004"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -409,6 +439,145 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2729,
+          "page_index": 4,
+          "printed_page": "4",
+          "start_offset": 2661,
+          "verbatim_text": "pero no ha acreditado que reúna las\ncondiciones para ser considerado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4074,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4032,
+          "verbatim_text": "sin que el actor haya probado lo contrario"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1763,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1695,
+          "verbatim_text": "La permanencia fuera del territorio\nnacional durante más de 183 días"
+        },
+        {
+          "end_offset": 1897,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 1847,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 251,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 172,
+          "verbatim_text": "En el ejercicio 2015, el recurrente no fue residente en España sino en Colombia"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4074,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4032,
+          "verbatim_text": "sin que el actor haya probado lo contrario"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "d66683a9ef16e9904fde6aabd9c2454c512468acaedd6842f9ede6334f45d265"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3937,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3834,
+          "verbatim_text": "el artículo 19 del CDI España-Colombia determina que dichos rendimientos no pueden gravarse\nen Colombia"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

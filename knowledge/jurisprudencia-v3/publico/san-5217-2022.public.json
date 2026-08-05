@@ -66,6 +66,106 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "resulta indiferente que la interesada no haya justiﬁcado la residencia\nﬁscal de los futbolistas en otros países"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "no cabe\nreputar como ocasional o esporádica una ausencia prolongada"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "corresponde a la Inspección probar que, en contra\nde lo que se desprende de las declaraciones presentadas por la entidad obligada tributaria"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "no cabe\nreputar como ocasional o esporádica una ausencia prolongada"
+        },
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "por un\ntraslado laboral a Italia y a Turquía respectivamente"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 19,
+          "printedPage": "19",
+          "verbatimText": "el período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
     }
   ],
   "issues": [
@@ -73,9 +173,33 @@
       "anchorIds": [
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
-        "anchor-legacy-evidence-003"
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "De conformidad con el artículo 105 LGT corresponde a la Inspección probar hechos que desvirtúen las declaraciones del obligado tributario (prueba de residencia en España).",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -158,7 +282,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.",
         "consequences": [],

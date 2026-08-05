@@ -21,12 +21,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-3169-2024.case.json",
-    "case_sha256": "16488fc06e3c6ff16d3711a6cd0fc126746e9262245ba245afa435b2488c41c8",
+    "case_sha256": "5cc2473d2690c0b4cf42356c51705ea067e32e3e085a372de3426a704de0c233",
     "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Administración debe aportar indicios de residencia en España; una vez acreditados indicios suﬁcientes corresponde al obligado probar su residencia en otro Estado (art.9 LIRPF y jurisprudencia del TS).",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -419,7 +443,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.",
         "consequences": [],
@@ -458,7 +482,12 @@
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
-          "anchor-legacy-evidence-012"
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -497,7 +526,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_PRESUNCION_FAMILIA\nCertificado Director General SRI 21/06/2013\nCertificado remitido por el Director General del Servicio de Rentas Internas de Ecuador (21-06-2013) que señala que el Sr. Pablo no cumple 183 días en Ecuador para 2008-2011 y que no emitieron certificado de residencia.\nAcreditar que no estaba sujeto a tributación en Ecuador y desvirtuar alegada residencia ecuatoriana\nACCEPTED\nAcredita que no cumplió 183 días en Ecuador y que no existía certificado de residencia para los ejercicios, destruyendo la alegación de residencia extranjera\nActa A02 / Informe de disconformidad / acuerdo de liquidación\nActa de comprobación, informe de disconformidad y acuerdo de liquidación que recogen el análisis global de las operaciones (préstamos, donaciones, disposiciones bancarias) y concluyen simulación.\nProbar la existencia del entramado de operaciones y la simulación que justifica la regularización\nACCEPTED\nDocumentación interna detallada y correlacionada que permite inferir la simulación y la procedencia de fondos; la Sala la considera suficiente\nExtractos cuenta BANKIA (cuenta NUM010)\nMovimientos e ingresos por transferencias procedentes de CDE HOLDING BV y transferencias posteriores a los hijos; la cuenta figura a nombre del Sr. Pablo con su hijo Fidel autorizado.\nAcreditar la disposición efectiva de fondos en España y la gestión por parte del núcleo familiar\nACCEPTED\nCorrobora la secuencia de ingresos desde CDE y su inmediata transmisión a los hijos; respalda la tesis de confusión patrimonial\nEscritura pública donación participaciones 31/12/2008\nEscritura pública de donación de la totalidad de las acciones de CDE HOLDING BV a favor de los hijos (31-12-2008).\nAcreditar que los hijos eran titulares de la sociedad y la secuencia posterior de operaciones\nACCEPTED\nLa escritura pública acredita la titularidad de los hijos y es elemento relevante para inferir la falta de lógica económica de los préstamos al padre\nContratos privados de préstamo (20/06/2009, 20/06/2011 y private de 11/02/2011)\nContratos privados donde CDE HOLDING BV concede préstamos al Sr. Pablo por importes elevados, con condiciones genéricas y garantías referidas a participaciones y bienes.\nAcreditar la existencia formal de préstamos que la Inspección considera simulados\nACCEPTED\nContratos documentados que constan en el expediente y en los balances de la sociedad; la Sala los valora como parte del conjunto indiciario\nCuentas/balance CDE HOLDING BV (2009, 2011)\nBalances y memoria de CDE HOLDING BV donde figura registrado el préstamo a favor del Sr. Pablo y los ingresos por dividendos.\nAcreditar que el préstamo consta contablemente en la sociedad y la procedencia de fondos\nACCEPTED\nLos balances muestran el asiento contable del préstamo y los dividendos recibidos por la sociedad; la Sala considera esto relevante y concordante con otros indicios\nInforme de auditoría (BDO) y actas de inspección\nInforme de auditoría que recoge la existencia del préstamo y actas de la Inspección que documentan las comprobaciones.\nCorroborar la anotación contable del préstamo y las disposiciones\nACCEPTED\nInforme técnico de terceros y acta de comprobación con documentación coetánea; valorada favorablemente por la Sala\nTransferencia desde Banco Mees a Banco Itaú y posterior ingreso en Bankia\nTrazas de transferencias internacionales (ordenante CDE HOLDING BV -> Banco Itaú -> ingreso en cuenta Bankia del Sr. Pablo) y su cronología (23/06/2009, 26/06/2009).\nProbar el origen externo de los fondos y la secuencia inmediata hasta las donaciones a hijos\nACCEPTED\nLa correlación temporal de las transferencias y su origen refuerzan la tesis de fondos procedentes de la sociedad holandesa\nPresentación modelo 720 por hijos y ausencia del padre\nLos hijos presentan el modelo 720 declarando su participación en CDE HOLDING BV desde 2012; el obligado no presenta dicho modelo.\nAcreditar la vinculación patrimonial de los hijos y la falta de declaración del padre\nACCEPTED\nLa presentación del modelo 720 por los hijos contrasta con la ausencia del padre y es indicio de la titularidad y posesión real por parte de los hijos\nCertificados del Servicio de Rentas Internas de Ecuador (aportados por recurrente)\nCertificados aportados por el recurrente que, según el actor, acreditaban su residencia fiscal en Ecuador y su vivienda alquilada allí.\nAcreditar residencia fiscal en Ecuador y justificar que las ausencias en España eran esporádicas\nREJECTED\nLa Sala considera que los certificados se refieren a ejercicios anteriores a los examinados o no acreditan tributación por renta mundial en los ejercicios controvertidos\nAlegación de fuerza mayor por estado de salud / declaración del recurrente\nAlegación del recurrente de que su permanencia en España (>183 días) se debió a motivos de salud (fuerza mayor) y que vivía en precario en casa de un hijo.\nCalificar las estancias en España como ausencias esporádicas (desvirtuar cómputo de 183 días)\nREJECTED\nLa Sala considera la alegación insuficientemente acreditada y prevalece el criterio objetivo de permanencia; no basta la mera alegación sin pruebas contemporáneas\nDevoluciones registradas (30/12/2014; 24/07/2015; 31/07/2015)\nMovimientos de devolución de importes que el recurrente alega acreditan reembolsos del préstamo.\nAcreditar la realidad del préstamo y capacidad de devolución\nPARTIAL\nLa Sala admite que existieron devoluciones pero las considera realizadas durante el procedimiento inspector y no decisivas para destruir la apreciación de simulación hecha sobre el conjunto de indicios\nLa Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.\nLa Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.\nNOT_DECIDED\n2009\n2010\n2011\nse revisó las bases internas\nno cumple con el tiempo\nmínimo de permanencia en el Ecuador, de 183 días\nde la lectura tanto del acta A02, el Informe de disconformidad y el acuerdo de liquidación\ningresadas todas ellas por transferencia en la cuenta  NUM010 , de la entidad BANKIA\nautorizado en la misma su hijo  Fidel\nEscritura Pública de donación\n31 de diciembre de 2008\ncontrato es ﬁrmado en fecha 11 de febrero de 2011\nEl importe prestado asciende a 3.000.000 euros\nen el activo del balance\nconsta un préstamo por\nimporte registrado de 1.050.000 euros\nen la memoria de la sociedad\nse ha concedido un préstamo al señor\nPablo  por importe de 1.050.000 euros\norden de transferencia internacional\nimporte de 950.000 euros con destino a la cuenta  NUM011  del BANCO ITAÚ\nTodos ellos presentan el modelo 720\nEl obligado tributario, el señor  Pablo , no presenta dicha declaración\ncertiﬁcados emitidos por el Servicio de Rentas Internas de Ecuador su\nresidencia ﬁscal en dicho país\ndicha estancia se debió a razones de fuerza mayor derivadas de su estado de\nsalud\nlas devoluciones realizadas tuvieron lugar cuando D.  Pablo  se hallaba\nsometido a un proceso de regularización",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_PRESUNCION_FAMILIA\nCertificado Director General SRI 21/06/2013\nCertificado remitido por el Director General del Servicio de Rentas Internas de Ecuador (21-06-2013) que señala que el Sr. Pablo no cumple 183 días en Ecuador para 2008-2011 y que no emitieron certificado de residencia.\nAcreditar que no estaba sujeto a tributación en Ecuador y desvirtuar alegada residencia ecuatoriana\nACCEPTED\nAcredita que no cumplió 183 días en Ecuador y que no existía certificado de residencia para los ejercicios, destruyendo la alegación de residencia extranjera\nActa A02 / Informe de disconformidad / acuerdo de liquidación\nActa de comprobación, informe de disconformidad y acuerdo de liquidación que recogen el análisis global de las operaciones (préstamos, donaciones, disposiciones bancarias) y concluyen simulación.\nProbar la existencia del entramado de operaciones y la simulación que justifica la regularización\nACCEPTED\nDocumentación interna detallada y correlacionada que permite inferir la simulación y la procedencia de fondos; la Sala la considera suficiente\nExtractos cuenta BANKIA (cuenta NUM010)\nMovimientos e ingresos por transferencias procedentes de CDE HOLDING BV y transferencias posteriores a los hijos; la cuenta figura a nombre del Sr. Pablo con su hijo Fidel autorizado.\nAcreditar la disposición efectiva de fondos en España y la gestión por parte del núcleo familiar\nACCEPTED\nCorrobora la secuencia de ingresos desde CDE y su inmediata transmisión a los hijos; respalda la tesis de confusión patrimonial\nEscritura pública donación participaciones 31/12/2008\nEscritura pública de donación de la totalidad de las acciones de CDE HOLDING BV a favor de los hijos (31-12-2008).\nAcreditar que los hijos eran titulares de la sociedad y la secuencia posterior de operaciones\nACCEPTED\nLa escritura pública acredita la titularidad de los hijos y es elemento relevante para inferir la falta de lógica económica de los préstamos al padre\nContratos privados de préstamo (20/06/2009, 20/06/2011 y private de 11/02/2011)\nContratos privados donde CDE HOLDING BV concede préstamos al Sr. Pablo por importes elevados, con condiciones genéricas y garantías referidas a participaciones y bienes.\nAcreditar la existencia formal de préstamos que la Inspección considera simulados\nACCEPTED\nContratos documentados que constan en el expediente y en los balances de la sociedad; la Sala los valora como parte del conjunto indiciario\nCuentas/balance CDE HOLDING BV (2009, 2011)\nBalances y memoria de CDE HOLDING BV donde figura registrado el préstamo a favor del Sr. Pablo y los ingresos por dividendos.\nAcreditar que el préstamo consta contablemente en la sociedad y la procedencia de fondos\nACCEPTED\nLos balances muestran el asiento contable del préstamo y los dividendos recibidos por la sociedad; la Sala considera esto relevante y concordante con otros indicios\nInforme de auditoría (BDO) y actas de inspección\nInforme de auditoría que recoge la existencia del préstamo y actas de la Inspección que documentan las comprobaciones.\nCorroborar la anotación contable del préstamo y las disposiciones\nACCEPTED\nInforme técnico de terceros y acta de comprobación con documentación coetánea; valorada favorablemente por la Sala\nTransferencia desde Banco Mees a Banco Itaú y posterior ingreso en Bankia\nTrazas de transferencias internacionales (ordenante CDE HOLDING BV -> Banco Itaú -> ingreso en cuenta Bankia del Sr. Pablo) y su cronología (23/06/2009, 26/06/2009).\nProbar el origen externo de los fondos y la secuencia inmediata hasta las donaciones a hijos\nACCEPTED\nLa correlación temporal de las transferencias y su origen refuerzan la tesis de fondos procedentes de la sociedad holandesa\nPresentación modelo 720 por hijos y ausencia del padre\nLos hijos presentan el modelo 720 declarando su participación en CDE HOLDING BV desde 2012; el obligado no presenta dicho modelo.\nAcreditar la vinculación patrimonial de los hijos y la falta de declaración del padre\nACCEPTED\nLa presentación del modelo 720 por los hijos contrasta con la ausencia del padre y es indicio de la titularidad y posesión real por parte de los hijos\nCertificados del Servicio de Rentas Internas de Ecuador (aportados por recurrente)\nCertificados aportados por el recurrente que, según el actor, acreditaban su residencia fiscal en Ecuador y su vivienda alquilada allí.\nAcreditar residencia fiscal en Ecuador y justificar que las ausencias en España eran esporádicas\nREJECTED\nLa Sala considera que los certificados se refieren a ejercicios anteriores a los examinados o no acreditan tributación por renta mundial en los ejercicios controvertidos\nAlegación de fuerza mayor por estado de salud / declaración del recurrente\nAlegación del recurrente de que su permanencia en España (>183 días) se debió a motivos de salud (fuerza mayor) y que vivía en precario en casa de un hijo.\nCalificar las estancias en España como ausencias esporádicas (desvirtuar cómputo de 183 días)\nREJECTED\nLa Sala considera la alegación insuficientemente acreditada y prevalece el criterio objetivo de permanencia; no basta la mera alegación sin pruebas contemporáneas\nDevoluciones registradas (30/12/2014; 24/07/2015; 31/07/2015)\nMovimientos de devolución de importes que el recurrente alega acreditan reembolsos del préstamo.\nAcreditar la realidad del préstamo y capacidad de devolución\nPARTIAL\nLa Sala admite que existieron devoluciones pero las considera realizadas durante el procedimiento inspector y no decisivas para destruir la apreciación de simulación hecha sobre el conjunto de indicios\nLa Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.\nLa Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.\nNOT_DECIDED\n2009\n2010\n2011\nLa Administración debe aportar indicios de residencia en España; una vez acreditados indicios suﬁcientes corresponde al obligado probar su residencia en otro Estado (art.9 LIRPF y jurisprudencia del TS).\nLa carga probatoria no se consideró cumplida.\nse revisó las bases internas\nno cumple con el tiempo\nmínimo de permanencia en el Ecuador, de 183 días\nde la lectura tanto del acta A02, el Informe de disconformidad y el acuerdo de liquidación\ningresadas todas ellas por transferencia en la cuenta  NUM010 , de la entidad BANKIA\nautorizado en la misma su hijo  Fidel\nEscritura Pública de donación\n31 de diciembre de 2008\ncontrato es ﬁrmado en fecha 11 de febrero de 2011\nEl importe prestado asciende a 3.000.000 euros\nen el activo del balance\nconsta un préstamo por\nimporte registrado de 1.050.000 euros\nen la memoria de la sociedad\nse ha concedido un préstamo al señor\nPablo  por importe de 1.050.000 euros\norden de transferencia internacional\nimporte de 950.000 euros con destino a la cuenta  NUM011  del BANCO ITAÚ\nTodos ellos presentan el modelo 720\nEl obligado tributario, el señor  Pablo , no presenta dicha declaración\ncertiﬁcados emitidos por el Servicio de Rentas Internas de Ecuador su\nresidencia ﬁscal en dicho país\ndicha estancia se debió a razones de fuerza mayor derivadas de su estado de\nsalud\nlas devoluciones realizadas tuvieron lugar cuando D.  Pablo  se hallaba\nsometido a un proceso de regularización\nse trata de certiﬁcados de residencia relativos a\nejercicios ﬁscales anteriores a los que aquí nos conciernen\ncorresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal\nresulta un hecho no controvertido\nque ha permanecido en España durante más de 183 días\ncorresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal\nestablecida la presunción\ncorrespondía a la parte demostrar\nla residencia en otro Estado",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -810,6 +839,130 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 975,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 866,
+              "verbatim_text": "se trata de certiﬁcados de residencia relativos a\nejercicios ﬁscales anteriores a los que aquí nos conciernen"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2552,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2453,
+              "verbatim_text": "corresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4172,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 4139,
+              "verbatim_text": "resulta un hecho no controvertido"
+            },
+            {
+              "end_offset": 4260,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 4208,
+              "verbatim_text": "que ha permanecido en España durante más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2552,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2453,
+              "verbatim_text": "corresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2884,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2859,
+              "verbatim_text": "establecida la presunción"
+            },
+            {
+              "end_offset": 2965,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2903,
+              "verbatim_text": "correspondía a la parte demostrar\nla residencia en otro Estado"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

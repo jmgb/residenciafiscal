@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-6289-2022.case.json",
-    "case_sha256": "7455e19e02450b30de2c53b4be0077254922214451eb2cb0c26447173d62b3f7",
+    "case_sha256": "74b5e358ca3958ca0f798af6c7a97318bfa16678810329b5e5a1ecdb0210e7b8",
     "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Audiencia recuerda que corresponde a la Administración aportar datos de los que se infiera la existencia de domicilio fiscal en España; si tales indicios son suficientes, compete al obligado demostrar residencia en otro Estado.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -277,7 +301,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "La Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.",
         "consequences": [],
@@ -310,7 +335,14 @@
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
-          "anchor-legacy-evidence-008"
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-reasoning-004",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -346,7 +378,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCertificados EEUU y Perú (movimientos 2011)\nCertificado de la Administración de EEUU y certificado migratorio expedido en Lima (Perú) de 5/5/2014, que permiten computar estancias en Miami y Perú por 126 días en 2011.\nDemostrar días de permanencia en el extranjero y, por diferencia, que el resto del año estuvo en España (>183 días).\nPARTIAL\nEl tribunal admite los certificados para cuantificar 126 días fuera de España, pero estima que no acreditan entradas/salidas a España ni permiten inferir fehacientemente que el resto del año estuvo en España.\nEmpadronamiento (INE) hasta 18-03-2011\nConstancia de empadronamiento en CALLE000 nº NUM004 de Madrid hasta el 18-03-2011.\nAcreditar residencia habitual en España.\nREJECTED\nEl tribunal estima que el padrón por sí no constituye prueba fehaciente de permanencia física superior a 183 días en el año.\nImputación de cobros por ENDESA / consumo luz 2011\nReferencia en el modelo 347 de imputación de cobros realizada por ENDESA correspondiente al ejercicio 2011.\nAcreditar vida doméstica en España mediante consumos eléctricos.\nPARTIAL\nEl tribunal aprecia que el consumo acreditado puede corresponder a la finca vendida en febrero de 2011 y no prueba permanencia continuada durante el año.\nEscritura pública adquisición inmueble en Madrid (28/10/2011)\nEscritura pública del 28-10-2011 por importe de 2.600.000 euros de una vivienda en CALLE003 nº NUM008 de Madrid.\nAcreditar titularidad y posible vivienda habitual en España.\nPARTIAL\nLa compra de un inmueble es indicio relevante pero no prueba por sí la residencia efectiva durante el año 2011.\nDiligencia notificación y declaración empleada del hogar (11/04/2011)\nDiligencia de notificación en la que una empleada del hogar manifiesta que el obligado tributario tiene su domicilio en CALLE003 nº NUM008 y que en ese momento no se encontraba en el domicilio.\nAcreditar presencia/uso de vivienda y señalar domicilio habitual.\nPARTIAL\nLa declaración testimonial corrobora un domicilio, pero la constatación de ausencia en la notificación limita su valor probatorio sobre la permanencia anual.\nContrato guardamuebles URBANO MUDANZAS SL (18/11/1998)\nContrato de guardamuebles con depósito de 248 artículos valorados en 40 millones de pesetas (240.404,84€), aportado por URBANO MUDANZAS SL.\nAcreditar existencia de efectos fuera de vivienda que podrían indicar estancia fuera de España.\nPARTIAL\nEl tribunal indica que el guardamuebles no acredita la residencia efectiva en España; puede incluso respaldar la tesis de estancias fuera del país.\nCopias de pasaportes (sin sellos)\nCopias de pasaportes aportadas por el recurrente en las que no constan sellos de entrada/salida del territorio español.\nAcreditar ausencias o entradas/salidas y, por tanto, negar residencia en España en 2011.\nPARTIAL\nEl tribunal observa que la ausencia de sellos en las copias no permite acreditar fehacientemente permanencias o ausencias del territorio y que la Administración podría haber aportado pasaporte con sellos.\nAlegación de ausencia de saldos bancarios y rentas en España\nAlegación del recurrente de que no disponía de medios económicos en España, no tenía rentas, ni saldos bancarios ni actividad económica.\nDemostrar la falta de centro de intereses económicos en España.\nUNRESOLVED\nLa Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.\nLa Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.\nNOT_DECIDED\n2011\nse deduce que ha estado ente Miami y Perú un total\nde 126 días\nconsta empadronado en dicho domicilio hasta el 18-03-2011\nConsta en el modelo 347 del ejercicio 2011 una imputación de cobros realizada por ENDESA\nMediante escritura pública de fecha 28-10-2011\nadquiere un inmueble en la  CALLE003  nº  NUM008\nnos atiende una\nempleada de hogar que maniﬁesta que el obligado tributario tiene su domicilio en la  CALLE003\nse aporta contrato\ndonde deposita 248\nartículos por un valor de 40 millones de pesetas\nSe han\nadjuntado las copias de los pasaportes y no constan los sellos de entrada y salida del territorio Español\nCarece de\nactividad económica en España, ni rentas ni saldos bancarios",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCertificados EEUU y Perú (movimientos 2011)\nCertificado de la Administración de EEUU y certificado migratorio expedido en Lima (Perú) de 5/5/2014, que permiten computar estancias en Miami y Perú por 126 días en 2011.\nDemostrar días de permanencia en el extranjero y, por diferencia, que el resto del año estuvo en España (>183 días).\nPARTIAL\nEl tribunal admite los certificados para cuantificar 126 días fuera de España, pero estima que no acreditan entradas/salidas a España ni permiten inferir fehacientemente que el resto del año estuvo en España.\nEmpadronamiento (INE) hasta 18-03-2011\nConstancia de empadronamiento en CALLE000 nº NUM004 de Madrid hasta el 18-03-2011.\nAcreditar residencia habitual en España.\nREJECTED\nEl tribunal estima que el padrón por sí no constituye prueba fehaciente de permanencia física superior a 183 días en el año.\nImputación de cobros por ENDESA / consumo luz 2011\nReferencia en el modelo 347 de imputación de cobros realizada por ENDESA correspondiente al ejercicio 2011.\nAcreditar vida doméstica en España mediante consumos eléctricos.\nPARTIAL\nEl tribunal aprecia que el consumo acreditado puede corresponder a la finca vendida en febrero de 2011 y no prueba permanencia continuada durante el año.\nEscritura pública adquisición inmueble en Madrid (28/10/2011)\nEscritura pública del 28-10-2011 por importe de 2.600.000 euros de una vivienda en CALLE003 nº NUM008 de Madrid.\nAcreditar titularidad y posible vivienda habitual en España.\nPARTIAL\nLa compra de un inmueble es indicio relevante pero no prueba por sí la residencia efectiva durante el año 2011.\nDiligencia notificación y declaración empleada del hogar (11/04/2011)\nDiligencia de notificación en la que una empleada del hogar manifiesta que el obligado tributario tiene su domicilio en CALLE003 nº NUM008 y que en ese momento no se encontraba en el domicilio.\nAcreditar presencia/uso de vivienda y señalar domicilio habitual.\nPARTIAL\nLa declaración testimonial corrobora un domicilio, pero la constatación de ausencia en la notificación limita su valor probatorio sobre la permanencia anual.\nContrato guardamuebles URBANO MUDANZAS SL (18/11/1998)\nContrato de guardamuebles con depósito de 248 artículos valorados en 40 millones de pesetas (240.404,84€), aportado por URBANO MUDANZAS SL.\nAcreditar existencia de efectos fuera de vivienda que podrían indicar estancia fuera de España.\nPARTIAL\nEl tribunal indica que el guardamuebles no acredita la residencia efectiva en España; puede incluso respaldar la tesis de estancias fuera del país.\nCopias de pasaportes (sin sellos)\nCopias de pasaportes aportadas por el recurrente en las que no constan sellos de entrada/salida del territorio español.\nAcreditar ausencias o entradas/salidas y, por tanto, negar residencia en España en 2011.\nPARTIAL\nEl tribunal observa que la ausencia de sellos en las copias no permite acreditar fehacientemente permanencias o ausencias del territorio y que la Administración podría haber aportado pasaporte con sellos.\nAlegación de ausencia de saldos bancarios y rentas en España\nAlegación del recurrente de que no disponía de medios económicos en España, no tenía rentas, ni saldos bancarios ni actividad económica.\nDemostrar la falta de centro de intereses económicos en España.\nUNRESOLVED\nLa Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.\nLa Audiencia entiende que la Administración sólo acreditó mediante certificados la permanencia del recurrente en Perú y EEUU por 126 días y aportó indicios administrativos (padrón, NIF/NIE con direcciones, contrato de alquiler, compra de vivienda, consumos y contrato de guardamuebles), pero dichos indicios no son fehacientes para inferir permanencia en España >183 días en 2011. Al no existir indicios sólidos de permanencia en España la AEAT no cumplió su carga probatoria y procede estimar el recurso a favor del contribuyente.\nNOT_DECIDED\n2011\nLa Audiencia recuerda que corresponde a la Administración aportar datos de los que se infiera la existencia de domicilio fiscal en España; si tales indicios son suficientes, compete al obligado demostrar residencia en otro Estado.\nLa carga probatoria no se consideró cumplida.\nse deduce que ha estado ente Miami y Perú un total\nde 126 días\nconsta empadronado en dicho domicilio hasta el 18-03-2011\nConsta en el modelo 347 del ejercicio 2011 una imputación de cobros realizada por ENDESA\nMediante escritura pública de fecha 28-10-2011\nadquiere un inmueble en la  CALLE003  nº  NUM008\nnos atiende una\nempleada de hogar que maniﬁesta que el obligado tributario tiene su domicilio en la  CALLE003\nse aporta contrato\ndonde deposita 248\nartículos por un valor de 40 millones de pesetas\nSe han\nadjuntado las copias de los pasaportes y no constan los sellos de entrada y salida del territorio Español\nCarece de\nactividad económica en España, ni rentas ni saldos bancarios\nni la certiﬁcación en el padrón\npueden ser consideradas pruebas fehacientes de su residencia en España\ntampoco\nsirve por si mismo para acreditar la residencia en España por mas de 183 días\nla\ncompra de una vivienda\nel gasto de luz acreditado por\nEndesa\nse reﬁere a un inmueble vendido en febrero de 2011\nel arrendamiento de un guardamuebles\ntampoco sirve para acreditar la\nresidencia efectiva del recurrente en España\ncorresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal en España\nno existen indicios suﬁcientes\npara determinar que el obligado tributario residió en España más de 183 días en el año 2011\nLa estimación de este motivo\nno es necesario entrar a analizar el resto de las pretensiones planteadas",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -529,6 +561,195 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 62,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 31,
+              "verbatim_text": "ni la certiﬁcación en el padrón"
+            },
+            {
+              "end_offset": 313,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 243,
+              "verbatim_text": "pueden ser consideradas pruebas fehacientes de su residencia en España"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 773,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 688,
+              "verbatim_text": "tampoco\nsirve por si mismo para acreditar la residencia en España por mas de 183 días"
+            },
+            {
+              "end_offset": 825,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 800,
+              "verbatim_text": "la\ncompra de una vivienda"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1178,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1141,
+              "verbatim_text": "el gasto de luz acreditado por\nEndesa"
+            },
+            {
+              "end_offset": 1254,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1204,
+              "verbatim_text": "se reﬁere a un inmueble vendido en febrero de 2011"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 902,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 866,
+              "verbatim_text": "el arrendamiento de un guardamuebles"
+            },
+            {
+              "end_offset": 1000,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 924,
+              "verbatim_text": "tampoco sirve para acreditar la\nresidencia efectiva del recurrente en España"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2426,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2317,
+              "verbatim_text": "corresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal en España"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5242,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 5120,
+              "verbatim_text": "no existen indicios suﬁcientes\npara determinar que el obligado tributario residió en España más de 183 días en el año 2011"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "159d8e81424faaed17b2c4866dca860066f6cddd15250f59f061a2f2ede21236"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 43,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 15,
+              "verbatim_text": "La estimación de este motivo"
+            },
+            {
+              "end_offset": 197,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 124,
+              "verbatim_text": "no es necesario entrar a analizar el resto de las pretensiones planteadas"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

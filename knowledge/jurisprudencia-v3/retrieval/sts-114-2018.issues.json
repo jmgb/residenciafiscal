@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-114-2018.case.json",
-    "case_sha256": "da66dc4d1c228ae9ad500d91de60f6e79bc6afa557266cc02abd836a8511dbb5",
+    "case_sha256": "d145da242f54dccc408330a47b4cc0528700dd0fb4fdc1d24f7bd564a0d280e1",
     "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "Procedimiento de devolución: el solicitante debía acreditar hechos de no residencia (permanencia fuera >183 días) para excluir art. 9.1.a LIRPF por falta de permanencia en España.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -231,7 +255,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.",
         "consequences": [],
@@ -262,7 +287,13 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -294,7 +325,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (objeto y duración)\nIndicio alegado por AEAT: el traslado obedece a beca para prácticas con objeto y duración determinados.\nSostener que la estancia en el extranjero era temporal y, por tanto, ausencia esporádica computable como permanencia en España.\nREJECTED\nEl TS fija que una ausencia prolongada (>183 días) no puede ser esporádica por definición, aunque exista temporalidad/propósito de retorno.\ntransporte de ida y vuelta sufragado por ICEX\nIndicio alegado por AEAT: el organismo concedente asume transporte de ida y regreso a España al terminar prácticas.\nInferir intención de retorno y, con ello, carácter esporádico/temporal de la ausencia.\nREJECTED\nEl TS declara irrelevante el propósito de retorno o que se sufrague el regreso para delimitar si la ausencia es esporádica.\npresentación declaración IRPF en España\nIndicio alegado por AEAT: el recurrente presentó en España la declaración del IRPF, considerándose residente fiscal en España.\nInferir voluntad de mantener residencia fiscal en España y calificar la estancia fuera como ausencia esporádica.\nUNRESOLVED\nexigencia de certificado de residencia fiscal extranjero (alegación)\nTesis jurídica-probatoria de AEAT: si se pretende excluir el cómputo por ausencias esporádicas, debe acreditarse residencia fiscal en otro país, aunque no sea paraíso fiscal.\nImpedir la devolución por falta de prueba de residencia fiscal en el extranjero (evitar desimposición).\nUNRESOLVED\nconcesión beca ICEX y contrato formativo (Tokio)\nHecho constatado: beca formativa a desarrollar en Oficina Comercial de Tokio, del 1/10/2010 al 30/09/2011, que exige permanencia fuera de España.\nAcreditar que la ausencia del territorio español fue continuada/prolongada por obligación del programa, no “esporádica”.\nACCEPTED\nEl TS vincula la beca y el contrato a la exigencia indeclinable de actividad continuada en el país de destino, incompatible con mantener residencia habitual en España.\nestancia efectiva en Tokio 9 meses durante 2011\nHecho probado: en 2011 permaneció en Tokio nueve meses, superando ampliamente 183 días, residiendo de manera permanente y efectiva en Tokio.\nDemostrar no permanencia en España >183 días y excluir residencia fiscal española por el criterio principal de permanencia.\nACCEPTED\nEl TS considera determinante el dato objetivo de duración/intensidad fuera de España: una ausencia prolongada no puede ser “esporádica” y elimina la permanencia en España.\nEl TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.\nEl TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.\nNOT_DECIDED\n2011\nno sería esporádica una ausencia que\ndeterminara la permanencia fuera de España durante un periodo tal que neutralizase la regla general\nEl propósito de retorno a España o el hecho de que\nsufrague los\ncostes\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal en nuestro país\nhace innecesario que nos pronunciemos sobre la tercera\nacerca de si se precisa\nla certiﬁcación de la residencia ﬁscal en otro país\npor imperativo de la beca obtenida y del\ncontrato suscrito\nactividad\nformativa\ncontinuada en el tiempo\npermaneció en Tokio durante un período de nueve meses\nresidió de manera permanente y efectiva en Tokio",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (objeto y duración)\nIndicio alegado por AEAT: el traslado obedece a beca para prácticas con objeto y duración determinados.\nSostener que la estancia en el extranjero era temporal y, por tanto, ausencia esporádica computable como permanencia en España.\nREJECTED\nEl TS fija que una ausencia prolongada (>183 días) no puede ser esporádica por definición, aunque exista temporalidad/propósito de retorno.\ntransporte de ida y vuelta sufragado por ICEX\nIndicio alegado por AEAT: el organismo concedente asume transporte de ida y regreso a España al terminar prácticas.\nInferir intención de retorno y, con ello, carácter esporádico/temporal de la ausencia.\nREJECTED\nEl TS declara irrelevante el propósito de retorno o que se sufrague el regreso para delimitar si la ausencia es esporádica.\npresentación declaración IRPF en España\nIndicio alegado por AEAT: el recurrente presentó en España la declaración del IRPF, considerándose residente fiscal en España.\nInferir voluntad de mantener residencia fiscal en España y calificar la estancia fuera como ausencia esporádica.\nUNRESOLVED\nexigencia de certificado de residencia fiscal extranjero (alegación)\nTesis jurídica-probatoria de AEAT: si se pretende excluir el cómputo por ausencias esporádicas, debe acreditarse residencia fiscal en otro país, aunque no sea paraíso fiscal.\nImpedir la devolución por falta de prueba de residencia fiscal en el extranjero (evitar desimposición).\nUNRESOLVED\nconcesión beca ICEX y contrato formativo (Tokio)\nHecho constatado: beca formativa a desarrollar en Oficina Comercial de Tokio, del 1/10/2010 al 30/09/2011, que exige permanencia fuera de España.\nAcreditar que la ausencia del territorio español fue continuada/prolongada por obligación del programa, no “esporádica”.\nACCEPTED\nEl TS vincula la beca y el contrato a la exigencia indeclinable de actividad continuada en el país de destino, incompatible con mantener residencia habitual en España.\nestancia efectiva en Tokio 9 meses durante 2011\nHecho probado: en 2011 permaneció en Tokio nueve meses, superando ampliamente 183 días, residiendo de manera permanente y efectiva en Tokio.\nDemostrar no permanencia en España >183 días y excluir residencia fiscal española por el criterio principal de permanencia.\nACCEPTED\nEl TS considera determinante el dato objetivo de duración/intensidad fuera de España: una ausencia prolongada no puede ser “esporádica” y elimina la permanencia en España.\nEl TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.\nEl TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.\nNOT_DECIDED\n2011\nProcedimiento de devolución: el solicitante debía acreditar hechos de no residencia (permanencia fuera >183 días) para excluir art. 9.1.a LIRPF por falta de permanencia en España.\nLa carga probatoria se consideró cumplida.\nno sería esporádica una ausencia que\ndeterminara la permanencia fuera de España durante un periodo tal que neutralizase la regla general\nEl propósito de retorno a España o el hecho de que\nsufrague los\ncostes\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal en nuestro país\nhace innecesario que nos pronunciemos sobre la tercera\nacerca de si se precisa\nla certiﬁcación de la residencia ﬁscal en otro país\npor imperativo de la beca obtenida y del\ncontrato suscrito\nactividad\nformativa\ncontinuada en el tiempo\npermaneció en Tokio durante un período de nueve meses\nresidió de manera permanente y efectiva en Tokio\nEl propósito de retorno a España\nno son datos\npara delimitar\nsi una ausencia es esporádica\nno cabe reputar ocasional o esporádica una ausencia\nsuperior a 183 días\nEn 2011 la interesada permaneció en Tokio durante un período de nueve meses\nsobrepasó con mucho\nel plazo de 183 días\nEl concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración o\nintensidad\nno puede considerarse como una ausencia esporádica a\nlos efectos del artículo 9.1.a\nresidió de manera permanente y efectiva en Tokio",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -482,6 +513,166 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3407,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3375,
+              "verbatim_text": "El propósito de retorno a España"
+            },
+            {
+              "end_offset": 3536,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3524,
+              "verbatim_text": "no son datos"
+            },
+            {
+              "end_offset": 3613,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3569,
+              "verbatim_text": "para delimitar\nsi una ausencia es esporádica"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 293,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 242,
+              "verbatim_text": "no cabe reputar ocasional o esporádica una ausencia"
+            },
+            {
+              "end_offset": 1393,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 1374,
+              "verbatim_text": "superior a 183 días"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2612,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2537,
+              "verbatim_text": "En 2011 la interesada permaneció en Tokio durante un período de nueve meses"
+            },
+            {
+              "end_offset": 2662,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2622,
+              "verbatim_text": "sobrepasó con mucho\nel plazo de 183 días"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1577,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 1468,
+              "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración o\nintensidad"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1218,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 1135,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica a\nlos efectos del artículo 9.1.a"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2825,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2777,
+              "verbatim_text": "residió de manera permanente y efectiva en Tokio"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

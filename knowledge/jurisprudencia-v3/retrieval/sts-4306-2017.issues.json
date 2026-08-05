@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4306-2017.case.json",
-    "case_sha256": "73fa0492dab5dcd4ec5a299420442efeaeb810bdcdbe4f3a82de7d874d3794ee",
+    "case_sha256": "81bb4f236d95eb955fe662acf5c197d573463b5a6a6cde51432649b3c17327f1",
     "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Administración negó la devolución arguyendo falta de acreditación de residencia fiscal en el extranjero; correspondía justificar la tributación en España o que no concurriera la estancia fuera de España.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -244,7 +268,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.",
         "consequences": [],
@@ -276,7 +300,11 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -308,7 +336,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\ndeclaración IRPF presentada\nQue el recurrente presentó declaración del IRPF en España (empleada por la AEAT como indicio de residencia)\nAcreditar la residencia fiscal en España\nPARTIAL\nIndicio relevante pero insuficiente frente a prueba de permanencia efectiva fuera de España\nfalta de certificado de residencia fiscal extranjero\nLa AEAT señaló que no se aportó certificado acreditativo de residencia por la autoridad fiscal competente de otro Estado\nProbar inexistencia de residencia fiscal en el extranjero y mantener la residencia en España\nREJECTED\nLa Sala considera que no es requisito exigible en el supuesto del disfrute de la beca y frente al hecho objetivo de permanencia fuera de España\npropuesta de resolución y liquidación denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria que denegó la devolución y liquidación provisional denegatoria\nMantener la retención y justificar tributación en España\nREJECTED\nActo administrativo motivado en ausencia de prueba suficiente y contradicho por hechos probados de permanencia en el extranjero\ncontrato ICEX Bucarest\nContrato por el que desarrolló su labor desde 1/10/2010 hasta 30/9/2011 en la Oficina Económica y Comercial de España en Bucarest (Rumanía)\nDemostrar permanencia continuada en Rumanía superior a 183 días\nACCEPTED\nAcredita de forma fehaciente una residencia continuada en el extranjero durante el periodo; fundamento decisivo de la sentencia\nmodelo 210 (IRNR) 12-02-2015\nPresentación por el interesado del modelo 210 solicitando devolución de retenciones practicadas en concepto de IRPF de 2011\nAcreditar la condición de no residente y solicitar la devolución\nACCEPTED\nCorrobora la alegación de no residencia y la intención de obtener devolución\nreconocimiento administrativo de estancia >183 días\nLa propia Administración reconoció el hecho de que el recurrente permaneció fuera de España más de 183 días\nDemostrar permanencia fuera de España durante el año natural\nACCEPTED\nLa Sala considera ese hecho cierto y reconocido y lo estima decisivo para excluir la residencia en España\nLa Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.\nLa Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.\nNOT_DECIDED\n2011\n2012\niii) el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\nal no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente de otra jurisdicción\nformuló propuesta\nde resolución\nen las que se denegó la devolución solicitada\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011, en\nBucarest (Rumanía\nel contribuyente presentó\ncon fecha de 12 de febrero de 2015 el modelo 210\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\ndeclaración IRPF presentada\nQue el recurrente presentó declaración del IRPF en España (empleada por la AEAT como indicio de residencia)\nAcreditar la residencia fiscal en España\nPARTIAL\nIndicio relevante pero insuficiente frente a prueba de permanencia efectiva fuera de España\nfalta de certificado de residencia fiscal extranjero\nLa AEAT señaló que no se aportó certificado acreditativo de residencia por la autoridad fiscal competente de otro Estado\nProbar inexistencia de residencia fiscal en el extranjero y mantener la residencia en España\nREJECTED\nLa Sala considera que no es requisito exigible en el supuesto del disfrute de la beca y frente al hecho objetivo de permanencia fuera de España\npropuesta de resolución y liquidación denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria que denegó la devolución y liquidación provisional denegatoria\nMantener la retención y justificar tributación en España\nREJECTED\nActo administrativo motivado en ausencia de prueba suficiente y contradicho por hechos probados de permanencia en el extranjero\ncontrato ICEX Bucarest\nContrato por el que desarrolló su labor desde 1/10/2010 hasta 30/9/2011 en la Oficina Económica y Comercial de España en Bucarest (Rumanía)\nDemostrar permanencia continuada en Rumanía superior a 183 días\nACCEPTED\nAcredita de forma fehaciente una residencia continuada en el extranjero durante el periodo; fundamento decisivo de la sentencia\nmodelo 210 (IRNR) 12-02-2015\nPresentación por el interesado del modelo 210 solicitando devolución de retenciones practicadas en concepto de IRPF de 2011\nAcreditar la condición de no residente y solicitar la devolución\nACCEPTED\nCorrobora la alegación de no residencia y la intención de obtener devolución\nreconocimiento administrativo de estancia >183 días\nLa propia Administración reconoció el hecho de que el recurrente permaneció fuera de España más de 183 días\nDemostrar permanencia fuera de España durante el año natural\nACCEPTED\nLa Sala considera ese hecho cierto y reconocido y lo estima decisivo para excluir la residencia en España\nLa Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.\nLa Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.\nNOT_DECIDED\n2011\n2012\nLa Administración negó la devolución arguyendo falta de acreditación de residencia fiscal en el extranjero; correspondía justificar la tributación en España o que no concurriera la estancia fuera de España.\nLa carga probatoria no se consideró cumplida.\niii) el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\nal no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente de otra jurisdicción\nformuló propuesta\nde resolución\nen las que se denegó la devolución solicitada\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011, en\nBucarest (Rumanía\nel contribuyente presentó\ncon fecha de 12 de febrero de 2015 el modelo 210\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días\niii) el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días\nLa permanencia fuera del territorio nacional durante más de 183 días\nno puede considerarse como una ausencia esporádica\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -461,6 +489,115 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 758,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 655,
+              "verbatim_text": "iii) el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1845,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1780,
+              "verbatim_text": "existió un hecho cierto y reconocido por la propia Administración"
+            },
+            {
+              "end_offset": 1921,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1857,
+              "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3530,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 3462,
+              "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+            },
+            {
+              "end_offset": 3664,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 3614,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1845,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1780,
+              "verbatim_text": "existió un hecho cierto y reconocido por la propia Administración"
+            },
+            {
+              "end_offset": 1921,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1857,
+              "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

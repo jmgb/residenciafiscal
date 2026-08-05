@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "El art. 9.1.a LIRPF condiciona excluir el cómputo de ausencias esporádicas a que el contribuyente acredite residencia fiscal en otro país, aunque aquí se declara irrelevante por no ser esporádica la ausencia.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -156,7 +180,8 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "conclusion": "El TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.",
       "consequences": [],
@@ -231,7 +256,12 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -388,6 +418,100 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "no cabe reputar ocasional o esporádica una ausencia"
+        },
+        {
+          "page_index": 6,
+          "verbatim_text": "por periodo superior a 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "residió de manera permanente y efectiva en Seul"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

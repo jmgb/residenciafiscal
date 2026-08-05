@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "La Administración alegó que, si la ausencia era esporádica, el obligado debía acreditar residencia fiscal en el extranjero; enjuicia la suficiencia de la prueba administr. para gravar.",
+      "initial_bearer": "AEAT",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -84,7 +108,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho reconocido). Frente a la posición administrativa que vinculaba la exclusión al certificado de residencia en el extranjero, aplica un criterio objetivo: la duración continuada (beca) impide calificar la ausencia como esporádica, por lo que no procede tributar en España por IRPF.",
       "consequences": [],
@@ -164,7 +188,12 @@
       "anchor_ids": [
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
-        "anchor-legacy-evidence-003"
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -260,6 +289,130 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 494,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 438,
+          "verbatim_text": "el recurrente presentó\nen España la declaración del IRPF"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3726,
+          "page_index": 5,
+          "printed_page": "5",
+          "start_offset": 3591,
+          "verbatim_text": "si el obligado tributario pretende\nque la ausencia inicialmente esporádica supone un cambio de residencia, la LIRPF le impone la prueba"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3096,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3028,
+          "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "end_offset": 3230,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3180,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1514,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1449,
+          "verbatim_text": "existió un hecho cierto y reconocido por la propia Administración"
+        },
+        {
+          "end_offset": 1590,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1526,
+          "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c5bfde616fcd534e711f0587de2641d14204e3335f0f5e95cbdf121b4f01091b"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2498,
+          "page_index": 2,
+          "printed_page": "2",
+          "start_offset": 2409,
+          "verbatim_text": "no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

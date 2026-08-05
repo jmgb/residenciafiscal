@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió STS 109/2018 este supuesto de residencia: El litigio gira sobre si, por estar fuera de España más de 183 días en 2011 por beca ICEX, el contribuyente deja de ser residente IRPF. El TS interpreta el art. 9.1.a LIRPF: una ausencia prolongada (>183 días) no puede calificarse como “aus?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

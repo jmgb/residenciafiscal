@@ -1,9 +1,9 @@
 {
-  "anchor_count": 2,
-  "case_sha256": "5523a1dc4b44da1fac14cdfa127bd3956eff0fab1acfce15d7d453f4086ca5e7",
+  "anchor_count": 4,
+  "case_sha256": "6e7187bab8da1afc0236edf67789ed0e1b1a8ecdbff68b4f5a385d78f1bbeb6f",
   "evidence_finding_count": 2,
   "fact_count": 0,
-  "fragment_count": 2,
+  "fragment_count": 5,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-698-2018",

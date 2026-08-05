@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió STS 115/2018 este supuesto de residencia: El TS interpreta el art. 9.1.a LIRPF: la residencia depende de la permanencia física >183 días en España, computando “ausencias esporádicas” solo como complemento. Una estancia en el extranjero >183 días por beca ICEX no es “ausencia esporá?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

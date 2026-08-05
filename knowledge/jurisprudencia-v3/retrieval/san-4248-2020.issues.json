@@ -21,12 +21,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-4248-2020.case.json",
-    "case_sha256": "359444bb8ef1b5867efdec61d2e4c6b46140d633a8fc393c6d9e1010916c312f",
+    "case_sha256": "507823f87cb873a2900e1af0ef923deea4cbcab8d0e2b9dc97f2693330a78843",
     "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "Presunción de residencia fiscal en España derivada de actuaciones administrativas y declaraciones presentadas; corresponde al interesado desvirtuarla aportando prueba suficiente de residencia en otro país.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -431,7 +455,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.",
         "consequences": [],
@@ -471,7 +495,11 @@
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
           "anchor-legacy-evidence-012",
-          "anchor-legacy-evidence-013"
+          "anchor-legacy-evidence-013",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -514,7 +542,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\nBases de datos AEAT - consideración como residente desde 2003\nRegistro en bases de datos de la AEAT que le considera residente fiscal en España de forma ininterrumpida desde 2003\nAcreditar antecedente administrativo de residencia en España\nACCEPTED\nPrueba administrativa con presunción; no desvirtuada por el recurrente\nDeclaraciones IRPF 2003-2011\nPresentación de autoliquidaciones por el IRPF desde el ejercicio 2003 hasta 2011\nDemostrar que tributó en España como residente\nACCEPTED\nActos ante la Administración que gozan de presunción; el contribuyente no solicitó rectificación\nDomicilio en Madrid y vivienda en Ávila (escrituras/registro)\nDomicilio habitual declarado en C/ DIRECCION000 nº NUM004, y título de propiedad de inmueble en URBANIZACION000, Ávila\nAcreditar vivienda permanente en España\nACCEPTED\nVivienda y domicilio habituales en España contribuyen a determinar vivienda permanente y centro de intereses\nSentencia TSJ Madrid 20-05-2016\nResolución judicial previa que declaró la residencia del interesado en España en relación con la sociedad DIRECCION001\nEfecto de cosa juzgada/precedente sobre la residencia\nACCEPTED\nSentencia firme que ya declaró la residencia en España; fundamento importante para la decisión\nPasaportes argentinos (entradas/salidas)\nPasaportes argentinos, vigentes en los años 2006-2008, compulsados, que muestran salidas y entradas en territorio argentino\nAcreditar estancia y permanencia en Argentina\nREJECTED\nLos pasaportes justifican entradas y salidas pero no acreditan residencia fiscal\nDocumento Nacional de Identidad argentino\nDNI argentino aportado por el interesado\nAcreditar vínculo administrativo con Argentina\nREJECTED\nNo acredita por sí la residencia fiscal en Argentina\nCertificado nacimiento hija en Argentina\nCertificado de nacimiento de la hija nacido en Argentina en 2007\nAcreditar vínculos personales/familiares en Argentina\nPARTIAL\nAporta vínculo familiar pero no es suficiente para desplazar la presunción y demostrar centro de intereses en Argentina\nTítulo de propiedad inmueble en Buenos Aires\nEscritura aportada que acredita adquisición de inmueble en Buenos Aires el 2-1-2007\nAcreditar vivienda permanente en Argentina\nPARTIAL\nSolo consta adquisición en 2007; para 2006 no prueba vivienda permanente en Argentina; en 2007-2008 coexistencia de vivienda en ambos países\nCertificados de residencia fiscal argentinos (2006-2008)\nCertificados expedidos por autoridades fiscales argentinas en 2012 que declaran al interesado residente en Argentina en 2006-2008\nAcreditar residencia fiscal en Argentina y su sujeción a tributación allí\nPARTIAL\nConsiderados los únicos documentos potencialmente relevantes, pero el certificado no especifica tributación por renta mundial, por lo que no prueba residencia fiscal plena según Convenio\nRelación de facturas y tickets en Argentina\nRelación de facturas de compras en establecimientos, peluquerías, supermercados, restaurantes, tiendas, médicos, etc. en Argentina\nAcreditar vida cotidiana y consumos en Argentina\nPARTIAL\nAcreditan consumos pero únicamente esa circunstancia; no bastan para declarar residencia fiscal\nNotas de prensa e internet sobre giras en Argentina\nRelación de notas de prensa e internet relativas a conciertos, entrevistas y actividades en Argentina\nAcreditar desplazamientos y actividad profesional en Argentina\nPARTIAL\nCorrobora vinculaciones profesionales con Argentina pero no desvirtúa el centro económico en España\nTestifical Dª Emma (SGAE) y Dª Eufrasia (mánager España)\nDeclaraciones testificales: Directora Área socios internacionales SGAE y mánager para España\nAportar información sobre actividad y gestión de derechos\nREJECTED\nTestimonios no considerados trascendentes para justificar residencia fiscal en Argentina\nRecibos Swiss Medical (feb y mar 2006)\nDos recibos de Swiss Medical de fechas 27-02-2006 y 27-03-2006 aportados por el recurrente\nAcreditar uso de servicios de salud en Argentina\nREJECTED\nPrueba accesoria que no aporta control suficiente sobre residencia fiscal\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nNOT_DECIDED\n2006\n2007\n2008\nse venía considerado residente ﬁscal en España en los 9\nejercicios ﬁscales precedentes\nhabía presentado las autoliquidaciones por el Impuesto sobre la Renta de las Personas Físicas desde\nel ejercicio 2003\nEra propietario de un inmueble tipo residencia\nen el municipio de\nCASA000  (Ávila\nya ha sido declarado por sentencia ﬁrme que el interesado tenía su residencia ﬁscal en España\nlos pasaportes argentinos\njustiﬁcan las entradas y salidas\npero no su\nresidencia ﬁscal\nTampoco el hecho de estar en posesión de documento nacional de identidad argentino acredita su residencia\nCertiﬁcado de nacimiento de la hija del Sr.  Eutimio , en territorio argentino\nque el 2 de enero\nde 2007 habría adquirido un inmueble en Buenos Aires\nLos únicos documentos que podrían ser relevantes\nson los certiﬁcados\nde residencia ﬁscal en Argentina\nRelación de facturas de compras\nrealizadas en el territorio de la República Argentina\nRelación de notas de prensa e internet relativas a los conciertos\nen la República Argentina\nlas testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal\ndos\nrecibos de Swiss Medical de fechas 27 de febrero de 2006 y 27 de marzo de 2006",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\nBases de datos AEAT - consideración como residente desde 2003\nRegistro en bases de datos de la AEAT que le considera residente fiscal en España de forma ininterrumpida desde 2003\nAcreditar antecedente administrativo de residencia en España\nACCEPTED\nPrueba administrativa con presunción; no desvirtuada por el recurrente\nDeclaraciones IRPF 2003-2011\nPresentación de autoliquidaciones por el IRPF desde el ejercicio 2003 hasta 2011\nDemostrar que tributó en España como residente\nACCEPTED\nActos ante la Administración que gozan de presunción; el contribuyente no solicitó rectificación\nDomicilio en Madrid y vivienda en Ávila (escrituras/registro)\nDomicilio habitual declarado en C/ DIRECCION000 nº NUM004, y título de propiedad de inmueble en URBANIZACION000, Ávila\nAcreditar vivienda permanente en España\nACCEPTED\nVivienda y domicilio habituales en España contribuyen a determinar vivienda permanente y centro de intereses\nSentencia TSJ Madrid 20-05-2016\nResolución judicial previa que declaró la residencia del interesado en España en relación con la sociedad DIRECCION001\nEfecto de cosa juzgada/precedente sobre la residencia\nACCEPTED\nSentencia firme que ya declaró la residencia en España; fundamento importante para la decisión\nPasaportes argentinos (entradas/salidas)\nPasaportes argentinos, vigentes en los años 2006-2008, compulsados, que muestran salidas y entradas en territorio argentino\nAcreditar estancia y permanencia en Argentina\nREJECTED\nLos pasaportes justifican entradas y salidas pero no acreditan residencia fiscal\nDocumento Nacional de Identidad argentino\nDNI argentino aportado por el interesado\nAcreditar vínculo administrativo con Argentina\nREJECTED\nNo acredita por sí la residencia fiscal en Argentina\nCertificado nacimiento hija en Argentina\nCertificado de nacimiento de la hija nacido en Argentina en 2007\nAcreditar vínculos personales/familiares en Argentina\nPARTIAL\nAporta vínculo familiar pero no es suficiente para desplazar la presunción y demostrar centro de intereses en Argentina\nTítulo de propiedad inmueble en Buenos Aires\nEscritura aportada que acredita adquisición de inmueble en Buenos Aires el 2-1-2007\nAcreditar vivienda permanente en Argentina\nPARTIAL\nSolo consta adquisición en 2007; para 2006 no prueba vivienda permanente en Argentina; en 2007-2008 coexistencia de vivienda en ambos países\nCertificados de residencia fiscal argentinos (2006-2008)\nCertificados expedidos por autoridades fiscales argentinas en 2012 que declaran al interesado residente en Argentina en 2006-2008\nAcreditar residencia fiscal en Argentina y su sujeción a tributación allí\nPARTIAL\nConsiderados los únicos documentos potencialmente relevantes, pero el certificado no especifica tributación por renta mundial, por lo que no prueba residencia fiscal plena según Convenio\nRelación de facturas y tickets en Argentina\nRelación de facturas de compras en establecimientos, peluquerías, supermercados, restaurantes, tiendas, médicos, etc. en Argentina\nAcreditar vida cotidiana y consumos en Argentina\nPARTIAL\nAcreditan consumos pero únicamente esa circunstancia; no bastan para declarar residencia fiscal\nNotas de prensa e internet sobre giras en Argentina\nRelación de notas de prensa e internet relativas a conciertos, entrevistas y actividades en Argentina\nAcreditar desplazamientos y actividad profesional en Argentina\nPARTIAL\nCorrobora vinculaciones profesionales con Argentina pero no desvirtúa el centro económico en España\nTestifical Dª Emma (SGAE) y Dª Eufrasia (mánager España)\nDeclaraciones testificales: Directora Área socios internacionales SGAE y mánager para España\nAportar información sobre actividad y gestión de derechos\nREJECTED\nTestimonios no considerados trascendentes para justificar residencia fiscal en Argentina\nRecibos Swiss Medical (feb y mar 2006)\nDos recibos de Swiss Medical de fechas 27-02-2006 y 27-03-2006 aportados por el recurrente\nAcreditar uso de servicios de salud en Argentina\nREJECTED\nPrueba accesoria que no aporta control suficiente sobre residencia fiscal\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nEl tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.\nNOT_DECIDED\n2006\n2007\n2008\nPresunción de residencia fiscal en España derivada de actuaciones administrativas y declaraciones presentadas; corresponde al interesado desvirtuarla aportando prueba suficiente de residencia en otro país.\nLa carga probatoria no se consideró cumplida.\nse venía considerado residente ﬁscal en España en los 9\nejercicios ﬁscales precedentes\nhabía presentado las autoliquidaciones por el Impuesto sobre la Renta de las Personas Físicas desde\nel ejercicio 2003\nEra propietario de un inmueble tipo residencia\nen el municipio de\nCASA000  (Ávila\nya ha sido declarado por sentencia ﬁrme que el interesado tenía su residencia ﬁscal en España\nlos pasaportes argentinos\njustiﬁcan las entradas y salidas\npero no su\nresidencia ﬁscal\nTampoco el hecho de estar en posesión de documento nacional de identidad argentino acredita su residencia\nCertiﬁcado de nacimiento de la hija del Sr.  Eutimio , en territorio argentino\nque el 2 de enero\nde 2007 habría adquirido un inmueble en Buenos Aires\nLos únicos documentos que podrían ser relevantes\nson los certiﬁcados\nde residencia ﬁscal en Argentina\nRelación de facturas de compras\nrealizadas en el territorio de la República Argentina\nRelación de notas de prensa e internet relativas a los conciertos\nen la República Argentina\nlas testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal\ndos\nrecibos de Swiss Medical de fechas 27 de febrero de 2006 y 27 de marzo de 2006\nlos pasaportes argentinos\njustiﬁcan las entradas y salidas\npero no su\nresidencia ﬁscal\nlas testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal\nla presunción que establece\nel  artículo 108.4\ny no haber solicitado la rectiﬁcación\npuede aﬁrmarse que\ntenía en España el centro de sus intereses económicos",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -835,6 +863,122 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3286,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3261,
+              "verbatim_text": "los pasaportes argentinos"
+            },
+            {
+              "end_offset": 3330,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3298,
+              "verbatim_text": "justiﬁcan las entradas y salidas"
+            },
+            {
+              "end_offset": 3372,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3345,
+              "verbatim_text": "pero no su\nresidencia ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3977,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3894,
+              "verbatim_text": "las testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 5145,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 5099,
+              "verbatim_text": "la presunción que establece\nel  artículo 108.4"
+            },
+            {
+              "end_offset": 5218,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 5181,
+              "verbatim_text": "y no haber solicitado la rectiﬁcación"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "a0e4db6e54967ee83c5d882c90ec3879c48b803e33d9a2ee6037b995a5922956"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3591,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3573,
+              "verbatim_text": "puede aﬁrmarse que"
+            },
+            {
+              "end_offset": 3735,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3682,
+              "verbatim_text": "tenía en España el centro de sus intereses económicos"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

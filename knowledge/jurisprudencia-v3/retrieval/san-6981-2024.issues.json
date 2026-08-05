@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-6981-2024.case.json",
-    "case_sha256": "686f1395264d8c4995ddfca791c164bc8ef44c520481e2247dcb4af779d8052c",
+    "case_sha256": "c995d6dd3bc026570f25f7e6edf4d19ef44aeb59662315d6542a48d2a9fcf78b",
     "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "La Sala expone la doble doctrina: regla clásica (cada parte prueba lo que le favorece) y la posibilidad de desplazamiento de carga hacia la Administración cuando dispone de medios; en el caso concreto el recurrente debía acreditar residencia en Méjico y la Aeat la negativa a ello.",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -313,7 +337,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.",
         "consequences": [],
@@ -347,7 +371,12 @@
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
           "anchor-legacy-evidence-008",
-          "anchor-legacy-evidence-009"
+          "anchor-legacy-evidence-009",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -384,7 +413,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nResolución denegatoria 23-04-2019\nResolución de la Dependencia de Asistencia y Servicios Tributarios de la DCGC denegando la devolución por no acreditar residencia en Méjico.\nAcreditar la falta de residencia en Méjico y justificar la retención definitiva en España\nREJECTED\nPrueba insuficiente: la Sala considera que la mera denegación por ausencia del certificado fiscal no desvirtúa la documental aportada por el contribuyente.\nRequerimiento y exigencia de certificado de residencia\nRequerimiento de 27-02-2019 solicitando certificado de residencia fiscal emitido por las autoridades del país de residencia (Méjico).\nExigir prueba formal de residencia fiscal en el extranjero\nREJECTED\nLa Sala entiende que la ausencia de ese certificado no invalida otras pruebas y que la documentación aportada en vía judicial puede ser admitida salvo mala fe.\nAlegación de extemporaneidad\nAlegación de la Abogacía del Estado sobre la extemporaneidad de documentos aportados en la demanda que pudieron presentarse en vía económico-administrativa.\nQue se inadmitan pruebas presentadas fuera del trámite administrativo\nREJECTED\nLa Sala rechaza la objeción por extemporaneidad citando STS que permite admitir documental en vía judicial salvo mala fe.\nMovimientos bancarios\nMovimientos bancarios de su cuenta que recogen consumos y gastos en Méjico, usados para acreditar permanencia.\nDemostrar permanencia y vida cotidiana en Méjico (días de estancia)\nACCEPTED\nLa Sala considera estos movimientos, junto con otros indicios, suficientes para acreditar residencia en Méjico en 2017.\nCertificados de la empresa (desplazamientos y rentas)\nCertificados aportados por la empresa acreditativos de los desplazamientos y de las rentas obtenidas en el extranjero (incluye certificado de 7.10.2020).\nAcreditar trabajo y desplazamientos desarrollados en Méjico y rentas obtenidas fuera de España\nACCEPTED\nValorados como entendibles y coherentes con la permanencia en Méjico; la Sala los considera probatorios junto con el resto de la documental.\nJustificante de estancia y reserva de apartamento\nJustificante de las estancias en el extranjero y de reserva en el apartamento sito en DIRECCION000 de Ciudad de México D.F.\nAcreditar vivienda habitual/uso efectivo en Méjico durante 2017\nACCEPTED\nLa Sala considera la reserva y justificantes como indicios relevantes y concordantes con la tesis de residencia en Méjico.\nSellos pasaporte\nJustificante de los sellos en el pasaporte de entrada y salida del país.\nAcreditar entradas y salidas y permanencia física en Méjico\nACCEPTED\nAceptada como corroboración de las estancias y de la permanencia temporal en Méjico.\nBilletes/vuelos de entrada y salida\nJustificantes de los vuelos de entrada y salida del país.\nDocumentar desplazamientos y calcular días de permanencia\nACCEPTED\nConsiderados relevantes y concordantes con el resto de la documentación para acreditar la presencia en Méjico.\nModelo 210 y certificado de retenciones\nModelo 210 presentado el 5-9-2018 y certificado de retenciones donde consta entidad pagadora Ericsson España S.A y país de residencia Méjico.\nAcreditar la tributación en el extranjero y la aplicación del convenio con Méjico\nACCEPTED\nValorados por la Sala como coherentes con la petición de devolución y la alegación de residencia en Méjico.\nLa Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.\nLa Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.\nNOT_DECIDED\n2017\nCon fecha 23-04-2019 la Dependencia\ndicta Resolución\ncon Liquidación Provisional denegando la devolución solicitada por no haber acreditado el contribuyente su\nresidencia en Méjico\nEl actor aportó dicho certiﬁcado de retenciones, pero no el de residencia ﬁscal emitido por las autoridades\nadmitir dicha documental en\nvía judicial salvo que concurra mala fe\nMovimientos bancarios de su cuenta, que recogen consumos y gastos en Méjico\nCertiﬁcados aportados por su empresa acreditativos de los desplazamientos y de las rentas obtenidas en el\nextranjero\nJustiﬁcante de las estancias\ny de reserva en el apartamento que constituyó su residencia\nJustiﬁcante de los sellos en el pasaporte de entrada y salida del país\nJustiﬁcante de los vuelos de entrada y salida del país\nCon fecha 5 de septiembre de 2.018 el contribuyente presentó el modelo 210\npaís de residencia Méjico",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nResolución denegatoria 23-04-2019\nResolución de la Dependencia de Asistencia y Servicios Tributarios de la DCGC denegando la devolución por no acreditar residencia en Méjico.\nAcreditar la falta de residencia en Méjico y justificar la retención definitiva en España\nREJECTED\nPrueba insuficiente: la Sala considera que la mera denegación por ausencia del certificado fiscal no desvirtúa la documental aportada por el contribuyente.\nRequerimiento y exigencia de certificado de residencia\nRequerimiento de 27-02-2019 solicitando certificado de residencia fiscal emitido por las autoridades del país de residencia (Méjico).\nExigir prueba formal de residencia fiscal en el extranjero\nREJECTED\nLa Sala entiende que la ausencia de ese certificado no invalida otras pruebas y que la documentación aportada en vía judicial puede ser admitida salvo mala fe.\nAlegación de extemporaneidad\nAlegación de la Abogacía del Estado sobre la extemporaneidad de documentos aportados en la demanda que pudieron presentarse en vía económico-administrativa.\nQue se inadmitan pruebas presentadas fuera del trámite administrativo\nREJECTED\nLa Sala rechaza la objeción por extemporaneidad citando STS que permite admitir documental en vía judicial salvo mala fe.\nMovimientos bancarios\nMovimientos bancarios de su cuenta que recogen consumos y gastos en Méjico, usados para acreditar permanencia.\nDemostrar permanencia y vida cotidiana en Méjico (días de estancia)\nACCEPTED\nLa Sala considera estos movimientos, junto con otros indicios, suficientes para acreditar residencia en Méjico en 2017.\nCertificados de la empresa (desplazamientos y rentas)\nCertificados aportados por la empresa acreditativos de los desplazamientos y de las rentas obtenidas en el extranjero (incluye certificado de 7.10.2020).\nAcreditar trabajo y desplazamientos desarrollados en Méjico y rentas obtenidas fuera de España\nACCEPTED\nValorados como entendibles y coherentes con la permanencia en Méjico; la Sala los considera probatorios junto con el resto de la documental.\nJustificante de estancia y reserva de apartamento\nJustificante de las estancias en el extranjero y de reserva en el apartamento sito en DIRECCION000 de Ciudad de México D.F.\nAcreditar vivienda habitual/uso efectivo en Méjico durante 2017\nACCEPTED\nLa Sala considera la reserva y justificantes como indicios relevantes y concordantes con la tesis de residencia en Méjico.\nSellos pasaporte\nJustificante de los sellos en el pasaporte de entrada y salida del país.\nAcreditar entradas y salidas y permanencia física en Méjico\nACCEPTED\nAceptada como corroboración de las estancias y de la permanencia temporal en Méjico.\nBilletes/vuelos de entrada y salida\nJustificantes de los vuelos de entrada y salida del país.\nDocumentar desplazamientos y calcular días de permanencia\nACCEPTED\nConsiderados relevantes y concordantes con el resto de la documentación para acreditar la presencia en Méjico.\nModelo 210 y certificado de retenciones\nModelo 210 presentado el 5-9-2018 y certificado de retenciones donde consta entidad pagadora Ericsson España S.A y país de residencia Méjico.\nAcreditar la tributación en el extranjero y la aplicación del convenio con Méjico\nACCEPTED\nValorados por la Sala como coherentes con la petición de devolución y la alegación de residencia en Méjico.\nLa Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.\nLa Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.\nNOT_DECIDED\n2017\nLa Sala expone la doble doctrina: regla clásica (cada parte prueba lo que le favorece) y la posibilidad de desplazamiento de carga hacia la Administración cuando dispone de medios; en el caso concreto el recurrente debía acreditar residencia en Méjico y la Aeat la negativa a ello.\nLa carga probatoria se consideró cumplida.\nCon fecha 23-04-2019 la Dependencia\ndicta Resolución\ncon Liquidación Provisional denegando la devolución solicitada por no haber acreditado el contribuyente su\nresidencia en Méjico\nEl actor aportó dicho certiﬁcado de retenciones, pero no el de residencia ﬁscal emitido por las autoridades\nadmitir dicha documental en\nvía judicial salvo que concurra mala fe\nMovimientos bancarios de su cuenta, que recogen consumos y gastos en Méjico\nCertiﬁcados aportados por su empresa acreditativos de los desplazamientos y de las rentas obtenidas en el\nextranjero\nJustiﬁcante de las estancias\ny de reserva en el apartamento que constituyó su residencia\nJustiﬁcante de los sellos en el pasaporte de entrada y salida del país\nJustiﬁcante de los vuelos de entrada y salida del país\nCon fecha 5 de septiembre de 2.018 el contribuyente presentó el modelo 210\npaís de residencia Méjico\nEl actor aportó dicho certiﬁcado de retenciones, pero no el de residencia ﬁscal emitido por las autoridades\nDos son los criterios teóricos\ncada parte tiene la carga de probar aquellas circunstancias que le favorecen\nQue permanezca más de 183 días, durante el año natural, en territorio español\nPor consiguiente, la recurrente ha acreditado los hechos constitutivos de su pretensión\nadmitir dicha documental en\nvía judicial salvo que concurra mala fe",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -596,6 +625,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3173,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 3066,
+              "verbatim_text": "El actor aportó dicho certiﬁcado de retenciones, pero no el de residencia ﬁscal emitido por las autoridades"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3719,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3689,
+              "verbatim_text": "Dos son los criterios teóricos"
+            },
+            {
+              "end_offset": 776,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 700,
+              "verbatim_text": "cada parte tiene la carga de probar aquellas circunstancias que le favorecen"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2159,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 2082,
+              "verbatim_text": "Que permanezca más de 183 días, durante el año natural, en territorio español"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2400,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2313,
+              "verbatim_text": "Por consiguiente, la recurrente ha acreditado los hechos constitutivos de su pretensión"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2173,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 2106,
+              "verbatim_text": "admitir dicha documental en\nvía judicial salvo que concurra mala fe"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

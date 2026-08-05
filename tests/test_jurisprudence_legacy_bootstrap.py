@@ -154,6 +154,78 @@ def test_construye_una_propuesta_minima_valida_y_evaluable(tmp_path: Path) -> No
     assert "centro de intereses" in evaluation.questions[0].question
 
 
+def test_conserva_anclajes_literales_de_valoracion_resultado_y_carga() -> None:
+    from jurisprudence_legacy_draft import build_legacy_case_draft
+
+    record = _legacy_record() | {
+        "carga_prueba": {
+            "quien_tenia_carga": "AEAT",
+            "cumplida": "NO",
+            "motivo": "La Administración no acreditó el presupuesto residencial.",
+            "cita": {
+                "pagina": "2",
+                "texto": "La Sala considera acreditada la residencia fiscal en España",
+            },
+        },
+        "Pruebas_rechazadas_clave": [
+            {
+                "parte": "AEAT",
+                "categoria": "ACTIVIDAD_ECONOMICA_Y_GESTION",
+                "subcategoria": "centro de intereses",
+                "cita": {
+                    "pagina": "2",
+                    "texto": "por el centro de intereses económicos",
+                },
+            }
+        ],
+        "frases_clave": [
+            {
+                "tema": "resultado",
+                "pagina": "2",
+                "texto": "FALLAMOS\nDESESTIMAR el recurso.",
+            }
+        ],
+    }
+
+    draft = build_legacy_case_draft(
+        record,
+        verbatim=_verbatim(),
+        verbatim_resource="knowledge/verbatim/san-1-2026.pages.json",
+        legacy_resource="output/analisis.jsonl",
+        generated_at=datetime(2026, 8, 1, tzinfo=UTC),
+    )
+
+    purposes_by_id = {
+        item["anchor_id"]: item["purpose"] for item in draft.proposal["source_anchors"]
+    }
+    assert {"HOLDING", "REASONING", "BURDEN_OF_PROOF"} <= set(purposes_by_id.values())
+    assert all(
+        purposes_by_id[anchor_id] == "HOLDING"
+        for anchor_id in draft.proposal["holdings"][0]["anchor_ids"]
+    )
+    assert draft.proposal["burden_of_proof_steps"] == [
+        {
+            "step_id": "burden-legacy-001",
+            "sequence": 1,
+            "issue_ids": ["residencia-fiscal"],
+            "fact_to_prove": "La Administración no acreditó el presupuesto residencial.",
+            "initial_bearer": "AEAT",
+            "triggering_evidence_ids": [],
+            "shifts_to": None,
+            "response_required": None,
+            "conclusion": "La carga probatoria no se consideró cumplida.",
+            "anchor_ids": [
+                next(
+                    anchor_id
+                    for anchor_id, purpose in purposes_by_id.items()
+                    if purpose == "BURDEN_OF_PROOF"
+                )
+            ],
+            "review": draft.proposal["review"],
+        }
+    ]
+
+
 def test_conserva_fuera_de_alcance_sin_convertirlo_en_residencia() -> None:
     from jurisprudence_legacy_draft import build_legacy_case_draft
 

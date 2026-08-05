@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4305-2017.case.json",
-    "case_sha256": "e8f1b87d4448cf470847e1f957c2eb6048258c02697354e39bb6bb57831b13e1",
+    "case_sha256": "37817e50e7e9240a811269ffc25828cd34ddd914b6bf0eedd505a48f35d5c53a",
     "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La cuestión tercera del auto (exigencia de acreditar residencia fiscal en otro país) se califica como “terreno probatorio”, pero se considera irrelevante al descartarse que exista ausencia esporádica; por ello no se entra a concretar la carga efectiva.",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -346,7 +370,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "Hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.",
         "consequences": [],
@@ -381,7 +406,12 @@
           "anchor-legacy-evidence-007",
           "anchor-legacy-evidence-008",
           "anchor-legacy-evidence-009",
-          "anchor-legacy-evidence-010"
+          "anchor-legacy-evidence-010",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -417,7 +447,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal extranjera\nLa AEAT deniega la devolución por no aportarse “certificado acreditativo de residencia” de otra jurisdicción tributaria.\nMantener el cómputo de ausencias como permanencia en España (y, por tanto, residencia IRPF) por falta de acreditación de residencia fiscal extranjera.\nREJECTED\nEl TS considera irrelevante exigir dicha acreditación cuando no existe “ausencia esporádica” que computar; por tanto, no puede sustentar la residencia en España en este caso.\nausencia de prueba de tributación en el Estado de destino\nLa AEAT deniega también por no acreditarse la tributación de la renta percibida en Panamá.\nEvitar “desimposición” y sostener que, sin tributación en destino, procede mantener tributación por IRPF en España.\nREJECTED\nNo se considera determinante para la residencia al descartarse la existencia de ausencias esporádicas; la controversia probatoria sobre residencia extranjera queda superada por la calificación jurídica.\ncarácter temporal/finalidad formativa de la beca\nIndicio alegado por el Abogado del Estado: la estancia deriva de beca oficial “con objeto y duración determinados”.\nSostener que la estancia en el extranjero es temporal y, por ello, “ausencia esporádica” computable como permanencia en España.\nREJECTED\nEl TS descarta que una ausencia prolongada (>183 días) pueda ser esporádica por su duración, aunque la beca sea temporal o formativa.\nviajes sufragados por ICEX (ida y vuelta)\nIndicio alegado por AEAT: el organismo concedente asume transporte de ida y vuelta a España al finalizar prácticas.\nInferir intención de retorno y calificar la ausencia como esporádica.\nREJECTED\nEl TS afirma que el propósito de retorno o que el ICEX sufrague el regreso no sirve para delimitar si la ausencia es esporádica.\npresentación de declaración IRPF en España\nIndicio alegado por AEAT: el recurrente presentó IRPF en España, “considerándose residente fiscal”.\nAcreditar voluntad/condición de residente fiscal en España durante el periodo.\nREJECTED\nNo se admite como criterio definitorio de “ausencia esporádica” frente al dato objetivo de permanencia fuera >183 días.\npropuesta de resolución y liquidación provisional denegatoria\nPropuesta de resolución (fecha ignorada) y liquidación provisional denegando devolución; confirmación por TEAR Asturias (23/10/2015).\nSostener la sujeción a IRPF (residencia) y justificar la denegación de devolución de retenciones.\nREJECTED\nLos actos se anulan al no ser conforme a Derecho la calificación de la ausencia como esporádica en una permanencia fuera >183 días por beca.\ncontrato/beca ICEX en Oficina Comercial de España en Panamá\nContrato de beca ICEX: actividad del 1/10/2010 al 30/09/2011 en la Oficina Económica y Comercial de España en Panamá (hecho no controvertido).\nAcreditar permanencia continuada en el extranjero por causa contractual (no ocasional) durante el periodo relevante.\nACCEPTED\nSe asume como hecho cierto e inmutable que la beca/contrato exige y explica una ausencia continuada fuera de España superior a 183 días.\nhecho admitido: permanencia fuera de España >183 días en 2011\nHecho declarado cierto (y reconocido por la Administración según la sentencia de instancia transcrita): permaneció fuera de España más de 183 días durante 2011.\nDemostrar no permanencia en territorio español >183 días y excluir residencia fiscal en España por el criterio de permanencia.\nACCEPTED\nEl TS parte de este hecho como presupuesto inmutable y concluye que una ausencia así no puede ser esporádica.\nmodelo 210 IRNR solicitando devolución de retenciones IRPF\nPresentación del modelo 210 IRNR el 19/02/2015 solicitando devolución de 2.160 euros retenidos a cuenta de IRPF (2011) por considerarse no residente.\nArticular la pretensión de no residencia fiscal y devolución de retenciones practicadas indebidamente.\nPARTIAL\nAcredita la actuación procesal/administrativa del contribuyente, pero la decisión se funda en la interpretación del art. 9.1.a y el hecho de permanencia fuera >183 días.\nretenciones practicadas por ICEX (2.160 euros)\nRetención por ICEX de 2.160 euros a cuenta del IRPF durante 2011.\nCuantificar el ingreso cuya devolución se reclama y conectar con la sujeción (o no) al IRPF.\nACCEPTED\nHecho base del procedimiento de devolución; no controvertido.\nHecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.\nHecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.\nNOT_DECIDED\n2011\nal no haber aportado certiﬁcado acreditativo de residencia\nde otra jurisdicción tributaria\nni haber acreditado la tributación de la renta percibida en el\nEstado de destino\nel traslado al exterior se\nproduce por la concesión\ncon objeto y duración\ndeterminados\nEl propósito de retorno\nsufrague los\ncostes\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\nliquidación provisional denegatoria\n23 de octubre de 2015\nsuscribió un contrato\ndesde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011\nel interesado\npermaneció fuera de España durante más de 183 días del año 2011\nel 19 de febrero de 2015, el modelo 210\nsolicitó\nla devolución de los 2.160 euros\nle fue retenida por el ICEX la cantidad de 2.160 euros a cuenta",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal extranjera\nLa AEAT deniega la devolución por no aportarse “certificado acreditativo de residencia” de otra jurisdicción tributaria.\nMantener el cómputo de ausencias como permanencia en España (y, por tanto, residencia IRPF) por falta de acreditación de residencia fiscal extranjera.\nREJECTED\nEl TS considera irrelevante exigir dicha acreditación cuando no existe “ausencia esporádica” que computar; por tanto, no puede sustentar la residencia en España en este caso.\nausencia de prueba de tributación en el Estado de destino\nLa AEAT deniega también por no acreditarse la tributación de la renta percibida en Panamá.\nEvitar “desimposición” y sostener que, sin tributación en destino, procede mantener tributación por IRPF en España.\nREJECTED\nNo se considera determinante para la residencia al descartarse la existencia de ausencias esporádicas; la controversia probatoria sobre residencia extranjera queda superada por la calificación jurídica.\ncarácter temporal/finalidad formativa de la beca\nIndicio alegado por el Abogado del Estado: la estancia deriva de beca oficial “con objeto y duración determinados”.\nSostener que la estancia en el extranjero es temporal y, por ello, “ausencia esporádica” computable como permanencia en España.\nREJECTED\nEl TS descarta que una ausencia prolongada (>183 días) pueda ser esporádica por su duración, aunque la beca sea temporal o formativa.\nviajes sufragados por ICEX (ida y vuelta)\nIndicio alegado por AEAT: el organismo concedente asume transporte de ida y vuelta a España al finalizar prácticas.\nInferir intención de retorno y calificar la ausencia como esporádica.\nREJECTED\nEl TS afirma que el propósito de retorno o que el ICEX sufrague el regreso no sirve para delimitar si la ausencia es esporádica.\npresentación de declaración IRPF en España\nIndicio alegado por AEAT: el recurrente presentó IRPF en España, “considerándose residente fiscal”.\nAcreditar voluntad/condición de residente fiscal en España durante el periodo.\nREJECTED\nNo se admite como criterio definitorio de “ausencia esporádica” frente al dato objetivo de permanencia fuera >183 días.\npropuesta de resolución y liquidación provisional denegatoria\nPropuesta de resolución (fecha ignorada) y liquidación provisional denegando devolución; confirmación por TEAR Asturias (23/10/2015).\nSostener la sujeción a IRPF (residencia) y justificar la denegación de devolución de retenciones.\nREJECTED\nLos actos se anulan al no ser conforme a Derecho la calificación de la ausencia como esporádica en una permanencia fuera >183 días por beca.\ncontrato/beca ICEX en Oficina Comercial de España en Panamá\nContrato de beca ICEX: actividad del 1/10/2010 al 30/09/2011 en la Oficina Económica y Comercial de España en Panamá (hecho no controvertido).\nAcreditar permanencia continuada en el extranjero por causa contractual (no ocasional) durante el periodo relevante.\nACCEPTED\nSe asume como hecho cierto e inmutable que la beca/contrato exige y explica una ausencia continuada fuera de España superior a 183 días.\nhecho admitido: permanencia fuera de España >183 días en 2011\nHecho declarado cierto (y reconocido por la Administración según la sentencia de instancia transcrita): permaneció fuera de España más de 183 días durante 2011.\nDemostrar no permanencia en territorio español >183 días y excluir residencia fiscal en España por el criterio de permanencia.\nACCEPTED\nEl TS parte de este hecho como presupuesto inmutable y concluye que una ausencia así no puede ser esporádica.\nmodelo 210 IRNR solicitando devolución de retenciones IRPF\nPresentación del modelo 210 IRNR el 19/02/2015 solicitando devolución de 2.160 euros retenidos a cuenta de IRPF (2011) por considerarse no residente.\nArticular la pretensión de no residencia fiscal y devolución de retenciones practicadas indebidamente.\nPARTIAL\nAcredita la actuación procesal/administrativa del contribuyente, pero la decisión se funda en la interpretación del art. 9.1.a y el hecho de permanencia fuera >183 días.\nretenciones practicadas por ICEX (2.160 euros)\nRetención por ICEX de 2.160 euros a cuenta del IRPF durante 2011.\nCuantificar el ingreso cuya devolución se reclama y conectar con la sujeción (o no) al IRPF.\nACCEPTED\nHecho base del procedimiento de devolución; no controvertido.\nHecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.\nHecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.\nNOT_DECIDED\n2011\nLa cuestión tercera del auto (exigencia de acreditar residencia fiscal en otro país) se califica como “terreno probatorio”, pero se considera irrelevante al descartarse que exista ausencia esporádica; por ello no se entra a concretar la carga efectiva.\nLa carga probatoria no se consideró cumplida.\nal no haber aportado certiﬁcado acreditativo de residencia\nde otra jurisdicción tributaria\nni haber acreditado la tributación de la renta percibida en el\nEstado de destino\nel traslado al exterior se\nproduce por la concesión\ncon objeto y duración\ndeterminados\nEl propósito de retorno\nsufrague los\ncostes\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\nliquidación provisional denegatoria\n23 de octubre de 2015\nsuscribió un contrato\ndesde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011\nel interesado\npermaneció fuera de España durante más de 183 días del año 2011\nel 19 de febrero de 2015, el modelo 210\nsolicitó\nla devolución de los 2.160 euros\nle fue retenida por el ICEX la cantidad de 2.160 euros a cuenta\nno son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no\ndeviene superﬂua\nno podemos dar carta de naturaleza a la existencia de ausencias esporádicas\ndiscurre en el terreno probatorio\ndeviene superﬂua si se proyecta sobre una realidad inexistente\nla noción de ausencias esporádicas\nse conﬁgura\nen función de\nun elemento fáctico\nduración o intensidad\nhace innecesario que nos pronunciemos sobre la tercera\ndiscurre en el terreno probatorio",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -686,6 +716,165 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5175,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 5081,
+              "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1575,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 1559,
+              "verbatim_text": "deviene superﬂua"
+            },
+            {
+              "end_offset": 1745,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 1670,
+              "verbatim_text": "no podemos dar carta de naturaleza a la existencia de ausencias esporádicas"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1236,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 1203,
+              "verbatim_text": "discurre en el terreno probatorio"
+            },
+            {
+              "end_offset": 1621,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 1559,
+              "verbatim_text": "deviene superﬂua si se proyecta sobre una realidad inexistente"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4369,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 4335,
+              "verbatim_text": "la noción de ausencias esporádicas"
+            },
+            {
+              "end_offset": 4381,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 4370,
+              "verbatim_text": "se conﬁgura"
+            },
+            {
+              "end_offset": 4395,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 4382,
+              "verbatim_text": "en función de"
+            },
+            {
+              "end_offset": 4419,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 4400,
+              "verbatim_text": "un elemento fáctico"
+            },
+            {
+              "end_offset": 4587,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 4566,
+              "verbatim_text": "duración o intensidad"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 926,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 872,
+              "verbatim_text": "hace innecesario que nos pronunciemos sobre la tercera"
+            },
+            {
+              "end_offset": 1236,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 1203,
+              "verbatim_text": "discurre en el terreno probatorio"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

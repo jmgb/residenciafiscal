@@ -397,6 +397,92 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "los restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "Es una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "Los órganos administrativos o judiciales nacionales no son competentes para enjuiciar"
+        },
+        {
+          "pageIndex": 14,
+          "printedPage": "14",
+          "verbatimText": "un\ncertiﬁcado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 18,
+          "printedPage": "18",
+          "verbatimText": "centro\nde intereses vitales"
+        },
+        {
+          "pageIndex": 18,
+          "printedPage": "18",
+          "verbatimText": "aun con disponibilidad de vivienda permanente tanto en España como en Reino Unido"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
     }
   ],
   "issues": [
@@ -418,9 +504,32 @@
         "anchor-legacy-evidence-014",
         "anchor-legacy-evidence-015",
         "anchor-legacy-evidence-016",
-        "anchor-legacy-evidence-017"
+        "anchor-legacy-evidence-017",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La residencia por art. 9.1.b es fáctica y se sujeta a reglas de carga probatoria (art. 105 LGT); el contribuyente no acreditó hechos relevantes (32 días y elementos en el extranjero).",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_CENTRO_INTERESES_ECONOMICOS",

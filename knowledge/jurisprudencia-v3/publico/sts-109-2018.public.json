@@ -191,6 +191,165 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no es admisible es que la naturaleza de la ausencia"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "sean factores"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "para deﬁnir el carácter esporádico"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "deviene superﬂua"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no podemos dar carta de naturaleza a la existencia de ausencias esporádicas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "discurre en el terreno probatorio"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "deviene superﬂua si se proyecta sobre una realidad inexistente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "La permanencia fuera"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "más de 183 días"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "ausencias esporádicas"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "exclusivamente"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "dato objetivo de la duración o\nintensidad"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "al no haber aportado certiﬁcado acreditativo de residencia"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "de otra jurisdicción"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "9e172c210e9323a2a2dffa93d48e165baaaf74f7ef07a9afac193a4ddfe077ee"
     }
   ],
   "issues": [
@@ -203,9 +362,34 @@
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
-        "anchor-legacy-evidence-008"
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "Se debate en casación la exigencia de aportar certificado de residencia fiscal extranjera y la dimensión probatoria (AEAT invoca arts. 105.1 y 108.4 LGT; el TS considera innecesario pronunciarse sobre esa cuestión en este caso al negar que existan ausencias esporádicas).",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -403,7 +587,8 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS parte de dos hechos inmutables: el interesado estuvo fuera de España más de 183 días en 2011 y ello obedeció al disfrute de una beca ICEX. Interpreta que las “ausencias esporádicas” del art. 9.1.a LIRPF son solo las ocasionales y breves; una ausencia prolongada superior a 183 días no puede ser esporádica. Rechaza que el concepto dependa de la voluntad/intención de retorno o de datos como que el ICEX pague el regreso. En consecuencia, no procede computar esa ausencia como permanencia en España y se confirma la devolución de retenciones.",
         "consequences": [],

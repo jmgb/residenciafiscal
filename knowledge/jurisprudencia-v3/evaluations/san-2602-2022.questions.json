@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 2602/2022 este supuesto de residencia: El tribunal aplica principalmente el criterio objetivo de permanencia (>183 días) apoyado en indicios de presencia y uso efectivo de viviendas, consumos y movimientos bancarios en España. Complementariamente valora el centro de intereses ec?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

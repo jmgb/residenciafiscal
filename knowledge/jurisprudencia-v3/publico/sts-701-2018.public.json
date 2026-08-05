@@ -128,6 +128,54 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "denegó la devolución"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "al no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "1º) La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "1ecff1f3ed9076e66f5ad83ee31b85ca8e5013bb8a202262f4a8a69734d3b94f"
     }
   ],
   "issues": [
@@ -138,9 +186,30 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración exigió al obligado la acreditación de la residencia fiscal en el Estado extranjero para excluir la consideración de ausencia esporádica conforme a art.9.1.a LIRPF",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -276,7 +345,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que la actora permaneció fuera de España más de 183 días (dato objetivo) y aplica el criterio objetivo del art.9 LIRPF: la estancia por beca no es ausencia esporádica. Por ello no exige acreditar residencia fiscal en el país destino salvo que exista indicación de paraíso fiscal; prevalecen los hechos objetivos sobre inferencias de voluntad.",
         "consequences": [],

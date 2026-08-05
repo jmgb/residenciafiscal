@@ -17,12 +17,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-188-2018.case.json",
-    "case_sha256": "9ab47415e9f1d199a0e470529836baa01bb787f7b7f9f04a38c6864d164f7ac4",
+    "case_sha256": "7a7ec9b01aa548706bf83a492c8931b1bc1bc34f3c476fe6667fadee06a17300",
     "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "El artículo 9.1.a) permite excluir las ausencias si el contribuyente acredita residencia fiscal en otro país; por tanto la carga de probar residencia en el extranjero recae sobre el interesado.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -260,7 +284,12 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-reasoning-004"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -292,7 +321,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta resolucion y liquidacion provisional denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria en Asturias que denegó la devolución al considerar que el interesado debía tributar en España.\nSostener que el contribuyente debía tributar en España y denegar devolución\nREJECTED\nEl Tribunal considera que la existencia objetiva de estancia fuera >183 días y su carácter no esporádico prevalecen sobre la tesis administrativa.\nausencia certificado residencia fiscal extranjero\nLa Administración advirtió que el interesado no aportó certificado acreditativo de residencia por autoridad fiscal de otra jurisdicción ni acreditó tributación en el Estado de destino.\nAcreditar que no se ha probado residencia fiscal en otro país y, por tanto, computar las ausencias como días en España\nREJECTED\nEl Tribunal estima innecesaria esa exigencia en el supuesto de hecho probado (estancia continua superior a 183 días); la falta del certificado no desvirtúa la permanencia efectiva fuera de España.\nalegaciones Abogado del Estado sobre indicios (beca temporal, transporte, presentacion IRPF)\nArgumentos presentados en casación que señalan indicios de intencionalidad de retorno: carácter formativo y temporal de la beca, transporte de ida y vuelta pagado por organismo, presentación previa de declaración IRPF.\nDesvirtuar la existencia de cambio de residencia y sostener que la ausencia es esporádica\nREJECTED\nEl Tribunal rechaza que esos indicios basten para considerar la ausencia esporádica frente al dato objetivo de duración.\ncontrato ICEX 1/10/2010-30/9/2011 en Cantón (China)\nContrato/condición de beca por ICEX para desarrollar labores en la Oficina Económica y Comercial de España en Cantón desde 1-10-2010 hasta 30-9-2011.\nAcreditar permanencia continuada fuera de España durante el año 2011 (>183 días) y motivo de la estancia\nACCEPTED\nEl Tribunal considera probado y determinante que la estancia fue continuada y superior a 183 días, no esporádica.\nmodelo 210 presentado 20/02/2015\nSolicitud de devolución mediante modelo 210 del IRNR presentada ante la AEAT el 20 de febrero de 2015.\nAcreditar que el interesado se consideraba no residente y solicitó devolución de retenciones\nACCEPTED\nPrueba administrativa que muestra la alegación de no residencia; el Tribunal la valora conjuntamente con la prueba de estancia efectiva.\nautoliquidacion IRPF previa\nEl interesado había presentado en su día autoliquidación por el IRPF correspondiente al ejercicio.\nIndicar vinculación fiscal previa con España (indicio contrario a cambio de residencia)\nPARTIAL\nEl Tribunal admite el hecho pero le atribuye menor valor frente al dato objetivo de la permanencia continuada en el extranjero.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días por el disfrute de una beca ICEX; esa ausencia supera lo que puede reputarse \"esporádico\" y, por tanto, constituye residencia efectiva fuera de España en el periodo, aplicándose el criterio objetivo del art. 9.1.a) LIRPF. La pretensión administrativa de exigir certificación de residencia en el extranjero no altera este resultado dado el hecho probado.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días por el disfrute de una beca ICEX; esa ausencia supera lo que puede reputarse \"esporádico\" y, por tanto, constituye residencia efectiva fuera de España en el periodo, aplicándose el criterio objetivo del art. 9.1.a) LIRPF. La pretensión administrativa de exigir certificación de residencia en el extranjero no altera este resultado dado el hecho probado.\nNOT_DECIDED\n2011\nformuló propuesta de\nresolución en la que se denegó la devolución solicitada\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad ﬁscal competente\nse\ndeduce la intención\npor los siguientes indicios: (i) el traslado\nii) el organismo concedente se hace cargo\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el\n30 de septiembre de 2011, en la Oﬁcina\nen Cantón (China\nel 20 de febrero de 2015, el modelo 210\nsolicitó la\ndevolución\nEn su día había presentado autoliquidación por el mencionado\nimpuesto",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta resolucion y liquidacion provisional denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria en Asturias que denegó la devolución al considerar que el interesado debía tributar en España.\nSostener que el contribuyente debía tributar en España y denegar devolución\nREJECTED\nEl Tribunal considera que la existencia objetiva de estancia fuera >183 días y su carácter no esporádico prevalecen sobre la tesis administrativa.\nausencia certificado residencia fiscal extranjero\nLa Administración advirtió que el interesado no aportó certificado acreditativo de residencia por autoridad fiscal de otra jurisdicción ni acreditó tributación en el Estado de destino.\nAcreditar que no se ha probado residencia fiscal en otro país y, por tanto, computar las ausencias como días en España\nREJECTED\nEl Tribunal estima innecesaria esa exigencia en el supuesto de hecho probado (estancia continua superior a 183 días); la falta del certificado no desvirtúa la permanencia efectiva fuera de España.\nalegaciones Abogado del Estado sobre indicios (beca temporal, transporte, presentacion IRPF)\nArgumentos presentados en casación que señalan indicios de intencionalidad de retorno: carácter formativo y temporal de la beca, transporte de ida y vuelta pagado por organismo, presentación previa de declaración IRPF.\nDesvirtuar la existencia de cambio de residencia y sostener que la ausencia es esporádica\nREJECTED\nEl Tribunal rechaza que esos indicios basten para considerar la ausencia esporádica frente al dato objetivo de duración.\ncontrato ICEX 1/10/2010-30/9/2011 en Cantón (China)\nContrato/condición de beca por ICEX para desarrollar labores en la Oficina Económica y Comercial de España en Cantón desde 1-10-2010 hasta 30-9-2011.\nAcreditar permanencia continuada fuera de España durante el año 2011 (>183 días) y motivo de la estancia\nACCEPTED\nEl Tribunal considera probado y determinante que la estancia fue continuada y superior a 183 días, no esporádica.\nmodelo 210 presentado 20/02/2015\nSolicitud de devolución mediante modelo 210 del IRNR presentada ante la AEAT el 20 de febrero de 2015.\nAcreditar que el interesado se consideraba no residente y solicitó devolución de retenciones\nACCEPTED\nPrueba administrativa que muestra la alegación de no residencia; el Tribunal la valora conjuntamente con la prueba de estancia efectiva.\nautoliquidacion IRPF previa\nEl interesado había presentado en su día autoliquidación por el IRPF correspondiente al ejercicio.\nIndicar vinculación fiscal previa con España (indicio contrario a cambio de residencia)\nPARTIAL\nEl Tribunal admite el hecho pero le atribuye menor valor frente al dato objetivo de la permanencia continuada en el extranjero.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días por el disfrute de una beca ICEX; esa ausencia supera lo que puede reputarse \"esporádico\" y, por tanto, constituye residencia efectiva fuera de España en el periodo, aplicándose el criterio objetivo del art. 9.1.a) LIRPF. La pretensión administrativa de exigir certificación de residencia en el extranjero no altera este resultado dado el hecho probado.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días por el disfrute de una beca ICEX; esa ausencia supera lo que puede reputarse \"esporádico\" y, por tanto, constituye residencia efectiva fuera de España en el periodo, aplicándose el criterio objetivo del art. 9.1.a) LIRPF. La pretensión administrativa de exigir certificación de residencia en el extranjero no altera este resultado dado el hecho probado.\nNOT_DECIDED\n2011\nEl artículo 9.1.a) permite excluir las ausencias si el contribuyente acredita residencia fiscal en otro país; por tanto la carga de probar residencia en el extranjero recae sobre el interesado.\nLa carga probatoria se consideró cumplida.\nformuló propuesta de\nresolución en la que se denegó la devolución solicitada\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad ﬁscal competente\nse\ndeduce la intención\npor los siguientes indicios: (i) el traslado\nii) el organismo concedente se hace cargo\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el\n30 de septiembre de 2011, en la Oﬁcina\nen Cantón (China\nel 20 de febrero de 2015, el modelo 210\nsolicitó la\ndevolución\nEn su día había presentado autoliquidación por el mencionado\nimpuesto\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad ﬁscal competente\nse\ndeduce la intención\npor los siguientes indicios: (i) el traslado\nii) el organismo concedente se hace cargo\nsalvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\ncomo una ausencia esporádica\nno puede caliﬁcarse esa estancia\nLa respuesta ha de ser necesariamente negativa",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -445,6 +474,137 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2560,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2471,
+              "verbatim_text": "no haber aportado certiﬁcado acreditativo de residencia por la autoridad ﬁscal competente"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 256,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 234,
+              "verbatim_text": "se\ndeduce la intención"
+            },
+            {
+              "end_offset": 337,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 293,
+              "verbatim_text": "por los siguientes indicios: (i) el traslado"
+            },
+            {
+              "end_offset": 550,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 509,
+              "verbatim_text": "ii) el organismo concedente se hace cargo"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4398,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 4330,
+              "verbatim_text": "salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4257,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 4229,
+              "verbatim_text": "como una ausencia esporádica"
+            },
+            {
+              "end_offset": 80,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 48,
+              "verbatim_text": "no puede caliﬁcarse esa estancia"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "da8471b890336dd5cf4018b22e56fa6fad179e67bfc5edac8516a5eb6fada4b3"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2212,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 2166,
+              "verbatim_text": "La respuesta ha de ser necesariamente negativa"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -17,7 +17,7 @@ from jurisprudence_case_source import SourceAnchor, SourceFragment
 from jurisprudence_phase_d_retrieval import ChatRetrievalResult
 from verbatim_models import VerbatimCorpus
 
-EVIDENCE_PER_UNIT = 2
+EVIDENCE_PER_UNIT = 4
 _PURPOSE_WEIGHT = {
     AnchorPurpose.HOLDING: 6,
     AnchorPurpose.REASONING: 5,
@@ -51,6 +51,7 @@ _STOPWORDS = {
 class StructuredEvidenceBundle:
     context_json: str
     sources_by_evidence_id: dict[str, StrategySource]
+    purposes_by_evidence_id: dict[str, str]
 
 
 def _unit_payload(unit: RetrievalUnit, role: str) -> dict[str, object]:
@@ -230,9 +231,25 @@ def _selected_fragments(
             candidates.append((-score, order, anchor, fragment))
             order += 1
     candidates.sort(key=lambda item: (item[0], item[1]))
-    return [
-        (anchor, fragment) for _score, _order, anchor, fragment in candidates[:EVIDENCE_PER_UNIT]
-    ]
+    selected = candidates[:1]
+    for purpose in (
+        AnchorPurpose.HOLDING,
+        AnchorPurpose.REASONING,
+        AnchorPurpose.BURDEN_OF_PROOF,
+    ):
+        if any(item[2].purpose == purpose for item in selected):
+            continue
+        candidate = next(
+            (item for item in candidates if item[2].purpose == purpose and item not in selected),
+            None,
+        )
+        if candidate is not None:
+            selected.append(candidate)
+        if len(selected) == EVIDENCE_PER_UNIT:
+            break
+    if len(selected) < EVIDENCE_PER_UNIT:
+        selected.extend(item for item in candidates if item not in selected)
+    return [(anchor, fragment) for _score, _order, anchor, fragment in selected[:EVIDENCE_PER_UNIT]]
 
 
 def build_structured_evidence_bundle(
@@ -244,6 +261,7 @@ def build_structured_evidence_bundle(
     units: list[dict[str, object]] = []
     evidence: list[dict[str, object]] = []
     sources: dict[str, StrategySource] = {}
+    purposes: dict[str, str] = {}
     evidence_number = 1
     query_terms = _query_terms(query)
 
@@ -275,6 +293,7 @@ def build_structured_evidence_bundle(
                 quote=quote,
                 verification="EXACT",
             )
+            purposes[evidence_id] = anchor.purpose.value
 
     context = json.dumps(
         {"units": units, "evidence": evidence},
@@ -285,4 +304,5 @@ def build_structured_evidence_bundle(
     return StructuredEvidenceBundle(
         context_json=context,
         sources_by_evidence_id=sources,
+        purposes_by_evidence_id=purposes,
     )

@@ -13,12 +13,20 @@ import { retrieveForChat } from './structured-retrieval';
 
 const MODEL = 'gpt-5.6-luna';
 const REASONING_EFFORT = 'high';
-export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v4';
+export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v5';
 
 const systemPrompt =
-  'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal de personas físicas en IRPF y CDI, no sobre extranjería. Responde solo con el contexto recuperado. La primera claim debe contestar directamente a lo preguntado, siempre que exista respaldo literal. Si la pregunta contiene varias partes, contesta cada una mediante claims separadas o identifica expresamente en limits la parte que la evidencia no permite resolver. Si una parte carece de respaldo, no crees una claim para esa parte ni afirmes que no existe jurisprudencia: identifícala solo en limits. Devuelve afirmaciones jurídicas atómicas: separa hechos acreditados, valoración judicial y resultado, y no mezcles permanencia física, ausencias esporádicas, certificados fiscales extranjeros ni reglas de desempate de CDI en una misma afirmación. En indicios de vida cotidiana, aclara que una mera alta, titularidad o pago de cuota no equivale por sí solo a presencia física en una fecha; distingue esos datos del uso efectivo atribuible al contribuyente y de su valoración conjunta con otros indicios. Muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. Recibirás fragmentos literales con IDs E<n>: cada claim debe incluir todos y solo los IDs cuyos extractos literales permiten comprobar íntegramente la afirmación. Nunca uses un evidence_id que no aparezca en el contexto. Los campos estructurados sirven para localizar el asunto, pero no bastan para respaldar una claim: si el extracto solo menciona una prueba, no infieras de ahí que el tribunal la aceptó, rechazó o consideró decisiva. No añadas introducciones o conclusiones sustantivas fuera de claims. Incluye siempre limits y claims.';
+  'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal de personas físicas en IRPF y CDI, no sobre extranjería. Responde solo con el contexto recuperado. La primera claim debe contestar directamente a lo preguntado, siempre que exista respaldo literal. Si la pregunta contiene varias partes, contesta cada una mediante claims separadas o identifica expresamente en limits la parte que la evidencia no permite resolver. Si una parte carece de respaldo, no crees una claim para esa parte ni afirmes que no existe jurisprudencia: identifícala solo en limits. Devuelve afirmaciones jurídicas atómicas: separa hechos acreditados, valoración judicial y resultado, y no mezcles permanencia física, ausencias esporádicas, certificados fiscales extranjeros ni reglas de desempate de CDI en una misma afirmación. Cada claim debe declarar kind: party_argument para alegaciones o actuaciones de una parte, judicial_assessment para valoración del tribunal, legal_rule para reglas jurídicas, holding para el resultado o criterio decisorio y procedural_power para facultades o carga probatoria. Cuando la pregunta pida cómo puede Hacienda demostrar un hecho, distingue obligatoriamente los medios utilizados o alegados, su valoración judicial y el resultado probatorio. No presentes como medio eficaz una actuación que la resolución citada rechazó o consideró insuficiente; si solo existe cita de la alegación, di que Hacienda la alegó o intentó y no afirmes su suficiencia. En indicios de vida cotidiana, aclara en la misma claim que una mera alta, titularidad o pago de cuota no equivale por sí solo a presencia física en una fecha; distingue esos datos del uso efectivo atribuible al contribuyente y de su valoración conjunta con otros indicios. No relegues una insuficiencia probatoria decisiva al campo limits: intégrala en la respuesta principal con su cita. Para preguntas sobre prueba de permanencia, ordena la respuesta en pruebas directas, indicios corroborativos, elementos insuficientes por sí solos y carga de la prueba, incluyendo solo los bloques respaldados. Muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. Recibirás fragmentos literales con IDs E<n>: cada claim debe incluir todos y solo los IDs cuyos extractos literales permiten comprobar íntegramente la afirmación. Nunca uses un evidence_id que no aparezca en el contexto. Los campos estructurados sirven para localizar el asunto, pero no bastan para respaldar una claim: si el extracto solo menciona una prueba, no infieras de ahí que el tribunal la aceptó, rechazó o consideró decisiva. No añadas introducciones o conclusiones sustantivas fuera de claims. Incluye siempre limits y claims.';
+
+export type StructuredClaimKind =
+  | 'party_argument'
+  | 'judicial_assessment'
+  | 'legal_rule'
+  | 'holding'
+  | 'procedural_power';
 
 export interface StructuredClaim {
+  kind: StructuredClaimKind;
   text: string;
   evidence_ids: string[];
 }
@@ -125,6 +133,28 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
       ...new Set(written.draft.claims.flatMap((claim) => claim.evidence_ids)),
     ];
     const unknown = candidateEvidenceIds.filter((id) => !bundle.sourcesByEvidenceId.has(id));
+    const claimsWithIncompatiblePurpose = unknown.length
+      ? []
+      : written.draft.claims.filter((claim) => {
+          const purposes = claim.evidence_ids.map((id) => bundle.purposesByEvidenceId.get(id));
+          if (claim.kind === 'holding') return !purposes.includes('HOLDING');
+          if (claim.kind === 'judicial_assessment') {
+            return !purposes.some((purpose) =>
+              ['REASONING', 'HOLDING', 'BURDEN_OF_PROOF'].includes(String(purpose))
+            );
+          }
+          if (claim.kind === 'legal_rule') {
+            return !purposes.some((purpose) =>
+              ['LEGAL_RULE', 'REASONING', 'HOLDING'].includes(String(purpose))
+            );
+          }
+          if (claim.kind === 'procedural_power') {
+            return !purposes.some((purpose) =>
+              ['BURDEN_OF_PROOF', 'LEGAL_RULE', 'REASONING', 'HOLDING'].includes(String(purpose))
+            );
+          }
+          return false;
+        });
     const substantiveDraft = ['completa', 'parcial'].includes(written.draft.status);
     const claimsWithoutRelevantEvidence = unknown.length
       ? []
@@ -143,6 +173,7 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
     if (
       unknown.length ||
       claimsWithoutEvidence.length ||
+      claimsWithIncompatiblePurpose.length ||
       (substantiveDraft && !candidateEvidenceIds.length) ||
       (substantiveDraft &&
         written.draft.claims.length > 0 &&
@@ -152,9 +183,11 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         ? `El redactor devolvió evidencias desconocidas: ${unknown.join(', ')}.`
         : claimsWithoutEvidence.length
           ? 'El redactor devolvió al menos una afirmación vacía o sin evidencia.'
-          : !candidateEvidenceIds.length
-            ? 'El redactor no vinculó ninguna evidencia a la respuesta sustantiva.'
-            : 'Al menos una afirmación no guarda relación suficiente con sus extractos literales.';
+          : claimsWithIncompatiblePurpose.length
+            ? 'El redactor vinculó una afirmación a evidencia con una función jurídica incompatible.'
+            : !candidateEvidenceIds.length
+              ? 'El redactor no vinculó ninguna evidencia a la respuesta sustantiva.'
+              : 'Al menos una afirmación no guarda relación suficiente con sus extractos literales.';
       return {
         strategy: this.id,
         status: 'error',

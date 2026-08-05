@@ -101,10 +101,14 @@ omitido no puede significar «no hay», y el prompt los pide explícitamente. Es
 garantía es jurídica y ningún proveedor la da por nosotros;
 `tests/test_chat_answer_contract.py` la comprueba sin red ni coste.
 
-Desde el contrato `structured-claims-v4`, A no devuelve prosa libre: devuelve
-afirmaciones atómicas con **sus** `evidence_ids`. El texto público se compone
-después, solo con las claims que superan el gate léxico contra sus propios
-extractos. Una sola afirmación con toda la respuesta enlazada a todas las
+Desde el contrato `structured-claims-v5`, A no devuelve prosa libre: devuelve
+afirmaciones atómicas con **sus** `evidence_ids` y una función jurídica
+explícita (`party_argument`, `judicial_assessment`, `legal_rule`, `holding` o
+`procedural_power`). El texto público se compone después, solo con las claims
+que superan el gate léxico contra sus propios extractos. Además, una valoración
+judicial debe citar `REASONING`, `HOLDING` o `BURDEN_OF_PROOF`, y un resultado
+debe citar `HOLDING`; así una alegación no puede publicarse como conclusión del
+tribunal. Una sola afirmación con toda la respuesta enlazada a todas las
 fuentes declararía un respaldo que nadie ha comprobado, y por eso el esquema ya
 no admite esa forma.
 

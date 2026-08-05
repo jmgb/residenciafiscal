@@ -266,6 +266,106 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "Dicha documentación es, a juicio de esta Sala, insuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "el mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por mas de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "corresponde al obligado tributario, demostrar su residencia en otro Estado"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "permanezca más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "existen indicios mas que\nsuﬁcientes para determinar que la ahora recurrente reside en España más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
     }
   ],
   "issues": [
@@ -283,9 +383,33 @@
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
         "anchor-legacy-evidence-012",
-        "anchor-legacy-evidence-013"
+        "anchor-legacy-evidence-013",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración debe aportar indicios de residencia en España; si son suficientes, corresponde al obligado demostrar residencia en otro Estado.",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -590,7 +714,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.",
         "consequences": [],

@@ -118,7 +118,7 @@ pregunta del usuario
         │     router local
         │       ├── preguntar/abstenerse → respuesta determinista, USD 0
         │       └── recuperar hasta 5 unidades
-        │              └── máximo 2 fragmentos por unidad
+        │              └── máximo 4 fragmentos diversos por unidad
         │                     └── redactor LLM
         │                            └── IDs E<n>
         │                                   └── resolución local + gate
@@ -323,8 +323,10 @@ jurídica humana.
   deliberado del paquete.
 - La revisión jurídica ciega de ese paquete por un abogado especialista todavía
   no se ha realizado.
-- El límite de dos fragmentos por unidad redujo de forma material el contexto y
-  el coste de A.
+- El límite vigente de cuatro fragmentos por unidad preserva el mejor match
+  léxico y, cuando existen, una cita de `HOLDING`, `REASONING` y
+  `BURDEN_OF_PROOF`. Sustituye al límite histórico de dos, que podía ocultar la
+  valoración judicial tras una alegación con mayor coincidencia textual.
 - Dos respuestas sustantivas de B sin fuentes verificables demostraron que el
   gate debe fallar cerrado.
 - B recuperó fuentes sobre ausencias esporádicas que el corpus estructurado no

@@ -258,6 +258,106 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Fingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "la parte acusadora"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "debería de haber postulado a dichos testigos, como prueba de cargo"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "la carga -onus probandi- que le incumbe, debería de haber postulado a dichos testigos"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "no existe una prueba directa y concluyente de la permanencia en España del Sr.  Pedro\nEnrique  más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "unos mismos hechos no pueden existir\ny dejar de existir para los órganos del Estado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
     }
   ],
   "issues": [
@@ -273,9 +373,33 @@
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
-        "anchor-legacy-evidence-011"
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "Corresponde a la Administración acreditar que el contribuyente tuvo su residencia habitual en España y desvirtuar certificados y hechos probados en sede penal",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -530,7 +654,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.",
         "consequences": [],

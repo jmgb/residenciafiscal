@@ -103,5 +103,5 @@ def test_auditoria_prioriza_cdi_resultados_complejos_y_anclajes_escasos() -> Non
     assert "UNTYPED_RESIDENCE_DETERMINATION" in flags
     assert report.finding_counts["TREATY_ANALYSIS_MISSING"] == 13
     assert report.finding_counts["RESIDENCE_DETERMINATION_NOT_TYPED"] == 36
-    assert report.finding_counts["ANCHOR_COVERAGE_LOW"] == 6
+    assert report.finding_counts["ANCHOR_COVERAGE_LOW"] == 3
     assert report.finding_counts["COMPLEX_OUTCOME_REQUIRES_REVIEW"] == 5

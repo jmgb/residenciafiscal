@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 5640/2023 este supuesto de residencia: La Sala aplica el art.9.1 LIRPF (periodo de permanencia/ausencias) y valora la documentación administrativa (permiso de residencia, renovaciones, contratos y escrituras) que acredita la residencia legal y la permanencia en España, rechazand?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

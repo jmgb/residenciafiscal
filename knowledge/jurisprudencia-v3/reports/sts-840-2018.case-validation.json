@@ -1,9 +1,9 @@
 {
-  "anchor_count": 5,
-  "case_sha256": "17a50fa75a0aa5d7c9a143c267996f061d60fa3db70cc1f4ff70c8a8c256801a",
+  "anchor_count": 9,
+  "case_sha256": "debf091c4c0fcbafb8622475da469a94db84e8c8d96821431c16d981afb643ab",
   "evidence_finding_count": 5,
   "fact_count": 0,
-  "fragment_count": 9,
+  "fragment_count": 17,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-840-2018",

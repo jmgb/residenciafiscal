@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "La normativa (art.9.1 LIRPF) computa ausencias como presencia salvo que el contribuyente acredite residencia fiscal en otro país, por tanto correspondía al recurrente acreditar residencia en Rusia",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -234,7 +258,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "La Sala considera probados actos y documentos que muestran fijación de la residencia en España (permiso de residencia continuado, contratos laborales con domicilio español, escrituras posteriores situando domicilio en España). El certificado ruso se refiere solo a 2008 y la documentación española y los permisos administrativos desvirtúan la pretensión de residencia en Rusia, por lo que prevalece la residencia fiscal en España.",
       "consequences": [],
@@ -321,7 +345,13 @@
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
-        "anchor-legacy-evidence-008"
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003",
+        "anchor-legacy-reasoning-004"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -541,6 +571,152 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3964,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3865,
+          "verbatim_text": "se reﬁere al ejercicio 2008 (y no se acredita la\nresidencia en dicho país durante todo el ejercicio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 855,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 746,
+          "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 539,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 455,
+          "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2499,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2438,
+          "verbatim_text": "la Administración señala los elementos probatorios siguientes"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3214,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3115,
+          "verbatim_text": "Permiso de residencia desde el 23 de abril de 2007 y de larga duración desde el 23 de abril de 2011"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "4c442336e41520ebbbdc174cb912d96ed924dfd2066d7f8d513d805e75d4eec2"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-004",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3841,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3808,
+          "verbatim_text": "El certiﬁcado ﬁscal de residencia"
+        },
+        {
+          "end_offset": 3892,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 3865,
+          "verbatim_text": "se reﬁere al ejercicio 2008"
+        },
+        {
+          "end_offset": 4116,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 4067,
+          "verbatim_text": "que nada prueba sobre la residencia en dicho país"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

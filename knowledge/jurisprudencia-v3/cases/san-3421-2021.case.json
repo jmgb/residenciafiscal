@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "Corresponde a la Administración acreditar que el contribuyente tuvo su residencia habitual en España y desvirtuar certificados y hechos probados en sede penal",
+      "initial_bearer": "AEAT",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -302,7 +326,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "La Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.",
       "consequences": [],
@@ -390,7 +414,12 @@
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
-        "anchor-legacy-evidence-011"
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -743,6 +772,123 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2094,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1981,
+          "verbatim_text": "Fingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 751,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 733,
+          "verbatim_text": "la parte acusadora"
+        },
+        {
+          "end_offset": 899,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 833,
+          "verbatim_text": "debería de haber postulado a dichos testigos, como prueba de cargo"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 877,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 792,
+          "verbatim_text": "la carga -onus probandi- que le incumbe, debería de haber postulado a dichos testigos"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2784,
+          "page_index": 11,
+          "printed_page": "11",
+          "start_offset": 2674,
+          "verbatim_text": "no existe una prueba directa y concluyente de la permanencia en España del Sr.  Pedro\nEnrique  más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1025,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 942,
+          "verbatim_text": "unos mismos hechos no pueden existir\ny dejar de existir para los órganos del Estado"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

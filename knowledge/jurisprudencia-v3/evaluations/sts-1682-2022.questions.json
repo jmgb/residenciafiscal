@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió STS 1682/2022 este supuesto de residencia: El litigio versa sobre residencia habitual dentro de España (CCAA) a efectos de ISD (Ley 22/2009, arts. 28 y 32), usando como criterio principal el “mayor número de días” en los 5 años previos al devengo, computando “ausencias temporales”. ?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

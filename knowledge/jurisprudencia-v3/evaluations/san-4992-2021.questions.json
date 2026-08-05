@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 4992/2021 este supuesto de residencia: El tribunal valora de forma conjunta indicios de presencia, vinculación familiar y, sobre todo, la existencia de un núcleo principal de intereses económicos en España (volúmenes de negocio y cargos en sociedades españolas), y concluye que n?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

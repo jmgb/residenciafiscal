@@ -133,6 +133,140 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "No puede modelarse la\níndole esporádica"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "según el albedrío del afectado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "hace innecesario que nos pronunciemos sobre la tercera"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "discurre en el terreno probatorio"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no cabe reputar ocasional o esporádica una ausencia"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "superior a 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "hace innecesario que nos pronunciemos sobre la tercera"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "discurre en el terreno probatorio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "60c831aaf81a0715275efa9bfc07bdd3a5521585759768409254fe38494720ed"
     }
   ],
   "issues": [
@@ -143,9 +277,34 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración alegó que, si la ausencia fuese esporádica, el obligado debía acreditar residencia fiscal en otro país; el TS declara innecesario pronunciarse al no existir “ausencias esporádicas” en el caso.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -291,7 +450,8 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS parte de un hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días por una beca ICEX.\nInterpreta “ausencias esporádicas” en sentido objetivo y gramatical: lo esporádico es ocasional y necesariamente breve.\nUna ausencia prolongada y superior a 183 días no puede complementar una “permanencia” en España; al contrario, la neutraliza.\nPor ello, no cabe computar tal ausencia como días en España y se confirma la estimación del contribuyente (devolución de retenciones).",
         "consequences": [],

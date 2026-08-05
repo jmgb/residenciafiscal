@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria se consideró cumplida.",
+      "fact_to_prove": "La Administración debía aportar indicios de residencia en España; si esos indicios son suficientes, corresponde al obligado probar residencia en otro Estado.",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -228,7 +252,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "La Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.",
       "consequences": [],
@@ -307,7 +331,12 @@
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
-        "anchor-legacy-evidence-008"
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -501,6 +530,108 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "Dicha documentación es"
+        },
+        {
+          "page_index": 8,
+          "verbatim_text": "insuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "los certiﬁcados aportados hacían referencia únicamente a aspectos administrativos, ajenos a lo que"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "se entiende por residencia ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "corresponde a la Administración aportar datos"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "y si tales\nindicios son suﬁcientes, corresponde al obligado tributario, demostrar su residencia en otro Estado"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "Que permanezca más de 183 días, durante el año natural, en territorio español"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "por la Administración se ha aportado prueba suﬁciente de la que poder deducir que el recurrente\ntiene su residencia efectiva en España"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

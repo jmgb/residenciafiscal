@@ -113,6 +113,111 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "si el obligado tributario pretende\nque la ausencia inicialmente esporádica supone un cambio de residencia, la LIRPF le impone la prueba de la\nresidencia ﬁscal en el Estado extranjero"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "existió un hecho cierto y reconocido"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "reiteran los criterios interpretativos que fueron expresados en esas anteriores sentencias"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "si el obligado tributario pretende\nque la ausencia inicialmente esporádica supone un cambio de residencia, la LIRPF le impone la prueba"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "efe695bab15d11a0f1b9e890795ba8dfa0d3d49bd224f050576590e1dd133934"
     }
   ],
   "issues": [
@@ -123,9 +228,33 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "La Administración exigía acreditación de la residencia fiscal en otro Estado para excluir el cómputo de ausencias esporádicas; por ello la carga formal recaía sobre el interesado.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -261,7 +390,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho objetivo). Declara que esa estancia por beca no constituye ausencia esporádica y, por tanto, el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF en España. Rechaza la exigencia de acreditar tributación en el Estado receptor salvo en caso de paraíso fiscal, por lo que prevalecen las pruebas de permanencia aportadas por el recurrente.",
         "consequences": [],

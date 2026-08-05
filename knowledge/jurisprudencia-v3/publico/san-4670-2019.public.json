@@ -85,6 +85,49 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "el propio recurrente reconoció"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "que en el año 2006 había\npermanecido más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
     }
   ],
   "issues": [
@@ -93,7 +136,9 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-001"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -192,7 +237,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.",
         "consequences": [],

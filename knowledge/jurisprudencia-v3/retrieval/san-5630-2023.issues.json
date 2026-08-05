@@ -22,12 +22,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-5630-2023.case.json",
-    "case_sha256": "ccf7a0f16d9ca40ae473f9fbeec92d103babdb555742c6266384a2f487d854a0",
+    "case_sha256": "43524c1558f56c565689f9c20f9b246d4657565c24c671e2cea2ef65e0df008b",
     "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "El art.9.1 computa las ausencias esporádicas salvo que el contribuyente acredite residencia fiscal en otro país; por tanto correspondía al recurrente demostrar residencia en Reino Unido",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -353,7 +377,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.",
         "consequences": [],
@@ -391,7 +415,12 @@
           "anchor-legacy-evidence-007",
           "anchor-legacy-evidence-008",
           "anchor-legacy-evidence-009",
-          "anchor-legacy-evidence-010"
+          "anchor-legacy-evidence-010",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -430,7 +459,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\ninmuebles titularidad en España\nAlegación y documentos sobre inmuebles de titularidad directa o indirecta en España\nAcreditar arraigo y posible residencia habitual en España\nACCEPTED\nCorrobora relaciones y bienes en España pero insuficiente para demostrar residencia habitual\ngestión actividad profesional desde España / sociedad en Países Bajos\nAlegación de que la gestión de su actividad profesional se realizaba desde España y con sociedad en Países Bajos\nAcreditar centralización de la gestión en España (centro de intereses económicos)\nPARTIAL\nIndicio relevante sobre gestión económica pero no concluyente para establecer residencia habitual en España\nrelaciones familiares en España\nAlegación y documentos que las relaciones familiares del recurrente se sitúan en España\nAcreditar centro de intereses vitales en España\nACCEPTED\nLa Sala reconoce acreditadas las relaciones familiares en España pero las considera insuficientes para probar residencia habitual del contribuyente\nequipo y asesores en España (manager, preparador, abogado)\nReferencias a miembros del equipo profesional y asesores con base en España\nIndicar dependencia organizativa y de gestión desde España\nPARTIAL\nIndicios de apoyo profesional en España, pero no demuestran residencia habitual del contribuyente\ninscripción consular en Londres\nCertificado de alta en el Registro de Matrícula del Consulado General de España en Londres\nAcreditar empadronamiento/inscripción consular y vinculación administrativa en Reino Unido\nACCEPTED\nAporta prueba administrativa de residencia en Londres y de traslado con efectos externos\ncertificados fiscales británicos de residencia\nCertificados de residencia fiscal emitidos por las autoridades fiscales británicas (a efectos del convenio para evitar la doble imposición)\nAcreditar residencia fiscal en Reino Unido\nACCEPTED\nLa Sala considera que estos certificados, junto con otros indicios, acreditan residencia en Reino Unido; resultan decisivos para desvirtuar la presunción de presencia en España\nfacturas suministros domicilio Londres\nFacturas de suministros (gas, luz, teléfono) del domicilio sito en DIRECCION000 Londres\nAcreditar uso efectivo y disponibilidad de vivienda en Reino Unido\nACCEPTED\nCorrobora la existencia y uso del domicilio en Londres; contribuye a la acreditación de residencia extranjera\ncontrato de alquiler Londres\nContrato de alquiler del domicilio sito en DIRECCION000 de Londres\nAcreditar disposición de vivienda habitual en Reino Unido\nACCEPTED\nPrueba directa de disponibilidad de vivienda en Londres y del traslado con publicidad\nmás de 300 tickets y recibos en Reino Unido\nMás de trescientos tickets y recibos de gastos en el Reino Unido aportados por el recurrente\nAcreditar presencia y vida cotidiana en Reino Unido\nACCEPTED\nDocumentación abundante y concordante con uso de residencia en Reino Unido; la Sala la considera altamente probatoria\nrecortes prensa y apariciones televisadas\nRecortes de prensa y apariciones televisadas relacionadas con su traslado a Londres\nAcreditar traslado publicitado y vida mediática en Londres\nPARTIAL\nSirve como indicio de traslado públicamente conocido pero de valor secundario comparado con certificados y consumos\nLa Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.\nLa Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.\nNOT_DECIDED\n2005\n2006\n2007\n2008\nLos inmuebles de su titularidad directa o indirecta están en España\nLa gestión de su actividad económica profesional se realizaba, desde España y posteriormente, con una\nsociedad que residencia en los Piases Bajos\nSus relaciones familiares se sitúan en España\nElementos básicos de su actuación: caso del manager sr  Aureliano\nque están en España\nCertiﬁcado de alta en el Registro de Matrícula del Consulado General de España en Londres\nLos certiﬁcados de residencia ﬁscal emitidos por las autoridades ﬁscales británicas\nLas facturas de suministros del domicilio sito en\nde Londres (gas, luz, teléfono\netc), demostrativas que arrojaban unos consumos\nContrato de alquiler del domicilio sito en\nMás de trescientos tickets y recibos de gastos en el Reino Unido\nRecortes de prensa y apariciones televisadas relacionadas con su traslado a Londres",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\ninmuebles titularidad en España\nAlegación y documentos sobre inmuebles de titularidad directa o indirecta en España\nAcreditar arraigo y posible residencia habitual en España\nACCEPTED\nCorrobora relaciones y bienes en España pero insuficiente para demostrar residencia habitual\ngestión actividad profesional desde España / sociedad en Países Bajos\nAlegación de que la gestión de su actividad profesional se realizaba desde España y con sociedad en Países Bajos\nAcreditar centralización de la gestión en España (centro de intereses económicos)\nPARTIAL\nIndicio relevante sobre gestión económica pero no concluyente para establecer residencia habitual en España\nrelaciones familiares en España\nAlegación y documentos que las relaciones familiares del recurrente se sitúan en España\nAcreditar centro de intereses vitales en España\nACCEPTED\nLa Sala reconoce acreditadas las relaciones familiares en España pero las considera insuficientes para probar residencia habitual del contribuyente\nequipo y asesores en España (manager, preparador, abogado)\nReferencias a miembros del equipo profesional y asesores con base en España\nIndicar dependencia organizativa y de gestión desde España\nPARTIAL\nIndicios de apoyo profesional en España, pero no demuestran residencia habitual del contribuyente\ninscripción consular en Londres\nCertificado de alta en el Registro de Matrícula del Consulado General de España en Londres\nAcreditar empadronamiento/inscripción consular y vinculación administrativa en Reino Unido\nACCEPTED\nAporta prueba administrativa de residencia en Londres y de traslado con efectos externos\ncertificados fiscales británicos de residencia\nCertificados de residencia fiscal emitidos por las autoridades fiscales británicas (a efectos del convenio para evitar la doble imposición)\nAcreditar residencia fiscal en Reino Unido\nACCEPTED\nLa Sala considera que estos certificados, junto con otros indicios, acreditan residencia en Reino Unido; resultan decisivos para desvirtuar la presunción de presencia en España\nfacturas suministros domicilio Londres\nFacturas de suministros (gas, luz, teléfono) del domicilio sito en DIRECCION000 Londres\nAcreditar uso efectivo y disponibilidad de vivienda en Reino Unido\nACCEPTED\nCorrobora la existencia y uso del domicilio en Londres; contribuye a la acreditación de residencia extranjera\ncontrato de alquiler Londres\nContrato de alquiler del domicilio sito en DIRECCION000 de Londres\nAcreditar disposición de vivienda habitual en Reino Unido\nACCEPTED\nPrueba directa de disponibilidad de vivienda en Londres y del traslado con publicidad\nmás de 300 tickets y recibos en Reino Unido\nMás de trescientos tickets y recibos de gastos en el Reino Unido aportados por el recurrente\nAcreditar presencia y vida cotidiana en Reino Unido\nACCEPTED\nDocumentación abundante y concordante con uso de residencia en Reino Unido; la Sala la considera altamente probatoria\nrecortes prensa y apariciones televisadas\nRecortes de prensa y apariciones televisadas relacionadas con su traslado a Londres\nAcreditar traslado publicitado y vida mediática en Londres\nPARTIAL\nSirve como indicio de traslado públicamente conocido pero de valor secundario comparado con certificados y consumos\nLa Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.\nLa Sala considera que la Administración no acreditó que el recurrente residiera habitualmente en España. Aunque la AEAT probó intereses económicos y relaciones familiares en España, el recurrente aportó prueba directa de residencia en Londres (certificado consular, certificados fiscales británicos, contrato de alquiler, facturas de suministros y numerosos tickets), por lo que no se alcanza la conclusión de domicilio fiscal en España y procede anular la liquidación.\nNOT_DECIDED\n2005\n2006\n2007\n2008\nEl art.9.1 computa las ausencias esporádicas salvo que el contribuyente acredite residencia fiscal en otro país; por tanto correspondía al recurrente demostrar residencia en Reino Unido\nLa carga probatoria se consideró cumplida.\nLos inmuebles de su titularidad directa o indirecta están en España\nLa gestión de su actividad económica profesional se realizaba, desde España y posteriormente, con una\nsociedad que residencia en los Piases Bajos\nSus relaciones familiares se sitúan en España\nElementos básicos de su actuación: caso del manager sr  Aureliano\nque están en España\nCertiﬁcado de alta en el Registro de Matrícula del Consulado General de España en Londres\nLos certiﬁcados de residencia ﬁscal emitidos por las autoridades ﬁscales británicas\nLas facturas de suministros del domicilio sito en\nde Londres (gas, luz, teléfono\netc), demostrativas que arrojaban unos consumos\nContrato de alquiler del domicilio sito en\nMás de trescientos tickets y recibos de gastos en el Reino Unido\nRecortes de prensa y apariciones televisadas relacionadas con su traslado a Londres\nNo tiene propiedades en Reino Unido, y si bien se dio de alta en el gas en la vivienda alquilada no lo hizo,\npor ejemplo, con el agua\nse computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\nse computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\nla Administración\nno ha acreditado que el recurrente resida habitualmente en España\nel recurrente ha acreditado que dispone de una vivienda que puede utilizar en Londres",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -657,6 +686,116 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1975,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1842,
+              "verbatim_text": "No tiene propiedades en Reino Unido, y si bien se dio de alta en el gas en la vivienda alquilada no lo hizo,\npor ejemplo, con el agua"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1222,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1113,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1222,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1113,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 189,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 106,
+              "verbatim_text": "la Administración\nno ha acreditado que el recurrente resida habitualmente en España"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0da75926001be7dacf70913d612162502530bfe22daeb222f4cb90cb5d3d21b2"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 538,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 453,
+              "verbatim_text": "el recurrente ha acreditado que dispone de una vivienda que puede utilizar en Londres"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

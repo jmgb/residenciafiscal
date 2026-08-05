@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria se consideró cumplida.",
+      "fact_to_prove": "El art.9.1.a) LIRPF exceptúa ausencias esporádicas salvo que el contribuyente acredite residencia fiscal en otro país; la Administración exigió certificación, por lo que en la práctica la carga se proyectó sobre el contribuyente.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -120,7 +144,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho no controvertido) y que la estancia obedeció a una beca continuada con finalidad formativa, por lo que no es ausencia esporádica. Aplica el criterio objetivo del art.9.1.a) LIRPF y estima que, en este caso, no procede exigir la acreditación de residencia fiscal en otro Estado.",
       "consequences": [],
@@ -200,7 +224,12 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -339,6 +368,137 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 424,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 401,
+          "verbatim_text": "El propósito de retorno"
+        },
+        {
+          "end_offset": 639,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 550,
+          "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4193,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 4084,
+          "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3745,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3677,
+          "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "end_offset": 3879,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3829,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1845,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1780,
+          "verbatim_text": "existió un hecho cierto y reconocido por la propia Administración"
+        },
+        {
+          "end_offset": 1921,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 1857,
+          "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "b2282acdc34f9779cf2e15741d1dded7a3fcd132f9ece1b359c925e9bac6f74e"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4193,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 4084,
+          "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

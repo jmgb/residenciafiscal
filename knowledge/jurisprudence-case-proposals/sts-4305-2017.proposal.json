@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "La cuestión tercera del auto (exigencia de acreditar residencia fiscal en otro país) se califica como “terreno probatorio”, pero se considera irrelevante al descartarse que exista ausencia esporádica; por ello no se entra a concretar la carga efectiva.",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -278,7 +302,8 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "conclusion": "Hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.",
       "consequences": [],
@@ -357,7 +382,12 @@
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
-        "anchor-legacy-evidence-010"
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -606,6 +636,124 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 10,
+          "verbatim_text": "deviene superﬂua"
+        },
+        {
+          "page_index": 10,
+          "verbatim_text": "no podemos dar carta de naturaleza a la existencia de ausencias esporádicas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 10,
+          "verbatim_text": "discurre en el terreno probatorio"
+        },
+        {
+          "page_index": 10,
+          "verbatim_text": "deviene superﬂua si se proyecta sobre una realidad inexistente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "la noción de ausencias esporádicas"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "se conﬁgura"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "en función de"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "un elemento fáctico"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "duración o intensidad"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 10,
+          "verbatim_text": "hace innecesario que nos pronunciemos sobre la tercera"
+        },
+        {
+          "page_index": 10,
+          "verbatim_text": "discurre en el terreno probatorio"
+        }
+      ],
+      "purpose": "HOLDING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

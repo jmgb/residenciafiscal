@@ -1,9 +1,9 @@
 {
-  "anchor_count": 9,
-  "case_sha256": "9e2304382a16f821d6985518c2bdf77d316424f1a15c797906c94e9c3ef720d3",
+  "anchor_count": 13,
+  "case_sha256": "73aa5e052ebcf38307a6cd3d86370d1e756e3df5283321fe55faf0f86b8ed55e",
   "evidence_finding_count": 9,
   "fact_count": 0,
-  "fragment_count": 12,
+  "fragment_count": 18,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "san-2335-2022",

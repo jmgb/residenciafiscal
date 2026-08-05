@@ -257,6 +257,140 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "el certiﬁcado"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "es expedido\na todo nacional estadounidense por el mero hecho de serlo"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "no hallarse debidamente\ntraducidos y constituir copias"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "la carga de la\nprueba incumbe, en primer lugar, a la Administración Tributaria"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "Por su parte, el recurrente no está exento de aportar"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Conforme a este precepto, se considera"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "cuando se dé cualquiera de las siguientes circunstancias"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "el conjunto de las pruebas y elementos indiciarios descritos"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "acreditan la conformidad de la valoración"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "la carga de la\nprueba incumbe, en primer lugar, a la Administración Tributaria"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "b7eb03c20426eba607ab6bfec268e25c2e18dffd068d9f352d2053e659624cfa"
     }
   ],
   "issues": [
@@ -273,9 +407,34 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003",
+        "anchor-legacy-reasoning-004"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración debe demostrar y combatir la residencia formal acreditada por certificados extranjeros, pero el contribuyente debe aportar los elementos en su poder para desvirtuar los indicios administrativos (art.105 LGT y doctrina citada).",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -550,7 +709,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala constata que no se superan 183 días (criterio a) y analiza el art.9.1.b: valora de forma conjunta indicios patrimoniales y financieros (viviendas, cuentas y transferencias, vehículos, domicilios de contacto) que convergen en que el núcleo de intereses económicos está en España; estima que los certificados extranjeros son insuficientes para desvirtuar esos indicios, por lo que confirma la residencia en España.",
         "consequences": [],

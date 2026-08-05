@@ -19,7 +19,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-108-2018.case.json",
-    "case_sha256": "1ede63d9cfa33a77963d4eb6550e22ed5aeed88ca61cd5822eef2f8e4fa48796",
+    "case_sha256": "dfd5821985f5055e02015fa0e473c1bfd27c0a124abc93f6451328ec2b90d7f2",
     "source_sha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
   },
   "units": [
@@ -155,7 +155,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.",
         "consequences": [],
@@ -184,7 +184,10 @@
         "anchor_ids": [
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
-          "anchor-legacy-evidence-003"
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -213,7 +216,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nalegaciones del Abogado del Estado\nArgumentos en casación: la estancia obedecía a beca temporal, ICEX sufragaba regreso, y presentación previa de IRPF en España indican intención de retorno\nDesvirtuar la interpretación de ausencia no esporádica y sostener obligación de acreditar residencia en extranjero\nREJECTED\nContradicho por la duración objetiva de la estancia y por la valoración del tribunal que entiende la ausencia como prolongada y no ocasional\ncontrato beca ICEX - Oﬁcina en Bruselas y UNDP Copenhague\nContrato y relación de servicios: 1/10/2010-30/9/2011 en Oficina Económica en Bruselas; 15/11/2011-14/11/2012 en UNDP Copenhague (no controvertido)\nDemostrar permanencia continuada en el extranjero y desarrollo de actividad vinculada a la beca (soporte del >183 días)\nACCEPTED\nAcredita fehacientemente la estancia continuada y supera 183 días, hecho reconocido por la Administración y por el Tribunal\nmodelo 210 y autoliquidación IRPF\nPresentación del modelo 210 (IRNR) solicitando devolución y autoliquidación IRPF en su día\nSolicitar devolución por entenderse no residente; acreditar tratamiento fiscal distinto\nPARTIAL\nLa presentación del modelo 210 constituye actuación procedimental; no resulta decisiva frente a prueba objetiva de estancia prolongada pero forma parte del expediente probatorio\nEl Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.\nEl Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.\nNOT_DECIDED\n2011\n2012\nel\nrecurrente\npresentó\nen España la declaración del IRPF\ndesde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011\ndesde el 15 de noviembre de 2011 hasta el 14 de noviembre de 2012\npresentó en la Agencia Tributaria\nel modelo 210\nsolicitó la\ndevolución",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nalegaciones del Abogado del Estado\nArgumentos en casación: la estancia obedecía a beca temporal, ICEX sufragaba regreso, y presentación previa de IRPF en España indican intención de retorno\nDesvirtuar la interpretación de ausencia no esporádica y sostener obligación de acreditar residencia en extranjero\nREJECTED\nContradicho por la duración objetiva de la estancia y por la valoración del tribunal que entiende la ausencia como prolongada y no ocasional\ncontrato beca ICEX - Oﬁcina en Bruselas y UNDP Copenhague\nContrato y relación de servicios: 1/10/2010-30/9/2011 en Oficina Económica en Bruselas; 15/11/2011-14/11/2012 en UNDP Copenhague (no controvertido)\nDemostrar permanencia continuada en el extranjero y desarrollo de actividad vinculada a la beca (soporte del >183 días)\nACCEPTED\nAcredita fehacientemente la estancia continuada y supera 183 días, hecho reconocido por la Administración y por el Tribunal\nmodelo 210 y autoliquidación IRPF\nPresentación del modelo 210 (IRNR) solicitando devolución y autoliquidación IRPF en su día\nSolicitar devolución por entenderse no residente; acreditar tratamiento fiscal distinto\nPARTIAL\nLa presentación del modelo 210 constituye actuación procedimental; no resulta decisiva frente a prueba objetiva de estancia prolongada pero forma parte del expediente probatorio\nEl Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.\nEl Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.\nNOT_DECIDED\n2011\n2012\nel\nrecurrente\npresentó\nen España la declaración del IRPF\ndesde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011\ndesde el 15 de noviembre de 2011 hasta el 14 de noviembre de 2012\npresentó en la Agencia Tributaria\nel modelo 210\nsolicitó la\ndevolución\nel traslado al exterior se\nproduce por la concesión\nbeca para realizar prácticas\nexistió un hecho cierto\nque el recurrente ha permanecido fuera de España más de 183 días\nsentencias de 28 de noviembre de 2017",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -300,6 +303,86 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 377,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 326,
+              "verbatim_text": "el traslado al exterior se\nproduce por la concesión"
+            },
+            {
+              "end_offset": 437,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 409,
+              "verbatim_text": "beca para realizar prácticas"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1958,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1935,
+              "verbatim_text": "existió un hecho cierto"
+            },
+            {
+              "end_offset": 2076,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 2012,
+              "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2237,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2200,
+              "verbatim_text": "sentencias de 28 de noviembre de 2017"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

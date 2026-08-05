@@ -130,6 +130,18 @@ class CurrentStructuredStrategy:
         empty_claims = tuple(
             claim for claim in drafted_claims if not claim.text.strip() or not claim.evidence_ids
         )
+        incompatible_claims = (
+            ()
+            if unknown
+            else tuple(
+                claim
+                for claim in drafted_claims
+                if not _claim_purposes_are_compatible(
+                    claim.kind,
+                    tuple(bundle.purposes_by_evidence_id[e] for e in claim.evidence_ids),
+                )
+            )
+        )
         substantive = writer_result.draft.status in {"completa", "parcial"}
         # El gate léxico solo puede evaluarse si todos los IDs resuelven a una
         # fuente; con un ID desconocido la respuesta ya está descartada.
@@ -148,11 +160,17 @@ class CurrentStructuredStrategy:
         if (
             unknown
             or empty_claims
+            or incompatible_claims
             or (substantive and not candidate_evidence_ids)
             or (substantive and drafted_claims and len(irrelevant_positions) == len(drafted_claims))
         ):
             return _grounding_error(
-                _grounding_reason(unknown, empty_claims, candidate_evidence_ids),
+                _grounding_reason(
+                    unknown,
+                    empty_claims,
+                    incompatible_claims,
+                    candidate_evidence_ids,
+                ),
                 cost=cost,
                 model=writer_result.model_used,
                 reasoning_effort=effort,
@@ -230,15 +248,32 @@ class CurrentStructuredStrategy:
 def _grounding_reason(
     unknown: tuple[str, ...],
     empty_claims: tuple[object, ...],
+    incompatible_claims: tuple[object, ...],
     candidate_evidence_ids: tuple[str, ...],
 ) -> str:
     if unknown:
         return f"El redactor devolvió evidencias desconocidas: {', '.join(unknown)}."
     if empty_claims:
         return "El redactor devolvió al menos una afirmación vacía o sin evidencia."
+    if incompatible_claims:
+        return (
+            "El redactor vinculó una afirmación a evidencia con una función jurídica incompatible."
+        )
     if not candidate_evidence_ids:
         return "El redactor no vinculó ninguna evidencia a la respuesta sustantiva."
     return "Al menos una afirmación no guarda relación suficiente con sus extractos literales."
+
+
+def _claim_purposes_are_compatible(kind: str, purposes: tuple[str, ...]) -> bool:
+    if kind == "holding":
+        return "HOLDING" in purposes
+    if kind == "judicial_assessment":
+        return bool({"REASONING", "HOLDING", "BURDEN_OF_PROOF"} & set(purposes))
+    if kind == "legal_rule":
+        return bool({"LEGAL_RULE", "REASONING", "HOLDING"} & set(purposes))
+    if kind == "procedural_power":
+        return bool({"BURDEN_OF_PROOF", "LEGAL_RULE", "REASONING", "HOLDING"} & set(purposes))
+    return True
 
 
 def _authority_limit(intent: JudicialAuthorityIntent | None, match: str) -> str | None:

@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4434-2017.case.json",
-    "case_sha256": "ff2701489ca36187325ffe5a2fb1f82894badbf0a3e516e1b01dcc6cd2de5468",
+    "case_sha256": "91967328d12f0f53ecb2a1190ee99e22214c12def4d83fec9424df667c667717",
     "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "El artículo 9.1.a) LIRPF permite computar ausencias como permanencia salvo que el contribuyente acredite residencia fiscal en otro país; por tanto la carga probatoria para desvirtuar la permanencia recae en el contribuyente cuando alega residencia en el extranjero.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -193,7 +217,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el interesado estuvo fuera de España más de 183 días por disfrutar de una beca ICEX en Ankara; tal ausencia es prolongada y vinculada a la finalidad de la beca, por lo que no puede reputarse esporádica. Aplicando el criterio objetivo del art.9.1.a) LIRPF, la estancia excluye la residencia habitual en España para 2011, sin que sea necesario acreditar residencia fiscal en el país extranjero en este supuesto.",
         "consequences": [],
@@ -223,7 +247,12 @@
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
-          "anchor-legacy-evidence-005"
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -254,7 +283,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nPropuesta de resolución denegatoria\nPropuesta de la Oficina de Gestión Tributaria en Asturias que denegó la devolución por falta de certificado de residencia en otra jurisdicción y falta de acreditación de tributación en el Estado de destino.\nAcreditar que debía tributar en España y que la ausencia era esporádica al no acreditar residencia fiscal en extranjero\nREJECTED\nNo desvirtúa la prueba objetiva de permanencia >183 días; la exigencia de certificado no es necesaria en este caso concreto\nResolución TEAR desestimatoria\nAcuerdo del Tribunal Económico-Administrativo Regional del Principado de Asturias, de 23 de octubre de 2015, que desestimó la reclamación económico-administrativa.\nConfirmar la denegación administrativa del derecho a la devolución\nREJECTED\nLa resolución administrativa fue revocada por la instancia y confirmada por el Tribunal Supremo; su motivación no prevalece frente a la valoración judicial de la permanencia objetiva\nestancia en Ankara por beca ICEX\nHecho reconocido en autos: el recurrente fue beneficiario de una beca del ICEX y durante 2011 desarrolló su labor en la Oficina Económica y Comercial de España en Ankara (Turquía).\nDemostrar permanencia fuera de España superior a 183 días en 2011 y que la ausencia no era esporádica\nACCEPTED\nEl Tribunal considera este hecho objetivo y reconocido por la Administración; constituye la prueba decisiva para aplicar el criterio objetivo del art.9.1.a) LIRPF\nModelo 210 presentado 19-02-2015\nPresentación por el recurrente del modelo 210 del IRNR solicitando la devolución de las retenciones practicadas en 2011 por considerarse no residente.\nAcreditar la alegación de no residencia fiscal en España y solicitar devolución de retenciones\nACCEPTED\nActo administrativo aportado por el interesado que muestra su alegación de no residencia; valor corroborado por la constatación de la estancia en el extranjero\nRetenciones practicadas por ICEX (3.105 €)\nEn 2011 le fueron retenidos por el ICEX 3.105 euros en concepto de IRPF.\nProbar que existieron retenciones en España vinculadas a su situación laboral/becaria\nACCEPTED\nHecho constatado en el expediente y reconocido; sirve de contexto económico aunque no determinante frente a la permanencia física\nEl Tribunal considera probado que el interesado estuvo fuera de España más de 183 días por disfrutar de una beca ICEX en Ankara; tal ausencia es prolongada y vinculada a la finalidad de la beca, por lo que no puede reputarse esporádica. Aplicando el criterio objetivo del art.9.1.a) LIRPF, la estancia excluye la residencia habitual en España para 2011, sin que sea necesario acreditar residencia fiscal en el país extranjero en este supuesto.\nEl Tribunal considera probado que el interesado estuvo fuera de España más de 183 días por disfrutar de una beca ICEX en Ankara; tal ausencia es prolongada y vinculada a la finalidad de la beca, por lo que no puede reputarse esporádica. Aplicando el criterio objetivo del art.9.1.a) LIRPF, la estancia excluye la residencia habitual en España para 2011, sin que sea necesario acreditar residencia fiscal en el país extranjero en este supuesto.\nNOT_DECIDED\n2011\nformuló propuesta de resolución denegando la devolución\nno haber aportado certiﬁcado acreditativo de residencia\nfue desestimada por el Tribunal\nEconómico-Administrativo Regional\n23 de octubre de\n2015\nDon  Roque  fue beneﬁciario de una beca\ndesarrolló su labor en\nAnkara\n(Turquía\nel 19 de febrero de 2015 presentó modelo 210\nsolicitando la devolución de 3.105\neuros\nle fueron retenidos por el ICEX 3.105 euros en concepto de impuesto sobre la\nrenta",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nPropuesta de resolución denegatoria\nPropuesta de la Oficina de Gestión Tributaria en Asturias que denegó la devolución por falta de certificado de residencia en otra jurisdicción y falta de acreditación de tributación en el Estado de destino.\nAcreditar que debía tributar en España y que la ausencia era esporádica al no acreditar residencia fiscal en extranjero\nREJECTED\nNo desvirtúa la prueba objetiva de permanencia >183 días; la exigencia de certificado no es necesaria en este caso concreto\nResolución TEAR desestimatoria\nAcuerdo del Tribunal Económico-Administrativo Regional del Principado de Asturias, de 23 de octubre de 2015, que desestimó la reclamación económico-administrativa.\nConfirmar la denegación administrativa del derecho a la devolución\nREJECTED\nLa resolución administrativa fue revocada por la instancia y confirmada por el Tribunal Supremo; su motivación no prevalece frente a la valoración judicial de la permanencia objetiva\nestancia en Ankara por beca ICEX\nHecho reconocido en autos: el recurrente fue beneficiario de una beca del ICEX y durante 2011 desarrolló su labor en la Oficina Económica y Comercial de España en Ankara (Turquía).\nDemostrar permanencia fuera de España superior a 183 días en 2011 y que la ausencia no era esporádica\nACCEPTED\nEl Tribunal considera este hecho objetivo y reconocido por la Administración; constituye la prueba decisiva para aplicar el criterio objetivo del art.9.1.a) LIRPF\nModelo 210 presentado 19-02-2015\nPresentación por el recurrente del modelo 210 del IRNR solicitando la devolución de las retenciones practicadas en 2011 por considerarse no residente.\nAcreditar la alegación de no residencia fiscal en España y solicitar devolución de retenciones\nACCEPTED\nActo administrativo aportado por el interesado que muestra su alegación de no residencia; valor corroborado por la constatación de la estancia en el extranjero\nRetenciones practicadas por ICEX (3.105 €)\nEn 2011 le fueron retenidos por el ICEX 3.105 euros en concepto de IRPF.\nProbar que existieron retenciones en España vinculadas a su situación laboral/becaria\nACCEPTED\nHecho constatado en el expediente y reconocido; sirve de contexto económico aunque no determinante frente a la permanencia física\nEl Tribunal considera probado que el interesado estuvo fuera de España más de 183 días por disfrutar de una beca ICEX en Ankara; tal ausencia es prolongada y vinculada a la finalidad de la beca, por lo que no puede reputarse esporádica. Aplicando el criterio objetivo del art.9.1.a) LIRPF, la estancia excluye la residencia habitual en España para 2011, sin que sea necesario acreditar residencia fiscal en el país extranjero en este supuesto.\nEl Tribunal considera probado que el interesado estuvo fuera de España más de 183 días por disfrutar de una beca ICEX en Ankara; tal ausencia es prolongada y vinculada a la finalidad de la beca, por lo que no puede reputarse esporádica. Aplicando el criterio objetivo del art.9.1.a) LIRPF, la estancia excluye la residencia habitual en España para 2011, sin que sea necesario acreditar residencia fiscal en el país extranjero en este supuesto.\nNOT_DECIDED\n2011\nEl artículo 9.1.a) LIRPF permite computar ausencias como permanencia salvo que el contribuyente acredite residencia fiscal en otro país; por tanto la carga probatoria para desvirtuar la permanencia recae en el contribuyente cuando alega residencia en el extranjero.\nLa carga probatoria se consideró cumplida.\nformuló propuesta de resolución denegando la devolución\nno haber aportado certiﬁcado acreditativo de residencia\nfue desestimada por el Tribunal\nEconómico-Administrativo Regional\n23 de octubre de\n2015\nDon  Roque  fue beneﬁciario de una beca\ndesarrolló su labor en\nAnkara\n(Turquía\nel 19 de febrero de 2015 presentó modelo 210\nsolicitando la devolución de 3.105\neuros\nle fueron retenidos por el ICEX 3.105 euros en concepto de impuesto sobre la\nrenta\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente de otra jurisdicción\nsalvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\nLa permanencia fuera del territorio nacional durante más de 183 días\nno puede considerarse como una ausencia esporádica\nsalvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\nEl concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -392,6 +421,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2256,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2146,
+              "verbatim_text": "no haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente de otra jurisdicción"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3861,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3793,
+              "verbatim_text": "salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2588,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 2520,
+              "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+            },
+            {
+              "end_offset": 2722,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 2672,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3861,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3793,
+              "verbatim_text": "salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "48e2f7913f201cd10e247436efd3123490d79de1c74b518129c215683b564b1b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3101,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 3005,
+              "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

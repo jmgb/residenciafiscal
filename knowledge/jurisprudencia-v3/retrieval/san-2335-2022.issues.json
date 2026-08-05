@@ -19,7 +19,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-2335-2022.case.json",
-    "case_sha256": "9e2304382a16f821d6985518c2bdf77d316424f1a15c797906c94e9c3ef720d3",
+    "case_sha256": "73aa5e052ebcf38307a6cd3d86370d1e756e3df5283321fe55faf0f86b8ed55e",
     "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
   },
   "units": [
@@ -325,7 +325,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.",
         "consequences": [],
@@ -360,7 +360,11 @@
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
           "anchor-legacy-evidence-008",
-          "anchor-legacy-evidence-009"
+          "anchor-legacy-evidence-009",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -397,7 +401,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCRIT_AUSENCIAS_ESPORADICAS\nreservas viajes y hoteles (Carlson Wagonlit)\nListado de reservas de viajes y hoteles obtenidas (Carlson Wagonlit) que la Inspección valora como indicio de presencia en España\nDemostrar permanencia en España y estancias\nACCEPTED\nCorroborado por otros indicios concordantes\ncitas médicas Barcelona\nCitas con neuróloga Dª Angelina los días 11 y 22 de enero de 2007 en Barcelona\nAcreditar estancias y vida cotidiana en España\nACCEPTED\nCorroborado por otros indicios concordantes\ntitularidad de inmuebles y contratos de arrendamiento\nExistencia de cinco inmuebles; tres contratos de arrendamiento de vivienda en Perelada; inmuebles a nombre de la familia\nAcreditar residencia efectiva y uso de viviendas en España\nACCEPTED\nAcredita el hecho de forma fehaciente\ndiligencias de visita e investigación\nDiligencias (visitas) documentadas: diligencia 2,9,13,14,15 que recogen no aportación de documentación, detección de cuentas NUM000-NUM003 y solicitud de autorizaciones bancarias\nAcreditar falta de colaboración, detección de cuentas y documentación acreditativa de movimientos\nACCEPTED\nNo se ha cuestionado su autenticidad y motivan imputación de dilaciones\nresidencia del cónyuge y libro de familia\nDocumentación y actuaciones que acreditan que la residencia habitual del esposo estaba en España; libro de familia incorporado al expediente\nAplicar presunción familiar de residencia en España\nACCEPTED\nNo desvirtúa la presunción legal y corrobora otros indicios\nCarte de resident Mónaco\nCarte de resident del Principado de Mónaco aportada por la recurrente para justificar residencia en Mónaco\nAcreditar residencia fiscal efectiva en Mónaco y permanencia >183 días\nREJECTED\nPrueba insuficiente para acreditar el hecho\ncertificados consulares Marsella\nCopia de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular de residente\nAcreditar residencia administrativa en Francia/Mónaco\nREJECTED\nDocumento sin valor probatorio suficiente sobre residencia efectiva\ncontratos privados de alquiler (marido)\nCopia de tres contratos privados de alquiler entre el Sr. Leovigildo y Erasmo (2002,2005,2008) y recibos de alquiler 2009-2010 remitidos en el marco de comprobación del esposo\nAcreditar vinculación domiciliaria en el extranjero (o alquileres que justifiquen residencia fuera de España)\nPARTIAL\nNo desvirtúa la presunción legal por ser insuficiente para probar estancia efectiva\nlibro de familia\nCopia del libro de familia en que consta su matrimonio con Leovigildo\nAcreditar vínculo con cónyuge (posible residencia conjunta en Mónaco)\nREJECTED\nNo desvirtúa la presunción; insuficiente para probar residencia en otro Estado\nEl tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.\nEl tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.\nNOT_DECIDED\n2008\n2010\ninformación obtenida de Carlson Wagonlit sobre reservas de viajes y hoteles\ncita con la doctora Dª\nAngelina , neuróloga los días 11 y 22 de enero de 2007\nexistencia de cinco inmuebles\ntres contratos de arrendamiento\nde una vivienda sita en Perelada\nEn la diligencia número 13\nrotunda negativa a aportar información o documentación\nla residencia habitual de este último estaba en España, lo que permitía concluir en aplicación\nde la presunción\nse ha aportado la Carte de\nresident del principado de Mónaco\ncopia de certiﬁcados de residencia expedidos\npor el Consul General en Marsella\ncopia de tres contratos privados de alquiler\ny copia de los recibos de alquiler\nAportó además copia del libro de familia en el que consta su matrimonio",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nCRIT_AUSENCIAS_ESPORADICAS\nreservas viajes y hoteles (Carlson Wagonlit)\nListado de reservas de viajes y hoteles obtenidas (Carlson Wagonlit) que la Inspección valora como indicio de presencia en España\nDemostrar permanencia en España y estancias\nACCEPTED\nCorroborado por otros indicios concordantes\ncitas médicas Barcelona\nCitas con neuróloga Dª Angelina los días 11 y 22 de enero de 2007 en Barcelona\nAcreditar estancias y vida cotidiana en España\nACCEPTED\nCorroborado por otros indicios concordantes\ntitularidad de inmuebles y contratos de arrendamiento\nExistencia de cinco inmuebles; tres contratos de arrendamiento de vivienda en Perelada; inmuebles a nombre de la familia\nAcreditar residencia efectiva y uso de viviendas en España\nACCEPTED\nAcredita el hecho de forma fehaciente\ndiligencias de visita e investigación\nDiligencias (visitas) documentadas: diligencia 2,9,13,14,15 que recogen no aportación de documentación, detección de cuentas NUM000-NUM003 y solicitud de autorizaciones bancarias\nAcreditar falta de colaboración, detección de cuentas y documentación acreditativa de movimientos\nACCEPTED\nNo se ha cuestionado su autenticidad y motivan imputación de dilaciones\nresidencia del cónyuge y libro de familia\nDocumentación y actuaciones que acreditan que la residencia habitual del esposo estaba en España; libro de familia incorporado al expediente\nAplicar presunción familiar de residencia en España\nACCEPTED\nNo desvirtúa la presunción legal y corrobora otros indicios\nCarte de resident Mónaco\nCarte de resident del Principado de Mónaco aportada por la recurrente para justificar residencia en Mónaco\nAcreditar residencia fiscal efectiva en Mónaco y permanencia >183 días\nREJECTED\nPrueba insuficiente para acreditar el hecho\ncertificados consulares Marsella\nCopia de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular de residente\nAcreditar residencia administrativa en Francia/Mónaco\nREJECTED\nDocumento sin valor probatorio suficiente sobre residencia efectiva\ncontratos privados de alquiler (marido)\nCopia de tres contratos privados de alquiler entre el Sr. Leovigildo y Erasmo (2002,2005,2008) y recibos de alquiler 2009-2010 remitidos en el marco de comprobación del esposo\nAcreditar vinculación domiciliaria en el extranjero (o alquileres que justifiquen residencia fuera de España)\nPARTIAL\nNo desvirtúa la presunción legal por ser insuficiente para probar estancia efectiva\nlibro de familia\nCopia del libro de familia en que consta su matrimonio con Leovigildo\nAcreditar vínculo con cónyuge (posible residencia conjunta en Mónaco)\nREJECTED\nNo desvirtúa la presunción; insuficiente para probar residencia en otro Estado\nEl tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.\nEl tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.\nNOT_DECIDED\n2008\n2010\ninformación obtenida de Carlson Wagonlit sobre reservas de viajes y hoteles\ncita con la doctora Dª\nAngelina , neuróloga los días 11 y 22 de enero de 2007\nexistencia de cinco inmuebles\ntres contratos de arrendamiento\nde una vivienda sita en Perelada\nEn la diligencia número 13\nrotunda negativa a aportar información o documentación\nla residencia habitual de este último estaba en España, lo que permitía concluir en aplicación\nde la presunción\nse ha aportado la Carte de\nresident del principado de Mónaco\ncopia de certiﬁcados de residencia expedidos\npor el Consul General en Marsella\ncopia de tres contratos privados de alquiler\ny copia de los recibos de alquiler\nAportó además copia del libro de familia en el que consta su matrimonio\nla carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler\nel mero hecho de poseer o alquilar un inmueble\nno es medio suﬁciente\npara acreditar su residencia\nSe entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\nmás de 183 días\npor la Administración se ha aportado prueba suﬁciente de la que poder deducir que la recurrente\ntiene su residencia efectiva en España",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -609,6 +613,108 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5069,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 4933,
+              "verbatim_text": "la carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 5288,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 5242,
+              "verbatim_text": "el mero hecho de poseer o alquilar un inmueble"
+            },
+            {
+              "end_offset": 5353,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 5303,
+              "verbatim_text": "no es medio suﬁciente\npara acreditar su residencia"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4054,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3963,
+              "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            },
+            {
+              "end_offset": 4139,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4124,
+              "verbatim_text": "más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 163,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 29,
+              "verbatim_text": "por la Administración se ha aportado prueba suﬁciente de la que poder deducir que la recurrente\ntiene su residencia efectiva en España"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -9,6 +9,13 @@ from pydantic import Field, field_validator
 from jurisprudence_case_catalogs import JurisprudenceCaseModel
 
 DraftStatus = Literal["completa", "parcial", "pregunta", "abstención"]
+ClaimKind = Literal[
+    "party_argument",
+    "judicial_assessment",
+    "legal_rule",
+    "holding",
+    "procedural_power",
+]
 
 
 class ChatAnswerDraft(JurisprudenceCaseModel):
@@ -27,6 +34,7 @@ class StructuredClaim(JurisprudenceCaseModel):
     que nadie ha comprobado; por eso el contrato exige la unidad mínima.
     """
 
+    kind: ClaimKind
     text: str
     evidence_ids: tuple[str, ...]
 
@@ -40,7 +48,7 @@ class StructuredClaim(JurisprudenceCaseModel):
 
 
 class StructuredChatAnswerDraft(JurisprudenceCaseModel):
-    """Contrato `structured-claims-v4` de A: claims atómicas y límites.
+    """Contrato `structured-claims-v5` de A: claims atómicas y límites.
 
     No hereda `answer` a propósito: el texto público se compone después desde
     las claims que superan la verificación, de modo que una frase sin respaldo

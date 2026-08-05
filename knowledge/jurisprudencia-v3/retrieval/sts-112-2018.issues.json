@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-112-2018.case.json",
-    "case_sha256": "6759ce20f3fa58f55781339e5afe75123a44a2f203486bf462bd003e591a6e75",
+    "case_sha256": "6ca2c018eb06629d17d9c81497e7c2375785ebe83540f1b6a178232fa3dc13b8",
     "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El art. 9.1.a LIRPF condiciona excluir el cómputo de ausencias esporádicas a que el contribuyente acredite residencia fiscal en otro país, aunque aquí se declara irrelevante por no ser esporádica la ausencia.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -220,7 +244,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.",
         "consequences": [],
@@ -251,7 +276,12 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002",
+          "anchor-legacy-reasoning-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -283,7 +313,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (prácticas)\nIndicio invocado por la Administración: el traslado al exterior deriva de una beca oficial con objeto y duración predeterminados.\nSostener que la estancia en el extranjero era temporal y, por tanto, ausencia esporádica computable como permanencia en España.\nPARTIAL\nSe admite como circunstancia fáctica, pero el TS niega que una ausencia >183 días por beca pueda ser “esporádica”.\nviaje ida/vuelta sufragado por organismo concedente\nIndicio invocado por la Administración: el organismo concedente se hace cargo del transporte de ida al destino y vuelta a España al concluir las prácticas.\nInferir intención de retorno a España y carácter esporádico/temporal de la ausencia.\nREJECTED\nEl TS declara que el propósito de retorno y que la beca sufrague el regreso no delimitan lo “esporádico”.\npresentación declaración IRPF en España\nIndicio invocado por la Administración: el recurrente presentó en España declaración del IRPF considerándose residente fiscal.\nAcreditar autoatribución de residencia fiscal en España durante 2011.\nPARTIAL\nSe menciona como indicio alegado por AEAT, pero no es determinante frente al dato objetivo de permanencia fuera >183 días.\nbeca formativa ICEX en Seúl (01/10/2010-30/09/2011)\nConsta la concesión de una beca formativa a desarrollar en la Oficina Económica y Comercial de España en Seúl, con duración de 1/10/2010 a 30/09/2011.\nAcreditar que la actividad exigía residencia continuada fuera de España y, por tanto, ausencia no esporádica en 2011.\nACCEPTED\nEl TS lo da por acreditado (“Consta...”) y lo conecta con la exigencia necesaria de permanencia fuera >183 días.\npermanencia efectiva en Seúl 12 meses (2011)\nHecho declarado: en 2011 la interesada permaneció en Seúl durante doce meses, superando ampliamente 183 días.\nDemostrar ausencia de permanencia en España >183 días (dato objetivo) y excluir el cómputo como ausencia esporádica.\nACCEPTED\nEl TS lo considera determinante: una ausencia tan prolongada no puede ser esporádica y neutraliza la permanencia en España.\ncontrato ligado a la beca que exige actividad continuada en destino\nReferencia a contrato suscrito para materializar la beca, cuya exigencia es desarrollar actividad formativa continuada en el país de destino, impidiendo mantener residencia en España.\nReforzar que la ausencia fue continuada/permanente (no ocasional) por imperativo contractual de la beca.\nACCEPTED\nEl TS lo usa para explicar la necesidad objetiva de la permanencia fuera de España y la incompatibilidad con “ausencia esporádica”.\nEl TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.\nEl TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.\nNOT_DECIDED\n2011\nel traslado al exterior se\nproduce por la concesión\ncon objeto y duración\ndeterminados\nEl propósito de retorno a España\nsufrague los\ncostes\nno son datos\nel recurrente presentó\nen España la declaración del IRPF\nConsta que a la interesada le fue concedida una beca formativa\nEn 2011 la interesada permaneció en Seul durante un período de doce meses\npor imperativo de la beca obtenida y del\ncontrato suscrito\ncontinuada en el tiempo",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (prácticas)\nIndicio invocado por la Administración: el traslado al exterior deriva de una beca oficial con objeto y duración predeterminados.\nSostener que la estancia en el extranjero era temporal y, por tanto, ausencia esporádica computable como permanencia en España.\nPARTIAL\nSe admite como circunstancia fáctica, pero el TS niega que una ausencia >183 días por beca pueda ser “esporádica”.\nviaje ida/vuelta sufragado por organismo concedente\nIndicio invocado por la Administración: el organismo concedente se hace cargo del transporte de ida al destino y vuelta a España al concluir las prácticas.\nInferir intención de retorno a España y carácter esporádico/temporal de la ausencia.\nREJECTED\nEl TS declara que el propósito de retorno y que la beca sufrague el regreso no delimitan lo “esporádico”.\npresentación declaración IRPF en España\nIndicio invocado por la Administración: el recurrente presentó en España declaración del IRPF considerándose residente fiscal.\nAcreditar autoatribución de residencia fiscal en España durante 2011.\nPARTIAL\nSe menciona como indicio alegado por AEAT, pero no es determinante frente al dato objetivo de permanencia fuera >183 días.\nbeca formativa ICEX en Seúl (01/10/2010-30/09/2011)\nConsta la concesión de una beca formativa a desarrollar en la Oficina Económica y Comercial de España en Seúl, con duración de 1/10/2010 a 30/09/2011.\nAcreditar que la actividad exigía residencia continuada fuera de España y, por tanto, ausencia no esporádica en 2011.\nACCEPTED\nEl TS lo da por acreditado (“Consta...”) y lo conecta con la exigencia necesaria de permanencia fuera >183 días.\npermanencia efectiva en Seúl 12 meses (2011)\nHecho declarado: en 2011 la interesada permaneció en Seúl durante doce meses, superando ampliamente 183 días.\nDemostrar ausencia de permanencia en España >183 días (dato objetivo) y excluir el cómputo como ausencia esporádica.\nACCEPTED\nEl TS lo considera determinante: una ausencia tan prolongada no puede ser esporádica y neutraliza la permanencia en España.\ncontrato ligado a la beca que exige actividad continuada en destino\nReferencia a contrato suscrito para materializar la beca, cuya exigencia es desarrollar actividad formativa continuada en el país de destino, impidiendo mantener residencia en España.\nReforzar que la ausencia fue continuada/permanente (no ocasional) por imperativo contractual de la beca.\nACCEPTED\nEl TS lo usa para explicar la necesidad objetiva de la permanencia fuera de España y la incompatibilidad con “ausencia esporádica”.\nEl TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.\nEl TS parte de hechos inmutables: en 2011 la interesada permaneció fuera de España por la beca (Seúl) durante un periodo superior a 183 días, de forma continuada. Interpreta “ausencias esporádicas” según un criterio fáctico-objetivo (duración/intensidad), incompatibles con una estancia prolongada que neutraliza la permanencia en España. Por ello, no cabe sumar esa ausencia como permanencia en España, y se confirma la devolución de retenciones al no ser residente IRPF en 2011.\nNOT_DECIDED\n2011\nEl art. 9.1.a LIRPF condiciona excluir el cómputo de ausencias esporádicas a que el contribuyente acredite residencia fiscal en otro país, aunque aquí se declara irrelevante por no ser esporádica la ausencia.\nLa carga probatoria no se consideró cumplida.\nel traslado al exterior se\nproduce por la concesión\ncon objeto y duración\ndeterminados\nEl propósito de retorno a España\nsufrague los\ncostes\nno son datos\nel recurrente presentó\nen España la declaración del IRPF\nConsta que a la interesada le fue concedida una beca formativa\nEn 2011 la interesada permaneció en Seul durante un período de doce meses\npor imperativo de la beca obtenida y del\ncontrato suscrito\ncontinuada en el tiempo\nno son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica\nse computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país\nno cabe reputar ocasional o esporádica una ausencia\npor periodo superior a 183 días\nEl concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo\nresidió de manera permanente y efectiva en Seul",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -436,6 +466,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3613,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3524,
+              "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2234,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2125,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 293,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 242,
+              "verbatim_text": "no cabe reputar ocasional o esporádica una ausencia"
+            },
+            {
+              "end_offset": 355,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 324,
+              "verbatim_text": "por periodo superior a 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1549,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 1468,
+              "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "9a3cd49b64c7ccdc53778249c3a76bff7c6606b6cb9c5e4382aeb31c0c9a6ceb"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2834,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2787,
+              "verbatim_text": "residió de manera permanente y efectiva en Seul"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-695-2018.case.json",
-    "case_sha256": "b34c38e074ab55484b32daaf8628c18c92fa953f5b3619a22a5e68ca5012f769",
+    "case_sha256": "71e7b42b9742ba8c36dbd8fcd54941105a6fd250bee37b765c0ff472017c7924",
     "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El TS fija un criterio interpretativo sobre el concepto de «ausencias esporádicas» y no desarrolla una regla de carga probatoria; consta que la AEAT denegó por falta de certificado extranjero.",
+          "initial_bearer": "OTHER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -258,7 +282,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).",
         "consequences": [],
@@ -290,7 +315,13 @@
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
-          "anchor-legacy-evidence-007"
+          "anchor-legacy-evidence-007",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -323,7 +354,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal extranjero\nLa AEAT deniega la devolución por no aportarse certificado de residencia fiscal de otra jurisdicción ni acreditarse tributación en el país de destino.\nMantener la condición de residente IRPF en España computando como permanencia en España las ausencias (por no acreditarse residencia fiscal en otro país).\nREJECTED\nEl TS confirma que la estancia >183 días por beca no es «ausencia esporádica» y fija una interpretación objetiva del concepto, sin supeditarla a la intención/voluntad ni a la exigencia pretendida por la AEAT.\ntransporte ida/vuelta asumido por el organismo concedente (indicio)\nIndicio invocado por la Abogacía del Estado: el organismo concedente se hace cargo del transporte de ida y vuelta a España una vez concluido el período.\nInferir intención de retorno y, por tanto, naturaleza esporádica/temporal de la ausencia.\nREJECTED\nEl TS fija que no cabe vincular la ausencia esporádica a un elemento volitivo/intencional, sino al dato objetivo de duración/intensidad fuera de España.\npresentación de declaración IRPF en España\nIndicio invocado por la Abogacía del Estado: el recurrente presentó en España la declaración del IRPF, considerándose residente fiscal en España.\nInferir residencia habitual en España y que la salida era ausencia esporádica.\nREJECTED\nLa doctrina fijada por el TS se apoya en el dato objetivo de permanencia fuera >183 días y niega que sea relevante un elemento volitivo para calificar la ausencia como esporádica.\nresolución TEAR Asturias 23/10/2015 (desestimatoria)\nResolución del TEAR del Principado de Asturias desestimando la reclamación contra la liquidación provisional denegatoria.\nSostener la denegación administrativa de la devolución y la tesis de residencia IRPF en España.\nUNRESOLVED\ncontrato/beca ICEX en Taipei con fechas\nHecho no controvertido: beca ICEX y contrato para desarrollar la labor en la Oficina Económica y Comercial de España en Taipei, desde 01/10/2010 hasta 31/12/2011.\nAcreditar estancia continuada en el extranjero durante el ejercicio 2011 (base para no residencia IRPF por no permanencia >183 días en España).\nACCEPTED\nHecho expresamente indicado como no controvertido y asumido como base fáctica del litigio y de la doctrina fijada.\nmodelo 210 IRNR solicitando devolución\nPresentación ante AEAT del modelo 210 (IRNR) solicitando devolución de retenciones IRPF 2011 por considerarse no residente fiscal en España.\nInstar la devolución de retenciones por no residencia fiscal en España.\nPARTIAL\nSe tiene por acreditado el acto de solicitud y la pretensión, pero la decisión se funda en la interpretación del art. 9.1.a LIRPF (no en el modelo en sí).\npermanencia fuera de España >183 días (hecho reconocido)\nHecho afirmado por la sentencia de instancia (y recogido en antecedentes): permanencia fuera de España más de 183 días durante 2011, reconocido por la propia Administración.\nExcluir la residencia fiscal en España por el criterio de permanencia (art. 9.1.a LIRPF) y negar que la estancia sea ausencia esporádica.\nACCEPTED\nSe trata como hecho cierto y reconocido, que sostiene la aplicación del criterio objetivo y la no calificación como ausencia esporádica.\nEl TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).\nEl TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).\nNOT_DECIDED\n2011\ndenegó la devolución\nal no haber aportado certiﬁcado acreditativo de residencia\nni haber acreditado la tributación\nel organismo concedente se hace cargo del transporte\nde ida\ny vuelta a España\nel recurrente presentó\nen España la declaración del IRPF, considerándose\nresidente ﬁscal\nla desestimó mediante resolución de 23 de octubre de 2015\nsuscribió un contrato\ndesarrollaría su labor\n1 de octubre de 2010\n31 de diciembre de 2011\nel modelo 210\nsolicitó la devolución\ndel IRPF de 2011\nexistió un hecho cierto y reconocido\nha permanecido fuera de España más de 183 días durante el año natural",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal extranjero\nLa AEAT deniega la devolución por no aportarse certificado de residencia fiscal de otra jurisdicción ni acreditarse tributación en el país de destino.\nMantener la condición de residente IRPF en España computando como permanencia en España las ausencias (por no acreditarse residencia fiscal en otro país).\nREJECTED\nEl TS confirma que la estancia >183 días por beca no es «ausencia esporádica» y fija una interpretación objetiva del concepto, sin supeditarla a la intención/voluntad ni a la exigencia pretendida por la AEAT.\ntransporte ida/vuelta asumido por el organismo concedente (indicio)\nIndicio invocado por la Abogacía del Estado: el organismo concedente se hace cargo del transporte de ida y vuelta a España una vez concluido el período.\nInferir intención de retorno y, por tanto, naturaleza esporádica/temporal de la ausencia.\nREJECTED\nEl TS fija que no cabe vincular la ausencia esporádica a un elemento volitivo/intencional, sino al dato objetivo de duración/intensidad fuera de España.\npresentación de declaración IRPF en España\nIndicio invocado por la Abogacía del Estado: el recurrente presentó en España la declaración del IRPF, considerándose residente fiscal en España.\nInferir residencia habitual en España y que la salida era ausencia esporádica.\nREJECTED\nLa doctrina fijada por el TS se apoya en el dato objetivo de permanencia fuera >183 días y niega que sea relevante un elemento volitivo para calificar la ausencia como esporádica.\nresolución TEAR Asturias 23/10/2015 (desestimatoria)\nResolución del TEAR del Principado de Asturias desestimando la reclamación contra la liquidación provisional denegatoria.\nSostener la denegación administrativa de la devolución y la tesis de residencia IRPF en España.\nUNRESOLVED\ncontrato/beca ICEX en Taipei con fechas\nHecho no controvertido: beca ICEX y contrato para desarrollar la labor en la Oficina Económica y Comercial de España en Taipei, desde 01/10/2010 hasta 31/12/2011.\nAcreditar estancia continuada en el extranjero durante el ejercicio 2011 (base para no residencia IRPF por no permanencia >183 días en España).\nACCEPTED\nHecho expresamente indicado como no controvertido y asumido como base fáctica del litigio y de la doctrina fijada.\nmodelo 210 IRNR solicitando devolución\nPresentación ante AEAT del modelo 210 (IRNR) solicitando devolución de retenciones IRPF 2011 por considerarse no residente fiscal en España.\nInstar la devolución de retenciones por no residencia fiscal en España.\nPARTIAL\nSe tiene por acreditado el acto de solicitud y la pretensión, pero la decisión se funda en la interpretación del art. 9.1.a LIRPF (no en el modelo en sí).\npermanencia fuera de España >183 días (hecho reconocido)\nHecho afirmado por la sentencia de instancia (y recogido en antecedentes): permanencia fuera de España más de 183 días durante 2011, reconocido por la propia Administración.\nExcluir la residencia fiscal en España por el criterio de permanencia (art. 9.1.a LIRPF) y negar que la estancia sea ausencia esporádica.\nACCEPTED\nSe trata como hecho cierto y reconocido, que sostiene la aplicación del criterio objetivo y la no calificación como ausencia esporádica.\nEl TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).\nEl TS confirma la sentencia de instancia y fija doctrina: la permanencia fuera de España >183 días por disfrute de una beca de estudios no puede calificarse como «ausencia esporádica» a efectos del art. 9.1.a LIRPF. El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo (duración/intensidad) y no a un elemento volitivo de intención de retorno. Por ello, no se acoge la tesis de la AEAT que exigía tratar la beca temporal como ausencia esporádica y supeditar la no residencia a prueba adicional (certificado de residencia fiscal).\nNOT_DECIDED\n2011\nEl TS fija un criterio interpretativo sobre el concepto de «ausencias esporádicas» y no desarrolla una regla de carga probatoria; consta que la AEAT denegó por falta de certificado extranjero.\nLa carga probatoria no se consideró cumplida.\ndenegó la devolución\nal no haber aportado certiﬁcado acreditativo de residencia\nni haber acreditado la tributación\nel organismo concedente se hace cargo del transporte\nde ida\ny vuelta a España\nel recurrente presentó\nen España la declaración del IRPF, considerándose\nresidente ﬁscal\nla desestimó mediante resolución de 23 de octubre de 2015\nsuscribió un contrato\ndesarrollaría su labor\n1 de octubre de 2010\n31 de diciembre de 2011\nel modelo 210\nsolicitó la devolución\ndel IRPF de 2011\nexistió un hecho cierto y reconocido\nha permanecido fuera de España más de 183 días durante el año natural\nLa permanencia fuera\ndurante más de 183 días\nno puede considerarse\nausencia esporádica\nausencias esporádicas debe atender exclusivamente al dato objetivo\nelemento volitivo\ndenegó la devolución\nal no haber aportado certiﬁcado acreditativo de residencia\nde otra jurisdicción tributaria\nLa permanencia fuera\ndurante más de 183 días\nno puede considerarse\nausencia esporádica\nausencias esporádicas\nexclusivamente\ndato objetivo\nelemento volitivo\nen las sentencias de 28 de noviembre\nde 2017",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -540,6 +571,222 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3056,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3036,
+              "verbatim_text": "La permanencia fuera"
+            },
+            {
+              "end_offset": 3104,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3081,
+              "verbatim_text": "durante más de 183 días"
+            },
+            {
+              "end_offset": 3209,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3188,
+              "verbatim_text": "no puede considerarse"
+            },
+            {
+              "end_offset": 3238,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3219,
+              "verbatim_text": "ausencia esporádica"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3602,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3536,
+              "verbatim_text": "ausencias esporádicas debe atender exclusivamente al dato objetivo"
+            },
+            {
+              "end_offset": 3766,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3749,
+              "verbatim_text": "elemento volitivo"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2314,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2294,
+              "verbatim_text": "denegó la devolución"
+            },
+            {
+              "end_offset": 2452,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2394,
+              "verbatim_text": "al no haber aportado certiﬁcado acreditativo de residencia"
+            },
+            {
+              "end_offset": 2518,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2487,
+              "verbatim_text": "de otra jurisdicción tributaria"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3056,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3036,
+              "verbatim_text": "La permanencia fuera"
+            },
+            {
+              "end_offset": 3104,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3081,
+              "verbatim_text": "durante más de 183 días"
+            },
+            {
+              "end_offset": 3209,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3188,
+              "verbatim_text": "no puede considerarse"
+            },
+            {
+              "end_offset": 3238,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3219,
+              "verbatim_text": "ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3557,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3536,
+              "verbatim_text": "ausencias esporádicas"
+            },
+            {
+              "end_offset": 3585,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3571,
+              "verbatim_text": "exclusivamente"
+            },
+            {
+              "end_offset": 3602,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3589,
+              "verbatim_text": "dato objetivo"
+            },
+            {
+              "end_offset": 3766,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3749,
+              "verbatim_text": "elemento volitivo"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b26680d81a0193e12a03b1a2e2d4bf9f1c04b2b6cddbaad86075ccad886c0348"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1834,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1790,
+              "verbatim_text": "en las sentencias de 28 de noviembre\nde 2017"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

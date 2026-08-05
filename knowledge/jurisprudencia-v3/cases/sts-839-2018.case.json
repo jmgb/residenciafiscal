@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "La Administración sostenía que el obligado debía acreditar residencia fiscal en el extranjero para excluir ausencias esporádicas; el Tribunal, sin embargo, establece que el cumplimiento del criterio objetivo (>183 días fuera) exonera al contribuyente de esa carga en este supuesto.",
+      "initial_bearer": "AEAT",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -182,7 +206,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días (hecho no controvertido) y aplica el criterio objetivo del art.9 LIRPF, estimando que la estancia por beca ICEX es continuada y no es 'ausencia esporádica'. Por ello prevalece la tesis del contribuyente y no exige acreditación de residencia fiscal en el extranjero en este caso.",
       "consequences": [],
@@ -265,7 +289,11 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -443,6 +471,115 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3591,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3495,
+          "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2399,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2362,
+          "verbatim_text": "no solo concurre un elemento objetivo"
+        },
+        {
+          "end_offset": 2571,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 2512,
+          "verbatim_text": "justiﬁcaría la no obligación de tributar en España por\nIRPF"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3078,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3010,
+          "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "end_offset": 3212,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 3162,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "1bab731f8b27fd9538dbbaaeccd174f65015ab0c801444541e406138a7fbcd3c"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1811,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1774,
+          "verbatim_text": "sentencias de 28 de noviembre\nde 2017"
+        },
+        {
+          "end_offset": 2534,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 2493,
+          "verbatim_text": "se reiteran los criterios interpretativos"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

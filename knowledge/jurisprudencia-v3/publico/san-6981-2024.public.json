@@ -185,6 +185,106 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "El actor aportó dicho certiﬁcado de retenciones, pero no el de residencia ﬁscal emitido por las autoridades"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Dos son los criterios teóricos"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "cada parte tiene la carga de probar aquellas circunstancias que le favorecen"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "Que permanezca más de 183 días, durante el año natural, en territorio español"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Por consiguiente, la recurrente ha acreditado los hechos constitutivos de su pretensión"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "admitir dicha documental en\nvía judicial salvo que concurra mala fe"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "fc56031968cbd59c11020ffa3b26cae85876a650abae2a178fc4d4595cff9355"
     }
   ],
   "issues": [
@@ -198,9 +298,33 @@
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
-        "anchor-legacy-evidence-009"
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "La Sala expone la doble doctrina: regla clásica (cada parte prueba lo que le favorece) y la posibilidad de desplazamiento de carga hacia la Administración cuando dispone de medios; en el caso concreto el recurrente debía acreditar residencia en Méjico y la Aeat la negativa a ello.",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -411,7 +535,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probada la residencia en Méjico en 2017 por la documental aportada (332 días) —movimientos bancarios, certificados de empresa, justificantes de estancias, sellos y vuelos— y estima que la Aeat no desvirtuó esos indicios; aplica el criterio de permanencia (>183 días) del art.9 LIRPF y anula la liquidación.",
         "consequences": [],

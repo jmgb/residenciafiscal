@@ -17,7 +17,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-110-2018.case.json",
-    "case_sha256": "1e93ed71788a4b219de0847ed358034fe3fd8cd4e8bbfb67f050a66096130002",
+    "case_sha256": "acfa74314d6d4c9feaac8d3590e966290ef7e5e000b0195f82b976ee3daf6508",
     "source_sha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
   },
   "units": [
@@ -167,7 +167,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.",
         "consequences": [],
@@ -196,7 +196,9 @@
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
-          "anchor-legacy-evidence-004"
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-holding-001"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -226,7 +228,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nalegaciones Abogado del Estado\nArgumentos/indicios esgrimidos por la Administración: (i) traslado al exterior por beca de duración determinada; (ii) el organismo concedente sufraga transporte de ida y vuelta; (iii) el recurrente presentó declaración de IRPF en España.\nAcreditar que la ausencia era esporádica y que no hubo cambio de residencia fuera de España\nREJECTED\nPrueba insuficiente para considerar la ausencia como esporádica; no desvirtúa la evidencia objetiva de permanencia prolongada.\nreconocimiento administrativo de la permanencia\nRegistro/acto administrativo en el expediente que reconoce que el recurrente permaneció fuera de España más de 183 días durante el año natural.\nDemostrar la permanencia física prolongada fuera de España\nACCEPTED\nEl Tribunal considera este hecho cierto y reconocido; constituye prueba decisiva de la residencia efectiva fuera de España.\nalegación de permanencia >183 días\nAlegación y documentación en el expediente sobre la estancia fuera de España por más de 183 días (vinculada al disfrute de la beca ICEX).\nDemostrar permanencia superior a 183 días en el año natural\nACCEPTED\nCorroborada y reconocida en el expediente; el Tribunal la estima como hecho material determinante.\nbeca ICEX / contrato de prácticas\nContrato/concesión de beca por ICEX que exigía la permanencia en el país de destino para la realización de prácticas formativas.\nAcreditar que la estancia era continuada y vinculada a la actividad de la beca, no ocasional\nACCEPTED\nEl Tribunal considera que la naturaleza y finalidad de la beca justifican la ausencia continuada y no esporádica.\nEl Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.\nEl Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.\nNOT_DECIDED\n2011\nel organismo concedente se hace cargo del transporte\nel recurrente presentó\nen España la declaración del IRPF\nexistió un hecho cierto y reconocido por la propia Administración\ndemandada, que el recurrente ha permanecido fuera de España más de 183 días\nel recurrente ha permanecido fuera de España más de 183 días durante el\naño natural\nla concesión por el ICEX\nexige necesariamente la permanencia fuera de España por más de 183 días",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nalegaciones Abogado del Estado\nArgumentos/indicios esgrimidos por la Administración: (i) traslado al exterior por beca de duración determinada; (ii) el organismo concedente sufraga transporte de ida y vuelta; (iii) el recurrente presentó declaración de IRPF en España.\nAcreditar que la ausencia era esporádica y que no hubo cambio de residencia fuera de España\nREJECTED\nPrueba insuficiente para considerar la ausencia como esporádica; no desvirtúa la evidencia objetiva de permanencia prolongada.\nreconocimiento administrativo de la permanencia\nRegistro/acto administrativo en el expediente que reconoce que el recurrente permaneció fuera de España más de 183 días durante el año natural.\nDemostrar la permanencia física prolongada fuera de España\nACCEPTED\nEl Tribunal considera este hecho cierto y reconocido; constituye prueba decisiva de la residencia efectiva fuera de España.\nalegación de permanencia >183 días\nAlegación y documentación en el expediente sobre la estancia fuera de España por más de 183 días (vinculada al disfrute de la beca ICEX).\nDemostrar permanencia superior a 183 días en el año natural\nACCEPTED\nCorroborada y reconocida en el expediente; el Tribunal la estima como hecho material determinante.\nbeca ICEX / contrato de prácticas\nContrato/concesión de beca por ICEX que exigía la permanencia en el país de destino para la realización de prácticas formativas.\nAcreditar que la estancia era continuada y vinculada a la actividad de la beca, no ocasional\nACCEPTED\nEl Tribunal considera que la naturaleza y finalidad de la beca justifican la ausencia continuada y no esporádica.\nEl Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.\nEl Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.\nNOT_DECIDED\n2011\nel organismo concedente se hace cargo del transporte\nel recurrente presentó\nen España la declaración del IRPF\nexistió un hecho cierto y reconocido por la propia Administración\ndemandada, que el recurrente ha permanecido fuera de España más de 183 días\nel recurrente ha permanecido fuera de España más de 183 días durante el\naño natural\nla concesión por el ICEX\nexige necesariamente la permanencia fuera de España por más de 183 días\nSi solamente se atendiera al elemento objetivo de\nla duración, el artículo 9 LIRPF quedaría\nLa permanencia fuera del territorio nacional durante más de 183 días\nno puede considerarse como una ausencia esporádica",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -321,6 +323,57 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3429,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3338,
+              "verbatim_text": "Si solamente se atendiera al elemento objetivo de\nla duración, el artículo 9 LIRPF quedaría"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 87,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 19,
+              "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+            },
+            {
+              "end_offset": 221,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 171,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

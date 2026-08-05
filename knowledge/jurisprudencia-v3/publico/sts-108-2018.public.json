@@ -76,6 +76,73 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "el traslado al exterior se\nproduce por la concesión"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "beca para realizar prácticas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "existió un hecho cierto"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "sentencias de 28 de noviembre de 2017"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "aab22482c4c34480da7d8c4d64b0d21154ba3c05def99c80018b0ea9fda53d0f"
     }
   ],
   "issues": [
@@ -83,7 +150,10 @@
       "anchorIds": [
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
-        "anchor-legacy-evidence-003"
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -168,7 +238,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.",
         "consequences": [],

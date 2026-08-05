@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 5096/2021 este supuesto de residencia: La Sala analiza los criterios del art.9 LIRPF (183 días, núcleo de intereses económicos y presunción por familia). Constata que no concurre el criterio de estancia (>183 días) y, aplicando el criterio de núcleo o base de intereses económico?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

@@ -1,9 +1,9 @@
 {
-  "anchor_count": 6,
-  "case_sha256": "da66dc4d1c228ae9ad500d91de60f6e79bc6afa557266cc02abd836a8511dbb5",
+  "anchor_count": 12,
+  "case_sha256": "d145da242f54dccc408330a47b4cc0528700dd0fb4fdc1d24f7bd564a0d280e1",
   "evidence_finding_count": 6,
   "fact_count": 0,
-  "fragment_count": 15,
+  "fragment_count": 25,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-114-2018",

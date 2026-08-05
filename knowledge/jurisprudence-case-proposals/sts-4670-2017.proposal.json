@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "En vía administrativa la AEAT exigió la acreditación de residencia fiscal en el extranjero; el interesado aportó contrato y documentación de la beca y petición de devolución; el Tribunal aprecia hecho objetivo (>183 días) que decide el caso.",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -106,7 +130,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.",
       "consequences": [],
@@ -179,7 +203,11 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -294,6 +322,86 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 2,
+          "verbatim_text": "Es un hecho cierto y reconocido por la Administración que el recurrente ha permanecido fuera de España más\nde 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 11,
+          "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "no hay ninguna norma en el modelo referido que resulte\ncontraria a la regulación"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "no puede caliﬁcarse esa estancia"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "disfrutando\nde una beca ICEX como una ausencia esporádica"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

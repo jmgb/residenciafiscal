@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
@@ -162,6 +163,110 @@ def _evidence(
     return findings, anchors
 
 
+def _supplemental_anchors(
+    record: dict[str, object], verbatim: VerbatimCorpus
+) -> tuple[list[dict[str, Any]], dict[str, list[str]]]:
+    candidates: list[tuple[str, object]] = []
+    rejected = record.get("Pruebas_rechazadas_clave")
+    if isinstance(rejected, list):
+        candidates.extend(
+            ("REASONING", item.get("cita")) for item in rejected if isinstance(item, dict)
+        )
+    burden = record.get("carga_prueba")
+    if isinstance(burden, dict):
+        candidates.append(("BURDEN_OF_PROOF", burden.get("cita")))
+    key_phrases = record.get("frases_clave")
+    if isinstance(key_phrases, list):
+        for item in key_phrases:
+            if not isinstance(item, dict):
+                continue
+            topic = str(item.get("tema", "")).casefold()
+            purpose = (
+                "BURDEN_OF_PROOF"
+                if "carga" in topic
+                else "HOLDING"
+                if topic in {"criterio", "resultado"}
+                else "REASONING"
+            )
+            candidates.append((purpose, item))
+
+    anchors: list[dict[str, Any]] = []
+    anchor_ids: dict[str, list[str]] = defaultdict(list)
+    seen: set[tuple[str, tuple[tuple[int, int, int], ...]]] = set()
+    counters: dict[str, int] = defaultdict(int)
+    prefix = {
+        "BURDEN_OF_PROOF": "burden",
+        "HOLDING": "holding",
+        "REASONING": "reasoning",
+    }
+    for purpose, raw_citation in candidates:
+        if not isinstance(raw_citation, dict):
+            continue
+        quote = raw_citation.get("texto")
+        if not isinstance(quote, str):
+            continue
+        fragments = locate_exact_fragments(
+            quote,
+            declared_page=raw_citation.get("pagina"),
+            verbatim=verbatim,
+        )
+        signature = tuple(
+            (item.page_index, item.start_offset, item.end_offset) for item in fragments
+        )
+        if not fragments or (purpose, signature) in seen:
+            continue
+        seen.add((purpose, signature))
+        counters[purpose] += 1
+        anchor_id = f"anchor-legacy-{prefix[purpose]}-{counters[purpose]:03d}"
+        anchors.append(_anchor(anchor_id, fragments, purpose))
+        anchor_ids[purpose].append(anchor_id)
+    return anchors, dict(anchor_ids)
+
+
+def _burden_steps(
+    record: dict[str, object],
+    *,
+    issue_id: str,
+    anchor_ids: list[str],
+) -> list[dict[str, Any]]:
+    burden = record.get("carga_prueba")
+    if not anchor_ids or not isinstance(burden, dict):
+        return []
+    bearer = {
+        "AEAT": "AEAT",
+        "ADMINISTRACION": "AEAT",
+        "ADMINISTRACIÓN": "AEAT",
+        "CONTRIBUYENTE": "TAXPAYER",
+        "AMBOS": "BOTH",
+        "TRIBUNAL": "COURT",
+    }.get(str(burden.get("quien_tenia_carga", "")).upper(), "OTHER")
+    fulfilled = str(burden.get("cumplida", "")).upper() == "SI"
+    shifts_to = "TAXPAYER" if fulfilled and bearer == "AEAT" else None
+    return [
+        {
+            "step_id": "burden-legacy-001",
+            "sequence": 1,
+            "issue_ids": [issue_id],
+            "fact_to_prove": _text(
+                burden.get("motivo"), "Hecho sujeto a la distribución de la carga probatoria."
+            ),
+            "initial_bearer": bearer,
+            "triggering_evidence_ids": [],
+            "shifts_to": shifts_to,
+            "response_required": (
+                "Desvirtuar los indicios y acreditar la residencia exterior." if shifts_to else None
+            ),
+            "conclusion": (
+                "La carga probatoria se consideró cumplida."
+                if fulfilled
+                else "La carga probatoria no se consideró cumplida."
+            ),
+            "anchor_ids": anchor_ids,
+            "review": _review(),
+        }
+    ]
+
+
 def build_legacy_case_draft(
     record: dict[str, object],
     *,
@@ -178,10 +283,17 @@ def build_legacy_case_draft(
     in_scope = str(record.get("es_caso_residencia_irpf")).upper() == "SI"
     issue_id = "residencia-fiscal" if in_scope else "fuera-de-alcance"
     evidence, anchors = _evidence(record, verbatim) if in_scope else ([], [])
+    supplemental, supplemental_ids = (
+        _supplemental_anchors(record, verbatim) if in_scope else ([], {})
+    )
+    anchors.extend(supplemental)
     if not anchors:
         fallback = _fallback_fragment(verbatim)
         anchors = [_anchor("anchor-legacy-decision", (fallback,), "HOLDING")]
-    holding_anchor = anchors[0]["anchor_id"]
+    holding_anchor_ids = supplemental_ids.get("HOLDING", [])
+    if not holding_anchor_ids:
+        holding_anchor_ids = [anchors[0]["anchor_id"]]
+    holding_anchor = holding_anchor_ids[0]
     years = _tax_years(record.get("ejercicios_afectados"))
     raw_criteria = record.get("Criterios_residencia_detectados")
     criteria_values = raw_criteria if isinstance(raw_criteria, list) else []
@@ -264,7 +376,7 @@ def build_legacy_case_draft(
                     if in_scope and years
                     else None
                 ),
-                "anchor_ids": [holding_anchor],
+                "anchor_ids": holding_anchor_ids,
                 "review": _review(),
             }
         ],
@@ -284,7 +396,11 @@ def build_legacy_case_draft(
                 "review": _review(),
             }
         ],
-        "burden_of_proof_steps": [],
+        "burden_of_proof_steps": _burden_steps(
+            record,
+            issue_id=issue_id,
+            anchor_ids=supplemental_ids.get("BURDEN_OF_PROOF", []),
+        ),
         "presence_events": [],
         "presence_periods": [],
         "treaty_analyses": [],

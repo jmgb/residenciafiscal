@@ -92,7 +92,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal entiende probada la estancia continuada por la beca ICEX (fechas y contrato) que supera 183 días; declara que tal ausencia no es esporádica porque es prolongada y vinculada a la beca, y aplica el criterio objetivo del art.9.1.a) LIRPF, rechazando la exigencia de certificado de residencia extranjera en estas circunstancias.",
       "consequences": [],
@@ -166,7 +166,10 @@
       "anchor_ids": [
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
-        "anchor-legacy-evidence-003"
+        "anchor-legacy-evidence-003",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -266,6 +269,68 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "el traslado al exterior se\nproduce por la concesión"
+        },
+        {
+          "page_index": 5,
+          "verbatim_text": "beca para realizar prácticas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "existió un hecho cierto"
+        },
+        {
+          "page_index": 3,
+          "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "sentencias de 28 de noviembre de 2017"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -1,9 +1,9 @@
 {
-  "anchor_count": 10,
-  "case_sha256": "e8f1b87d4448cf470847e1f957c2eb6048258c02697354e39bb6bb57831b13e1",
+  "anchor_count": 15,
+  "case_sha256": "37817e50e7e9240a811269ffc25828cd34ddd914b6bf0eedd505a48f35d5c53a",
   "evidence_finding_count": 10,
   "fact_count": 0,
-  "fragment_count": 18,
+  "fragment_count": 30,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-4305-2017",

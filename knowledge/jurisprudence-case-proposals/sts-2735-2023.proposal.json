@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria se consideró cumplida.",
+      "fact_to_prove": "Debe aportar documentación específica para acreditar la condición de residente “a efectos del Convenio” (certificado de residencia fiscal).",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -586,7 +610,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El TS censura que la AN “banalice” el certificado de residencia fiscal de EEUU y niegue el conflicto de residencia. Si el certificado lo emite la autoridad competente y expresa que se expide a efectos del CDI, es hábil para probar residencia a efectos del Convenio y, por tanto, para afirmar conflicto (doble residencia). Acreditado el conflicto, España no puede prescindir unilateralmente del CDI: debe aplicarse el art. 4.2 (vivienda permanente → centro intereses vitales → morada habitual → nacionalidad → acuerdo). El TS no fija el desempate en casación y ordena retroacción para que la AN lo resuelva.",
       "consequences": [],
@@ -681,7 +705,12 @@
         "anchor-legacy-evidence-018",
         "anchor-legacy-evidence-019",
         "anchor-legacy-evidence-020",
-        "anchor-legacy-evidence-021"
+        "anchor-legacy-evidence-021",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_CENTRO_INTERESES_ECONOMICOS",
@@ -1216,6 +1245,128 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 12,
+          "verbatim_text": "ha de quedar acreditado"
+        },
+        {
+          "page_index": 12,
+          "verbatim_text": "mediante la aportación\nde un \"certiﬁcado de residencia ﬁscal"
+        },
+        {
+          "page_index": 12,
+          "verbatim_text": "en el que deberá constar expresamente que el contribuyente es residente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 13,
+          "verbatim_text": "siguiendo la doctrina"
+        },
+        {
+          "page_index": 13,
+          "verbatim_text": "sentencia de 4 de julio de\n2006"
+        },
+        {
+          "page_index": 14,
+          "verbatim_text": "obligado aplicar las reglas de\n\"desempate"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "la validez de un\ncertiﬁcado de residencia"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "debe ser presumida, no pudiendo ser su contenido rechazado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 15,
+          "verbatim_text": "el \"centro de\nintereses vitales\" es más amplia que el concepto de \"núcleo de intereses económicos"
+        },
+        {
+          "page_index": 15,
+          "verbatim_text": "no resulta equiparable"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 3,
+          "verbatim_text": "artículo 4.2"
+        },
+        {
+          "page_index": 16,
+          "verbatim_text": "Ordenar la retroacción"
+        },
+        {
+          "page_index": 16,
+          "verbatim_text": "partiendo de la existencia de un conﬂicto"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-1682-2022.case.json",
-    "case_sha256": "9866bb433b838a1f864bf133fe6653e95e47bf91407ce2a428cc7282701aa6c4",
+    "case_sha256": "f8beeadad59b03f84001320d756ea16eded83ff6dc107a72a055dd6280d1082d",
     "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
   },
   "units": [
@@ -380,7 +380,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.",
         "consequences": [],
@@ -418,7 +418,11 @@
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
-          "anchor-legacy-evidence-012"
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -457,7 +461,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_OTRO\nescritura pública de donación (17/02/2017)\nEn la escritura de donación el recurrente se identifica como estudiante y “vecino de Burgos” indicando dirección en Burgos.\nAcreditar manifestación espontánea de domicilio/residencia en Burgos a fecha de devengo.\nACCEPTED\nSe rechaza que fuese un error; se considera coherente con el resto de circunstancias.\ncertificado/constancia de empadronamiento\nMantenimiento del empadronamiento en Burgos hasta 22/09/2017; alta posterior en Madrid.\nIndicio administrativo de residencia en Burgos durante el periodo 2012-2017.\nPARTIAL\nNo prueba por sí solo la residencia, pero se valora como elemento adicional no rectificado en 5 años.\nmovimientos bancarios pago Colegio Mayor\nMovimientos bancarios del pago del Colegio Mayor en Madrid que muestran estancia solo de septiembre 2012 a marzo 2014 (descontando agosto 2013).\nDelimitar temporalmente la presencia en Madrid y refutar permanencia continuada 2012-2017.\nACCEPTED\nSe utiliza para concluir que no residió en Madrid todo el periodo; enlaza con manifestación del propio actor en conclusiones.\ndomicilio de notificaciones en cuentas bancarias\nConsta que el domicilio de Burgos fue el declarado por el recurrente a efectos de notificaciones en 4 cuentas bancarias abiertas en Burgos (BBVA, Bankia, EVO con su madre).\nAcreditar vinculación estable con Burgos y coherencia de domicilio habitual allí.\nACCEPTED\nSe considera indicio incompatible con la residencia habitual en Madrid alegada.\nnotificaciones propuestas de liquidación recibidas en Burgos\nSe señala que el propio actor recepcionó las propuestas de liquidación en el domicilio de Burgos.\nIndicio de localización operativa/residencial en Burgos en fechas cercanas a la comprobación.\nACCEPTED\nElemento corroborador del resto (domicilio fiscal/empadronamiento/escritura/cuentas).\nConsultas DGT sobre convivencia/ausencias por estudios\nInvocación de Consultas DGT (V1136-09, V07010-07) para sostener que ausencias por estudios no rompen convivencia y se califican como ausencia temporal a efectos del art. 28 Ley 22/2009.\nSostener interpretación administrativa del concepto de ausencias temporales por estudios.\nPARTIAL\nEl TS considera que la cuestión de 'ausencias temporales' no fue ratio decidendi principal; su discusión resulta inocua si ya se concluye mayor permanencia en Burgos.\njustificantes/matrículas estudios en Madrid (Universidad Pontificia Comillas-ICAI)\nCopia de justificantes de estudios cursados en Madrid (Grado 2012-2016).\nEvidenciar estancia y vinculación académica en Madrid durante varios cursos.\nPARTIAL\nSe admite como dato de estudios, pero se considera insuficiente para acreditar residencia habitual por permanencia (días) en Madrid.\ndomiciliaciones BBVA Colegio Mayor Madrid\nCargos bancarios (BBVA) por domiciliaciones del Colegio Mayor en Madrid para acreditar residencia durante esos estudios.\nAcreditar alojamiento efectivo en Madrid en parte del periodo 2012-2014.\nPARTIAL\nSirve para acotar estancia en Colegio Mayor (sep 2012-mar 2014), pero no prueba permanencia en Madrid el resto del periodo 2012-2017.\ncontrato arrendamiento habitación Madrid (piso compartido)\nContrato de arrendamiento de habitación en Madrid, indicando inicio el 31/08/2016.\nAcreditar vivienda/uso efectivo en Madrid desde 31/08/2016.\nPARTIAL\nAcredita alojamiento desde agosto 2016, pero no desvirtúa la residencia habitual en Burgos durante el conjunto del quinquenio ni se acompañó de prueba de días.\nretiradas de efectivo en cajeros (tarjeta BBVA)\nEstadística de disposiciones de efectivo: 80,33% en Madrid y 11,5% en Burgos; importes también considerados por el recurrente.\nInferir presencia física y residencia habitual en Madrid por frecuencia de disposiciones.\nREJECTED\nLa instancia considera que movimientos bancarios no son representativos de residencia habitual en Madrid por tratarse de ausencias por estudios y por falta de cuantificación de días.\ntransacciones EVO (compras supermercados Madrid)\n42 transacciones de la tarjeta/cuenta EVO con compras en supermercados de Madrid.\nInferir vida cotidiana y residencia en Madrid por recurrencia de compras.\nREJECTED\nSe reputa insuficiente/no representativo para fijar residencia habitual frente al resto de indicios y sin prueba de días de permanencia.\nmanifestaciones del recurrente (alegaciones/conclusiones)\nAlegó que no residió en Burgos desde 2012 salvo vacaciones; y reconoció estancias principales en Lyon (abril 2014-agosto 2016) y Leamington Spa (mayo-julio 2016).\nSostener que su centro de vida/permanencia estaba fuera de Burgos (Madrid/Francia/UK) y que Burgos era meramente vacacional.\nPARTIAL\nSe toma en cuenta para ubicar estancias (Lyon/UK), pero perjudica su tesis de permanencia en Madrid y no acredita días de permanencia comparados Madrid/Burgos.\nEl TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.\nEl TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.\nNOT_DECIDED\n2012\n2017\nen la escritura de donación\nestudiante, y\nvecino de Burgos\nsin que sea admisible entender\nmantuvo su empadronamiento en Burgos\nhasta el 22 de septiembre 2017\nno es por sí solo\nmovimientos bancarios\nColegio\nMayor\nseptiembre de 2012\nhasta marzo de 2014\ndomicilio\nde Burgos\na efectos de notiﬁcaciones en las 4 cuentas bancarias\nlo que mal se compadece\ndebiendo recordarse que fue el propio actor quien recepcionó las mismas en el domicilio\nuna \"ausencia temporal justiﬁcada\nDirección General de Tributos\nCopia de los justiﬁcantes de los estudios\ndurante los\ncursos 2012-2013\nmovimientos bancarios\nColegio\nMayor\nseptiembre de 2012\nhasta marzo de 2014\nfue posteriormente, el 31 de agosto de 2016\ncontrato de arrendamiento\ncomenzó a residir\nde los pretendidos movimientos bancarios no cabe extraer las consecuencias\nno son representativos de una residencia habitual en Madrid\ncompras en Madrid\nen cualquier caso los mismos no son representativos de una residencia habitual en Madrid\nabril\nde 2014 y agosto de 2016\nresidió, principalmente en Lyon (Francia\nmayo a julio de 2016\nLeamington Spa",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_OTRO\nescritura pública de donación (17/02/2017)\nEn la escritura de donación el recurrente se identifica como estudiante y “vecino de Burgos” indicando dirección en Burgos.\nAcreditar manifestación espontánea de domicilio/residencia en Burgos a fecha de devengo.\nACCEPTED\nSe rechaza que fuese un error; se considera coherente con el resto de circunstancias.\ncertificado/constancia de empadronamiento\nMantenimiento del empadronamiento en Burgos hasta 22/09/2017; alta posterior en Madrid.\nIndicio administrativo de residencia en Burgos durante el periodo 2012-2017.\nPARTIAL\nNo prueba por sí solo la residencia, pero se valora como elemento adicional no rectificado en 5 años.\nmovimientos bancarios pago Colegio Mayor\nMovimientos bancarios del pago del Colegio Mayor en Madrid que muestran estancia solo de septiembre 2012 a marzo 2014 (descontando agosto 2013).\nDelimitar temporalmente la presencia en Madrid y refutar permanencia continuada 2012-2017.\nACCEPTED\nSe utiliza para concluir que no residió en Madrid todo el periodo; enlaza con manifestación del propio actor en conclusiones.\ndomicilio de notificaciones en cuentas bancarias\nConsta que el domicilio de Burgos fue el declarado por el recurrente a efectos de notificaciones en 4 cuentas bancarias abiertas en Burgos (BBVA, Bankia, EVO con su madre).\nAcreditar vinculación estable con Burgos y coherencia de domicilio habitual allí.\nACCEPTED\nSe considera indicio incompatible con la residencia habitual en Madrid alegada.\nnotificaciones propuestas de liquidación recibidas en Burgos\nSe señala que el propio actor recepcionó las propuestas de liquidación en el domicilio de Burgos.\nIndicio de localización operativa/residencial en Burgos en fechas cercanas a la comprobación.\nACCEPTED\nElemento corroborador del resto (domicilio fiscal/empadronamiento/escritura/cuentas).\nConsultas DGT sobre convivencia/ausencias por estudios\nInvocación de Consultas DGT (V1136-09, V07010-07) para sostener que ausencias por estudios no rompen convivencia y se califican como ausencia temporal a efectos del art. 28 Ley 22/2009.\nSostener interpretación administrativa del concepto de ausencias temporales por estudios.\nPARTIAL\nEl TS considera que la cuestión de 'ausencias temporales' no fue ratio decidendi principal; su discusión resulta inocua si ya se concluye mayor permanencia en Burgos.\njustificantes/matrículas estudios en Madrid (Universidad Pontificia Comillas-ICAI)\nCopia de justificantes de estudios cursados en Madrid (Grado 2012-2016).\nEvidenciar estancia y vinculación académica en Madrid durante varios cursos.\nPARTIAL\nSe admite como dato de estudios, pero se considera insuficiente para acreditar residencia habitual por permanencia (días) en Madrid.\ndomiciliaciones BBVA Colegio Mayor Madrid\nCargos bancarios (BBVA) por domiciliaciones del Colegio Mayor en Madrid para acreditar residencia durante esos estudios.\nAcreditar alojamiento efectivo en Madrid en parte del periodo 2012-2014.\nPARTIAL\nSirve para acotar estancia en Colegio Mayor (sep 2012-mar 2014), pero no prueba permanencia en Madrid el resto del periodo 2012-2017.\ncontrato arrendamiento habitación Madrid (piso compartido)\nContrato de arrendamiento de habitación en Madrid, indicando inicio el 31/08/2016.\nAcreditar vivienda/uso efectivo en Madrid desde 31/08/2016.\nPARTIAL\nAcredita alojamiento desde agosto 2016, pero no desvirtúa la residencia habitual en Burgos durante el conjunto del quinquenio ni se acompañó de prueba de días.\nretiradas de efectivo en cajeros (tarjeta BBVA)\nEstadística de disposiciones de efectivo: 80,33% en Madrid y 11,5% en Burgos; importes también considerados por el recurrente.\nInferir presencia física y residencia habitual en Madrid por frecuencia de disposiciones.\nREJECTED\nLa instancia considera que movimientos bancarios no son representativos de residencia habitual en Madrid por tratarse de ausencias por estudios y por falta de cuantificación de días.\ntransacciones EVO (compras supermercados Madrid)\n42 transacciones de la tarjeta/cuenta EVO con compras en supermercados de Madrid.\nInferir vida cotidiana y residencia en Madrid por recurrencia de compras.\nREJECTED\nSe reputa insuficiente/no representativo para fijar residencia habitual frente al resto de indicios y sin prueba de días de permanencia.\nmanifestaciones del recurrente (alegaciones/conclusiones)\nAlegó que no residió en Burgos desde 2012 salvo vacaciones; y reconoció estancias principales en Lyon (abril 2014-agosto 2016) y Leamington Spa (mayo-julio 2016).\nSostener que su centro de vida/permanencia estaba fuera de Burgos (Madrid/Francia/UK) y que Burgos era meramente vacacional.\nPARTIAL\nSe toma en cuenta para ubicar estancias (Lyon/UK), pero perjudica su tesis de permanencia en Madrid y no acredita días de permanencia comparados Madrid/Burgos.\nEl TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.\nEl TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.\nNOT_DECIDED\n2012\n2017\nen la escritura de donación\nestudiante, y\nvecino de Burgos\nsin que sea admisible entender\nmantuvo su empadronamiento en Burgos\nhasta el 22 de septiembre 2017\nno es por sí solo\nmovimientos bancarios\nColegio\nMayor\nseptiembre de 2012\nhasta marzo de 2014\ndomicilio\nde Burgos\na efectos de notiﬁcaciones en las 4 cuentas bancarias\nlo que mal se compadece\ndebiendo recordarse que fue el propio actor quien recepcionó las mismas en el domicilio\nuna \"ausencia temporal justiﬁcada\nDirección General de Tributos\nCopia de los justiﬁcantes de los estudios\ndurante los\ncursos 2012-2013\nmovimientos bancarios\nColegio\nMayor\nseptiembre de 2012\nhasta marzo de 2014\nfue posteriormente, el 31 de agosto de 2016\ncontrato de arrendamiento\ncomenzó a residir\nde los pretendidos movimientos bancarios no cabe extraer las consecuencias\nno son representativos de una residencia habitual en Madrid\ncompras en Madrid\nen cualquier caso los mismos no son representativos de una residencia habitual en Madrid\nabril\nde 2014 y agosto de 2016\nresidió, principalmente en Lyon (Francia\nmayo a julio de 2016\nLeamington Spa\nde los pretendidos movimientos bancarios no cabe extraer las consecuencias\nno son representativos de una residencia habitual en Madrid\ncompras en Madrid\nen cualquier caso los mismos no son representativos de una residencia habitual en Madrid\nresidencia habitual\nla ley está exigiendo\na partir del dato fáctico de la permanencia\nha de ser probada por el mismo\ninsuﬁcientes",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -847,6 +851,129 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2145,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2071,
+              "verbatim_text": "de los pretendidos movimientos bancarios no cabe extraer las consecuencias"
+            },
+            {
+              "end_offset": 2464,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2405,
+              "verbatim_text": "no son representativos de una residencia habitual en Madrid"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2302,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2285,
+              "verbatim_text": "compras en Madrid"
+            },
+            {
+              "end_offset": 2464,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 2376,
+              "verbatim_text": "en cualquier caso los mismos no son representativos de una residencia habitual en Madrid"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4054,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 4035,
+              "verbatim_text": "residencia habitual"
+            },
+            {
+              "end_offset": 1055,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 1034,
+              "verbatim_text": "la ley está exigiendo"
+            },
+            {
+              "end_offset": 1181,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 1138,
+              "verbatim_text": "a partir del dato fáctico de la permanencia"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4622,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 4592,
+              "verbatim_text": "ha de ser probada por el mismo"
+            },
+            {
+              "end_offset": 4840,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 4828,
+              "verbatim_text": "insuﬁcientes"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

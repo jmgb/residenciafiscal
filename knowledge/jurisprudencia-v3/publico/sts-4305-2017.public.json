@@ -229,6 +229,136 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "deviene superﬂua"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no podemos dar carta de naturaleza a la existencia de ausencias esporádicas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "discurre en el terreno probatorio"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "deviene superﬂua si se proyecta sobre una realidad inexistente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "la noción de ausencias esporádicas"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "se conﬁgura"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "en función de"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "un elemento fáctico"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "duración o intensidad"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "hace innecesario que nos pronunciemos sobre la tercera"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "discurre en el terreno probatorio"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e3ecbf0bcf490b004a0d736364de1e6e699a4601bcb5554fc7944a66886971da"
     }
   ],
   "issues": [
@@ -243,9 +373,33 @@
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
-        "anchor-legacy-evidence-010"
+        "anchor-legacy-evidence-010",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La cuestión tercera del auto (exigencia de acreditar residencia fiscal en otro país) se califica como “terreno probatorio”, pero se considera irrelevante al descartarse que exista ausencia esporádica; por ello no se entra a concretar la carga efectiva.",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -485,7 +639,8 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "Hecho inmutable en casación: el interesado permaneció fuera de España más de 183 días en 2011 por la beca/contrato ICEX en Panamá. El TS interpreta el art. 9.1.a LIRPF: las “ausencias esporádicas” son accesorias y solo pueden ser ocasionales/breves; no pueden abarcar periodos prolongados que vacíen la regla de permanencia. La calificación de esporádica atiende al elemento fáctico (duración/intensidad), no a la intención de retorno ni a que el ICEX pague el viaje. Concluye que no hay residencia fiscal en España por la vía del cómputo de ausencias esporádicas y confirma la devolución.",
         "consequences": [],

@@ -267,6 +267,111 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se trata de certiﬁcados de residencia relativos a\nejercicios ﬁscales anteriores a los que aquí nos conciernen"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "corresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "resulta un hecho no controvertido"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "que ha permanecido en España durante más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "corresponde a la Administración aportar datos de los\nque se inﬁera la existencia de domicilio ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "establecida la presunción"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "correspondía a la parte demostrar\nla residencia en otro Estado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e81bf3b4a7e99b1ce73516440c09239652fe666ee1b7f3c78acf84c0f46edbf9"
     }
   ],
   "issues": [
@@ -283,9 +388,33 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración debe aportar indicios de residencia en España; una vez acreditados indicios suﬁcientes corresponde al obligado probar su residencia en otro Estado (art.9 LIRPF y jurisprudencia del TS).",
+          "initialBearer": "BOTH",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -578,7 +707,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probado, por la propia admisión del recurrente y por la información recibida de la Administración ecuatoriana, que no estuvo sujeto a tributación por residencia en Ecuador y que permaneció en España más de 183 días en cada ejercicio; aplica el Art. 9 LIRPF y la jurisprudencia que prioriza el criterio objetivo de permanencia, rechazando las alegaciones de ausencias esporádicas por salud por insuficiencia probatoria.",
         "consequences": [],

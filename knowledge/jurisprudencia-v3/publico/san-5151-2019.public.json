@@ -171,6 +171,101 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "el emisor del mismo no tiene el carácter de autoridad ﬁscal competente"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "nada relativo a su tributación por el ejercicio 2011 que acredite que ha tributado en ese Estado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "tenía el centro de sus intereses económicos en España, dado que estaba vinculado con el FC Barcelona\nmediante un contrato que no se extinguió hasta el 4 de agosto"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c4e7d1745b5153bdd903b71ec4cb609bbb31259ca5faf461ce536fb383e4a0d2"
     }
   ],
   "issues": [
@@ -183,9 +278,33 @@
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
-        "anchor-legacy-evidence-008"
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "Corresponde al contribuyente acreditar residencia fiscal en otro Estado para que las ausencias no se computen como esporádicas (art.9 LIRPF y jurisprudencia citada).",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -396,7 +515,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probado que hasta el 4-8-2011 el jugador mantenía vínculo laboral y percepción de salario con FC Barcelona (centro económico en España) y que la salida por la Copa América fue esporádica. Al no aportar certificado de residencia argentino ni prueba cualificada de tributación mundial en Argentina, no desvirtúa la presunción de residencia en España; por tanto se declara residente y obligado al IRPF.",
         "consequences": [],

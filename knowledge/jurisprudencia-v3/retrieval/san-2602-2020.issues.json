@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-2602-2020.case.json",
-    "case_sha256": "6bfae3574f072c12f46d45b0640d9dba5517f5b02122cf3e1a0d5dcec09dd1a9",
+    "case_sha256": "9ee876f4f5e725112a0500a0a9a88f28ccb9e17fa69fd9fb42b604e36bd03e0b",
     "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El art. 9 LIRPF computa las ausencias como presencia en España salvo que el contribuyente acredite su residencia fiscal en otro país; por tanto correspondía al recurrente probar residencia fiscal en Argentina (certificado u otra prueba acreditativa).",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -288,7 +312,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.",
         "consequences": [],
@@ -321,7 +345,14 @@
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
-          "anchor-legacy-evidence-008"
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-004",
+          "anchor-legacy-reasoning-005"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -357,7 +388,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\ncontrato FC Barcelona 18-11-2010\nContrato laboral suscrito 18-11-2010 y extinción notificada con efectos 4-08-2011, constando que estaba bajo disciplina del club hasta dicha fecha.\nAcreditar vinculación contractual y que el centro de intereses económicos radicaba en España hasta 4-8-2011\nACCEPTED\nAcredita vínculo contractual y demuestra que el núcleo económico estaba en España hasta la fecha de extinción\nnómina julio 2011 (doc. 2)\nNómina del mes de julio de 2011 aportada (doc. 2), que evidencia percepción de salario hasta la extinción contractual.\nDemostrar percepción de retribución en España durante 2011, reforzando centro de intereses económicos en España\nACCEPTED\nPrueba fehaciente de que percibía salario en España hasta la fecha indicada, reforzando la vinculación económica\ndatos administrativos sobre cónyuge e hijos\nDatos en poder de la Administración que constatan que el cónyuge y los hijos han residido en España en el ejercicio 2011.\nAcreditar la presunción prevista en el art.9 LIRPF respecto de la residencia habitual por núcleo familiar\nACCEPTED\nCorrobora la presunción legal; el recurrente no desvirtuó suficientemente esta circunstancia\npasaporte con sello 31-05-2011\nPasaporte con sello de entrada en Argentina el 31 de mayo de 2011; alega que no regresó a España.\nDemostrar ausencia física desde 31-05-2011 y, por tanto, no permanencia >183 días en España\nREJECTED\nEl Tribunal considera la salida como ausencia esporádica vinculada a obligaciones deportivas; por tanto el sello no basta para acreditar residencia fiscal en Argentina\ninscripción AFIP (desde 2003)\nInscripción en la AFIP donde consta inscrito desde 2003 (primera declaración en 2003).\nAcreditar tributación o residencia fiscal en Argentina\nREJECTED\nLa inscripción no acredita que en 2011 tributara en Argentina por su renta mundial; no prueba condición de residente fiscal en ese ejercicio\ncertificados del Contador Público N. Elizari (27-09-2012 y 19-11-2011)\nDocumento del Contador que certifica haber presentado declaraciones en Argentina y certifica residencia fiscal en Argentina para 2011 (emitido 19-11-2011 y 27-09-2012).\nAcreditar residencia fiscal en Argentina en 2011\nREJECTED\nEl emisor no es la autoridad fiscal competente; el Tribunal considera que carece de fuerza probatoria suficiente frente a la falta del certificado oficial\nmodelo 210 presentado 02-07-2011\nDeclaración por el Impuesto sobre la Renta de no Residentes (modelo 210) presentada el 2 de julio de 2011 por la que solicitó devolución por 743.039,41 €.\nAcreditar tributación como no residente y solicitar devolución por aplicación del IRNR\nREJECTED\nLa presentación del formulario no basta para acreditar residencia fiscal en otro Estado cuando no se prueba tributación allí en 2011; la devolución fue denegada por la existencia de liquidación por IRPF\ninformaciones periodísticas en Internet\nDiversas informaciones periodísticas publicadas en Internet sobre acontecimientos deportivos del recurrente.\nAportar indicios sobre desplazamientos y trayectoria profesional\nREJECTED\nPrueba de escaso valor probatorio para acreditar residencia fiscal; informaciones periodísticas no suplen necesidad de certificado oficial\nLa Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.\nLa Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.\nNOT_DECIDED\n2011\nConsta en dicha Resolución que el demandante fue jugador\nsegún contrato suscrito\nel 18 de noviembre de 2010\nextinción del contrato con\nefectos de 4 de agosto de 2011\nnómina del mes de julio de 2011, aportada como doc. 2 de la demanda\nconsta que el cónyuge e hijos han residido en España en el ejercicio 2011\ncon sello de entrada en Argentina el 31 de mayo de 2011\npresenta inscripción en la AFIP\ndonde consta inscrito desde\n2003\nDocumento emitido por el Contador Público\ncertiﬁca que el Sr.\nFeliciano  ha presentado la Declaración Jurada\nEl 2 de julio de 2011, el demandante presentó declaración por el IRNR, que dio como resultado una cantidad a\ndevolver de 743.039,41\nDiversas informaciones periodísticas publicadas en Internet, en relación a los acaecimientos deportivos del\nrecurrente",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\ncontrato FC Barcelona 18-11-2010\nContrato laboral suscrito 18-11-2010 y extinción notificada con efectos 4-08-2011, constando que estaba bajo disciplina del club hasta dicha fecha.\nAcreditar vinculación contractual y que el centro de intereses económicos radicaba en España hasta 4-8-2011\nACCEPTED\nAcredita vínculo contractual y demuestra que el núcleo económico estaba en España hasta la fecha de extinción\nnómina julio 2011 (doc. 2)\nNómina del mes de julio de 2011 aportada (doc. 2), que evidencia percepción de salario hasta la extinción contractual.\nDemostrar percepción de retribución en España durante 2011, reforzando centro de intereses económicos en España\nACCEPTED\nPrueba fehaciente de que percibía salario en España hasta la fecha indicada, reforzando la vinculación económica\ndatos administrativos sobre cónyuge e hijos\nDatos en poder de la Administración que constatan que el cónyuge y los hijos han residido en España en el ejercicio 2011.\nAcreditar la presunción prevista en el art.9 LIRPF respecto de la residencia habitual por núcleo familiar\nACCEPTED\nCorrobora la presunción legal; el recurrente no desvirtuó suficientemente esta circunstancia\npasaporte con sello 31-05-2011\nPasaporte con sello de entrada en Argentina el 31 de mayo de 2011; alega que no regresó a España.\nDemostrar ausencia física desde 31-05-2011 y, por tanto, no permanencia >183 días en España\nREJECTED\nEl Tribunal considera la salida como ausencia esporádica vinculada a obligaciones deportivas; por tanto el sello no basta para acreditar residencia fiscal en Argentina\ninscripción AFIP (desde 2003)\nInscripción en la AFIP donde consta inscrito desde 2003 (primera declaración en 2003).\nAcreditar tributación o residencia fiscal en Argentina\nREJECTED\nLa inscripción no acredita que en 2011 tributara en Argentina por su renta mundial; no prueba condición de residente fiscal en ese ejercicio\ncertificados del Contador Público N. Elizari (27-09-2012 y 19-11-2011)\nDocumento del Contador que certifica haber presentado declaraciones en Argentina y certifica residencia fiscal en Argentina para 2011 (emitido 19-11-2011 y 27-09-2012).\nAcreditar residencia fiscal en Argentina en 2011\nREJECTED\nEl emisor no es la autoridad fiscal competente; el Tribunal considera que carece de fuerza probatoria suficiente frente a la falta del certificado oficial\nmodelo 210 presentado 02-07-2011\nDeclaración por el Impuesto sobre la Renta de no Residentes (modelo 210) presentada el 2 de julio de 2011 por la que solicitó devolución por 743.039,41 €.\nAcreditar tributación como no residente y solicitar devolución por aplicación del IRNR\nREJECTED\nLa presentación del formulario no basta para acreditar residencia fiscal en otro Estado cuando no se prueba tributación allí en 2011; la devolución fue denegada por la existencia de liquidación por IRPF\ninformaciones periodísticas en Internet\nDiversas informaciones periodísticas publicadas en Internet sobre acontecimientos deportivos del recurrente.\nAportar indicios sobre desplazamientos y trayectoria profesional\nREJECTED\nPrueba de escaso valor probatorio para acreditar residencia fiscal; informaciones periodísticas no suplen necesidad de certificado oficial\nLa Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.\nLa Sala estima probada la vinculación económica con España hasta 4-8-2011 (contrato y percepción de nómina) y considera la salida para la Copa América como ausencia esporádica. Al no acreditarse de forma convincente la residencia en Argentina (falta de certificado de la autoridad fiscal y pruebas sustitutorias insuficientes), concluye que el recurrente residió fiscalmente en España en 2011 y debía tributar por IRPF.\nNOT_DECIDED\n2011\nEl art. 9 LIRPF computa las ausencias como presencia en España salvo que el contribuyente acredite su residencia fiscal en otro país; por tanto correspondía al recurrente probar residencia fiscal en Argentina (certificado u otra prueba acreditativa).\nLa carga probatoria no se consideró cumplida.\nConsta en dicha Resolución que el demandante fue jugador\nsegún contrato suscrito\nel 18 de noviembre de 2010\nextinción del contrato con\nefectos de 4 de agosto de 2011\nnómina del mes de julio de 2011, aportada como doc. 2 de la demanda\nconsta que el cónyuge e hijos han residido en España en el ejercicio 2011\ncon sello de entrada en Argentina el 31 de mayo de 2011\npresenta inscripción en la AFIP\ndonde consta inscrito desde\n2003\nDocumento emitido por el Contador Público\ncertiﬁca que el Sr.\nFeliciano  ha presentado la Declaración Jurada\nEl 2 de julio de 2011, el demandante presentó declaración por el IRNR, que dio como resultado una cantidad a\ndevolver de 743.039,41\nDiversas informaciones periodísticas publicadas en Internet, en relación a los acaecimientos deportivos del\nrecurrente\ncon sello de entrada en Argentina el 31 de mayo de 2011\ninscripción en la AFIP\ndonde consta inscrito desde\n2003, cuando presentó su primera declaración\nEl 2 de julio de 2011, el demandante presentó declaración por el IRNR\ncantidad a\ndevolver de 743.039,41\nel Sr.  Feliciano  no aportó el certiﬁcado de residencia ﬁscal expedido por la autoridad ﬁscal Argentina\nno ha justiﬁcado su imposibilidad de hacerlo\nEl artículo 9 Ley 35/2006\ndetermina:\n\"1. Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\na) Que permanezca más de 183 días\nla documentación aportada en sustitución no es suﬁciente para acreditar esa\nresidencia ﬁscal en Argentina\nEl Tribunal Supremo ha declarado\nla llamada legal a\nlas ausencias esporádicas tiene un objeto y ﬁnalidad bien precisos",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -554,6 +585,202 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 377,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 322,
+              "verbatim_text": "con sello de entrada en Argentina el 31 de mayo de 2011"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1743,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1721,
+              "verbatim_text": "inscripción en la AFIP"
+            },
+            {
+              "end_offset": 1839,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1767,
+              "verbatim_text": "donde consta inscrito desde\n2003, cuando presentó su primera declaración"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1447,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1378,
+              "verbatim_text": "El 2 de julio de 2011, el demandante presentó declaración por el IRNR"
+            },
+            {
+              "end_offset": 1509,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 1476,
+              "verbatim_text": "cantidad a\ndevolver de 743.039,41"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2984,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2880,
+              "verbatim_text": "el Sr.  Feliciano  no aportó el certiﬁcado de residencia ﬁscal expedido por la autoridad ﬁscal Argentina"
+            },
+            {
+              "end_offset": 3036,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2992,
+              "verbatim_text": "no ha justiﬁcado su imposibilidad de hacerlo"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1479,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1454,
+              "verbatim_text": "El artículo 9 Ley 35/2006"
+            },
+            {
+              "end_offset": 1658,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1552,
+              "verbatim_text": "determina:\n\"1. Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            },
+            {
+              "end_offset": 1743,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 1710,
+              "verbatim_text": "a) Que permanezca más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3226,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3121,
+              "verbatim_text": "la documentación aportada en sustitución no es suﬁciente para acreditar esa\nresidencia ﬁscal en Argentina"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-005",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3611,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3579,
+              "verbatim_text": "El Tribunal Supremo ha declarado"
+            },
+            {
+              "end_offset": 4087,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 4002,
+              "verbatim_text": "la llamada legal a\nlas ausencias esporádicas tiene un objeto y ﬁnalidad bien precisos"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

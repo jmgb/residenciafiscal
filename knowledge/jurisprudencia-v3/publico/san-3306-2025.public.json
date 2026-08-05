@@ -113,6 +113,149 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "no resuelven la misma cuestión litigiosa"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "se refería a una beca para Kuwait, país con el que no existía Convenio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "En cualquier caso, de haber tributado allí, la demanda lo habría aportado"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "La permanencia fuera del territorio\nnacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "En cualquier caso, de haber tributado allí, la demanda lo habría aportado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-005",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "no resuelven la misma cuestión litigiosa, por lo que ni\nconstituían un precedente"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "ni, por no seguirlas, se produciría\nla vulneración"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cc83f1021914ec8f562526c092aa937850d8a6e3245625f806699fa479620a8d"
     }
   ],
   "issues": [
@@ -123,9 +266,35 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-004",
+        "anchor-legacy-reasoning-005"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La parte actora debía aportar pruebas de la condición exigida para la exención o de tributación en el país extranjero (no aportadas)",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -271,7 +440,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala constata hechos no discutidos (beca pagada por ICEX; en 2015 el recurrente no era residente en España sino en Rusia; prestó servicios en la Oficina Económica y Comercial). Aplicando el artículo 20 del CDI España‑Rusia y el artículo 13.1.c)2 TRLIRNR, entiende que esos rendimientos no pueden gravarse en Rusia y se califican como obtenidos en España sujetos al IRNR. Además, fija doctrina interpretativa sobre 183 días/ausencias esporádicas: la estancia fuera >183 días por beca no es ausencia esporádica y la comprobación debe ser objetiva.",
         "consequences": [],

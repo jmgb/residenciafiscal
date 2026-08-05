@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-2347-2022.case.json",
-    "case_sha256": "32c321dc1bc4da051508aaa32c1928f68ff20393de115d535f0847a923f1654a",
+    "case_sha256": "c6cb7dcad59288e8bbc7cd562e7c44adb3f6fc52c77c98d9a40a0e84255e5fbd",
     "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Administración debe aportar indicios de residencia en España; si son suficientes, corresponde al obligado demostrar residencia en otro Estado.",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -431,7 +455,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.",
         "consequences": [],
@@ -469,7 +493,12 @@
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
           "anchor-legacy-evidence-012",
-          "anchor-legacy-evidence-013"
+          "anchor-legacy-evidence-013",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -510,7 +539,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nconstancia gráfica en internet\nConstancia gráfica de intensa vida pública vinculada a actos sociales a través de internet.\nAcreditar presencia y vida pública en España\nACCEPTED\nCorroborado por otros indicios concordantes\nrevisiones médicas esposa\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona.\nAcreditar núcleo familiar y presencia familiar en España\nACCEPTED\nCorroborado por otros indicios concordantes\nreservas viajes y hoteles\nReservas de viajes y hoteles a nombre del matrimonio que exteriorizan su presencia en determinadas fechas en España.\nDemostrar estancias efectivas en España\nACCEPTED\nAporta indicio directo de estancias concordante con otros medios\ninmuebles a nombre de la esposa\nIdentificados hasta cinco inmuebles a nombre de su esposa con consumos eléctricos en algunos de ellos.\nAcreditar disponibilidad y uso de vivienda en España\nACCEPTED\nAcredita uso efectivo de vivienda y se considera prueba decisiva junto a consumos\ninmuebles acceso por sociedades\nAcceso a inmuebles a través de sociedades propiedad de la esposa, numerosas fincas en Avenida y zona de golf con consumos eléctricos.\nAcreditar patrimonio y uso de inmuebles en España\nACCEPTED\nCorroborado por consumos y demás indicios patrimoniales\nconsumos y entregas (gasoil, Nespresso, facturas)\nEntregas de gasóleo bonificado en domicilio, facturaciones a nombre del contribuyente, entrega de cápsulas Nespresso en domicilio.\nDemostrar vida cotidiana y uso efectivo de domicilio en España\nACCEPTED\nAcredita vida cotidiana en España y es valorada como prueba fehaciente\ncargos en sociedades y fundaciones\nParticipación en órganos de gobierno de Banesto y otras sociedades; figura como administrador de diversas fundaciones.\nAcreditar centro de intereses económicos y actividad gestionadora en España\nACCEPTED\nIndicio significativo del núcleo económico en España\nseguimiento cuentas bancarias\nMinucioso seguimiento de las cuentas bancarias por la Inspección.\nAcreditar movimientos económicos y origen/destino de fondos vinculados a España\nACCEPTED\nCorroborado con otros indicios patrimoniales\npagos y cuotas locales\nPago de seguros, seguridad, cuotas de clubs deportivos, golf, polo, fútbol o gimnasios, la mayoría en provincia de Barcelona.\nAcreditar arraigo social y personal en España\nACCEPTED\nRefuerza el conjunto indicios sobre estancia y arraigo en España\nCarte de resident (Mónaco)\nCarte de resident del Principado de Mónaco aportada por el recurrente.\nAcreditar residencia fiscal y permanencia en Mónaco\nREJECTED\nPrueba insuficiente para acreditar residencia efectiva o permanencia >183 días en Mónaco\ncontratos privados de alquiler (Mónaco)\nCopia de tres contratos privados de alquiler fechados en 2002, 2005 y 2008.\nAcreditar morada habitual en Mónaco\nREJECTED\nPosesión o alquiler de inmueble no prueba por sí sola ocupación efectiva como residencia habitual\ncertificados consulares (Marsella)\nCopias de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular.\nAcreditar inscripción y residencia administrativa en el extranjero\nREJECTED\nCertificados administrativos insuficientes para acreditar residencia efectiva o permanencia >183 días\npasaporte español (copia)\nCopia de pasaporte español aportada en expediente.\nComplementar documentación de identidad y residencia\nREJECTED\nDocumental identificativa sin valor para justificar residencia efectiva en Mónaco\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nNOT_DECIDED\n2007\nExistencia de una intensa vida pública vinculada a actos sociales de los que existe constancia gráﬁca a\ntravés de internet\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona\nSe han\nobtenido reservas de viajes y hoteles a nombre del matrimonio\nidentiﬁcado hasta un total de cinco diferentes inmuebles a nombre de su\nesposa en los que se ha observado consumos eléctricos\nA través de determinadas\nsociedades\nel matrimonio ha tenido acceso a determinados inmuebles\nEntregas de gasóleo boniﬁcado \"en el domicilio del Sr.  Teresa \", facturaciones realizadas a D.\nCasiano\nentrega de cápsulas Nespresso en el domicilio\nParticipación en los órganos de gobierno de Banesto\nFigura como administrador de\nlas fundaciones\nMinucioso seguimiento de las cuentas bancarias\nPago de seguros,\nseguridad, cuotas de clubs deportivos\nla mayoría ubicados en la provincia\nde Barcelona\nCarte de resident del principado de Mónaco\nCopia de tres contratos privados de alquiler entre el Sr.  Teresa  y  DIRECCION012 , fechados\nCopia de certiﬁcados de residencia expedidos por el Consul General en Marsella de inscripción en el registro\nconsular de residente\nCopia de pasaporte español",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_PRESUNCION_FAMILIA\nconstancia gráfica en internet\nConstancia gráfica de intensa vida pública vinculada a actos sociales a través de internet.\nAcreditar presencia y vida pública en España\nACCEPTED\nCorroborado por otros indicios concordantes\nrevisiones médicas esposa\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona.\nAcreditar núcleo familiar y presencia familiar en España\nACCEPTED\nCorroborado por otros indicios concordantes\nreservas viajes y hoteles\nReservas de viajes y hoteles a nombre del matrimonio que exteriorizan su presencia en determinadas fechas en España.\nDemostrar estancias efectivas en España\nACCEPTED\nAporta indicio directo de estancias concordante con otros medios\ninmuebles a nombre de la esposa\nIdentificados hasta cinco inmuebles a nombre de su esposa con consumos eléctricos en algunos de ellos.\nAcreditar disponibilidad y uso de vivienda en España\nACCEPTED\nAcredita uso efectivo de vivienda y se considera prueba decisiva junto a consumos\ninmuebles acceso por sociedades\nAcceso a inmuebles a través de sociedades propiedad de la esposa, numerosas fincas en Avenida y zona de golf con consumos eléctricos.\nAcreditar patrimonio y uso de inmuebles en España\nACCEPTED\nCorroborado por consumos y demás indicios patrimoniales\nconsumos y entregas (gasoil, Nespresso, facturas)\nEntregas de gasóleo bonificado en domicilio, facturaciones a nombre del contribuyente, entrega de cápsulas Nespresso en domicilio.\nDemostrar vida cotidiana y uso efectivo de domicilio en España\nACCEPTED\nAcredita vida cotidiana en España y es valorada como prueba fehaciente\ncargos en sociedades y fundaciones\nParticipación en órganos de gobierno de Banesto y otras sociedades; figura como administrador de diversas fundaciones.\nAcreditar centro de intereses económicos y actividad gestionadora en España\nACCEPTED\nIndicio significativo del núcleo económico en España\nseguimiento cuentas bancarias\nMinucioso seguimiento de las cuentas bancarias por la Inspección.\nAcreditar movimientos económicos y origen/destino de fondos vinculados a España\nACCEPTED\nCorroborado con otros indicios patrimoniales\npagos y cuotas locales\nPago de seguros, seguridad, cuotas de clubs deportivos, golf, polo, fútbol o gimnasios, la mayoría en provincia de Barcelona.\nAcreditar arraigo social y personal en España\nACCEPTED\nRefuerza el conjunto indicios sobre estancia y arraigo en España\nCarte de resident (Mónaco)\nCarte de resident del Principado de Mónaco aportada por el recurrente.\nAcreditar residencia fiscal y permanencia en Mónaco\nREJECTED\nPrueba insuficiente para acreditar residencia efectiva o permanencia >183 días en Mónaco\ncontratos privados de alquiler (Mónaco)\nCopia de tres contratos privados de alquiler fechados en 2002, 2005 y 2008.\nAcreditar morada habitual en Mónaco\nREJECTED\nPosesión o alquiler de inmueble no prueba por sí sola ocupación efectiva como residencia habitual\ncertificados consulares (Marsella)\nCopias de certificados de residencia expedidos por el Cónsul General en Marsella de inscripción en el registro consular.\nAcreditar inscripción y residencia administrativa en el extranjero\nREJECTED\nCertificados administrativos insuficientes para acreditar residencia efectiva o permanencia >183 días\npasaporte español (copia)\nCopia de pasaporte español aportada en expediente.\nComplementar documentación de identidad y residencia\nREJECTED\nDocumental identificativa sin valor para justificar residencia efectiva en Mónaco\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nLa Sala considera acreditados indicios concordantes de estancia y actividad en España (reservas, consumos, inmuebles usados, cargos societarios). Aplica el art. 9 LIRPF (183 días y centro de intereses económicos) y estima que la documentación aportada por el recurrente sobre Mónaco es insuficiente, por lo que prevalecen los indicios de la Inspección y se confirma la residencia fiscal en España.\nNOT_DECIDED\n2007\nLa Administración debe aportar indicios de residencia en España; si son suficientes, corresponde al obligado demostrar residencia en otro Estado.\nLa carga probatoria no se consideró cumplida.\nExistencia de una intensa vida pública vinculada a actos sociales de los que existe constancia gráﬁca a\ntravés de internet\nConsta la presencia de su esposa en algunas revisiones médicas llevadas a cabo en Barcelona\nSe han\nobtenido reservas de viajes y hoteles a nombre del matrimonio\nidentiﬁcado hasta un total de cinco diferentes inmuebles a nombre de su\nesposa en los que se ha observado consumos eléctricos\nA través de determinadas\nsociedades\nel matrimonio ha tenido acceso a determinados inmuebles\nEntregas de gasóleo boniﬁcado \"en el domicilio del Sr.  Teresa \", facturaciones realizadas a D.\nCasiano\nentrega de cápsulas Nespresso en el domicilio\nParticipación en los órganos de gobierno de Banesto\nFigura como administrador de\nlas fundaciones\nMinucioso seguimiento de las cuentas bancarias\nPago de seguros,\nseguridad, cuotas de clubs deportivos\nla mayoría ubicados en la provincia\nde Barcelona\nCarte de resident del principado de Mónaco\nCopia de tres contratos privados de alquiler entre el Sr.  Teresa  y  DIRECCION012 , fechados\nCopia de certiﬁcados de residencia expedidos por el Consul General en Marsella de inscripción en el registro\nconsular de residente\nCopia de pasaporte español\nDicha documentación es, a juicio de esta Sala, insuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco\nel mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por mas de 183 días\ncorresponde al obligado tributario, demostrar su residencia en otro Estado\nSe entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\npermanezca más de 183 días\nexisten indicios mas que\nsuﬁcientes para determinar que la ahora recurrente reside en España más de 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -817,6 +846,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4078,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3949,
+              "verbatim_text": "Dicha documentación es, a juicio de esta Sala, insuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4647,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 4516,
+              "verbatim_text": "el mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por mas de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5027,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 4953,
+              "verbatim_text": "corresponde al obligado tributario, demostrar su residencia en otro Estado"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4179,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 4088,
+              "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            },
+            {
+              "end_offset": 4264,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 4238,
+              "verbatim_text": "permanezca más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6bd84ad1fe55ba2bc830e787bf693291720ba19a8e313276a9a1576eb699201b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2659,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 2551,
+              "verbatim_text": "existen indicios mas que\nsuﬁcientes para determinar que la ahora recurrente reside en España más de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

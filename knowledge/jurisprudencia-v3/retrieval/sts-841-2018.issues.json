@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-841-2018.case.json",
-    "case_sha256": "463c5c12261c80177c7c2f8df0a0bb08be0c3e93fac41d430bfb696ae6095a72",
+    "case_sha256": "a66afb5e4f172cc8350bc8d2e38a993158ad16afe8c23d1c5a585f818b65381b",
     "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Oficina de Gestión denegó la devolución por no haber aportado el certificado acreditativo de residencia fiscal en otro Estado, exigiendo así prueba del contribuyente",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -195,7 +219,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado y reconocido por la Administración que la recurrente permaneció fuera de España más de 183 días en 2011; aplica el criterio objetivo de permanencia (>183 días) y concluye que una estancia por beca no constituye ausencia esporádica, por lo que no era necesaria la aportación de certificado de residencia fiscal en el extranjero en este caso.",
         "consequences": [],
@@ -225,7 +249,12 @@
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
-          "anchor-legacy-evidence-005"
+          "anchor-legacy-evidence-005",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -256,7 +285,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta de resolución / liquidación provisional denegatoria\nPropuesta de resolución y liquidación provisional denegatoria que fundamenta la denegación en la falta de certificado de residencia en otro país y ausencia de prueba de tributación en destino\nSustentar la obligación de tributar en España (denegar la devolución)\nREJECTED\nNo se ajusta a la interpretación legal dada por el Tribunal; la exigencia de certificado no era necesaria en el supuesto decidido\nreconocimiento administrativo de permanencia >183 días\nEn el expediente consta, y la Administración lo reconoció, que la recurrente permaneció fuera de España más de 183 días durante 2011\nAcreditar permanencia superior a 183 días en España (o en su caso fuera de España para excluir residencia en España)\nACCEPTED\nEl Tribunal considera ese hecho como cierto y reconocido por la propia Administración; acredita el hecho de forma fehaciente\ncontrato ICEX 1-10-2010 a 30-9-2011\nContrato por el que la recurrente desarrolló su labor en la Oficina Económica y Comercial de España en Berna durante el periodo indicado (hecho no controvertido)\nDemostrar que la estancia en el extranjero obedecía al desarrollo de la beca y prueba de permanencia fuera de España\nACCEPTED\nContrasta y corrobora la permanencia continuada y la finalidad de la estancia; considerada por la Sala como indicio objetivo relevante\nmodelo 210 (solicitud devolución) 19-02-2015\nPresentación del modelo 210 solicitando la devolución de las cantidades retenidas por considerar no residente fiscal en España\nAcreditar la condición de no residente y solicitar devolución de retenciones\nPARTIAL\nActo procesal que evidencia la pretensión del contribuyente; útil pero no decisivo por sí solo\nresolución TEAR 23-10-2015\nResolución del Tribunal Económico-Administrativo Regional que desestimó la reclamación previa del contribuyente\nRegistro de la actuación administrativa previa y antecedentes del litigio\nUNRESOLVED\nEl Tribunal considera probado y reconocido por la Administración que la recurrente permaneció fuera de España más de 183 días en 2011; aplica el criterio objetivo de permanencia (>183 días) y concluye que una estancia por beca no constituye ausencia esporádica, por lo que no era necesaria la aportación de certificado de residencia fiscal en el extranjero en este caso.\nEl Tribunal considera probado y reconocido por la Administración que la recurrente permaneció fuera de España más de 183 días en 2011; aplica el criterio objetivo de permanencia (>183 días) y concluye que una estancia por beca no constituye ausencia esporádica, por lo que no era necesaria la aportación de certificado de residencia fiscal en el extranjero en este caso.\nNOT_DECIDED\n2011\ndenegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España\nal no haber aportado certiﬁcado\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días\nsuscribió un contrato, conforme al cual desarrollaría su labor, desde el 1 de octubre de 2010 hasta el\n30 de septiembre de 2011, en la Oﬁcina\nel contribuyente presentó\nel modelo 210\nsolicitó la devolución\nel\nmencionado órgano de revisión la desestimó mediante resolución de 23 de octubre de 2015",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta de resolución / liquidación provisional denegatoria\nPropuesta de resolución y liquidación provisional denegatoria que fundamenta la denegación en la falta de certificado de residencia en otro país y ausencia de prueba de tributación en destino\nSustentar la obligación de tributar en España (denegar la devolución)\nREJECTED\nNo se ajusta a la interpretación legal dada por el Tribunal; la exigencia de certificado no era necesaria en el supuesto decidido\nreconocimiento administrativo de permanencia >183 días\nEn el expediente consta, y la Administración lo reconoció, que la recurrente permaneció fuera de España más de 183 días durante 2011\nAcreditar permanencia superior a 183 días en España (o en su caso fuera de España para excluir residencia en España)\nACCEPTED\nEl Tribunal considera ese hecho como cierto y reconocido por la propia Administración; acredita el hecho de forma fehaciente\ncontrato ICEX 1-10-2010 a 30-9-2011\nContrato por el que la recurrente desarrolló su labor en la Oficina Económica y Comercial de España en Berna durante el periodo indicado (hecho no controvertido)\nDemostrar que la estancia en el extranjero obedecía al desarrollo de la beca y prueba de permanencia fuera de España\nACCEPTED\nContrasta y corrobora la permanencia continuada y la finalidad de la estancia; considerada por la Sala como indicio objetivo relevante\nmodelo 210 (solicitud devolución) 19-02-2015\nPresentación del modelo 210 solicitando la devolución de las cantidades retenidas por considerar no residente fiscal en España\nAcreditar la condición de no residente y solicitar devolución de retenciones\nPARTIAL\nActo procesal que evidencia la pretensión del contribuyente; útil pero no decisivo por sí solo\nresolución TEAR 23-10-2015\nResolución del Tribunal Económico-Administrativo Regional que desestimó la reclamación previa del contribuyente\nRegistro de la actuación administrativa previa y antecedentes del litigio\nUNRESOLVED\nEl Tribunal considera probado y reconocido por la Administración que la recurrente permaneció fuera de España más de 183 días en 2011; aplica el criterio objetivo de permanencia (>183 días) y concluye que una estancia por beca no constituye ausencia esporádica, por lo que no era necesaria la aportación de certificado de residencia fiscal en el extranjero en este caso.\nEl Tribunal considera probado y reconocido por la Administración que la recurrente permaneció fuera de España más de 183 días en 2011; aplica el criterio objetivo de permanencia (>183 días) y concluye que una estancia por beca no constituye ausencia esporádica, por lo que no era necesaria la aportación de certificado de residencia fiscal en el extranjero en este caso.\nNOT_DECIDED\n2011\nLa Oficina de Gestión denegó la devolución por no haber aportado el certificado acreditativo de residencia fiscal en otro Estado, exigiendo así prueba del contribuyente\nLa carga probatoria no se consideró cumplida.\ndenegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España\nal no haber aportado certiﬁcado\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días\nsuscribió un contrato, conforme al cual desarrollaría su labor, desde el 1 de octubre de 2010 hasta el\n30 de septiembre de 2011, en la Oﬁcina\nel contribuyente presentó\nel modelo 210\nsolicitó la devolución\nel\nmencionado órgano de revisión la desestimó mediante resolución de 23 de octubre de 2015\nno son requisitos exigibles\nla exigencia de acreditación de la residencia en otro país\ndenegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España\nal no haber aportado certiﬁcado acreditativo de residencia\nLa permanencia fuera del territorio nacional durante más de 183 días\nno puede considerarse como una ausencia esporádica\nexistió un hecho cierto y reconocido por la propia Administración\nque el recurrente ha permanecido fuera de España más de 183 días\nIdéntica cuestión\nha sido resuelta por esta misma Sala\nen las sentencias de 28 de noviembre\nde 2017",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -387,6 +416,158 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3471,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3444,
+              "verbatim_text": "no son requisitos exigibles"
+            },
+            {
+              "end_offset": 265,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 207,
+              "verbatim_text": "la exigencia de acreditación de la residencia en otro país"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2359,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2272,
+              "verbatim_text": "denegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España"
+            },
+            {
+              "end_offset": 2430,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2372,
+              "verbatim_text": "al no haber aportado certiﬁcado acreditativo de residencia"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3075,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3007,
+              "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+            },
+            {
+              "end_offset": 3209,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3159,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1514,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1449,
+              "verbatim_text": "existió un hecho cierto y reconocido por la propia Administración"
+            },
+            {
+              "end_offset": 1590,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1526,
+              "verbatim_text": "que el recurrente ha permanecido fuera de España más de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6b4e9058e85592a2df3192d4457c69488369d89492165b39ad537c4181892f12"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1503,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1486,
+              "verbatim_text": "Idéntica cuestión"
+            },
+            {
+              "end_offset": 1753,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1717,
+              "verbatim_text": "ha sido resuelta por esta misma Sala"
+            },
+            {
+              "end_offset": 1808,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1764,
+              "verbatim_text": "en las sentencias de 28 de noviembre\nde 2017"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -24,8 +24,18 @@ const structuredDraftSchema = {
       items: {
         type: 'object',
         additionalProperties: false,
-        required: ['text', 'evidence_ids'],
+        required: ['kind', 'text', 'evidence_ids'],
         properties: {
+          kind: {
+            type: 'string',
+            enum: [
+              'party_argument',
+              'judicial_assessment',
+              'legal_rule',
+              'holding',
+              'procedural_power',
+            ],
+          },
           text: { type: 'string' },
           evidence_ids: {
             type: 'array',
@@ -60,6 +70,13 @@ const isStructuredDraft = (value: unknown): value is StructuredDraft => {
       (item) =>
         item &&
         typeof item === 'object' &&
+        [
+          'party_argument',
+          'judicial_assessment',
+          'legal_rule',
+          'holding',
+          'procedural_power',
+        ].includes(String((item as { kind?: unknown }).kind)) &&
         typeof (item as { text?: unknown }).text === 'string' &&
         Array.isArray((item as { evidence_ids?: unknown }).evidence_ids) &&
         ((item as { evidence_ids: unknown[] }).evidence_ids as unknown[]).every(

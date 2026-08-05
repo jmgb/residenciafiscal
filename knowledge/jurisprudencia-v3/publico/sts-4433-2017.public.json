@@ -182,6 +182,136 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "ausencias esporádicas"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "la certiﬁcación de la residencia ﬁscal en otro país"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "deviene superﬂua"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no son datos que puedan servir"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "para delimitar\nsi una ausencia es esporádica o no"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "no cabe reputar ocasional o esporádica una ausencia"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "por periodo superior a 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "consecuencia del disfrute de una beca de estudios"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "denegó la devolución"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "no haber aportado certiﬁcado"
+        },
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "ni haber acreditado la tributación"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f28463395dd1cebb5d9e2ba85706872ba461a1185950d66a4d0754c398c27627"
     }
   ],
   "issues": [
@@ -193,9 +323,33 @@
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
-        "anchor-legacy-evidence-007"
+        "anchor-legacy-evidence-007",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La AEAT pretende mantener la residencia en España computando como «ausencias esporádicas» una estancia exterior >183 días; debe sostener esa calificación para negar la devolución.",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -372,7 +526,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El TS parte de hechos inmutables en casación: la contribuyente permaneció fuera de España más de 183 días en 2011 y 2012 por beca ICEX.\nInterpreta que «ausencias esporádicas» (art. 9.1.a LIRPF) tiene sentido accesorio para completar permanencia en España, y no puede abarcar ausencias prolongadas >183 días.\nRechaza un enfoque basado en voluntad/intención de retorno para calificar una ausencia como esporádica.\nAl no haber «ausencias esporádicas», resulta irrelevante exigir certificado de residencia fiscal en otro país para neutralizarlas.\nConfirma la sentencia de instancia y la devolución de retenciones.",
         "consequences": [],

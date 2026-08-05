@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 5151/2019 este supuesto de residencia: El tribunal estima que el contribuyente estuvo vinculado contractualmente al FC Barcelona hasta el 4-8-2011 (centro de intereses económicos en España) y que la ausencia por la Copa América es esporádica, por lo que computa días y supera 183?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

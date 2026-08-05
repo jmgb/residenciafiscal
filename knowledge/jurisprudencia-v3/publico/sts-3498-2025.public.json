@@ -297,6 +297,136 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no es en absoluto cierto"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "dispusiera de una vivienda\nen el Reino Unido"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "la mera indicación del domicilio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no es verosímil, que el Sr.  Fausto  dispusiera de una vivienda\nen el Reino Unido pues"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "la mera indicación del domicilio"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "la validez de un\ncertiﬁcado"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "debe ser presumida, no pudiendo ser su contenido rechazado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "el primero de los criterios resulta decisivo para dilucidar el litigio"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "consta una vivienda en España"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "empadronamiento"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "alta en la\nasistencia sanitaria"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no desmiente"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "cbb02693a5f4408890bb981b80b5d7a03c1d62c47cee650d45689299f0e1080f"
     }
   ],
   "issues": [
@@ -313,9 +443,33 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "Al alegar residencia fiscal en Reino Unido y, en el marco del CDI, sostener que también tenía vivienda permanente allí, debía aportar al menos identificación/prueba de vivienda disponible en Reino Unido para activar el desempate a su favor.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_CDI_TIEBREAKER",
         "CRIT_183_DIAS",
@@ -609,7 +763,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "Aunque la Sala reprocha que AEAT y la instancia omitieran valorar formal/materialmente el certificado de residencia UK, mantiene el fallo porque, aplicando el art. 4.2 CDI, el primer criterio (vivienda permanente) resuelve el caso. Se da por probada la disponibilidad de vivienda en España y se constatan vínculos administrativos (padrón, asistencia sanitaria, vehículos) sin prueba en contrario. El contribuyente no identifica ni prueba vivienda en Reino Unido, por lo que no existe duda razonable para desplazar la residencia a UK.",
         "consequences": [],

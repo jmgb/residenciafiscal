@@ -158,6 +158,140 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "El propósito de retorno a España"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "no son datos"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "para delimitar\nsi una ausencia es esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "no cabe reputar ocasional o esporádica una ausencia"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "superior a 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "En 2011 la interesada permaneció en Tokio durante un período de nueve meses"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "sobrepasó con mucho\nel plazo de 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración o\nintensidad"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no puede considerarse como una ausencia esporádica a\nlos efectos del artículo 9.1.a"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "residió de manera permanente y efectiva en Tokio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
     }
   ],
   "issues": [
@@ -168,9 +302,34 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "Procedimiento de devolución: el solicitante debía acreditar hechos de no residencia (permanencia fuera >183 días) para excluir art. 9.1.a LIRPF por falta de permanencia en España.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -316,7 +475,8 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.",
         "consequences": [],

@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-5983-2024.case.json",
-    "case_sha256": "0994c44a6b7208970577adf1366240a13bf67d5e89d7897c4b3c9e30f540cc6a",
+    "case_sha256": "f7d23eccdfdb599f21d5951d79bdf782ab814fc12ef6ab44d4e2b4bbef2e9361",
     "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El art.9.1 establece que las ausencias se computan salvo que el contribuyente acredite residencia fiscal en otro país; por tanto corresponde al contribuyente probar su residencia en el extranjero.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -280,7 +304,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.",
         "consequences": [],
@@ -314,7 +338,13 @@
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
-          "anchor-legacy-evidence-008"
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-reasoning-004"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -351,7 +381,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nextracto Banco Sabadell - tarjetas\nInformación de Banco Sabadell sobre uso de tarjetas de crédito para reconstruir estancias en el extranjero: 23 días (2007), 15 días (2008), 1 día (2009).\nDemostrar permanencia superior a 183 días en España\nACCEPTED\nCorrobora número de días de estancia fuera y permite inferir permanencia en España; considerado decisivo.\nfacturas electricidad y agua Magna Marbella\nConsumos de energía eléctrica y agua que demuestran ocupación permanente del inmueble Magna Marbella.\nAcreditar uso efectivo y ocupación continuada de vivienda en España\nACCEPTED\nLos consumos son indicativos de ocupación permanente y no ocasional.\nnombramientos y participaciones en sociedades españolas\nListado de sociedades españolas en las que ejercía cargos (presidente, administrador, apoderado) y participaciones (Autos Zeus, Hipodromos Costa del Sol, etc.).\nAcreditar centro de intereses económicos y gestión desde España\nACCEPTED\nLa dirección y gestión de intereses económicos en España es indicio claro de residencia fiscal.\nextractos - ingresos en cuentas Banco Sabadell\nIngresos en cinco cuentas del Banco Sabadell por 1.683.528,19€ (2007); 285.095,05€ (2008); 140.968,65€ (2009) sin justificación de origen.\nAcreditar ganancias de patrimonio no justificadas y vinculación económica en España\nACCEPTED\nMovimientos bancarios relevantes sin justificación que respaldan la regularización; contribuye a acreditar actividad patrimonial en España.\nfactura compra vehículo PORSCHE 14/02/2008\nFactura de compra de Porsche 911 Cabriolet por 90.989,27€ con matrícula española.\nAcreditar aplicación de fondos y ganancias patrimoniales no justificadas\nACCEPTED\nCompra materializada en España sin acreditación del medio de pago; relevante para la regularización patrimonial.\ndeclaración domicilio Gibraltar (DIRECCION000)\nAlegación del recurrente de residencia en Gibraltar y domicilio en DIRECCION000, Gibraltar.\nAcreditar residencia fiscal en Gibraltar y excluir cómputo de días en España\nREJECTED\nAlegación no acreditada documentalmente; contradicha por indicios y registros en España.\nsentencia de incapacitación y tutela (19/11/2018)\nSentencia de incapacitación y tutela que indica matrimonio en 2010 y convivencia desde 1998 con Doña Justa, domiciliada en Marbella; tutela concedida a la esposa.\nAcreditar vínculo familiar y presunción de residencia en España\nACCEPTED\nDocumento aporta prueba directa de convivencia y domicilio del cónyuge en Marbella, reforzando presunción de residencia.\nalegación devolución transferencias (320.000€)\nAlegación del recurrente de que se devolvieron 320.000€ y que movimientos vinculados anulan ganancia patrimonial.\nDesvirtuar imputación de ganancia patrimonial\nREJECTED\nNo se acreditó la devolución ni la conexión entre transferencias; la Sala considera insuficiente la alegación.\nEl tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.\nEl tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.\nNOT_DECIDED\n2007\n2009\nde 23 días en 2007, 15 días en 2008 y 1 día en 2009\nconsumos de energía eléctrica y\nagua\ndemuestran una ocupación permanente\noperaba y gestionaba desde España sus intereses económicos\n1 .683.528,19\neuros en 2007; 285.095,05 euros en 2008, y 140.968,65 euros en 2009\nadquirido el 14\nde febrero de 2008, y por 90.989,27 euros, un vehículo\nalegó que era residente en Gibraltar\ndomicilio se hallaba en el  DIRECCION000 , Gibraltar\nse indica que el recurrente se casó en 2010 con Doña  Justa , con quien ya convivía\ndesde 1998\nNo se ha acreditado que se ha devuelto 320.000 euros",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nextracto Banco Sabadell - tarjetas\nInformación de Banco Sabadell sobre uso de tarjetas de crédito para reconstruir estancias en el extranjero: 23 días (2007), 15 días (2008), 1 día (2009).\nDemostrar permanencia superior a 183 días en España\nACCEPTED\nCorrobora número de días de estancia fuera y permite inferir permanencia en España; considerado decisivo.\nfacturas electricidad y agua Magna Marbella\nConsumos de energía eléctrica y agua que demuestran ocupación permanente del inmueble Magna Marbella.\nAcreditar uso efectivo y ocupación continuada de vivienda en España\nACCEPTED\nLos consumos son indicativos de ocupación permanente y no ocasional.\nnombramientos y participaciones en sociedades españolas\nListado de sociedades españolas en las que ejercía cargos (presidente, administrador, apoderado) y participaciones (Autos Zeus, Hipodromos Costa del Sol, etc.).\nAcreditar centro de intereses económicos y gestión desde España\nACCEPTED\nLa dirección y gestión de intereses económicos en España es indicio claro de residencia fiscal.\nextractos - ingresos en cuentas Banco Sabadell\nIngresos en cinco cuentas del Banco Sabadell por 1.683.528,19€ (2007); 285.095,05€ (2008); 140.968,65€ (2009) sin justificación de origen.\nAcreditar ganancias de patrimonio no justificadas y vinculación económica en España\nACCEPTED\nMovimientos bancarios relevantes sin justificación que respaldan la regularización; contribuye a acreditar actividad patrimonial en España.\nfactura compra vehículo PORSCHE 14/02/2008\nFactura de compra de Porsche 911 Cabriolet por 90.989,27€ con matrícula española.\nAcreditar aplicación de fondos y ganancias patrimoniales no justificadas\nACCEPTED\nCompra materializada en España sin acreditación del medio de pago; relevante para la regularización patrimonial.\ndeclaración domicilio Gibraltar (DIRECCION000)\nAlegación del recurrente de residencia en Gibraltar y domicilio en DIRECCION000, Gibraltar.\nAcreditar residencia fiscal en Gibraltar y excluir cómputo de días en España\nREJECTED\nAlegación no acreditada documentalmente; contradicha por indicios y registros en España.\nsentencia de incapacitación y tutela (19/11/2018)\nSentencia de incapacitación y tutela que indica matrimonio en 2010 y convivencia desde 1998 con Doña Justa, domiciliada en Marbella; tutela concedida a la esposa.\nAcreditar vínculo familiar y presunción de residencia en España\nACCEPTED\nDocumento aporta prueba directa de convivencia y domicilio del cónyuge en Marbella, reforzando presunción de residencia.\nalegación devolución transferencias (320.000€)\nAlegación del recurrente de que se devolvieron 320.000€ y que movimientos vinculados anulan ganancia patrimonial.\nDesvirtuar imputación de ganancia patrimonial\nREJECTED\nNo se acreditó la devolución ni la conexión entre transferencias; la Sala considera insuficiente la alegación.\nEl tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.\nEl tribunal considera probados: (i) la permanencia en España superior a 183 días por reconstrucción vía tarjetas y consumos; (ii) la disponibilidad y uso de varias viviendas en Marbella/Estepona con suministros a su nombre; (iii) la gestión de sus intereses económicos desde España. Dado que no acreditó residencia fiscal en Gibraltar, la Sala confirma que su residencia habitual fue en España.\nNOT_DECIDED\n2007\n2009\nEl art.9.1 establece que las ausencias se computan salvo que el contribuyente acredite residencia fiscal en otro país; por tanto corresponde al contribuyente probar su residencia en el extranjero.\nLa carga probatoria no se consideró cumplida.\nde 23 días en 2007, 15 días en 2008 y 1 día en 2009\nconsumos de energía eléctrica y\nagua\ndemuestran una ocupación permanente\noperaba y gestionaba desde España sus intereses económicos\n1 .683.528,19\neuros en 2007; 285.095,05 euros en 2008, y 140.968,65 euros en 2009\nadquirido el 14\nde febrero de 2008, y por 90.989,27 euros, un vehículo\nalegó que era residente en Gibraltar\ndomicilio se hallaba en el  DIRECCION000 , Gibraltar\nse indica que el recurrente se casó en 2010 con Doña  Justa , con quien ya convivía\ndesde 1998\nNo se ha acreditado que se ha devuelto 320.000 euros\nalegó que era residente en Gibraltar\ndomicilio se hallaba en el  DIRECCION000 , Gibraltar\nNo se ha acreditado que se ha devuelto 320.000 euros\nse computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país\nSe entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\nQue permanezca más de 183 días\nDe todos estos elementos probatorios concluimos que el recurrente era residente en España\nno puede fundarse la existencia de infracción en la mera referencia al resultado de la regularización",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -534,6 +564,152 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4262,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 4226,
+              "verbatim_text": "alegó que era residente en Gibraltar"
+            },
+            {
+              "end_offset": 4354,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 4302,
+              "verbatim_text": "domicilio se hallaba en el  DIRECCION000 , Gibraltar"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2583,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2531,
+              "verbatim_text": "No se ha acreditado que se ha devuelto 320.000 euros"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3278,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3169,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente acredite\nsu residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2969,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 2878,
+              "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            },
+            {
+              "end_offset": 3054,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 3024,
+              "verbatim_text": "Que permanezca más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3408,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3319,
+              "verbatim_text": "De todos estos elementos probatorios concluimos que el recurrente era residente en España"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "83a31fc22688bdbe96b30ac4966ab27353ecb85680c484ff1bcc5bd75a2d44f7"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5919,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 5818,
+              "verbatim_text": "no puede fundarse la existencia de infracción en la mera referencia al resultado de la regularización"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

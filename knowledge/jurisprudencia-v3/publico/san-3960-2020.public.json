@@ -128,6 +128,87 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Que en el año 2011 no existía en Kuwait impuesto sobre la renta obtenida por personas físicas"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "las rentas de trabajo satisfechas por una entidad residente en España a un no\nresidente, se encuentran sometidas a tributación en territorio nacional"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "entendemos probada la residencia de la recurrente en Kuwait a partir de\nabril de 2011"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "nota verbal de la embajada de Kuwait"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Se expide el presente certiﬁcado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "04d52939629a123cc10c51bafa2345e5187f42691311b3700faca224f83676f7"
     }
   ],
   "issues": [
@@ -138,9 +219,32 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "Corresponde al recurrente acreditar que en el país de residencia (Kuwait) existió tributación personal y universal sobre la renta percibida, para justificar la devolución por doble imposición.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -288,7 +392,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probada la residencia de la recurrente en Kuwait desde abril de 2011 (por sellos y contrato/traslado laboral) y acepta que estuvo menos de 183 días en España. No obstante, la cuestión principal es que las rentas abonadas por entidad residente en España constituyen hecho imponible del IRNR y, dado que Kuwait no gravó esas rentas en 2011, no concurrió doble imposición que obligue a la devolución.",
         "consequences": [],

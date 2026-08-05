@@ -242,6 +242,97 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "no resulta defendible la posición"
+        },
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "al\naﬁrmar la existencia de incongruencia extra petita"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "ante la falta de prueba eﬁciente postulada de la acusación -a cuyo cargo pesa su\nprobanza"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "Los hechos declarados probados en una sentencia penal no vinculan"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "cuando el juez"
+        },
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "llegue a una distinta apreciación"
+        },
+        {
+          "pageIndex": 21,
+          "printedPage": "21",
+          "verbatimText": "habrá de exponer las razones"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
     }
   ],
   "issues": [
@@ -258,9 +349,32 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "En la sentencia (AN transcrita) se afirma que la falta de prueba eficiente de la acusación impide negar la residencia en Suiza; el TS además exige motivación para evitar contradicción fáctica con sentencia penal.",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_CENTRO_INTERESES_ECONOMICOS",

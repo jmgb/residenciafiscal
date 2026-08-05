@@ -21,12 +21,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4219-2024.case.json",
-    "case_sha256": "debfc1bf6ca3196bd5679bc31b5d2cf93b5a36da95f5c2c393fc5617c767c6fd",
+    "case_sha256": "8f22efb193a62d6109137fe9dadfd530212693e5bae0aa7edddd72b74fa2600c",
     "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La sentencia de instancia aplica el art. 105 LGT y toma como premisa que lo relevante es la tributación de la renta mundial, no el certificado británico, además de partir de hechos aceptados en acta de conformidad.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -339,7 +363,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.",
         "consequences": [],
@@ -376,7 +400,13 @@
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
           "anchor-legacy-evidence-008",
-          "anchor-legacy-evidence-009"
+          "anchor-legacy-evidence-009",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-reasoning-004"
         ],
         "criterion_ids": [
           "CRIT_CENTRO_INTERESES_ECONOMICOS",
@@ -411,7 +441,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nacta de conformidad Inspección (14/07/2015)\nActa de conformidad del procedimiento inspector (inicio 26/11/2014), con hechos admitidos y referencia a contenido probatorio (págs. 53 y ss.).\nAcreditar que la contribuyente era residente fiscal en España en 2010-2013.\nACCEPTED\nLa instancia parte de los hechos del acta de conformidad y entiende ajustado a Derecho considerarla residente fiscal en España.\ncalificación residencia por intereses económicos (art. 9.1.b LIRPF)\nConclusión inspectora de residencia en España por radicar el núcleo principal de intereses económicos en España (art. 9.1.b LIRPF).\nFundamentar la residencia fiscal en España por centro de intereses económicos.\nACCEPTED\nLa sentencia identifica este como criterio aplicado por la Inspección para concluir residencia en España.\nrégimen fiscal RU 'remittance basis' (imposición limitada)\nHecho considerado probado/indiscutido: tributación en Reino Unido bajo “tributación por remesas” o “remittance basis”, calificada como imposición limitada no sujeta a renta mundial.\nSostener que, a efectos del art. 4.1 CDI, no es residente CDI en Reino Unido y no procede aplicar art. 4.2 (desempate).\nACCEPTED\nLa instancia considera “hecho indiscutible” la tributación limitada, con efecto excluyente para la residencia CDI en RU.\nrentas descubiertas: intereses cuentas y renta imputada inmueble\nRentas regularizadas: intereses de cuentas bancarias en España (rendimientos capital mobiliario) e imputación de rentas por tenencia de inmueble en municipio español.\nAcreditar existencia de rentas en España sometidas a IRPF por residencia y omisión de declaración.\nACCEPTED\nSe describen como rentas objeto de regularización tras considerar residencia en España.\nausencia de declaración IRPF en España 2010-2013\nHecho: no presentó declaración-liquidación IRPF en España en 2010-2013 por considerarse residente en Reino Unido.\nEvidenciar incumplimiento declarativo en España ligado a la controversia de residencia.\nACCEPTED\nConsta como hecho relevante del procedimiento y base de la regularización.\ninexistencia de procedimiento amistoso (MAP)\nReferencia de la instancia a la inexistencia de procedimiento amistoso instado por la recurrente.\nReforzar la tesis de la instancia sobre el planteamiento del conflicto de residencia y la falta de activación de mecanismos del CDI.\nPARTIAL\nSe menciona como elemento adicional (“amén... inexistencia de procedimiento amistoso”), sin aparecer como ratio exclusiva.\ncertificados de residencia fiscal Reino Unido (a efectos CDI)\nCertificados de residencia fiscal emitidos por la autoridad competente del Reino Unido “a efectos del Convenio”.\nAcreditar residencia fiscal en Reino Unido y existencia de doble residencia a resolver con art. 4.2 CDI.\nREJECTED\nLa instancia prioriza la tributación efectiva (renta mundial) y aplica el art. 4.1 CDI para excluir residencia CDI en RU pese al certificado.\ndeclaración en Reino Unido bajo 'remittance basis'\nDeclaración en Reino Unido bajo el régimen de “tributación por remesas” (remittance basis).\nSostener que era residente fiscal en RU y que el certificado británico debía respetarse.\nPARTIAL\nSe acepta el hecho de que tributó bajo ese régimen, pero se usa en contra para negar residencia CDI en RU conforme a art. 4.1 CDI.\ninvocación art. 4.2 CDI (reglas desempate)\nAlegación de que el caso era de doble residencia y debía resolverse aplicando los criterios de desempate del art. 4.2 CDI.\nForzar la aplicación del CDI (tie-breaker) en lugar de norma interna exclusivamente.\nUNRESOLVED\nLa instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.\nLa instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.\nNOT_DECIDED\n2010\n2011\n2012\n2013\nderiva de acta de\nconformidad, la recurrente se ha aquietado a los hechos descritos\nen aplicación de lo dispuesto en el art. 9.1.b\npor radicar en España el núcleo principal de\nsus intereses económicos\nremittance\nbasis\nEs un hecho indiscutible\ntributó en Reino Unido bajo\nlo que determina la\nno sujeción\npor toda su renta mundial\nrentas descubiertas, consistentes en unos intereses de cuentas bancarias\ny en una imputación de rentas\nde un bien inmueble\nEn los ejercicios comprobados, 2010 a 2013, la recurrente no presentó declaración\nliquidación por el IRPF\nde inexistencia de procedimiento amistoso\ninstado por la aquí recurrente\nvenía obligada a reconocer validez a los certiﬁcados de residencia\nemitidos\na efectos del Convenio\npaís en que presentó declaración\nbajo el régimen\ntributación por remesas\" o \"remittance\nbasis\nsupuesto de doble residencia que debía resolverse aplicando\nlos criterios de desempate ﬁjados en el art. 4.2 CDI",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nacta de conformidad Inspección (14/07/2015)\nActa de conformidad del procedimiento inspector (inicio 26/11/2014), con hechos admitidos y referencia a contenido probatorio (págs. 53 y ss.).\nAcreditar que la contribuyente era residente fiscal en España en 2010-2013.\nACCEPTED\nLa instancia parte de los hechos del acta de conformidad y entiende ajustado a Derecho considerarla residente fiscal en España.\ncalificación residencia por intereses económicos (art. 9.1.b LIRPF)\nConclusión inspectora de residencia en España por radicar el núcleo principal de intereses económicos en España (art. 9.1.b LIRPF).\nFundamentar la residencia fiscal en España por centro de intereses económicos.\nACCEPTED\nLa sentencia identifica este como criterio aplicado por la Inspección para concluir residencia en España.\nrégimen fiscal RU 'remittance basis' (imposición limitada)\nHecho considerado probado/indiscutido: tributación en Reino Unido bajo “tributación por remesas” o “remittance basis”, calificada como imposición limitada no sujeta a renta mundial.\nSostener que, a efectos del art. 4.1 CDI, no es residente CDI en Reino Unido y no procede aplicar art. 4.2 (desempate).\nACCEPTED\nLa instancia considera “hecho indiscutible” la tributación limitada, con efecto excluyente para la residencia CDI en RU.\nrentas descubiertas: intereses cuentas y renta imputada inmueble\nRentas regularizadas: intereses de cuentas bancarias en España (rendimientos capital mobiliario) e imputación de rentas por tenencia de inmueble en municipio español.\nAcreditar existencia de rentas en España sometidas a IRPF por residencia y omisión de declaración.\nACCEPTED\nSe describen como rentas objeto de regularización tras considerar residencia en España.\nausencia de declaración IRPF en España 2010-2013\nHecho: no presentó declaración-liquidación IRPF en España en 2010-2013 por considerarse residente en Reino Unido.\nEvidenciar incumplimiento declarativo en España ligado a la controversia de residencia.\nACCEPTED\nConsta como hecho relevante del procedimiento y base de la regularización.\ninexistencia de procedimiento amistoso (MAP)\nReferencia de la instancia a la inexistencia de procedimiento amistoso instado por la recurrente.\nReforzar la tesis de la instancia sobre el planteamiento del conflicto de residencia y la falta de activación de mecanismos del CDI.\nPARTIAL\nSe menciona como elemento adicional (“amén... inexistencia de procedimiento amistoso”), sin aparecer como ratio exclusiva.\ncertificados de residencia fiscal Reino Unido (a efectos CDI)\nCertificados de residencia fiscal emitidos por la autoridad competente del Reino Unido “a efectos del Convenio”.\nAcreditar residencia fiscal en Reino Unido y existencia de doble residencia a resolver con art. 4.2 CDI.\nREJECTED\nLa instancia prioriza la tributación efectiva (renta mundial) y aplica el art. 4.1 CDI para excluir residencia CDI en RU pese al certificado.\ndeclaración en Reino Unido bajo 'remittance basis'\nDeclaración en Reino Unido bajo el régimen de “tributación por remesas” (remittance basis).\nSostener que era residente fiscal en RU y que el certificado británico debía respetarse.\nPARTIAL\nSe acepta el hecho de que tributó bajo ese régimen, pero se usa en contra para negar residencia CDI en RU conforme a art. 4.1 CDI.\ninvocación art. 4.2 CDI (reglas desempate)\nAlegación de que el caso era de doble residencia y debía resolverse aplicando los criterios de desempate del art. 4.2 CDI.\nForzar la aplicación del CDI (tie-breaker) en lugar de norma interna exclusivamente.\nUNRESOLVED\nLa instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.\nLa instancia parte de hechos aceptados en acta de conformidad y confirma la residencia fiscal en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos).\nConsidera que el certificado de residencia del Reino Unido no es determinante si, por el art. 4.1 CDI, no hay “residencia CDI” cuando se tributa sólo por rentas procedentes del Reino Unido.\nDado que la contribuyente tributó bajo “remittance basis” (imposición limitada), concluye que no procede resolver un conflicto de doble residencia aplicando el art. 4.2 CDI.\nEl Tribunal Supremo desestima el recurso de casación y confirma el criterio de instancia.\nNOT_DECIDED\n2010\n2011\n2012\n2013\nLa sentencia de instancia aplica el art. 105 LGT y toma como premisa que lo relevante es la tributación de la renta mundial, no el certificado británico, además de partir de hechos aceptados en acta de conformidad.\nLa carga probatoria no se consideró cumplida.\nderiva de acta de\nconformidad, la recurrente se ha aquietado a los hechos descritos\nen aplicación de lo dispuesto en el art. 9.1.b\npor radicar en España el núcleo principal de\nsus intereses económicos\nremittance\nbasis\nEs un hecho indiscutible\ntributó en Reino Unido bajo\nlo que determina la\nno sujeción\npor toda su renta mundial\nrentas descubiertas, consistentes en unos intereses de cuentas bancarias\ny en una imputación de rentas\nde un bien inmueble\nEn los ejercicios comprobados, 2010 a 2013, la recurrente no presentó declaración\nliquidación por el IRPF\nde inexistencia de procedimiento amistoso\ninstado por la aquí recurrente\nvenía obligada a reconocer validez a los certiﬁcados de residencia\nemitidos\na efectos del Convenio\npaís en que presentó declaración\nbajo el régimen\ntributación por remesas\" o \"remittance\nbasis\nsupuesto de doble residencia que debía resolverse aplicando\nlos criterios de desempate ﬁjados en el art. 4.2 CDI\nlo relevante\nes la tributación de la renta mundial\ny no tanto su certiﬁcado británico\nde residencia ﬁscal\ndel conjunto de medios probatorios\ny en virtud del principio de carga de la prueba del art 105 LGT\nfue residente ﬁscal en España\npor radicar en España el núcleo principal de\nsus intereses económicos\ndel conjunto de medios probatorios\nlo relevante\nes la tributación de la renta mundial\ny no tanto su certiﬁcado británico\nNo haber lugar al recurso de casación\nejercicios\n2010 a 2013",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -672,6 +702,180 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1273,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1261,
+              "verbatim_text": "lo relevante"
+            },
+            {
+              "end_offset": 1339,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1302,
+              "verbatim_text": "es la tributación de la renta mundial"
+            },
+            {
+              "end_offset": 1411,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1357,
+              "verbatim_text": "y no tanto su certiﬁcado británico\nde residencia ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1234,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1136,
+              "verbatim_text": "del conjunto de medios probatorios\ny en virtud del principio de carga de la prueba del art 105 LGT"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2424,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2395,
+              "verbatim_text": "fue residente ﬁscal en España"
+            },
+            {
+              "end_offset": 2812,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2743,
+              "verbatim_text": "por radicar en España el núcleo principal de\nsus intereses económicos"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1170,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1136,
+              "verbatim_text": "del conjunto de medios probatorios"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1273,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1261,
+              "verbatim_text": "lo relevante"
+            },
+            {
+              "end_offset": 1339,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1302,
+              "verbatim_text": "es la tributación de la renta mundial"
+            },
+            {
+              "end_offset": 1391,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1357,
+              "verbatim_text": "y no tanto su certiﬁcado británico"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "1ca332924075d6662b697d424db8b89826dac84479cd7e4150751d740ba51465"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 579,
+              "page_index": 17,
+              "printed_page": "17",
+              "start_offset": 542,
+              "verbatim_text": "No haber lugar al recurso de casación"
+            },
+            {
+              "end_offset": 971,
+              "page_index": 17,
+              "printed_page": "17",
+              "start_offset": 949,
+              "verbatim_text": "ejercicios\n2010 a 2013"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

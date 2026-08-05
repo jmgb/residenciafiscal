@@ -1,5 +1,5 @@
 {
-  "agent_reviewed_items": 1620,
+  "agent_reviewed_items": 1976,
   "by_case": [
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1071-2025.case.json",
@@ -48,174 +48,174 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2132-2025.case.json",
-      "case_sha256": "1161a8778194149da28b9cd75bc5b2954c81bcc8a0c1076c24e51067b7a79eb7",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
+      "case_sha256": "a09bbe100232241e973f3d11202fdcce0f73ff7b520c8d47561509702539db17",
+      "entity_count": 15,
+      "items_requiring_human_review": 17,
       "judgment_id": "san-2132-2025",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "review_item_count": 17,
+      "source_anchor_count": 8
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2229-2022.case.json",
-      "case_sha256": "9c1c4f12dbdf46b20a80f7cb17a1ec38e38a4770dc42d65d7b3b9141fe13405f",
-      "entity_count": 16,
-      "items_requiring_human_review": 18,
+      "case_sha256": "92aea6e6286bd6dc47418104402ef768f8e31b7ec339e5e597edf89a444f4f81",
+      "entity_count": 25,
+      "items_requiring_human_review": 27,
       "judgment_id": "san-2229-2022",
-      "review_item_count": 18,
-      "source_anchor_count": 7
+      "review_item_count": 27,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2335-2022.case.json",
-      "case_sha256": "9e2304382a16f821d6985518c2bdf77d316424f1a15c797906c94e9c3ef720d3",
-      "entity_count": 20,
-      "items_requiring_human_review": 22,
+      "case_sha256": "73aa5e052ebcf38307a6cd3d86370d1e756e3df5283321fe55faf0f86b8ed55e",
+      "entity_count": 24,
+      "items_requiring_human_review": 26,
       "judgment_id": "san-2335-2022",
-      "review_item_count": 22,
-      "source_anchor_count": 9
+      "review_item_count": 26,
+      "source_anchor_count": 13
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2347-2022.case.json",
-      "case_sha256": "32c321dc1bc4da051508aaa32c1928f68ff20393de115d535f0847a923f1654a",
-      "entity_count": 28,
-      "items_requiring_human_review": 30,
+      "case_sha256": "c6cb7dcad59288e8bbc7cd562e7c44adb3f6fc52c77c98d9a40a0e84255e5fbd",
+      "entity_count": 34,
+      "items_requiring_human_review": 36,
       "judgment_id": "san-2347-2022",
-      "review_item_count": 30,
-      "source_anchor_count": 13
+      "review_item_count": 36,
+      "source_anchor_count": 18
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2602-2020.case.json",
-      "case_sha256": "6bfae3574f072c12f46d45b0640d9dba5517f5b02122cf3e1a0d5dcec09dd1a9",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "9ee876f4f5e725112a0500a0a9a88f28ccb9e17fa69fd9fb42b604e36bd03e0b",
+      "entity_count": 26,
+      "items_requiring_human_review": 28,
       "judgment_id": "san-2602-2020",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 28,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-2602-2022.case.json",
-      "case_sha256": "5ed941508316f530c3f350c91187d0f7b164e04aaac1b00404a33bd6af08435d",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
-      "judgment_id": "san-2602-2022",
-      "review_item_count": 20,
-      "source_anchor_count": 8
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3169-2024.case.json",
-      "case_sha256": "16488fc06e3c6ff16d3711a6cd0fc126746e9262245ba245afa435b2488c41c8",
-      "entity_count": 26,
-      "items_requiring_human_review": 28,
-      "judgment_id": "san-3169-2024",
-      "review_item_count": 28,
-      "source_anchor_count": 12
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3306-2025.case.json",
-      "case_sha256": "34741dcee8f73af757f5532dc845cb4a917b375d7a967ae584456d70c87298c8",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
-      "judgment_id": "san-3306-2025",
-      "review_item_count": 16,
-      "source_anchor_count": 6
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3421-2021.case.json",
-      "case_sha256": "7240844850c56a265ace15dc6b8a11fbe78e75f3bdef3c5cd1ef5314e4394db4",
+      "case_sha256": "7fb12ac18bf653acdd477759d43d9979a65b3bb9002f6a8a2bc2a747ab155cc9",
       "entity_count": 24,
       "items_requiring_human_review": 26,
-      "judgment_id": "san-3421-2021",
+      "judgment_id": "san-2602-2022",
       "review_item_count": 26,
-      "source_anchor_count": 11
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3477-2022.case.json",
-      "case_sha256": "d5cd9fea9a463561d75606307aa9db9e96791aebdb3ff83fdd60110d00c6f741",
-      "entity_count": 26,
-      "items_requiring_human_review": 28,
-      "judgment_id": "san-3477-2022",
-      "review_item_count": 28,
-      "source_anchor_count": 12
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3960-2020.case.json",
-      "case_sha256": "03d64251dad2c860ea99c9fe898f0b95d781283fb579cffb449e431f6f39b33f",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
-      "judgment_id": "san-3960-2020",
-      "review_item_count": 16,
-      "source_anchor_count": 6
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4187-2023.case.json",
-      "case_sha256": "58fbddacdd9ccecef97b7f413ff71510e8fbbeea84410fd879acbe74ce1abc39",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
-      "judgment_id": "san-4187-2023",
-      "review_item_count": 20,
-      "source_anchor_count": 8
-    },
-    {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4248-2020.case.json",
-      "case_sha256": "359444bb8ef1b5867efdec61d2e4c6b46140d633a8fc393c6d9e1010916c312f",
-      "entity_count": 28,
-      "items_requiring_human_review": 30,
-      "judgment_id": "san-4248-2020",
-      "review_item_count": 30,
       "source_anchor_count": 13
     },
     {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4438-2025.case.json",
-      "case_sha256": "e008b7f0345a572486f13ea2be1c3581571606919d4fece913d5834d666ab64c",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
-      "judgment_id": "san-4438-2025",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3169-2024.case.json",
+      "case_sha256": "5cc2473d2690c0b4cf42356c51705ea067e32e3e085a372de3426a704de0c233",
+      "entity_count": 32,
+      "items_requiring_human_review": 34,
+      "judgment_id": "san-3169-2024",
+      "review_item_count": 34,
+      "source_anchor_count": 17
     },
     {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4670-2019.case.json",
-      "case_sha256": "a6fcd4ac390ce82be69e092fb780e27d45c4661837f1324df71372597edb3fdd",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
-      "judgment_id": "san-4670-2019",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3306-2025.case.json",
+      "case_sha256": "5e2d9a5bfaecf2f09c4e7b2146dce3f66cb9c7f92965d7d82b15753ce726e8b6",
+      "entity_count": 22,
+      "items_requiring_human_review": 24,
+      "judgment_id": "san-3306-2025",
+      "review_item_count": 24,
+      "source_anchor_count": 13
     },
     {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4992-2021.case.json",
-      "case_sha256": "82b108ff2f093e7c9d7f257303c316377f541e1476908aaf879bd442e4d2d340",
-      "entity_count": 24,
-      "items_requiring_human_review": 26,
-      "judgment_id": "san-4992-2021",
-      "review_item_count": 26,
-      "source_anchor_count": 11
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3421-2021.case.json",
+      "case_sha256": "74558c04b23fda7927cb3b6e7479549594095cb31325a536c5711140db0b24fd",
+      "entity_count": 30,
+      "items_requiring_human_review": 32,
+      "judgment_id": "san-3421-2021",
+      "review_item_count": 32,
+      "source_anchor_count": 16
     },
     {
-      "case_resource": "knowledge/jurisprudencia-v3/cases/san-5096-2021.case.json",
-      "case_sha256": "f5cbd8e8af4d5c29a8ac35715cbe15f93297058f50fab9f15c477766bea630d4",
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3477-2022.case.json",
+      "case_sha256": "fe6a3ee7a350aa96c05a9425853797facab5de4ba9ded51f852aba9da9f12f48",
+      "entity_count": 32,
+      "items_requiring_human_review": 34,
+      "judgment_id": "san-3477-2022",
+      "review_item_count": 34,
+      "source_anchor_count": 18
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-3960-2020.case.json",
+      "case_sha256": "5541ee879716ee1a35a63571714c093fd6aa4cef0afc6c65b669b2b74562122e",
+      "entity_count": 19,
+      "items_requiring_human_review": 21,
+      "judgment_id": "san-3960-2020",
+      "review_item_count": 21,
+      "source_anchor_count": 10
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4187-2023.case.json",
+      "case_sha256": "d62b90feb615ca9408d347cc1ab585a004fa16424fcc9f1e96806f800120d22c",
       "entity_count": 26,
       "items_requiring_human_review": 28,
-      "judgment_id": "san-5096-2021",
+      "judgment_id": "san-4187-2023",
       "review_item_count": 28,
+      "source_anchor_count": 15
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4248-2020.case.json",
+      "case_sha256": "507823f87cb873a2900e1af0ef923deea4cbcab8d0e2b9dc97f2693330a78843",
+      "entity_count": 33,
+      "items_requiring_human_review": 35,
+      "judgment_id": "san-4248-2020",
+      "review_item_count": 35,
+      "source_anchor_count": 17
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4438-2025.case.json",
+      "case_sha256": "0bcd62359c60c58028bc5f58ce348606f5d9961a330af3ee0bdf572d8f36b07d",
+      "entity_count": 21,
+      "items_requiring_human_review": 23,
+      "judgment_id": "san-4438-2025",
+      "review_item_count": 23,
       "source_anchor_count": 12
     },
     {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4670-2019.case.json",
+      "case_sha256": "8ff3c4a4ba0566408d020616eccd51cbd6bb48a71cff91e28a8fb7de2d8e564f",
+      "entity_count": 12,
+      "items_requiring_human_review": 14,
+      "judgment_id": "san-4670-2019",
+      "review_item_count": 14,
+      "source_anchor_count": 6
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-4992-2021.case.json",
+      "case_sha256": "3b92766898461f0d49abbc7efc562c330e885928f21ed09c8f687206902c9063",
+      "entity_count": 28,
+      "items_requiring_human_review": 30,
+      "judgment_id": "san-4992-2021",
+      "review_item_count": 30,
+      "source_anchor_count": 14
+    },
+    {
+      "case_resource": "knowledge/jurisprudencia-v3/cases/san-5096-2021.case.json",
+      "case_sha256": "35bf60d35bafecc380d1666e5688591803ddcbdb031e5c15b304ca0c8539a851",
+      "entity_count": 33,
+      "items_requiring_human_review": 35,
+      "judgment_id": "san-5096-2021",
+      "review_item_count": 35,
+      "source_anchor_count": 18
+    },
+    {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5151-2019.case.json",
-      "case_sha256": "fe5e85d837fc2fdd6d7aa09274b7245425bc4867ed3ebea60caa494fd5726ace",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "93c3cf16e3a7ebe5f21657a99be3ba9ea42e58db91c99b1a1a6f223b1525df98",
+      "entity_count": 24,
+      "items_requiring_human_review": 26,
       "judgment_id": "san-5151-2019",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 26,
+      "source_anchor_count": 13
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5217-2022.case.json",
-      "case_sha256": "7e8525d04939386c98643fef6c6086da41d512448214690474bfdc9fdead7d16",
-      "entity_count": 8,
-      "items_requiring_human_review": 10,
+      "case_sha256": "793c0547f132ea7267ec573b45bc9733de28ead62242389338fe0c71c7dac2ef",
+      "entity_count": 14,
+      "items_requiring_human_review": 16,
       "judgment_id": "san-5217-2022",
-      "review_item_count": 10,
-      "source_anchor_count": 3
+      "review_item_count": 16,
+      "source_anchor_count": 8
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5408-2017.case.json",
@@ -228,57 +228,57 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5630-2023.case.json",
-      "case_sha256": "ccf7a0f16d9ca40ae473f9fbeec92d103babdb555742c6266384a2f487d854a0",
-      "entity_count": 22,
-      "items_requiring_human_review": 24,
+      "case_sha256": "43524c1558f56c565689f9c20f9b246d4657565c24c671e2cea2ef65e0df008b",
+      "entity_count": 28,
+      "items_requiring_human_review": 30,
       "judgment_id": "san-5630-2023",
-      "review_item_count": 24,
-      "source_anchor_count": 10
+      "review_item_count": 30,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5640-2023.case.json",
-      "case_sha256": "bd250febceac7c345f3a9458ffb70ad1ef4fb3f9588d1e25e16cb65e2935bf3f",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "44c9dfe475c45baccb6cf924cef64e57ce574d08f33f9662f1ee57adc3dd4ee7",
+      "entity_count": 25,
+      "items_requiring_human_review": 27,
       "judgment_id": "san-5640-2023",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 27,
+      "source_anchor_count": 14
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-5983-2024.case.json",
-      "case_sha256": "0994c44a6b7208970577adf1366240a13bf67d5e89d7897c4b3c9e30f540cc6a",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "f7d23eccdfdb599f21d5951d79bdf782ab814fc12ef6ab44d4e2b4bbef2e9361",
+      "entity_count": 25,
+      "items_requiring_human_review": 27,
       "judgment_id": "san-5983-2024",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 27,
+      "source_anchor_count": 14
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-6289-2022.case.json",
-      "case_sha256": "7455e19e02450b30de2c53b4be0077254922214451eb2cb0c26447173d62b3f7",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "74b5e358ca3958ca0f798af6c7a97318bfa16678810329b5e5a1ecdb0210e7b8",
+      "entity_count": 26,
+      "items_requiring_human_review": 28,
       "judgment_id": "san-6289-2022",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 28,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-6981-2024.case.json",
-      "case_sha256": "686f1395264d8c4995ddfca791c164bc8ef44c520481e2247dcb4af779d8052c",
-      "entity_count": 20,
-      "items_requiring_human_review": 22,
+      "case_sha256": "c995d6dd3bc026570f25f7e6edf4d19ef44aeb59662315d6542a48d2a9fcf78b",
+      "entity_count": 26,
+      "items_requiring_human_review": 28,
       "judgment_id": "san-6981-2024",
-      "review_item_count": 22,
-      "source_anchor_count": 9
+      "review_item_count": 28,
+      "source_anchor_count": 14
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-699-2015.case.json",
-      "case_sha256": "8fa660dd24f740a1566d40bbfaee23ace4cd3f12f8dc15061f27bbf14b12b6c5",
-      "entity_count": 36,
-      "items_requiring_human_review": 38,
+      "case_sha256": "87bdb9764fa34ee510dd16ed392bd0dcb97460324750dc476a85186fc84c4751",
+      "entity_count": 40,
+      "items_requiring_human_review": 42,
       "judgment_id": "san-699-2015",
-      "review_item_count": 38,
-      "source_anchor_count": 17
+      "review_item_count": 42,
+      "source_anchor_count": 21
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-7135-2024.case.json",
@@ -291,30 +291,30 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-107-2018.case.json",
-      "case_sha256": "029656cb11cd4b432444ed7750692663f91c16621fcdfd926c3f8ef714c9dd05",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "50e5f460a6f9c42eb59c95fded4ab94c1d2d2e15e51af43df10e96e22a36c5cb",
+      "entity_count": 26,
+      "items_requiring_human_review": 28,
       "judgment_id": "sts-107-2018",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 28,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-108-2018.case.json",
-      "case_sha256": "1ede63d9cfa33a77963d4eb6550e22ed5aeed88ca61cd5822eef2f8e4fa48796",
-      "entity_count": 8,
-      "items_requiring_human_review": 10,
+      "case_sha256": "dfd5821985f5055e02015fa0e473c1bfd27c0a124abc93f6451328ec2b90d7f2",
+      "entity_count": 11,
+      "items_requiring_human_review": 13,
       "judgment_id": "sts-108-2018",
-      "review_item_count": 10,
-      "source_anchor_count": 3
+      "review_item_count": 13,
+      "source_anchor_count": 6
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-109-2018.case.json",
-      "case_sha256": "0d7059136c3e0b011274ac58b46d8ffedee1ac8b58d3b4bfeb1048a0723ddc8f",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "239072acb1f13caea672e2844b6c8412020ab34bae0a170684ec0720baddf18f",
+      "entity_count": 25,
+      "items_requiring_human_review": 27,
       "judgment_id": "sts-109-2018",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 27,
+      "source_anchor_count": 14
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-1102-2020.case.json",
@@ -327,12 +327,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-110-2018.case.json",
-      "case_sha256": "1e93ed71788a4b219de0847ed358034fe3fd8cd4e8bbfb67f050a66096130002",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
+      "case_sha256": "acfa74314d6d4c9feaac8d3590e966290ef7e5e000b0195f82b976ee3daf6508",
+      "entity_count": 12,
+      "items_requiring_human_review": 14,
       "judgment_id": "sts-110-2018",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "review_item_count": 14,
+      "source_anchor_count": 6
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-111-2021.case.json",
@@ -345,30 +345,30 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-112-2018.case.json",
-      "case_sha256": "6759ce20f3fa58f55781339e5afe75123a44a2f203486bf462bd003e591a6e75",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "6ca2c018eb06629d17d9c81497e7c2375785ebe83540f1b6a178232fa3dc13b8",
+      "entity_count": 20,
+      "items_requiring_human_review": 22,
       "judgment_id": "sts-112-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 22,
+      "source_anchor_count": 11
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-114-2018.case.json",
-      "case_sha256": "da66dc4d1c228ae9ad500d91de60f6e79bc6afa557266cc02abd836a8511dbb5",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "d145da242f54dccc408330a47b4cc0528700dd0fb4fdc1d24f7bd564a0d280e1",
+      "entity_count": 21,
+      "items_requiring_human_review": 23,
       "judgment_id": "sts-114-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 23,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-115-2018.case.json",
-      "case_sha256": "c7da84b28a17a51b934ca8351302a9918b537dbc128ab8cae0ed8f6fb5b235d8",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "557814c8639ab828676901f61f331739d4526f7cc89b98af4e006c7c8aea9982",
+      "entity_count": 21,
+      "items_requiring_human_review": 23,
       "judgment_id": "sts-115-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 23,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-116-2021.case.json",
@@ -417,12 +417,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-1682-2022.case.json",
-      "case_sha256": "9866bb433b838a1f864bf133fe6653e95e47bf91407ce2a428cc7282701aa6c4",
-      "entity_count": 26,
-      "items_requiring_human_review": 28,
+      "case_sha256": "f8beeadad59b03f84001320d756ea16eded83ff6dc107a72a055dd6280d1082d",
+      "entity_count": 30,
+      "items_requiring_human_review": 32,
       "judgment_id": "sts-1682-2022",
-      "review_item_count": 28,
-      "source_anchor_count": 12
+      "review_item_count": 32,
+      "source_anchor_count": 16
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-1814-2021.case.json",
@@ -435,12 +435,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-183-2018.case.json",
-      "case_sha256": "be8936039124375e757e5926404d44b73dcc06425ec64e7e657b92ab94add84b",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "8feda7a061c8ea98abdf210168ac99f0a3cf5c6c2a2528c31764ebe93111ced6",
+      "entity_count": 21,
+      "items_requiring_human_review": 23,
       "judgment_id": "sts-183-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 23,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-1845-2023.case.json",
@@ -453,30 +453,30 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-184-2018.case.json",
-      "case_sha256": "a99383b9f1175b707a06542d8a7e8cdb1b661244b81b7d039f69ca1b05035099",
-      "entity_count": 16,
-      "items_requiring_human_review": 18,
+      "case_sha256": "4ee16966b48fde7e5d19d46622fcf8975d040441bbb0b82cddedbce1c19f4ded",
+      "entity_count": 23,
+      "items_requiring_human_review": 25,
       "judgment_id": "sts-184-2018",
-      "review_item_count": 18,
-      "source_anchor_count": 7
+      "review_item_count": 25,
+      "source_anchor_count": 13
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-188-2018.case.json",
-      "case_sha256": "9ab47415e9f1d199a0e470529836baa01bb787f7b7f9f04a38c6864d164f7ac4",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "7a7ec9b01aa548706bf83a492c8931b1bc1bc34f3c476fe6667fadee06a17300",
+      "entity_count": 20,
+      "items_requiring_human_review": 22,
       "judgment_id": "sts-188-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 22,
+      "source_anchor_count": 11
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-2013-2024.case.json",
-      "case_sha256": "65d77623b8fbc14b661ddfa19546fcb4dac50efbb14d750fd0e3fe763296055c",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
+      "case_sha256": "8f00f3c712850bd82d38617500ae9c21658c6294a7735751f7b6bb8e03e62c3f",
+      "entity_count": 16,
+      "items_requiring_human_review": 18,
       "judgment_id": "sts-2013-2024",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "review_item_count": 18,
+      "source_anchor_count": 9
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-2396-2018.case.json",
@@ -516,12 +516,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-2735-2023.case.json",
-      "case_sha256": "8527f4c634ebdce9505ac1b484971304608ca14ffdd62ed92ad4a6ee06a9d502",
-      "entity_count": 44,
-      "items_requiring_human_review": 46,
+      "case_sha256": "21c9d8b9f8a02f4673afcb3dbc1bbb42df0494a00aad66e0d60dd35ddc708845",
+      "entity_count": 50,
+      "items_requiring_human_review": 52,
       "judgment_id": "sts-2735-2023",
-      "review_item_count": 46,
-      "source_anchor_count": 21
+      "review_item_count": 52,
+      "source_anchor_count": 26
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-2806-2023.case.json",
@@ -543,12 +543,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-305-2018.case.json",
-      "case_sha256": "344e0bd9c084e39b03d3bed1fbe560c3d2ba1cec69ac5a2a6e8959cba479386c",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
+      "case_sha256": "777c0824e163219cdbf390afd1ed91335bd6e8ca83d94bb48b683bd38dd3a755",
+      "entity_count": 16,
+      "items_requiring_human_review": 18,
       "judgment_id": "sts-305-2018",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "review_item_count": 18,
+      "source_anchor_count": 9
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3270-2019.case.json",
@@ -579,30 +579,30 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3498-2025.case.json",
-      "case_sha256": "3bec78eb4f1e56b9d775b5c7f86a6655546d64ebc6c077d4042b861d549ef84e",
-      "entity_count": 26,
-      "items_requiring_human_review": 28,
+      "case_sha256": "f6a49ff3439692a8febcdffd3d340b74c3bca0caf05f2c5fe9ac7803fa983187",
+      "entity_count": 32,
+      "items_requiring_human_review": 34,
       "judgment_id": "sts-3498-2025",
-      "review_item_count": 28,
-      "source_anchor_count": 12
+      "review_item_count": 34,
+      "source_anchor_count": 17
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3574-2023.case.json",
-      "case_sha256": "e9bdf315f6668bd38670263dcbf4b5ba4c28306f448d5b938f81374efab3803a",
-      "entity_count": 26,
-      "items_requiring_human_review": 28,
+      "case_sha256": "a92c73efb9cba1689cacac0a769403c26213b6137777be85ee3debd10f6a9457",
+      "entity_count": 31,
+      "items_requiring_human_review": 33,
       "judgment_id": "sts-3574-2023",
-      "review_item_count": 28,
-      "source_anchor_count": 12
+      "review_item_count": 33,
+      "source_anchor_count": 16
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3585-2024.case.json",
-      "case_sha256": "a442cdb83c416933cd31a61e22017364bbc1b94ed31278d983f503e062ab4151",
-      "entity_count": 12,
-      "items_requiring_human_review": 14,
+      "case_sha256": "ceb379ca08b57dd758cf449892452c638c60054ccc6a01292aa2f010932597ec",
+      "entity_count": 18,
+      "items_requiring_human_review": 20,
       "judgment_id": "sts-3585-2024",
-      "review_item_count": 14,
-      "source_anchor_count": 5
+      "review_item_count": 20,
+      "source_anchor_count": 10
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-371-2020.case.json",
@@ -615,21 +615,21 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3881-2024.case.json",
-      "case_sha256": "f22c2cbaed63fb6283391908a37a20374a2bacf589632c2c72e6ac5a81bb419b",
-      "entity_count": 36,
-      "items_requiring_human_review": 38,
+      "case_sha256": "080cc4276c146d40ef4e6acad2d2aa87cc3d568373887326e03b42ba8a20b867",
+      "entity_count": 42,
+      "items_requiring_human_review": 44,
       "judgment_id": "sts-3881-2024",
-      "review_item_count": 38,
-      "source_anchor_count": 17
+      "review_item_count": 44,
+      "source_anchor_count": 22
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3882-2024.case.json",
-      "case_sha256": "d42f8d3efcfffc5555a067ab7159912371561f4c3b2e53b51d406c22c4d0b939",
-      "entity_count": 36,
-      "items_requiring_human_review": 38,
+      "case_sha256": "fb8bcd95b7234ce6e475413004928a03388d6438065539adb519ead6681b904d",
+      "entity_count": 41,
+      "items_requiring_human_review": 43,
       "judgment_id": "sts-3882-2024",
-      "review_item_count": 38,
-      "source_anchor_count": 17
+      "review_item_count": 43,
+      "source_anchor_count": 21
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-3942-2021.case.json",
@@ -651,21 +651,21 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4219-2024.case.json",
-      "case_sha256": "debfc1bf6ca3196bd5679bc31b5d2cf93b5a36da95f5c2c393fc5617c767c6fd",
-      "entity_count": 20,
-      "items_requiring_human_review": 22,
+      "case_sha256": "8f22efb193a62d6109137fe9dadfd530212693e5bae0aa7edddd72b74fa2600c",
+      "entity_count": 27,
+      "items_requiring_human_review": 29,
       "judgment_id": "sts-4219-2024",
-      "review_item_count": 22,
-      "source_anchor_count": 9
+      "review_item_count": 29,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4220-2024.case.json",
-      "case_sha256": "c97393f690b25d011044a355c273eb8b6da3b837027588233cd1b8e591f154ad",
-      "entity_count": 18,
-      "items_requiring_human_review": 20,
+      "case_sha256": "e00e635536ff73edcc954ec2e6009963c7ae8ca149fd2040fb0a3f14f3596569",
+      "entity_count": 23,
+      "items_requiring_human_review": 25,
       "judgment_id": "sts-4220-2024",
-      "review_item_count": 20,
-      "source_anchor_count": 8
+      "review_item_count": 25,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4277-2018.case.json",
@@ -678,30 +678,30 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4305-2017.case.json",
-      "case_sha256": "e8f1b87d4448cf470847e1f957c2eb6048258c02697354e39bb6bb57831b13e1",
-      "entity_count": 22,
-      "items_requiring_human_review": 24,
+      "case_sha256": "37817e50e7e9240a811269ffc25828cd34ddd914b6bf0eedd505a48f35d5c53a",
+      "entity_count": 28,
+      "items_requiring_human_review": 30,
       "judgment_id": "sts-4305-2017",
-      "review_item_count": 24,
-      "source_anchor_count": 10
+      "review_item_count": 30,
+      "source_anchor_count": 15
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4306-2017.case.json",
-      "case_sha256": "73fa0492dab5dcd4ec5a299420442efeaeb810bdcdbe4f3a82de7d874d3794ee",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "81bb4f236d95eb955fe662acf5c197d573463b5a6a6cde51432649b3c17327f1",
+      "entity_count": 19,
+      "items_requiring_human_review": 21,
       "judgment_id": "sts-4306-2017",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 21,
+      "source_anchor_count": 10
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4307-2017.case.json",
-      "case_sha256": "e49d12820cb7e0d62c39b725f2598f0b70fb6a6501254433af37da6af0f713f9",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "d7f55e913dec26a6b8baaa6747d7ae061bf09f6afcdaa8c013cc13cf74070aef",
+      "entity_count": 18,
+      "items_requiring_human_review": 20,
       "judgment_id": "sts-4307-2017",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 20,
+      "source_anchor_count": 9
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4337-2020.case.json",
@@ -732,21 +732,21 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4433-2017.case.json",
-      "case_sha256": "4777d8a14507d714f2d1e2d676b0b6cb689915e251da19ffb1e6df374dc8d2fb",
-      "entity_count": 16,
-      "items_requiring_human_review": 18,
+      "case_sha256": "028fe710d7d0e731bf4e7a2f30d333b6266ade1ac90f1b776fd8773db4c07d5b",
+      "entity_count": 22,
+      "items_requiring_human_review": 24,
       "judgment_id": "sts-4433-2017",
-      "review_item_count": 18,
-      "source_anchor_count": 7
+      "review_item_count": 24,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4434-2017.case.json",
-      "case_sha256": "ff2701489ca36187325ffe5a2fb1f82894badbf0a3e516e1b01dcc6cd2de5468",
-      "entity_count": 12,
-      "items_requiring_human_review": 14,
+      "case_sha256": "91967328d12f0f53ecb2a1190ee99e22214c12def4d83fec9424df667c667717",
+      "entity_count": 18,
+      "items_requiring_human_review": 20,
       "judgment_id": "sts-4434-2017",
-      "review_item_count": 14,
-      "source_anchor_count": 5
+      "review_item_count": 20,
+      "source_anchor_count": 10
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4560-2022.case.json",
@@ -768,12 +768,12 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4670-2017.case.json",
-      "case_sha256": "7059f3a5c24781bf3ae7c10c5e91ccfdde567c2c7d49e158a96c6d0dbf740334",
-      "entity_count": 10,
-      "items_requiring_human_review": 12,
+      "case_sha256": "4179553ebc412e3f0e39e292272f9b0519295c51ec314d077fef7738878a7f04",
+      "entity_count": 15,
+      "items_requiring_human_review": 17,
       "judgment_id": "sts-4670-2017",
-      "review_item_count": 12,
-      "source_anchor_count": 4
+      "review_item_count": 17,
+      "source_anchor_count": 8
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-4849-2025.case.json",
@@ -849,57 +849,57 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-691-2018.case.json",
-      "case_sha256": "c2f948f3a6d7241b888929684616461b0d0f4fc34539d315f58fa81e8d80d96f",
-      "entity_count": 16,
-      "items_requiring_human_review": 18,
+      "case_sha256": "7e44e2f8d9aa8c1f247387d65ff6a6f1a5428e747db12e241fec3c6d83c22090",
+      "entity_count": 22,
+      "items_requiring_human_review": 24,
       "judgment_id": "sts-691-2018",
-      "review_item_count": 18,
-      "source_anchor_count": 7
+      "review_item_count": 24,
+      "source_anchor_count": 12
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-695-2018.case.json",
-      "case_sha256": "b34c38e074ab55484b32daaf8628c18c92fa953f5b3619a22a5e68ca5012f769",
-      "entity_count": 16,
-      "items_requiring_human_review": 18,
+      "case_sha256": "71e7b42b9742ba8c36dbd8fcd54941105a6fd250bee37b765c0ff472017c7924",
+      "entity_count": 23,
+      "items_requiring_human_review": 25,
       "judgment_id": "sts-695-2018",
-      "review_item_count": 18,
-      "source_anchor_count": 7
+      "review_item_count": 25,
+      "source_anchor_count": 13
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-697-2018.case.json",
-      "case_sha256": "2d093c630836da49e5a100b3ea7408b80460bf6de33c6808bebd99666bb87ce9",
-      "entity_count": 12,
-      "items_requiring_human_review": 14,
+      "case_sha256": "214f7e7c83934c9945c65834c1563a055bdea060279238b00f0615f72226f425",
+      "entity_count": 15,
+      "items_requiring_human_review": 17,
       "judgment_id": "sts-697-2018",
-      "review_item_count": 14,
-      "source_anchor_count": 5
+      "review_item_count": 17,
+      "source_anchor_count": 7
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-698-2018.case.json",
-      "case_sha256": "5523a1dc4b44da1fac14cdfa127bd3956eff0fab1acfce15d7d453f4086ca5e7",
-      "entity_count": 6,
-      "items_requiring_human_review": 8,
+      "case_sha256": "6e7187bab8da1afc0236edf67789ed0e1b1a8ecdbff68b4f5a385d78f1bbeb6f",
+      "entity_count": 9,
+      "items_requiring_human_review": 11,
       "judgment_id": "sts-698-2018",
-      "review_item_count": 8,
-      "source_anchor_count": 2
+      "review_item_count": 11,
+      "source_anchor_count": 4
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-700-2018.case.json",
-      "case_sha256": "48e977bde4b389fba48579d8319c5c1387478365b974726abf0a4bd6a0218324",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "08d1becdb569a2257b7581814be6d7acf3cc49721461b8e5adf27acc28150244",
+      "entity_count": 20,
+      "items_requiring_human_review": 22,
       "judgment_id": "sts-700-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 22,
+      "source_anchor_count": 11
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-701-2018.case.json",
-      "case_sha256": "f7220a679862dd4fcf9b40f61121d5cbfc18dc06670d0947c7df4059cc06af3f",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "cce9f3ed1a46d8b8e40de47032454d99f13ebe651d15a9925411edf60e026427",
+      "entity_count": 17,
+      "items_requiring_human_review": 19,
       "judgment_id": "sts-701-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 19,
+      "source_anchor_count": 8
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-710-2021.case.json",
@@ -921,46 +921,46 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-839-2018.case.json",
-      "case_sha256": "8aa0930c7d7bfd59d0a4b46f43ba26eea3e3d41318df3f3752771926becabaa6",
-      "entity_count": 14,
-      "items_requiring_human_review": 16,
+      "case_sha256": "6971f8f430fd91e15547a2bfaa916324332a75ed03fa199e147882a25bcec0e2",
+      "entity_count": 19,
+      "items_requiring_human_review": 21,
       "judgment_id": "sts-839-2018",
-      "review_item_count": 16,
-      "source_anchor_count": 6
+      "review_item_count": 21,
+      "source_anchor_count": 10
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-840-2018.case.json",
-      "case_sha256": "17a50fa75a0aa5d7c9a143c267996f061d60fa3db70cc1f4ff70c8a8c256801a",
-      "entity_count": 12,
-      "items_requiring_human_review": 14,
+      "case_sha256": "debf091c4c0fcbafb8622475da469a94db84e8c8d96821431c16d981afb643ab",
+      "entity_count": 17,
+      "items_requiring_human_review": 19,
       "judgment_id": "sts-840-2018",
-      "review_item_count": 14,
-      "source_anchor_count": 5
+      "review_item_count": 19,
+      "source_anchor_count": 9
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-841-2018.case.json",
-      "case_sha256": "463c5c12261c80177c7c2f8df0a0bb08be0c3e93fac41d430bfb696ae6095a72",
-      "entity_count": 12,
-      "items_requiring_human_review": 14,
+      "case_sha256": "a66afb5e4f172cc8350bc8d2e38a993158ad16afe8c23d1c5a585f818b65381b",
+      "entity_count": 18,
+      "items_requiring_human_review": 20,
       "judgment_id": "sts-841-2018",
-      "review_item_count": 14,
-      "source_anchor_count": 5
+      "review_item_count": 20,
+      "source_anchor_count": 10
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/sts-842-2018.case.json",
-      "case_sha256": "172e8eeab502015b5ce50ce197e1429df9f7901b3216f3ba7fc767f4a608af01",
-      "entity_count": 8,
-      "items_requiring_human_review": 10,
+      "case_sha256": "48109a5d95f19faf7f805502b5e507893cbd8f4b5bd1e5a6588d58d5916d3a96",
+      "entity_count": 14,
+      "items_requiring_human_review": 16,
       "judgment_id": "sts-842-2018",
-      "review_item_count": 10,
-      "source_anchor_count": 3
+      "review_item_count": 16,
+      "source_anchor_count": 8
     }
   ],
   "case_count": 106,
-  "exact_anchor_count": 350,
-  "exact_with_ellipsis_anchor_count": 243,
+  "exact_anchor_count": 497,
+  "exact_with_ellipsis_anchor_count": 397,
   "human_approved_items": 0,
-  "items_requiring_human_review": 1620,
+  "items_requiring_human_review": 1976,
   "noncanonical_catalog_values": 0,
   "null_field_occurrences": {
     "assessment_reason": 52,
@@ -979,13 +979,13 @@
     "place": 21,
     "prompt_sha256": 106,
     "residence_determination": 46,
-    "response_required": 5,
-    "shifts_to": 5,
+    "response_required": 59,
+    "shifts_to": 59,
     "start_date": 21
   },
   "required_field_failures": 0,
-  "review_item_count": 1620,
+  "review_item_count": 1976,
   "sample_id": "jurisprudencia-v3-fase-e",
   "schema_version": "residenciafiscal-sample-quality/1",
-  "source_fragment_count": 936
+  "source_fragment_count": 1442
 }

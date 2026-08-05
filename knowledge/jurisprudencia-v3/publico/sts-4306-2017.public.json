@@ -133,6 +133,97 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "iii) el recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "existió un hecho cierto y reconocido por la propia Administración"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "existió un hecho cierto y reconocido por la propia Administración"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "que el recurrente ha permanecido fuera de España más de 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a420a25f37c80264fd188df5c6e56a6f73679d2cd49a52e271ed2e5dc8819cff"
     }
   ],
   "issues": [
@@ -143,9 +234,32 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración negó la devolución arguyendo falta de acreditación de residencia fiscal en el extranjero; correspondía justificar la tributación en España o que no concurriera la estancia fuera de España.",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"
@@ -301,7 +415,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala constata hechos probados: contrato/beca ICEX para desempeñar labores en Bucarest y permanencia fuera de España superior a 183 días. Aplica primariamente el criterio objetivo (más de 183 días) y concluye que esa estancia no es ausencia esporádica; por tanto el contribuyente no estaba obligado por IRPF en España en el periodo.",
         "consequences": [],

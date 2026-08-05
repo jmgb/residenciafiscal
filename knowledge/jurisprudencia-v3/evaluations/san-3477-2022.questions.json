@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 3477/2022 este supuesto de residencia: La Administración aplicó el art.9.1.b) LIRPF (centro de intereses económicos) y aportó información que situaba el núcleo económico en España (domicilio en BDC, cargos y rentas españolas). El demandante aportó indicios de residencia en Franc?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

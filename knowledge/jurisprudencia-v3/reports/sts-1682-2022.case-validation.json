@@ -1,9 +1,9 @@
 {
-  "anchor_count": 12,
-  "case_sha256": "9866bb433b838a1f864bf133fe6653e95e47bf91407ce2a428cc7282701aa6c4",
+  "anchor_count": 16,
+  "case_sha256": "f8beeadad59b03f84001320d756ea16eded83ff6dc107a72a055dd6280d1082d",
   "evidence_finding_count": 12,
   "fact_count": 0,
-  "fragment_count": 31,
+  "fragment_count": 40,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-1682-2022",

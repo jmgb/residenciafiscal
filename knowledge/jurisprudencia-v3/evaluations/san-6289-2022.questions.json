@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 6289/2022 este supuesto de residencia: El tribunal centra su análisis en el criterio objetivo de los 183 días; examina las pruebas aportadas por la Administración (certificados de presencia en EEUU/Perú, padrón, contratos y consumos) y concluye que no son suficientes para acredi?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

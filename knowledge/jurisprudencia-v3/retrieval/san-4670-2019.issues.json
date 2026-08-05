@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-4670-2019.case.json",
-    "case_sha256": "a6fcd4ac390ce82be69e092fb780e27d45c4661837f1324df71372597edb3fdd",
+    "case_sha256": "8ff3c4a4ba0566408d020616eccd51cbd6bb48a71cff91e28a8fb7de2d8e564f",
     "source_sha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
   },
   "units": [
@@ -170,7 +170,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.",
         "consequences": [],
@@ -199,7 +199,9 @@
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
-          "anchor-legacy-evidence-004"
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-001"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -232,7 +234,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\ndiligencia 04-05-2011 (declaración del recurrente)\nActuaciones inspectoras donde el recurrente declara que en 2006 residía en Japón pero recuerda que estuvo más días en España.\nDemostrar permanencia superior a 183 días en España\nACCEPTED\nEl propio recurrente reconoció haber permanecido más de 183 días, lo que acredita la presencia\ndeclaración IRPF cónyuge y deducción por hija menor\nConsta que la cónyuge presentó declaración por IRPF en régimen individual y dedujo el mínimo por descendientes por la hija menor.\nAcreditar residencia habitual de la familia en España (presunción legal)\nACCEPTED\nLa residencia habitual del cónyuge y la hija en España genera la presunción iuris tantum de residencia del contribuyente\ndiligencia 03-06-2011 (acta)\nDiligencia donde se hace constar que durante 2006 residió en España la mayor parte del año.\nCorroborar permanencia mayoritaria en España durante 2006\nACCEPTED\nActa administrativa que manifiesta la residencia mayoritaria en España, concordante con otras declaraciones\ndiligencia 04-05-2011 (declaración del recurrente)\nManifestaciones del recurrente sobre su actividad en Japón desde 1983 y asesoramiento a empresa japonesa en 2006.\nAcreditar centro de intereses vitales/económicos en Japón y ausencias no esporádicas\nPARTIAL\nSe reconoce actividad en Japón pero el propio recurrente admite haber estado más días en España; no desvirtúa la presunción ni acredita residencia fiscal en Japón\nEl tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.\nEl tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.\nNOT_DECIDED\n2006\nel propio recurrente reconoció durante las actuaciones inspectoras que en el año 2006 había\npermanecido más de 183 días\nSu cónyuge había presentado declaración por el IRPF del ejercicio 2006\npor una hija menor de edad\ncomún\nEn diligencia de 03-06-2011 se hizo constar que durante 2006 residió en España la mayor parte del año\ndurante 2006 residía\nen Japón\nRecuerda que estuvo más días en España",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\ndiligencia 04-05-2011 (declaración del recurrente)\nActuaciones inspectoras donde el recurrente declara que en 2006 residía en Japón pero recuerda que estuvo más días en España.\nDemostrar permanencia superior a 183 días en España\nACCEPTED\nEl propio recurrente reconoció haber permanecido más de 183 días, lo que acredita la presencia\ndeclaración IRPF cónyuge y deducción por hija menor\nConsta que la cónyuge presentó declaración por IRPF en régimen individual y dedujo el mínimo por descendientes por la hija menor.\nAcreditar residencia habitual de la familia en España (presunción legal)\nACCEPTED\nLa residencia habitual del cónyuge y la hija en España genera la presunción iuris tantum de residencia del contribuyente\ndiligencia 03-06-2011 (acta)\nDiligencia donde se hace constar que durante 2006 residió en España la mayor parte del año.\nCorroborar permanencia mayoritaria en España durante 2006\nACCEPTED\nActa administrativa que manifiesta la residencia mayoritaria en España, concordante con otras declaraciones\ndiligencia 04-05-2011 (declaración del recurrente)\nManifestaciones del recurrente sobre su actividad en Japón desde 1983 y asesoramiento a empresa japonesa en 2006.\nAcreditar centro de intereses vitales/económicos en Japón y ausencias no esporádicas\nPARTIAL\nSe reconoce actividad en Japón pero el propio recurrente admite haber estado más días en España; no desvirtúa la presunción ni acredita residencia fiscal en Japón\nEl tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.\nEl tribunal considera probados (i) que el recurrente permaneció más de 183 días en España (reconocimiento en actuaciones inspectoras) y (ii) que su cónyuge e hija residían en España, generando la presunción legal. Al no acreditarse la residencia fiscal en Japón (documentación insuficiente), no existe conflicto de residencia y debe tributar como residente en España.\nNOT_DECIDED\n2006\nel propio recurrente reconoció durante las actuaciones inspectoras que en el año 2006 había\npermanecido más de 183 días\nSu cónyuge había presentado declaración por el IRPF del ejercicio 2006\npor una hija menor de edad\ncomún\nEn diligencia de 03-06-2011 se hizo constar que durante 2006 residió en España la mayor parte del año\ndurante 2006 residía\nen Japón\nRecuerda que estuvo más días en España\nSe entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\nel propio recurrente reconoció\nque en el año 2006 había\npermanecido más de 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -327,6 +329,57 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3249,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3158,
+              "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d50d690831035f50250f8d6d1a23c2426ccb3af16702de17d2373e7bf0edb5a4"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4524,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4494,
+              "verbatim_text": "el propio recurrente reconoció"
+            },
+            {
+              "end_offset": 4613,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 4561,
+              "verbatim_text": "que en el año 2006 había\npermanecido más de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "Presunción de residencia fiscal en España derivada de actuaciones administrativas y declaraciones presentadas; corresponde al interesado desvirtuarla aportando prueba suficiente de residencia en otro país.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -342,7 +366,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El tribunal considera probados hechos materiales: presentaciones de autoliquidaciones IRPF en España desde 2003, domicilio y vivienda en España, actividad económica ligada a sociedad española y vínculos administrativos (NIF, cotizaciones). Frente a las pruebas de Argentina (certificados, pasaportes, gastos) aprecia que no desvirtúan la presunción ni prueban tributación mundial en Argentina; aplica el tie-breaker del Convenio y concluye que el centro de intereses económicos y vitales estaba en España, resolviendo a favor de la Administración.",
       "consequences": [],
@@ -429,7 +453,11 @@
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
         "anchor-legacy-evidence-012",
-        "anchor-legacy-evidence-013"
+        "anchor-legacy-evidence-013",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -731,6 +759,94 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "los pasaportes argentinos"
+        },
+        {
+          "page_index": 6,
+          "verbatim_text": "justiﬁcan las entradas y salidas"
+        },
+        {
+          "page_index": 6,
+          "verbatim_text": "pero no su\nresidencia ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "las testiﬁcales practicadas no son trascendentes para justiﬁcar la residencia ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 4,
+          "verbatim_text": "la presunción que establece\nel  artículo 108.4"
+        },
+        {
+          "page_index": 4,
+          "verbatim_text": "y no haber solicitado la rectiﬁcación"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "puede aﬁrmarse que"
+        },
+        {
+          "page_index": 5,
+          "verbatim_text": "tenía en España el centro de sus intereses económicos"
+        }
+      ],
+      "purpose": "HOLDING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

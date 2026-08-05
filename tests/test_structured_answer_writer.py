@@ -22,10 +22,12 @@ class RecordingWriter:
         evidence_ids: tuple[str, ...] = ("E1",),
         status: str = "completa",
         unrelated_claim: bool = False,
+        claim_kind: str = "party_argument",
     ) -> None:
         self.evidence_ids = evidence_ids
         self.status = status
         self.unrelated_claim = unrelated_claim
+        self.claim_kind = claim_kind
         self.requests: list[Any] = []
 
     async def write(self, request: Any) -> Any:
@@ -41,6 +43,7 @@ class RecordingWriter:
         }
         claims = tuple(
             StructuredClaim(
+                kind=self.claim_kind,
                 text=_claim_from_quote(quotes.get(evidence_id, ""))
                 or "Afirmación redactada sin ningún respaldo literal comprobable.",
                 evidence_ids=(evidence_id,),
@@ -51,6 +54,7 @@ class RecordingWriter:
             claims = (
                 *claims,
                 StructuredClaim(
+                    kind="party_argument",
                     text="Zanahorias bicicletas taxonomías inventadas completamente ajenas.",
                     evidence_ids=(self.evidence_ids[0],),
                 ),
@@ -124,7 +128,7 @@ async def test_redactor_recibe_evidencias_opacas_y_solo_publica_las_usadas() -> 
     assert request.request_id == "req-writer"
     assert request.response_schema["title"] == "StructuredChatAnswerDraft"
     context = json.loads(request.evidence_context)
-    assert len(context["evidence"]) <= 12
+    assert len(context["evidence"]) <= 20
     assert len(request.evidence_context) < 40_000
     assert [item["evidence_id"] for item in context["evidence"]] == [
         f"E{index}" for index in range(1, len(context["evidence"]) + 1)
@@ -175,6 +179,23 @@ async def test_respuesta_sustantiva_sin_evidencias_falla_cerrada() -> None:
     assert result.text == ""
     assert result.sources == ()
     assert "ninguna evidencia" in result.limits[0]
+
+
+async def test_una_alegacion_no_puede_publicarse_como_valoracion_judicial() -> None:
+    from current_structured_strategy import CurrentStructuredStrategy
+
+    result = await CurrentStructuredStrategy(
+        _corpus(),
+        writer=RecordingWriter(evidence_ids=("E1",), claim_kind="judicial_assessment"),
+    ).answer(
+        "¿Qué tiene en cuenta Hacienda para demostrar la residencia fiscal en España?",
+        request_id="req-incompatible-purpose",
+    )
+
+    assert result.status == "error"
+    assert result.text == ""
+    assert result.sources == ()
+    assert "función jurídica incompatible" in result.limits[0]
 
 
 async def test_abstencion_de_recuperacion_no_llama_al_llm_y_cuesta_cero() -> None:

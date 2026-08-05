@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 5630/2023 este supuesto de residencia: La Sala examina la residencia habitual según art.9 LIRPF (183 días y tratamiento de ausencias). Aunque la Administración acreditó intereses económicos y vínculos familiares en España, el recurrente aportó certificado de residencia fiscal en?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

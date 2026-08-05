@@ -253,7 +253,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.",
       "consequences": [],
@@ -333,7 +333,11 @@
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
-        "anchor-legacy-evidence-009"
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -545,6 +549,86 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "la carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "el mero hecho de poseer o alquilar un inmueble"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "no es medio suﬁciente\npara acreditar su residencia"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 5,
+          "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+        },
+        {
+          "page_index": 5,
+          "verbatim_text": "más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 8,
+          "verbatim_text": "por la Administración se ha aportado prueba suﬁciente de la que poder deducir que la recurrente\ntiene su residencia efectiva en España"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

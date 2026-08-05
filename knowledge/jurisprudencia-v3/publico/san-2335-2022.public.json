@@ -185,6 +185,92 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "la carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "el mero hecho de poseer o alquilar un inmueble"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "no es medio suﬁciente\npara acreditar su residencia"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "por la Administración se ha aportado prueba suﬁciente de la que poder deducir que la recurrente\ntiene su residencia efectiva en España"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "db3219d866db52d5807d1ea9ea2f8dcc0bca10d7e510f00e97dc032ee1477677"
     }
   ],
   "issues": [
@@ -198,7 +284,11 @@
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
         "anchor-legacy-evidence-008",
-        "anchor-legacy-evidence-009"
+        "anchor-legacy-evidence-009",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -421,7 +511,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados hechos objetivos: titularidad y uso de múltiples inmuebles en España, consumos (gasóleo, electricidad, seguridad, servicio doméstico), movimientos bancarios significativos y la residencia habitual del cónyuge en España. Aplica como criterio principal la permanencia efectiva (183 días) y el centro de intereses económicos; estima que la documentación de Mónaco no acredita estancia ni centro de intereses allí, por lo que prevalecen los indicios de la Administración.",
         "consequences": [],

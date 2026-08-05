@@ -233,6 +233,73 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "la referida diligencia 29 de septiembre de 2011 no tiene el correspondiente título habilitante"
+        },
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "no constituye una actuación perteneciente al propio procedimiento"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "permanezca más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
     }
   ],
   "issues": [
@@ -248,9 +315,31 @@
         "anchor-legacy-evidence-008",
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
-        "anchor-legacy-evidence-011"
+        "anchor-legacy-evidence-011",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "El art.9 LIRPF computa ausencias como días en España salvo que el contribuyente acredite residencia fiscal en otro país; por tanto corresponde al contribuyente probar su residencia en Andorra",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -524,7 +613,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.",
         "consequences": [],

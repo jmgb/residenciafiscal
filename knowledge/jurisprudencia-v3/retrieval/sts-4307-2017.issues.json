@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4307-2017.case.json",
-    "case_sha256": "e49d12820cb7e0d62c39b725f2598f0b70fb6a6501254433af37da6af0f713f9",
+    "case_sha256": "d7f55e913dec26a6b8baaa6747d7ae061bf09f6afcdaa8c013cc13cf74070aef",
     "source_sha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El TS declara innecesario pronunciarse sobre la exigencia probatoria (certificado de residencia fiscal extranjera) al no existir 'ausencias esporádicas'.",
+          "initial_bearer": "OTHER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -256,7 +280,10 @@
           "anchor-legacy-evidence-003",
           "anchor-legacy-evidence-004",
           "anchor-legacy-evidence-005",
-          "anchor-legacy-evidence-006"
+          "anchor-legacy-evidence-006",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-reasoning-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -288,7 +315,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (objeto y duración determinados)\nIndicio alegado por la Abogacía del Estado: el traslado al exterior se produce por beca oficial para prácticas, con objeto y duración determinados.\nSostener que la estancia en el extranjero era temporal y por tanto 'ausencia esporádica' computable como permanencia en España.\nREJECTED\nEl TS fija que la esporadicidad no depende del carácter temporal/volitivo de la beca sino del dato objetivo de duración/intensidad; una ausencia >183 días no es esporádica.\ntransporte ida/vuelta sufragado por ICEX\nIndicio alegado por la Abogacía del Estado: el organismo concedente paga transporte de ida y vuelta a España al concluir prácticas.\nAcreditar intención de retorno y carácter temporal/esporádico de la ausencia.\nREJECTED\nEl TS declara irrelevante el propósito de retorno o que la beca sufrague el regreso para delimitar si la ausencia es esporádica.\npresentación declaración IRPF en España\nIndicio alegado por la Abogacía del Estado: el recurrente presentó en España la declaración de IRPF considerándose residente fiscal.\nInferir voluntad/auto-calificación de residencia fiscal en España durante el periodo en el extranjero.\nUNRESOLVED\nconcesión beca formativa ICEX Bangkok (12 meses)\nHecho asumido por el TS: beca en Oficina Comercial de Bangkok por 12 meses (1/10/2010-30/9/2011).\nAcreditar que la actividad formativa exigía permanencia continuada fuera de España, impidiendo residencia en España.\nACCEPTED\nEl TS lo da por constatado ('Consta que...') y lo usa para concluir ausencia prolongada no esporádica y falta de permanencia en España.\npermanencia Bangkok 9 meses en 2011\nHecho asumido por el TS: en 2011 permaneció en Bangkok nueve meses (sobrepasando 183 días).\nDemostrar que no residió en España >183 días en 2011 y que la ausencia fue prolongada/permanente (no esporádica).\nACCEPTED\nEl TS lo considera 'diáfano/evidente' y decisivo para negar residencia en España y negar el carácter esporádico de la ausencia.\nresidencia en Dinamarca (nov 2011-nov 2012)\nHecho asumido por el TS: formación continuó en Dinamarca entre noviembre 2011 y noviembre 2012; en 2012 residió en Dinamarca hasta noviembre 2012 (>183 días).\nDemostrar que en 2012 no residió en España >183 días y que Dinamarca fue residencia habitual/efectiva durante el periodo.\nACCEPTED\nEl TS concluye que la residencia efectiva en Dinamarca por periodo muy superior a 183 días excluye por definición ausencias esporádicas.\nEl TS parte de hechos inmutables: la contribuyente permaneció fuera de España más de 183 días por una beca ICEX. Interpreta que 'ausencias esporádicas' solo cubren ausencias ocasionales y breves; una ausencia >183 días neutraliza la permanencia y no puede computarse como días en España. Rechaza que el elemento volitivo (intención de volver) defina la esporadicidad, que debe atender al dato objetivo de duración/intensidad. Con ello, concluye que no hubo residencia habitual en España en 2011 ni 2012 y confirma la devolución de retenciones.\nEl TS parte de hechos inmutables: la contribuyente permaneció fuera de España más de 183 días por una beca ICEX. Interpreta que 'ausencias esporádicas' solo cubren ausencias ocasionales y breves; una ausencia >183 días neutraliza la permanencia y no puede computarse como días en España. Rechaza que el elemento volitivo (intención de volver) defina la esporadicidad, que debe atender al dato objetivo de duración/intensidad. Con ello, concluye que no hubo residencia habitual en España en 2011 ni 2012 y confirma la devolución de retenciones.\nNOT_DECIDED\n2011\n2012\nelemento volitivo\nel traslado al exterior se\nproduce por\nduración\ndeterminados\npueda ser vinculado\na\nse hace cargo del transporte\nvuelta a España\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\n1 de octubre de 2010 a 30 de septiembre de 2011\npermaneció en Bangkok\nsobrepasó con\nmucho el plazo de 183 días\nen Dinamarca entre noviembre de 2011 y noviembre de 2012\nresidiendo en Dinamarca hasta noviembre",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nbeca ICEX temporal (objeto y duración determinados)\nIndicio alegado por la Abogacía del Estado: el traslado al exterior se produce por beca oficial para prácticas, con objeto y duración determinados.\nSostener que la estancia en el extranjero era temporal y por tanto 'ausencia esporádica' computable como permanencia en España.\nREJECTED\nEl TS fija que la esporadicidad no depende del carácter temporal/volitivo de la beca sino del dato objetivo de duración/intensidad; una ausencia >183 días no es esporádica.\ntransporte ida/vuelta sufragado por ICEX\nIndicio alegado por la Abogacía del Estado: el organismo concedente paga transporte de ida y vuelta a España al concluir prácticas.\nAcreditar intención de retorno y carácter temporal/esporádico de la ausencia.\nREJECTED\nEl TS declara irrelevante el propósito de retorno o que la beca sufrague el regreso para delimitar si la ausencia es esporádica.\npresentación declaración IRPF en España\nIndicio alegado por la Abogacía del Estado: el recurrente presentó en España la declaración de IRPF considerándose residente fiscal.\nInferir voluntad/auto-calificación de residencia fiscal en España durante el periodo en el extranjero.\nUNRESOLVED\nconcesión beca formativa ICEX Bangkok (12 meses)\nHecho asumido por el TS: beca en Oficina Comercial de Bangkok por 12 meses (1/10/2010-30/9/2011).\nAcreditar que la actividad formativa exigía permanencia continuada fuera de España, impidiendo residencia en España.\nACCEPTED\nEl TS lo da por constatado ('Consta que...') y lo usa para concluir ausencia prolongada no esporádica y falta de permanencia en España.\npermanencia Bangkok 9 meses en 2011\nHecho asumido por el TS: en 2011 permaneció en Bangkok nueve meses (sobrepasando 183 días).\nDemostrar que no residió en España >183 días en 2011 y que la ausencia fue prolongada/permanente (no esporádica).\nACCEPTED\nEl TS lo considera 'diáfano/evidente' y decisivo para negar residencia en España y negar el carácter esporádico de la ausencia.\nresidencia en Dinamarca (nov 2011-nov 2012)\nHecho asumido por el TS: formación continuó en Dinamarca entre noviembre 2011 y noviembre 2012; en 2012 residió en Dinamarca hasta noviembre 2012 (>183 días).\nDemostrar que en 2012 no residió en España >183 días y que Dinamarca fue residencia habitual/efectiva durante el periodo.\nACCEPTED\nEl TS concluye que la residencia efectiva en Dinamarca por periodo muy superior a 183 días excluye por definición ausencias esporádicas.\nEl TS parte de hechos inmutables: la contribuyente permaneció fuera de España más de 183 días por una beca ICEX. Interpreta que 'ausencias esporádicas' solo cubren ausencias ocasionales y breves; una ausencia >183 días neutraliza la permanencia y no puede computarse como días en España. Rechaza que el elemento volitivo (intención de volver) defina la esporadicidad, que debe atender al dato objetivo de duración/intensidad. Con ello, concluye que no hubo residencia habitual en España en 2011 ni 2012 y confirma la devolución de retenciones.\nEl TS parte de hechos inmutables: la contribuyente permaneció fuera de España más de 183 días por una beca ICEX. Interpreta que 'ausencias esporádicas' solo cubren ausencias ocasionales y breves; una ausencia >183 días neutraliza la permanencia y no puede computarse como días en España. Rechaza que el elemento volitivo (intención de volver) defina la esporadicidad, que debe atender al dato objetivo de duración/intensidad. Con ello, concluye que no hubo residencia habitual en España en 2011 ni 2012 y confirma la devolución de retenciones.\nNOT_DECIDED\n2011\n2012\nEl TS declara innecesario pronunciarse sobre la exigencia probatoria (certificado de residencia fiscal extranjera) al no existir 'ausencias esporádicas'.\nLa carga probatoria no se consideró cumplida.\nelemento volitivo\nel traslado al exterior se\nproduce por\nduración\ndeterminados\npueda ser vinculado\na\nse hace cargo del transporte\nvuelta a España\nno son datos\npara delimitar\nsi una ausencia es esporádica\nel recurrente presentó\nen España la declaración del IRPF, considerándose por tanto residente ﬁscal\n1 de octubre de 2010 a 30 de septiembre de 2011\npermaneció en Bangkok\nsobrepasó con\nmucho el plazo de 183 días\nen Dinamarca entre noviembre de 2011 y noviembre de 2012\nresidiendo en Dinamarca hasta noviembre\nno son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no\nhace innecesario que nos pronunciemos\ndiscurre en el terreno probatorio\ndeviene superﬂua\nno residió en territorio español por un período superior a 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -469,6 +496,86 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3832,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 3738,
+              "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 5275,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 5238,
+              "verbatim_text": "hace innecesario que nos pronunciemos"
+            },
+            {
+              "end_offset": 5602,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 5569,
+              "verbatim_text": "discurre en el terreno probatorio"
+            },
+            {
+              "end_offset": 246,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 230,
+              "verbatim_text": "deviene superﬂua"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "8f1fc7fa93a8d60de49056dc87fc033808055620bf9119d593ada6fc5485e7ac"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3736,
+              "page_index": 9,
+              "printed_page": "9",
+              "start_offset": 3669,
+              "verbatim_text": "no residió en territorio español por un período superior a 183 días"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

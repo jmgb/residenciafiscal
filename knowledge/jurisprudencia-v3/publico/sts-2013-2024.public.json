@@ -95,6 +95,126 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "la competencia"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "depende de la correcta identiﬁcación del\npunto de conexión"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "sin que resulte exigible una previa\nmodiﬁcación del domicilio ﬁscal"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "una vez constatada (tras la inspección"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "y\nla aquiescencia de ambas Administraciones"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "Se considera producido en el territorio"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "que tengan su residencia habitual en dicho territorio"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "El concepto de residencia habitual es una cuestión fáctica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "no cabe invocar"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "sentencias\ndictadas por la misma Sala y Sección"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
     }
   ],
   "issues": [
@@ -103,9 +223,33 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "La prueba del cambio de punto de conexión provino de la actuación inspectora y de la documentación administrativa aportada por la Administración.",
+          "initialBearer": "AEAT",
+          "responseRequired": "Desvirtuar los indicios y acreditar la residencia exterior.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": "TAXPAYER",
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_CENTRO_INTERESES_VITALES"
@@ -199,7 +343,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.",
         "consequences": [],

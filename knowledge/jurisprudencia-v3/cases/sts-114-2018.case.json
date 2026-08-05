@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria se consideró cumplida.",
+      "fact_to_prove": "Procedimiento de devolución: el solicitante debía acreditar hechos de no residencia (permanencia fuera >183 días) para excluir art. 9.1.a LIRPF por falta de permanencia en España.",
+      "initial_bearer": "TAXPAYER",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -172,7 +196,8 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "conclusion": "El TS parte de hechos inmutables: estancia en Tokio por beca durante 2011 por más de 183 días. Interpreta “ausencias esporádicas” de forma estricta: ocasionales y breves, accesorias a la permanencia en España; una ausencia prolongada neutraliza la permanencia y no puede calificarse de esporádica. Por ello, no procede computar esos días como permanencia en España y se confirma la no residencia en España en 2011, estimándose la devolución.",
       "consequences": [],
@@ -255,7 +280,13 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -482,6 +513,166 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3407,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3375,
+          "verbatim_text": "El propósito de retorno a España"
+        },
+        {
+          "end_offset": 3536,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3524,
+          "verbatim_text": "no son datos"
+        },
+        {
+          "end_offset": 3613,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 3569,
+          "verbatim_text": "para delimitar\nsi una ausencia es esporádica"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 293,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 242,
+          "verbatim_text": "no cabe reputar ocasional o esporádica una ausencia"
+        },
+        {
+          "end_offset": 1393,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1374,
+          "verbatim_text": "superior a 183 días"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2612,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 2537,
+          "verbatim_text": "En 2011 la interesada permaneció en Tokio durante un período de nueve meses"
+        },
+        {
+          "end_offset": 2662,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 2622,
+          "verbatim_text": "sobrepasó con mucho\nel plazo de 183 días"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1577,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1468,
+          "verbatim_text": "El concepto de ausencias esporádicas debe atender exclusivamente al dato objetivo de la duración o\nintensidad"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 1218,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 1135,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica a\nlos efectos del artículo 9.1.a"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c12b1ce355bd0b8184b4b016fbaff40302cfaf0d62c8832108f7bc691e75a861"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 2825,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 2777,
+          "verbatim_text": "residió de manera permanente y efectiva en Tokio"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

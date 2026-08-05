@@ -1,6 +1,6 @@
 """El contrato de A tiene que sobrevivir al modo estricto antes de pagar nada.
 
-`structured-claims-v4` anida un objeto dentro de un array, que es justo la forma
+`structured-claims-v5` anida un objeto dentro de un array, que es justo la forma
 que el modo estricto de la Responses API rechaza si falta `required` o
 `additionalProperties` en la definición anidada. Comprobarlo aquí cuesta cero y
 evita descubrir un `invalid_json_schema` con tráfico real.
@@ -42,12 +42,19 @@ def test_el_contrato_de_a_se_cierra_entero_en_modo_estricto() -> None:
         assert set(node.get("required", [])) == set(node["properties"])
 
 
-def test_la_claim_anidada_declara_sus_dos_campos() -> None:
+def test_la_claim_anidada_declara_sus_tres_campos() -> None:
     schema = strict_json_schema(StructuredChatAnswerDraft)
 
     claim = schema["$defs"]["StructuredClaim"]
 
-    assert set(claim["properties"]) == {"text", "evidence_ids"}
+    assert set(claim["properties"]) == {"kind", "text", "evidence_ids"}
+    assert set(claim["properties"]["kind"]["enum"]) == {
+        "party_argument",
+        "judicial_assessment",
+        "legal_rule",
+        "holding",
+        "procedural_power",
+    }
     assert claim["properties"]["evidence_ids"]["items"]["type"] == "string"
 
 

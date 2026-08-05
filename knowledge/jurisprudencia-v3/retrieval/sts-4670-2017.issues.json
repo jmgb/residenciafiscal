@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-4670-2017.case.json",
-    "case_sha256": "7059f3a5c24781bf3ae7c10c5e91ccfdde567c2c7d49e158a96c6d0dbf740334",
+    "case_sha256": "4179553ebc412e3f0e39e292272f9b0519295c51ec314d077fef7738878a7f04",
     "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "En vía administrativa la AEAT exigió la acreditación de residencia fiscal en el extranjero; el interesado aportó contrato y documentación de la beca y petición de devolución; el Tribunal aprecia hecho objetivo (>183 días) que decide el caso.",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -168,7 +192,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.",
         "consequences": [],
@@ -197,7 +221,11 @@
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
-          "anchor-legacy-evidence-004"
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -227,7 +255,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta de resolución denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria en Asturias que deniega devolución por falta de certificado de residencia fiscal en otro país y por no acreditarse tributación en el Estado de destino.\nAcreditar que la ausencia debía considerarse esporádica y que el interesado debía tributar en España.\nREJECTED\nPrueba insuficiente para acreditar que la estancia era esporádica; tribunal considera acreditada la residencia efectiva en el extranjero por duración y finalidad.\ncontrato ICEX\nContrato por el que el interesado desarrollaría su labor desde 1-10-2010 hasta 30-9-2011 en la Oficina Económica y Comercial de España en Panamá.\nDemostrar permanencia en Panamá durante el periodo (superior a 183 días) y que la estancia obedecía a la beca.\nACCEPTED\nAcredita el hecho de permanencia y la finalidad formativa de la estancia; el tribunal lo considera determinante para excluir que la ausencia sea esporádica.\ncondicionado concesión beca ICEX\nCondicionado de la beca ICEX que establece la obligación del ICEX de sufragar los títulos de transporte ida y vuelta entre lugar de residencia y país de destino.\nAcreditar la naturaleza y finalidad de la beca, su vínculo con la permanencia en el extranjero y la previsión de retorno al término de la beca.\nACCEPTED\nCorrobora la finalidad formativa y la previsión de desplazamiento prolongado; el Tribunal considera que no convierte la estancia en esporádica.\nmodelo 210 presentado 19/02/2015\nPresentación del modelo 210 (IRNR) solicitando devolución por considerarse no residente fiscal en España.\nProbar la alegación de no residencia y solicitar la devolución de retenciones practicadas por IRPF 2011.\nUNRESOLVED\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.\nNOT_DECIDED\n2011\nla Oﬁcina de Gestión Tributaria en Asturias de la AEAT formuló propuesta\nde resolución\nen que se denegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España\nal no haber aportado certiﬁcado acreditativo de residencia\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011, en la Oﬁcina Económica y Comercial de España en Panamá\nEn el propio condicionado de concesión de la beca se\nestablecía la obligación a cargo del ICEX de hacerse cargo de los títulos de transporte\nel contribuyente presentó en la Agencia Tributaria\nel modelo 210 del impuesto sobre la renta de no residentes (IRNR), en que solicitó\nla devolución",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\npropuesta de resolución denegatoria\nPropuesta de resolución de la Oficina de Gestión Tributaria en Asturias que deniega devolución por falta de certificado de residencia fiscal en otro país y por no acreditarse tributación en el Estado de destino.\nAcreditar que la ausencia debía considerarse esporádica y que el interesado debía tributar en España.\nREJECTED\nPrueba insuficiente para acreditar que la estancia era esporádica; tribunal considera acreditada la residencia efectiva en el extranjero por duración y finalidad.\ncontrato ICEX\nContrato por el que el interesado desarrollaría su labor desde 1-10-2010 hasta 30-9-2011 en la Oficina Económica y Comercial de España en Panamá.\nDemostrar permanencia en Panamá durante el periodo (superior a 183 días) y que la estancia obedecía a la beca.\nACCEPTED\nAcredita el hecho de permanencia y la finalidad formativa de la estancia; el tribunal lo considera determinante para excluir que la ausencia sea esporádica.\ncondicionado concesión beca ICEX\nCondicionado de la beca ICEX que establece la obligación del ICEX de sufragar los títulos de transporte ida y vuelta entre lugar de residencia y país de destino.\nAcreditar la naturaleza y finalidad de la beca, su vínculo con la permanencia en el extranjero y la previsión de retorno al término de la beca.\nACCEPTED\nCorrobora la finalidad formativa y la previsión de desplazamiento prolongado; el Tribunal considera que no convierte la estancia en esporádica.\nmodelo 210 presentado 19/02/2015\nPresentación del modelo 210 (IRNR) solicitando devolución por considerarse no residente fiscal en España.\nProbar la alegación de no residencia y solicitar la devolución de retenciones practicadas por IRPF 2011.\nUNRESOLVED\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.\nEl Tribunal considera probado que el interesado permaneció fuera de España más de 183 días y que la ausencia obedeció al disfrute de una beca ICEX cuya naturaleza exige permanencia continuada. Por ello la ausencia no es «esporádica» y el criterio objetivo de permanencia (>183 días) determina la no sujeción al IRPF; la exigencia de certificado de residencia en extranjero resulta innecesaria en este concreto supuesto.\nNOT_DECIDED\n2011\nEn vía administrativa la AEAT exigió la acreditación de residencia fiscal en el extranjero; el interesado aportó contrato y documentación de la beca y petición de devolución; el Tribunal aprecia hecho objetivo (>183 días) que decide el caso.\nLa carga probatoria no se consideró cumplida.\nla Oﬁcina de Gestión Tributaria en Asturias de la AEAT formuló propuesta\nde resolución\nen que se denegó la devolución solicitada, concluyendo que el interesado\ndebía tributar en España\nal no haber aportado certiﬁcado acreditativo de residencia\ndesarrollaría su labor, desde el 1 de octubre de 2010 hasta el 30\nde septiembre de 2011, en la Oﬁcina Económica y Comercial de España en Panamá\nEn el propio condicionado de concesión de la beca se\nestablecía la obligación a cargo del ICEX de hacerse cargo de los títulos de transporte\nel contribuyente presentó en la Agencia Tributaria\nel modelo 210 del impuesto sobre la renta de no residentes (IRNR), en que solicitó\nla devolución\nEs un hecho cierto y reconocido por la Administración que el recurrente ha permanecido fuera de España más\nde 183 días\nLa permanencia fuera del territorio nacional durante más de 183 días\nno puede considerarse como una ausencia esporádica\nno hay ninguna norma en el modelo referido que resulte\ncontraria a la regulación\nno puede caliﬁcarse esa estancia\ndisfrutando\nde una beca ICEX como una ausencia esporádica",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -329,6 +357,108 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2516,
+              "page_index": 2,
+              "printed_page": "2",
+              "start_offset": 2398,
+              "verbatim_text": "Es un hecho cierto y reconocido por la Administración que el recurrente ha permanecido fuera de España más\nde 183 días"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 634,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 566,
+              "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+            },
+            {
+              "end_offset": 768,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 718,
+              "verbatim_text": "no puede considerarse como una ausencia esporádica"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1227,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 1147,
+              "verbatim_text": "no hay ninguna norma en el modelo referido que resulte\ncontraria a la regulación"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "d4d287bfd54453bb58e4a76796c06dfe74211e91585ef94fc88f072afd9dda93"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 579,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 547,
+              "verbatim_text": "no puede caliﬁcarse esa estancia"
+            },
+            {
+              "end_offset": 659,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 602,
+              "verbatim_text": "disfrutando\nde una beca ICEX como una ausencia esporádica"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

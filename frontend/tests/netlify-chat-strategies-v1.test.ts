@@ -15,6 +15,7 @@ describe('estrategia A estructurada', () => {
         status: 'completa' as const,
         claims: [
           {
+            kind: 'party_argument' as const,
             text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
             evidence_ids: ['E1'],
           },
@@ -45,6 +46,12 @@ describe('estrategia A estructurada', () => {
     );
     expect(writerInput.systemPrompt).toContain(
       'una parte carece de respaldo, no crees una claim para esa parte'
+    );
+    expect(writerInput.systemPrompt).toContain(
+      'distingue obligatoriamente los medios utilizados o alegados, su valoración judicial y el resultado probatorio'
+    );
+    expect(writerInput.systemPrompt).toContain(
+      'No relegues una insuficiencia probatoria decisiva al campo limits'
     );
     expect(
       new TextEncoder().encode(`${writerInput.systemPrompt}\n${writerInput.userPrompt}`).byteLength
@@ -85,7 +92,7 @@ describe('estrategia A estructurada', () => {
       write: async () => ({
         draft: {
           status: 'completa',
-          claims: [{ text: 'No debe publicarse.', evidence_ids: ['E999'] }],
+          claims: [{ kind: 'party_argument', text: 'No debe publicarse.', evidence_ids: ['E999'] }],
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
@@ -108,8 +115,8 @@ describe('estrategia A estructurada', () => {
         draft: {
           status: 'completa',
           claims: [
-            { text: 'Afirmación respaldada.', evidence_ids: ['E1'] },
-            { text: 'Afirmación sin respaldo.', evidence_ids: [] },
+            { kind: 'party_argument', text: 'Afirmación respaldada.', evidence_ids: ['E1'] },
+            { kind: 'party_argument', text: 'Afirmación sin respaldo.', evidence_ids: [] },
           ],
           limits: [],
         },
@@ -134,6 +141,7 @@ describe('estrategia A estructurada', () => {
           status: 'completa',
           claims: [
             {
+              kind: 'party_argument',
               text: 'La jurisprudencia valida una colonia permanente en la Luna.',
               evidence_ids: ['E1'],
             },
@@ -154,6 +162,34 @@ describe('estrategia A estructurada', () => {
     expect(answer.limits.join(' ')).toContain('relación suficiente');
   });
 
+  it('no permite presentar una alegación como valoración judicial', async () => {
+    const strategy = new CurrentStructuredStrategy(corpus, {
+      write: async () => ({
+        draft: {
+          status: 'completa',
+          claims: [
+            {
+              kind: 'judicial_assessment',
+              text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+              evidence_ids: ['E1'],
+            },
+          ],
+          limits: [],
+        },
+        usage: { input_tokens: 10, output_tokens: 10, complete: true },
+        model: 'gpt-5.6-luna',
+      }),
+    });
+
+    const answer = await strategy.answer(
+      '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+      context
+    );
+
+    expect(answer).toMatchObject({ status: 'error', text: '', sources: [] });
+    expect(answer.limits.join(' ')).toContain('función jurídica');
+  });
+
   it('conserva las afirmaciones respaldadas y degrada a parcial si retira otra', async () => {
     const strategy = new CurrentStructuredStrategy(corpus, {
       write: async () => ({
@@ -161,10 +197,12 @@ describe('estrategia A estructurada', () => {
           status: 'completa',
           claims: [
             {
+              kind: 'party_argument',
               text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
               evidence_ids: ['E1'],
             },
             {
+              kind: 'party_argument',
               text: 'La jurisprudencia valida una colonia permanente en la Luna.',
               evidence_ids: ['E1'],
             },
@@ -229,6 +267,7 @@ describe('estrategia A estructurada', () => {
           status: 'completa',
           claims: [
             {
+              kind: 'party_argument',
               text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
               evidence_ids: ['E1', 'E1'],
             },

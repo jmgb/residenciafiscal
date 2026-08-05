@@ -306,7 +306,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.",
       "consequences": [],
@@ -388,7 +388,11 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -720,6 +724,98 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "de los pretendidos movimientos bancarios no cabe extraer las consecuencias"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 9,
+          "verbatim_text": "compras en Madrid"
+        },
+        {
+          "page_index": 9,
+          "verbatim_text": "en cualquier caso los mismos no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 6,
+          "verbatim_text": "residencia habitual"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "la ley está exigiendo"
+        },
+        {
+          "page_index": 11,
+          "verbatim_text": "a partir del dato fáctico de la permanencia"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 7,
+          "verbatim_text": "ha de ser probada por el mismo"
+        },
+        {
+          "page_index": 7,
+          "verbatim_text": "insuﬁcientes"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

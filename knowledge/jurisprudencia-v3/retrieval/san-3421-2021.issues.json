@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-3421-2021.case.json",
-    "case_sha256": "7240844850c56a265ace15dc6b8a11fbe78e75f3bdef3c5cd1ef5314e4394db4",
+    "case_sha256": "74558c04b23fda7927cb3b6e7479549594095cb31325a536c5711140db0b24fd",
     "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "Corresponde a la Administración acreditar que el contribuyente tuvo su residencia habitual en España y desvirtuar certificados y hechos probados en sede penal",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -368,7 +392,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.",
         "consequences": [],
@@ -404,7 +428,12 @@
           "anchor-legacy-evidence-008",
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
-          "anchor-legacy-evidence-011"
+          "anchor-legacy-evidence-011",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -445,7 +474,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\ncontratos de arrendamiento supuestamente simulados\nActa de la Inspección donde se afirma que el interesado fingió no disponer de inmuebles en España simulando arrendamientos y usando sociedad instrumental\nAcreditar residencia efectiva en vivienda española\nREJECTED\nPrueba insuficiente para acreditar residencia; no consta permanencia en esos inmuebles\ninformes CARLSON WAGON LIT\nInformación de la entidad que gestionaba sus viajes indicando que la mayoría de los vuelos del interesado tenían origen/destino Barcelona y ninguna ruta Suiza\nDemostrar presencia frecuente/permanente en España y ausencias no justificadas\nPARTIAL\nAdmitido como indicio pero explicado por el recurrente (logística profesional); no prueba concluyente de permanencia >183 días\ntestimonios de vecinos y actuaciones de los actuarios\nDiligencias con declaraciones de vecinos y actuarios que apuntaban presencia del entorno del recurrente en España y ausencia del propio recurrente\nCorroborar residencia habitual en España\nREJECTED\nTestimonios no postulados adecuadamente por la Acusación; contradichos por testificales de la defensa y valorados con poca eficacia\nnoticias prensa y presencia pareja en Esplugues\nCitas en prensa y alusiones a la pareja del recurrente viviendo en Esplugues como indicio de arraigo en España\nAcreditar centro de intereses vitales en España\nPARTIAL\nValoradas como indicios pero insuficientes y contradichas por documentación probatoria de residencia en Suiza\ninforme patrimonial y atribución de bienes en España\nActuaciones inspectoras con valoración de bienes y atribución de inmuebles en España para cuantificar la base imponible\nDemostrar que la mayor parte de intereses económicos y patrimonio estaban en España\nREJECTED\nContradicho por pruebas documentales que muestran mayor volumen de patrimonio y gestión en Suiza\ncertificado autoridad fiscal Cantón Friburgo\nCertificado de la autoridad fiscal del Cantón de Friburgo que declara al recurrente residente en Suiza según Convenio (26/06/2000-15/03/2007)\nAcreditar residencia fiscal en Suiza\nACCEPTED\nDocumento cualificado de autoridad fiscal extranjera, valorado como medio incontestable para probar residencia en otro Estado\nmatrícula consular en Ginebra\nCertificado del Cónsul español en Ginebra donde consta inscripción en el registro de matrícula consular (18/03/2003 - 29/03/2007)\nAcreditar residencia efectiva y formalización en representación consular en Suiza\nACCEPTED\nAcreditada la inscripción consular como indicio formal y relevante de residencia en Suiza; valorada por el tribunal\ncontrato de arrendamiento vivienda en Suiza y recibos de alquiler\nContrato de arrendamiento de vivienda en Chatel-St-Denis y recibos de pago de alquileres\nAcreditar vivienda habitual y estancia en Suiza\nACCEPTED\nDocumental de uso de vivienda en Suiza valorada junto con otros indicios; contribuye a acreditar residencia extranjera\nregistro entrada/salida Suiza\nCertificado de organismo suizo de Justicia y Seguridad que informa de entrada en Suiza 26/06/2000 y salida 14/02/2007\nAcreditar estancias prolongadas en Suiza y ausencia de permanencia en España\nACCEPTED\nCorrobora períodos de estancia en Suiza; valor probatorio importante unido a demás documentación\nextractos y saldos cuentas en EFG/Lombard Odier\nExtractos y saldos de cuentas bancarias suizas con saldos medios elevados (EFG y Lombard Odier)\nAcreditar centro patrimonial y gestión financiera en Suiza\nACCEPTED\nPrueba determinante sobre localización del patrimonio y gestión desde Suiza; valorada por la Sala como indicio objetivo\ndeclaraciones chofer y entrenador y perito de la defensa\nTestificales del chófer, entrenador y perito en juicio que corroboraron la organización profesional y gestión desde Suiza y la existencia de pruebas documentales\nDesvirtuar los indicios de residencia en España y apoyar residencia en Suiza\nACCEPTED\nValoradas por el Juzgador como verosímiles y coherentes con la documentación aportada; contribuyeron a la sana crítica\nLa Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.\nLa Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.\nNOT_DECIDED\n2005\nFingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad\ninformación aportada por la entidad que gestionaba sus viajes (CARLSON WAGON LIT ESPAÑA, SL\nmayoría de los vuelos\nno podemos compartir ni la probanza de\nlos indicios, ni, por consiguiente, la deducción o consecuencia\nNoticias de prensa\nAusencia de noticia alguna que lo relacione con Suiza, y sí de\nque su pareja vivía en Esplugues\nSi se incluye el inmueble sito en Esplugues\nla valoración del total de activos ascendería a 3.629.386,60 euros\nCertiﬁcado de la Autoridad ﬁscal del Cantón de Friburgo\ndesde 26 / 06 / 2000 hasta 15/\n03/ 2007\nCertiﬁcado del Cónsul español en Ginebra\ninscrito en\nel registro de matrícula consular\ndesde el día 18 / 03/ 2003\nSe ha aportado, asimismo, un contrato de arrendamiento de la vivienda situada en Suiza\ny recibos del pago del alquiler\nCertiﬁcado de un organismo suizo de Justicia y Seguridad que informa de su entrada en Suiza en fecha de\n26 /06 / 2000 y su salida en fecha de 14/ 02 / 2007\nActivos ﬁnancieros EFG Bank 5.976.855,77 euros\nTotal: 6.256.888,69 euros\nla prueba personal practicada\nnos lleva a la sana convicción\nla tesis de la Acusación Particular - residencia simulada en Suiza- no es tal",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nCRIT_CDI_TIEBREAKER\ncontratos de arrendamiento supuestamente simulados\nActa de la Inspección donde se afirma que el interesado fingió no disponer de inmuebles en España simulando arrendamientos y usando sociedad instrumental\nAcreditar residencia efectiva en vivienda española\nREJECTED\nPrueba insuficiente para acreditar residencia; no consta permanencia en esos inmuebles\ninformes CARLSON WAGON LIT\nInformación de la entidad que gestionaba sus viajes indicando que la mayoría de los vuelos del interesado tenían origen/destino Barcelona y ninguna ruta Suiza\nDemostrar presencia frecuente/permanente en España y ausencias no justificadas\nPARTIAL\nAdmitido como indicio pero explicado por el recurrente (logística profesional); no prueba concluyente de permanencia >183 días\ntestimonios de vecinos y actuaciones de los actuarios\nDiligencias con declaraciones de vecinos y actuarios que apuntaban presencia del entorno del recurrente en España y ausencia del propio recurrente\nCorroborar residencia habitual en España\nREJECTED\nTestimonios no postulados adecuadamente por la Acusación; contradichos por testificales de la defensa y valorados con poca eficacia\nnoticias prensa y presencia pareja en Esplugues\nCitas en prensa y alusiones a la pareja del recurrente viviendo en Esplugues como indicio de arraigo en España\nAcreditar centro de intereses vitales en España\nPARTIAL\nValoradas como indicios pero insuficientes y contradichas por documentación probatoria de residencia en Suiza\ninforme patrimonial y atribución de bienes en España\nActuaciones inspectoras con valoración de bienes y atribución de inmuebles en España para cuantificar la base imponible\nDemostrar que la mayor parte de intereses económicos y patrimonio estaban en España\nREJECTED\nContradicho por pruebas documentales que muestran mayor volumen de patrimonio y gestión en Suiza\ncertificado autoridad fiscal Cantón Friburgo\nCertificado de la autoridad fiscal del Cantón de Friburgo que declara al recurrente residente en Suiza según Convenio (26/06/2000-15/03/2007)\nAcreditar residencia fiscal en Suiza\nACCEPTED\nDocumento cualificado de autoridad fiscal extranjera, valorado como medio incontestable para probar residencia en otro Estado\nmatrícula consular en Ginebra\nCertificado del Cónsul español en Ginebra donde consta inscripción en el registro de matrícula consular (18/03/2003 - 29/03/2007)\nAcreditar residencia efectiva y formalización en representación consular en Suiza\nACCEPTED\nAcreditada la inscripción consular como indicio formal y relevante de residencia en Suiza; valorada por el tribunal\ncontrato de arrendamiento vivienda en Suiza y recibos de alquiler\nContrato de arrendamiento de vivienda en Chatel-St-Denis y recibos de pago de alquileres\nAcreditar vivienda habitual y estancia en Suiza\nACCEPTED\nDocumental de uso de vivienda en Suiza valorada junto con otros indicios; contribuye a acreditar residencia extranjera\nregistro entrada/salida Suiza\nCertificado de organismo suizo de Justicia y Seguridad que informa de entrada en Suiza 26/06/2000 y salida 14/02/2007\nAcreditar estancias prolongadas en Suiza y ausencia de permanencia en España\nACCEPTED\nCorrobora períodos de estancia en Suiza; valor probatorio importante unido a demás documentación\nextractos y saldos cuentas en EFG/Lombard Odier\nExtractos y saldos de cuentas bancarias suizas con saldos medios elevados (EFG y Lombard Odier)\nAcreditar centro patrimonial y gestión financiera en Suiza\nACCEPTED\nPrueba determinante sobre localización del patrimonio y gestión desde Suiza; valorada por la Sala como indicio objetivo\ndeclaraciones chofer y entrenador y perito de la defensa\nTestificales del chófer, entrenador y perito en juicio que corroboraron la organización profesional y gestión desde Suiza y la existencia de pruebas documentales\nDesvirtuar los indicios de residencia en España y apoyar residencia en Suiza\nACCEPTED\nValoradas por el Juzgador como verosímiles y coherentes con la documentación aportada; contribuyeron a la sana crítica\nLa Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.\nLa Sala considera vinculantes los hechos probados en la sentencia penal (residencia en Suiza 26/06/2000-15/03/2007) y valora la documental extranjera (certificado cantonal, matrícula consular, contrato y recibos) junto con la mayor concentración de patrimonio y gestión en Suiza. No existió prueba directa de permanencia en España >183 días y los indicios de la AEAT (viajes, prensa, contratos simulados) son insuficientes para desvirtuar la residencia suiza, por lo que estima el recurso y anula la liquidación.\nNOT_DECIDED\n2005\nCorresponde a la Administración acreditar que el contribuyente tuvo su residencia habitual en España y desvirtuar certificados y hechos probados en sede penal\nLa carga probatoria no se consideró cumplida.\nFingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad\ninformación aportada por la entidad que gestionaba sus viajes (CARLSON WAGON LIT ESPAÑA, SL\nmayoría de los vuelos\nno podemos compartir ni la probanza de\nlos indicios, ni, por consiguiente, la deducción o consecuencia\nNoticias de prensa\nAusencia de noticia alguna que lo relacione con Suiza, y sí de\nque su pareja vivía en Esplugues\nSi se incluye el inmueble sito en Esplugues\nla valoración del total de activos ascendería a 3.629.386,60 euros\nCertiﬁcado de la Autoridad ﬁscal del Cantón de Friburgo\ndesde 26 / 06 / 2000 hasta 15/\n03/ 2007\nCertiﬁcado del Cónsul español en Ginebra\ninscrito en\nel registro de matrícula consular\ndesde el día 18 / 03/ 2003\nSe ha aportado, asimismo, un contrato de arrendamiento de la vivienda situada en Suiza\ny recibos del pago del alquiler\nCertiﬁcado de un organismo suizo de Justicia y Seguridad que informa de su entrada en Suiza en fecha de\n26 /06 / 2000 y su salida en fecha de 14/ 02 / 2007\nActivos ﬁnancieros EFG Bank 5.976.855,77 euros\nTotal: 6.256.888,69 euros\nla prueba personal practicada\nnos lleva a la sana convicción\nla tesis de la Acusación Particular - residencia simulada en Suiza- no es tal\nFingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad\nla parte acusadora\ndebería de haber postulado a dichos testigos, como prueba de cargo\nla carga -onus probandi- que le incumbe, debería de haber postulado a dichos testigos\nno existe una prueba directa y concluyente de la permanencia en España del Sr.  Pedro\nEnrique  más de 183 días\nunos mismos hechos no pueden existir\ny dejar de existir para los órganos del Estado",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -750,6 +779,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2094,
+              "page_index": 3,
+              "printed_page": "3",
+              "start_offset": 1981,
+              "verbatim_text": "Fingió no disponer de inmuebles en España: simuló contratos de arrendamientos sobre dos viviendas de su\npropiedad"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 751,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 733,
+              "verbatim_text": "la parte acusadora"
+            },
+            {
+              "end_offset": 899,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 833,
+              "verbatim_text": "debería de haber postulado a dichos testigos, como prueba de cargo"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 877,
+              "page_index": 10,
+              "printed_page": "10",
+              "start_offset": 792,
+              "verbatim_text": "la carga -onus probandi- que le incumbe, debería de haber postulado a dichos testigos"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2784,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 2674,
+              "verbatim_text": "no existe una prueba directa y concluyente de la permanencia en España del Sr.  Pedro\nEnrique  más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "b1c7688142d47dfc86a7f13284b1a50a4776d3fde11a6663339c0860d86f8955"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1025,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 942,
+              "verbatim_text": "unos mismos hechos no pueden existir\ny dejar de existir para los órganos del Estado"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

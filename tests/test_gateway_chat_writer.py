@@ -20,7 +20,8 @@ from structured_answer_writer import ChatWriterRequest  # noqa: E402
 
 DRAFT_JSON = (
     '{"status": "completa", "limits": [],'
-    ' "claims": [{"text": "La sentencia valora la permanencia.", "evidence_ids": ["E1"]}]}'
+    ' "claims": [{"kind": "judicial_assessment", "text": '
+    '"La sentencia valora la permanencia.", "evidence_ids": ["E1"]}]}'
 )
 
 

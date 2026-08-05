@@ -173,7 +173,7 @@ def get_production_chat_repository() -> SupabaseChatRepository | None:
             "CHAT_STRUCTURED_CORPUS_VERSION", "residenciafiscal-case/3"
         ),
         structured_prompt_version=os.getenv(
-            "CHAT_STRUCTURED_PROMPT_VERSION", "structured-claims-v4"
+            "CHAT_STRUCTURED_PROMPT_VERSION", "structured-claims-v5"
         ),
         file_search_store=os.getenv("CHAT_FILE_SEARCH_STORE_NAME", "unknown"),
         file_search_prompt_version=os.getenv(

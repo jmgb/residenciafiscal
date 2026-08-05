@@ -106,7 +106,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.",
       "consequences": [],
@@ -178,7 +178,9 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-holding-001"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -289,6 +291,46 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "page_index": 4,
+          "verbatim_text": "Si solamente se atendiera al elemento objetivo de\nla duración, el artículo 9 LIRPF quedaría"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      }
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "page_index": 10,
+          "verbatim_text": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "page_index": 10,
+          "verbatim_text": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

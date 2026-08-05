@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-698-2018.case.json",
-    "case_sha256": "5523a1dc4b44da1fac14cdfa127bd3956eff0fab1acfce15d7d453f4086ca5e7",
+    "case_sha256": "6e7187bab8da1afc0236edf67789ed0e1b1a8ecdbff68b4f5a385d78f1bbeb6f",
     "source_sha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La Administración denegó la devolución basándose en la consideración de ausencia esporádica y en la falta de acreditación de residencia fiscal en el extranjero, por lo que debía justificar esa calificaci\u0003n.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -152,7 +176,9 @@
       "issue": {
         "anchor_ids": [
           "anchor-legacy-evidence-001",
-          "anchor-legacy-evidence-002"
+          "anchor-legacy-evidence-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-reasoning-001"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -180,7 +206,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal\nLa AEAT aleg\u0003o que el interesado no aport\u0003o certificado acreditativo de residencia por la autoridad fiscal competente de otro pa\u0003s\nDemostrar que no resid\u0003a fiscalmente en otro pa\u0003s y que la ausencia era espor\u0003adica\nREJECTED\nLa Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva\nretenciones ICEX ejercicio 2011\nImporte de retenciones practicadas por ICEX en 2011 por 3.292,54 euros que se reclamaron a devoluci\u0003n\nAcreditar la retenci\u0003n efectuada y el derecho a su devoluci\u0003n si no existe residencia en Espa\u0003na\nACCEPTED\nDocumento administrativo que prueba la pr\u0003actica de la retenci\u0003n y el importe reclamado; la Sala acuerda la devoluci\u0003n al estimar la no residencia\nEl Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.\nEl Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.\nNOT_DECIDED\n2011\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente\nDurante dicho ejercicio 2011 le fue retenida por el ICEX la cantidad de 3.292,54 euros",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nausencia de certificado de residencia fiscal\nLa AEAT aleg\u0003o que el interesado no aport\u0003o certificado acreditativo de residencia por la autoridad fiscal competente de otro pa\u0003s\nDemostrar que no resid\u0003a fiscalmente en otro pa\u0003s y que la ausencia era espor\u0003adica\nREJECTED\nLa Sala entiende que en este supuesto de permanencia fuera de Espa\u0003na >183 d\u0003ias no era exigible dicha acreditaci\u0003n; por tanto la carencia del certificado no es decisiva\nretenciones ICEX ejercicio 2011\nImporte de retenciones practicadas por ICEX en 2011 por 3.292,54 euros que se reclamaron a devoluci\u0003n\nAcreditar la retenci\u0003n efectuada y el derecho a su devoluci\u0003n si no existe residencia en Espa\u0003na\nACCEPTED\nDocumento administrativo que prueba la pr\u0003actica de la retenci\u0003n y el importe reclamado; la Sala acuerda la devoluci\u0003n al estimar la no residencia\nEl Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.\nEl Tribunal considera probado que el recurrente permaneció fuera de España m\u0003as de 183 d\u0003ias (hecho objetivo y reconocido). Aplica el criterio objetivo del art. 9 LIRPF y entiende que la estancia por beca no constituye ausencia esporádica, de modo que el requisito de acreditar residencia fiscal en otro Estado no era exigible en este supuesto, por lo que confirma la estimaci\u0003n a favor del recurrente.\nNOT_DECIDED\n2011\nLa Administración denegó la devolución basándose en la consideración de ausencia esporádica y en la falta de acreditación de residencia fiscal en el extranjero, por lo que debía justificar esa calificaci\u0003n.\nLa carga probatoria no se consideró cumplida.\nno haber aportado certiﬁcado acreditativo de residencia por la autoridad\nﬁscal competente\nDurante dicho ejercicio 2011 le fue retenida por el ICEX la cantidad de 3.292,54 euros\nla Administración partió del hecho de que\nse trataba de una ausencia esporádica\nse reiteran los criterios interpretativos\nexpresados en esas anteriores sentencias",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -217,6 +243,57 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5150,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 5071,
+              "verbatim_text": "la Administración partió del hecho de que\nse trataba de una ausencia esporádica"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2367,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2326,
+              "verbatim_text": "se reiteran los criterios interpretativos"
+            },
+            {
+              "end_offset": 2419,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 2379,
+              "verbatim_text": "expresados en esas anteriores sentencias"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

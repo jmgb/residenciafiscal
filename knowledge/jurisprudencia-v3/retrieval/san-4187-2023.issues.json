@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-4187-2023.case.json",
-    "case_sha256": "58fbddacdd9ccecef97b7f413ff71510e8fbbeea84410fd879acbe74ce1abc39",
+    "case_sha256": "d62b90feb615ca9408d347cc1ab585a004fa16424fcc9f1e96806f800120d22c",
     "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El artículo 9 LIRPF computa ausencias como días en España salvo que el contribuyente acredite residencia fiscal en otro país; por tanto correspondía al interesado probar residencia en Guinea.",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -275,7 +299,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.",
         "consequences": [],
@@ -308,7 +333,14 @@
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
-          "anchor-legacy-evidence-008"
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002",
+          "anchor-legacy-reasoning-004"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -343,7 +375,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_PRESUNCION_FAMILIA\nCRIT_AUSENCIAS_ESPORADICAS\nActa de disconformidad 16/05/2012\nActa de disconformidad de la Inspección que incrementa la base imponible y califica importes como rendimientos y ganancias no declaradas.\nAcreditar ingresos no declarados y justificar liquidación\nACCEPTED\nActa inspectoría aporta la motivación y cuantificación que el Tribunal considera relevante para la liquidación\nDescuento pagaré 06/10/2006\nRegistro bancario/operación de descuento del pagaré derivado de la venta del terreno y abono en cuenta el 6/10/2006.\nAcreditar que el cobro de la venta se produjo en 2006\nACCEPTED\nEl Tribunal considera probado que el pagaré fue descontado y abonado en 2006, por lo que la ganancia se imputa a 2006\nPresunción por residencia de cónyuge e hijos\nArgumento/presunción de la Administración (y asumida por la resolución recurrida) de que la residencia habitual del cónyuge y de los hijos menores en España presume la residencia del contribuyente.\nDesvirtuar la alegación de residencia en el extranjero y presumir residencia en España\nACCEPTED\nEl Tribunal aplica la presunción legal al no aportarse prueba suficiente en contrario\nCertificado de Baja Consular (Embajada en Malabo) 11/07/2011\nCertificado de baja en el Registro de Matrícula de la Embajada de España en Malabo, indica residencia desde 20/07/2003 y baja el 30/11/2009.\nAcreditar residencia efectiva en Guinea durante periodo alegado\nREJECTED\nEl Tribunal considera que, pese a su veracidad, no acredita la permanencia efectiva por más de 183 días en 2006\nContrato de arrendamiento Malabo 15/04/2004\nContrato de arrendamiento de vivienda sita en Malabo a favor del recurrente.\nAcreditar domicilio y permanencia en Guinea\nREJECTED\nEl Tribunal entiende que el contrato por sí solo no prueba permanencia por más de 183 días en 2006\nInscripción Censo Electoral de Españoles Residentes Ausentes (CERA) 03/10/2012\nCertificado que consta inscrito en CERA desde 31/03/2005 a 30/11/2009 con domicilio en Malabo.\nAcreditar residencia en Guinea durante periodo alegado\nREJECTED\nNo suficiente para acreditar permanencia efectiva; tribunal exige certificado de residencia expedido por autoridades de Guinea\nEscritura compraventa terreno Guinea 13/12/2005\nEscritura de compra de un terreno en Guinea.\nAcreditar vinculación patrimonial y estancia en Guinea\nREJECTED\nEl Tribunal considera que la escritura no prueba por sí sola la permanencia por más de 183 días en 2006\nFacturas obras DIRECCION002 (2000-2003)\nDiversas facturas expedidas por la mercantil DIRECCION002 por obras realizadas, importe total alegado 335.263,35€ y informe de arquitecto.\nAumentar valor de adquisición inmueble y anular ganancia patrimonial\nPARTIAL\nTribunal rechaza muchas facturas por ser emitidas por la constructora del contribuyente y por faltas de presupuestos, licencias y pago; admite ciertos importes reducidos considerados por la Inspección\nEl Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.\nEl Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.\nNOT_DECIDED\n2006\nen la que la Inspección consideró que la Base imponible general debía ser incrementada en 120.000\nEl pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006\njuega en su contra la presunción de residencia en España al residir en este país\nsu cónyuge y de sus hijos menores\nresidente en esta demarcación consular desde el día 20 de julio de 2003\nBAJA con fecha 30 de\nnoviembre de 2009\nContrato de arrendamiento de vivienda sita en Malabo\nconcertado el 15 de abril\nde 2004 a favor de D.  Gonzalo\nﬁgurado inscrito en el Censo Electoral de Españoles Residentes Ausentes desde 31/03/2005\na 30/11/2009, con domicilio en Malabo\nEscritura de compraventa de un terreno en Guinea en fecha 13/12/2005\nfacturas expedidas por la mercantil  DIRECCION002\naportando un informe\ninforme realizado en\nmayo de 2012",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_PRESUNCION_FAMILIA\nCRIT_AUSENCIAS_ESPORADICAS\nActa de disconformidad 16/05/2012\nActa de disconformidad de la Inspección que incrementa la base imponible y califica importes como rendimientos y ganancias no declaradas.\nAcreditar ingresos no declarados y justificar liquidación\nACCEPTED\nActa inspectoría aporta la motivación y cuantificación que el Tribunal considera relevante para la liquidación\nDescuento pagaré 06/10/2006\nRegistro bancario/operación de descuento del pagaré derivado de la venta del terreno y abono en cuenta el 6/10/2006.\nAcreditar que el cobro de la venta se produjo en 2006\nACCEPTED\nEl Tribunal considera probado que el pagaré fue descontado y abonado en 2006, por lo que la ganancia se imputa a 2006\nPresunción por residencia de cónyuge e hijos\nArgumento/presunción de la Administración (y asumida por la resolución recurrida) de que la residencia habitual del cónyuge y de los hijos menores en España presume la residencia del contribuyente.\nDesvirtuar la alegación de residencia en el extranjero y presumir residencia en España\nACCEPTED\nEl Tribunal aplica la presunción legal al no aportarse prueba suficiente en contrario\nCertificado de Baja Consular (Embajada en Malabo) 11/07/2011\nCertificado de baja en el Registro de Matrícula de la Embajada de España en Malabo, indica residencia desde 20/07/2003 y baja el 30/11/2009.\nAcreditar residencia efectiva en Guinea durante periodo alegado\nREJECTED\nEl Tribunal considera que, pese a su veracidad, no acredita la permanencia efectiva por más de 183 días en 2006\nContrato de arrendamiento Malabo 15/04/2004\nContrato de arrendamiento de vivienda sita en Malabo a favor del recurrente.\nAcreditar domicilio y permanencia en Guinea\nREJECTED\nEl Tribunal entiende que el contrato por sí solo no prueba permanencia por más de 183 días en 2006\nInscripción Censo Electoral de Españoles Residentes Ausentes (CERA) 03/10/2012\nCertificado que consta inscrito en CERA desde 31/03/2005 a 30/11/2009 con domicilio en Malabo.\nAcreditar residencia en Guinea durante periodo alegado\nREJECTED\nNo suficiente para acreditar permanencia efectiva; tribunal exige certificado de residencia expedido por autoridades de Guinea\nEscritura compraventa terreno Guinea 13/12/2005\nEscritura de compra de un terreno en Guinea.\nAcreditar vinculación patrimonial y estancia en Guinea\nREJECTED\nEl Tribunal considera que la escritura no prueba por sí sola la permanencia por más de 183 días en 2006\nFacturas obras DIRECCION002 (2000-2003)\nDiversas facturas expedidas por la mercantil DIRECCION002 por obras realizadas, importe total alegado 335.263,35€ y informe de arquitecto.\nAumentar valor de adquisición inmueble y anular ganancia patrimonial\nPARTIAL\nTribunal rechaza muchas facturas por ser emitidas por la constructora del contribuyente y por faltas de presupuestos, licencias y pago; admite ciertos importes reducidos considerados por la Inspección\nEl Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.\nEl Tribunal examina los documentos aportados por el recurrente y concluye que, aunque existen documentos (consular, contrato de arrendamiento, certificados, escrituras y declaraciones de terceros), ninguno acredita la permanencia efectiva por más de 183 días en Guinea en 2006; ante la falta de certificado de residencia guineano y la presunción legal por residencia del cónyuge e hijos en España, prevalece la residencia en España.\nNOT_DECIDED\n2006\nEl artículo 9 LIRPF computa ausencias como días en España salvo que el contribuyente acredite residencia fiscal en otro país; por tanto correspondía al interesado probar residencia en Guinea.\nLa carga probatoria no se consideró cumplida.\nen la que la Inspección consideró que la Base imponible general debía ser incrementada en 120.000\nEl pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006\njuega en su contra la presunción de residencia en España al residir en este país\nsu cónyuge y de sus hijos menores\nresidente en esta demarcación consular desde el día 20 de julio de 2003\nBAJA con fecha 30 de\nnoviembre de 2009\nContrato de arrendamiento de vivienda sita en Malabo\nconcertado el 15 de abril\nde 2004 a favor de D.  Gonzalo\nﬁgurado inscrito en el Censo Electoral de Españoles Residentes Ausentes desde 31/03/2005\na 30/11/2009, con domicilio en Malabo\nEscritura de compraventa de un terreno en Guinea en fecha 13/12/2005\nfacturas expedidas por la mercantil  DIRECCION002\naportando un informe\ninforme realizado en\nmayo de 2012\nde la documentación referida no se puede deducir que el recurrente tuviera su domicilio en Guinea\nEcuatorial en el año 2006\nni el contrato\nde arrendamiento\nsirven para acreditar que el recurrente tuvo su residencia efectiva por\nmás de 183 días\nno se aporta\nun certiﬁcado de\nresidencia emitido por las autoridades de Guinea Ecuatorial\nse computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país\nse computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país\njuega en su contra la presunción de residencia en España al residir en este país\nsu cónyuge y de sus hijos menores\nEl pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -547,6 +579,181 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2166,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2043,
+              "verbatim_text": "de la documentación referida no se puede deducir que el recurrente tuviera su domicilio en Guinea\nEcuatorial en el año 2006"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2293,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2262,
+              "verbatim_text": "ni el contrato\nde arrendamiento"
+            },
+            {
+              "end_offset": 2827,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2740,
+              "verbatim_text": "sirven para acreditar que el recurrente tuvo su residencia efectiva por\nmás de 183 días"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2880,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2868,
+              "verbatim_text": "no se aporta"
+            },
+            {
+              "end_offset": 3012,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 2936,
+              "verbatim_text": "un certiﬁcado de\nresidencia emitido por las autoridades de Guinea Ecuatorial"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3756,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3647,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3756,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 3647,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3202,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3122,
+              "verbatim_text": "juega en su contra la presunción de residencia en España al residir en este país"
+            },
+            {
+              "end_offset": 3276,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 3243,
+              "verbatim_text": "su cónyuge y de sus hijos menores"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ce860a288f665178fa9c3e0967e308fad40927f24565d4e1efa7f5ae8dc28d4d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-004",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3655,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 3569,
+              "verbatim_text": "El pagaré fue descontado y abonado en la cuenta del recurrente el 6 de octubre de 2006"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

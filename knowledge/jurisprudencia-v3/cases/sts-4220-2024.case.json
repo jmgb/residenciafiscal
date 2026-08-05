@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "La determinación del núcleo principal o base de intereses económicos es cuestión fáctica sujeta a las reglas de carga de la prueba del art. 105 LGT (cada parte debe acreditar los hechos que sostiene).",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -234,7 +258,7 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "conclusion": "El TS parte de que la Administración no niega la validez del certificado de residencia fiscal UK y, por ello, acepta el escenario de doble residencia y aplica el art. 4.2 CDI. Para afirmar residencia en España, considera aplicable el art. 9.1 LIRPF, destacando que no es determinante el criterio de permanencia (183 días) y que la Administración acude al criterio del art. 9.1.b) (núcleo principal o base de intereses económicos) en España. Con doble residencia, el desempate del CDI se resuelve a favor de España por centro de intereses vitales (relaciones personales y económicas más estrechas), apoyado en la disponibilidad de vivienda en España y en la localización de intereses económicos/patrimoniales en España. El TS desestima la casación y confirma la residencia fiscal en España en 2014.",
       "consequences": [],
@@ -319,7 +343,11 @@
         "anchor-legacy-evidence-005",
         "anchor-legacy-evidence-006",
         "anchor-legacy-evidence-007",
-        "anchor-legacy-evidence-008"
+        "anchor-legacy-evidence-008",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -587,6 +615,108 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 491,
+          "page_index": 3,
+          "printed_page": "3",
+          "start_offset": 394,
+          "verbatim_text": "el recurrente no prueba que tuviera que tributar en el Reino Unido en un impuesto análogo al IRPF"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 3654,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3534,
+          "verbatim_text": "Es una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2125,
+          "page_index": 13,
+          "printed_page": "13",
+          "start_offset": 2090,
+          "verbatim_text": "No resulta determinante el criterio"
+        },
+        {
+          "end_offset": 2255,
+          "page_index": 13,
+          "printed_page": "13",
+          "start_offset": 2232,
+          "verbatim_text": "la Administración acude"
+        },
+        {
+          "end_offset": 2326,
+          "page_index": 13,
+          "printed_page": "13",
+          "start_offset": 2286,
+          "verbatim_text": "apartado b) del mismo\nartículo 9.1 LIRPF"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "affb7b96493c59f0864f5dc198e84b3cb665c4ec4d94cf154063ad4211973381"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 4302,
+          "page_index": 12,
+          "printed_page": "12",
+          "start_offset": 4182,
+          "verbatim_text": "ante una situación de conﬂicto de residencia, es\nnecesario acudir a las normas previstas para su solución en el Convenio"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -16,9 +16,9 @@ BASE_LEGAL_ANSWER_INSTRUCTIONS = (
     "Si faltan hechos o cobertura, responde parcial, pregunta o abstención."
 )
 
-STRUCTURED_PROMPT_VERSION = "structured-claims-v4"
+STRUCTURED_PROMPT_VERSION = "structured-claims-v5"
 
-# Texto idéntico al `structured-claims-v4` del runtime vigente. Es el prompt que
+# Texto idéntico al `structured-claims-v5` del runtime vigente. Es el prompt que
 # el experimento tiene medido: reescribirlo aquí rompería la atribución de
 # calidad entre los dos runtimes, así que se porta literal.
 STRUCTURED_ANSWER_INSTRUCTIONS = (
@@ -31,10 +31,22 @@ STRUCTURED_ANSWER_INSTRUCTIONS = (
     "jurisprudencia: identifícala solo en limits. Devuelve afirmaciones jurídicas atómicas: "
     "separa hechos acreditados, valoración judicial y resultado, y no mezcles permanencia física, "
     "ausencias esporádicas, certificados fiscales extranjeros ni reglas de desempate de CDI en "
-    "una misma afirmación. En indicios de vida cotidiana, aclara que una mera alta, titularidad o "
-    "pago de cuota no equivale por sí solo a presencia física en una fecha; distingue esos datos "
+    "una misma afirmación. Cada claim debe declarar kind: party_argument para alegaciones o "
+    "actuaciones de una parte, judicial_assessment para valoración del tribunal, legal_rule para "
+    "reglas jurídicas, holding para el resultado o criterio decisorio y procedural_power para "
+    "facultades o carga probatoria. Cuando la pregunta pida cómo puede Hacienda demostrar un hecho, "
+    "distingue obligatoriamente los medios utilizados o alegados, su valoración judicial y el "
+    "resultado probatorio. No presentes como medio eficaz una actuación que la resolución citada "
+    "rechazó o consideró insuficiente; si solo existe cita de la alegación, di que Hacienda la "
+    "alegó o intentó y no afirmes su suficiencia. En indicios de vida cotidiana, aclara en la misma "
+    "claim que una mera alta, titularidad o pago de cuota no equivale por sí solo a presencia física "
+    "en una fecha; distingue esos datos "
     "del uso efectivo atribuible al contribuyente y de su valoración conjunta con otros indicios. "
-    "Muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento "
+    "No relegues una insuficiencia probatoria decisiva al campo limits: intégrala en la respuesta "
+    "principal con su cita. Para preguntas sobre prueba de permanencia, ordena la respuesta en "
+    "pruebas directas, indicios corroborativos, elementos insuficientes por sí solos y carga de la "
+    "prueba, incluyendo solo los bloques respaldados. Muestra contraste cuando exista. No predigas "
+    "el caso del usuario ni uses conocimiento "
     "externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese "
     "tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; "
     "una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. "

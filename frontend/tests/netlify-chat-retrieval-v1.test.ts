@@ -99,10 +99,11 @@ describe('recuperación estructurada Netlify V1', () => {
     const source = [...bundle.sourcesByEvidenceId.values()].find(
       (candidate) =>
         candidate.judgment_id === 'sts-3585-2024' &&
-        candidate.quote.includes('Calendario de residencia')
+        candidate.quote.includes('consumos efectuados con las tarjetas virtuales')
     );
 
     expect(source?.quote).toContain('consumos efectuados con las tarjetas virtuales');
+    expect(source?.quote).toContain('no se ha acreditado en forma');
     expect(source?.quote.length).toBeGreaterThan(250);
   });
 
@@ -126,6 +127,38 @@ describe('recuperación estructurada Netlify V1', () => {
 
     expect(gymSource?.quote).toContain('cuotas de clubs deportivos');
     expect(gymSource?.quote).toContain('gimnasios');
+  });
+
+  it('empareja la prueba de Hacienda con la valoración judicial en la pregunta de los 183 días', () => {
+    const question =
+      '¿Qué puede hacer Hacienda para demostrar que he estado en España más de 183 días?';
+    const retrieval = retrieveForChat(rolloutCorpus, question, 5);
+    const bundle = buildEvidenceBundle(
+      rolloutCorpus,
+      retrieval,
+      question,
+      productionVerbatimArtifacts
+    );
+    const sources = [...bundle.sourcesByEvidenceId.values()].filter(
+      (source) => source.judgment_id === 'san-6289-2022'
+    );
+    const purposes = [...bundle.sourcesByEvidenceId.keys()]
+      .filter((id) => bundle.sourcesByEvidenceId.get(id)?.judgment_id === 'san-6289-2022')
+      .map((id) => bundle.purposesByEvidenceId.get(id));
+
+    expect(retrieval.hits.map((hit) => hit.judgmentId)).toContain('san-6289-2022');
+    expect(sources.length).toBeGreaterThan(2);
+    expect(sources.some((source) => source.quote.includes('no existen indicios suﬁcientes'))).toBe(
+      true
+    );
+    expect(
+      sources.some((source) =>
+        source.quote
+          .replace(/\s+/g, ' ')
+          .includes('tampoco sirve por si mismo para acreditar la residencia en España')
+      )
+    ).toBe(true);
+    expect(purposes).toEqual(['HOLDING', 'REASONING', 'BURDEN_OF_PROOF', 'EVIDENCE']);
   });
 
   it('no interpreta el verbo genérico apunta como una alta en el gimnasio', () => {

@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "Residencia (art. 9.1.b LIRPF) es cuestión fáctica sujeta a art. 105 LGT; el interesado debe aportar prueba de hechos que alega (p.ej., días no acreditados).",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -478,7 +502,8 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "conclusion": "El TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).",
       "consequences": [],
@@ -573,7 +598,12 @@
         "anchor-legacy-evidence-014",
         "anchor-legacy-evidence-015",
         "anchor-legacy-evidence-016",
-        "anchor-legacy-evidence-017"
+        "anchor-legacy-evidence-017",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -1111,6 +1141,158 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 806,
+          "page_index": 17,
+          "printed_page": "17",
+          "start_offset": 684,
+          "verbatim_text": "deberá ponderarse, además del lugar de\nobtención de sus rentas, la localización de su patrimonio inmobiliario y mobiliario"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1346,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 1325,
+          "verbatim_text": "los restantes 32 días"
+        },
+        {
+          "end_offset": 1404,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 1367,
+          "verbatim_text": "el interesado no\naportó prueba alguna"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 416,
+          "page_index": 15,
+          "printed_page": "15",
+          "start_offset": 296,
+          "verbatim_text": "Es una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1455,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 1417,
+          "verbatim_text": "no resultando determinante el criterio"
+        },
+        {
+          "end_offset": 1497,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 1481,
+          "verbatim_text": "9.1 (permanencia"
+        },
+        {
+          "end_offset": 1521,
+          "page_index": 14,
+          "printed_page": "14",
+          "start_offset": 1506,
+          "verbatim_text": "más de 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2001,
+          "page_index": 16,
+          "printed_page": "16",
+          "start_offset": 1974,
+          "verbatim_text": "centro\nde intereses vitales"
+        },
+        {
+          "end_offset": 3220,
+          "page_index": 16,
+          "printed_page": "16",
+          "start_offset": 3199,
+          "verbatim_text": "resulta de aplicación"
+        },
+        {
+          "end_offset": 3992,
+          "page_index": 16,
+          "printed_page": "16",
+          "start_offset": 3971,
+          "verbatim_text": "es incuestionable que"
+        },
+        {
+          "end_offset": 4062,
+          "page_index": 16,
+          "printed_page": "16",
+          "start_offset": 4033,
+          "verbatim_text": "su residencia\nﬁscal en España"
+        }
+      ],
+      "purpose": "HOLDING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

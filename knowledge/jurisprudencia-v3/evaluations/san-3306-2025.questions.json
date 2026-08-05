@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 3306/2025 este supuesto de residencia: La Sala interpreta los arts. 8.1.a) y 9.1.a) LIRPF (183 días y ausencias esporádicas), afirmando que la permanencia fuera >183 días por disfrute de una beca no constituye ausencia esporádica y que la valoración debe ser objetiva sobre la du?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

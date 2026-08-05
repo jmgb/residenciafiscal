@@ -1,5 +1,29 @@
 {
-  "burden_of_proof_steps": [],
+  "burden_of_proof_steps": [
+    {
+      "anchor_ids": [
+        "anchor-legacy-burden-001"
+      ],
+      "conclusion": "La carga probatoria no se consideró cumplida.",
+      "fact_to_prove": "El art. 9.1.a LIRPF prevé que las ausencias esporádicas computan salvo que el contribuyente acredite residencia fiscal en otro país; en este caso, el TS declara inexistentes “ausencias esporádicas”, haciendo irrelevante el debate probatorio del certificado.",
+      "initial_bearer": "BOTH",
+      "issue_ids": [
+        "residencia-fiscal"
+      ],
+      "response_required": null,
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sequence": 1,
+      "shifts_to": null,
+      "step_id": "burden-legacy-001",
+      "triggering_evidence_ids": []
+    }
+  ],
   "evidence_findings": [
     {
       "anchor_ids": [
@@ -172,7 +196,8 @@
   "holdings": [
     {
       "anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002"
       ],
       "conclusion": "El TS parte de hechos inmutables: el interesado permaneció fuera de España más de 183 días en 2011 por una beca ICEX. Interpreta que “ausencias esporádicas” son solo las ocasionales y breves, accesorias a una permanencia principal en España; no pueden abarcar una ausencia prolongada superior a 183 días. Por ello, no procede computar esa ausencia como permanencia en España ni mantener la residencia fiscal española durante ese periodo. Al no existir “ausencias esporádicas”, resulta irrelevante pronunciarse sobre la exigencia del certificado de residencia fiscal extranjero en este caso.",
       "consequences": [],
@@ -255,7 +280,13 @@
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
         "anchor-legacy-evidence-005",
-        "anchor-legacy-evidence-006"
+        "anchor-legacy-evidence-006",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-holding-002",
+        "anchor-legacy-reasoning-003"
       ],
       "criterion_ids": [
         "CRIT_183_DIAS",
@@ -447,6 +478,208 @@
         }
       ],
       "purpose": "EVIDENCE",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "end_offset": 5775,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 5681,
+          "verbatim_text": "no son datos que puedan servir de fundamento para delimitar\nsi una ausencia es esporádica o no"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 4995,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 4970,
+          "verbatim_text": "se conﬁgura en función de"
+        },
+        {
+          "end_offset": 5019,
+          "page_index": 9,
+          "printed_page": "9",
+          "start_offset": 5000,
+          "verbatim_text": "un elemento fáctico"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1710,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 1625,
+          "verbatim_text": "la materia sobre la que versa esta tercera pregunta discurre en el terreno probatorio"
+        },
+        {
+          "end_offset": 2048,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 2032,
+          "verbatim_text": "deviene superﬂua"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 2623,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 2589,
+          "verbatim_text": "el concepto de\nresidencia habitual"
+        },
+        {
+          "end_offset": 2721,
+          "page_index": 7,
+          "printed_page": "7",
+          "start_offset": 2703,
+          "verbatim_text": "privado\nde sentido"
+        },
+        {
+          "end_offset": 1478,
+          "page_index": 8,
+          "printed_page": "8",
+          "start_offset": 1466,
+          "verbatim_text": "una ausencia"
+        },
+        {
+          "end_offset": 3404,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3385,
+          "verbatim_text": "superior a 183 días"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-holding-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 3014,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 2994,
+          "verbatim_text": "La permanencia fuera"
+        },
+        {
+          "end_offset": 3062,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3047,
+          "verbatim_text": "más de 183 días"
+        },
+        {
+          "end_offset": 3167,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3146,
+          "verbatim_text": "no puede considerarse"
+        },
+        {
+          "end_offset": 3196,
+          "page_index": 10,
+          "printed_page": "10",
+          "start_offset": 3177,
+          "verbatim_text": "ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+        "reviewed_at": "2026-08-01",
+        "reviewed_by": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "source_sha256": "aa5d36fa948d17e901c017559c162a0d6cf096b8eeb248a3c1f2c88806bce236"
+    },
+    {
+      "anchor_id": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "end_offset": 1390,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1374,
+          "verbatim_text": "ha sido resuelta"
+        },
+        {
+          "end_offset": 1463,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1421,
+          "verbatim_text": "en la sentencia de 28 de noviembre de 2017"
+        },
+        {
+          "end_offset": 1527,
+          "page_index": 6,
+          "printed_page": "6",
+          "start_offset": 1510,
+          "verbatim_text": "así como en otras"
+        }
+      ],
+      "purpose": "REASONING",
       "review": {
         "legal": "AGENT_REVIEWED",
         "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

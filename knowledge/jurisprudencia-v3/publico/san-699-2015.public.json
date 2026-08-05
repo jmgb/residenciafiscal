@@ -372,6 +372,87 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "documento puramente privado, que no permite, por sí mismo, dar fe de su fecha, ni\nde su contenido"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "el cotejo se ha producido el 27 de noviembre de 2009, más de cuatro años después"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "cuando la liquidación\ntributaria se funda en las actuaciones inspectoras practicadas"
+        },
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "es al\ncontribuyente a quien incumbe desvirtuar"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "los documentos privados no hacen prueba de su autenticidad si esta ha sido impugnada"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "a49d4fd7d5e1b2c2e35a3e6bea247543e6ae344884036c02359408c09a6c80ea"
     }
   ],
   "issues": [
@@ -393,7 +474,11 @@
         "anchor-legacy-evidence-014",
         "anchor-legacy-evidence-015",
         "anchor-legacy-evidence-016",
-        "anchor-legacy-evidence-017"
+        "anchor-legacy-evidence-017",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -776,7 +861,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probada la residencia en España en 2005 por la concurrencia de presencia física (consumos, consultas hospitalarias, uso de tarjetas), empadronamiento y, sobre todo, por la concentración de intereses económicos (administraciones y pagos desde sociedades españolas). Para 2006 acepta certificado suizo de residencia fiscal pero, por doble residencia, aplica el art.4.2 del Convenio y concluye que el centro de intereses vitales y la vivienda permanente vinculan al contribuyente a España.",
         "consequences": [],

@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-3574-2023.case.json",
-    "case_sha256": "e9bdf315f6668bd38670263dcbf4b5ba4c28306f448d5b938f81374efab3803a",
+    "case_sha256": "a92c73efb9cba1689cacac0a769403c26213b6137777be85ee3debd10f6a9457",
     "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "En la sentencia (AN transcrita) se afirma que la falta de prueba eficiente de la acusación impide negar la residencia en Suiza; el TS además exige motivación para evitar contradicción fáctica con sentencia penal.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -443,7 +467,11 @@
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
           "anchor-legacy-evidence-011",
-          "anchor-legacy-evidence-012"
+          "anchor-legacy-evidence-012",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -482,7 +510,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_OTRO\nvuelos con origen o destino Barcelona\nIndicios de desplazamientos: vuelos con origen o destino en Barcelona.\nInferir permanencia y vínculos de hecho en España durante 2005.\nUNRESOLVED\nrelación estable con residente en España\nIndicio personal: existencia de relación estable con persona residente en España.\nAcreditar centro de intereses vitales/arraigo personal en España.\nUNRESOLVED\nchofer y entrenador personal residentes en España\nIndicios de servicios personales en España: chofer y entrenador personal residentes en España.\nInferir vida cotidiana/organización personal en España.\nUNRESOLVED\nimpugnación de certificado suizo como simulado\nLa Inspección/TEAC sostienen que el certificado de residencia suizo se obtuvo mediante actuaciones simuladas para aparentar residencia en Suiza.\nDesacreditar la prueba directa de residencia fiscal en Suiza aportada por el contribuyente.\nUNRESOLVED\npagos/cobros desde cuentas suizas (considerados simulación)\nOperativa bancaria en Suiza (pagos/cobros) que el TSJ calificó como parte de la simulación de residencia, no como gestión económica real.\nNegar que el uso de cuentas suizas acredite residencia o centro económico fuera de España.\nUNRESOLVED\ncertificado de residencia fiscal en Suiza\nCertificado de residencia fiscal en Suiza aportado por el contribuyente para el ejercicio 2005 (discutido por Inspección/TEAC).\nAcreditar residencia fiscal en Suiza en 2005 y excluir residencia en España.\nUNRESOLVED\ninscripción consular en Ginebra\nConstancia de inscripción en el Consulado de España en Ginebra durante el periodo en que se afirma residencia en Suiza.\nCorroborar residencia efectiva en Suiza (vínculo administrativo coherente con residencia).\nACCEPTED\nEl TS reproduce el hecho probado penal que lo incluye y lo trata como dato fáctico relevante a considerar para evitar contradicciones.\nsentencia penal Juzgado Penal 19 Barcelona (hechos probados)\nSentencia penal 1/10/2018 (Juzgado Penal 19 Barcelona) que declara probado que el contribuyente tenía residencia fiscal en Friburgo (Suiza) 26/06/2000-15/03/2007 (incluye 2005).\nFijar como hecho probado judicialmente la residencia fiscal en Suiza también en 2005.\nACCEPTED\nEl TS la considera una \"nítida aseveración\" sobre un dato fáctico esencial que debía ser tenido en cuenta y cuya contradicción exigía motivación.\nsentencia Audiencia Provincial Barcelona confirmando hechos probados\nSentencia de 21/05/2019 (AP Barcelona) desestima apelación de AEAT y confirma la declaración contundente de residencia en Suiza.\nReforzar firmeza y contundencia del hecho probado penal sobre residencia en Suiza.\nACCEPTED\nEl TS descarta la tesis de extralimitación/indefensión y asume que la Audiencia Provincial ratificó la declaración de hechos probados.\nsentencia Audiencia Nacional IRPF 2005 (firme)\nSentencia AN 26/05/2021 (IRPF 2005) que, considerando el hecho probado penal y su propia valoración, concluye residencia fiscal en Suiza en 2005 y anula IRPF 2005.\nAcreditar que a efectos del IRPF 2005 (y por remisión del IP) la residencia estaba en Suiza.\nACCEPTED\nEl TS usa esta sentencia firme como soporte para declarar la misma circunstancia fáctica en IP 2005 por remisión legal (art. 5 Dos LIP).\ndocumental de la defensa valorada en sede penal (no especificada)\nReferencia a que la condena/absolución penal se apoya en una extensa documental y valoración indiciaria conjunta conforme a sana crítica.\nCorroborar que la residencia en Suiza se declaró probada con base probatoria amplia (no por duda).\nPARTIAL\nEl TS no detalla documentos concretos, pero destaca que no hubo duda y que la conclusión fue contundente tras valorar una extensa documental.\nmanager/gestor residente en Suiza (Sr. Secundino)\nAlegación de gestión patrimonial/manager en Suiza (el TSJ indica que no se acredita gestión más allá de abrir cuenta).\nAcreditar que el centro de intereses económicos/gestión estaría fuera de España.\nUNRESOLVED\nEl TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.\nEl TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.\nNOT_DECIDED\n2005\n2006\nvuelos con origen o destino en Barcelona\nexistencia de una relación estable con persona residente en España\nchofer y entrenador\npersonal residentes en España\nha sido emitido mediante actuaciones simuladas\ndel interesado\npagos y cobros\nrealizados desde cuentas bancarias sitas en Suiza\nel recurrente aporta un certiﬁcado de residencia ﬁscal en Suiza\nasí como constaba inscrito en el Consulado de España en Ginebra\ntenía\nsu residencia ﬁscal\ndesde la fecha 26/06/2000\nhasta 15/03/2007\nvino a ratiﬁcar esa declaración de hechos probados\na los efectos del IRPF\nla sentencia ﬁrme\napreció que su residencia se\nencontraba en Suiza\nse basa en una extensa documental\ngestor residente en Suiza",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_OTRO\nvuelos con origen o destino Barcelona\nIndicios de desplazamientos: vuelos con origen o destino en Barcelona.\nInferir permanencia y vínculos de hecho en España durante 2005.\nUNRESOLVED\nrelación estable con residente en España\nIndicio personal: existencia de relación estable con persona residente en España.\nAcreditar centro de intereses vitales/arraigo personal en España.\nUNRESOLVED\nchofer y entrenador personal residentes en España\nIndicios de servicios personales en España: chofer y entrenador personal residentes en España.\nInferir vida cotidiana/organización personal en España.\nUNRESOLVED\nimpugnación de certificado suizo como simulado\nLa Inspección/TEAC sostienen que el certificado de residencia suizo se obtuvo mediante actuaciones simuladas para aparentar residencia en Suiza.\nDesacreditar la prueba directa de residencia fiscal en Suiza aportada por el contribuyente.\nUNRESOLVED\npagos/cobros desde cuentas suizas (considerados simulación)\nOperativa bancaria en Suiza (pagos/cobros) que el TSJ calificó como parte de la simulación de residencia, no como gestión económica real.\nNegar que el uso de cuentas suizas acredite residencia o centro económico fuera de España.\nUNRESOLVED\ncertificado de residencia fiscal en Suiza\nCertificado de residencia fiscal en Suiza aportado por el contribuyente para el ejercicio 2005 (discutido por Inspección/TEAC).\nAcreditar residencia fiscal en Suiza en 2005 y excluir residencia en España.\nUNRESOLVED\ninscripción consular en Ginebra\nConstancia de inscripción en el Consulado de España en Ginebra durante el periodo en que se afirma residencia en Suiza.\nCorroborar residencia efectiva en Suiza (vínculo administrativo coherente con residencia).\nACCEPTED\nEl TS reproduce el hecho probado penal que lo incluye y lo trata como dato fáctico relevante a considerar para evitar contradicciones.\nsentencia penal Juzgado Penal 19 Barcelona (hechos probados)\nSentencia penal 1/10/2018 (Juzgado Penal 19 Barcelona) que declara probado que el contribuyente tenía residencia fiscal en Friburgo (Suiza) 26/06/2000-15/03/2007 (incluye 2005).\nFijar como hecho probado judicialmente la residencia fiscal en Suiza también en 2005.\nACCEPTED\nEl TS la considera una \"nítida aseveración\" sobre un dato fáctico esencial que debía ser tenido en cuenta y cuya contradicción exigía motivación.\nsentencia Audiencia Provincial Barcelona confirmando hechos probados\nSentencia de 21/05/2019 (AP Barcelona) desestima apelación de AEAT y confirma la declaración contundente de residencia en Suiza.\nReforzar firmeza y contundencia del hecho probado penal sobre residencia en Suiza.\nACCEPTED\nEl TS descarta la tesis de extralimitación/indefensión y asume que la Audiencia Provincial ratificó la declaración de hechos probados.\nsentencia Audiencia Nacional IRPF 2005 (firme)\nSentencia AN 26/05/2021 (IRPF 2005) que, considerando el hecho probado penal y su propia valoración, concluye residencia fiscal en Suiza en 2005 y anula IRPF 2005.\nAcreditar que a efectos del IRPF 2005 (y por remisión del IP) la residencia estaba en Suiza.\nACCEPTED\nEl TS usa esta sentencia firme como soporte para declarar la misma circunstancia fáctica en IP 2005 por remisión legal (art. 5 Dos LIP).\ndocumental de la defensa valorada en sede penal (no especificada)\nReferencia a que la condena/absolución penal se apoya en una extensa documental y valoración indiciaria conjunta conforme a sana crítica.\nCorroborar que la residencia en Suiza se declaró probada con base probatoria amplia (no por duda).\nPARTIAL\nEl TS no detalla documentos concretos, pero destaca que no hubo duda y que la conclusión fue contundente tras valorar una extensa documental.\nmanager/gestor residente en Suiza (Sr. Secundino)\nAlegación de gestión patrimonial/manager en Suiza (el TSJ indica que no se acredita gestión más allá de abrir cuenta).\nAcreditar que el centro de intereses económicos/gestión estaría fuera de España.\nUNRESOLVED\nEl TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.\nEl TS declara que los hechos probados penales no vinculan automáticamente si versan sobre periodos distintos, pero si proyectan efectos sobre el periodo discutido y el juez contencioso llega a conclusión contraria, debe motivar por qué no hay contradicción.\nEl TS aprecia que el TSJ Cataluña conocía la sentencia penal que declaró como hecho probado residencia en Suiza también en 2005, pero no razonó la inexistencia de contradicción y llegó a lo contrario.\nPor seguridad jurídica y tutela judicial efectiva, casa la sentencia por falta de motivación y, dada la sentencia firme de la AN (IRPF 2005) y la remisión del IP al IRPF, declara residencia en Suiza en 2005 y anula liquidación y sanción IP 2005.\nNOT_DECIDED\n2005\n2006\nEn la sentencia (AN transcrita) se afirma que la falta de prueba eficiente de la acusación impide negar la residencia en Suiza; el TS además exige motivación para evitar contradicción fáctica con sentencia penal.\nLa carga probatoria no se consideró cumplida.\nvuelos con origen o destino en Barcelona\nexistencia de una relación estable con persona residente en España\nchofer y entrenador\npersonal residentes en España\nha sido emitido mediante actuaciones simuladas\ndel interesado\npagos y cobros\nrealizados desde cuentas bancarias sitas en Suiza\nel recurrente aporta un certiﬁcado de residencia ﬁscal en Suiza\nasí como constaba inscrito en el Consulado de España en Ginebra\ntenía\nsu residencia ﬁscal\ndesde la fecha 26/06/2000\nhasta 15/03/2007\nvino a ratiﬁcar esa declaración de hechos probados\na los efectos del IRPF\nla sentencia ﬁrme\napreció que su residencia se\nencontraba en Suiza\nse basa en una extensa documental\ngestor residente en Suiza\nno resulta defendible la posición\nal\naﬁrmar la existencia de incongruencia extra petita\nante la falta de prueba eﬁciente postulada de la acusación -a cuyo cargo pesa su\nprobanza\nLos hechos declarados probados en una sentencia penal no vinculan\ncuando el juez\nllegue a una distinta apreciación\nhabrá de exponer las razones",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -760,6 +788,115 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 716,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 683,
+              "verbatim_text": "no resulta defendible la posición"
+            },
+            {
+              "end_offset": 820,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 767,
+              "verbatim_text": "al\naﬁrmar la existencia de incongruencia extra petita"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5196,
+              "page_index": 12,
+              "printed_page": "12",
+              "start_offset": 5107,
+              "verbatim_text": "ante la falta de prueba eﬁciente postulada de la acusación -a cuyo cargo pesa su\nprobanza"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 80,
+              "page_index": 21,
+              "printed_page": "21",
+              "start_offset": 15,
+              "verbatim_text": "Los hechos declarados probados en una sentencia penal no vinculan"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "0ff58b179b8c325694417449a53ebd5d9e6317a81560cfb3915ac59fe131ddbf"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 489,
+              "page_index": 21,
+              "printed_page": "21",
+              "start_offset": 475,
+              "verbatim_text": "cuando el juez"
+            },
+            {
+              "end_offset": 550,
+              "page_index": 21,
+              "printed_page": "21",
+              "start_offset": 517,
+              "verbatim_text": "llegue a una distinta apreciación"
+            },
+            {
+              "end_offset": 596,
+              "page_index": 21,
+              "printed_page": "21",
+              "start_offset": 568,
+              "verbatim_text": "habrá de exponer las razones"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

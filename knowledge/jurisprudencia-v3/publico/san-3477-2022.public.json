@@ -247,6 +247,135 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "con un importe retenido de 0,00"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "el contrato de arrendamiento"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "o\nel vehículo"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "no son determinantes"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "el contrato de arrendamiento"
+        },
+        {
+          "pageIndex": 8,
+          "printedPage": "8",
+          "verbatimText": "no son determinantes"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-004",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "con dicho certiﬁcado lo que está probando es que es residente\nen España"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "Que radique en España el núcleo principal o la base de sus actividades o intereses económicos"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-005",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "La consideración del centro de intereses económicos"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "eba741c75445592f9a9b08534f4fef9c748024100096759696cee62fbfec8d8e"
     }
   ],
   "issues": [
@@ -263,7 +392,13 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-reasoning-003",
+        "anchor-legacy-reasoning-004",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-005"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -538,7 +673,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probados hechos administrativos y de gestión económica en España (domicilio fiscal en BDC, representación en múltiples sociedades españolas, percepción de rentas y existencia de inmuebles), y valora decisivamente la información francesa que indica percepciones sin retención en Francia. Las pruebas aportadas por el recurrente (contratos de alquiler en París, nóminas, informe de detective, certificados) no desvirtúan ni prueban residencia fiscal en Francia, por lo que se confirma la residencia fiscal en España.",
         "consequences": [],

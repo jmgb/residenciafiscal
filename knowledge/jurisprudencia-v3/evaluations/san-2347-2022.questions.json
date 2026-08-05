@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 2347/2022 este supuesto de residencia: La Sala aplica prioritariamente el criterio objetivo de permanencia (>183 días) apoyado en indicios materiales (consumos, reservas, participación societaria) aportados por la Inspección; una vez acreditados indicios suficientes, corresponde?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

@@ -37,15 +37,79 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 5,
+          "printedPage": "5",
+          "verbatimText": "la Administración partió del hecho de que\nse trataba de una ausencia esporádica"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "se reiteran los criterios interpretativos"
+        },
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "expresados en esas anteriores sentencias"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5200d85a325b9f527104e9153051ef04a46f6d62ea288f2d0edc53b0cac52856"
     }
   ],
   "issues": [
     {
       "anchorIds": [
         "anchor-legacy-evidence-001",
-        "anchor-legacy-evidence-002"
+        "anchor-legacy-evidence-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-001"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración denegó la devolución basándose en la consideración de ausencia esporádica y en la falta de acreditación de residencia fiscal en el extranjero, por lo que debía justificar esa calificaci\u0003n.",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS"

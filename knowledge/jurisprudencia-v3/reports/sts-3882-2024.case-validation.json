@@ -1,9 +1,9 @@
 {
-  "anchor_count": 17,
-  "case_sha256": "d42f8d3efcfffc5555a067ab7159912371561f4c3b2e53b51d406c22c4d0b939",
+  "anchor_count": 21,
+  "case_sha256": "fb8bcd95b7234ce6e475413004928a03388d6438065539adb519ead6681b904d",
   "evidence_finding_count": 17,
   "fact_count": 0,
-  "fragment_count": 32,
+  "fragment_count": 38,
   "holding_count": 1,
   "input_artifact_count": 2,
   "judgment_id": "sts-3882-2024",

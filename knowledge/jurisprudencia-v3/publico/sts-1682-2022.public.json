@@ -322,6 +322,107 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "de los pretendidos movimientos bancarios no cabe extraer las consecuencias"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "compras en Madrid"
+        },
+        {
+          "pageIndex": 9,
+          "printedPage": "9",
+          "verbatimText": "en cualquier caso los mismos no son representativos de una residencia habitual en Madrid"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 6,
+          "printedPage": "6",
+          "verbatimText": "residencia habitual"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "la ley está exigiendo"
+        },
+        {
+          "pageIndex": 11,
+          "printedPage": "11",
+          "verbatimText": "a partir del dato fáctico de la permanencia"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "ha de ser probada por el mismo"
+        },
+        {
+          "pageIndex": 7,
+          "printedPage": "7",
+          "verbatimText": "insuﬁcientes"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7996b8a6153f3e1d548ef40f2bfddd9dc4e67a143b873bee6b2f77123452b993"
     }
   ],
   "issues": [
@@ -338,7 +439,11 @@
         "anchor-legacy-evidence-009",
         "anchor-legacy-evidence-010",
         "anchor-legacy-evidence-011",
-        "anchor-legacy-evidence-012"
+        "anchor-legacy-evidence-012",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -603,7 +708,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El TS declara que la cuestión es principalmente fáctica (permanencia/días en 5 años) y no revisa la valoración probatoria de la instancia. Comprueba que el TSJ aplicó correctamente el orden legal (art. 28 Ley 22/2009) y que su conclusión no se basó principal ni exclusivamente en calificar las estancias por estudios como “ausencias temporales”. La instancia tuvo por acreditado, con indicios (domicilio fiscal, empadronamiento, escritura, IRPF de padres, cuentas), que permaneció más días en Burgos; por ello, el cómputo de “ausencias temporales” resultaba intrascendente. Se desestima la casación y se confirma la residencia en Castilla y León a efectos del ISD.",
         "consequences": [],

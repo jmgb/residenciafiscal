@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió SAN 6981/2024 este supuesto de residencia: El tribunal aplica el art.9 LIRPF enfatizando el cómputo de permanencia (183 días) y la necesidad de acreditar residencia fiscal en el extranjero. La resolución valora las pruebas de presencia (vuelos, sellos, consumos, reservas) como sufic?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

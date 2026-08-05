@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-2602-2022.case.json",
-    "case_sha256": "5ed941508316f530c3f350c91187d0f7b164e04aaac1b00404a33bd6af08435d",
+    "case_sha256": "7fb12ac18bf653acdd477759d43d9979a65b3bb9002f6a8a2bc2a747ab155cc9",
     "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "La Administración debía aportar indicios de residencia en España; si esos indicios son suficientes, corresponde al obligado probar residencia en otro Estado.",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -302,7 +326,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.",
         "consequences": [],
@@ -336,7 +360,12 @@
           "anchor-legacy-evidence-005",
           "anchor-legacy-evidence-006",
           "anchor-legacy-evidence-007",
-          "anchor-legacy-evidence-008"
+          "anchor-legacy-evidence-008",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -373,7 +402,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nconstancia gráfica internet actos sociales\nPruebas gráficas en internet de intensa vida pública y presencia en actos sociales en España.\nDemostrar presencia y actividad pública en España\nACCEPTED\nCorrobora otros indicios de presencia y vida pública en España\nreservas Carlson Wagonlit y hoteles\nRequerimiento a Carlson Wagonlit y respuestas de hoteles y chófer que muestran reservas de viajes y hoteles a nombre del matrimonio en fechas concretas.\nAcreditar estancias/visitas en España en fechas concretas\nACCEPTED\nIndicio directo de estancias concordante con otros medios de prueba\nconsumos eléctricos y gasoil en inmuebles\nFacturas y consumos eléctricos y entregas de gasoil en inmuebles atribuidos al matrimonio; Endesa y proveedores aportaron consumos.\nAcreditar uso efectivo y habitual de las viviendas en España\nACCEPTED\nPrueba concluyente sobre ocupación y uso habitual de domicilios; considerada decisiva junto con otros indicios\nmovimientos cuentas Banco Santander (cuenta NUM013)\nSeguimiento de cuentas bancarias, importantes salidas y retiradas de la cuenta NUM013 y pagos de seguros, clubes y servicios en Barcelona.\nMostrar gestión económica y gastos asociados a vida habitual en España\nACCEPTED\nMovimientos concordantes con residencia y gastos habituales en España; corroborado por la actuaria\nentregas de cápsulas Nespresso y paquetes EXALBA SL\nConstancia de entregas de cápsulas Nespresso, paquetes transportados por EXALBA SL y otros suministros entregados en domicilios en España.\nAcreditar uso material del domicilio y presencia física\nACCEPTED\nIndicios complementarios que corroboran uso habitual del domicilio\nCarte de resident (Mónaco)\nCarte de resident del Principado de Mónaco presentada por el recurrente como prueba de residencia.\nAcreditar residencia fiscal en Mónaco y permanencia >183 días\nREJECTED\nLa Sala considera la carta de residencia insuficiente para acreditar residencia efectiva en Mónaco (documento administrativo no prueba permanencia efectiva).\ncertificados consulares de Marsella\nCopias de certificados de residencia expedidos por el Cónsul General en Marsella e inscripción en registro consular.\nAcreditar residencia en Mónaco\nREJECTED\nConsiderados meramente administrativos y no acreditativos de permanencia o centro de intereses económicos efectivos en Mónaco.\ncontratos de alquiler en Mónaco\nTres contratos de alquiler presentados como justificantes de estancia en Mónaco.\nProbar ocupación efectiva de vivienda en Mónaco y permanencia\nREJECTED\nEl Tribunal estima que la mera posesión de contrato de alquiler no prueba ocupación efectiva ni permanencia >183 días; por tanto insuficiente para desvirtuar indicios en España.\nLa Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.\nLa Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.\nNOT_DECIDED\n2008\n2010\nintensa vida pública vinculada a actos sociales de los que existe constancia\ngráﬁca a través de internet\nrequerimiento de información practicado a Carlson Wagonlit\nreservas de\nviajes y hoteles a nombre del matrimonio\nExistencia de consumos eléctricos en alguno de ellos\nconstan consumos en la C/  DIRECCION013  de la Escala\nretiradas de dinero\nde la cuenta  NUM013\npara\natender los ﬁnes particulares del Sr.  Aquilino\nha recibido paquetes transportados por la mercantil del transporte EXALBA SL\nla carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler\ncopia de certiﬁcados de residencia expedidos por el Consul General en\nMarsella de inscripción en el registro consular\nel mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por mas de 183 días",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nconstancia gráfica internet actos sociales\nPruebas gráficas en internet de intensa vida pública y presencia en actos sociales en España.\nDemostrar presencia y actividad pública en España\nACCEPTED\nCorrobora otros indicios de presencia y vida pública en España\nreservas Carlson Wagonlit y hoteles\nRequerimiento a Carlson Wagonlit y respuestas de hoteles y chófer que muestran reservas de viajes y hoteles a nombre del matrimonio en fechas concretas.\nAcreditar estancias/visitas en España en fechas concretas\nACCEPTED\nIndicio directo de estancias concordante con otros medios de prueba\nconsumos eléctricos y gasoil en inmuebles\nFacturas y consumos eléctricos y entregas de gasoil en inmuebles atribuidos al matrimonio; Endesa y proveedores aportaron consumos.\nAcreditar uso efectivo y habitual de las viviendas en España\nACCEPTED\nPrueba concluyente sobre ocupación y uso habitual de domicilios; considerada decisiva junto con otros indicios\nmovimientos cuentas Banco Santander (cuenta NUM013)\nSeguimiento de cuentas bancarias, importantes salidas y retiradas de la cuenta NUM013 y pagos de seguros, clubes y servicios en Barcelona.\nMostrar gestión económica y gastos asociados a vida habitual en España\nACCEPTED\nMovimientos concordantes con residencia y gastos habituales en España; corroborado por la actuaria\nentregas de cápsulas Nespresso y paquetes EXALBA SL\nConstancia de entregas de cápsulas Nespresso, paquetes transportados por EXALBA SL y otros suministros entregados en domicilios en España.\nAcreditar uso material del domicilio y presencia física\nACCEPTED\nIndicios complementarios que corroboran uso habitual del domicilio\nCarte de resident (Mónaco)\nCarte de resident del Principado de Mónaco presentada por el recurrente como prueba de residencia.\nAcreditar residencia fiscal en Mónaco y permanencia >183 días\nREJECTED\nLa Sala considera la carta de residencia insuficiente para acreditar residencia efectiva en Mónaco (documento administrativo no prueba permanencia efectiva).\ncertificados consulares de Marsella\nCopias de certificados de residencia expedidos por el Cónsul General en Marsella e inscripción en registro consular.\nAcreditar residencia en Mónaco\nREJECTED\nConsiderados meramente administrativos y no acreditativos de permanencia o centro de intereses económicos efectivos en Mónaco.\ncontratos de alquiler en Mónaco\nTres contratos de alquiler presentados como justificantes de estancia en Mónaco.\nProbar ocupación efectiva de vivienda en Mónaco y permanencia\nREJECTED\nEl Tribunal estima que la mera posesión de contrato de alquiler no prueba ocupación efectiva ni permanencia >183 días; por tanto insuficiente para desvirtuar indicios en España.\nLa Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.\nLa Sala considera probados hechos materiales (presencia en actos sociales, reservas de hoteles/viajes, uso de inmuebles, consumos eléctricos y movimientos bancarios) que permiten inferir permanencia en España superior a 183 días. Aplica el art. 9 LIRPF y la jurisprudencia que atribuye valor probatorio a indicios concordantes; la documentación aportada por el recurrente (Mónaco) es insuficiente para desvirtuarlos, por lo que prevalece la tesis de la Administración.\nNOT_DECIDED\n2008\n2010\nLa Administración debía aportar indicios de residencia en España; si esos indicios son suficientes, corresponde al obligado probar residencia en otro Estado.\nLa carga probatoria se consideró cumplida.\nintensa vida pública vinculada a actos sociales de los que existe constancia\ngráﬁca a través de internet\nrequerimiento de información practicado a Carlson Wagonlit\nreservas de\nviajes y hoteles a nombre del matrimonio\nExistencia de consumos eléctricos en alguno de ellos\nconstan consumos en la C/  DIRECCION013  de la Escala\nretiradas de dinero\nde la cuenta  NUM013\npara\natender los ﬁnes particulares del Sr.  Aquilino\nha recibido paquetes transportados por la mercantil del transporte EXALBA SL\nla carta de residencia no deja de ser una documentación para cuya\nobtención solo hace falta aportar un título de propiedad o de alquiler\ncopia de certiﬁcados de residencia expedidos por el Consul General en\nMarsella de inscripción en el registro consular\nel mero hecho de poseer o alquilar un inmueble en dicho país no es medio suﬁciente\npara acreditar su residencia por mas de 183 días\nDicha documentación es\ninsuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco\nlos certiﬁcados aportados hacían referencia únicamente a aspectos administrativos, ajenos a lo que\nse entiende por residencia ﬁscal\ncorresponde a la Administración aportar datos\ny si tales\nindicios son suﬁcientes, corresponde al obligado tributario, demostrar su residencia en otro Estado\nQue permanezca más de 183 días, durante el año natural, en territorio español\npor la Administración se ha aportado prueba suﬁciente de la que poder deducir que el recurrente\ntiene su residencia efectiva en España",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -563,6 +592,137 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1030,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1008,
+              "verbatim_text": "Dicha documentación es"
+            },
+            {
+              "end_offset": 1137,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1055,
+              "verbatim_text": "insuﬁciente para justiﬁcar que la recurrente ha residido mas\nde 183 días en Mónaco"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1691,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1593,
+              "verbatim_text": "los certiﬁcados aportados hacían referencia únicamente a aspectos administrativos, ajenos a lo que"
+            },
+            {
+              "end_offset": 1799,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 1767,
+              "verbatim_text": "se entiende por residencia ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2212,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2167,
+              "verbatim_text": "corresponde a la Administración aportar datos"
+            },
+            {
+              "end_offset": 2432,
+              "page_index": 7,
+              "printed_page": "7",
+              "start_offset": 2322,
+              "verbatim_text": "y si tales\nindicios son suﬁcientes, corresponde al obligado tributario, demostrar su residencia en otro Estado"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 95,
+              "page_index": 6,
+              "printed_page": "6",
+              "start_offset": 18,
+              "verbatim_text": "Que permanezca más de 183 días, durante el año natural, en territorio español"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "6318ddcfe1eacd4c0caf951cead6cae4f61c858b0b50f791c2f0b4f10a3f3c9e"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 1959,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 1825,
+              "verbatim_text": "por la Administración se ha aportado prueba suﬁciente de la que poder deducir que el recurrente\ntiene su residencia efectiva en España"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

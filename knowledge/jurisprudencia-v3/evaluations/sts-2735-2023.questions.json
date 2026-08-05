@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió STS 2735/2023 este supuesto de residencia: La Inspección calificó residente en España por el art. 9.1.b) LIRPF (núcleo principal de intereses económicos). El TS declara que, aportado certificado de residencia fiscal en EEUU “a efectos del CDI”, debe presumirse válido y determina con?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

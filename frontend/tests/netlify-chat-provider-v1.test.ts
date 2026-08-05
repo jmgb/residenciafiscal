@@ -46,7 +46,10 @@ describe('adaptador OpenAI de la Function', () => {
     });
 
     expect(createResponse.mock.calls[0]?.[0]).toMatchObject({ max_output_tokens: 4_000 });
-    expect(JSON.stringify(createResponse.mock.calls[0]?.[0])).not.toContain('uniqueItems');
+    const requestJson = JSON.stringify(createResponse.mock.calls[0]?.[0]);
+    expect(requestJson).not.toContain('uniqueItems');
+    expect(requestJson).toContain('judicial_assessment');
+    expect(requestJson).toContain('procedural_power');
   });
 
   it('clasifica los errores HTTP de OpenAI sin conservar el mensaje del proveedor', async () => {

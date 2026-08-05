@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-5217-2022.case.json",
-    "case_sha256": "7e8525d04939386c98643fef6c6086da41d512448214690474bfdc9fdead7d16",
+    "case_sha256": "793c0547f132ea7267ec573b45bc9733de28ead62242389338fe0c71c7dac2ef",
     "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "De conformidad con el artículo 105 LGT corresponde a la Inspección probar hechos que desvirtúen las declaraciones del obligado tributario (prueba de residencia en España).",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -154,7 +178,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.",
         "consequences": [],
@@ -183,7 +207,12 @@
         "anchor_ids": [
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
-          "anchor-legacy-evidence-003"
+          "anchor-legacy-evidence-003",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -212,7 +241,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\ndocumentación del expediente sobre días de permanencia\nDocumentación obrante en expediente acreditando período de presencia/ausencia (no detallada en la sentencia)\nDemostrar permanencia superior a 183 días en España\nREJECTED\nTribunal considera que, según la documentación, el período acreditado no resulta superior a 183 días; por tanto, la prueba no alcanza para acreditar residencia.\nfalta acreditación de residencia en Italia/Turquía (según Inspección)\nLa Inspección denegó devolución por considerar no acreditada la residencia fiscal en Italia (Sr. Gines) y en Turquía (Sr. Elias)\nDesvirtuar la pretensión de devolución acreditando residencia en el extranjero\nREJECTED\nEl tribunal considera indiferente la falta de acreditación de residencia en otro país cuando el período acreditado no supera 183 días; por tanto la ausencia de esa prueba no justifica la residencia en España.\ntraslado laboral a Italia/Turquía (contratos/actuaciones)\nAlegación y documentación sobre traslado laboral de los jugadores a Italia y Turquía y períodos de estancia fuera de España (documentos del expediente, no individualizados en la sentencia)\nAcreditar que las ausencias fueron prolongadas por traslado laboral y no esporádicas\nACCEPTED\nTribunal estima que las ausencias se deben a traslado laboral prolongado y no son esporádicas; ello desplaza la regla de los 183 días y determina la no residencia en 2015.\nEl tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.\nEl tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.\nNOT_DECIDED\n2011\n2015\nel período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días\nLa Inspección denegó la devolución solicitada por considerar que la residencia ﬁscal en Italia\nno había sido acreditada\nno cabe\nreputar como ocasional o esporádica una ausencia prolongada\npor un\ntraslado laboral a Italia y a Turquía respectivamente",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\ndocumentación del expediente sobre días de permanencia\nDocumentación obrante en expediente acreditando período de presencia/ausencia (no detallada en la sentencia)\nDemostrar permanencia superior a 183 días en España\nREJECTED\nTribunal considera que, según la documentación, el período acreditado no resulta superior a 183 días; por tanto, la prueba no alcanza para acreditar residencia.\nfalta acreditación de residencia en Italia/Turquía (según Inspección)\nLa Inspección denegó devolución por considerar no acreditada la residencia fiscal en Italia (Sr. Gines) y en Turquía (Sr. Elias)\nDesvirtuar la pretensión de devolución acreditando residencia en el extranjero\nREJECTED\nEl tribunal considera indiferente la falta de acreditación de residencia en otro país cuando el período acreditado no supera 183 días; por tanto la ausencia de esa prueba no justifica la residencia en España.\ntraslado laboral a Italia/Turquía (contratos/actuaciones)\nAlegación y documentación sobre traslado laboral de los jugadores a Italia y Turquía y períodos de estancia fuera de España (documentos del expediente, no individualizados en la sentencia)\nAcreditar que las ausencias fueron prolongadas por traslado laboral y no esporádicas\nACCEPTED\nTribunal estima que las ausencias se deben a traslado laboral prolongado y no son esporádicas; ello desplaza la regla de los 183 días y determina la no residencia en 2015.\nEl tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.\nEl tribunal considera probados el traslado laboral a Italia y Turquía y la duración de las ausencias. Aplica el criterio de ausencias esporádicas del art.9.1.a LIRPF y concluye que no cabe reputar como esporádica una ausencia prolongada por traslado laboral; así, el período acreditado no supera 183 días en 2015 y procede considerar a los jugadores no residentes en España para ese año. La insuficiencia probatoria de la Inspección respecto de estancia >183 días determina la resolución en favor de la posición de no residencia respecto de esos meses.\nNOT_DECIDED\n2011\n2015\nDe conformidad con el artículo 105 LGT corresponde a la Inspección probar hechos que desvirtúen las declaraciones del obligado tributario (prueba de residencia en España).\nLa carga probatoria no se consideró cumplida.\nel período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días\nLa Inspección denegó la devolución solicitada por considerar que la residencia ﬁscal en Italia\nno había sido acreditada\nno cabe\nreputar como ocasional o esporádica una ausencia prolongada\npor un\ntraslado laboral a Italia y a Turquía respectivamente\nresulta indiferente que la interesada no haya justiﬁcado la residencia\nﬁscal de los futbolistas en otros países\nno cabe\nreputar como ocasional o esporádica una ausencia prolongada\ncorresponde a la Inspección probar que, en contra\nde lo que se desprende de las declaraciones presentadas por la entidad obligada tributaria\nno cabe\nreputar como ocasional o esporádica una ausencia prolongada\npor un\ntraslado laboral a Italia y a Turquía respectivamente\nel período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -285,6 +314,123 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4776,
+              "page_index": 19,
+              "printed_page": "19",
+              "start_offset": 4665,
+              "verbatim_text": "resulta indiferente que la interesada no haya justiﬁcado la residencia\nﬁscal de los futbolistas en otros países"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3931,
+              "page_index": 19,
+              "printed_page": "19",
+              "start_offset": 3864,
+              "verbatim_text": "no cabe\nreputar como ocasional o esporádica una ausencia prolongada"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 2665,
+              "page_index": 8,
+              "printed_page": "8",
+              "start_offset": 2525,
+              "verbatim_text": "corresponde a la Inspección probar que, en contra\nde lo que se desprende de las declaraciones presentadas por la entidad obligada tributaria"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3931,
+              "page_index": 19,
+              "printed_page": "19",
+              "start_offset": 3864,
+              "verbatim_text": "no cabe\nreputar como ocasional o esporádica una ausencia prolongada"
+            },
+            {
+              "end_offset": 4026,
+              "page_index": 19,
+              "printed_page": "19",
+              "start_offset": 3966,
+              "verbatim_text": "por un\ntraslado laboral a Italia y a Turquía respectivamente"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 4663,
+              "page_index": 19,
+              "printed_page": "19",
+              "start_offset": 4553,
+              "verbatim_text": "el período acreditado de acuerdo con la documentación que obra en el\nexpediente no resulta superior a 183 días"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

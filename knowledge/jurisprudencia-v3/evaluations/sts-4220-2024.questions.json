@@ -7,7 +7,7 @@
       "question": "¿Cómo resolvió STS 4220/2024 este supuesto de residencia: El litigio versa sobre la residencia fiscal IRPF 2014 y el valor del certificado de residencia UK a efectos del CDI. La AEAT/TEAR aprecian doble residencia (vivienda disponible en España y UK) y aplican el art. 4.2 CDI, resolviendo por cent?",
       "question_id": "LEGACY-01",
       "required_anchor_ids": [
-        "anchor-legacy-evidence-001"
+        "anchor-legacy-holding-001"
       ],
       "required_evidence_ids": [
         "evidence-legacy-001",

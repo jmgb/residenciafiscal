@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-4992-2021.case.json",
-    "case_sha256": "82b108ff2f093e7c9d7f257303c316377f541e1476908aaf879bd442e4d2d340",
+    "case_sha256": "3b92766898461f0d49abbc7efc562c330e885928f21ed09c8f687206902c9063",
     "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "El art.9 LIRPF computa ausencias como días en España salvo que el contribuyente acredite residencia fiscal en otro país; por tanto corresponde al contribuyente probar su residencia en Andorra",
+          "initial_bearer": "TAXPAYER",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -389,7 +413,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.",
         "consequences": [],
@@ -426,7 +450,10 @@
           "anchor-legacy-evidence-008",
           "anchor-legacy-evidence-009",
           "anchor-legacy-evidence-010",
-          "anchor-legacy-evidence-011"
+          "anchor-legacy-evidence-011",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -466,7 +493,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nDiligencia 29/09/2011 (portero)\nDiligencia de constancia de hechos de 29-09-2011 donde el portero manifiesta que el obligado tiene su domicilio en el nº indicado de Barcelona\nAcreditar domicilio efectivo y permanencia en España\nACCEPTED\nValorada como indicio relevante aunque no constituye actuación de inicio del procedimiento inspector\nNotificaciones comunicaciones inicio en Barcelona\nComunicación de inicio y notificaciones recibidas en domicilio de Barcelona (Av. Diagonal)\nAcreditar presencia y vinculación administrativa en España\nACCEPTED\nSe considera indicio a tener en cuenta dentro de la valoración conjunta de pruebas\nVolumen operaciones sociedades españolas\nRegistros/actas que muestran volúmenes de operaciones de sociedades radicadas en España (DIRECCION007: 3.449.941€ en 2007 y 2.161.896€ en 2008)\nAcreditar que radica en España el núcleo principal de intereses económicos\nACCEPTED\nDeterminante para el tribunal; usado como prueba fehaciente del predominio de intereses económicos en España\nDeclaraciones de la cónyuge\nManifestaciones de la cónyuge ante agentes tributarios sobre domicilio y circunstancias familiares\nAcreditar ubicación del centro de intereses vitales/familiares\nPARTIAL\nTomadas como indicio significativo aunque con matices por la propia incoherencia temporal de los documentos sobre su residencia\nAusencia de justificantes de gasto en Andorra\nFalta de justificantes de pagos, compras o movimientos bancarios que acrediten vida cotidiana en Andorra\nProbar ausencia de rastro de vida cotidiana económica en Andorra\nACCEPTED\nValorada negativamente frente a la documentación formal andorrana; la Sala destaca la ausencia de 'rastro' (compras, pagos) en Andorra\nPóliza seguro Sanitas con dirección Barcelona\nDirección señalada en póliza de seguro Sanitas como domicilio del obligado\nAcreditar domicilio habitual en España\nACCEPTED\nConsiderada como indicio más formal que concluyente pero valorada dentro del conjunto probatorio\nCertificado residencia fiscal Andorra 18/12/2013\nCertificado expedido por Director del Departamento de Tributs de Andorra en que consta residencia fiscal en el Hotel DIRECCION003\nAcreditar residencia fiscal en Andorra durante años comprobados\nPARTIAL\nLa Sala reconoce que aporta indicios pero lo valora en conjunto y lo estima insuficiente para enervar el resto de indicios que sitúan intereses en España\nCertificado Cónsul Mayor 10/12/2014\nCertificado del Cónsul Mayor de la parroquia donde consta residencia en Andorra desde 23/01/1995\nAcreditar larga residencia en Andorra\nPARTIAL\nAdmitida como indicio formal pero la Sala la considera insuficiente frente a los indicios en España y al carácter de paraíso fiscal de Andorra en esos ejercicios\nPermiso de residencia y trabajo Andorra 22/12/2004\nCopia de autorización de residencia y trabajo concedida por Servei d'Inmigració del Govern de Andorra (vigente hasta 13/11/2014)\nAcreditar residencia legal y uso de vivienda en Andorra\nPARTIAL\nValorada como indicio formal; la Sala considera que tales documentos son resultado de actuaciones solicitadas por el propio interesado y no suficientes por sí solos\nLibro de familia y datos filiación\nLibro de familia y datos sobre hijos y matrimonio aportados al expediente\nAportar indicios sobre ubicación familiar y tiempo de nacimiento de hijos\nPARTIAL\nAdmitida pero no suficiente: hijos nacieron en fechas posteriores al periodo comprobado y la ubicación de la cónyuge no acreditó residencia habitual en Andorra durante ambos ejercicios\nPasaporte y anotación consular\nCopia de pasaporte con anotación del Consulado General de España en Andorra la Vella con inscripción desde 24/08/2006\nAcreditar residencia administrativa en Andorra\nPARTIAL\nLa Sala reconoce la existencia de inscripciones administrativas pero las considera insuficientes frente a los indicios de actividad y residencia en España\nLa Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.\nLa Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.\nNOT_DECIDED\n2007\n2008\ntiene su domicilio desde hace varios años en el  NUM007\nsegún conﬁrma el portero de la ﬁnca el obligado\ntributario\nlas comunicaciones de inicio\nfueron recibidas por el propio destinatario en Barcelona\nel actor estaba al frente de las mercantiles\nradicadas\nen España, con un volumen de operaciones respecto de la primera de 3.449.941 € en 2007\nse recogen las manifestaciones de su cónyuge (que dijo que su domicilio\nﬁscal está en Barcelona\nno se\nhayan aportado otro tipo de justiﬁcantes demostrativos del \" rastro\" de las actividades en Andorra, como por\nejemplo de compras o pagos con tarjetas de crédito\nel citado es el domicilio\nseñalado en la póliza del seguro de Sanitas por el obligado tributario\ncertiﬁcado de residencia ﬁscal del Principado\nde Andorra de 18 de diciembre de 2013\nen el Hotel  DIRECCION003\ncertiﬁcado de residencia suscrito\npor el Cónsul Mayor\nen el que se\ndemuestra la residencia en Andorra desde el 23 de enero de 1995\ncopia de la autorización de residencia y\ntrabajo de 22 de diciembre de 2004\nválida hasta el\n13 de noviembre de 2014\nlos hijos fruto del matrimonio nacieron en  NUM001  de 2008\ny  NUM001  de 2011, por lo tanto después de los ejercicios comprobados\ncopia del pasaporte donde ﬁgura\nun certiﬁcado del Consulado General de España en Andorra la Vella, constando inscrito el demandante como\nresidente desde el 24 de agosto de 2006",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_AUSENCIAS_ESPORADICAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CENTRO_INTERESES_VITALES\nCRIT_PRESUNCION_FAMILIA\nDiligencia 29/09/2011 (portero)\nDiligencia de constancia de hechos de 29-09-2011 donde el portero manifiesta que el obligado tiene su domicilio en el nº indicado de Barcelona\nAcreditar domicilio efectivo y permanencia en España\nACCEPTED\nValorada como indicio relevante aunque no constituye actuación de inicio del procedimiento inspector\nNotificaciones comunicaciones inicio en Barcelona\nComunicación de inicio y notificaciones recibidas en domicilio de Barcelona (Av. Diagonal)\nAcreditar presencia y vinculación administrativa en España\nACCEPTED\nSe considera indicio a tener en cuenta dentro de la valoración conjunta de pruebas\nVolumen operaciones sociedades españolas\nRegistros/actas que muestran volúmenes de operaciones de sociedades radicadas en España (DIRECCION007: 3.449.941€ en 2007 y 2.161.896€ en 2008)\nAcreditar que radica en España el núcleo principal de intereses económicos\nACCEPTED\nDeterminante para el tribunal; usado como prueba fehaciente del predominio de intereses económicos en España\nDeclaraciones de la cónyuge\nManifestaciones de la cónyuge ante agentes tributarios sobre domicilio y circunstancias familiares\nAcreditar ubicación del centro de intereses vitales/familiares\nPARTIAL\nTomadas como indicio significativo aunque con matices por la propia incoherencia temporal de los documentos sobre su residencia\nAusencia de justificantes de gasto en Andorra\nFalta de justificantes de pagos, compras o movimientos bancarios que acrediten vida cotidiana en Andorra\nProbar ausencia de rastro de vida cotidiana económica en Andorra\nACCEPTED\nValorada negativamente frente a la documentación formal andorrana; la Sala destaca la ausencia de 'rastro' (compras, pagos) en Andorra\nPóliza seguro Sanitas con dirección Barcelona\nDirección señalada en póliza de seguro Sanitas como domicilio del obligado\nAcreditar domicilio habitual en España\nACCEPTED\nConsiderada como indicio más formal que concluyente pero valorada dentro del conjunto probatorio\nCertificado residencia fiscal Andorra 18/12/2013\nCertificado expedido por Director del Departamento de Tributs de Andorra en que consta residencia fiscal en el Hotel DIRECCION003\nAcreditar residencia fiscal en Andorra durante años comprobados\nPARTIAL\nLa Sala reconoce que aporta indicios pero lo valora en conjunto y lo estima insuficiente para enervar el resto de indicios que sitúan intereses en España\nCertificado Cónsul Mayor 10/12/2014\nCertificado del Cónsul Mayor de la parroquia donde consta residencia en Andorra desde 23/01/1995\nAcreditar larga residencia en Andorra\nPARTIAL\nAdmitida como indicio formal pero la Sala la considera insuficiente frente a los indicios en España y al carácter de paraíso fiscal de Andorra en esos ejercicios\nPermiso de residencia y trabajo Andorra 22/12/2004\nCopia de autorización de residencia y trabajo concedida por Servei d'Inmigració del Govern de Andorra (vigente hasta 13/11/2014)\nAcreditar residencia legal y uso de vivienda en Andorra\nPARTIAL\nValorada como indicio formal; la Sala considera que tales documentos son resultado de actuaciones solicitadas por el propio interesado y no suficientes por sí solos\nLibro de familia y datos filiación\nLibro de familia y datos sobre hijos y matrimonio aportados al expediente\nAportar indicios sobre ubicación familiar y tiempo de nacimiento de hijos\nPARTIAL\nAdmitida pero no suficiente: hijos nacieron en fechas posteriores al periodo comprobado y la ubicación de la cónyuge no acreditó residencia habitual en Andorra durante ambos ejercicios\nPasaporte y anotación consular\nCopia de pasaporte con anotación del Consulado General de España en Andorra la Vella con inscripción desde 24/08/2006\nAcreditar residencia administrativa en Andorra\nPARTIAL\nLa Sala reconoce la existencia de inscripciones administrativas pero las considera insuficientes frente a los indicios de actividad y residencia en España\nLa Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.\nLa Sala estima que, valorada en conjunto la prueba obrante y la aportada, predominan los indicios que sitúan en España el centro de intereses económicos (ej.: volumen de operaciones de sociedades españolas) y varios indicios personales (domicilio en pólizas, notificaciones, manifestaciones), por lo que no se ha desvirtuado la determinación de residencia en España. En todo caso reconoce que la documentación andorrana aporta indicios pero insuficientes para enervar la presunción.\nNOT_DECIDED\n2007\n2008\nEl art.9 LIRPF computa ausencias como días en España salvo que el contribuyente acredite residencia fiscal en otro país; por tanto corresponde al contribuyente probar su residencia en Andorra\nLa carga probatoria no se consideró cumplida.\ntiene su domicilio desde hace varios años en el  NUM007\nsegún conﬁrma el portero de la ﬁnca el obligado\ntributario\nlas comunicaciones de inicio\nfueron recibidas por el propio destinatario en Barcelona\nel actor estaba al frente de las mercantiles\nradicadas\nen España, con un volumen de operaciones respecto de la primera de 3.449.941 € en 2007\nse recogen las manifestaciones de su cónyuge (que dijo que su domicilio\nﬁscal está en Barcelona\nno se\nhayan aportado otro tipo de justiﬁcantes demostrativos del \" rastro\" de las actividades en Andorra, como por\nejemplo de compras o pagos con tarjetas de crédito\nel citado es el domicilio\nseñalado en la póliza del seguro de Sanitas por el obligado tributario\ncertiﬁcado de residencia ﬁscal del Principado\nde Andorra de 18 de diciembre de 2013\nen el Hotel  DIRECCION003\ncertiﬁcado de residencia suscrito\npor el Cónsul Mayor\nen el que se\ndemuestra la residencia en Andorra desde el 23 de enero de 1995\ncopia de la autorización de residencia y\ntrabajo de 22 de diciembre de 2004\nválida hasta el\n13 de noviembre de 2014\nlos hijos fruto del matrimonio nacieron en  NUM001  de 2008\ny  NUM001  de 2011, por lo tanto después de los ejercicios comprobados\ncopia del pasaporte donde ﬁgura\nun certiﬁcado del Consulado General de España en Andorra la Vella, constando inscrito el demandante como\nresidente desde el 24 de agosto de 2006\nla referida diligencia 29 de septiembre de 2011 no tiene el correspondiente título habilitante\nno constituye una actuación perteneciente al propio procedimiento\nse computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país\nSe entenderá que el contribuyente tiene su residencia habitual en territorio español cuando\npermanezca más de 183 días",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -736,6 +763,86 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 5292,
+              "page_index": 4,
+              "printed_page": "4",
+              "start_offset": 5198,
+              "verbatim_text": "la referida diligencia 29 de septiembre de 2011 no tiene el correspondiente título habilitante"
+            },
+            {
+              "end_offset": 86,
+              "page_index": 5,
+              "printed_page": "5",
+              "start_offset": 21,
+              "verbatim_text": "no constituye una actuación perteneciente al propio procedimiento"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 3430,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 3321,
+              "verbatim_text": "se computarán las ausencias esporádicas, salvo que el contribuyente\nacredite su residencia ﬁscal en otro país"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "499e54eb62c6e498e19694fcef0e0bd779b4bd3b3ade4c43a20c49562af4ed5b"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3121,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 3030,
+              "verbatim_text": "Se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando"
+            },
+            {
+              "end_offset": 3206,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 3180,
+              "verbatim_text": "permanezca más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -25,6 +25,9 @@ def test_las_salvedades_y_la_evidencia_son_obligatorias() -> None:
 
     assert {"limits", "claims"} <= obligatorios
 
+    claim_schema = StructuredChatAnswerDraft.model_json_schema()["$defs"]["StructuredClaim"]
+    assert {"kind", "text", "evidence_ids"} <= set(claim_schema["required"])
+
 
 def test_los_prompts_declaran_la_version_que_se_persiste() -> None:
     """Etiquetar una fila con una versión y enviar otro texto falsea el experimento.
@@ -40,7 +43,7 @@ def test_los_prompts_declaran_la_version_que_se_persiste() -> None:
         STRUCTURED_PROMPT_VERSION,
     )
 
-    assert STRUCTURED_PROMPT_VERSION == "structured-claims-v4"
+    assert STRUCTURED_PROMPT_VERSION == "structured-claims-v5"
     assert FILE_SEARCH_PROMPT_VERSION == "file-search-authority-v8"
     # Las reglas que el baseline F0.2 midió y que distinguen v8 de un prompt
     # genérico: si desaparecen, la etiqueta deja de describir el texto.
@@ -50,7 +53,13 @@ def test_los_prompts_declaran_la_version_que_se_persiste() -> None:
         "no conviertas la prueba o el resultado de un caso concreto en una regla general".lower(),
     ):
         assert regla.lower() in FILE_SEARCH_ANSWER_INSTRUCTIONS.lower()
-    for regla in ("claims", "afirmaciones jurídicas atómicas", "judgment_id"):
+    for regla in (
+        "claims",
+        "afirmaciones jurídicas atómicas",
+        "judgment_id",
+        "judicial_assessment",
+        "No relegues una insuficiencia probatoria decisiva",
+    ):
         assert regla.lower() in STRUCTURED_ANSWER_INSTRUCTIONS.lower()
 
 

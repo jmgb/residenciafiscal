@@ -533,6 +533,141 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "ha de quedar acreditado"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "mediante la aportación\nde un \"certiﬁcado de residencia ﬁscal"
+        },
+        {
+          "pageIndex": 12,
+          "printedPage": "12",
+          "verbatimText": "en el que deberá constar expresamente que el contribuyente es residente"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "siguiendo la doctrina"
+        },
+        {
+          "pageIndex": 13,
+          "printedPage": "13",
+          "verbatimText": "sentencia de 4 de julio de\n2006"
+        },
+        {
+          "pageIndex": 14,
+          "printedPage": "14",
+          "verbatimText": "obligado aplicar las reglas de\n\"desempate"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 15,
+          "printedPage": "15",
+          "verbatimText": "la validez de un\ncertiﬁcado de residencia"
+        },
+        {
+          "pageIndex": 15,
+          "printedPage": "15",
+          "verbatimText": "debe ser presumida, no pudiendo ser su contenido rechazado"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 15,
+          "printedPage": "15",
+          "verbatimText": "el \"centro de\nintereses vitales\" es más amplia que el concepto de \"núcleo de intereses económicos"
+        },
+        {
+          "pageIndex": 15,
+          "printedPage": "15",
+          "verbatimText": "no resulta equiparable"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "artículo 4.2"
+        },
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "Ordenar la retroacción"
+        },
+        {
+          "pageIndex": 16,
+          "printedPage": "16",
+          "verbatimText": "partiendo de la existencia de un conﬂicto"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "f000fac5ed80654e305013e7f1e25919ebf2d73131871f303b593d1019d3d976"
     }
   ],
   "issues": [
@@ -558,9 +693,33 @@
         "anchor-legacy-evidence-018",
         "anchor-legacy-evidence-019",
         "anchor-legacy-evidence-020",
-        "anchor-legacy-evidence-021"
+        "anchor-legacy-evidence-021",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "factToProve": "Debe aportar documentación específica para acreditar la condición de residente “a efectos del Convenio” (certificado de residencia fiscal).",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_CENTRO_INTERESES_ECONOMICOS",
         "CRIT_CENTRO_INTERESES_VITALES",
@@ -1062,7 +1221,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El TS censura que la AN “banalice” el certificado de residencia fiscal de EEUU y niegue el conflicto de residencia. Si el certificado lo emite la autoridad competente y expresa que se expide a efectos del CDI, es hábil para probar residencia a efectos del Convenio y, por tanto, para afirmar conflicto (doble residencia). Acreditado el conflicto, España no puede prescindir unilateralmente del CDI: debe aplicarse el art. 4.2 (vivienda permanente → centro intereses vitales → morada habitual → nacionalidad → acuerdo). El TS no fija el desempate en casación y ordena retroacción para que la AN lo resuelva.",
         "consequences": [],

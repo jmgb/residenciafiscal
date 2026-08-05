@@ -114,6 +114,101 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "no se ha acreditado en forma la\npermanencia en territorio español"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "documentos, correos electrónicos, facturas, extractos\nde tarjetas"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "no se ha acreditado en forma la\npermanencia en territorio español"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 2,
+          "printedPage": "2",
+          "verbatimText": "no se ha acreditado en forma la\npermanencia en territorio español"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-003",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "documentos, correos electrónicos, facturas, extractos\nde tarjetas, archivos"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "2bcf2f136515fbc552e9b055d5cb783d48dfb581aee63f87868d2d8d548d8115"
     }
   ],
   "issues": [
@@ -123,9 +218,33 @@
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
         "anchor-legacy-evidence-004",
-        "anchor-legacy-evidence-005"
+        "anchor-legacy-evidence-005",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-reasoning-002",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-003"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "La Administración practicó la regularización y debe justificar mediante prueba la residencia fiscal de los socios para aplicar retenciones/IRPF",
+          "initialBearer": "AEAT",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_CENTRO_INTERESES_ECONOMICOS"
@@ -240,7 +359,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "La Sala de instancia negó validez probatoria a los datos obtenidos en la entrada al entender que no concurría el presupuesto de procedimiento inspector previamente notificado y por ello no se acreditaron los 183 días ni la prevalencia de rentas en España. El TS estima que la exclusión automática no procede tras ponderación (STC 97/2019) y ordena retrotraer actuaciones para que la instancia valore conforme a derecho el conjunto probatorio, sin excluir de plano las pruebas obtenidas en la entrada.",
         "consequences": [],

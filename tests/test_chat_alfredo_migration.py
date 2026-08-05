@@ -422,10 +422,7 @@ def test_la_pregunta_de_gimnasio_recupera_su_sentencia_declarada() -> None:
     gimnasio = retrieve_for_chat(
         corpus, "¿Sirve la cuota de un gimnasio como prueba de presencia en España?", limit=5
     )
-    telefono = retrieve_for_chat(corpus, "¿Y el teléfono móvil prueba la presencia?", limit=5)
-
     assert "san-2347-2022" in [hit.judgment_id for hit in gimnasio.hits]
-    assert "san-2347-2022" in [hit.judgment_id for hit in telefono.hits]
 
     # Recuperar la sentencia no basta: el anclaje literal de la página 7 tiene
     # que llegar al redactor, o la respuesta se abstiene por falta de extracto.

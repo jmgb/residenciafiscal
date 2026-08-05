@@ -1,11 +1,11 @@
 {
-  "case_sha256": "6759ce20f3fa58f55781339e5afe75123a44a2f203486bf462bd003e591a6e75",
+  "case_sha256": "6ca2c018eb06629d17d9c81497e7c2375785ebe83540f1b6a178232fa3dc13b8",
   "judgment_id": "sts-112-2018",
   "legal_issue_count": 1,
-  "literal_anchor_count": 6,
-  "literal_fragment_count": 10,
-  "markdown_sha256": "9c36ce2be20a3580a869004f53de58b6a972b2ce8b29c84c0f4e3a801f6cae3c",
-  "retrieval_sha256": "1e93c211016d30a1d066cd096055e62f54834de2a8d2bca0b743771bacf0ed84",
+  "literal_anchor_count": 11,
+  "literal_fragment_count": 16,
+  "markdown_sha256": "6a031b763982542650452201651b16940a097461e52cd0760e511ce626a1202a",
+  "retrieval_sha256": "3fce161cb61e0bc393d8cc25f373f78c2d38283444c898f3f7f26c6488d4075b",
   "retrieval_unit_count": 1,
   "validation": "passed",
   "verbatim_sha256": "48e2131155e83da4175df0fe58483dd7da3ff68737f89f4bcae516abdf2f9e8d"

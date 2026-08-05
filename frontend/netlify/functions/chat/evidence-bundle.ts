@@ -42,10 +42,12 @@ interface VerbatimArtifact {
 export interface EvidenceBundle {
   contextJson: string;
   sourcesByEvidenceId: Map<string, StrategySource>;
+  purposesByEvidenceId: Map<string, string>;
 }
 
 const MAX_CONTEXT_BYTES = 43 * 1024;
 const MAX_JUDGMENT_BYTES = 4 * 1024;
+const MAX_FRAGMENTS_PER_JUDGMENT = 4;
 
 const purposeWeight: Record<string, number> = {
   HOLDING: 6,
@@ -93,8 +95,8 @@ const queryTerms = (query: string) => {
   return result;
 };
 
-const selectFragments = (unit: EvidenceUnit, queryTerms: Set<string>) =>
-  unit.source_anchors
+const selectFragments = (unit: EvidenceUnit, queryTerms: Set<string>) => {
+  const ranked = unit.source_anchors
     .flatMap((anchor, anchorIndex) =>
       anchor.fragments.map((fragment, fragmentIndex) => {
         const overlap = [...terms(fragment.verbatim_text)].filter((token) =>
@@ -108,8 +110,22 @@ const selectFragments = (unit: EvidenceUnit, queryTerms: Set<string>) =>
         };
       })
     )
-    .sort((left, right) => right.score - left.score || left.order - right.order)
-    .slice(0, 2);
+    .sort((left, right) => right.score - left.score || left.order - right.order);
+  const selected = ranked.slice(0, 1);
+  for (const purpose of ['HOLDING', 'REASONING', 'BURDEN_OF_PROOF']) {
+    if (selected.some((item) => item.anchor.purpose === purpose)) continue;
+    const candidate = ranked.find(
+      (item) => item.anchor.purpose === purpose && !selected.includes(item)
+    );
+    if (candidate) selected.push(candidate);
+    if (selected.length === MAX_FRAGMENTS_PER_JUDGMENT) return selected;
+  }
+  for (const candidate of ranked) {
+    if (!selected.includes(candidate)) selected.push(candidate);
+    if (selected.length === MAX_FRAGMENTS_PER_JUDGMENT) break;
+  }
+  return selected;
+};
 
 const byteLength = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
 
@@ -188,6 +204,7 @@ export const buildEvidenceBundle = (
   const contextUnits: unknown[] = [];
   const evidence: unknown[] = [];
   const sourcesByEvidenceId = new Map<string, StrategySource>();
+  const purposesByEvidenceId = new Map<string, string>();
   const selectedQueryTerms = queryTerms(query);
   let evidenceNumber = 1;
 
@@ -239,9 +256,14 @@ export const buildEvidenceBundle = (
     contextUnits.push(packedUnit);
     evidence.push(...hitEvidence);
     for (const [evidenceId, source] of hitSources) sourcesByEvidenceId.set(evidenceId, source);
+    for (const item of hitEvidence) {
+      const typed = item as { evidence_id: string; purpose: string };
+      purposesByEvidenceId.set(typed.evidence_id, typed.purpose);
+    }
   }
   return {
     contextJson: JSON.stringify({ units: contextUnits, evidence }),
     sourcesByEvidenceId,
+    purposesByEvidenceId,
   };
 };

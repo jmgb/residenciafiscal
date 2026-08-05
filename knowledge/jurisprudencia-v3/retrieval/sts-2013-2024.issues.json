@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-2013-2024.case.json",
-    "case_sha256": "65d77623b8fbc14b661ddfa19546fcb4dac50efbb14d750fd0e3fe763296055c",
+    "case_sha256": "8f00f3c712850bd82d38617500ae9c21658c6294a7735751f7b6bb8e03e62c3f",
     "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria se consideró cumplida.",
+          "fact_to_prove": "La prueba del cambio de punto de conexión provino de la actuación inspectora y de la documentación administrativa aportada por la Administración.",
+          "initial_bearer": "AEAT",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": "Desvirtuar los indicios y acreditar la residencia exterior.",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": "TAXPAYER",
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -169,7 +193,7 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.",
         "consequences": [],
@@ -199,7 +223,12 @@
           "anchor-legacy-evidence-001",
           "anchor-legacy-evidence-002",
           "anchor-legacy-evidence-003",
-          "anchor-legacy-evidence-004"
+          "anchor-legacy-evidence-004",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -229,7 +258,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_VITALES\nconsumo eléctrico 2013-2016 (Diligencia A08)\nDiligencia de Colaboración A08 (NUM015) basada en el consumo eléctrico facturado en las viviendas de Madrid y Marbella entre 2013-2016, que dedujo la residencia habitual en Marbella.\nDemostrar residencia habitual en Marbella (Andalucía) en ejercicios 2013-2016\nACCEPTED\nCorroborada por otras actuaciones administrativas y considerada indicio suficiente para situar el punto de conexión en Andalucía.\noficio remisión y resolución Comunidad de Madrid 19-01-2018\nOficio de remisión a la Gerencia Provincial de Málaga y resolución del Director General de Tributos de la Comunidad de Madrid de 19/01/2018 declarando la incompetencia de Madrid y remitiendo expediente a Andalucía.\nAcreditar que la Comunidad de Madrid se ratiﬁcó en su incompetencia y que Andalucía asumió la competencia por punto de conexión.\nACCEPTED\nLa aquiescencia de la Administración de Madrid corrobora el cambio de punto de conexión y fue valorada por el Tribunal.\nautoliquidaciones IRPF (domicilio Calle000 Madrid)\nAutoliquidaciones del IRPF en las que doña Lourdes consignó como domicilio fiscal la calle en Madrid (CALLE000).\nAcreditar que la residencia habitual era en Madrid (domicilio fiscal declarado).\nPARTIAL\nEl Tribunal reconoce la existencia del domicilio fiscal declarado pero lo considera insuficiente para excluir los indicios de residencia habitual en Andalucía.\nResolución TEARA 24/06/2021\nResolución del TEARA que estimó las reclamaciones de las sucesoras y anuló las liquidaciones por falta de procedimiento contradictorio de cambio de domicilio fiscal.\nAnular liquidaciones por entender no tramitado el procedimiento de comprobación del domicilio fiscal.\nREJECTED\nEl Tribunal Supremo no comparte la conclusión jurídica del TEARA; considera que, una vez constatado el punto de conexión, no es exigible la previa modificación formal del domicilio fiscal.\nEl Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.\nEl Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.\nNOT_DECIDED\n2015\n2016\na la vista del consumo eléctrico facturado durante los años 2013, 2014,\n2015 y 2016\nse deducía que su domicilio habitual\nconstituía esta\núltima vivienda\nEl Director General\nde la Comunidad de Madrid, mediante\nresolución de 19 de enero de 2018, declara la incompetencia\nconstando que la Sra.  Lourdes\ntenía su residencia habitual en la Comunidad Autónoma de Madrid, consignado expresamente en sus\nautoliquidaciones del IRPF como domicilio ﬁscal\nen cuyo FD octavo se señala\nprocede anular las liquidaciones",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_VITALES\nconsumo eléctrico 2013-2016 (Diligencia A08)\nDiligencia de Colaboración A08 (NUM015) basada en el consumo eléctrico facturado en las viviendas de Madrid y Marbella entre 2013-2016, que dedujo la residencia habitual en Marbella.\nDemostrar residencia habitual en Marbella (Andalucía) en ejercicios 2013-2016\nACCEPTED\nCorroborada por otras actuaciones administrativas y considerada indicio suficiente para situar el punto de conexión en Andalucía.\noficio remisión y resolución Comunidad de Madrid 19-01-2018\nOficio de remisión a la Gerencia Provincial de Málaga y resolución del Director General de Tributos de la Comunidad de Madrid de 19/01/2018 declarando la incompetencia de Madrid y remitiendo expediente a Andalucía.\nAcreditar que la Comunidad de Madrid se ratiﬁcó en su incompetencia y que Andalucía asumió la competencia por punto de conexión.\nACCEPTED\nLa aquiescencia de la Administración de Madrid corrobora el cambio de punto de conexión y fue valorada por el Tribunal.\nautoliquidaciones IRPF (domicilio Calle000 Madrid)\nAutoliquidaciones del IRPF en las que doña Lourdes consignó como domicilio fiscal la calle en Madrid (CALLE000).\nAcreditar que la residencia habitual era en Madrid (domicilio fiscal declarado).\nPARTIAL\nEl Tribunal reconoce la existencia del domicilio fiscal declarado pero lo considera insuficiente para excluir los indicios de residencia habitual en Andalucía.\nResolución TEARA 24/06/2021\nResolución del TEARA que estimó las reclamaciones de las sucesoras y anuló las liquidaciones por falta de procedimiento contradictorio de cambio de domicilio fiscal.\nAnular liquidaciones por entender no tramitado el procedimiento de comprobación del domicilio fiscal.\nREJECTED\nEl Tribunal Supremo no comparte la conclusión jurídica del TEARA; considera que, una vez constatado el punto de conexión, no es exigible la previa modificación formal del domicilio fiscal.\nEl Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.\nEl Tribunal concluye que el punto de conexión es la residencia habitual (cuestión fáctica) y que, cuando la inspección y la aquiescencia administrativa constatan ese cambio de punto de conexión, no resulta exigible una previa modificación formal del domicilio fiscal. Se aceptan los indicios (consumo eléctrico, remisión y resolución de Madrid, actas y liquidaciones) como acreditativos de residencia en Andalucía y se estima la casación ordenando retroacción.\nNOT_DECIDED\n2015\n2016\nLa prueba del cambio de punto de conexión provino de la actuación inspectora y de la documentación administrativa aportada por la Administración.\nLa carga probatoria se consideró cumplida.\na la vista del consumo eléctrico facturado durante los años 2013, 2014,\n2015 y 2016\nse deducía que su domicilio habitual\nconstituía esta\núltima vivienda\nEl Director General\nde la Comunidad de Madrid, mediante\nresolución de 19 de enero de 2018, declara la incompetencia\nconstando que la Sra.  Lourdes\ntenía su residencia habitual en la Comunidad Autónoma de Madrid, consignado expresamente en sus\nautoliquidaciones del IRPF como domicilio ﬁscal\nen cuyo FD octavo se señala\nprocede anular las liquidaciones\nla competencia\ndepende de la correcta identiﬁcación del\npunto de conexión\nsin que resulte exigible una previa\nmodiﬁcación del domicilio ﬁscal\nuna vez constatada (tras la inspección\ny\nla aquiescencia de ambas Administraciones\nSe considera producido en el territorio\nque tengan su residencia habitual en dicho territorio\nEl concepto de residencia habitual es una cuestión fáctica\nno cabe invocar\nsentencias\ndictadas por la misma Sala y Sección",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -338,6 +367,151 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 3816,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 3802,
+              "verbatim_text": "la competencia"
+            },
+            {
+              "end_offset": 3941,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 3883,
+              "verbatim_text": "depende de la correcta identiﬁcación del\npunto de conexión"
+            },
+            {
+              "end_offset": 4069,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 4002,
+              "verbatim_text": "sin que resulte exigible una previa\nmodiﬁcación del domicilio ﬁscal"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2555,
+              "page_index": 12,
+              "printed_page": "12",
+              "start_offset": 2517,
+              "verbatim_text": "una vez constatada (tras la inspección"
+            },
+            {
+              "end_offset": 2639,
+              "page_index": 12,
+              "printed_page": "12",
+              "start_offset": 2596,
+              "verbatim_text": "y\nla aquiescencia de ambas Administraciones"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1872,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 1833,
+              "verbatim_text": "Se considera producido en el territorio"
+            },
+            {
+              "end_offset": 2043,
+              "page_index": 11,
+              "printed_page": "11",
+              "start_offset": 1990,
+              "verbatim_text": "que tengan su residencia habitual en dicho territorio"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 527,
+              "page_index": 12,
+              "printed_page": "12",
+              "start_offset": 469,
+              "verbatim_text": "El concepto de residencia habitual es una cuestión fáctica"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 4377,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 4362,
+              "verbatim_text": "no cabe invocar"
+            },
+            {
+              "end_offset": 4448,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 4401,
+              "verbatim_text": "sentencias\ndictadas por la misma Sala y Sección"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

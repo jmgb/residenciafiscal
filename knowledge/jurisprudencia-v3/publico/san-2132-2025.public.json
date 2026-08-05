@@ -75,6 +75,87 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+    },
+    {
+      "anchorId": "anchor-legacy-burden-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "no ha acreditado que reúna las\ncondiciones para ser considerado como \"plan anual de cooperación internacional aprobado en Consejo de\nMinistros"
+        }
+      ],
+      "purpose": "BURDEN_OF_PROOF",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "La permanencia fuera del territorio\nnacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-002",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 3,
+          "printedPage": "3",
+          "verbatimText": "La liquidación, que aﬁrma la residencia ﬁscal del recurrente en Emiratos Árabes en aquel ejercicio"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "7379d314785bc6ce43cdc7c5c4803b886edc3b2d64232c15f4db70bb9f7036e9"
     }
   ],
   "issues": [
@@ -83,9 +164,32 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-burden-001",
+        "anchor-legacy-holding-001",
+        "anchor-legacy-reasoning-002"
       ],
-      "burdenOfProof": [],
+      "burdenOfProof": [
+        {
+          "anchorIds": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "factToProve": "El recurrente alegó la no sujeción o exención y debía acreditar el presupuesto normativo de la exención (p. ej. que la beca se enmarcara en plan aprobado por el Consejo de Ministros) o prueba de tributación en el país de destino.",
+          "initialBearer": "TAXPAYER",
+          "responseRequired": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "reviewedAt": "2026-08-01",
+            "reviewedBy": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shiftsTo": null,
+          "stepId": "burden-legacy-001"
+        }
+      ],
       "criterionIds": [
         "CRIT_183_DIAS",
         "CRIT_AUSENCIAS_ESPORADICAS",
@@ -180,7 +284,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal entiende probado que la prestación de la beca se realizó íntegramente en el extranjero y que la cuestión se regula por el artículo 19 del CDI España-Emiratos; la beca constituye rendimiento del trabajo según TRLIRNR y no concurre la excepción por tributación en Emiratos (no acreditada). Las sentencias del TS citadas no son aplicables porque trataban distinta cuestión (residencia IRPF).",
         "consequences": [],

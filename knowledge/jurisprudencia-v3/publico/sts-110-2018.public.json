@@ -85,6 +85,49 @@
         "technical": "VALIDATED"
       },
       "sourceSha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
+    },
+    {
+      "anchorId": "anchor-legacy-reasoning-001",
+      "fidelity": "EXACT",
+      "fragments": [
+        {
+          "pageIndex": 4,
+          "printedPage": "4",
+          "verbatimText": "Si solamente se atendiera al elemento objetivo de\nla duración, el artículo 9 LIRPF quedaría"
+        }
+      ],
+      "purpose": "REASONING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
+    },
+    {
+      "anchorId": "anchor-legacy-holding-001",
+      "fidelity": "EXACT_WITH_ELLIPSIS",
+      "fragments": [
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "La permanencia fuera del territorio nacional durante más de 183 días"
+        },
+        {
+          "pageIndex": 10,
+          "printedPage": "10",
+          "verbatimText": "no puede considerarse como una ausencia esporádica"
+        }
+      ],
+      "purpose": "HOLDING",
+      "review": {
+        "legal": "AGENT_REVIEWED",
+        "reviewedAt": "2026-08-01",
+        "reviewedBy": "agent:codex",
+        "technical": "VALIDATED"
+      },
+      "sourceSha256": "5ac76b7e9f5fc6bd8abd032dba48742cda53501a48ecb0eb4d8dd40d0ed3aaac"
     }
   ],
   "issues": [
@@ -93,7 +136,9 @@
         "anchor-legacy-evidence-001",
         "anchor-legacy-evidence-002",
         "anchor-legacy-evidence-003",
-        "anchor-legacy-evidence-004"
+        "anchor-legacy-evidence-004",
+        "anchor-legacy-reasoning-001",
+        "anchor-legacy-holding-001"
       ],
       "burdenOfProof": [],
       "criterionIds": [
@@ -189,7 +234,7 @@
       "facts": [],
       "holding": {
         "anchorIds": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001"
         ],
         "conclusion": "El Tribunal considera probado que el recurrente permaneció fuera de España más de 183 días y que la ausencia obedeció a una beca de carácter continuado, por lo que no puede reputarse esporádica. Aplica el criterio objetivo del artículo 9.1.a) LIRPF y descarta que la mera intención o indicios aportados por la Administración desvirtúen la realidad objetiva de la permanencia. Frente a la exigencia alegada por la Administración de acreditar residencia fiscal en otro Estado, el Tribunal estima que no resulta pertinente en este caso concreto.",
         "consequences": [],

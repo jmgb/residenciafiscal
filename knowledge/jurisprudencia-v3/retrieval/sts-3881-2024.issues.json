@@ -19,12 +19,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-3881-2024.case.json",
-    "case_sha256": "f22c2cbaed63fb6283391908a37a20374a2bacf589632c2c72e6ac5a81bb419b",
+    "case_sha256": "080cc4276c146d40ef4e6acad2d2aa87cc3d568373887326e03b42ba8a20b867",
     "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "Residencia (art. 9.1.b LIRPF) es cuestión fáctica sujeta a art. 105 LGT; el interesado debe aportar prueba de hechos que alega (p.ej., días no acreditados).",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -545,7 +569,8 @@
       "facts": [],
       "holding": {
         "anchor_ids": [
-          "anchor-legacy-evidence-001"
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "conclusion": "El TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).",
         "consequences": [],
@@ -587,7 +612,12 @@
           "anchor-legacy-evidence-014",
           "anchor-legacy-evidence-015",
           "anchor-legacy-evidence-016",
-          "anchor-legacy-evidence-017"
+          "anchor-legacy-evidence-017",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-holding-001",
+          "anchor-legacy-holding-002"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -632,7 +662,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nCRIT_CENTRO_INTERESES_VITALES\nacta de disconformidad Inspección (IP 2014)\nIncoación de acta por IP 2014 firmada en disconformidad, regularizando a obligación personal por considerar residente en España.\nFundamentar la regularización por residencia fiscal en España (IP por obligación personal remisión a residencia IRPF).\nACCEPTED\nSe toma como antecedente procedimental y base de los hechos relevantes del litigio.\ncómputo de días por país (2014)\nReconstrucción de permanencia: 172 días España; 30 Reino Unido; 131 Alemania; 32 días indeterminados.\nNegar o no poder afirmar permanencia >183 días en España y encuadrar el análisis hacia criterios alternativos.\nACCEPTED\nEl tribunal lo tiene por hecho pacífico, pero declara que no resulta determinante para el art. 9.1.a) LIRPF.\ndías no acreditados (32)\nLa Inspección no determina 32 días y el contribuyente tampoco acredita en qué país estuvo.\nEvidenciar falta de acreditación de permanencia fuera de España y reforzar inferencias en favor de España.\nACCEPTED\nSe valora negativamente la ausencia de prueba aportada por el interesado sobre los 32 días restantes.\nsituación fiscal en Reino Unido (remittance basis/retenciones)\nConsta que en RU solo se incluyeron rentas Chelsea en un periodo y en el siguiente no hubo autoliquidación, alegándose solo retenciones.\nMostrar tributación limitada en RU y contextualizar el debate sobre residencia/“remittance basis”.\nACCEPTED\nSe tiene por hecho relevante (régimen de tributación) para enmarcar el conflicto, aunque la Administración no impugnó el certificado.\nausencia de autoliquidación en Alemania (retenciones)\nNo se presentó autoliquidación en Alemania; se indica que solo hubo retenciones del Stuttgart en 2014.\nDebilitar la tesis de residencia fiscal alemana y ausencia de sujeción por renta mundial allí.\nACCEPTED\nSe considera hecho relevante para descartar acreditación fiscal en Alemania y para la ponderación del conflicto.\nretribuciones por clubes (Valencia/Chelsea/Stuttgart)\nDatos de retribuciones percibidas por el contribuyente en 2014, vinculadas a contratos/cesiones con clubes (incluido Valencia CF).\nPonderar dónde radica el núcleo principal de intereses económicos (rentas de trabajo/actividad profesional).\nACCEPTED\nEl tribunal acepta su integración en un análisis conjunto (no monista), junto al patrimonio.\ndepósitos y saldos bancarios (comparativa España vs extranjero)\nComparativa de activos/rendimientos: España 1.778.771,22€ vs extranjero (RU+Alemania) 1.724.237,32€; referencia a depósitos y saldos.\nAcreditar que el conjunto de intereses económicos/patrimoniales se concentra en España (art. 9.1.b LIRPF) y apoyar centro de intereses vitales CDI.\nACCEPTED\nSe considera ponderación fáctica extensa y ajustada: el mayor peso de activos/rendimientos en España sustenta art. 9.1.b LIRPF.\ninmueble en Alcanar (referencia catastral)\nTitularidad de inmueble en España (Alcanar) valorado en 360.000€ (según declaración del recurrente en IP).\nAcreditar localización de patrimonio inmobiliario en España como indicio relevante del núcleo de intereses económicos (art. 9.1.b).\nACCEPTED\nSe acepta como elemento patrimonial relevante en el análisis conjunto del art. 9.1.b LIRPF.\nvehículos con matrícula española\nTitularidad de dos vehículos valorados en 55.000€, destacándose la matrícula española.\nRefuerzo indiciario de vinculación patrimonial/administrativa con España (centro de intereses).\nACCEPTED\nSe integra como parte del conjunto patrimonial radicado en España.\nvivienda permanente en España y alquiler en Valencia\nHecho probado de vivienda permanente en España; además se razona que dispuso de vivienda arrendada en Valencia en 2014 (según alegaciones en vía TEAR).\nAplicar el primer escalón del art. 4.2 CDI (vivienda permanente) y, subsidiariamente, soporte al centro de intereses vitales.\nACCEPTED\nEl tribunal afirma vivienda permanente en España y utiliza este dato para activar el tiebreaker; incluso aceptando vivienda en RU, el centro vital resulta España.\nvínculos personales en España (padre apoderado; hermana)\nVínculos personales localizados en España (padre apoderado; hermana relacionada con alquiler de inmueble).\nReforzar el “centro de intereses vitales” del art. 4.2 CDI (relaciones personales y económicas más estrechas).\nPARTIAL\nSe consideran elemento de contextualización; la conclusión descansa principalmente en intereses económicos/patrimoniales.\nnacionalidad española\nDato de nacionalidad española del contribuyente, contemplado como criterio subsidiario en el CDI.\nApoyar, en su caso, el escalón de nacionalidad en el art. 4.2 CDI.\nACCEPTED\nSe recoge como hecho; no es el paso decisivo porque se resuelve antes por centro de intereses vitales.\nautoliquidación IP 2014 por obligación real\nAutoliquidación del Impuesto sobre el Patrimonio 2014 por obligación real, basada en considerarse no residente fiscal en España.\nSostener que no concurre residencia fiscal en España (y por tanto no procede obligación personal).\nACCEPTED\nSe admite como hecho (posición del contribuyente), pero no acredita por sí misma la no residencia.\ncertificado de residencia fiscal Reino Unido (a efectos CDI)\nCertificado expedido por autoridades del Reino Unido acreditando residencia fiscal, invocado a efectos del CDI España-RU.\nAcreditar residencia fiscal en Reino Unido y forzar la aplicación del CDI (y/o prevalencia frente a norma interna).\nPARTIAL\nEl tribunal destaca que la Administración no cuestionó su validez/alcance, pero ello no impide doble residencia y desempate a favor de España.\ncontratos/cesiones deportivas (Chelsea, Valencia, Stuttgart)\nHechos sobre relación laboral/deportiva: contrato con Chelsea; cesión a Valencia hasta julio 2014; cesión a Stuttgart desde agosto 2014.\nSostener que la actividad profesional y rentas principales se localizaron fuera de España (Alemania) y, por ello, el centro económico no está en España.\nPARTIAL\nSe admiten los hechos, pero no se acepta que por sí solos determinen el art. 9.1.b LIRPF (se exige ponderación conjunta).\ntesis monista: residencia según mayor renta por país (Alemania)\nAlegación de que el centro de intereses económicos debe fijarse por comparación de cuantías de rendimientos del trabajo, predominando los obtenidos fuera de España.\nExcluir residencia española por art. 9.1.b LIRPF al situar el “núcleo” donde se obtiene la mayor parte de la renta (Alemania).\nREJECTED\nEl TS rechaza que deba prevalecer un único elemento (lugar de obtención de renta) y exige ponderación integral con patrimonio y otros vínculos.\nausencia de prueba sobre 32 días no determinados\nNo aportación de prueba por el interesado sobre el país de permanencia en 32 días del año 2014.\nAcreditar permanencia fuera de España para evitar que se consolide residencia española por indicios o para soportar su tesis de residencia extranjera.\nREJECTED\nEl tribunal destaca expresamente que respecto a esos 32 días el interesado “no aportó prueba alguna”.\nEl TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).\nEl TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).\nNOT_DECIDED\n2014\nEl 3 de julio de 2017, la Inspección Regional de la AEAT le incoó acta por el Impuesto sobre el Patrimonio,\nperiodo 2014\npermaneció al menos 172 días en\nEspaña, 30 días en el Reino Unido y 131 en Alemania\nlos restantes 32 días\nla\nInspección no pudo determinar, ni el obligado tributario tampoco acreditó\nEn el Reino Unido\nse incluyeron únicamente las rentas percibidas del\nChelsea\nsu\núnica tributación fueron las retenciones\nEn Alemania no se presentó ninguna autoliquidación, señalando que su única tributación fueron las\nretenciones\nsumadas retribuciones (exclusivamente las\nsatisfechas por el Valencia CF) y depósitos y saldos bancarios\nacredita en España activos y rendimientos por\nimporte de 1.778.771,22 euros\nen todo el extranjero\n1.724.237,32 euros\ntitular de un inmueble (en\nAlcanar\nreferencia catastral), valorado en otros 360.000 euros\ny de dos vehículos\nde matrícula española\nvalorados en otros 55.000 euros\nEl recurrente dispone de vivienda permanente en España\naceptando la disponibilidad permanente de una vivienda de alquiler en Valencia\nse hallaban en España al menos su padre que era su apoderado\ny su hermana\nFinalmente, la nacionalidad de D.  Olegario  es la española\npresentó autoliquidación del Impuesto sobre el Patrimonio 2014, por obligación real, al\nconsiderar que no era residente ﬁscal\nla ADMINISTRACIÓN\nno cuestionó la validez y alcance del certiﬁcado\nlo considera\nválido y eﬁcaz y aplica las reglas de desempate\nTenía contrato con\nChelsea\ncedido al Valencia\nen agosto de 2014 fue cedido\nconsiderar también\nbienes y derechos patrimoniales\nno debe prevalecer la tesis \"monista\nsino la tesis ecléctica o integral\nsin que\nse haya podido acreditar el lugar\nde los restantes 32 días, respecto a los que el interesado no\naportó prueba alguna",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nCRIT_CENTRO_INTERESES_VITALES\nacta de disconformidad Inspección (IP 2014)\nIncoación de acta por IP 2014 firmada en disconformidad, regularizando a obligación personal por considerar residente en España.\nFundamentar la regularización por residencia fiscal en España (IP por obligación personal remisión a residencia IRPF).\nACCEPTED\nSe toma como antecedente procedimental y base de los hechos relevantes del litigio.\ncómputo de días por país (2014)\nReconstrucción de permanencia: 172 días España; 30 Reino Unido; 131 Alemania; 32 días indeterminados.\nNegar o no poder afirmar permanencia >183 días en España y encuadrar el análisis hacia criterios alternativos.\nACCEPTED\nEl tribunal lo tiene por hecho pacífico, pero declara que no resulta determinante para el art. 9.1.a) LIRPF.\ndías no acreditados (32)\nLa Inspección no determina 32 días y el contribuyente tampoco acredita en qué país estuvo.\nEvidenciar falta de acreditación de permanencia fuera de España y reforzar inferencias en favor de España.\nACCEPTED\nSe valora negativamente la ausencia de prueba aportada por el interesado sobre los 32 días restantes.\nsituación fiscal en Reino Unido (remittance basis/retenciones)\nConsta que en RU solo se incluyeron rentas Chelsea en un periodo y en el siguiente no hubo autoliquidación, alegándose solo retenciones.\nMostrar tributación limitada en RU y contextualizar el debate sobre residencia/“remittance basis”.\nACCEPTED\nSe tiene por hecho relevante (régimen de tributación) para enmarcar el conflicto, aunque la Administración no impugnó el certificado.\nausencia de autoliquidación en Alemania (retenciones)\nNo se presentó autoliquidación en Alemania; se indica que solo hubo retenciones del Stuttgart en 2014.\nDebilitar la tesis de residencia fiscal alemana y ausencia de sujeción por renta mundial allí.\nACCEPTED\nSe considera hecho relevante para descartar acreditación fiscal en Alemania y para la ponderación del conflicto.\nretribuciones por clubes (Valencia/Chelsea/Stuttgart)\nDatos de retribuciones percibidas por el contribuyente en 2014, vinculadas a contratos/cesiones con clubes (incluido Valencia CF).\nPonderar dónde radica el núcleo principal de intereses económicos (rentas de trabajo/actividad profesional).\nACCEPTED\nEl tribunal acepta su integración en un análisis conjunto (no monista), junto al patrimonio.\ndepósitos y saldos bancarios (comparativa España vs extranjero)\nComparativa de activos/rendimientos: España 1.778.771,22€ vs extranjero (RU+Alemania) 1.724.237,32€; referencia a depósitos y saldos.\nAcreditar que el conjunto de intereses económicos/patrimoniales se concentra en España (art. 9.1.b LIRPF) y apoyar centro de intereses vitales CDI.\nACCEPTED\nSe considera ponderación fáctica extensa y ajustada: el mayor peso de activos/rendimientos en España sustenta art. 9.1.b LIRPF.\ninmueble en Alcanar (referencia catastral)\nTitularidad de inmueble en España (Alcanar) valorado en 360.000€ (según declaración del recurrente en IP).\nAcreditar localización de patrimonio inmobiliario en España como indicio relevante del núcleo de intereses económicos (art. 9.1.b).\nACCEPTED\nSe acepta como elemento patrimonial relevante en el análisis conjunto del art. 9.1.b LIRPF.\nvehículos con matrícula española\nTitularidad de dos vehículos valorados en 55.000€, destacándose la matrícula española.\nRefuerzo indiciario de vinculación patrimonial/administrativa con España (centro de intereses).\nACCEPTED\nSe integra como parte del conjunto patrimonial radicado en España.\nvivienda permanente en España y alquiler en Valencia\nHecho probado de vivienda permanente en España; además se razona que dispuso de vivienda arrendada en Valencia en 2014 (según alegaciones en vía TEAR).\nAplicar el primer escalón del art. 4.2 CDI (vivienda permanente) y, subsidiariamente, soporte al centro de intereses vitales.\nACCEPTED\nEl tribunal afirma vivienda permanente en España y utiliza este dato para activar el tiebreaker; incluso aceptando vivienda en RU, el centro vital resulta España.\nvínculos personales en España (padre apoderado; hermana)\nVínculos personales localizados en España (padre apoderado; hermana relacionada con alquiler de inmueble).\nReforzar el “centro de intereses vitales” del art. 4.2 CDI (relaciones personales y económicas más estrechas).\nPARTIAL\nSe consideran elemento de contextualización; la conclusión descansa principalmente en intereses económicos/patrimoniales.\nnacionalidad española\nDato de nacionalidad española del contribuyente, contemplado como criterio subsidiario en el CDI.\nApoyar, en su caso, el escalón de nacionalidad en el art. 4.2 CDI.\nACCEPTED\nSe recoge como hecho; no es el paso decisivo porque se resuelve antes por centro de intereses vitales.\nautoliquidación IP 2014 por obligación real\nAutoliquidación del Impuesto sobre el Patrimonio 2014 por obligación real, basada en considerarse no residente fiscal en España.\nSostener que no concurre residencia fiscal en España (y por tanto no procede obligación personal).\nACCEPTED\nSe admite como hecho (posición del contribuyente), pero no acredita por sí misma la no residencia.\ncertificado de residencia fiscal Reino Unido (a efectos CDI)\nCertificado expedido por autoridades del Reino Unido acreditando residencia fiscal, invocado a efectos del CDI España-RU.\nAcreditar residencia fiscal en Reino Unido y forzar la aplicación del CDI (y/o prevalencia frente a norma interna).\nPARTIAL\nEl tribunal destaca que la Administración no cuestionó su validez/alcance, pero ello no impide doble residencia y desempate a favor de España.\ncontratos/cesiones deportivas (Chelsea, Valencia, Stuttgart)\nHechos sobre relación laboral/deportiva: contrato con Chelsea; cesión a Valencia hasta julio 2014; cesión a Stuttgart desde agosto 2014.\nSostener que la actividad profesional y rentas principales se localizaron fuera de España (Alemania) y, por ello, el centro económico no está en España.\nPARTIAL\nSe admiten los hechos, pero no se acepta que por sí solos determinen el art. 9.1.b LIRPF (se exige ponderación conjunta).\ntesis monista: residencia según mayor renta por país (Alemania)\nAlegación de que el centro de intereses económicos debe fijarse por comparación de cuantías de rendimientos del trabajo, predominando los obtenidos fuera de España.\nExcluir residencia española por art. 9.1.b LIRPF al situar el “núcleo” donde se obtiene la mayor parte de la renta (Alemania).\nREJECTED\nEl TS rechaza que deba prevalecer un único elemento (lugar de obtención de renta) y exige ponderación integral con patrimonio y otros vínculos.\nausencia de prueba sobre 32 días no determinados\nNo aportación de prueba por el interesado sobre el país de permanencia en 32 días del año 2014.\nAcreditar permanencia fuera de España para evitar que se consolide residencia española por indicios o para soportar su tesis de residencia extranjera.\nREJECTED\nEl tribunal destaca expresamente que respecto a esos 32 días el interesado “no aportó prueba alguna”.\nEl TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).\nEl TS asume que no resulta determinante el criterio de permanencia >183 días (solo constan 172 días en España y 32 días sin acreditar). Por ello, confirma que la Administración y la sentencia de instancia aplican el art. 9.1.b LIRPF, interpretado de forma “ecléctica”, ponderando rentas y, sobre todo, localización del patrimonio (inmueble, depósitos/saldos, vehículos) y otros vínculos relevantes. A partir de esa residencia en España y la residencia certificada en RU, existe conflicto y se aplican las reglas del art. 4.2 CDI: con vivienda permanente en España (y aceptando dialécticamente vivienda en RU), el “centro de intereses vitales” se fija en España por mayor peso de intereses económicos (y vínculos personales acreditados).\nNOT_DECIDED\n2014\nResidencia (art. 9.1.b LIRPF) es cuestión fáctica sujeta a art. 105 LGT; el interesado debe aportar prueba de hechos que alega (p.ej., días no acreditados).\nLa carga probatoria no se consideró cumplida.\nEl 3 de julio de 2017, la Inspección Regional de la AEAT le incoó acta por el Impuesto sobre el Patrimonio,\nperiodo 2014\npermaneció al menos 172 días en\nEspaña, 30 días en el Reino Unido y 131 en Alemania\nlos restantes 32 días\nla\nInspección no pudo determinar, ni el obligado tributario tampoco acreditó\nEn el Reino Unido\nse incluyeron únicamente las rentas percibidas del\nChelsea\nsu\núnica tributación fueron las retenciones\nEn Alemania no se presentó ninguna autoliquidación, señalando que su única tributación fueron las\nretenciones\nsumadas retribuciones (exclusivamente las\nsatisfechas por el Valencia CF) y depósitos y saldos bancarios\nacredita en España activos y rendimientos por\nimporte de 1.778.771,22 euros\nen todo el extranjero\n1.724.237,32 euros\ntitular de un inmueble (en\nAlcanar\nreferencia catastral), valorado en otros 360.000 euros\ny de dos vehículos\nde matrícula española\nvalorados en otros 55.000 euros\nEl recurrente dispone de vivienda permanente en España\naceptando la disponibilidad permanente de una vivienda de alquiler en Valencia\nse hallaban en España al menos su padre que era su apoderado\ny su hermana\nFinalmente, la nacionalidad de D.  Olegario  es la española\npresentó autoliquidación del Impuesto sobre el Patrimonio 2014, por obligación real, al\nconsiderar que no era residente ﬁscal\nla ADMINISTRACIÓN\nno cuestionó la validez y alcance del certiﬁcado\nlo considera\nválido y eﬁcaz y aplica las reglas de desempate\nTenía contrato con\nChelsea\ncedido al Valencia\nen agosto de 2014 fue cedido\nconsiderar también\nbienes y derechos patrimoniales\nno debe prevalecer la tesis \"monista\nsino la tesis ecléctica o integral\nsin que\nse haya podido acreditar el lugar\nde los restantes 32 días, respecto a los que el interesado no\naportó prueba alguna\ndeberá ponderarse, además del lugar de\nobtención de sus rentas, la localización de su patrimonio inmobiliario y mobiliario\nlos restantes 32 días\nel interesado no\naportó prueba alguna\nEs una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT\nno resultando determinante el criterio\n9.1 (permanencia\nmás de 183 días\ncentro\nde intereses vitales\nresulta de aplicación\nes incuestionable que\nsu residencia\nﬁscal en España",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -1118,6 +1148,158 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 806,
+              "page_index": 17,
+              "printed_page": "17",
+              "start_offset": 684,
+              "verbatim_text": "deberá ponderarse, además del lugar de\nobtención de sus rentas, la localización de su patrimonio inmobiliario y mobiliario"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1346,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 1325,
+              "verbatim_text": "los restantes 32 días"
+            },
+            {
+              "end_offset": 1404,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 1367,
+              "verbatim_text": "el interesado no\naportó prueba alguna"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 416,
+              "page_index": 15,
+              "printed_page": "15",
+              "start_offset": 296,
+              "verbatim_text": "Es una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-001",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 1455,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 1417,
+              "verbatim_text": "no resultando determinante el criterio"
+            },
+            {
+              "end_offset": 1497,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 1481,
+              "verbatim_text": "9.1 (permanencia"
+            },
+            {
+              "end_offset": 1521,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 1506,
+              "verbatim_text": "más de 183 días"
+            }
+          ],
+          "purpose": "HOLDING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "c993e8eb7ade70d2977c4c99407751761e33131abfe4f6ad095bc8f45ed91516"
+        },
+        {
+          "anchor_id": "anchor-legacy-holding-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 2001,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 1974,
+              "verbatim_text": "centro\nde intereses vitales"
+            },
+            {
+              "end_offset": 3220,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 3199,
+              "verbatim_text": "resulta de aplicación"
+            },
+            {
+              "end_offset": 3992,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 3971,
+              "verbatim_text": "es incuestionable que"
+            },
+            {
+              "end_offset": 4062,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 4033,
+              "verbatim_text": "su residencia\nﬁscal en España"
+            }
+          ],
+          "purpose": "HOLDING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",

@@ -18,12 +18,36 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-3882-2024.case.json",
-    "case_sha256": "d42f8d3efcfffc5555a067ab7159912371561f4c3b2e53b51d406c22c4d0b939",
+    "case_sha256": "fb8bcd95b7234ce6e475413004928a03388d6438065539adb519ead6681b904d",
     "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
   },
   "units": [
     {
-      "burden_of_proof_steps": [],
+      "burden_of_proof_steps": [
+        {
+          "anchor_ids": [
+            "anchor-legacy-burden-001"
+          ],
+          "conclusion": "La carga probatoria no se consideró cumplida.",
+          "fact_to_prove": "La residencia por art. 9.1.b es fáctica y se sujeta a reglas de carga probatoria (art. 105 LGT); el contribuyente no acreditó hechos relevantes (32 días y elementos en el extranjero).",
+          "initial_bearer": "BOTH",
+          "issue_ids": [
+            "residencia-fiscal"
+          ],
+          "response_required": null,
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "sequence": 1,
+          "shifts_to": null,
+          "step_id": "burden-legacy-001",
+          "triggering_evidence_ids": []
+        }
+      ],
       "evidence_findings": [
         {
           "anchor_ids": [
@@ -573,7 +597,11 @@
           "anchor-legacy-evidence-014",
           "anchor-legacy-evidence-015",
           "anchor-legacy-evidence-016",
-          "anchor-legacy-evidence-017"
+          "anchor-legacy-evidence-017",
+          "anchor-legacy-reasoning-001",
+          "anchor-legacy-burden-001",
+          "anchor-legacy-reasoning-002",
+          "anchor-legacy-reasoning-003"
         ],
         "criterion_ids": [
           "CRIT_183_DIAS",
@@ -617,7 +645,7 @@
       "legal_rules": [],
       "presence_events": [],
       "presence_periods": [],
-      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nacta de Inspección IRPF 2014 (incoación 13/04/2016)\nActa firmada en disconformidad donde se regulariza IRPF 2014 por considerar al contribuyente residente en España.\nFundamentar la regularización por residencia fiscal en España (IRPF 2014).\nACCEPTED\nSe toma como base fáctica del procedimiento (antecedentes) y soporta la regularización confirmada.\ncómputo de días de permanencia (España/RU/Alemania)\nReconstrucción de estancias: 172 días España, 30 días RU y 131 Alemania; 32 días no determinados.\nAcreditar patrón de permanencia y sostener residencia/arraigo en España; evidenciar falta de prueba del contribuyente sobre ausencias.\nPARTIAL\nSe acepta el cómputo (172 días) pero se reconoce que no se alcanza/probó >183 días; sirve como contexto y para valorar falta de prueba de los 32 días.\n32 días no acreditados\nHecho declarado: ni la Inspección pudo determinar ni el obligado acreditó dónde estuvo 32 días del año natural 2014.\nReforzar que el contribuyente no acredita estancia fuera/otra residencia durante periodos relevantes.\nACCEPTED\nEl TS lo utiliza para evidenciar ausencia de prueba del interesado sobre su localización fuera de España.\nretribuciones por clubes (Valencia/Chelsea/Stuttgart)\nDatos de contratos/cesiones y retribuciones percibidas por clubes en 2014; la Inspección/TSJ comparan cuantías entre España y extranjero.\nAcreditar núcleo de intereses económicos y actividad profesional vinculada a España (parte de 2014 con Valencia CF).\nACCEPTED\nEl TS valida la ponderación conjunta de rentas como elemento del art. 9.1.b LIRPF.\ndepósitos/saldos bancarios por países\nCuantificación de depósitos y saldos bancarios en España y en el extranjero (RU y Alemania) para comparar magnitudes económicas.\nAcreditar que el mayor volumen de intereses económicos/patrimoniales está en España.\nACCEPTED\nSe considera indicio relevante y se integra en el juicio ecléctico validado por el TS (renta + patrimonio).\ncifra agregada activos+rentas (España vs extranjero)\nCálculo judicial (TSJ) de 1.778.771,22€ en España (retribuciones Valencia + depósitos/saldos) vs 1.724.237,32€ en extranjero (RU+Alemania).\nEvidenciar mayor volumen relativo de intereses económicos en España.\nACCEPTED\nEl TS confirma que el art. 9.1.b permite ponderar rentas y patrimonio (criterio ecléctico).\ninmueble en España (Alcanar) con referencia catastral\nTitularidad de inmueble en España (Alcanar) con referencia catastral; valor 360.000€ según IP.\nAcreditar patrimonio inmobiliario radicado en España como indicio del centro de intereses económicos y vivienda disponible.\nACCEPTED\nSe considera elemento patrimonial relevante en la ponderación del art. 9.1.b y para la vivienda permanente en CDI.\nvivienda permanente en España (hecho probado)\nDeclaración de que el recurrente dispone de vivienda permanente en España; y existencia de arrendamiento en Valencia durante 2014.\nAplicar el primer escalón del tie-breaker (vivienda permanente) y/o sostener disponibilidad de vivienda en España.\nACCEPTED\nEl TS afirma que la sentencia recurrida lo declara hecho probado y lo usa para el art. 4.2 CDI.\nmatrícula española de vehículos\nDos vehículos de matrícula española (no se dice lo contrario), valorados en 55.000€ según IP.\nAcreditar localización de bienes y vínculos económicos/patrimoniales con España.\nACCEPTED\nSe integra como indicio patrimonial adicional radicado en España.\ndeclaración en sede de Impuesto sobre el Patrimonio (IP)\nDeclaración del propio recurrente en IP utilizada para acreditar valores de inmueble y vehículos en España.\nAportar prueba de patrimonio en España (inmueble/vehículos) con soporte declarativo del interesado.\nACCEPTED\nEl TS destaca que deriva de declaración del recurrente y no se cuestiona.\ndomicilio en autoliquidación IRPF 2012 y notificaciones en España\nDomicilio español (DIRECCION001) constaba en IRPF 2012; notificaciones de liquidación y sanción practicadas con éxito en familiares.\nIndicio de disponibilidad de domicilio/vivienda en España y de vínculos administrativos efectivos.\nPARTIAL\nSe usa por TSJ (reproducido) para cuestionar credibilidad de alegaciones; el TS no centra el fallo en ello.\ncertificado de residencia fiscal Reino Unido (a efectos CDI)\nCertificado expedido por Reino Unido que acredita residencia fiscal en RU a efectos del Convenio; no consta que certifique sujeción por renta mundial.\nAcreditar residencia fiscal en Reino Unido y excluir la residencia fiscal en España o forzar la aplicación del CDI.\nPARTIAL\nSe tiene por válido para admitir doble residencia y aplicar el CDI, pero no impide la residencia en España ni el desempate a favor de España.\ncontrato de arrendamiento en Valencia y cancelación (Diligencia 11-07-2016, elemento 99)\nAportado por el interesado: contrato de alquiler del piso en Valencia (DIRECCION002) y cancelación 22/05/2014.\nExplicar vivienda en España como vinculada al trabajo temporal con Valencia CF (y limitar su alcance).\nACCEPTED\nSe acepta como prueba de disponibilidad de vivienda en España en 2014 (refuerza criterio a favor de España).\nacuerdo de cesión Chelsea-Valencia (cláusula tercera)\nAcuerdo aportado con la demanda: Valencia responsable de salarios/primas temporada 2013/14; Chelsea sin obligación de pago respecto esa temporada.\nSostener que rentas del Chelsea no deben imputarse a servicios en España y apoyar tesis de que el núcleo económico no está en España.\nPARTIAL\nSe toma en cuenta para el cálculo en términos favorables al actor, pero no altera la conclusión final de residencia en España.\nalegación tributación RU limitada a retenciones Chelsea / no autoliquidación 2014-2015\nSe aduce que en RU no se presentó autoliquidación 06/04/2014-05/04/2015 y que la tributación fueron retenciones; (Inspección lo recoge como alegación).\nApoyar existencia de tributación/estatus en RU y justificar no declarar en España.\nPARTIAL\nConsta como hecho alegado; el TS no lo usa para excluir España y destaca que la Administración ni siquiera cuestionó el certificado por este motivo.\nalegación de vivienda permanente en Reino Unido\nEl recurrente sostiene tener vivienda permanente en Reino Unido; la sentencia la acepta solo a efectos dialécticos, sin precisarse prueba concreta.\nActivar el tie-breaker del CDI y defender residencia no española.\nPARTIAL\nSe admite hipotéticamente (a efectos dialécticos) pero no impide desempate a favor de España por centro de intereses vitales.\nfalta de prueba sobre 32 días\nNo se aporta por el interesado prueba de localización/permanencia de 32 días del año 2014.\n(Omisión) intentar evitar que se imputen días a España o acreditar otra residencia.\nREJECTED\nEl tribunal destaca expresamente la ausencia de prueba, lo que perjudica la tesis del contribuyente.\nEl TS parte de que el criterio de 183 días no es determinante (172 días acreditados en España y 32 no acreditados). Confirma que, para el art. 9.1.b LIRPF, procede un análisis ecléctico: no solo rentas (flujo) sino también patrimonio (fondo) y otros vínculos económicos. Concluye que el mayor volumen relativo de intereses económicos/patrimoniales radica en España. Admitida (por la propia AEAT) doble residencia con RU por certificado, aplica el art. 4.2 CDI: existiendo vivienda permanente en España y, aun aceptando vivienda en RU, el centro de intereses vitales es España; por tanto, residente fiscal en España en 2014.\nEl TS parte de que el criterio de 183 días no es determinante (172 días acreditados en España y 32 no acreditados). Confirma que, para el art. 9.1.b LIRPF, procede un análisis ecléctico: no solo rentas (flujo) sino también patrimonio (fondo) y otros vínculos económicos. Concluye que el mayor volumen relativo de intereses económicos/patrimoniales radica en España. Admitida (por la propia AEAT) doble residencia con RU por certificado, aplica el art. 4.2 CDI: existiendo vivienda permanente en España y, aun aceptando vivienda en RU, el centro de intereses vitales es España; por tanto, residente fiscal en España en 2014.\nNOT_DECIDED\n2014\nEl 13 de abril de 2016, la Inspección Regional de la AEAT incoó acta\nLa regularización obedeció a que la Inspección\nconsideró\nLa Inspección no pudo probar la permanencia\nmás de 183\ndías\nal menos 172 días en España\nsin que se haya podido acreditar el lugar\nde los restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna\nla Inspección sostuvo que, atendiendo a las retribuciones percibidas de cada club\nel núcleo principal\nradicaba en España\nse ha de ponderar no solo la variable de ﬂujo de renta, sino\ntambién los intereses patrimoniales\nsumadas retribuciones\ny depósitos y saldos bancarios\n1.778.771,22 euros, y en todo el extranjero\n1.724.237,32\ntitular de un inmueble (en\nAlcanar, consta su referencia catastral), valorado en otros 360.000 euros\nEl recurrente dispone de vivienda permanente en España, así lo aﬁrma como hecho probado la sentencia\nrecurrida\ndos vehículos\nde matrícula española\nvalorados en otros\n55.000 euros\ntodo ello según declaración del mismo recurrente en sede de IP, que\néste no cuestiona\núnico domicilio que constaba a la Agencia Tributaria, consignado en la\nautoliquidación del IRPF de 2012\nno cuestionó la validez y alcance del certiﬁcado\nAntes bien, lo considera\nválido y eﬁcaz y aplica las reglas de desempate\nla Administración\nhay en el expediente es un contrato de arrendamiento de un piso en Valencia y su cancelación\nDiligencia de 11-07-2016\ncláusula tercera del acuerdo de cesión\nentre \"Chelsea\" y \"Valencia\nresponsable del pago de todos los\nsalarios\nEn cuanto al periodo 06/04/2014 a 05/04/2015, no se presentó autoliquidación y se adujo que\nrespecto a la alegación de disponer de vivienda\nen Reino Unido, nuevamente acepta \"a efectos de dialéctica procesal\nlos restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna",
+      "search_text": "¿Qué decidió la resolución sobre la residencia fiscal?\nTAX_RESIDENCE\nCRIT_183_DIAS\nCRIT_CENTRO_INTERESES_ECONOMICOS\nCRIT_CDI_TIEBREAKER\nacta de Inspección IRPF 2014 (incoación 13/04/2016)\nActa firmada en disconformidad donde se regulariza IRPF 2014 por considerar al contribuyente residente en España.\nFundamentar la regularización por residencia fiscal en España (IRPF 2014).\nACCEPTED\nSe toma como base fáctica del procedimiento (antecedentes) y soporta la regularización confirmada.\ncómputo de días de permanencia (España/RU/Alemania)\nReconstrucción de estancias: 172 días España, 30 días RU y 131 Alemania; 32 días no determinados.\nAcreditar patrón de permanencia y sostener residencia/arraigo en España; evidenciar falta de prueba del contribuyente sobre ausencias.\nPARTIAL\nSe acepta el cómputo (172 días) pero se reconoce que no se alcanza/probó >183 días; sirve como contexto y para valorar falta de prueba de los 32 días.\n32 días no acreditados\nHecho declarado: ni la Inspección pudo determinar ni el obligado acreditó dónde estuvo 32 días del año natural 2014.\nReforzar que el contribuyente no acredita estancia fuera/otra residencia durante periodos relevantes.\nACCEPTED\nEl TS lo utiliza para evidenciar ausencia de prueba del interesado sobre su localización fuera de España.\nretribuciones por clubes (Valencia/Chelsea/Stuttgart)\nDatos de contratos/cesiones y retribuciones percibidas por clubes en 2014; la Inspección/TSJ comparan cuantías entre España y extranjero.\nAcreditar núcleo de intereses económicos y actividad profesional vinculada a España (parte de 2014 con Valencia CF).\nACCEPTED\nEl TS valida la ponderación conjunta de rentas como elemento del art. 9.1.b LIRPF.\ndepósitos/saldos bancarios por países\nCuantificación de depósitos y saldos bancarios en España y en el extranjero (RU y Alemania) para comparar magnitudes económicas.\nAcreditar que el mayor volumen de intereses económicos/patrimoniales está en España.\nACCEPTED\nSe considera indicio relevante y se integra en el juicio ecléctico validado por el TS (renta + patrimonio).\ncifra agregada activos+rentas (España vs extranjero)\nCálculo judicial (TSJ) de 1.778.771,22€ en España (retribuciones Valencia + depósitos/saldos) vs 1.724.237,32€ en extranjero (RU+Alemania).\nEvidenciar mayor volumen relativo de intereses económicos en España.\nACCEPTED\nEl TS confirma que el art. 9.1.b permite ponderar rentas y patrimonio (criterio ecléctico).\ninmueble en España (Alcanar) con referencia catastral\nTitularidad de inmueble en España (Alcanar) con referencia catastral; valor 360.000€ según IP.\nAcreditar patrimonio inmobiliario radicado en España como indicio del centro de intereses económicos y vivienda disponible.\nACCEPTED\nSe considera elemento patrimonial relevante en la ponderación del art. 9.1.b y para la vivienda permanente en CDI.\nvivienda permanente en España (hecho probado)\nDeclaración de que el recurrente dispone de vivienda permanente en España; y existencia de arrendamiento en Valencia durante 2014.\nAplicar el primer escalón del tie-breaker (vivienda permanente) y/o sostener disponibilidad de vivienda en España.\nACCEPTED\nEl TS afirma que la sentencia recurrida lo declara hecho probado y lo usa para el art. 4.2 CDI.\nmatrícula española de vehículos\nDos vehículos de matrícula española (no se dice lo contrario), valorados en 55.000€ según IP.\nAcreditar localización de bienes y vínculos económicos/patrimoniales con España.\nACCEPTED\nSe integra como indicio patrimonial adicional radicado en España.\ndeclaración en sede de Impuesto sobre el Patrimonio (IP)\nDeclaración del propio recurrente en IP utilizada para acreditar valores de inmueble y vehículos en España.\nAportar prueba de patrimonio en España (inmueble/vehículos) con soporte declarativo del interesado.\nACCEPTED\nEl TS destaca que deriva de declaración del recurrente y no se cuestiona.\ndomicilio en autoliquidación IRPF 2012 y notificaciones en España\nDomicilio español (DIRECCION001) constaba en IRPF 2012; notificaciones de liquidación y sanción practicadas con éxito en familiares.\nIndicio de disponibilidad de domicilio/vivienda en España y de vínculos administrativos efectivos.\nPARTIAL\nSe usa por TSJ (reproducido) para cuestionar credibilidad de alegaciones; el TS no centra el fallo en ello.\ncertificado de residencia fiscal Reino Unido (a efectos CDI)\nCertificado expedido por Reino Unido que acredita residencia fiscal en RU a efectos del Convenio; no consta que certifique sujeción por renta mundial.\nAcreditar residencia fiscal en Reino Unido y excluir la residencia fiscal en España o forzar la aplicación del CDI.\nPARTIAL\nSe tiene por válido para admitir doble residencia y aplicar el CDI, pero no impide la residencia en España ni el desempate a favor de España.\ncontrato de arrendamiento en Valencia y cancelación (Diligencia 11-07-2016, elemento 99)\nAportado por el interesado: contrato de alquiler del piso en Valencia (DIRECCION002) y cancelación 22/05/2014.\nExplicar vivienda en España como vinculada al trabajo temporal con Valencia CF (y limitar su alcance).\nACCEPTED\nSe acepta como prueba de disponibilidad de vivienda en España en 2014 (refuerza criterio a favor de España).\nacuerdo de cesión Chelsea-Valencia (cláusula tercera)\nAcuerdo aportado con la demanda: Valencia responsable de salarios/primas temporada 2013/14; Chelsea sin obligación de pago respecto esa temporada.\nSostener que rentas del Chelsea no deben imputarse a servicios en España y apoyar tesis de que el núcleo económico no está en España.\nPARTIAL\nSe toma en cuenta para el cálculo en términos favorables al actor, pero no altera la conclusión final de residencia en España.\nalegación tributación RU limitada a retenciones Chelsea / no autoliquidación 2014-2015\nSe aduce que en RU no se presentó autoliquidación 06/04/2014-05/04/2015 y que la tributación fueron retenciones; (Inspección lo recoge como alegación).\nApoyar existencia de tributación/estatus en RU y justificar no declarar en España.\nPARTIAL\nConsta como hecho alegado; el TS no lo usa para excluir España y destaca que la Administración ni siquiera cuestionó el certificado por este motivo.\nalegación de vivienda permanente en Reino Unido\nEl recurrente sostiene tener vivienda permanente en Reino Unido; la sentencia la acepta solo a efectos dialécticos, sin precisarse prueba concreta.\nActivar el tie-breaker del CDI y defender residencia no española.\nPARTIAL\nSe admite hipotéticamente (a efectos dialécticos) pero no impide desempate a favor de España por centro de intereses vitales.\nfalta de prueba sobre 32 días\nNo se aporta por el interesado prueba de localización/permanencia de 32 días del año 2014.\n(Omisión) intentar evitar que se imputen días a España o acreditar otra residencia.\nREJECTED\nEl tribunal destaca expresamente la ausencia de prueba, lo que perjudica la tesis del contribuyente.\nEl TS parte de que el criterio de 183 días no es determinante (172 días acreditados en España y 32 no acreditados). Confirma que, para el art. 9.1.b LIRPF, procede un análisis ecléctico: no solo rentas (flujo) sino también patrimonio (fondo) y otros vínculos económicos. Concluye que el mayor volumen relativo de intereses económicos/patrimoniales radica en España. Admitida (por la propia AEAT) doble residencia con RU por certificado, aplica el art. 4.2 CDI: existiendo vivienda permanente en España y, aun aceptando vivienda en RU, el centro de intereses vitales es España; por tanto, residente fiscal en España en 2014.\nEl TS parte de que el criterio de 183 días no es determinante (172 días acreditados en España y 32 no acreditados). Confirma que, para el art. 9.1.b LIRPF, procede un análisis ecléctico: no solo rentas (flujo) sino también patrimonio (fondo) y otros vínculos económicos. Concluye que el mayor volumen relativo de intereses económicos/patrimoniales radica en España. Admitida (por la propia AEAT) doble residencia con RU por certificado, aplica el art. 4.2 CDI: existiendo vivienda permanente en España y, aun aceptando vivienda en RU, el centro de intereses vitales es España; por tanto, residente fiscal en España en 2014.\nNOT_DECIDED\n2014\nLa residencia por art. 9.1.b es fáctica y se sujeta a reglas de carga probatoria (art. 105 LGT); el contribuyente no acreditó hechos relevantes (32 días y elementos en el extranjero).\nLa carga probatoria no se consideró cumplida.\nEl 13 de abril de 2016, la Inspección Regional de la AEAT incoó acta\nLa regularización obedeció a que la Inspección\nconsideró\nLa Inspección no pudo probar la permanencia\nmás de 183\ndías\nal menos 172 días en España\nsin que se haya podido acreditar el lugar\nde los restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna\nla Inspección sostuvo que, atendiendo a las retribuciones percibidas de cada club\nel núcleo principal\nradicaba en España\nse ha de ponderar no solo la variable de ﬂujo de renta, sino\ntambién los intereses patrimoniales\nsumadas retribuciones\ny depósitos y saldos bancarios\n1.778.771,22 euros, y en todo el extranjero\n1.724.237,32\ntitular de un inmueble (en\nAlcanar, consta su referencia catastral), valorado en otros 360.000 euros\nEl recurrente dispone de vivienda permanente en España, así lo aﬁrma como hecho probado la sentencia\nrecurrida\ndos vehículos\nde matrícula española\nvalorados en otros\n55.000 euros\ntodo ello según declaración del mismo recurrente en sede de IP, que\néste no cuestiona\núnico domicilio que constaba a la Agencia Tributaria, consignado en la\nautoliquidación del IRPF de 2012\nno cuestionó la validez y alcance del certiﬁcado\nAntes bien, lo considera\nválido y eﬁcaz y aplica las reglas de desempate\nla Administración\nhay en el expediente es un contrato de arrendamiento de un piso en Valencia y su cancelación\nDiligencia de 11-07-2016\ncláusula tercera del acuerdo de cesión\nentre \"Chelsea\" y \"Valencia\nresponsable del pago de todos los\nsalarios\nEn cuanto al periodo 06/04/2014 a 05/04/2015, no se presentó autoliquidación y se adujo que\nrespecto a la alegación de disponer de vivienda\nen Reino Unido, nuevamente acepta \"a efectos de dialéctica procesal\nlos restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna\nlos restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna\nEs una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT\nLos órganos administrativos o judiciales nacionales no son competentes para enjuiciar\nun\ncertiﬁcado\ncentro\nde intereses vitales\naun con disponibilidad de vivienda permanente tanto en España como en Reino Unido",
       "source_anchors": [
         {
           "anchor_id": "anchor-legacy-evidence-001",
@@ -1089,6 +1117,108 @@
             }
           ],
           "purpose": "EVIDENCE",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 368,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 289,
+              "verbatim_text": "los restantes 32 días, respecto a los que el\ninteresado no aportó prueba alguna"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+        },
+        {
+          "anchor_id": "anchor-legacy-burden-001",
+          "fidelity": "EXACT",
+          "fragments": [
+            {
+              "end_offset": 5331,
+              "page_index": 16,
+              "printed_page": "16",
+              "start_offset": 5211,
+              "verbatim_text": "Es una cuestión eminentemente fáctica que se\nsujeta a las reglas de carga de la prueba que establece el artículo 105 LGT"
+            }
+          ],
+          "purpose": "BURDEN_OF_PROOF",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-002",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 5199,
+              "page_index": 13,
+              "printed_page": "13",
+              "start_offset": 5114,
+              "verbatim_text": "Los órganos administrativos o judiciales nacionales no son competentes para enjuiciar"
+            },
+            {
+              "end_offset": 133,
+              "page_index": 14,
+              "printed_page": "14",
+              "start_offset": 120,
+              "verbatim_text": "un\ncertiﬁcado"
+            }
+          ],
+          "purpose": "REASONING",
+          "review": {
+            "legal": "AGENT_REVIEWED",
+            "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
+            "reviewed_at": "2026-08-01",
+            "reviewed_by": "agent:codex",
+            "technical": "VALIDATED"
+          },
+          "source_sha256": "ef57ce06676172f74a1f943099652c87a18cdebad4785f509058707fc6eb181d"
+        },
+        {
+          "anchor_id": "anchor-legacy-reasoning-003",
+          "fidelity": "EXACT_WITH_ELLIPSIS",
+          "fragments": [
+            {
+              "end_offset": 799,
+              "page_index": 18,
+              "printed_page": "18",
+              "start_offset": 772,
+              "verbatim_text": "centro\nde intereses vitales"
+            },
+            {
+              "end_offset": 1744,
+              "page_index": 18,
+              "printed_page": "18",
+              "start_offset": 1663,
+              "verbatim_text": "aun con disponibilidad de vivienda permanente tanto en España como en Reino Unido"
+            }
+          ],
+          "purpose": "REASONING",
           "review": {
             "legal": "AGENT_REVIEWED",
             "notes": "Borrador conservador derivado del análisis legado; sin aprobación humana.",
