@@ -1,4 +1,5 @@
 import { CheckCircle2, CircleAlert, FileText, LoaderCircle, Search, Square } from 'lucide-react';
+import { answerStatusLabel } from '@/lib/chat-answer-status';
 import { Button } from '@/shared/components/ui/button';
 import type { DeepResearchJob, DeepResearchOutput } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
@@ -112,9 +113,19 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
       {job.status === 'completed' && result && (
         <div className='space-y-5 p-4 sm:p-5'>
           <section className='space-y-3'>
-            <h3 className='font-heading text-sm font-semibold text-foreground'>
-              Respuesta verificada
-            </h3>
+            <div className='flex flex-wrap items-center justify-between gap-2'>
+              {/* «Respuesta verificada» afirma que cada afirmación está anclada a una
+                  cita literal. Sin claims retenidas —pregunta, abstención o error— no
+                  hay nada anclado y el rótulo diría lo contrario que el texto. */}
+              <h3 className='font-heading text-sm font-semibold text-foreground'>
+                {result.claims.length > 0 ? 'Respuesta verificada' : 'Resultado'}
+              </h3>
+              {answerStatusLabel(result.status) && (
+                <span className='rounded-full bg-muted px-2.5 py-1 text-[0.6875rem] font-medium text-secondary-foreground'>
+                  {answerStatusLabel(result.status)}
+                </span>
+              )}
+            </div>
             {result.claims.length > 0 ? (
               <div className='space-y-4'>
                 {result.claims.map((claim) => (

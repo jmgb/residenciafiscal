@@ -146,6 +146,48 @@ describe('DeepResearchCard', () => {
     expect(screen.getByRole('radio', { name: 'Opción C' })).toBeInTheDocument();
   });
 
+  it('no presenta como verificado un resultado sin afirmaciones ancladas', () => {
+    const result = completed.result;
+    if (!result) throw new Error('Expected a completed deep-research result');
+
+    render(
+      <DeepResearchCard
+        job={{
+          ...completed,
+          result: {
+            ...result,
+            status: 'abstención',
+            text: 'No hay evidencia suficiente en el corpus de sentencias para responder a la consulta.',
+            limits: [],
+            claims: [],
+            evidence: [],
+          },
+        }}
+        onCancel={() => undefined}
+      />
+    );
+
+    expect(screen.queryByRole('heading', { name: 'Respuesta verificada' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Resultado' })).toBeInTheDocument();
+    expect(screen.getByText('Sin cobertura suficiente')).toBeInTheDocument();
+    expect(screen.getByText(/No hay evidencia suficiente/)).toBeInTheDocument();
+  });
+
+  it('avisa de una cobertura parcial sin dejar de rotular las afirmaciones ancladas', () => {
+    const result = completed.result;
+    if (!result) throw new Error('Expected a completed deep-research result');
+
+    render(
+      <DeepResearchCard
+        job={{ ...completed, result: { ...result, status: 'parcial' } }}
+        onCancel={() => undefined}
+      />
+    );
+
+    expect(screen.getByRole('heading', { name: 'Respuesta verificada' })).toBeInTheDocument();
+    expect(screen.getByText('Cobertura parcial')).toBeInTheDocument();
+  });
+
   it('renders Markdown formatting inside verified conclusions', () => {
     const result = completed.result;
     if (!result) throw new Error('Expected a completed deep-research result');
