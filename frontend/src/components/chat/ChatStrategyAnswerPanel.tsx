@@ -1,5 +1,6 @@
 import { getJudgmentDocument } from '@/lib/judgment-documents';
 import type { ChatStrategyAnswer } from '@/types/chat';
+import { ChatMessageActions } from './ChatMessageActions';
 import { ChatMessageContent } from './ChatMessageContent';
 import { JudgmentDocumentActions } from './JudgmentDocumentActions';
 
@@ -61,6 +62,24 @@ export const ChatStrategyAnswerPanel = ({
     ) : null}
     {answer.isStreaming && <span className='animate-pulse text-muted-foreground'>▍</span>}
 
+    {!answer.isStreaming && answer.content && (
+      <ChatMessageActions
+        content={answer.content}
+        sourcesId={`chat-sources-${answer.strategy}`}
+        verifiedSources={answer.sources.map((source) => {
+          const document = getJudgmentDocument(source.judgmentId);
+          return {
+            label: document?.roj ?? source.judgmentId,
+            ecli: document?.ecli,
+            page: source.page,
+            sourceSha256: source.sourceSha256,
+            quote: source.quote,
+            verification: source.verification,
+          };
+        })}
+      />
+    )}
+
     {answer.status === 'error' && (
       <div className='mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-xs text-secondary-foreground'>
         <p className='font-semibold text-foreground'>
@@ -74,7 +93,7 @@ export const ChatStrategyAnswerPanel = ({
     )}
 
     {answer.sources.length > 0 && (
-      <div className='mt-4 border-t border-border pt-3'>
+      <div id={`chat-sources-${answer.strategy}`} className='mt-4 border-t border-border pt-3'>
         <h4 className='text-xs font-semibold uppercase tracking-wide text-muted-foreground'>
           Citas verificadas ({answer.sources.length})
         </h4>

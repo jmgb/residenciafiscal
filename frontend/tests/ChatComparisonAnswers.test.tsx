@@ -58,6 +58,35 @@ describe('ChatComparisonAnswers', () => {
     );
   });
 
+  it('ofrece acciones de copia y fuentes en una respuesta live terminada', () => {
+    render(
+      <ChatComparisonAnswers
+        answers={[
+          answer('current_structured', {
+            sources: [
+              {
+                strategy: 'current_structured',
+                judgmentId: 'STS-107-2018',
+                page: 7,
+                sourceSha256: 'a'.repeat(64),
+                quote: 'Cita literal A.',
+                verification: 'EXACT',
+              },
+            ],
+          }),
+        ]}
+      />
+    );
+
+    const response = screen.getByRole('region', { name: 'Respuesta de la opción A' });
+    expect(within(response).getByRole('button', { name: 'Copiar respuesta' })).toBeInTheDocument();
+    expect(within(response).getByRole('button', { name: 'Descargar fuentes' })).toBeInTheDocument();
+    expect(within(response).getByRole('link', { name: 'Ver fuentes' })).toHaveAttribute(
+      'href',
+      '#chat-sources-current_structured'
+    );
+  });
+
   it('muestra dos columnas en escritorio y pestañas ciegas en móvil', async () => {
     const user = userEvent.setup();
     render(

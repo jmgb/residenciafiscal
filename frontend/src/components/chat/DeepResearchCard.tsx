@@ -2,6 +2,7 @@ import { CheckCircle2, CircleAlert, FileText, LoaderCircle, Search, Square } fro
 import { Button } from '@/shared/components/ui/button';
 import type { DeepResearchJob, DeepResearchOutput } from '@/types/chat';
 import { ChatComparisonVote } from './ChatComparisonVote';
+import { ChatMessageActions } from './ChatMessageActions';
 import { ChatMessageContent } from './ChatMessageContent';
 
 interface DeepResearchCardProps {
@@ -131,8 +132,20 @@ export function DeepResearchCard({ job, comparisonId, onCancel }: DeepResearchCa
             )}
           </section>
 
+          <ChatMessageActions
+            content={result.text}
+            sourcesId={`chat-deep-sources-${job.jobId}`}
+            verifiedSources={result.evidence.map((evidence) => ({
+              label: judgmentLabel(evidence.judgmentId),
+              page: evidence.page,
+              sourceSha256: evidence.sourceSha256,
+              quote: evidence.quote,
+              verification: evidence.verification,
+            }))}
+          />
+
           {result.evidence.length > 0 && (
-            <section className='space-y-3'>
+            <section id={`chat-deep-sources-${job.jobId}`} className='space-y-3'>
               <h3 className='font-heading text-sm font-semibold text-foreground'>
                 Evidencias verificadas
               </h3>
