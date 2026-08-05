@@ -45,7 +45,7 @@ export interface EvidenceBundle {
   purposesByEvidenceId: Map<string, string>;
 }
 
-const MAX_CONTEXT_BYTES = 43 * 1024;
+export const MAX_CONTEXT_BYTES = 43 * 1024;
 const MAX_JUDGMENT_BYTES = 4 * 1024;
 const MAX_FRAGMENTS_PER_JUDGMENT = 4;
 
@@ -197,7 +197,11 @@ export const buildEvidenceBundle = (
   rawCorpus: unknown,
   retrieval: ChatRetrievalResult,
   query: string,
-  artifacts?: Record<string, VerbatimArtifact>
+  artifacts?: Record<string, VerbatimArtifact>,
+  // El contexto conversacional comparte prompt con la evidencia. Se descuenta aquí
+  // en vez de bajar el presupuesto fijo, para que un primer turno —sin historial—
+  // siga recibiendo exactamente la misma evidencia que antes.
+  maxContextBytes = MAX_CONTEXT_BYTES
 ): EvidenceBundle => {
   const corpus = rawCorpus as EvidenceCorpus;
   const unitsById = new Map(corpus.units.map((unit) => [unit.unit_id, unit]));
@@ -252,7 +256,7 @@ export const buildEvidenceBundle = (
       units: [...contextUnits, packedUnit],
       evidence: [...evidence, ...hitEvidence],
     };
-    if (byteLength(prospective) > MAX_CONTEXT_BYTES) break;
+    if (byteLength(prospective) > maxContextBytes) break;
     contextUnits.push(packedUnit);
     evidence.push(...hitEvidence);
     for (const [evidenceId, source] of hitSources) sourcesByEvidenceId.set(evidenceId, source);

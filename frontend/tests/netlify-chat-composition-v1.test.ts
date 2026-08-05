@@ -152,8 +152,8 @@ describe('composition root de la Function con Supabase', () => {
       expect.objectContaining({
         p_experiment: expect.objectContaining({
           experiment_version: 'ab-2026-08-04-v5',
-          structured_prompt_version: 'structured-claims-v5',
-          file_search_prompt_version: 'file-search-authority-v8',
+          structured_prompt_version: 'structured-claims-v6',
+          file_search_prompt_version: 'file-search-authority-v9',
         }),
       })
     );

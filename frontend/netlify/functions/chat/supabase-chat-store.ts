@@ -1,5 +1,10 @@
 import { ChatDiagnosticError, supabaseDiagnostic } from './chat-diagnostics';
-import type { ComparisonReport } from './contracts';
+import type {
+  ComparisonReport,
+  ConversationTurn,
+  HistoryStrategyId,
+  StrategySource,
+} from './contracts';
 
 export interface RpcError {
   message: string;
@@ -47,6 +52,54 @@ interface ChatCompletionInput {
   report: ComparisonReport;
 }
 
+interface ChatHistoryInput {
+  conversationId: string;
+  turnLimit: number;
+}
+
+export interface EditorialTurnInput {
+  conversationId: string;
+  userMessageId: string;
+  countryPath: string;
+  question: string;
+  content: string;
+  model: string;
+  sources: StrategySource[];
+}
+
+const HISTORY_STRATEGY_IDS: readonly HistoryStrategyId[] = [
+  'current_structured',
+  'gemini_file_search',
+  'editorial',
+];
+
+/**
+ * Acepta solo turnos con la forma esperada y descarta el resto en silencio: un
+ * historial parcial sigue siendo contexto útil, y aquí no hay nada que el usuario
+ * pueda corregir.
+ */
+const conversationTurns = (value: unknown): ConversationTurn[] => {
+  if (!Array.isArray(value)) return [];
+  const turns: ConversationTurn[] = [];
+  for (const item of value) {
+    if (!item || typeof item !== 'object') continue;
+    const candidate = item as { question?: unknown; answers?: unknown };
+    if (typeof candidate.question !== 'string' || !candidate.question.trim()) continue;
+    const answers = Array.isArray(candidate.answers) ? candidate.answers : [];
+    turns.push({
+      question: candidate.question,
+      answers: answers.flatMap((answer) => {
+        if (!answer || typeof answer !== 'object') return [];
+        const { strategy, content } = answer as { strategy?: unknown; content?: unknown };
+        if (typeof content !== 'string' || !content) return [];
+        if (!HISTORY_STRATEGY_IDS.includes(strategy as HistoryStrategyId)) return [];
+        return [{ strategy: strategy as HistoryStrategyId, content }];
+      }),
+    });
+  }
+  return turns;
+};
+
 interface ChatFailureInput {
   requestId: string;
   status: 'failed' | 'timed_out';
@@ -89,7 +142,10 @@ const answerForPersistence = (answer: ComparisonReport['answers'][number]) => ({
   limits: answer.limits,
   sources: answer.sources,
   claims: answer.claims ?? [],
-  diagnostics: answer.diagnostics ?? null,
+  // La clave se OMITE cuando no hay diagnóstico. Mandarla como `null` llega a Postgres
+  // como jsonb 'null' —no como NULL de SQL—, así que `answer->'diagnostics'` no es NULL
+  // y `chat_messages_diagnostics_object_check` rechaza la fila entera.
+  ...(answer.diagnostics ? { diagnostics: answer.diagnostics } : {}),
   cost_microusd: answer.cost.cost_microusd,
   cost_measurement: answer.cost.measurement,
   pricing_version: answer.cost.pricing_version,
@@ -135,6 +191,63 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
       throw supabaseFailure('create_chat_request', error, !error && !isRequestRecordResult(data));
     }
     return { requestId: data.request_id };
+  }
+
+  /**
+   * Turnos anteriores de la conversación. Degrada a `[]` ante cualquier fallo: sin
+   * contexto la respuesta es peor, pero perder el turno entero por no poder leer
+   * el historial sería un 503 evitable.
+   */
+  async history(input: ChatHistoryInput): Promise<ConversationTurn[]> {
+    const { data, error } = await this.client.rpc('read_chat_history', {
+      p_conversation_id: input.conversationId,
+      p_turn_limit: input.turnLimit,
+    });
+    if (error) return [];
+    return conversationTurns(data);
+  }
+
+  /**
+   * Registra un turno editorial completo —pregunta y respuesta— como si fuera un
+   * turno cualquiera de la conversación, para que `read_chat_history` lo devuelva
+   * después. El `request_id` se deriva del identificador del mensaje, así que un
+   * reintento del navegador no duplica el turno.
+   */
+  async recordEditorial(input: EditorialTurnInput): Promise<void> {
+    const { requestId } = await this.record({
+      requestId: `chat-editorial-${input.userMessageId}`,
+      conversationId: input.conversationId,
+      userMessageId: input.userMessageId,
+      countryPath: input.countryPath,
+      question: input.question,
+    });
+    const { error } = await this.client.rpc('complete_chat_request', {
+      p_request_id: requestId,
+      p_actual_microusd: 0,
+      p_actual_complete: true,
+      p_answers: [
+        {
+          strategy: 'editorial',
+          status: 'completa',
+          content: input.content,
+          model: input.model,
+          reasoning_effort: null,
+          latency_ms: 0,
+          limits: [],
+          sources: input.sources,
+          claims: [],
+          // Cero real: no hubo llamada a ningún proveedor, así que la medición es
+          // exacta y no debe presentarse como estimada ni como no disponible.
+          cost_microusd: 0,
+          cost_measurement: 'ACTUAL',
+          pricing_version: 'editorial',
+          input_tokens: 0,
+          output_tokens: 0,
+          retrieved_document_tokens: 0,
+        },
+      ],
+    });
+    if (error) throw supabaseFailure('complete_chat_request', error);
   }
 
   async complete(input: ChatCompletionInput): Promise<void> {

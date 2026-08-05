@@ -390,6 +390,7 @@ describe('handler real conectado a Sentry', () => {
       enabled: true,
       observability,
       recordRequest: async ({ requestId }) => ({ requestId }),
+      loadHistory: async () => [],
       compare: async () => {
         throw new Error(
           'upstream 500 al resolver "¿183 días en Andorra cuentan?" con postgresql://u:secreto@host'

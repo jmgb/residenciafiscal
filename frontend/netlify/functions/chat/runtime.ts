@@ -1,8 +1,10 @@
 import { type ChatDiagnostic, diagnosticFromError } from './chat-diagnostics';
 import {
   type ComparisonReport,
+  type ConversationTurn,
   type StrategyAnswer,
   type StrategyId,
+  type StrategyTurn,
   unknownCost,
 } from './contracts';
 import { requestedJudicialAuthority } from './judicial-authority';
@@ -12,6 +14,8 @@ export type { StrategyAnswer } from './contracts';
 export interface StrategyContext {
   requestId: string;
   signal: AbortSignal;
+  /** Turnos anteriores de ESTA estrategia, en orden cronológico. */
+  history: StrategyTurn[];
 }
 
 export interface NetlifyChatStrategy {
@@ -25,7 +29,25 @@ interface ComparisonInput {
   deadlineMs: number;
   strategies: readonly NetlifyChatStrategy[];
   signal?: AbortSignal;
+  history?: readonly ConversationTurn[];
 }
+
+/**
+ * Proyecta la conversación sobre una estrategia. Conserva los turnos en los que
+ * esa estrategia no respondió: la pregunta del usuario es contexto legítimo
+ * aunque su respuesta fallara o se abstuviera.
+ */
+const historyFor = (history: readonly ConversationTurn[], strategy: StrategyId): StrategyTurn[] =>
+  history.map((turn) => {
+    const own = turn.answers.find((answer) => answer.strategy === strategy)?.content;
+    if (own) return { question: turn.question, answer: own };
+    // El contenido editorial no lo escribió ninguna estrategia, pero es lo que el
+    // usuario tiene delante: las dos lo ven, marcado para que ninguna lo tome por
+    // doctrina propia.
+    const editorial = turn.answers.find((answer) => answer.strategy === 'editorial')?.content;
+    if (editorial) return { question: turn.question, answer: editorial, editorial: true };
+    return { question: turn.question, answer: '' };
+  });
 
 class DeadlineExceeded extends Error {
   constructor() {
@@ -133,17 +155,23 @@ export const compareStrategiesInParallel = async ({
   deadlineMs,
   strategies,
   signal,
+  history = [],
 }: ComparisonInput): Promise<ComparisonReport> => {
   if (strategies.length === 0) throw new Error('No hay estrategias de chat habilitadas');
   const controller = new AbortController();
   const abortFromParent = () => controller.abort(signal?.reason);
   signal?.addEventListener('abort', abortFromParent, { once: true });
   const timer = setTimeout(() => controller.abort(new DeadlineExceeded()), deadlineMs);
-  const context = { requestId, signal: controller.signal };
 
   try {
     const answers = await Promise.all(
-      strategies.map((strategy) => runIsolated(strategy, question, context))
+      strategies.map((strategy) =>
+        runIsolated(strategy, question, {
+          requestId,
+          signal: controller.signal,
+          history: historyFor(history, strategy.id),
+        })
+      )
     );
     return {
       schema_version: 'residenciafiscal-chat-comparison/1',

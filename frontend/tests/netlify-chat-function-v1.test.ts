@@ -76,6 +76,7 @@ const dependencies = (
   enabled: true,
   observability: new ConsoleChatObservability(),
   recordRequest: vi.fn(async ({ requestId }) => ({ requestId })),
+  loadHistory: vi.fn(async () => []),
   compare: vi.fn(async () => report),
   completeRequest: vi.fn(async () => undefined),
   failRequest: vi.fn(async () => undefined),
@@ -137,6 +138,54 @@ describe('Netlify Function /api/chat V1', () => {
       error_name: 'Error',
       latency_ms: expect.any(Number),
     });
+  });
+
+  // El historial sale del ledger por conversación, no del cuerpo de la petición.
+  it('recupera el hilo de la conversación y se lo entrega al comparador', async () => {
+    const history = [
+      {
+        question: '¿Cuántos días exige el artículo 9?',
+        answers: [{ strategy: 'current_structured' as const, content: 'Más de 183 días.' }],
+      },
+    ];
+    const deps = dependencies({ loadHistory: vi.fn(async () => history) });
+
+    const response = await createChatHandler(deps)(
+      request({
+        messages: [{ role: 'user', content: 'dame un ejemplo de lo anterior' }],
+        conversation_id: 'conversation-1',
+      })
+    );
+
+    expect(response.status).toBe(200);
+    expect(deps.loadHistory).toHaveBeenCalledWith('conversation-1');
+    expect(deps.compare).toHaveBeenCalledWith(
+      'dame un ejemplo de lo anterior',
+      expect.stringMatching(/^chat-/),
+      expect.anything(),
+      history
+    );
+  });
+
+  // Sin historial se responde igual que siempre: es contexto, no un requisito.
+  it('responde aunque el historial no se pueda leer', async () => {
+    const deps = dependencies({
+      loadHistory: vi.fn(async () => {
+        throw new Error('ledger caído');
+      }),
+    });
+
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+
+    expect(response.status).toBe(200);
+    expect(deps.compare).toHaveBeenCalledWith(
+      'pregunta autosuficiente',
+      expect.stringMatching(/^chat-/),
+      expect.anything(),
+      []
+    );
   });
 
   it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
@@ -213,6 +262,29 @@ describe('Netlify Function /api/chat V1', () => {
       failure_code: 'completion_error',
       stage: 'complete',
     });
+  });
+
+  // Sin esto la consulta se queda en `processing` para siempre: el `catch` de `compare`
+  // sí cierra el estado, pero el de `complete` no lo hacía. El ledger solo admite
+  // `unknown` para un fallo que no es del comparador.
+  it('cierra la consulta cuando falla la persistencia de coste', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const failRequest = vi.fn<ChatFunctionDependencies['failRequest']>(async () => undefined);
+    const deps = dependencies({
+      completeRequest: vi.fn(async () => {
+        throw new Error('database unavailable');
+      }),
+      failRequest,
+    });
+
+    const response = await createChatHandler(deps)(
+      request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+    );
+
+    expect(response.status).toBe(503);
+    expect(failRequest).toHaveBeenCalledWith(
+      expect.objectContaining({ status: 'failed', failureCode: 'unknown' })
+    );
   });
 
   it('registra la RPC y el código cuando falla la persistencia de coste', async () => {

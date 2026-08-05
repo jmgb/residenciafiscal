@@ -32,6 +32,86 @@ const answer = (strategy: StrategyAnswer['strategy'], text: string = strategy): 
 });
 
 describe('runtime comparativo Netlify V1', () => {
+  // Un turno editorial no lo escribió ninguna estrategia, pero es lo que el
+  // usuario leyó: las dos deben verlo, y marcado como ajeno.
+  it('reparte el turno editorial a las dos estrategias', async () => {
+    const seen = new Map<string, unknown>();
+    const strategy = (id: StrategyAnswer['strategy']): NetlifyChatStrategy => ({
+      id,
+      async answer(_question, context) {
+        seen.set(id, context.history);
+        return answer(id);
+      },
+    });
+
+    await compareStrategiesInParallel({
+      question: 'dame un ejemplo de lo anterior',
+      requestId: 'request-1',
+      deadlineMs: 1_000,
+      strategies: [strategy('current_structured'), strategy('gemini_file_search')],
+      history: [
+        {
+          question: '¿Cómo se valoran las ausencias esporádicas?',
+          answers: [{ strategy: 'editorial', content: 'Las verdaderamente esporádicas suman.' }],
+        },
+      ],
+    });
+
+    const expected = [
+      {
+        question: '¿Cómo se valoran las ausencias esporádicas?',
+        answer: 'Las verdaderamente esporádicas suman.',
+        editorial: true,
+      },
+    ];
+    expect(seen.get('current_structured')).toEqual(expected);
+    expect(seen.get('gemini_file_search')).toEqual(expected);
+  });
+
+  // Si A leyera las respuestas de B —o al revés— la comparación dejaría de medir
+  // dos stacks independientes. Cada estrategia ve su propio hilo y las preguntas
+  // del usuario, que son comunes.
+  it('entrega a cada estrategia solo su propio hilo de la conversación', async () => {
+    const seen = new Map<string, unknown>();
+    const strategy = (id: StrategyAnswer['strategy']): NetlifyChatStrategy => ({
+      id,
+      async answer(_question, context) {
+        seen.set(id, context.history);
+        return answer(id);
+      },
+    });
+
+    await compareStrategiesInParallel({
+      question: 'dame un ejemplo de lo anterior',
+      requestId: 'request-1',
+      deadlineMs: 1_000,
+      strategies: [strategy('current_structured'), strategy('gemini_file_search')],
+      history: [
+        {
+          question: '¿Cuántos días exige el artículo 9?',
+          answers: [
+            { strategy: 'current_structured', content: 'Más de 183 días.' },
+            { strategy: 'gemini_file_search', content: 'Ciento ochenta y tres.' },
+          ],
+        },
+        {
+          question: '¿Y las ausencias esporádicas?',
+          answers: [{ strategy: 'gemini_file_search', content: 'Solo B respondió.' }],
+        },
+      ],
+    });
+
+    expect(seen.get('current_structured')).toEqual([
+      { question: '¿Cuántos días exige el artículo 9?', answer: 'Más de 183 días.' },
+      // A no respondió a este turno, pero la pregunta sigue siendo contexto suyo.
+      { question: '¿Y las ausencias esporádicas?', answer: '' },
+    ]);
+    expect(seen.get('gemini_file_search')).toEqual([
+      { question: '¿Cuántos días exige el artículo 9?', answer: 'Ciento ochenta y tres.' },
+      { question: '¿Y las ausencias esporádicas?', answer: 'Solo B respondió.' },
+    ]);
+  });
+
   it('inicia A y B en paralelo y conserva el orden estable A → B', async () => {
     const started: string[] = [];
     let release: (() => void) | undefined;

@@ -67,6 +67,13 @@ versiones de ambos prompts. La columna `diagnostics` de
 públicos de sentencias; no guarda mensajes de error ni payloads de proveedor.
 En A, `claims` enlaza cada afirmación con los índices de sus citas exactas.
 
+Una respuesta puede no traer diagnóstico: la abstención determinista del router
+no llama al modelo. En ese caso la clave se **omite** del payload de la RPC. Un
+`diagnostics: null` explícito no vale: llega como jsonb `'null'`, que no es un
+`NULL` de SQL, y `chat_messages_diagnostics_object_check` rechaza la fila
+entera. Costó un 503 con la respuesta ya generada y la consulta atascada en
+`processing`.
+
 La Function no escribe tablas directamente. Solo puede invocar estas RPC de
 `public`, todas `SECURITY DEFINER`, con
 `search_path` fijo y `EXECUTE` revocado a `PUBLIC`, `anon` y `authenticated`:
@@ -81,7 +88,48 @@ La Function no escribe tablas directamente. Solo puede invocar estas RPC de
 - `fail_chat_request`: marca una consulta como `failed` o `timed_out` con un
   código técnico acotado, sin guardar el diagnóstico del proveedor;
 - `record_chat_vote`: acepta una sola preferencia por petición completada, con
-  veredicto `a`, `b`, `tie` o `both_bad` y un motivo de una allowlist cerrada.
+  veredicto `a`, `b`, `tie` o `both_bad` y un motivo de una allowlist cerrada;
+- `read_chat_history`: devuelve los últimos turnos completados de una
+  conversación como contexto del turno actual.
+
+El historial se lee del ledger, nunca del cuerpo de la petición: el navegador
+manda solo la pregunta actual y el servidor no puede dar por buenas unas
+respuestas anteriores que el cliente podría haber alterado. `read_chat_history`
+devuelve exclusivamente pregunta y texto de respuesta —ni coste, ni diagnóstico,
+ni citas—, solo de peticiones `completed`, y deja fuera `deep_research`, que es
+otro flujo. No amplía la superficie almacenada ni la retención: son las mismas
+filas de siempre, purgadas a los 15 días.
+
+Cada estrategia recibe **su propio hilo**: A ve sus respuestas anteriores y B las
+suyas. Compartirlo destruiría la independencia de la comparación A/B. Los turnos
+en los que una estrategia no respondió se conservan con su pregunta, porque lo
+que el usuario preguntó sigue siendo contexto suyo.
+
+### Turnos editoriales
+
+Las respuestas editoriales son texto revisado del repositorio que el chat muestra
+sin llamar a ningún modelo, y hasta ahora se resolvían solo en el navegador: el
+servidor no sabía que la conversación existía. `POST /api/chat-editorial` las
+registra como un turno completo, así que un seguimiento sobre ellas ya llega con
+antecedente.
+
+El cuerpo solo dice **qué** respuesta se mostró: el texto sale del catálogo del
+propio servidor (`src/data/editorialChatAnswers.json`), nunca del cliente. El
+`request_id` se deriva del identificador del mensaje, de modo que un reintento no
+duplica el turno.
+
+Se guardan con `strategy = 'editorial'`, coste cero y medición `ACTUAL` —no hubo
+llamada, así que el cero es exacto—. **Nunca reutilizan la estrategia de A o de
+B**: el ledger no puede atribuir a un modelo un texto que no escribió, y las
+métricas del experimento deben excluirlas filtrando por `strategy`. En el
+historial las ven las dos estrategias, marcadas como ajenas para que ninguna las
+tome por doctrina propia.
+
+Efecto conocido en el resumen diario: un turno editorial es una petición
+`completed` más, así que `requests` y `by_status` lo cuentan aunque no haya
+habido llamada a ningún modelo. `by_strategy` lo desglosa como `editorial`, con
+coste cero; es ahí donde hay que mirar antes de leer el total como volumen de
+consultas al modelo.
 
 El voto no admite texto libre y el endpoint `/api/chat-vote` no expone acceso
 directo a Supabase. Un segundo voto para el mismo `request_id` responde como
@@ -102,8 +150,10 @@ de presupuesto monetario y deja solo el coste real observado, y la migración
 `20260801111630_chat_messages_reasoning_effort.sql` añade el esfuerzo de
 razonamiento por respuesta;
 `20260802215501_chat_experiment_ledger.sql` versiona el experimento y conserva
-claims/diagnóstico; y `20260802221008_chat_comparison_votes.sql` añade el voto
-ciego. La segunda migración histórica retira un permiso público inseguro de
+claims/diagnóstico; `20260802221008_chat_comparison_votes.sql` añade el voto
+ciego; `20260805184500_chat_conversation_history.sql` añade la lectura del
+historial conversacional; y `20260805190000_chat_editorial_messages.sql` admite
+la estrategia `editorial`. La segunda migración histórica retira un permiso público inseguro de
 `rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de vida
 serializan el borrado. Tras aplicar las dos migraciones del experimento, los
 advisors de seguridad no devolvieron incidencias.

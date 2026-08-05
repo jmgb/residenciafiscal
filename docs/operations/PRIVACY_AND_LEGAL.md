@@ -31,7 +31,8 @@ mentir:
 
 | Afirmación publicada | Dónde se verifica |
 |---|---|
-| Solo viaja la última pregunta, no el historial | `frontend/src/lib/chat-engine.live.ts` |
+| El navegador solo transmite la última pregunta | `frontend/src/lib/chat-engine.live.ts` |
+| El servidor añade los seis últimos turnos de esa conversación, recortados y sin ampliar lo almacenado | `read_chat_history` en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md), `MAX_HISTORY_TURNS` en `frontend/netlify/functions/chat/conversation-history.ts` |
 | A pide al proveedor que no conserve la conversación | `store: false` en `frontend/netlify/functions/chat/provider-adapters.ts` |
 | B busca en el almacén de los 106 PDF | `frontend/netlify/functions/chat/file-search-strategy.ts` |
 | No se guardan IP, agente de usuario ni diagnóstico bruto | RPC de `public` descritas en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md) |

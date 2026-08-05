@@ -5,7 +5,7 @@ import { usePageTitle } from '@/lib/usePageTitle';
 const META = staticRoute('/privacidad');
 
 /** Fecha de la última revisión editorial del texto, no la del build. */
-const LAST_UPDATED = '1 de agosto de 2026';
+const LAST_UPDATED = '5 de agosto de 2026';
 
 /**
  * Responsable del tratamiento. Es la misma entidad titular del resto de
@@ -194,16 +194,23 @@ export function PrivacyPage() {
       <section className='mb-8'>
         <h2 className='mb-3 font-heading text-lg font-semibold'>3. Qué se envía al preguntar</h2>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
-          En cada consulta se transmite únicamente la última pregunta. La estrategia A la envía a
-          OpenAI junto con fragmentos estructurados de 106 sentencias; la estrategia B la envía a
-          Google Gemini, que busca de forma independiente en el File Search Store de esos 106 PDF.
+          Tu navegador transmite únicamente la última pregunta. La estrategia A la envía a OpenAI
+          junto con fragmentos estructurados de 106 sentencias; la estrategia B la envía a Google
+          Gemini, que busca de forma independiente en el File Search Store de esos 106 PDF.
         </p>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
-          No se reenvía el historial completo. Ambos proveedores reciben la consulta en paralelo y
-          aplican sus propias condiciones de tratamiento y conservación contratadas para sus API. La
-          llamada de la estrategia A se realiza pidiendo expresamente que el proveedor no conserve
-          la conversación; la estrategia B se apoya en un almacén de búsqueda que contiene
-          únicamente los PDF públicos de las sentencias.
+          Para que el chat entienda a qué te refieres cuando preguntas por algo ya dicho, el
+          servidor añade los seis últimos turnos de esa misma conversación, tomados de lo que ya
+          había guardado y recortados. Cada estrategia recibe solo sus propias respuestas
+          anteriores. Ese contexto se envía al proveedor junto con la pregunta, no amplía lo que se
+          almacena y desaparece con la conversación a los 15 días.
+        </p>
+        <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
+          Ambos proveedores reciben la consulta en paralelo y aplican sus propias condiciones de
+          tratamiento y conservación contratadas para sus API. La llamada de la estrategia A se
+          realiza pidiendo expresamente que el proveedor no conserve la conversación; la estrategia
+          B se apoya en un almacén de búsqueda que contiene únicamente los PDF públicos de las
+          sentencias.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
           Al servidor no se envían ni la dirección IP ni el agente de usuario para guardarlos: no se
@@ -217,6 +224,11 @@ export function PrivacyPage() {
           Para evaluar y mejorar el buscador, el servidor guarda en Supabase la pregunta y las dos
           respuestas comparadas. También conserva modelo, tokens, coste, duración y citas utilizadas
           por cada estrategia, vinculados a identificadores aleatorios de consulta y conversación.
+        </p>
+        <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
+          Cuando el chat contesta con una de sus respuestas ya redactadas, sin llamar a ningún
+          modelo, se guarda igualmente ese turno para poder seguir la conversación. En ese caso el
+          texto sale del propio servidor y el coste registrado es cero.
         </p>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
           Esas tablas viven en un esquema privado que no está expuesto al navegador: la aplicación

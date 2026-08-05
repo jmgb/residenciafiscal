@@ -24,6 +24,7 @@ const RUN_PAID_SMOKE =
 const context = () => ({
   requestId: 'paid-smoke-gym-phone',
   signal: AbortSignal.timeout(50_000),
+  history: [],
 });
 
 describe.runIf(RUN_PAID_SMOKE)('smoke pagado A/B para gimnasio y teléfono', () => {

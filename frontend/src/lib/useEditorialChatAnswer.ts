@@ -1,12 +1,15 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { trackEvent } from '@/components/layout/PostHogAnalytics';
+import { recordEditorialTurn } from '@/lib/editorial-chat-record';
 import { useConversations } from '@/stores/useConversations';
 import type { EditorialChatAnswer } from '@/types/chat';
 
 interface EditorialChatAnswerOptions {
   conversationId?: string;
   countryPath: string;
+  /** Con el motor simulado no hay ledger al que registrar el turno. */
+  isStub?: boolean;
 }
 
 interface EditorialChatAnswerRun {
@@ -42,6 +45,7 @@ const newMessageId = (): string => {
 export const useEditorialChatAnswer = ({
   conversationId,
   countryPath,
+  isStub = false,
 }: EditorialChatAnswerOptions) => {
   const navigate = useNavigate();
   const createConversation = useConversations((state) => state.createConversation);
@@ -57,13 +61,14 @@ export const useEditorialChatAnswer = ({
       if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
 
       const now = new Date().toISOString();
+      const userMessageId = newMessageId();
+      const assistantId = newMessageId();
       appendMessage(targetId, {
-        id: newMessageId(),
+        id: userMessageId,
         role: 'user',
         content: answer.question,
         createdAt: now,
       });
-      const assistantId = newMessageId();
       appendMessage(targetId, {
         id: assistantId,
         role: 'assistant',
@@ -96,10 +101,28 @@ export const useEditorialChatAnswer = ({
           answer_id: answer.id,
           version: answer.version,
         });
+        // El servidor no ve estas respuestas —se resuelven aquí—, así que sin
+        // este registro un seguimiento sobre ellas llegaría sin antecedente.
+        if (!isStub) {
+          void recordEditorialTurn({
+            conversationId: targetId,
+            userMessageId,
+            countryPath,
+            answerId: answer.id,
+          });
+        }
       });
 
       return { conversationId: targetId, completion };
     },
-    [appendMessage, conversationId, countryPath, createConversation, navigate, updateMessage]
+    [
+      appendMessage,
+      conversationId,
+      countryPath,
+      createConversation,
+      isStub,
+      navigate,
+      updateMessage,
+    ]
   );
 };

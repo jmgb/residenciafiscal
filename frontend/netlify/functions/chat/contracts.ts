@@ -31,7 +31,8 @@ export interface UnavailableMarginalCost extends MarginalCostBase {
 export type MarginalCost = AvailableMarginalCost | UnavailableMarginalCost;
 
 export interface StrategySource {
-  strategy: StrategyId;
+  /** `editorial` cuando la cita procede del catálogo revisado, no de una estrategia. */
+  strategy: StrategyId | 'editorial';
   judgment_id: string;
   page: number;
   source_sha256: string;
@@ -75,6 +76,33 @@ export interface StrategyAnswer {
   latency_ms: number;
   claims?: StrategyClaim[];
   diagnostics?: StrategyDiagnostics;
+}
+
+/**
+ * Estrategias que pueden aparecer en el historial. `editorial` es contenido
+ * revisado del repositorio que el chat muestra sin llamar a ningún modelo: no
+ * compite en la comparación, pero sí forma parte de la conversación que el
+ * usuario ha leído.
+ */
+export type HistoryStrategyId = StrategyId | 'editorial';
+
+/** Turno anterior de la conversación, tal y como quedó en el ledger privado. */
+export interface ConversationTurn {
+  question: string;
+  answers: { strategy: HistoryStrategyId; content: string }[];
+}
+
+/**
+ * El mismo turno visto por UNA estrategia: su propia respuesta anterior, o cadena
+ * vacía si en ese turno no llegó a responder. Cada estrategia recibe solo su hilo
+ * porque leer las respuestas de la otra destruiría la independencia de la
+ * comparación A/B.
+ */
+export interface StrategyTurn {
+  question: string;
+  answer: string;
+  /** La respuesta mostrada fue editorial, no la escribió esta estrategia. */
+  editorial?: boolean;
 }
 
 export interface ComparisonReport {

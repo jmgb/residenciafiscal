@@ -6,9 +6,78 @@ import {
 } from '../netlify/functions/chat/current-structured-strategy';
 import { GeminiFileSearchStrategy } from '../netlify/functions/chat/file-search-strategy';
 
-const context = { requestId: 'chat-test', signal: new AbortController().signal };
+const context = { requestId: 'chat-test', signal: new AbortController().signal, history: [] };
+const contextWith = (history: { question: string; answer: string }[]) => ({
+  ...context,
+  history,
+});
 
 describe('estrategia A estructurada', () => {
+  // El seguimiento es el caso que rompía la conversación: «lo anterior» no tiene
+  // términos que buscar, el router se abstenía y el turno moría ahí.
+  it('recupera un seguimiento apoyándose en las preguntas previas', async () => {
+    const write = vi.fn(async (_input: Parameters<StructuredWriter['write']>[0]) => ({
+      draft: {
+        status: 'completa' as const,
+        claims: [
+          {
+            kind: 'party_argument' as const,
+            text: 'La actuaria realizó un seguimiento de las cuentas bancarias.',
+            evidence_ids: ['E1'],
+          },
+        ],
+        limits: [],
+      },
+      usage: { input_tokens: 100, output_tokens: 40, complete: true },
+      model: 'gpt-5.6-luna',
+    }));
+    const strategy = new CurrentStructuredStrategy(corpus, { write });
+
+    const sinContexto = await strategy.answer('dame un ejemplo de lo anterior', context);
+    expect(sinContexto.status).toBe('abstención');
+    expect(write).not.toHaveBeenCalled();
+
+    const answer = await strategy.answer(
+      'dame un ejemplo de lo anterior',
+      contextWith([
+        {
+          question: '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+          answer: 'Hacienda atiende al seguimiento de cuentas bancarias.',
+        },
+      ])
+    );
+
+    expect(write).toHaveBeenCalledOnce();
+    expect(answer.status).toBe('completa');
+    const userPrompt = write.mock.calls[0]?.[0].userPrompt ?? '';
+    expect(userPrompt).toContain('¿Qué tiene en cuenta Hacienda');
+    expect(userPrompt).toContain('El historial no es evidencia');
+    expect(userPrompt).toContain('dame un ejemplo de lo anterior');
+  });
+
+  // Una pregunta que se sostiene sola debe recuperar igual que antes del historial:
+  // si no, las métricas del router y el holdout dejarían de valer.
+  it('no altera la recuperación de una pregunta autosuficiente', async () => {
+    const write = vi.fn(async (_input: Parameters<StructuredWriter['write']>[0]) => ({
+      draft: { status: 'completa' as const, claims: [], limits: [] },
+      usage: { input_tokens: 1, output_tokens: 1, complete: true },
+      model: 'gpt-5.6-luna',
+    }));
+    const question = '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?';
+    const strategy = new CurrentStructuredStrategy(corpus, { write });
+
+    await strategy.answer(question, context);
+    const sinHistorial = write.mock.calls[0]?.[0].userPrompt.split(
+      'Contexto estructurado recuperado:\n'
+    )[1];
+    await strategy.answer(question, contextWith([{ question: 'hola', answer: 'qué tal' }]));
+    const conHistorial = write.mock.calls[1]?.[0].userPrompt.split(
+      'Contexto estructurado recuperado:\n'
+    )[1];
+
+    expect(conHistorial).toBe(sinHistorial);
+  });
+
   it('resuelve IDs opacos a citas exactas del corpus y contabiliza el uso', async () => {
     const write = vi.fn(async (_input: Parameters<StructuredWriter['write']>[0]) => ({
       draft: {
@@ -316,6 +385,35 @@ describe('estrategia B Gemini File Search', () => {
     source_sha256: 'a'.repeat(64),
     pages: [{ page_index: 1, raw_page_text: 'La Sala valora conjuntamente toda la prueba.' }],
   };
+
+  it('lleva su propio hilo al prompt de File Search', async () => {
+    let prompt = '';
+    const interact = vi.fn(async (input: { prompt: string }) => {
+      prompt = input.prompt;
+      return {
+        output_text: JSON.stringify({ status: 'abstención', answer: '', limits: [] }),
+        steps: [],
+        usage: { total_input_tokens: 10, total_output_tokens: 5 },
+      };
+    });
+    const strategy = new GeminiFileSearchStrategy({
+      storeName: 'fileSearchStores/test',
+      artifacts: { 'sentencia-1': artifact },
+      interact,
+    });
+
+    await strategy.answer(
+      'dame un ejemplo de lo anterior',
+      contextWith([{ question: '¿Qué valoró la Sala?', answer: 'La valoración es conjunta.' }])
+    );
+
+    expect(prompt).toContain('¿Qué valoró la Sala?');
+    expect(prompt).toContain('La valoración es conjunta.');
+    expect(prompt).toContain('El historial no es evidencia');
+    expect(prompt.indexOf('¿Qué valoró la Sala?')).toBeLessThan(
+      prompt.indexOf('dame un ejemplo de lo anterior')
+    );
+  });
 
   it('solo publica citas verificadas contra el texto íntegro local', async () => {
     const interact = vi.fn(async () => ({

@@ -95,6 +95,7 @@ export function ChatView({
   const showEditorialAnswer = useEditorialChatAnswer({
     conversationId,
     countryPath: country.path,
+    isStub,
   });
 
   const [isStreaming, setIsStreaming] = useState(false);

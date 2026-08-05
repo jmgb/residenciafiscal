@@ -395,7 +395,12 @@ y se conserva como posible arquitectura futura para peticiones de más de 60 s;
 no es el target de la V1. El runtime conversacional ya está portado a una
 Netlify Function TypeScript: ejecuta las estrategias activas en paralelo, usa un
 deadline global y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
-en Supabase, y mantiene Luna `high`. El coste nunca decide la admisión; el schema
+en Supabase, y mantiene Luna `high`. El chat sostiene conversación: el servidor
+reconstruye los últimos turnos desde el ledger —nunca desde el cuerpo de la
+petición— y da a cada estrategia **solo su propio hilo**, para no contaminar la
+comparación A/B. Una pregunta autosuficiente recupera exactamente igual que
+antes; el contexto solo entra en la recuperación cuando la pregunta no se
+sostiene sola. El coste nunca decide la admisión; el schema
 es privado y el navegador no accede directamente. Contrato y operación:
 [`docs/operations/SUPABASE_CHAT.md`](docs/operations/SUPABASE_CHAT.md). Producción
 conserva el stub hasta completar configuración, privacidad y Deploy Preview;

@@ -149,6 +149,119 @@ describe('persistencia privada del chat en Supabase', () => {
     });
   });
 
+  // Una respuesta sin diagnóstico —la abstención determinista del router, que no llama
+  // al modelo— viajaba como `diagnostics: null`. Postgres lo recibe como jsonb 'null',
+  // que NO es un NULL de SQL, y `chat_messages_diagnostics_object_check` lo rechaza: la
+  // respuesta estaba generada y se perdía en un 503 al persistirla.
+  it('omite el diagnóstico ausente en vez de enviarlo como null', async () => {
+    let parameters: Record<string, unknown> | undefined;
+    const rpc = vi.fn(async (_functionName: string, input: Record<string, unknown>) => {
+      parameters = input;
+      return { data: true, error: null };
+    });
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await store.complete({
+      requestId: 'chat-request-1',
+      actualMicrousd: 2_000,
+      actualComplete: false,
+      report,
+    });
+
+    const answers = parameters?.p_answers as Record<string, unknown>[];
+    expect(answers[0]).toHaveProperty('diagnostics', report.answers[0].diagnostics);
+    expect(answers[1]).not.toHaveProperty('diagnostics');
+  });
+
+  // El historial sale del ledger, no del navegador: el servidor no puede dar por
+  // buenas unas respuestas anteriores que el cliente podría haber alterado.
+  it('lee el historial de la conversación acotado por turnos', async () => {
+    const rpc = vi.fn(async () => ({
+      data: [
+        {
+          question: '¿Cuántos días exige el artículo 9?',
+          answers: [
+            { strategy: 'current_structured', content: 'Más de 183 días.' },
+            { strategy: 'gemini_file_search', content: 'Ciento ochenta y tres.' },
+          ],
+        },
+      ],
+      error: null,
+    }));
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await expect(
+      store.history({ conversationId: 'conversation-1', turnLimit: 6 })
+    ).resolves.toEqual([
+      {
+        question: '¿Cuántos días exige el artículo 9?',
+        answers: [
+          { strategy: 'current_structured', content: 'Más de 183 días.' },
+          { strategy: 'gemini_file_search', content: 'Ciento ochenta y tres.' },
+        ],
+      },
+    ]);
+    expect(rpc).toHaveBeenCalledWith('read_chat_history', {
+      p_conversation_id: 'conversation-1',
+      p_turn_limit: 6,
+    });
+  });
+
+  // Un historial ilegible degrada a conversación sin contexto: perder el contexto
+  // es peor respuesta, pero perder el turno entero es un 503 evitable.
+  it('degrada a historial vacío si la RPC no devuelve turnos utilizables', async () => {
+    const rpc = vi.fn(async () => ({ data: null, error: { message: 'boom' } }));
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await expect(
+      store.history({ conversationId: 'conversation-1', turnLimit: 6 })
+    ).resolves.toEqual([]);
+  });
+
+  // Una respuesta editorial se registra como turno completo para que el historial
+  // la recupere, pero con estrategia propia y coste cero: el ledger no puede
+  // atribuir a un modelo un texto que no escribió.
+  it('registra un turno editorial con estrategia propia y sin coste', async () => {
+    const calls: [string, Record<string, unknown>][] = [];
+    const rpc = vi.fn(async (functionName: string, parameters: Record<string, unknown>) => {
+      calls.push([functionName, parameters]);
+      return {
+        data: functionName === 'create_chat_request' ? { request_id: 'chat-editorial-m1' } : true,
+        error: null,
+      };
+    });
+    const store = new SupabaseChatStore({ rpc }, experiment);
+
+    await store.recordEditorial({
+      conversationId: 'conversation-1',
+      userMessageId: 'm1',
+      countryPath: '/espana',
+      question: '¿Cómo se valoran las ausencias esporádicas?',
+      content: 'Las verdaderamente esporádicas suman.',
+      model: 'editorial-home-editorial-2026-08-03-v1',
+      sources: [],
+    });
+
+    expect(calls[0]?.[0]).toBe('create_chat_request');
+    expect(calls[0]?.[1]).toMatchObject({
+      p_request_id: 'chat-editorial-m1',
+      p_conversation_id: 'conversation-1',
+      p_question: '¿Cómo se valoran las ausencias esporádicas?',
+    });
+    expect(calls[1]?.[0]).toBe('complete_chat_request');
+    expect(calls[1]?.[1]).toMatchObject({ p_actual_microusd: 0, p_actual_complete: true });
+    const answers = calls[1]?.[1].p_answers as Record<string, unknown>[];
+    expect(answers).toHaveLength(1);
+    expect(answers[0]).toMatchObject({
+      strategy: 'editorial',
+      status: 'completa',
+      content: 'Las verdaderamente esporádicas suman.',
+      cost_microusd: 0,
+      cost_measurement: 'ACTUAL',
+    });
+    expect(answers[0]).not.toHaveProperty('diagnostics');
+  });
+
   it('falla cerrado sin filtrar el diagnóstico de Supabase', async () => {
     const rpc = vi.fn(async () => ({
       data: null,

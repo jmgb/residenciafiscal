@@ -48,8 +48,9 @@ async function requestChat(
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
-        // El comparador vigente es single-turn. No reenviar respuestas A/B ni
-        // hechos fiscales anteriores reduce exposición y evita ambigüedad.
+        // Solo viaja la pregunta actual. El contexto de los turnos anteriores lo
+        // reconstruye el servidor desde el ledger: reenviarlo desde aquí obligaría
+        // a dar por buenas unas respuestas que el cliente podría haber alterado.
         conversation_id: context?.conversationId ?? latestUserMessage.id,
         country_path: context?.countryPath ?? '/espana',
         messages: [{ id: latestUserMessage.id, role: 'user', content: latestUserMessage.content }],

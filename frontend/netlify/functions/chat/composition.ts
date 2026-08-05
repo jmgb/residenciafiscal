@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import type { ChatFunctionDependencies } from './chat';
 import { sanitizeChatDiagnostic } from './chat-diagnostics';
 import type { StrategyAnswer, StrategyId } from './contracts';
+import { MAX_HISTORY_TURNS } from './conversation-history';
 import {
   CurrentStructuredStrategy,
   STRUCTURED_PROMPT_VERSION,
@@ -167,6 +168,9 @@ export const createProductionDependencies = (
       async recordRequest() {
         throw new Error('Chat no configurado');
       },
+      async loadHistory() {
+        return [];
+      },
       async compare() {
         throw new Error('Chat no configurado');
       },
@@ -219,13 +223,16 @@ export const createProductionDependencies = (
     enabled: true,
     observability,
     recordRequest: (input) => store.record(input),
-    compare: (question, requestId, signal) =>
+    loadHistory: (conversationId) =>
+      store.history({ conversationId, turnLimit: MAX_HISTORY_TURNS }),
+    compare: (question, requestId, signal, history) =>
       compareStrategiesInParallel({
         question,
         requestId,
         signal,
         deadlineMs,
         strategies,
+        history,
       }),
     failRequest: (input) => store.fail(input),
     completeRequest: async ({

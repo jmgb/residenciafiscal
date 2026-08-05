@@ -4,6 +4,7 @@ import {
   verifyFileCitation,
 } from './citation-verification';
 import type { StrategyAnswer, StrategySource } from './contracts';
+import { conversationContextBlock } from './conversation-history';
 import {
   authorityLabel,
   authorityMatch,
@@ -15,7 +16,7 @@ import { extractJudgmentIdentifiers } from './retrieval-lexical';
 import type { NetlifyChatStrategy, StrategyContext } from './runtime';
 
 const DEFAULT_MODEL = 'gemini-3.5-flash-lite';
-export const FILE_SEARCH_PROMPT_VERSION = 'file-search-authority-v8';
+export const FILE_SEARCH_PROMPT_VERSION = 'file-search-authority-v9';
 
 export interface Interaction {
   output_text?: string;
@@ -128,6 +129,10 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
       judgmentIds.length === 1
         ? `judgment_id="${judgmentIds[0]}"`
         : (authorityMetadataFilter(authorityIntent) ?? undefined);
+    // El hilo de B, nunca el de A: cada estrategia responde sobre su propia
+    // conversación o la comparación dejaría de medir dos stacks independientes.
+    const historyBlock = conversationContextBlock(context.history);
+    const historyInstruction = historyBlock ? `\n\n${historyBlock}` : '';
     const authorityInstruction = authorityIntent
       ? ` La pregunta pide ${authorityLabel(authorityIntent)}: usa autoridad directa de ese órgano y no presentes como propia doctrina contenida solo en una sentencia de otro tribunal.`
       : '';
@@ -135,6 +140,7 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
       'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal. Usa exclusivamente los PDF recuperados mediante File Search. Solo emite una respuesta sustantiva con estado completa o parcial si File Search aporta al menos un pasaje citado por File Search que respalde la respuesta; si no hay ningún pasaje citado, pregunta o abstente. Responde primero y de forma directa a lo preguntado, en una o dos frases, y desarrolla después solo los puntos necesarios. Si la pregunta tiene varias partes, contesta cada parte o usa estado parcial e identifica la parte no resuelta; resuelve cada parte por separado. Si pregunta cuándo, cómo o salvo qué, expresa de forma explícita la condición y sus excepciones respaldadas; no las dejes implícitas. Distingue hechos acreditados, argumentos de las partes, valoración de la instancia, doctrina del tribunal consultado y resultado. No atribuyas al tribunal argumentos de las partes ni razonamientos que la resolución se limite a citar. Separa permanencia física, ausencias esporádicas, certificados fiscales extranjeros y reglas de desempate de CDI si la pregunta mezcla esos conceptos. Ante datos de vida cotidiana, una mera alta, titularidad o pago de una cuota no prueba por sí sola presencia en una fecha: distingue ese dato del uso efectivo atribuible al contribuyente y de su valoración conjunta con otros indicios. No desarrolles dimensiones que la pregunta no necesita. No equipares desvirtuar el número de días de presencia con acreditar residencia fiscal en otro país para excluir ausencias esporádicas: explica cuál de esas cuestiones respalda cada pasaje. No conviertas la prueba o el resultado de un caso concreto en una regla general salvo que el pasaje formule expresamente doctrina. Si se preguntan pruebas aceptadas por un tribunal, distingue lo que valoró la instancia de lo que confirmó o estableció directamente ese tribunal. En materia de ausencias esporádicas, no uses la intención de retorno como criterio sin comprobar si el tribunal la adopta o, por el contrario, la rechaza expresamente. El campo limits contiene solo carencias reales de evidencia o alcance, no conclusiones ni repeticiones de la respuesta. No predigas el caso del usuario ni uses conocimiento externo. Si la recuperación no aporta evidencia suficiente, responde parcial, pregunta o abstención; limita el diagnóstico a esta búsqueda y no concluyas que el corpus carece de documentos.' +
       authorityInstruction +
       retrievalHints(question) +
+      historyInstruction +
       '\n\nPregunta del usuario:\n' +
       question;
     const input = {

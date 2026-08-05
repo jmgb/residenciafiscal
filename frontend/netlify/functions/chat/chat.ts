@@ -2,9 +2,10 @@
 
 import { type ChatDiagnostic, diagnosticFromError } from './chat-diagnostics';
 import { createProductionDependencies } from './composition';
-import type { ComparisonReport } from './contracts';
+import type { ComparisonReport, ConversationTurn } from './contracts';
 import { type JudicialAuthorityIntent, requestedJudicialAuthority } from './judicial-authority';
 import type { ChatObservability } from './observability';
+import { validCountryPath, validIdentifier } from './request-identifiers';
 import type { ChatRequestInput } from './supabase-chat-store';
 
 const MAX_REQUEST_BYTES = 200_000;
@@ -16,7 +17,14 @@ export interface ChatFunctionDependencies {
   disabledDiagnostic?: ChatDiagnostic;
   observability: ChatObservability;
   recordRequest(input: ChatRequestInput): Promise<{ requestId: string }>;
-  compare(question: string, requestId: string, signal: AbortSignal): Promise<ComparisonReport>;
+  /** Turnos anteriores de la conversación, leídos del ledger; nunca del cuerpo. */
+  loadHistory(conversationId: string): Promise<ConversationTurn[]>;
+  compare(
+    question: string,
+    requestId: string,
+    signal: AbortSignal,
+    history: readonly ConversationTurn[]
+  ): Promise<ComparisonReport>;
   failRequest(input: {
     requestId: string;
     status: 'failed' | 'timed_out';
@@ -60,12 +68,6 @@ const jsonError = (status: number, message: string, requestId?: string) =>
       },
     }
   );
-
-const validIdentifier = (value: unknown): value is string =>
-  typeof value === 'string' && value.length >= 1 && value.length <= 128 && /^[\w-]+$/.test(value);
-
-const validCountryPath = (value: unknown): value is string =>
-  typeof value === 'string' && /^\/[a-z0-9-]{1,63}$/.test(value);
 
 const parseQuestion = async (request: Request): Promise<ParsedChatRequest | null> => {
   const declaredLength = Number(request.headers.get('content-length'));
@@ -203,10 +205,21 @@ export const createChatHandler =
     const recordLatencyMs = Math.round(performance.now() - recordStarted);
     const effectiveRequestId = recordedRequest.requestId;
 
+    // El contexto conversacional es una mejora, no un requisito: si el ledger no
+    // devuelve el hilo se responde igual, tratando la pregunta como autosuficiente.
+    const history = await dependencies
+      .loadHistory(parsed.conversationId)
+      .catch(() => [] as ConversationTurn[]);
+
     let report: ComparisonReport;
     const compareStarted = performance.now();
     try {
-      report = await dependencies.compare(parsed.question, effectiveRequestId, request.signal);
+      report = await dependencies.compare(
+        parsed.question,
+        effectiveRequestId,
+        request.signal,
+        history
+      );
     } catch (error) {
       // Solo se registra el diagnóstico estructurado y saneado del proveedor.
       const status = request.signal.aborted ? 'timed_out' : 'failed';
@@ -259,6 +272,17 @@ export const createChatHandler =
         latencyMs: Math.round(performance.now() - requestStarted),
         errorContext: diagnosticFromError(error),
       });
+      // Sin esto la consulta se queda en `processing` indefinidamente: el ledger no
+      // distingue una petición viva de una que murió al persistir su coste.
+      try {
+        await dependencies.failRequest({
+          requestId: effectiveRequestId,
+          status: 'failed',
+          failureCode: 'unknown',
+        });
+      } catch {
+        // Mantener la respuesta cerrada si también falla el registro del fallo.
+      }
       return jsonError(503, 'Registro de coste no disponible', requestId);
     }
     return new Response(serializeComparison(report), {
