@@ -364,7 +364,9 @@ La implementación debe evolucionar el protocolo actual antes de activar el
 modo comparativo. Los eventos `token` y `sources` nunca pueden carecer de
 `strategy`. El frontend debe persistir una o dos respuestas hermanas activas
 asociadas al mismo mensaje del usuario, no concatenarlas como si fueran una sola.
-`answer_done` incluye un objeto de coste:
+`answer_done` incluye un objeto de coste y, cuando una estrategia termina con
+`status=error`, un `failure_code` seguro para que la interfaz pueda mostrar el
+tipo de fallo sin exponer el mensaje bruto del proveedor:
 
 ```json
 {
@@ -378,6 +380,11 @@ asociadas al mismo mensaje del usuario, no concatenarlas como si fueran una sola
   "retrieved_document_tokens": 0
 }
 ```
+
+Los códigos admitidos son `timeout`, `exception`, `strategy_contract`,
+`citation_verification` y `evidence_validation`. La respuesta fallida conserva
+su coste y sus límites, mientras las otras estrategias de la comparación siguen
+siendo utilizables.
 
 `amount_usd` se serializa como decimal y se calcula internamente con
 microdólares enteros. `measurement` vale `ACTUAL` cuando el proveedor devuelve

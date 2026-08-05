@@ -481,6 +481,46 @@ describe('ChatView', () => {
     expect(assistant?.comparisonId).toBe('chat-comparison-1');
   });
 
+  it('muestra el tipo de fallo de una estrategia que termina con error', async () => {
+    const user = userEvent.setup();
+    const engine: ChatEngine = {
+      async *askQuestion(): AsyncIterable<ChatChunk> {
+        yield { type: 'answer_start', strategy: 'gemini_file_search' };
+        yield { type: 'strategy_sources', strategy: 'gemini_file_search', sources: [] };
+        yield {
+          type: 'answer_done',
+          strategy: 'gemini_file_search',
+          status: 'error',
+          failureCode: 'citation_verification',
+          limits: ['Se retiraron citas no verificables contra el PDF original.'],
+          cost: {
+            currency: 'USD',
+            amountUsd: '0.001480',
+            costMicrousd: 1480,
+            measurement: 'ACTUAL',
+            scope: 'REQUEST_MARGINAL',
+            pricingVersion: '2026-07-31',
+            inputTokens: 660,
+            outputTokens: 169,
+            retrievedDocumentTokens: 2865,
+            excludesCorpusPreparation: true,
+          },
+          model: 'gemini-3.5-flash-lite',
+          latencyMs: 21809,
+        };
+        yield { type: 'done', requestId: 'chat-failure-code' };
+      },
+    };
+    renderChat(engine);
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    const failed = await screen.findByRole('region', { name: 'Respuesta de la opción B' });
+    expect(failed).toHaveTextContent('Tipo de error: Cita no verificable');
+    expect(failed).toHaveTextContent('citation_verification');
+  });
+
   it('conserva solo A si el stream se corta antes de iniciar B', async () => {
     const user = userEvent.setup();
     const engine: ChatEngine = {

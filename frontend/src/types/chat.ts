@@ -173,6 +173,12 @@ export interface EditorialChatAnswer {
 
 export type ChatStrategyId = 'current_structured' | 'gemini_file_search';
 export type ChatAnswerStatus = 'completa' | 'parcial' | 'pregunta' | 'abstención' | 'error';
+export type ChatStrategyFailureCode =
+  | 'timeout'
+  | 'exception'
+  | 'strategy_contract'
+  | 'citation_verification'
+  | 'evidence_validation';
 
 export interface ChatMarginalCost {
   currency: 'USD';
@@ -213,6 +219,8 @@ export interface ChatStrategyAnswer {
   model?: string;
   latencyMs?: number;
   claims?: ChatStrategyClaim[];
+  /** Código seguro del gate que aisló una estrategia fallida. */
+  failureCode?: ChatStrategyFailureCode;
   isStreaming: boolean;
 }
 
@@ -227,6 +235,7 @@ export type ChatChunk =
       strategy: ChatStrategyId;
       status: ChatAnswerStatus;
       claims?: ChatStrategyClaim[];
+      failureCode?: ChatStrategyFailureCode;
       limits: string[];
       cost: ChatMarginalCost;
       model: string;

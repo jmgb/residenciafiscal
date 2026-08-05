@@ -77,6 +77,49 @@ describe('parseChatEventStream', () => {
     ]);
   });
 
+  it('propaga el tipo seguro de fallo de una estrategia', async () => {
+    const cost = {
+      currency: 'USD',
+      amount_usd: '0.001480',
+      cost_microusd: 1480,
+      measurement: 'ACTUAL',
+      scope: 'REQUEST_MARGINAL',
+      pricing_version: '2026-07-31',
+      input_tokens: 660,
+      output_tokens: 169,
+      retrieved_document_tokens: 2865,
+      excludes_corpus_preparation: true,
+    };
+
+    await expect(
+      collect(
+        streamFromText([
+          event('answer_start', { strategy: 'gemini_file_search' }),
+          event('sources', { strategy: 'gemini_file_search', sources: [] }),
+          event('answer_done', {
+            strategy: 'gemini_file_search',
+            status: 'error',
+            failure_code: 'citation_verification',
+            limits: ['Se retiraron citas no verificables contra el PDF original.'],
+            cost,
+            model: 'gemini-3.5-flash-lite',
+            latency_ms: 21809,
+          }),
+          event('done', { request_id: 'chat-failure-code' }),
+        ])
+      )
+    ).resolves.toContainEqual({
+      type: 'answer_done',
+      strategy: 'gemini_file_search',
+      status: 'error',
+      failureCode: 'citation_verification',
+      limits: ['Se retiraron citas no verificables contra el PDF original.'],
+      cost: expect.objectContaining({ amountUsd: '0.001480' }),
+      model: 'gemini-3.5-flash-lite',
+      latencyMs: 21809,
+    });
+  });
+
   it('mantiene separadas las dos estrategias con sus fuentes, estado y coste', async () => {
     const cost = {
       currency: 'USD',

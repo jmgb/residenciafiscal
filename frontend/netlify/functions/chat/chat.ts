@@ -139,6 +139,9 @@ export const serializeComparison = (report: ComparisonReport): string => {
       event('answer_done', {
         strategy: answer.strategy,
         status: answer.status,
+        ...(answer.diagnostics?.failure_code
+          ? { failure_code: answer.diagnostics.failure_code }
+          : {}),
         claims: answer.claims ?? [],
         limits: answer.limits,
         cost: answer.cost,

@@ -15,6 +15,7 @@ import type {
   ChatMessage,
   ChatSource,
   ChatStrategyAnswer,
+  ChatStrategyFailureCode,
   ChatStrategySource,
   Conversation,
   EditorialChatAttribution,
@@ -63,6 +64,16 @@ function isStoredStrategySource(value: unknown): value is ChatStrategySource {
     typeof value.quote === 'string' &&
     value.quote.trim().length > 0 &&
     value.verification === 'EXACT'
+  );
+}
+
+function isStoredFailureCode(value: unknown): value is ChatStrategyFailureCode {
+  return (
+    value === 'timeout' ||
+    value === 'exception' ||
+    value === 'strategy_contract' ||
+    value === 'citation_verification' ||
+    value === 'evidence_validation'
   );
 }
 
@@ -143,6 +154,7 @@ function isStoredAnswer(value: unknown): value is ChatStrategyAnswer {
     value.limits.every((limit) => typeof limit === 'string') &&
     (value.cost === undefined || isStoredCost(value.cost)) &&
     (value.model === undefined || typeof value.model === 'string') &&
+    (value.failureCode === undefined || isStoredFailureCode(value.failureCode)) &&
     (value.latencyMs === undefined ||
       (Number.isSafeInteger(value.latencyMs) && (value.latencyMs as number) >= 0)) &&
     typeof value.isStreaming === 'boolean'

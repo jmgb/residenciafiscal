@@ -10,6 +10,7 @@ import type {
   ChatChunk,
   ChatMarginalCost,
   ChatStrategyClaim,
+  ChatStrategyFailureCode,
   ChatStrategyId,
   ChatStrategySource,
 } from '@/types/chat';
@@ -58,6 +59,13 @@ function parseEventBlock(block: string): ParsedSseEvent | null {
 
 const STRATEGIES = ['current_structured', 'gemini_file_search'] as const;
 const ANSWER_STATUSES = ['completa', 'parcial', 'pregunta', 'abstención', 'error'] as const;
+const FAILURE_CODES = [
+  'timeout',
+  'exception',
+  'strategy_contract',
+  'citation_verification',
+  'evidence_validation',
+] as const;
 
 function isStrategy(value: unknown): value is ChatStrategyId {
   return STRATEGIES.some((strategy) => strategy === value);
@@ -65,6 +73,10 @@ function isStrategy(value: unknown): value is ChatStrategyId {
 
 function isAnswerStatus(value: unknown): value is ChatAnswerStatus {
   return ANSWER_STATUSES.some((status) => status === value);
+}
+
+function isFailureCode(value: unknown): value is ChatStrategyFailureCode {
+  return FAILURE_CODES.some((code) => code === value);
 }
 
 function parseToken(data: unknown, comparative: boolean): Extract<ChatChunk, { type: 'token' }> {
@@ -196,6 +208,9 @@ function parseAnswerDone(data: unknown): Extract<ChatChunk, { type: 'answer_done
     !isRecord(data) ||
     !isStrategy(data.strategy) ||
     !isAnswerStatus(data.status) ||
+    (data.failure_code !== undefined &&
+      data.failure_code !== null &&
+      !isFailureCode(data.failure_code)) ||
     (data.claims !== undefined && !Array.isArray(data.claims)) ||
     !Array.isArray(data.limits) ||
     !data.limits.every((limit) => typeof limit === 'string') ||
@@ -235,6 +250,7 @@ function parseAnswerDone(data: unknown): Extract<ChatChunk, { type: 'answer_done
     type: 'answer_done',
     strategy: data.strategy,
     status: data.status,
+    ...(data.failure_code ? { failureCode: data.failure_code } : {}),
     ...(data.claims !== undefined ? { claims: claims as ChatStrategyClaim[] } : {}),
     limits: data.limits,
     cost,

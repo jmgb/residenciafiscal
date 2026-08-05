@@ -339,6 +339,7 @@ export function ChatView({
             const answer = answerFor(chunk.strategy);
             if (answer) {
               answer.status = chunk.status;
+              answer.failureCode = chunk.failureCode;
               answer.claims = chunk.claims ?? [];
               answer.limits = chunk.limits;
               answer.cost = chunk.cost;

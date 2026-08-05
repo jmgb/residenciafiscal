@@ -11,6 +11,14 @@ const STATUS_LABEL = {
   error: 'Error aislado',
 } as const;
 
+const FAILURE_LABEL = {
+  timeout: 'Tiempo de espera agotado',
+  exception: 'Fallo del proveedor',
+  strategy_contract: 'Respuesta del proveedor inválida',
+  citation_verification: 'Cita no verificable',
+  evidence_validation: 'Evidencia no válida',
+} as const;
+
 interface ChatStrategyAnswerPanelProps {
   answer: ChatStrategyAnswer;
   label: string;
@@ -52,6 +60,18 @@ export const ChatStrategyAnswerPanel = ({
       <p className='text-sm text-muted-foreground'>Preparando respuesta…</p>
     ) : null}
     {answer.isStreaming && <span className='animate-pulse text-muted-foreground'>▍</span>}
+
+    {answer.status === 'error' && (
+      <div className='mt-4 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2.5 text-xs text-secondary-foreground'>
+        <p className='font-semibold text-foreground'>
+          Tipo de error:{' '}
+          {answer.failureCode ? FAILURE_LABEL[answer.failureCode] : 'Error no clasificado'}
+          {answer.failureCode && (
+            <code className='ml-1 font-normal text-muted-foreground'>({answer.failureCode})</code>
+          )}
+        </p>
+      </div>
+    )}
 
     {answer.sources.length > 0 && (
       <div className='mt-4 border-t border-border pt-3'>

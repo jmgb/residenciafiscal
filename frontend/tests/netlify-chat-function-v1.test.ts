@@ -3,6 +3,7 @@ import {
   type ChatFunctionDependencies,
   config,
   createChatHandler,
+  serializeComparison,
 } from '../netlify/functions/chat/chat';
 import { ChatDiagnosticError } from '../netlify/functions/chat/chat-diagnostics';
 import type { ComparisonReport } from '../netlify/functions/chat/contracts';
@@ -343,6 +344,32 @@ describe('Netlify Function /api/chat V1', () => {
       'answer_done',
       'done',
     ]);
+  });
+
+  it('serializa el código seguro del fallo aislado de una estrategia', () => {
+    const serialized = serializeComparison({
+      ...report,
+      answers: [
+        report.answers[0],
+        {
+          ...report.answers[1],
+          status: 'error',
+          text: '',
+          diagnostics: {
+            authority_intent: null,
+            authority_match: 'not_requested',
+            retrieval_filter: null,
+            retrieved_judgment_ids: [],
+            citation_candidates: 1,
+            citation_verified: 0,
+            failure_code: 'citation_verification',
+            error_name: null,
+          },
+        },
+      ],
+    });
+
+    expect(serialized).toContain('"failure_code":"citation_verification"');
   });
 
   it('rechaza entradas inválidas antes de registrar la consulta', async () => {
