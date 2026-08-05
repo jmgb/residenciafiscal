@@ -425,7 +425,7 @@ export function ChatView({
 
         {hasMessages ? (
           <div
-            className='mx-auto flex w-full max-w-3xl flex-col gap-3'
+            className='mx-auto flex w-full max-w-4xl flex-col gap-3'
             role='log'
             aria-label='Mensajes de la conversación'
             aria-live='polite'
@@ -458,7 +458,7 @@ export function ChatView({
         <p
           role='status'
           aria-label='Límite de mensajes de sesión'
-          className='mx-auto w-full max-w-3xl px-4 pb-2 text-center text-xs text-muted-foreground'
+          className='mx-auto w-full max-w-4xl px-4 pb-2 text-center text-xs text-muted-foreground'
         >
           Has alcanzado el límite de {sessionMessageLimit.limit}{' '}
           {sessionMessageLimit.limit === 1 ? 'mensaje' : 'mensajes'} de esta sesión. Podrás volver a
@@ -466,7 +466,7 @@ export function ChatView({
         </p>
       )}
       {isDeepResearchUiEnabled() && hasMessages && !isStreaming && !activeDeepResearch && (
-        <div className='mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 pb-1'>
+        <div className='mx-auto flex w-full max-w-4xl items-center justify-between gap-3 px-4 pb-1'>
           <p className='text-xs text-muted-foreground'>
             ¿Necesitas contrastar la respuesta con más fuentes del corpus?
           </p>

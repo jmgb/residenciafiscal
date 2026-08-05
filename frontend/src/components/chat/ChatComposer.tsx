@@ -75,7 +75,7 @@ export function ChatComposer({
           fondo sustituye al borde superior que antes lo separaba del hilo. El
           hueco inferior lo despega del borde del viewport en vez de dejarlo
           pegado abajo. */}
-      <div className='mx-auto flex w-full max-w-3xl items-center gap-1.5 rounded-2xl border border-border bg-card p-2 shadow-md focus-within:ring-2 focus-within:ring-ring sm:gap-2 sm:p-3'>
+      <div className='mx-auto flex w-full max-w-4xl items-center gap-1.5 rounded-2xl border border-border bg-card p-2 shadow-md focus-within:ring-2 focus-within:ring-ring sm:gap-2 sm:p-3'>
         <textarea
           ref={textareaRef}
           value={text}
@@ -120,7 +120,7 @@ export function ChatComposer({
       </div>
       {showCharCount && (
         <p
-          className={`mx-auto mt-1 w-full max-w-3xl text-right text-xs ${
+          className={`mx-auto mt-1 w-full max-w-4xl text-right text-xs ${
             isOverMaxLength ? 'text-destructive' : 'text-muted-foreground'
           }`}
         >

@@ -92,7 +92,7 @@ export const ChatComparisonAnswers = ({
       <div
         data-testid='comparison-grid'
         className={`grid w-full grid-cols-1 gap-4 ${
-          isComparison ? 'md:grid-cols-2' : 'mx-auto max-w-3xl'
+          isComparison ? 'md:grid-cols-2' : 'mx-auto max-w-4xl'
         }`}
       >
         {answers.map((answer, index) => {

@@ -32,7 +32,7 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
       </p>
       {/* Panel elevado: las sugerencias son una sola superficie blanca sobre el
           lienzo gris, separadas por hairlines en lugar de por huecos. */}
-      <div className='w-full max-w-2xl overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm'>
+      <div className='w-full max-w-4xl overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm'>
         {SUGGESTED_PROMPTS.map((answer, index) => (
           <button
             key={answer.id}
