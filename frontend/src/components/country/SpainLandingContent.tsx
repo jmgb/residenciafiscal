@@ -69,9 +69,11 @@ export function SpainLandingContent() {
         <p className='mb-4 text-sm leading-relaxed text-muted-foreground'>
           106 resoluciones del Tribunal Supremo y la Audiencia Nacional (2015–2025) sobre residencia
           fiscal de personas físicas, conservadas con su texto literal: ninguna cita se publica sin
-          haberse contrastado palabra por palabra con la sentencia. El análisis lo genera un modelo
-          de IA y su revisión jurídica es del agente, no una aprobación humana; esta herramienta
-          sirve para investigación y no constituye asesoramiento jurídico.
+          haberse contrastado palabra por palabra con la sentencia. Es una herramienta de trabajo
+          para la investigación jurisprudencial de abogados, asesores fiscales y especialistas en
+          tributación internacional. El análisis lo genera un modelo de IA y su revisión jurídica es
+          del agente, no una aprobación humana; no constituye asesoramiento jurídico y cada cita
+          debe verificarse en su sentencia de origen.
         </p>
         <ul className='list-disc space-y-1 pl-5 text-sm leading-relaxed'>
           <li>

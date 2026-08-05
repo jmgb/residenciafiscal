@@ -2,7 +2,7 @@
   {
     "path": "/manifiesto",
     "title": "Manifiesto — Residencia Fiscal",
-    "description": "Naciste en un país. No le perteneces. Elegir dónde vives — y dónde tributas — es un derecho. La jurisprudencia que decide estos casos, al alcance de cualquiera, siempre dentro de la ley.",
+    "description": "La residencia fiscal se decide en los tribunales y el criterio real estaba disperso. Este proyecto lo sistematiza como herramienta de trabajo para abogados y asesores fiscales, con la cita siempre a la vista.",
     "indexable": true,
     "image": "/og-image-manifiesto.png",
     "sitemap": { "changefreq": "monthly", "priority": "0.8" }

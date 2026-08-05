@@ -16,11 +16,12 @@ export function ChatWelcome({ onSelectPrompt }: ChatWelcomeProps) {
       className='flex flex-1 flex-col items-center justify-center px-4 py-8 text-center'
     >
       <h1 className='mb-2 font-heading text-2xl font-semibold text-foreground'>
-        Decide tu fiscalidad con las sentencias en la mano
+        Trabaja cada caso de residencia fiscal con las sentencias en la mano
       </h1>
       <p className='mb-3 max-w-xl text-sm leading-relaxed text-muted-foreground'>
-        106 sentencias sobre residencia fiscal, con la cita siempre a la vista. Elige una respuesta
-        editorial o escribe tu propia consulta.
+        Herramienta de investigación jurisprudencial para abogados, asesores fiscales y
+        especialistas en tributación internacional: 106 sentencias con la cita siempre a la vista.
+        Elige una respuesta editorial o escribe tu propia consulta.
       </p>
       <p className='mb-8 text-sm'>
         <Link

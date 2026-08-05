@@ -1,6 +1,6 @@
 # Residencia Fiscal
 
-> Aplicación web para consultar jurisprudencia sobre residencia fiscal por país. España es el primer corpus disponible y el proyecto es colaborativo: expertos en fiscalidad y tributación internacional de cualquier jurisdicción pueden aportar la de su país.
+> Herramienta de investigación jurisprudencial para profesionales del derecho tributario: consulta por país la jurisprudencia que decide la residencia fiscal. España es el primer corpus disponible y el proyecto es colaborativo: expertos en fiscalidad y tributación internacional de cualquier jurisdicción pueden aportar la de su país.
 
 ## Qué es
 
@@ -11,11 +11,12 @@ Tribunal Supremo (STS) y 32 de la Audiencia Nacional (SAN), con resoluciones de
 
 ## Por qué existe
 
-El proyecto democratiza el acceso a la jurisprudencia que decide los litigios de
-residencia fiscal: la misma información con la que trabajan los mejores despachos,
-al alcance de cualquiera, siempre dentro de la ley. Elegir dónde se reside — y por
-tanto dónde se tributa — es un derecho; ejercerlo bien exige conocer cómo lo juzgan
-los tribunales. El manifiesto completo está en
+El criterio que decide los litigios de residencia fiscal está en las sentencias, y
+hasta ahora solo los grandes despachos lo tenían sistematizado. Residencia Fiscal
+estructura esa jurisprudencia como herramienta de trabajo para profesionales del
+derecho tributario — abogados, asesores fiscales, especialistas en tributación
+internacional y equipos de compliance —, con cada afirmación respaldada por
+sentencia, página y cita literal verificable. El manifiesto completo está en
 [Manifiesto](https://residenciafiscal.org/manifiesto).
 
 ## Temas del corpus

@@ -7,11 +7,13 @@
 
 ## 1. La marca en dos frases
 
-**Narrativa** («Vive donde elijas»): un movimiento contra la asimetría de información —
-democratizar el conocimiento jurisprudencial con el que trabajan los mejores asesores
-fiscales, siempre dentro de la ley. **Ejecución visual** («El expediente, legible»):
-rigor documental; el color se gana, la cita no se negocia. La tesis que las une:
-*la libertad se ejerce mejor documentado*.
+**Narrativa** («El archivo de los grandes despachos, abierto»): una herramienta de
+trabajo para profesionales del derecho tributario — abogados, asesores fiscales,
+especialistas en tributación internacional y compliance — que sistematiza la
+jurisprudencia que decide los casos de residencia fiscal, hasta ahora solo al
+alcance de los equipos que litigan a escala. **Ejecución visual** («El expediente,
+legible»): rigor documental; el color se gana, la cita no se negocia. La tesis que
+las une: *el criterio se ejerce mejor documentado*.
 
 ## 2. Identidad gráfica
 
@@ -120,20 +122,25 @@ sistema: no se descarga ninguna tercera fuente.
 
 ## 6. Voz y mensaje
 
-- **Claim canónico:** «Reside donde mejor te traten. Decide con las sentencias en la
-  mano.» La primera frase nunca aparece sin la segunda.
+- **Claim canónico:** «Trabaja cada caso de residencia fiscal con las sentencias en
+  la mano.» Se usa completo, sin recortar.
 - **Claim funcional** (README, docs, metadescripciones): «106 sentencias sobre
   residencia fiscal, con la cita siempre a la vista.»
+- **Audiencia:** la marca habla a quien ejerce — abogados, asesores fiscales,
+  especialistas en tributación internacional, compliance —, en registro
+  profesional. No promete decisiones vitales al particular; promete base
+  documental verificable al profesional.
 - **Manifiesto:** tres versiones canónicas y reglas de uso en
   [`manifiesto.md`](manifiesto.md). Se usa una versión entera o no se usa.
 - **Distinción obligatoria:** toda respuesta separa criterio del tribunal, hechos
   probados e inferencia.
 - **Vetos:** «asesoramiento», «abogado virtual», «garantizamos», «IA jurídica»,
   promesas de resultado; y todo lo que suene a ocultación: «paga cero», «Hacienda no
-  se enterará», «escapa», «paraíso fiscal» como reclamo. La marca democratiza la
-  *información* de los mejores asesores; nunca promete el *servicio*. Habla de
-  *elegir*, no de *huir*. El veto más grave: citar una sentencia que no esté en el
-  corpus.
+  se enterará», «escapa», «paraíso fiscal» como reclamo. La marca pone a disposición
+  del profesional la *información sistematizada* con la que trabajan los mejores
+  equipos; nunca promete el *servicio* ni sustituye el criterio de quien ejerce.
+  Habla de *elegir* y de *probar*, no de *huir*. El veto más grave: citar una
+  sentencia que no esté en el corpus.
 - Mientras el motor sea stub, el aviso de contenido simulado **es parte del contrato
   de marca**, no un parche.
 
@@ -178,7 +185,7 @@ Antes de publicar cualquier pieza —interfaz, OG, copy, correo—:
 - [ ] Todo contenido generado que se muestre lleva su cita visible (ROJ/ECLI).
 - [ ] Ninguna palabra de las dos listas de vetos (§6).
 - [ ] Si la pieza usa el manifiesto, lleva el ancla del producto: la cifra del corpus,
-      una cita, o la segunda frase del claim. **La promesa de libertad nunca viaja sola.**
+      una cita, o el claim canónico. **La promesa nunca viaja sola.**
 - [ ] Contraste comprobado en cualquier par nuevo: calculado, no estimado a ojo.
 - [ ] Si el motor sigue en `stub`, la pieza no promete respuestas reales.
 - [ ] Si se tocó un token, los artefactos están regenerados en el mismo commit.

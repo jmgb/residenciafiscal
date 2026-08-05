@@ -18,12 +18,12 @@ describe('SpainPage', () => {
     expect(screen.getByTestId('chat-welcome')).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {
-        name: 'Decide tu fiscalidad con las sentencias en la mano',
+        name: 'Trabaja cada caso de residencia fiscal con las sentencias en la mano',
       })
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        '106 sentencias sobre residencia fiscal, con la cita siempre a la vista. Elige una respuesta editorial o escribe tu propia consulta.'
+        'Herramienta de investigación jurisprudencial para abogados, asesores fiscales y especialistas en tributación internacional: 106 sentencias con la cita siempre a la vista. Elige una respuesta editorial o escribe tu propia consulta.'
       )
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /183 días/ })).toBeInTheDocument();
