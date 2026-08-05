@@ -33,6 +33,7 @@ materializa y devuelve 404. Decisión cerrada y gates:
 |---|---|
 | `src/lib/chat-engine.ts` | Punto **único** de selección del motor. Es el fichero a cambiar al conectar el backend |
 | `src/lib/corpus.ts` | Degrada a corpus vacío si falla la carga, en vez de romper la app |
+| `src/lib/chat-answer-status.ts` | Fuente **única** de las etiquetas de estado de una respuesta, compartida por el panel de estrategia y la tarjeta de investigación profunda. `completa` **no se rotula** a propósito: el chat no puede certificar que una respuesta agote la cuestión sobre un corpus sin revisión jurídica humana, así que solo se avisa de los límites, nunca de su ausencia. Una tercera superficie usa este módulo, no su propia tabla |
 | `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
 | `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
 | `src/lib/structured-data.ts` | JSON-LD de las páginas de país: `BreadcrumbList` y `Legislation`, y nada más. Se emite con `components/seo/JsonLd.tsx` **dentro del árbol de React**, para que el HTML prerenderizado y la SPA no puedan divergir. Lo que el corpus no sabe se omite; contrato en [`docs/product/COUNTRY_PAGES.md`](../docs/product/COUNTRY_PAGES.md) |

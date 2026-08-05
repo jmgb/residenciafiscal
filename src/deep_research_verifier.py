@@ -103,6 +103,17 @@ _NON_SUBSTANTIVE_TEXT = {
     "abstención": "No hay evidencia suficiente en el corpus de sentencias para responder a la consulta.",
     "error": "No se ha podido completar la investigación de forma verificable.",
 }
+_GENERIC_PARTIAL_LIMIT = (
+    "Resultado parcial: el corpus no aporta evidencia para cubrir toda la consulta."
+)
+_UNMATCHED_QUOTE_LIMIT = (
+    "Se descartó {count} cita que no coincide literalmente con su página del PDF.",
+    "Se descartaron {count} citas que no coinciden literalmente con su página del PDF.",
+)
+_DROPPED_CLAIM_LIMIT = (
+    "Se retiró {count} afirmación que quedó sin cita verificable.",
+    "Se retiraron {count} afirmaciones que quedaron sin cita verificable.",
+)
 _PRICING_KEYS = {
     "schema_version",
     "catalog_version",
@@ -122,6 +133,26 @@ class ModelPricing:
 
 class UnmatchedEvidenceQuote(ValueError):
     """A model quote that cannot be localized uniquely in its declared page."""
+
+
+@dataclass(frozen=True)
+class _GraphOutcome:
+    """Lo que el verificador retiró del borrador, contado por causa.
+
+    Las cifras son hechos constatados por Python, no prosa del modelo, así que
+    pueden publicarse en `limits` sin abrir el canal libre que el contrato cierra.
+    """
+
+    unmatched_quotes: int
+    dropped_claims: int
+
+    def limits(self) -> list[str]:
+        lines = []
+        if self.unmatched_quotes:
+            lines.append(_plural_limit(self.unmatched_quotes, _UNMATCHED_QUOTE_LIMIT))
+        if self.dropped_claims:
+            lines.append(_plural_limit(self.dropped_claims, _DROPPED_CLAIM_LIMIT))
+        return lines
 
 
 def load_model_pricing(bundle_path: Path, model: str) -> ModelPricing:
@@ -175,7 +206,7 @@ def finalize_deep_research_output(
     draft = _parse_draft(draft_text)
     _trim_exterior_evidence_whitespace(draft)
     _verify_tool_audit(draft["status"], tool_audit)
-    _verify_evidence_graph(draft, bundle_path.resolve())
+    outcome = _verify_evidence_graph(draft, bundle_path.resolve())
     pricing = load_model_pricing(bundle_path, model)
     cost_microusd = estimated_cost_microusd(usage, pricing)
     cost_measurement = "ESTIMATED" if cost_microusd is not None else "UNAVAILABLE"
@@ -188,7 +219,7 @@ def finalize_deep_research_output(
         # Never trust a parallel prose channel. The visible answer is derived
         # exclusively from claims that participate in the verified graph.
         "text": verified_text,
-        "limits": _verified_limits(draft["status"]),
+        "limits": _verified_limits(draft["status"], outcome),
         "cost_microusd": cost_microusd,
         "cost_measurement": cost_measurement,
         "pricing_version": pricing.catalog_version,
@@ -219,10 +250,26 @@ def _verified_text(draft: dict[str, Any]) -> str:
     return _NON_SUBSTANTIVE_TEXT[draft["status"]]
 
 
-def _verified_limits(status: str) -> list[str]:
-    if status == "parcial":
-        return ["Resultado parcial: el corpus no aporta evidencia para cubrir toda la consulta."]
-    return []
+def _plural_limit(count: int, forms: tuple[str, str]) -> str:
+    return forms[0 if count == 1 else 1].format(count=count)
+
+
+def _verified_limits(status: str, outcome: _GraphOutcome) -> list[str]:
+    """Publica por qué el resultado no cubre toda la consulta, sin prosa del modelo.
+
+    El borrador nunca aporta este campo: sus `limits` son texto libre y podrían
+    colar una conclusión jurídica sin anclaje en una sección que el usuario lee
+    como garantía. Lo que sí puede publicarse es lo que el verificador constató
+    al recorrer el grafo, porque son hechos con cifras. Un resultado no
+    sustantivo no lleva límites: su texto fijo ya dice que no hay respuesta.
+    """
+
+    if status not in {"completa", "parcial"}:
+        return []
+    limits = outcome.limits()
+    if status == "parcial" and not limits:
+        limits.append(_GENERIC_PARTIAL_LIMIT)
+    return limits[:_MAX_LIMITS]
 
 
 def validate_verbatim_integrity(document: object) -> None:
@@ -345,7 +392,7 @@ def _parse_draft(draft_text: str) -> dict[str, Any]:
     return draft
 
 
-def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> None:
+def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> _GraphOutcome:
     evidence = draft["evidence"]
     original_claim_count = len(draft["claims"])
     rollout_sources = _rollout_sources(bundle_path)
@@ -398,6 +445,10 @@ def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> None:
         draft["evidence"] = []
     elif graph_changed:
         draft["status"] = "parcial"
+    return _GraphOutcome(
+        unmatched_quotes=len(evidence) - len(verified_by_original_index),
+        dropped_claims=original_claim_count - len(retained_claims),
+    )
 
 
 def _validated_claim(claim: object, evidence_count: int) -> tuple[str, list[int]]:

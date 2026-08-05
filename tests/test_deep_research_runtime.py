@@ -739,6 +739,40 @@ def test_finalizer_replaces_substantive_limits_with_deterministic_metadata(tmp_p
     assert "respaldada" not in final["limits"][0]
 
 
+def test_finalizer_publishes_what_the_graph_retired_with_counts(tmp_path):
+    draft = json.loads(_draft())
+    draft["claims"].append(
+        {"text": "El certificado extranjero basta por sí solo.", "evidence_indexes": [2]}
+    )
+    draft["evidence"].append(
+        {
+            "judgment_id": "san-1-2020",
+            "page": 1,
+            "source_sha256": "a" * 64,
+            "quote": "Frase que no figura en la página.",
+            "verification": "EXACT",
+        }
+    )
+
+    final = finalize_deep_research_output(
+        json.dumps(draft, ensure_ascii=False),
+        job_id="deep-job-1",
+        bundle_path=_bundle(tmp_path),
+        model="gpt-5.6-luna",
+        reasoning_effort="high",
+        latency_ms=1,
+        usage=None,
+        tool_audit=_audit(),
+    )
+
+    assert final["status"] == "parcial"
+    assert final["limits"] == [
+        "Se descartó 1 cita que no coincide literalmente con su página del PDF.",
+        "Se retiró 1 afirmación que quedó sin cita verificable.",
+    ]
+    assert len(final["claims"]) == 1
+
+
 @pytest.mark.parametrize("usage", [{}, {"total_tokens": 0}, {"input_tokens": 0}])
 def test_finalizer_treats_empty_or_zero_usage_as_unavailable(tmp_path, usage):
     final = finalize_deep_research_output(

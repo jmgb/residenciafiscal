@@ -118,10 +118,17 @@ ni las ligaduras tipográficas del PDF. Esta comprobación no pretende demostrar
 automáticamente la corrección semántica completa de una paráfrasis, por lo que
 el prompt exige lenguaje prudente, preferencia por doctrina directa y estado
 `parcial` cuando no estén
-cubiertos la respuesta, el efecto y el límite principal. `limits` no se publica
-desde el borrador: queda vacío o se sustituye por el aviso fijo de resultado
-parcial. Para `pregunta`, `abstención` y `error`, el texto libre del modelo se
-descarta y se usa una plantilla fija sin contenido jurídico.
+cubiertos la respuesta, el efecto y el límite principal. `limits` **nunca se
+publica desde el borrador**, porque es texto libre y podría colar una conclusión
+jurídica sin anclaje en la sección que el usuario lee como garantía. Lo que se
+publica ahí son los hechos que constata el verificador al recorrer el grafo, con
+sus cifras: cuántas citas se descartaron por no coincidir literalmente con su
+página y cuántas afirmaciones quedaron sin cita verificable. Un resultado
+`parcial` que no retiró nada —porque lo declaró el propio modelo— conserva el
+aviso fijo de resultado parcial, de modo que nunca aparece sin explicación. Para
+`pregunta`, `abstención` y `error`, el texto libre del modelo se descarta, se usa
+una plantilla fija sin contenido jurídico y no hay límites: la plantilla ya dice
+que no hay respuesta.
 
 Un fallo invalida toda la ejecución: el runtime termina con error y Alfredo no
 publica como respuesta jurídica el texto no verificable.
@@ -251,6 +258,14 @@ sus saltos de línea dentro de una tarjeta con sentencia y página visibles, y l
 límites aparecen en una sección de alcance separada. La tarjeta usa todo el ancho
 disponible del chat para evitar una superficie anidada y mantener las citas
 legibles también en móvil.
+
+El encabezado `Respuesta verificada` **solo aparece si quedan afirmaciones
+ancladas**. Un resultado de `pregunta`, `abstención` o `error` no las tiene —el
+verificador vacía los `claims` y publica una plantilla fija—, así que se rotula
+`Resultado` y se acompaña de la etiqueta de estado del chat. Esas etiquetas son
+únicas para todo el frontend (`frontend/src/lib/chat-answer-status.ts`) y
+deliberadamente no rotulan `completa`: el chat no puede certificar que una
+respuesta agote la cuestión sobre un corpus sin revisión jurídica humana.
 
 El callback valida HMAC, `job_id`, modelo, esfuerzo, versión y forma completa
 del resultado. Luego actualiza el job y crea en la misma transacción la fila de
