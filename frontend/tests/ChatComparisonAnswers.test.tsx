@@ -45,6 +45,8 @@ describe('ChatComparisonAnswers', () => {
     const response = screen.getByRole('region', { name: 'Respuesta' });
     expect(response).toHaveTextContent('Contenido de A.');
     expect(response).not.toHaveTextContent('Coste');
+    expect(response).not.toHaveClass('border');
+    expect(response).not.toHaveClass('bg-background');
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
   });
 
@@ -128,9 +130,9 @@ describe('ChatComparisonAnswers', () => {
       'hidden',
       'md:block'
     );
-    expect(screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' })).not.toHaveClass(
-      'hidden'
-    );
+    const panelB = screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' });
+    expect(panelB).not.toHaveClass('hidden');
+    expect(panelB).toHaveClass('border', 'bg-background');
   });
 
   it('envía un voto ciego con motivo cerrado y confirma el registro', async () => {

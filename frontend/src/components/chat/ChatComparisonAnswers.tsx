@@ -96,6 +96,7 @@ export const ChatComparisonAnswers = ({
             }
             id={isComparison ? `${componentId}-panel-${index}` : undefined}
             tabPanel={isComparison}
+            framed={isComparison}
             className={isComparison && index !== selectedIndex ? 'hidden md:block' : undefined}
           />
         ))}

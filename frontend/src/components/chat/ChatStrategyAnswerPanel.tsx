@@ -21,6 +21,7 @@ interface ChatStrategyAnswerPanelProps {
   labelledBy?: string;
   ariaLabel?: string;
   tabPanel?: boolean;
+  framed?: boolean;
 }
 
 export const ChatStrategyAnswerPanel = ({
@@ -31,6 +32,7 @@ export const ChatStrategyAnswerPanel = ({
   labelledBy,
   ariaLabel,
   tabPanel = false,
+  framed = true,
 }: ChatStrategyAnswerPanelProps) => {
   const statusLabel = answerStatusLabel(answer.status);
 
@@ -40,7 +42,9 @@ export const ChatStrategyAnswerPanel = ({
       role={tabPanel ? 'tabpanel' : 'region'}
       aria-labelledby={labelledBy}
       aria-label={labelledBy ? undefined : (ariaLabel ?? label)}
-      className={`min-w-0 rounded-xl border border-border bg-background p-4 ${className ?? ''}`}
+      className={`min-w-0 ${
+        framed ? 'rounded-xl border border-border bg-background p-4' : ''
+      } ${className ?? ''}`}
     >
       {(label || statusLabel) && (
         <div className='mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-border pb-3'>

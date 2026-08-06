@@ -146,8 +146,9 @@ independientes: la actual, basada en el corpus v3 estructurado, y Gemini File
 Search sobre los PDF de la muestra. Cada respuesta mantiene sus propias fuentes,
 errores, métricas y coste, pero el coste **no se pinta en la interfaz**: se
 registra en el ledger y se emite por consola en `ChatView` al cerrar cada
-estrategia. Cuando solo hay una estrategia activa tampoco se rotula «Opción A»:
-la etiqueta y las pestañas solo existen si hay comparación. No se ha adoptado
+estrategia. Cuando solo hay una estrategia activa tampoco se rotula «Opción A»
+ni se enmarca la respuesta en tarjeta: etiqueta, pestañas y marco solo existen
+si hay comparación. No se ha adoptado
 `pgvector`; una unión futura de candidatos con reranking local solo se evaluará
 después de esta comparación.
 
