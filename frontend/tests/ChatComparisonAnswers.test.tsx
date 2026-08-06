@@ -36,16 +36,15 @@ afterEach(() => {
 });
 
 describe('ChatComparisonAnswers', () => {
-  it('mantiene una sola columna e identifica A cuando solo A está activa', () => {
+  it('mantiene una sola columna y no rotula la opción cuando solo A está activa', () => {
     render(<ChatComparisonAnswers answers={[answer('current_structured')]} />);
 
     expect(screen.queryByRole('tablist')).not.toBeInTheDocument();
     expect(screen.getByTestId('comparison-grid')).not.toHaveClass('md:grid-cols-2');
-    const response = screen.getByRole('region', { name: 'Respuesta de la opción A' });
+    expect(screen.queryByText('Opción A')).not.toBeInTheDocument();
+    const response = screen.getByRole('region', { name: 'Respuesta' });
     expect(response).toHaveTextContent('Contenido de A.');
-    expect(response).toHaveTextContent('Coste: 0.002 USD');
-    expect(response).not.toHaveTextContent('Coste de esta respuesta');
-    expect(response).not.toHaveTextContent('No incluye la preparación previa del corpus.');
+    expect(response).not.toHaveTextContent('Coste');
     expect(screen.queryByRole('region', { name: /valorar comparación/i })).not.toBeInTheDocument();
   });
 
@@ -63,12 +62,11 @@ describe('ChatComparisonAnswers', () => {
     expect(screen.getByText('Cobertura parcial')).toBeInTheDocument();
   });
 
-  it('identifica B cuando solo B está activa', () => {
+  it('tampoco rotula la opción cuando solo B está activa', () => {
     render(<ChatComparisonAnswers answers={[answer('gemini_file_search')]} />);
 
-    expect(screen.getByRole('region', { name: 'Respuesta de la opción B' })).toHaveTextContent(
-      'Contenido de B.'
-    );
+    expect(screen.queryByText('Opción B')).not.toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Respuesta' })).toHaveTextContent('Contenido de B.');
   });
 
   it('ofrece acciones de copia y fuentes en una respuesta live terminada', () => {
@@ -91,7 +89,7 @@ describe('ChatComparisonAnswers', () => {
       />
     );
 
-    const response = screen.getByRole('region', { name: 'Respuesta de la opción A' });
+    const response = screen.getByRole('region', { name: 'Respuesta' });
     expect(within(response).getByRole('button', { name: 'Copiar respuesta' })).toBeInTheDocument();
     expect(within(response).getByRole('button', { name: 'Descargar fuentes' })).toBeInTheDocument();
     expect(within(response).getByRole('link', { name: 'Ver fuentes' })).toHaveAttribute(
@@ -210,7 +208,7 @@ describe('ChatComparisonAnswers', () => {
     });
   });
 
-  it('presenta un coste desconocido como no disponible, nunca como cero', () => {
+  it('no expone el coste al usuario en ninguna medición', () => {
     render(
       <ChatComparisonAnswers
         answers={[
@@ -237,7 +235,7 @@ describe('ChatComparisonAnswers', () => {
       />
     );
 
-    expect(screen.getByText('Coste: no disponible')).toBeInTheDocument();
-    expect(screen.queryByText(/USD 0\.000000/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Coste/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/USD/)).not.toBeInTheDocument();
   });
 });

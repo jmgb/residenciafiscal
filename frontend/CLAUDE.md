@@ -144,8 +144,12 @@ hacen falta llamadas de más de 60 s o mayor control operativo. Código y operac
 La estrategia de recuperación se debe medir con una o dos respuestas
 independientes: la actual, basada en el corpus v3 estructurado, y Gemini File
 Search sobre los PDF de la muestra. Cada respuesta mantiene sus propias fuentes,
-errores, métricas y coste visible en USD. No se ha adoptado `pgvector`; una unión futura
-de candidatos con reranking local solo se evaluará después de esta comparación.
+errores, métricas y coste, pero el coste **no se pinta en la interfaz**: se
+registra en el ledger y se emite por consola en `ChatView` al cerrar cada
+estrategia. Cuando solo hay una estrategia activa tampoco se rotula «Opción A»:
+la etiqueta y las pestañas solo existen si hay comparación. No se ha adoptado
+`pgvector`; una unión futura de candidatos con reranking local solo se evaluará
+después de esta comparación.
 
 - Diseño: `docs/development/CHAT_BACKEND_DESIGN.md`
 - Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`

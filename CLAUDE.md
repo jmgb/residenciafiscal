@@ -488,10 +488,13 @@ del control plane; instrumentarlo por sí solo no lo hace resoluble.
 
 ## Costes del chat
 
-Cada respuesta real del chat debe mostrar y registrar por separado tokens,
-modelo efectivo, coste marginal en USD, medición y latencia. Las antiguas cifras
-por PDF son históricas y no se usan para presupuestar: ya no se analizan
-sentencias mediante el gateway.
+Cada respuesta real del chat debe registrar por separado tokens, modelo
+efectivo, coste marginal en USD, medición y latencia. **El coste no se muestra
+en la interfaz**: es una cifra operativa, no información para quien consulta.
+Vive en el ledger de Supabase y, para diagnóstico local, en la consola del
+navegador (`[chat] respuesta`). La tarjeta de investigación profunda conserva su
+propia línea de coste. Las antiguas cifras por PDF son históricas y no se usan
+para presupuestar: ya no se analizan sentencias mediante el gateway.
 
 ## Gestión de dependencias (uv)
 

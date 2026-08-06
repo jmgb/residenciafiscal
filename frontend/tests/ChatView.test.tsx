@@ -516,7 +516,7 @@ describe('ChatView', () => {
     });
     const fileSearch = screen.getByRole('tabpanel', { name: 'Respuesta de la opción B' });
     expect(structured).toHaveTextContent('Respuesta estructurada.');
-    expect(structured).toHaveTextContent('Coste: 0.012 USD');
+    expect(structured).not.toHaveTextContent('Coste');
     expect(structured).toHaveTextContent('Cita literal A.');
     expect(within(structured).queryByText(/SHA-256/)).not.toBeInTheDocument();
     expect(
@@ -526,7 +526,7 @@ describe('ChatView', () => {
       within(structured).getByRole('link', { name: 'Descargar PDF STS 107/2018' })
     ).toHaveAttribute('download', 'STS_107_2018.pdf');
     expect(fileSearch).toHaveTextContent('Respuesta File Search.');
-    expect(fileSearch).toHaveTextContent('Coste: 0.020 USD');
+    expect(fileSearch).not.toHaveTextContent('Coste');
     expect(fileSearch).toHaveTextContent('Cobertura limitada.');
     expect(screen.getByRole('region', { name: 'Valorar comparación' })).toBeInTheDocument();
     const assistant = useConversations
@@ -570,7 +570,7 @@ describe('ChatView', () => {
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
-    const failed = await screen.findByRole('region', { name: 'Respuesta de la opción B' });
+    const failed = await screen.findByRole('region', { name: 'Respuesta' });
     expect(failed).toHaveTextContent('Tipo de error: Cita no verificable');
     expect(failed).toHaveTextContent('citation_verification');
   });
@@ -609,12 +609,10 @@ describe('ChatView', () => {
     await user.type(screen.getByRole('textbox', { name: 'Consulta' }), 'pregunta');
     await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
 
-    expect(
-      await screen.findByRole('region', { name: 'Respuesta de la opción A' })
-    ).toHaveTextContent('Respuesta A conservada.');
-    expect(
-      screen.queryByRole('tabpanel', { name: 'Respuesta de la opción B' })
-    ).not.toBeInTheDocument();
+    expect(await screen.findByRole('region', { name: 'Respuesta' })).toHaveTextContent(
+      'Respuesta A conservada.'
+    );
+    expect(screen.queryByText('Opción A')).not.toBeInTheDocument();
   });
 
   it('despliega el extracto de una fuente al pulsarla', async () => {

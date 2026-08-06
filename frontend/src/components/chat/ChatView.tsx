@@ -352,6 +352,15 @@ export function ChatView({
               answer.latencyMs = chunk.latencyMs;
               answer.isStreaming = false;
               updateAnswers();
+              // El coste no se muestra en la interfaz: queda registrado en el
+              // ledger del servidor y, para diagnóstico local, en la consola.
+              console.info('[chat] respuesta', {
+                strategy: chunk.strategy,
+                status: chunk.status,
+                model: chunk.model,
+                latencyMs: chunk.latencyMs,
+                cost: chunk.cost,
+              });
             }
           } else if (chunk.type === 'done') {
             comparisonId = chunk.requestId;

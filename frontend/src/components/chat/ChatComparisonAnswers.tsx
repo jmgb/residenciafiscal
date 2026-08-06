@@ -86,20 +86,19 @@ export const ChatComparisonAnswers = ({
           isComparison ? 'md:grid-cols-2' : 'mx-auto max-w-4xl'
         }`}
       >
-        {answers.map((answer, index) => {
-          const label = optionName(answer.strategy);
-          return (
-            <ChatStrategyAnswerPanel
-              key={answer.strategy}
-              answer={answer}
-              label={label}
-              ariaLabel={`Respuesta de la opción ${optionLetter(answer.strategy)}`}
-              id={isComparison ? `${componentId}-panel-${index}` : undefined}
-              tabPanel={isComparison}
-              className={isComparison && index !== selectedIndex ? 'hidden md:block' : undefined}
-            />
-          );
-        })}
+        {answers.map((answer, index) => (
+          <ChatStrategyAnswerPanel
+            key={answer.strategy}
+            answer={answer}
+            label={isComparison ? optionName(answer.strategy) : undefined}
+            ariaLabel={
+              isComparison ? `Respuesta de la opción ${optionLetter(answer.strategy)}` : 'Respuesta'
+            }
+            id={isComparison ? `${componentId}-panel-${index}` : undefined}
+            tabPanel={isComparison}
+            className={isComparison && index !== selectedIndex ? 'hidden md:block' : undefined}
+          />
+        ))}
       </div>
 
       {canVote && showVote && (
