@@ -163,6 +163,21 @@ def test_comando_codex_es_no_interactivo_y_solo_lectura(tmp_path: Path) -> None:
     assert "--dangerously-bypass-approvals-and-sandbox" not in command
 
 
+def test_resuelve_codex_instalado_en_nvm_sin_estar_en_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from deep_research_pilot import _resolve_codex_binary
+
+    nvm_codex = tmp_path / ".nvm/versions/node/v24.19.0/bin/codex"
+    nvm_codex.parent.mkdir(parents=True)
+    nvm_codex.write_text("#!/bin/sh\n", encoding="utf-8")
+    nvm_codex.chmod(0o755)
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
+    monkeypatch.setenv("PATH", "/usr/bin:/bin")
+
+    assert _resolve_codex_binary("codex", "bwrap") == [str(nvm_codex)]
+
+
 def test_run_fail_closed_hasta_disponer_del_worker_autenticado(tmp_path: Path) -> None:
     from deep_research_pilot import prepare_pilot, run_pilot
 

@@ -254,6 +254,12 @@ def _resolve_codex_binary(codex_binary: str, sandbox_binary: str | None) -> list
     if len(parts) != 1:
         raise ValueError("el modo sandbox requiere un único binario Codex")
     resolved = shutil.which(parts[0])
+    if resolved is None and Path(parts[0]).name == parts[0]:
+        nvm_root = Path.home() / ".nvm" / "versions" / "node"
+        nvm_candidates = sorted(
+            nvm_root.glob(f"*/bin/{parts[0]}"), key=lambda path: str(path), reverse=True
+        )
+        resolved = next((str(path) for path in nvm_candidates if path.is_file()), None)
     if resolved is None:
         raise FileNotFoundError(f"no se encuentra el binario Codex: {parts[0]}")
     return [str(Path(resolved).resolve())]
