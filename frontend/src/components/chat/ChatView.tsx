@@ -19,6 +19,7 @@ import type {
 } from '@/types/chat';
 import { ChatBubble } from './ChatBubble';
 import { ChatComposer } from './ChatComposer';
+import { ChatDateDivider } from './ChatDateDivider';
 import { ChatSafetyBanner } from './ChatSafetyBanner';
 import { ChatWelcome } from './ChatWelcome';
 import { TypingIndicator } from './TypingIndicator';
@@ -445,6 +446,7 @@ export function ChatView({
             aria-live='polite'
             aria-relevant='additions'
           >
+            {messages[0] && <ChatDateDivider createdAt={messages[0].createdAt} />}
             {messages
               .filter((message) => !isEmptyStreamingPlaceholder(message))
               .map((message) => (

@@ -282,6 +282,23 @@ describe('ChatView', () => {
     expect(await screen.findByText('¿Y los 183 días?')).toBeInTheDocument();
   });
 
+  it('sitúa una sola marca temporal al comienzo del hilo, no en cada burbuja', async () => {
+    const user = userEvent.setup();
+    renderChat();
+
+    await user.type(screen.getByRole('textbox', { name: 'Consulta' }), '¿Y los 183 días?');
+    await user.click(screen.getByRole('button', { name: 'Enviar consulta' }));
+
+    await screen.findByText('¿Y los 183 días?');
+    await waitFor(() => {
+      expect(screen.getAllByTestId('chat-bubble-assistant')).toHaveLength(1);
+    });
+
+    const dividers = screen.getAllByTestId('chat-date-divider');
+    expect(dividers).toHaveLength(1);
+    expect(dividers[0]?.textContent).toMatch(/^hoy \d{1,2}:\d{2}$/);
+  });
+
   it('ofrece investigación profunda fuera de A/B y encola el job al pulsar el botón', async () => {
     vi.stubEnv('VITE_DEEP_RESEARCH_ENABLED', 'true');
     const user = userEvent.setup();

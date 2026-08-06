@@ -21,4 +21,19 @@ describe('ChatBubble', () => {
     expect(screen.getByText('como estas')).toHaveClass('text-background');
     expect(screen.getByText('como estas')).not.toHaveClass('text-white');
   });
+
+  it('no repite la hora en la burbuja: la marca temporal va al inicio del hilo', () => {
+    render(
+      <ChatBubble
+        message={{
+          id: 'user-1',
+          role: 'user',
+          content: 'como estas',
+          createdAt: '2026-08-05T10:00:00Z',
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('chat-bubble-user').textContent).toBe('como estas');
+  });
 });

@@ -6,17 +6,6 @@ import { ChatSources } from './ChatSources';
 import { DeepResearchCard } from './DeepResearchCard';
 import { EditorialChatAnswer } from './EditorialChatAnswer';
 
-function formatTime(isoString: string): string {
-  try {
-    return new Date(isoString).toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  } catch {
-    return '';
-  }
-}
-
 interface ChatBubbleProps {
   message: ChatMessage;
   hideComparisonVote?: boolean;
@@ -81,13 +70,6 @@ export function ChatBubble({
         {!isUser && message.sources && (
           <ChatSources id={`chat-sources-${message.id}`} sources={message.sources} />
         )}
-        <span
-          className={`mt-1 block text-right text-[0.6875rem] ${
-            isUser ? 'text-background/70' : 'text-muted-foreground'
-          }`}
-        >
-          {formatTime(message.createdAt)}
-        </span>
       </div>
     </div>
   );
