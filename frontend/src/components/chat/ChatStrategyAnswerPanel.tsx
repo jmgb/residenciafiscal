@@ -105,7 +105,7 @@ export const ChatStrategyAnswerPanel = ({
               return (
                 <li
                   key={`${source.judgmentId}:${source.page}:${source.quote}`}
-                  className='rounded-lg bg-muted px-3 py-2.5 text-xs'
+                  className='rounded-lg border border-border bg-background px-3 py-2.5 text-xs'
                 >
                   <p className='font-semibold text-foreground'>
                     {document?.roj ?? source.judgmentId} · Página PDF {source.page}

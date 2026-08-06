@@ -98,6 +98,10 @@ describe('ChatComparisonAnswers', () => {
       'href',
       '#chat-sources-current_structured'
     );
+
+    const cita = within(response).getByText('Cita literal A.').closest('li');
+    expect(cita).toHaveClass('border', 'bg-background');
+    expect(cita).not.toHaveClass('bg-muted');
   });
 
   it('muestra dos columnas en escritorio y pestañas ciegas en móvil', async () => {
