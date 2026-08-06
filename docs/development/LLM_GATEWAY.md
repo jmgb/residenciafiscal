@@ -271,3 +271,7 @@ afecta al coste—, se regenera el catálogo de precios de la Function y se ejec
 `make fast-check`. `uv.lock` clava la versión resuelta y CI ejecuta
 `uv sync --locked`, así que nada se mueve sin ese paso. Nunca se fija una rama
 mutable ni una ruta local.
+
+El lock resuelve además `cryptography==50.0.0` a través de `google-auth`. Se
+actualizó desde `49.0.0` para cerrar la alerta alta de GitHub sobre el descifrado
+PKCS#7; no cambia el pin ni el contrato público de `neutral-llm-gateway`.
