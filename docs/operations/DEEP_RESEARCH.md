@@ -16,6 +16,9 @@ React → Netlify /api/deep-research
 El callback persiste el resultado y crea de forma idempotente un mensaje
 `assistant`/`deep_research` en `private.chat_messages`. El frontend obtiene el
 estado por polling; Alfredo no abre una conexión directa con el navegador.
+Antes de crear el job, el endpoint valida el secreto de posesión del ledger y
+solo envía su SHA-256 a `authorize_chat_conversation`; así una investigación no
+puede crear primero una conversación sin protección.
 
 ## Contrato vigente
 
@@ -123,7 +126,11 @@ publica desde el borrador**, porque es texto libre y podría colar una conclusi�
 jurídica sin anclaje en la sección que el usuario lee como garantía. Lo que se
 publica ahí son los hechos que constata el verificador al recorrer el grafo, con
 sus cifras: cuántas citas se descartaron por no coincidir literalmente con su
-página y cuántas afirmaciones quedaron sin cita verificable. Un resultado
+página, cuántas citas exactas no quedaron enlazadas a una afirmación verificada y
+cuántas afirmaciones perdieron alguna cita no verificable. También separa las citas que
+sí eran exactas pero no respaldaban suficientemente la afirmación por solapamiento,
+negación o términos jurídicos exigidos; no presenta esos casos como ausencia de
+cita. Un resultado
 `parcial` que no retiró nada —porque lo declaró el propio modelo— conserva el
 aviso fijo de resultado parcial, de modo que nunca aparece sin explicación. Para
 `pregunta`, `abstención` y `error`, el texto libre del modelo se descarta, se usa

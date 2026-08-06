@@ -5,12 +5,18 @@ import { createProductionDependencies } from './composition';
 import type { ComparisonReport, ConversationTurn } from './contracts';
 import { type JudicialAuthorityIntent, requestedJudicialAuthority } from './judicial-authority';
 import type { ChatObservability } from './observability';
-import { validCountryPath, validIdentifier } from './request-identifiers';
+import {
+  conversationAccessHash,
+  validConversationAccessToken,
+  validCountryPath,
+  validIdentifier,
+} from './request-identifiers';
 import type { ChatRequestInput } from './supabase-chat-store';
 
 const MAX_REQUEST_BYTES = 200_000;
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 500;
+const HISTORY_LOAD_TIMEOUT_MS = 1_000;
 
 export interface ChatFunctionDependencies {
   enabled: boolean;
@@ -18,7 +24,7 @@ export interface ChatFunctionDependencies {
   observability: ChatObservability;
   recordRequest(input: ChatRequestInput): Promise<{ requestId: string }>;
   /** Turnos anteriores de la conversación, leídos del ledger; nunca del cuerpo. */
-  loadHistory(conversationId: string): Promise<ConversationTurn[]>;
+  loadHistory(conversationId: string, conversationAccessHash: string): Promise<ConversationTurn[]>;
   compare(
     question: string,
     requestId: string,
@@ -55,6 +61,7 @@ interface ParsedChatRequest {
   conversationId: string;
   userMessageId: string;
   countryPath: string;
+  conversationAccessToken: string;
 }
 
 const jsonError = (status: number, message: string, requestId?: string) =>
@@ -106,19 +113,35 @@ const parseQuestion = async (request: Request): Promise<ParsedChatRequest | null
   if (!latestUser) return null;
   const bodyIdentifiers = parsed as {
     conversation_id?: unknown;
+    conversation_access_token?: unknown;
     country_path?: unknown;
   };
+  let conversationAccessToken: string;
+  let legacyClient = false;
+  // Las pestañas cargadas antes del rollout no conocen todavía el secreto. Se
+  // les permite terminar la consulta, pero en un hilo nuevo y aislado: nunca se
+  // acepta su UUID visible para leer o apropiarse de una conversación existente.
+  if (bodyIdentifiers.conversation_access_token === undefined) {
+    legacyClient = true;
+    conversationAccessToken = newConversationAccessToken();
+  } else if (validConversationAccessToken(bodyIdentifiers.conversation_access_token)) {
+    conversationAccessToken = bodyIdentifiers.conversation_access_token;
+  } else {
+    return null;
+  }
   return {
     question: latestUser.content.trim(),
-    conversationId: validIdentifier(bodyIdentifiers.conversation_id)
-      ? bodyIdentifiers.conversation_id
-      : `conversation-${crypto.randomUUID()}`,
+    conversationId:
+      !legacyClient && validIdentifier(bodyIdentifiers.conversation_id)
+        ? bodyIdentifiers.conversation_id
+        : `conversation-${crypto.randomUUID()}`,
     userMessageId: validIdentifier(latestUser.id)
       ? latestUser.id
       : `message-${crypto.randomUUID()}`,
     countryPath: validCountryPath(bodyIdentifiers.country_path)
       ? bodyIdentifiers.country_path
       : '/espana',
+    conversationAccessToken,
   };
 };
 
@@ -130,6 +153,27 @@ const event = (name: string, data: unknown) => `event: ${name}\ndata: ${JSON.str
  */
 const errorNameOf = (error: unknown): string | undefined =>
   error instanceof Error ? error.name : undefined;
+
+const newConversationAccessToken = (): string =>
+  [...crypto.getRandomValues(new Uint8Array(32))]
+    .map((value) => value.toString(16).padStart(2, '0'))
+    .join('');
+
+const loadHistoryWithinTimeout = async (
+  loadHistory: () => Promise<ConversationTurn[]>
+): Promise<ConversationTurn[]> => {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      loadHistory().catch(() => []),
+      new Promise<ConversationTurn[]>((resolve) => {
+        timeout = setTimeout(() => resolve([]), HISTORY_LOAD_TIMEOUT_MS);
+      }),
+    ]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+};
 
 export const serializeComparison = (report: ComparisonReport): string => {
   const events: string[] = [];
@@ -181,6 +225,7 @@ export const createChatHandler =
     if (!parsed) return jsonError(400, 'Petición inválida', requestId);
 
     const authorityIntent = requestedJudicialAuthority(parsed.question);
+    const accessHash = await conversationAccessHash(parsed.conversationAccessToken);
     let recordedRequest: { requestId: string };
     const recordStarted = performance.now();
     try {
@@ -190,6 +235,7 @@ export const createChatHandler =
         userMessageId: parsed.userMessageId,
         countryPath: parsed.countryPath,
         question: parsed.question,
+        conversationAccessHash: accessHash,
       });
     } catch (error) {
       await dependencies.observability.recordFailure({
@@ -207,9 +253,9 @@ export const createChatHandler =
 
     // El contexto conversacional es una mejora, no un requisito: si el ledger no
     // devuelve el hilo se responde igual, tratando la pregunta como autosuficiente.
-    const history = await dependencies
-      .loadHistory(parsed.conversationId)
-      .catch(() => [] as ConversationTurn[]);
+    const history = await loadHistoryWithinTimeout(() =>
+      dependencies.loadHistory(parsed.conversationId, accessHash)
+    );
 
     let report: ComparisonReport;
     const compareStarted = performance.now();

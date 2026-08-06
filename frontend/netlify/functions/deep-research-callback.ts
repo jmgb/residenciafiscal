@@ -233,6 +233,9 @@ const store = createProductionDeepResearchStore();
 export default createDeepResearchCallbackHandler({
   secret: process.env.ALFREDO_HMAC_SECRET?.trim() || '',
   store: store ?? {
+    async authorizeConversation() {
+      throw new Error('unavailable');
+    },
     async create() {
       throw new Error('unavailable');
     },

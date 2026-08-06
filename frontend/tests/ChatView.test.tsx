@@ -67,7 +67,8 @@ function LocationProbe() {
 function renderChatAt(
   initialEntries: string[],
   engine: ChatEngine = createFakeEngine(),
-  navTargets: string[] = []
+  navTargets: string[] = [],
+  isStub = true
 ) {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
@@ -76,8 +77,8 @@ function renderChatAt(
         <Link key={to} to={to}>{`ir a ${to}`}</Link>
       ))}
       <Routes>
-        <Route path='/' element={<ChatView engine={engine} isStub />} />
-        <Route path='/c/:conversationId' element={<ChatView engine={engine} isStub />} />
+        <Route path='/' element={<ChatView engine={engine} isStub={isStub} />} />
+        <Route path='/c/:conversationId' element={<ChatView engine={engine} isStub={isStub} />} />
       </Routes>
     </MemoryRouter>
   );
@@ -321,6 +322,7 @@ describe('ChatView', () => {
     );
     expect(JSON.parse(String(startCall?.[1]?.body))).toMatchObject({
       comparison_id: null,
+      conversation_access_token: expect.stringMatching(/^[0-9a-f]{64}$/),
     });
     expect(screen.getByText('Investigación profunda en cola')).toBeInTheDocument();
   });
@@ -423,6 +425,7 @@ describe('ChatView', () => {
       countryPath: '/mexico',
       countryName: 'México',
       conversationId: expect.any(String),
+      conversationAccessToken: expect.stringMatching(/^[0-9a-f]{64}$/),
     });
   });
 
@@ -701,6 +704,59 @@ describe('ChatView', () => {
     expect(
       screen.queryByRole('status', { name: 'Preparando la respuesta' })
     ).not.toBeInTheDocument();
+  });
+
+  it('muestra la respuesta pero no admite un seguimiento hasta que el turno está en el ledger', async () => {
+    vi.useFakeTimers();
+    let finishRecord: (response: Response) => void = () => undefined;
+    vi.spyOn(globalThis, 'fetch').mockImplementation(
+      () =>
+        new Promise<Response>((resolve) => {
+          finishRecord = resolve;
+        })
+    );
+    renderChatAt(['/'], createFakeEngine(), [], false);
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
+      })
+    );
+    await act(async () => vi.advanceTimersByTimeAsync(12_000));
+
+    expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Detener respuesta' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Enviar consulta' })).not.toBeInTheDocument();
+
+    await act(async () => finishRecord(new Response(null, { status: 204 })));
+    expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Enviar consulta' })).toBeInTheDocument();
+  });
+
+  it('conserva la respuesta visible si se cancela mientras se registra el turno editorial', async () => {
+    vi.useFakeTimers();
+    vi.spyOn(globalThis, 'fetch').mockImplementation(
+      (_url, init) =>
+        new Promise((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => reject(init.signal?.reason), {
+            once: true,
+          });
+        })
+    );
+    renderChatAt(['/'], createFakeEngine(), [], false);
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: '¿Cómo se valoran las ausencias esporádicas del art. 9.1.a) LIRPF?',
+      })
+    );
+    await act(async () => vi.advanceTimersByTimeAsync(12_000));
+    fireEvent.click(screen.getByRole('button', { name: 'Detener respuesta' }));
+
+    await act(async () => undefined);
+    expect(screen.getByRole('region', { name: 'Respuesta editorial' })).toBeInTheDocument();
+    expect(screen.queryByText('Respuesta detenida.')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Enviar consulta' })).toBeInTheDocument();
   });
 
   it('sitúa el inicio de una respuesta editorial en la parte superior de lectura', async () => {

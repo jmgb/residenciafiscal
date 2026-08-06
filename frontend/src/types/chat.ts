@@ -126,6 +126,8 @@ export interface ChatRequestContext {
   countryName: string;
   /** Identificador aleatorio local; no identifica por sí solo a una persona. */
   conversationId?: string;
+  /** Secreto local de posesión; el servidor solo persiste su SHA-256. */
+  conversationAccessToken?: string;
 }
 
 export interface ChatMessage {
@@ -255,6 +257,10 @@ export interface ChatEngine {
 
 export interface Conversation {
   id: string;
+  /** ID usado en el ledger; se separa del ID local al migrar historiales antiguos. */
+  ledgerId: string;
+  /** Secreto anónimo que autoriza a leer este hilo del ledger. */
+  accessToken: string;
   title: string;
   createdAt: string;
   updatedAt: string;

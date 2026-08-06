@@ -63,6 +63,9 @@ const store = createProductionDeepResearchStore();
 export default createDeepResearchCancelHandler({
   env: productionEnvironment,
   store: store ?? {
+    async authorizeConversation() {
+      throw new Error('unavailable');
+    },
     async create() {
       throw new Error('unavailable');
     },

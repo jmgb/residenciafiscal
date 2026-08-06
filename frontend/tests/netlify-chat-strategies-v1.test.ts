@@ -41,7 +41,12 @@ describe('estrategia A estructurada', () => {
       'dame un ejemplo de lo anterior',
       contextWith([
         {
-          question: '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?',
+          question: '¿Qué dice el Tribunal Supremo sobre los certificados?',
+          answer: 'El certificado a efectos del CDI se presume válido.',
+        },
+        {
+          question:
+            '¿Qué tiene en cuenta la Audiencia Nacional para demostrar la residencia en España?',
           answer: 'Hacienda atiende al seguimiento de cuentas bancarias.',
         },
       ])
@@ -50,9 +55,14 @@ describe('estrategia A estructurada', () => {
     expect(write).toHaveBeenCalledOnce();
     expect(answer.status).toBe('completa');
     const userPrompt = write.mock.calls[0]?.[0].userPrompt ?? '';
-    expect(userPrompt).toContain('¿Qué tiene en cuenta Hacienda');
+    expect(userPrompt).toContain('¿Qué tiene en cuenta la Audiencia Nacional');
     expect(userPrompt).toContain('El historial no es evidencia');
     expect(userPrompt).toContain('dame un ejemplo de lo anterior');
+    expect(answer.diagnostics).toMatchObject({
+      authority_intent: 'audiencia_nacional',
+      authority_match: 'direct',
+      retrieval_filter: 'local_authority="audiencia_nacional"',
+    });
   });
 
   // Una pregunta que se sostiene sola debe recuperar igual que antes del historial:
@@ -404,15 +414,27 @@ describe('estrategia B Gemini File Search', () => {
 
     await strategy.answer(
       'dame un ejemplo de lo anterior',
-      contextWith([{ question: '¿Qué valoró la Sala?', answer: 'La valoración es conjunta.' }])
+      contextWith([
+        {
+          question: '¿Qué dijo el Tribunal Supremo?',
+          answer: 'Una respuesta anterior del Supremo.',
+        },
+        {
+          question: '¿Qué valoró la Audiencia Nacional?',
+          answer: 'La valoración es conjunta.',
+        },
+      ])
     );
 
-    expect(prompt).toContain('¿Qué valoró la Sala?');
+    expect(prompt).toContain('¿Qué valoró la Audiencia Nacional?');
     expect(prompt).toContain('La valoración es conjunta.');
     expect(prompt).toContain('El historial no es evidencia');
-    expect(prompt.indexOf('¿Qué valoró la Sala?')).toBeLessThan(
+    expect(prompt.indexOf('¿Qué valoró la Audiencia Nacional?')).toBeLessThan(
       prompt.indexOf('dame un ejemplo de lo anterior')
     );
+    expect(interact.mock.calls[0]?.[0]).toMatchObject({
+      metadataFilter: 'authority="audiencia_nacional"',
+    });
   });
 
   it('solo publica citas verificadas contra el texto íntegro local', async () => {

@@ -23,7 +23,7 @@ import type {
 } from '@/types/chat';
 
 export const CONVERSATIONS_STORAGE_KEY = 'rf.conversations.v1';
-const CONVERSATIONS_STORAGE_VERSION = 4;
+const CONVERSATIONS_STORAGE_VERSION = 5;
 
 const TITLE_MAX_LENGTH = 60;
 const DEFAULT_TITLE = 'Consulta sin título';
@@ -39,6 +39,14 @@ function newId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID();
   return `id-${Math.random().toString(36).slice(2)}-${Date.now()}`;
 }
+
+const validAccessToken = (value: unknown): value is string =>
+  typeof value === 'string' && /^[0-9a-f]{64}$/.test(value);
+
+const newAccessToken = (): string => {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return [...bytes].map((value) => value.toString(16).padStart(2, '0')).join('');
+};
 
 function byUpdatedDesc(a: Conversation, b: Conversation): number {
   return b.updatedAt.localeCompare(a.updatedAt);
@@ -182,7 +190,12 @@ function isStoredMessage(value: unknown): value is ChatMessage {
   );
 }
 
-function isStoredConversation(value: unknown): value is Conversation {
+type StoredConversation = Omit<Conversation, 'ledgerId' | 'accessToken'> & {
+  ledgerId?: string;
+  accessToken?: string;
+};
+
+function isStoredConversation(value: unknown): value is StoredConversation {
   if (!isRecord(value)) return false;
   if (
     typeof value.id !== 'string' ||
@@ -193,7 +206,12 @@ function isStoredConversation(value: unknown): value is Conversation {
   ) {
     return false;
   }
-  return value.messages.every(isStoredMessage);
+  return (
+    (value.ledgerId === undefined ||
+      (typeof value.ledgerId === 'string' && /^[\w-]{1,128}$/.test(value.ledgerId))) &&
+    (value.accessToken === undefined || validAccessToken(value.accessToken)) &&
+    value.messages.every(isStoredMessage)
+  );
 }
 
 /**
@@ -211,8 +229,44 @@ export function clearStreamingFlags(conversations: unknown): Conversation[] {
 
   const valid = conversations.filter(isStoredConversation);
   let changed = valid.length !== conversations.length;
+  const secured: Conversation[] = valid.map((conversation) => {
+    if (conversation.ledgerId && conversation.accessToken) return conversation as Conversation;
+    changed = true;
+    const messages = conversation.messages.map((message) => {
+      // Los comparisonId y jobs anteriores pertenecen al UUID visible que se
+      // acaba de abandonar. No deben combinarse con el ledger nuevo.
+      const { comparisonId: _legacyComparisonId, ...withoutComparison } = message;
+      if (!message.deepResearch) return withoutComparison;
+      const { cancellationRequested: _pendingCancellation, ...deepResearch } = message.deepResearch;
+      const wasActive = deepResearch.status === 'queued' || deepResearch.status === 'running';
+      return {
+        ...withoutComparison,
+        deepResearch: {
+          ...deepResearch,
+          comparisonId: null,
+          ...(wasActive
+            ? {
+                status: 'error' as const,
+                stage: 'error' as const,
+                result: null,
+                error:
+                  'Esta investigación pertenecía a una versión anterior. Tras la actualización, iníciala de nuevo.',
+              }
+            : {}),
+        },
+      };
+    });
+    return {
+      ...conversation,
+      // Un historial previo a este contrato empieza un hilo nuevo en el servidor:
+      // así nadie puede reclamar por primera vez un UUID antiguo visto en una URL.
+      ledgerId: newId(),
+      accessToken: newAccessToken(),
+      messages,
+    };
+  });
 
-  const sanitized = valid.map((conversation) => {
+  const sanitized = secured.map((conversation) => {
     if (
       !conversation.messages.some(
         (message) =>
@@ -252,7 +306,7 @@ export function clearStreamingFlags(conversations: unknown): Conversation[] {
     };
   });
 
-  return changed ? sanitized : valid;
+  return changed ? sanitized : secured;
 }
 
 interface ConversationsState {
@@ -271,8 +325,11 @@ export const useConversations = create<ConversationsState>()(
 
       createConversation: () => {
         const now = new Date().toISOString();
+        const id = newId();
         const conversation: Conversation = {
-          id: newId(),
+          id,
+          ledgerId: id,
+          accessToken: newAccessToken(),
           title: DEFAULT_TITLE,
           createdAt: now,
           updatedAt: now,

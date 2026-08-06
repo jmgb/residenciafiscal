@@ -42,6 +42,19 @@ const recordFromRpc = (value: unknown): DeepResearchJobRecord | null => {
 export class SupabaseDeepResearchStore implements DeepResearchStore {
   constructor(private readonly client: RpcClient) {}
 
+  async authorizeConversation(input: {
+    conversationId: string;
+    countryPath: string;
+    conversationAccessHash: string;
+  }): Promise<void> {
+    const { data, error } = await this.client.rpc('authorize_chat_conversation', {
+      p_conversation_id: input.conversationId,
+      p_country_path: input.countryPath,
+      p_conversation_access_hash: input.conversationAccessHash,
+    });
+    if (error || data !== true) throw new Error('deep research persistence unavailable');
+  }
+
   async create(input: {
     jobId: string;
     conversationId: string;

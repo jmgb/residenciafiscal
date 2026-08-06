@@ -136,8 +136,15 @@ salida experimental:
 
 Reglas de comparabilidad:
 
-- A y B reciben la misma pregunta y la misma instrucción jurídica base; el
-  router puede terminar A sin llamada;
+- A y B reciben la misma pregunta actual y la misma instrucción jurídica base;
+  el router puede terminar A sin llamada;
+- el servidor reconstruye hasta seis turnos y 12 KiB desde el ledger. A recibe
+  solo sus respuestas anteriores y B solo las suyas; las preguntas del usuario
+  y los turnos editoriales son comunes, estos últimos marcados como ajenos;
+- la lectura requiere un secreto aleatorio de posesión además del UUID visible;
+  Supabase guarda su SHA-256 y nunca el secreto en claro;
+- el historial ayuda a interpretar y recuperar, pero nunca cuenta como evidencia
+  de la respuesta actual;
 - los modelos son deliberadamente distintos en la configuración vigente: A
   usa Luna + `high` y B uno de los modelos Gemini permitidos por File Search;
   esta prueba compara stacks de producto completos y no aísla el efecto del
@@ -215,8 +222,9 @@ El runbook de despliegue está en
 | Contrato y validación de fuentes v2 | `frontend/src/types/chat.ts`, `frontend/src/lib/chat-source.ts` |
 | Persistencia y presentación de fuentes | `frontend/src/stores/useConversations.ts`, `frontend/src/components/chat/ChatSources.tsx` |
 | Endpoint y runtime HTTP cerrados por defecto | `src/api/chat.py`, `src/api/chat_runtime.py` |
-| Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta las estrategias A/B activas en paralelo y falla cerrado |
-| Mensajes, presupuesto y costes V1 | `supabase-chat-store.ts`, `supabase/migrations/` |
+| Runtime V1 Netlify-only | `frontend/netlify/functions/chat/`; ejecuta A/B en paralelo, aísla sus hilos y falla cerrado |
+| Turnos editoriales | `frontend/netlify/functions/chat-editorial.ts`, `frontend/src/data/editorialChatAnswers.json` |
+| Mensajes, historial y costes V1 | `supabase-chat-store.ts`, `supabase/migrations/` |
 | Proxy FastAPI conservado | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` |
 | Parser SSE comparativo y transporte live | `frontend/src/lib/chat-sse-protocol.ts`, `frontend/src/lib/chat-engine.live.ts` |
 | UI y persistencia de una o dos respuestas | `frontend/src/components/chat/ChatComparisonAnswers.tsx`, `frontend/src/stores/useConversations.ts` |

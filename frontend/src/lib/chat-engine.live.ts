@@ -52,6 +52,7 @@ async function requestChat(
         // reconstruye el servidor desde el ledger: reenviarlo desde aquí obligaría
         // a dar por buenas unas respuestas que el cliente podría haber alterado.
         conversation_id: context?.conversationId ?? latestUserMessage.id,
+        conversation_access_token: context?.conversationAccessToken,
         country_path: context?.countryPath ?? '/espana',
         messages: [{ id: latestUserMessage.id, role: 'user', content: latestUserMessage.content }],
       }),

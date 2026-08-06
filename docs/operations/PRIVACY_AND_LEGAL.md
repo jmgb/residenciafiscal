@@ -31,8 +31,9 @@ mentir:
 
 | Afirmación publicada | Dónde se verifica |
 |---|---|
-| El navegador solo transmite la última pregunta | `frontend/src/lib/chat-engine.live.ts` |
+| Del contenido conversacional, el navegador solo transmite la última pregunta | `frontend/src/lib/chat-engine.live.ts` |
 | El servidor añade los seis últimos turnos de esa conversación, recortados y sin ampliar lo almacenado | `read_chat_history` en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md), `MAX_HISTORY_TURNS` en `frontend/netlify/functions/chat/conversation-history.ts` |
+| Conocer el UUID de `/c/...` no permite leer el hilo; hace falta el secreto local y solo se guarda su SHA-256 | `authorize_chat_conversation` y `read_chat_history` en la migración forward-only `20260806015000_chat_history_possession.sql` |
 | A pide al proveedor que no conserve la conversación | `store: false` en `frontend/netlify/functions/chat/provider-adapters.ts` |
 | B busca en el almacén de los 106 PDF | `frontend/netlify/functions/chat/file-search-strategy.ts` |
 | No se guardan IP, agente de usuario ni diagnóstico bruto | RPC de `public` descritas en [`SUPABASE_CHAT.md`](SUPABASE_CHAT.md) |
@@ -114,8 +115,11 @@ antes de difundirlo a terceros como servicio disponible.
 
 ## Ejercicio de derechos
 
-Sin cuentas de usuario, una conversación solo se localiza por el UUID de su URL.
-Ese identificador **no acredita identidad**: el procedimiento exige verificación
+Sin cuentas de usuario, una conversación se localiza operativamente por la
+referencia técnica de supresión que `/privacidad` lee del estado local. Suele
+coincidir con el UUID de la URL; tras migrar un historial antiguo puede ser el
+`ledgerId` nuevo, que la página muestra sin revelar el secreto. Ni la referencia
+ni el secreto **acreditan identidad**: el procedimiento exige verificación
 por un canal separado y un ticket operativo antes de borrar nada
 ([`SUPABASE_CHAT.md`](SUPABASE_CHAT.md)). La respuesta al solicitante debe
 informar de que la copia de seguridad que contenga el registro desaparece al

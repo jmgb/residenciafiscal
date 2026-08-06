@@ -124,7 +124,7 @@ describe('composition root de la Function con Supabase', () => {
   });
 
   it('crea un cliente exclusivamente server-side y conecta el registro privado', async () => {
-    rpc.mockResolvedValueOnce({
+    rpc.mockResolvedValueOnce({ data: true, error: null }).mockResolvedValueOnce({
       data: { request_id: 'chat-request-1', created: true },
       error: null,
     });
@@ -145,6 +145,7 @@ describe('composition root de la Function con Supabase', () => {
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: 'Pregunta',
+        conversationAccessHash: 'b'.repeat(64),
       })
     ).resolves.toEqual({ requestId: 'chat-request-1' });
     expect(rpc).toHaveBeenCalledWith(
@@ -152,7 +153,7 @@ describe('composition root de la Function con Supabase', () => {
       expect.objectContaining({
         p_experiment: expect.objectContaining({
           experiment_version: 'ab-2026-08-04-v5',
-          structured_prompt_version: 'structured-claims-v6',
+          structured_prompt_version: 'structured-claims-v7',
           file_search_prompt_version: 'file-search-authority-v9',
         }),
       })

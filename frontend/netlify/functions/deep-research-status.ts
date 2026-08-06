@@ -45,6 +45,9 @@ export const createDeepResearchStatusHandler =
 const store = createProductionDeepResearchStore();
 export default createDeepResearchStatusHandler({
   store: store ?? {
+    async authorizeConversation() {
+      throw new Error('unavailable');
+    },
     async create() {
       throw new Error('unavailable');
     },

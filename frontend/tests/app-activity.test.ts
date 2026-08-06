@@ -13,6 +13,8 @@ import type { ChatMessage, ChatStrategyAnswer, Conversation } from '@/types/chat
 function conversationWith(messages: ChatMessage[]): Conversation {
   return {
     id: 'c1',
+    ledgerId: 'c1',
+    accessToken: 'a'.repeat(64),
     title: 'Consulta',
     createdAt: '2026-07-31T10:00:00.000Z',
     updatedAt: '2026-07-31T10:00:00.000Z',

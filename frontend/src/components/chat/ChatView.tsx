@@ -160,6 +160,7 @@ export function ChatView({
     startDeepResearch: handleStartDeepResearch,
   } = useDeepResearch({
     conversationId,
+    ledgerConversationId: conversation?.ledgerId,
     countryPath: country.path,
     createMessageId: newMessageId,
     isStreaming,
@@ -248,6 +249,8 @@ export function ChatView({
         ? useConversations.getState().getConversation(conversationId)
         : undefined;
       const targetId = existing?.id ?? createConversation();
+      const targetConversation = useConversations.getState().getConversation(targetId);
+      if (!targetConversation) return;
       if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
 
       // Enviar es una acción explícita: devuelve al usuario al final del hilo.
@@ -305,7 +308,8 @@ export function ChatView({
         for await (const chunk of engine.askQuestion(history, controller.signal, {
           countryPath: country.path,
           countryName: country.name,
-          conversationId: targetId,
+          conversationId: targetConversation.ledgerId,
+          conversationAccessToken: targetConversation.accessToken,
         })) {
           if (chunk.type === 'answer_start') {
             answers ??= [];

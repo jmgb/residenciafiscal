@@ -180,9 +180,14 @@ producirá dos respuestas consecutivas y visualmente separadas:
 1. **Respuesta A — Sistema estructurado actual.**
 2. **Respuesta B — Gemini File Search.**
 
-Las dos estrategias reciben la misma última pregunta autosuficiente, pero
-trabajan de forma independiente. El historial permanece local en esta versión
-single-turn. Ninguna puede consumir la respuesta, los candidatos, las
+Las dos estrategias reciben la misma pregunta actual y hasta seis turnos
+previos reconstruidos por el servidor. A ve solo sus respuestas anteriores y B
+solo las suyas; las preguntas del usuario son comunes y un turno editorial se
+marca como ajeno para ambas. El historial no es evidencia y queda limitado a
+12 KiB. Una referencia explícita (`ese caso`, `lo anterior`) incorpora primero
+la pregunta previa más cercana aunque el turno actual ya contenga vocabulario
+jurídico; una pregunta autosuficiente conserva la recuperación original. Leer el
+hilo exige el secreto local cuyo hash guarda Supabase. Ninguna estrategia puede consumir la respuesta, los candidatos, las
 puntuaciones ni las conclusiones de la otra.
 
 El objetivo es comparar con evidencia qué enfoque recupera y explica mejor las

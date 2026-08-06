@@ -5,6 +5,7 @@ import type {
   DeepResearchJobRecord,
   DeepResearchStore,
 } from '../netlify/functions/deep-research/contracts';
+import { SupabaseDeepResearchStore } from '../netlify/functions/deep-research/store';
 import { createDeepResearchCallbackHandler } from '../netlify/functions/deep-research-callback';
 import { createDeepResearchCancelHandler } from '../netlify/functions/deep-research-cancel';
 import { createDeepResearchStatusHandler } from '../netlify/functions/deep-research-status';
@@ -21,6 +22,7 @@ const record: DeepResearchJobRecord = {
 
 function createStore(): DeepResearchStore {
   return {
+    authorizeConversation: vi.fn(async () => undefined),
     create: vi.fn(async () => record),
     get: vi.fn(async () => record),
     update: vi.fn(async () => undefined),
@@ -39,6 +41,23 @@ const env = {
 afterEach(() => vi.restoreAllMocks());
 
 describe('deep research HTTP contract', () => {
+  it('autoriza el ledger con el hash antes de crear trabajos', async () => {
+    const rpc = vi.fn(async () => ({ data: true, error: null }));
+    const store = new SupabaseDeepResearchStore({ rpc });
+
+    await store.authorizeConversation({
+      conversationId: 'conversation-1',
+      countryPath: '/espana',
+      conversationAccessHash: 'b'.repeat(64),
+    });
+
+    expect(rpc).toHaveBeenCalledWith('authorize_chat_conversation', {
+      p_conversation_id: 'conversation-1',
+      p_country_path: '/espana',
+      p_conversation_access_hash: 'b'.repeat(64),
+    });
+  });
+
   it('creates an authenticated Codex job without adding it to A/B', async () => {
     const store = createStore();
     const submit = vi.fn(async (payload: { job_id: string }) => ({
@@ -52,6 +71,7 @@ describe('deep research HTTP contract', () => {
         method: 'POST',
         body: JSON.stringify({
           conversation_id: 'conversation-1',
+          conversation_access_token: 'a'.repeat(64),
           comparison_id: 'chat-comparison-1',
           country_path: '/espana',
           question: '¿Cómo se acredita la residencia fiscal?',
@@ -64,6 +84,14 @@ describe('deep research HTTP contract', () => {
       job_id: expect.stringMatching(/^deep-/),
       status: 'queued',
     });
+    expect(store.authorizeConversation).toHaveBeenCalledWith({
+      conversationId: 'conversation-1',
+      countryPath: '/espana',
+      conversationAccessHash: expect.stringMatching(/^[0-9a-f]{64}$/),
+    });
+    expect(vi.mocked(store.authorizeConversation).mock.invocationCallOrder[0]).toBeLessThan(
+      vi.mocked(store.create).mock.invocationCallOrder[0] as number
+    );
     expect(submit).toHaveBeenCalledWith(
       expect.objectContaining({
         job_id: expect.stringMatching(/^deep-/),
@@ -107,6 +135,7 @@ describe('deep research HTTP contract', () => {
         method: 'POST',
         body: JSON.stringify({
           conversation_id: 'conversation-1',
+          conversation_access_token: 'a'.repeat(64),
           comparison_id: null,
           country_path: '/espana',
           question: '¿Cómo se acredita la residencia fiscal?',

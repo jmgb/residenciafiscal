@@ -4,7 +4,11 @@ import {
   verifyFileCitation,
 } from './citation-verification';
 import type { StrategyAnswer, StrategySource } from './contracts';
-import { conversationContextBlock } from './conversation-history';
+import {
+  contextualReferenceQuery,
+  conversationContextBlock,
+  questionReferencesHistory,
+} from './conversation-history';
 import {
   authorityLabel,
   authorityMatch,
@@ -123,8 +127,12 @@ export class GeminiFileSearchStrategy implements NetlifyChatStrategy {
 
   async answer(question: string, context: StrategyContext): Promise<StrategyAnswer> {
     const started = performance.now();
-    const judgmentIds = [...extractJudgmentIdentifiers(question)];
-    const authorityIntent = requestedJudicialAuthority(question);
+    const scopedQuery = questionReferencesHistory(question)
+      ? contextualReferenceQuery(context.history, question)
+      : question;
+    const judgmentIds = [...extractJudgmentIdentifiers(scopedQuery)];
+    const authorityIntent =
+      requestedJudicialAuthority(question) ?? requestedJudicialAuthority(scopedQuery);
     const metadataFilter =
       judgmentIds.length === 1
         ? `judgment_id="${judgmentIds[0]}"`

@@ -9,7 +9,12 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { editorialTurn } from './chat/editorial-answers';
-import { validCountryPath, validIdentifier } from './chat/request-identifiers';
+import {
+  conversationAccessHash,
+  validConversationAccessToken,
+  validCountryPath,
+  validIdentifier,
+} from './chat/request-identifiers';
 import {
   type EditorialTurnInput,
   SupabaseChatStore,
@@ -41,6 +46,7 @@ const parseEditorial = async (request: Request): Promise<EditorialTurnInput | nu
   const candidate = parsed as Record<string, unknown>;
   if (
     !validIdentifier(candidate.conversation_id) ||
+    !validConversationAccessToken(candidate.conversation_access_token) ||
     !validIdentifier(candidate.user_message_id) ||
     candidate.user_message_id.length > MAX_MESSAGE_ID_CHARS ||
     !validCountryPath(candidate.country_path)
@@ -51,6 +57,7 @@ const parseEditorial = async (request: Request): Promise<EditorialTurnInput | nu
   if (!turn) return null;
   return {
     conversationId: candidate.conversation_id,
+    conversationAccessHash: await conversationAccessHash(candidate.conversation_access_token),
     userMessageId: candidate.user_message_id,
     countryPath: candidate.country_path,
     ...turn,

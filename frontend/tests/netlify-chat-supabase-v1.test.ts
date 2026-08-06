@@ -87,8 +87,11 @@ const report: ComparisonReport = {
 
 describe('persistencia privada del chat en Supabase', () => {
   it('registra la pregunta con identificadores pseudónimos sin reservar dinero', async () => {
-    const rpc = vi.fn(async () => ({
-      data: { request_id: 'chat-request-1', created: true },
+    const rpc = vi.fn(async (functionName: string) => ({
+      data:
+        functionName === 'authorize_chat_conversation'
+          ? true
+          : { request_id: 'chat-request-1', created: true },
       error: null,
     }));
     const store = new SupabaseChatStore({ rpc }, experiment);
@@ -100,6 +103,7 @@ describe('persistencia privada del chat en Supabase', () => {
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: '¿Qué pruebas tiene en cuenta Hacienda?',
+        conversationAccessHash: 'b'.repeat(64),
       })
     ).resolves.toEqual({ requestId: 'chat-request-1' });
 
@@ -110,6 +114,11 @@ describe('persistencia privada del chat en Supabase', () => {
       p_country_path: '/espana',
       p_question: '¿Qué pruebas tiene en cuenta Hacienda?',
       p_experiment: experiment,
+    });
+    expect(rpc).toHaveBeenCalledWith('authorize_chat_conversation', {
+      p_conversation_id: 'conversation-1',
+      p_country_path: '/espana',
+      p_conversation_access_hash: 'b'.repeat(64),
     });
   });
 
@@ -191,7 +200,11 @@ describe('persistencia privada del chat en Supabase', () => {
     const store = new SupabaseChatStore({ rpc }, experiment);
 
     await expect(
-      store.history({ conversationId: 'conversation-1', turnLimit: 6 })
+      store.history({
+        conversationId: 'conversation-1',
+        conversationAccessHash: 'b'.repeat(64),
+        turnLimit: 6,
+      })
     ).resolves.toEqual([
       {
         question: '¿Cuántos días exige el artículo 9?',
@@ -203,6 +216,7 @@ describe('persistencia privada del chat en Supabase', () => {
     ]);
     expect(rpc).toHaveBeenCalledWith('read_chat_history', {
       p_conversation_id: 'conversation-1',
+      p_conversation_access_hash: 'b'.repeat(64),
       p_turn_limit: 6,
     });
   });
@@ -214,7 +228,11 @@ describe('persistencia privada del chat en Supabase', () => {
     const store = new SupabaseChatStore({ rpc }, experiment);
 
     await expect(
-      store.history({ conversationId: 'conversation-1', turnLimit: 6 })
+      store.history({
+        conversationId: 'conversation-1',
+        conversationAccessHash: 'b'.repeat(64),
+        turnLimit: 6,
+      })
     ).resolves.toEqual([]);
   });
 
@@ -234,6 +252,7 @@ describe('persistencia privada del chat en Supabase', () => {
 
     await store.recordEditorial({
       conversationId: 'conversation-1',
+      conversationAccessHash: 'b'.repeat(64),
       userMessageId: 'm1',
       countryPath: '/espana',
       question: '¿Cómo se valoran las ausencias esporádicas?',
@@ -242,15 +261,20 @@ describe('persistencia privada del chat en Supabase', () => {
       sources: [],
     });
 
-    expect(calls[0]?.[0]).toBe('create_chat_request');
+    expect(calls[0]?.[0]).toBe('authorize_chat_conversation');
     expect(calls[0]?.[1]).toMatchObject({
+      p_conversation_id: 'conversation-1',
+      p_conversation_access_hash: 'b'.repeat(64),
+    });
+    expect(calls[1]?.[0]).toBe('create_chat_request');
+    expect(calls[1]?.[1]).toMatchObject({
       p_request_id: 'chat-editorial-m1',
       p_conversation_id: 'conversation-1',
       p_question: '¿Cómo se valoran las ausencias esporádicas?',
     });
-    expect(calls[1]?.[0]).toBe('complete_chat_request');
-    expect(calls[1]?.[1]).toMatchObject({ p_actual_microusd: 0, p_actual_complete: true });
-    const answers = calls[1]?.[1].p_answers as Record<string, unknown>[];
+    expect(calls[2]?.[0]).toBe('complete_chat_request');
+    expect(calls[2]?.[1]).toMatchObject({ p_actual_microusd: 0, p_actual_complete: true });
+    const answers = calls[2]?.[1].p_answers as Record<string, unknown>[];
     expect(answers).toHaveLength(1);
     expect(answers[0]).toMatchObject({
       strategy: 'editorial',
@@ -276,6 +300,7 @@ describe('persistencia privada del chat en Supabase', () => {
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: 'Pregunta',
+        conversationAccessHash: 'b'.repeat(64),
       })
     ).rejects.toThrow('Supabase no disponible');
   });

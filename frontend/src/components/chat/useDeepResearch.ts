@@ -52,6 +52,7 @@ export const comparisonIdForLatestQuestion = (messages: ChatMessage[]): string |
 
 interface DeepResearchControllerInput {
   conversationId?: string;
+  ledgerConversationId?: string;
   countryPath: string;
   createMessageId(): string;
   isStreaming: boolean;
@@ -60,6 +61,7 @@ interface DeepResearchControllerInput {
 
 export const useDeepResearch = ({
   conversationId,
+  ledgerConversationId,
   countryPath,
   createMessageId,
   isStreaming,
@@ -83,6 +85,8 @@ export const useDeepResearch = ({
       ? useConversations.getState().getConversation(conversationId)
       : undefined;
     const targetId = existing?.id ?? createConversation();
+    const targetConversation = useConversations.getState().getConversation(targetId);
+    if (!targetConversation) return;
     if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
     const messageId = createMessageId();
     appendMessage(targetId, {
@@ -100,7 +104,8 @@ export const useDeepResearch = ({
     });
     try {
       const accepted = await startDeepResearch({
-        conversationId: targetId,
+        conversationId: targetConversation.ledgerId,
+        conversationAccessToken: targetConversation.accessToken,
         comparisonId: latestComparisonId ?? null,
         countryPath,
         question: latestQuestion.content,
@@ -142,7 +147,7 @@ export const useDeepResearch = ({
 
   const cancel = useCallback(
     async (jobId: string) => {
-      if (!conversationId || !jobId || jobId === 'pending') return;
+      if (!conversationId || !ledgerConversationId || !jobId || jobId === 'pending') return;
       const message = [
         ...(useConversations.getState().getConversation(conversationId)?.messages ?? []),
       ]
@@ -155,7 +160,7 @@ export const useDeepResearch = ({
         deepResearch: { ...currentJob, cancellationRequested: true, error: null },
       });
       try {
-        await cancelDeepResearch(jobId, conversationId);
+        await cancelDeepResearch(jobId, ledgerConversationId);
         updateMessage(conversationId, message.id, {
           deepResearch: {
             ...currentJob,
@@ -169,7 +174,7 @@ export const useDeepResearch = ({
       } catch (error) {
         if (error instanceof DeepResearchRequestError && error.status === 409) {
           try {
-            const latest = await getDeepResearchStatus(jobId, conversationId);
+            const latest = await getDeepResearchStatus(jobId, ledgerConversationId);
             updateMessage(
               conversationId,
               message.id,
@@ -197,17 +202,18 @@ export const useDeepResearch = ({
         }
       }
     },
-    [conversationId, updateMessage]
+    [conversationId, ledgerConversationId, updateMessage]
   );
 
   const activeJobId = activeDeepResearch ? deepResearchJob?.jobId : undefined;
   useEffect(() => {
-    if (!conversationId || !activeJobId || activeJobId === 'pending') return;
+    if (!conversationId || !ledgerConversationId || !activeJobId || activeJobId === 'pending')
+      return;
     let disposed = false;
     let timer: number | undefined;
     const poll = async () => {
       try {
-        const next = await getDeepResearchStatus(activeJobId, conversationId);
+        const next = await getDeepResearchStatus(activeJobId, ledgerConversationId);
         if (disposed) return;
         const current = useConversations.getState().getConversation(conversationId);
         const message = [...(current?.messages ?? [])]
@@ -236,7 +242,7 @@ export const useDeepResearch = ({
       disposed = true;
       if (timer !== undefined) window.clearTimeout(timer);
     };
-  }, [activeJobId, conversationId, countryPath, updateMessage]);
+  }, [activeJobId, conversationId, countryPath, ledgerConversationId, updateMessage]);
 
   return {
     activeDeepResearch,

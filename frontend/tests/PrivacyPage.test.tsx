@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { staticRoute } from '@/data/staticRoutes';
 import { PrivacyPage } from '@/pages/PrivacyPage';
+import { useConversations } from '@/stores/useConversations';
 
 const renderPage = () =>
   render(
@@ -12,6 +13,7 @@ const renderPage = () =>
   );
 
 describe('PrivacyPage', () => {
+  afterEach(() => useConversations.setState({ conversations: [] }));
   it('identifica al responsable del tratamiento', () => {
     renderPage();
 
@@ -61,6 +63,27 @@ describe('PrivacyPage', () => {
       'href',
       '/?no_analytics=1'
     );
+  });
+
+  it('expone la referencia técnica correcta para suprimir un ledger migrado', () => {
+    useConversations.setState({
+      conversations: [
+        {
+          id: 'id-visible-antiguo',
+          ledgerId: 'id-tecnico-del-ledger',
+          accessToken: 'a'.repeat(64),
+          title: 'Consulta migrada',
+          createdAt: '2026-08-01T10:00:00.000Z',
+          updatedAt: '2026-08-01T10:01:00.000Z',
+          messages: [],
+        },
+      ],
+    });
+
+    renderPage();
+
+    expect(screen.getByText('id-tecnico-del-ledger')).toBeInTheDocument();
+    expect(screen.queryByText('a'.repeat(64))).not.toBeInTheDocument();
   });
 
   it('no publica el pendiente legal interno en la página', () => {

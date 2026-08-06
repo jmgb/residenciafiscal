@@ -52,8 +52,11 @@ describe('chat sin presupuesto monetario global', () => {
   });
 
   it('registra una consulta sin reservar dinero', async () => {
-    const rpc = vi.fn(async () => ({
-      data: { request_id: 'chat-request-1', created: true },
+    const rpc = vi.fn(async (functionName: string) => ({
+      data:
+        functionName === 'authorize_chat_conversation'
+          ? true
+          : { request_id: 'chat-request-1', created: true },
       error: null,
     }));
     const store = new SupabaseChatStore({ rpc }, experiment);
@@ -65,6 +68,7 @@ describe('chat sin presupuesto monetario global', () => {
         userMessageId: 'message-1',
         countryPath: '/espana',
         question: 'Pregunta',
+        conversationAccessHash: 'b'.repeat(64),
       })
     ).resolves.toEqual({ requestId: 'chat-request-1' });
 

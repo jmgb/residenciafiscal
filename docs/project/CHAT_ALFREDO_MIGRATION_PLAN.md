@@ -118,8 +118,9 @@ límites de CPU, memoria, cola o ciclo de vida con los jobs agentivos.
    explícitamente declarados en su cadena de `FallbackPolicy`.
 7. El retry de B usa como máximo un segundo intento con el mismo modelo y store,
    bajo un presupuesto global, y suma ambos consumos.
-8. Solo sale del navegador la última pregunta autosuficiente; el historial
-   anterior sigue siendo local.
+8. Del historial visible solo sale del navegador la última pregunta. El servidor
+   reconstruye desde el ledger el contexto multi-turn acotado, protegido por el
+   hash de posesión; una migración de runtime debe conservar ese contrato.
 9. Los logs, Sentry y métricas nunca contienen pregunta, respuesta, citas ni
    credenciales.
 10. Los PDF, páginas verbatim y corpus montados son inmutables y verifican sus
@@ -146,7 +147,7 @@ límites de CPU, memoria, cola o ciclo de vida con los jobs agentivos.
 - cambiar la cadena de fallback o sus modelos por motivos de calidad;
 - mezclar el piloto Deep Research C con las respuestas rápidas A/B;
 - rediseñar la experiencia visual o el voto ciego;
-- añadir contexto multi-turn;
+- ampliar el contexto multi-turn vigente más allá de sus seis turnos y 12 KiB;
 - mover backups, retención u otros timers a otro servidor;
 - retirar Netlify como hosting del frontend;
 - mover en esta primera migración endpoints independientes como Deep Research.

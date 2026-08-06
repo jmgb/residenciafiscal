@@ -90,8 +90,8 @@ flowchart LR
 | Verbatim | `src/verbatim_*.py` | Representar el texto íntegro por páginas con hashes |
 | Normativa | `src/normativa_*.py` y CLIs relacionados | Convertir XML oficial del BOE y enlazar preceptos |
 | Chat experimental | `src/chat_*.py`, `src/current_structured_strategy.py`, `src/gemini_file_search_*.py` | Comparar A estructurada y B File Search con fuentes, coste y errores separados |
-| Runtime web V1 | `frontend/netlify/functions/chat/`, más `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo dentro de Netlify y presentar el protocolo comparativo |
-| Persistencia web V1 | `supabase/migrations/`, `supabase-chat-store.ts` | Reserva atómica y mensajes A/B con citas, uso y coste en schema privado |
+| Runtime web V1 | `frontend/netlify/functions/chat/`, `chat-editorial.ts` y `frontend/src/lib/chat-*` | Ejecutar A/B en paralelo, registrar turnos editoriales y presentar el protocolo comparativo |
+| Persistencia web V1 | `supabase/migrations/`, `supabase-chat-store.ts` | Mensajes A/B/editorial, historial acotado, citas, uso y coste en schema privado |
 | Rutas por jurisdicción | `frontend/src/data/jurisdictions.ts` | Construir el hub y los cinco subárboles SEO desde el slug canónico compartido |
 | Renderer de sentencias | `frontend/src/pages/Sentencias*.tsx`, `frontend/scripts/build-sentencias.mjs` | Renderizar por jurisdicción índice y fichas; España es la primera instancia, producción falla cerrada y la preview permanece `noindex` |
 | Transporte web conservado | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` | Fachada HMAC Edge → FastAPI; preview-only hasta superar los gates |
@@ -121,19 +121,25 @@ dominio y con una migración de imports independiente.
 1. El frontend permanece en `stub` por defecto; un build `live` envía la
    pregunta a `/api/chat`.
 2. La V1 usa una Netlify Function TypeScript autosuficiente, con rate limit,
-   presupuesto y un deadline global de 50–55 s.
-3. La Function inicia las estrategias A/B activas en paralelo. A, si está activa,
+   ledger privado y un deadline global de 50–55 s.
+3. La Function registra la pregunta y reconstruye hasta seis turnos y 12 KiB
+   desde el ledger. Cada estrategia recibe solo su propio hilo; el historial se
+   marca como conversación, no como evidencia. El UUID local no da acceso: cada
+   lectura exige un secreto de posesión y Supabase conserva solo su SHA-256.
+4. La Function inicia las estrategias A/B activas en paralelo. A, si está activa,
    recupera unidades v3, limita el contexto y redacta mediante IDs de evidencia
    que se resuelven localmente.
-4. B, si está activa, consulta de forma independiente un File Search Store con los 106 PDF
+5. B, si está activa, consulta de forma independiente un File Search Store con los 106 PDF
    originales y devuelve anotaciones del proveedor.
-5. Cada ruta activa verifica sus fuentes y retira cualquier respuesta sustantiva
+6. Cada ruta activa verifica sus fuentes y retira cualquier respuesta sustantiva
    que quede sin respaldo.
-6. La Function serializa uno o dos bloques con protocolo SSE 2 en orden visual A → B,
+7. La Function serializa uno o dos bloques con protocolo SSE 2 en orden visual A → B,
    pero devuelve el cuerpo completo de forma bufferizada para conservar el
    límite sincrónico estándar; el frontend conserva
    respuesta, estado, fuentes, latencia y coste por
    estrategia, sin usar la salida de una como entrada de la otra.
+8. Una respuesta editorial usa `/api/chat-editorial`: el cliente manda solo su
+   ID y el servidor materializa el catálogo canónico antes de persistirla.
 
 Arquitectura, estado, aprendizajes y siguiente gate:
 [`jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md).

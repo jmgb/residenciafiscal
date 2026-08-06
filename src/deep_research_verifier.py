@@ -110,9 +110,17 @@ _UNMATCHED_QUOTE_LIMIT = (
     "Se descartó {count} cita que no coincide literalmente con su página del PDF.",
     "Se descartaron {count} citas que no coinciden literalmente con su página del PDF.",
 )
+_UNUSED_QUOTE_LIMIT = (
+    "Se retiró {count} cita verificable que no quedó enlazada a ninguna afirmación verificada.",
+    "Se retiraron {count} citas verificables que no quedaron enlazadas a ninguna afirmación verificada.",
+)
 _DROPPED_CLAIM_LIMIT = (
-    "Se retiró {count} afirmación que quedó sin cita verificable.",
-    "Se retiraron {count} afirmaciones que quedaron sin cita verificable.",
+    "Se retiró {count} afirmación porque alguna de sus citas no era verificable.",
+    "Se retiraron {count} afirmaciones porque alguna de sus citas no era verificable.",
+)
+_UNGROUNDED_CLAIM_LIMIT = (
+    "Se retiró {count} afirmación que no quedó suficientemente respaldada por sus citas verificables.",
+    "Se retiraron {count} afirmaciones que no quedaron suficientemente respaldadas por sus citas verificables.",
 )
 _PRICING_KEYS = {
     "schema_version",
@@ -144,14 +152,25 @@ class _GraphOutcome:
     """
 
     unmatched_quotes: int
-    dropped_claims: int
+    unused_quotes: int
+    claims_without_verified_quotes: int
+    claims_with_insufficient_grounding: int
 
     def limits(self) -> list[str]:
         lines = []
         if self.unmatched_quotes:
             lines.append(_plural_limit(self.unmatched_quotes, _UNMATCHED_QUOTE_LIMIT))
-        if self.dropped_claims:
-            lines.append(_plural_limit(self.dropped_claims, _DROPPED_CLAIM_LIMIT))
+        if self.unused_quotes:
+            lines.append(_plural_limit(self.unused_quotes, _UNUSED_QUOTE_LIMIT))
+        if self.claims_without_verified_quotes:
+            lines.append(_plural_limit(self.claims_without_verified_quotes, _DROPPED_CLAIM_LIMIT))
+        if self.claims_with_insufficient_grounding:
+            lines.append(
+                _plural_limit(
+                    self.claims_with_insufficient_grounding,
+                    _UNGROUNDED_CLAIM_LIMIT,
+                )
+            )
         return lines
 
 
@@ -406,13 +425,17 @@ def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> _GraphOu
         verified_by_original_index[original_index] = item
 
     retained_claims: list[tuple[str, list[int]]] = []
+    claims_without_verified_quotes = 0
+    claims_with_insufficient_grounding = 0
     for claim in draft["claims"]:
         text, indexes = _validated_claim(claim, len(evidence))
         claim_evidence = [verified_by_original_index.get(index) for index in indexes]
         if any(item is None for item in claim_evidence):
+            claims_without_verified_quotes += 1
             continue
         verified_items = [item for item in claim_evidence if item is not None]
         if not _claim_is_grounded(text, verified_items):
+            claims_with_insufficient_grounding += 1
             continue
         retained_claims.append((text, indexes))
 
@@ -447,7 +470,9 @@ def _verify_evidence_graph(draft: dict[str, Any], bundle_path: Path) -> _GraphOu
         draft["status"] = "parcial"
     return _GraphOutcome(
         unmatched_quotes=len(evidence) - len(verified_by_original_index),
-        dropped_claims=original_claim_count - len(retained_claims),
+        unused_quotes=len(verified_by_original_index) - len(used_original_indexes),
+        claims_without_verified_quotes=claims_without_verified_quotes,
+        claims_with_insufficient_grounding=claims_with_insufficient_grounding,
     )
 
 

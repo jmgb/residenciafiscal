@@ -33,6 +33,7 @@ export interface ChatRequestInput {
   userMessageId: string;
   countryPath: string;
   question: string;
+  conversationAccessHash: string;
 }
 
 export interface ChatExperimentContext {
@@ -54,11 +55,13 @@ interface ChatCompletionInput {
 
 interface ChatHistoryInput {
   conversationId: string;
+  conversationAccessHash: string;
   turnLimit: number;
 }
 
 export interface EditorialTurnInput {
   conversationId: string;
+  conversationAccessHash: string;
   userMessageId: string;
   countryPath: string;
   question: string;
@@ -179,6 +182,18 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
   }
 
   async record(input: ChatRequestInput): Promise<{ requestId: string }> {
+    const authorization = await this.client.rpc('authorize_chat_conversation', {
+      p_conversation_id: input.conversationId,
+      p_country_path: input.countryPath,
+      p_conversation_access_hash: input.conversationAccessHash,
+    });
+    if (authorization.error || authorization.data !== true) {
+      throw supabaseFailure(
+        'authorize_chat_conversation',
+        authorization.error,
+        !authorization.error && authorization.data !== true
+      );
+    }
     const { data, error } = await this.client.rpc('create_chat_request', {
       p_request_id: input.requestId,
       p_conversation_id: input.conversationId,
@@ -201,6 +216,7 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
   async history(input: ChatHistoryInput): Promise<ConversationTurn[]> {
     const { data, error } = await this.client.rpc('read_chat_history', {
       p_conversation_id: input.conversationId,
+      p_conversation_access_hash: input.conversationAccessHash,
       p_turn_limit: input.turnLimit,
     });
     if (error) return [];
@@ -220,6 +236,7 @@ export class SupabaseChatStore extends SupabaseChatVoteStore {
       userMessageId: input.userMessageId,
       countryPath: input.countryPath,
       question: input.question,
+      conversationAccessHash: input.conversationAccessHash,
     });
     const { error } = await this.client.rpc('complete_chat_request', {
       p_request_id: requestId,

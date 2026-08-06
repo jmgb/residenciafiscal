@@ -223,8 +223,12 @@ export const createProductionDependencies = (
     enabled: true,
     observability,
     recordRequest: (input) => store.record(input),
-    loadHistory: (conversationId) =>
-      store.history({ conversationId, turnLimit: MAX_HISTORY_TURNS }),
+    loadHistory: (conversationId, conversationAccessHash) =>
+      store.history({
+        conversationId,
+        conversationAccessHash,
+        turnLimit: MAX_HISTORY_TURNS,
+      }),
     compare: (question, requestId, signal, history) =>
       compareStrategiesInParallel({
         question,

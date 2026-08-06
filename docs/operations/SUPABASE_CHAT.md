@@ -1,8 +1,10 @@
 # Persistencia del chat en Supabase
 
-**Estado:** proyecto `residenciafiscal` configurado en `eu-west-1`; migraciones
-aplicadas y verificadas, y persistencia conectada a producción el 31 de julio
-de 2026.
+**Estado:** proyecto `residenciafiscal` configurado en `eu-west-1`; persistencia
+conectada a producción el 31 de julio de 2026. Local y remoto coinciden hasta
+`20260806015000_chat_history_possession.sql`: el historial, los turnos
+editoriales y el hardening forward-only de posesión constan aplicados, y los
+advisors de seguridad y rendimiento no devuelven incidencias.
 
 Supabase es la persistencia privada de la V1 Netlify-only y del runtime FastAPI
 cuando la migración supere sus gates. No participa en la
@@ -21,13 +23,15 @@ La revisión de los proyectos de referencia mostró dos patrones útiles:
   modelo y coste/tokens, y además mantiene un ledger append-only para sumar el
   gasto sin recorrer artefactos heterogéneos.
 
-Residencia Fiscal adapta esos patrones al experimento real: una consulta A/B
-aceptada produce tres mensajes persistidos con el mismo `request_id` y
-`conversation_id`:
+Residencia Fiscal adapta esos patrones al experimento real. Una consulta A/B
+aceptada produce con el mismo `request_id` y `conversation_id`:
 
 1. pregunta del usuario;
-2. respuesta `current_structured` (A);
-3. respuesta `gemini_file_search` (B).
+2. una o dos respuestas activas: `current_structured` (A) y
+   `gemini_file_search` (B).
+
+Un turno resuelto desde el catálogo produce la pregunta y una respuesta
+`editorial`; no se hace pasar por A ni por B.
 
 Si el usuario lanza investigación profunda, su resultado añade de forma
 asíncrona un mensaje adicional de asistente `deep_research` (C). Este mensaje queda
@@ -36,8 +40,9 @@ A/B vive en el propio job, por lo que C no altera el ledger ni las métricas A/B
 
 No se guarda IP, user-agent, cookies, credenciales ni el diagnóstico bruto de los
 proveedores. El historial completo del navegador tampoco se reenvía: Supabase
-recibe solo la última pregunta autosuficiente y las respuestas de las estrategias
-activas para ese turno: una o dos respuestas A/B, más C si se solicita.
+recibe una pregunta por turno y sus respuestas A/B o editorial, más C si se
+solicita. En el turno siguiente la Function relee una proyección acotada de esas
+mismas filas; no crea otra copia del historial.
 
 ## Modelo
 
@@ -46,9 +51,9 @@ y no conceden permisos a `anon`, `authenticated` ni `service_role`:
 
 | Tabla | Responsabilidad |
 |---|---|
-| `private.chat_conversations` | Agrupa turnos mediante un UUID aleatorio local y jurisdicción |
+| `private.chat_conversations` | Agrupa turnos por UUID y guarda la jurisdicción y el SHA-256 del secreto de posesión |
 | `private.chat_requests` | Registro idempotente de consulta, coste, estado y versión del experimento |
-| `private.chat_messages` | Pregunta y respuestas A/B/C con contenido, fuentes, claims, diagnóstico acotado, límites y uso |
+| `private.chat_messages` | Pregunta y respuestas A/B/C/editorial con contenido, fuentes, claims, diagnóstico acotado, límites y uso |
 | `private.chat_comparison_votes` | Un voto ciego cerrado por petición completada |
 | `private.chat_retention_purge_audit` | Auditoría de dry-run, límites y purgados, sin contenido |
 
@@ -78,6 +83,8 @@ La Function no escribe tablas directamente. Solo puede invocar estas RPC de
 `public`, todas `SECURITY DEFINER`, con
 `search_path` fijo y `EXECUTE` revocado a `PUBLIC`, `anon` y `authenticated`:
 
+- `authorize_chat_conversation`: crea un hilo protegido o comprueba que coinciden
+  su jurisdicción y el SHA-256 del secreto antes de registrar otro turno;
 - `create_chat_request`: registra de forma idempotente la consulta y la pregunta
   en una sola transacción;
 - `complete_chat_request`: guarda A/B, el coste real y completa la petición en
@@ -100,6 +107,43 @@ ni citas—, solo de peticiones `completed`, y deja fuera `deep_research`, que e
 otro flujo. No amplía la superficie almacenada ni la retención: son las mismas
 filas de siempre, purgadas a los 15 días.
 
+El UUID aparece en la ruta local `/c/...` y **no autoriza** la lectura. Al crear
+una conversación, el navegador genera además un secreto aleatorio de 256 bits y
+lo conserva en `localStorage`; la Function calcula su SHA-256 y solo esa huella
+llega a Supabase. `authorize_chat_conversation` fija la huella al crear el hilo y
+rechaza después cualquier valor distinto; `read_chat_history` exige la misma
+coincidencia. El secreto en claro no se persiste ni se registra en observabilidad.
+
+Las conversaciones locales anteriores a este contrato no pueden reclamar una
+fila antigua sin protección: al migrar el estado del navegador conservan su
+historial visual y su URL local, pero reciben un `ledgerId` nuevo y un secreto
+nuevo. El siguiente turno empieza por tanto un hilo de servidor nuevo, sin exponer
+ni apropiarse del historial antiguo. Como los `comparisonId` y jobs remotos
+anteriores siguen ligados al UUID abandonado, la migración retira esas referencias:
+conserva los resultados de investigación ya terminados, pero convierte un job aún
+activo en error recuperable para que el usuario lo inicie de nuevo.
+
+Durante el despliegue, una pestaña que siga ejecutando el bundle anterior no manda
+todavía `conversation_access_token`. La Function admite esa ausencia solo como
+compatibilidad transitoria: ignora el `conversation_id` aportado, genera un UUID y
+un secreto efímeros para esa petición y responde sin contexto previo. Un secreto
+presente pero mal formado sigue siendo un `400`. Así el rollout no rompe pestañas
+abiertas ni permite que un cliente antiguo reclame o lea un UUID visible.
+
+La lectura es opcional y tiene un presupuesto de un segundo: un fallo o bloqueo
+de Supabase degrada a hilo vacío antes de consumir el deadline de los
+proveedores. El prompt admite como máximo seis turnos y 12 KiB en total; cada
+pregunta se recorta a 500 caracteres y cada respuesta a 1.500. El contexto se
+marca como conversación previa, nunca como evidencia, y su tamaño se descuenta
+del presupuesto de evidencia estructurada de A.
+
+Una referencia explícita como «ese caso» o «lo anterior» incorpora a la consulta
+de recuperación la pregunta previa más cercana aunque el turno actual ya incluya
+vocabulario del dominio. El resto de preguntas autosuficientes mantiene la
+recuperación original; si el router no puede resolverlas, se reintenta con las
+preguntas recientes. El adjetivo temporal aislado no activa esta vía: «el año
+anterior» sigue siendo una pregunta autosuficiente, no una referencia al diálogo.
+
 Cada estrategia recibe **su propio hilo**: A ve sus respuestas anteriores y B las
 suyas. Compartirlo destruiría la independencia de la comparación A/B. Los turnos
 en los que una estrategia no respondió se conservan con su pregunta, porque lo
@@ -117,6 +161,14 @@ El cuerpo solo dice **qué** respuesta se mostró: el texto sale del catálogo d
 propio servidor (`src/data/editorialChatAnswers.json`), nunca del cliente. El
 `request_id` se deriva del identificador del mensaje, de modo que un reintento no
 duplica el turno.
+
+En modo live el navegador muestra la respuesta al terminar la espera editorial,
+pero mantiene el composer bloqueado hasta que acaba el registro, evitando que un
+seguimiento inmediato adelante a la RPC. Si el usuario cancela durante esa
+persistencia, la respuesta ya visible se conserva: una cancelación de `fetch` no
+puede demostrar que el servidor no haya confirmado el turno. La espera se corta
+a los tres segundos; si el ledger no responde, el composer se libera y el
+siguiente turno degrada sin ese antecedente.
 
 Se guardan con `strategy = 'editorial'`, coste cero y medición `ACTUAL` —no hubo
 llamada, así que el cero es exacto—. **Nunca reutilizan la estrategia de A o de
@@ -151,9 +203,12 @@ de presupuesto monetario y deja solo el coste real observado, y la migración
 razonamiento por respuesta;
 `20260802215501_chat_experiment_ledger.sql` versiona el experimento y conserva
 claims/diagnóstico; `20260802221008_chat_comparison_votes.sql` añade el voto
-ciego; `20260805184500_chat_conversation_history.sql` añade la lectura del
-historial conversacional; y `20260805190000_chat_editorial_messages.sql` admite
-la estrategia `editorial`. La segunda migración histórica retira un permiso público inseguro de
+ciego; `20260805184500_chat_conversation_history.sql` añade la primera lectura
+del historial conversacional; `20260805190000_chat_editorial_messages.sql`
+admite la estrategia `editorial`; y la migración forward-only
+`20260806015000_chat_history_possession.sql` añade el hash de posesión, sustituye
+la firma de lectura insegura y conserva inmutables las migraciones ya aplicadas.
+La segunda migración histórica retira un permiso público inseguro de
 `rls_auto_enable()` que traía el proyecto nuevo. Las migraciones de ciclo de vida
 serializan el borrado. Tras aplicar las dos migraciones del experimento, los
 advisors de seguridad no devolvieron incidencias.
@@ -251,12 +306,13 @@ Estado operativo a 2026-08-01: `CHAT_RETENTION_DAYS=15`, job habilitado,
 candidatos y cero borrados. El timer diario queda activo en el VPS `alfredo`.
 
 El procedimiento de supresión requiere verificación de identidad fuera de la
-base de datos y un ticket operativo. El UUID visible de la URL no es una prueba
-suficiente:
+base de datos y un ticket operativo. Se usa la referencia técnica que
+`/privacidad` muestra desde el estado local —el `ledgerId` en un historial
+migrado—, no se pide el secreto y el UUID visible por sí solo no prueba identidad:
 
 ```bash
 bash scripts/privacy/delete-chat-conversation.sh \
-  --conversation-id conversation-... \
+  --conversation-id referencia-tecnica-del-ledger \
   --ticket PRIV-123 \
   --confirm-delete
 ```

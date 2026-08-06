@@ -58,6 +58,8 @@ export const useEditorialChatAnswer = ({
         ? useConversations.getState().getConversation(conversationId)
         : undefined;
       const targetId = existing?.id ?? createConversation();
+      const targetConversation = useConversations.getState().getConversation(targetId);
+      if (!targetConversation) throw new Error('No se pudo crear la conversación editorial');
       if (targetId !== conversationId) navigate(`/c/${targetId}`, { replace: true });
 
       const now = new Date().toISOString();
@@ -77,7 +79,7 @@ export const useEditorialChatAnswer = ({
         isStreaming: true,
       });
 
-      const completion = waitForEditorialAnswer(signal).then((completed) => {
+      const completion = waitForEditorialAnswer(signal).then(async (completed) => {
         if (!completed) {
           updateMessage(targetId, assistantId, {
             content: 'Respuesta detenida.',
@@ -86,9 +88,13 @@ export const useEditorialChatAnswer = ({
           return;
         }
 
+        // La respuesta se hace visible antes de persistirla, pero conserva el
+        // estado streaming para bloquear seguimientos hasta terminar el registro.
+        // Así, si el usuario cancela cuando el servidor ya pudo confirmar el
+        // turno, navegador y ledger no discrepan sobre lo que llegó a mostrarse.
         updateMessage(targetId, assistantId, {
           content: answer.content,
-          isStreaming: false,
+          isStreaming: !isStub,
           editorial: {
             answerId: answer.id,
             version: answer.version,
@@ -101,15 +107,23 @@ export const useEditorialChatAnswer = ({
           answer_id: answer.id,
           version: answer.version,
         });
+
         // El servidor no ve estas respuestas —se resuelven aquí—, así que sin
-        // este registro un seguimiento sobre ellas llegaría sin antecedente.
+        // este registro un seguimiento sobre ellas llegaría sin antecedente. Se
+        // espera antes de liberar el composer; un timeout de red conserva la
+        // degradación sin contexto.
         if (!isStub) {
-          void recordEditorialTurn({
-            conversationId: targetId,
-            userMessageId,
-            countryPath,
-            answerId: answer.id,
-          });
+          await recordEditorialTurn(
+            {
+              conversationId: targetConversation.ledgerId,
+              conversationAccessToken: targetConversation.accessToken,
+              userMessageId,
+              countryPath,
+              answerId: answer.id,
+            },
+            signal
+          );
+          updateMessage(targetId, assistantId, { isStreaming: false });
         }
       });
 

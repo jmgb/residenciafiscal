@@ -42,6 +42,7 @@ const requestContext = {
   countryPath: '/espana',
   countryName: 'España',
   conversationId: 'conversation-1',
+  conversationAccessToken: 'a'.repeat(64),
 };
 
 async function collect(engine = createLiveChatEngine()): Promise<ChatChunk[]> {
@@ -95,6 +96,7 @@ describe('createLiveChatEngine', () => {
     expect(init.headers).toEqual({ 'content-type': 'application/json' });
     expect(JSON.parse(init.body as string)).toEqual({
       conversation_id: 'conversation-1',
+      conversation_access_token: 'a'.repeat(64),
       country_path: '/espana',
       messages: [{ id: 'm1', role: 'user', content: '¿Qué ocurre con los 183 días?' }],
     });
@@ -133,6 +135,7 @@ describe('createLiveChatEngine', () => {
     const [, init] = fetchSpy.mock.calls[0] as unknown as [string, RequestInit];
     expect(JSON.parse(init.body as string)).toEqual({
       conversation_id: 'conversation-1',
+      conversation_access_token: 'a'.repeat(64),
       country_path: '/espana',
       messages: [{ id: 'm2', role: 'user', content: '¿Y qué ocurre con el centro de intereses?' }],
     });

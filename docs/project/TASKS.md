@@ -406,9 +406,15 @@ contra el dominio público después de cada deploy.
       probar primero en producción. La V1 ya está desplegada y el smoke
       productivo terminó en 20,23 s; esta tarea es un guardarraíl para próximos
       cambios, no un bloqueo técnico de la versión vigente.
-    - [ ] Diseñar y evaluar contexto multi-turn con privacidad y grounding. El
-      contrato actual es deliberadamente single-turn: el historial se muestra
-      localmente, pero solo la última pregunta autosuficiente sale del navegador.
+    - [x] Diseñar e implementar contexto multi-turn con privacidad y grounding.
+      El navegador sigue enviando solo la pregunta actual; el servidor reconstruye
+      hasta seis turnos y 12 KiB desde el ledger, entrega a cada estrategia solo
+      su propio hilo y no trata el historial como evidencia. El UUID de la URL no
+      autoriza la lectura: un secreto local de 256 bits protege el hilo y la base
+      solo conserva su SHA-256; las conversaciones locales anteriores empiezan un
+      `ledgerId` nuevo al migrar. Las referencias explícitas se contextualizan
+      incluso si contienen términos del dominio. La evaluación
+      conversacional de calidad sigue perteneciendo al banco de 40 preguntas.
     - [ ] **Piloto controlado — opción C agentiva; promoción general pendiente.**
       C queda separada de las respuestas rápidas A/B y se activa únicamente bajo
       una bandera explícita; nunca entra en el runtime Netlify síncrono. La
@@ -1025,7 +1031,8 @@ sola URL para poder encontrarse.
   el coste contable de Gemini; el límite fuerte por usuario queda condicionado a
   disponer de cuentas.
 - [ ] **Requisitos legales pendientes con el chat real activo.** La última
-  pregunta autosuficiente viaja a OpenAI para A y a Google/Gemini para B; la
+  pregunta y el contexto acotado reconstruido por el servidor viajan a OpenAI
+  para A y a Google/Gemini para B; la
   activación técnica del 31 de julio no sustituye estos requisitos.
   - [x] Aviso de que no es asesoramiento jurídico visible junto al chat tanto en
     `stub` como en `live`; el modo live no afirma que la respuesta sea simulada.
@@ -1067,8 +1074,10 @@ sola URL para poder encontrarse.
   - [x] Aviso visible antes del envío para no incluir datos personales o
     identificativos.
   - [x] Minimización técnica: el cliente live envía exclusivamente la última
-    pregunta no vacía, no el historial local. Supabase guarda esa pregunta y las
-    una o dos respuestas A/B activas del turno, sin IP, user-agent ni diagnósticos brutos.
+    pregunta no vacía, no el historial local. Supabase guarda una pregunta por
+    turno y sus respuestas A/B o editorial; para un seguimiento, la Function
+    relee una proyección acotada de las mismas filas. No se guardan IP, user-agent
+    ni diagnósticos brutos.
 - [x] Añadir validación automática del schema del corpus, detección de duplicados y
   trazabilidad de cada criterio hasta su sentencia de origen.
 

@@ -6,7 +6,7 @@ import {
   serializeComparison,
 } from '../netlify/functions/chat/chat';
 import { ChatDiagnosticError } from '../netlify/functions/chat/chat-diagnostics';
-import type { ComparisonReport } from '../netlify/functions/chat/contracts';
+import type { ComparisonReport, ConversationTurn } from '../netlify/functions/chat/contracts';
 import { ConsoleChatObservability } from '../netlify/functions/chat/observability';
 import { parseChatEventStream } from '../src/lib/chat-sse-protocol';
 
@@ -63,11 +63,17 @@ const report: ComparisonReport = {
   ],
 };
 
-const request = (body: unknown) =>
+const CONVERSATION_ACCESS_TOKEN = 'a'.repeat(64);
+
+const request = (body: unknown, includeAccessToken = true) =>
   new Request('https://residenciafiscal.org/api/chat', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify(
+      includeAccessToken && body && typeof body === 'object'
+        ? { ...body, conversation_access_token: CONVERSATION_ACCESS_TOKEN }
+        : body
+    ),
   });
 
 const dependencies = (
@@ -140,6 +146,46 @@ describe('Netlify Function /api/chat V1', () => {
     });
   });
 
+  it('aísla a un cliente anterior al despliegue en un hilo efímero protegido', async () => {
+    const deps = dependencies();
+
+    const response = await createChatHandler(deps)(
+      request(
+        {
+          conversation_id: 'conversation-visible-en-la-url',
+          messages: [{ role: 'user', content: 'repite lo anterior' }],
+        },
+        false
+      )
+    );
+
+    expect(response.status).toBe(200);
+    const recorded = vi.mocked(deps.recordRequest).mock.calls[0]?.[0];
+    expect(recorded?.conversationId).toMatch(/^conversation-/);
+    expect(recorded?.conversationId).not.toBe('conversation-visible-en-la-url');
+    expect(recorded?.conversationAccessHash).toMatch(/^[0-9a-f]{64}$/);
+    expect(deps.loadHistory).toHaveBeenCalledWith(
+      recorded?.conversationId,
+      recorded?.conversationAccessHash
+    );
+  });
+
+  it('rechaza un secreto de posesión presente pero mal formado', async () => {
+    const deps = dependencies();
+    const response = await createChatHandler(deps)(
+      request(
+        {
+          conversation_access_token: 'no-es-un-secreto',
+          messages: [{ role: 'user', content: 'pregunta' }],
+        },
+        false
+      )
+    );
+
+    expect(response.status).toBe(400);
+    expect(deps.recordRequest).not.toHaveBeenCalled();
+  });
+
   // El historial sale del ledger por conversación, no del cuerpo de la petición.
   it('recupera el hilo de la conversación y se lo entrega al comparador', async () => {
     const history = [
@@ -158,7 +204,11 @@ describe('Netlify Function /api/chat V1', () => {
     );
 
     expect(response.status).toBe(200);
-    expect(deps.loadHistory).toHaveBeenCalledWith('conversation-1');
+    expect(deps.loadHistory).toHaveBeenCalledWith(
+      'conversation-1',
+      expect.stringMatching(/^[0-9a-f]{64}$/)
+    );
+    expect(deps.loadHistory).not.toHaveBeenCalledWith('conversation-1', CONVERSATION_ACCESS_TOKEN);
     expect(deps.compare).toHaveBeenCalledWith(
       'dame un ejemplo de lo anterior',
       expect.stringMatching(/^chat-/),
@@ -186,6 +236,41 @@ describe('Netlify Function /api/chat V1', () => {
       expect.anything(),
       []
     );
+  });
+
+  it('no deja que una lectura de historial bloqueada consuma el deadline de los proveedores', async () => {
+    vi.useFakeTimers();
+    let notifyHistoryStarted: (() => void) | undefined;
+    const historyStarted = new Promise<void>((resolve) => {
+      notifyHistoryStarted = resolve;
+    });
+    const deps = dependencies({
+      loadHistory: vi.fn(() => {
+        notifyHistoryStarted?.();
+        return new Promise<ConversationTurn[]>(() => undefined);
+      }),
+    });
+
+    try {
+      const responsePromise = createChatHandler(deps)(
+        request({ messages: [{ role: 'user', content: 'pregunta autosuficiente' }] })
+      );
+      // WebCrypto termina antes de iniciar la lectura. Esperar a la llamada hace
+      // que el test avance exactamente el temporizador que quiere verificar.
+      await historyStarted;
+      await vi.advanceTimersByTimeAsync(1_000);
+      const response = await responsePromise;
+
+      expect(response).toBeInstanceOf(Response);
+      expect(deps.compare).toHaveBeenCalledWith(
+        'pregunta autosuficiente',
+        expect.stringMatching(/^chat-/),
+        expect.anything(),
+        []
+      );
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('falla cerrado si el ledger no está disponible y no filtra el error', async () => {
@@ -393,6 +478,7 @@ describe('Netlify Function /api/chat V1', () => {
       userMessageId: 'message-1',
       countryPath: '/espana',
       question: '¿Qué pruebas tiene en cuenta Hacienda?',
+      conversationAccessHash: expect.stringMatching(/^[0-9a-f]{64}$/),
     });
   });
 

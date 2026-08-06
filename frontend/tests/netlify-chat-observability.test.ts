@@ -404,6 +404,7 @@ describe('handler real conectado a Sentry', () => {
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: '¿183 días en Andorra cuentan?' }],
+          conversation_access_token: 'a'.repeat(64),
         }),
       })
     );

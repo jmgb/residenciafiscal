@@ -126,6 +126,16 @@ bloques activos y el schema 3 apaga cualquier streaming huérfano al rehidratar.
 El runtime V1 implementado es una Netlify Function TypeScript autosuficiente.
 Ejecuta en paralelo las estrategias activas, conserva el orden visual A → B,
 mantiene Luna `high` cuando A está activa y cancela antes del límite de 60 s.
+El servidor reconstruye hasta seis turnos y 12 KiB desde Supabase: A y B reciben
+solo su propio hilo, y el historial se marca como conversación previa, nunca como
+evidencia. La lectura exige el secreto de posesión que crea el navegador; el
+ledger solo conserva su SHA-256 y un historial local anterior abre un `ledgerId`
+nuevo al migrar; esa migración retira los `comparisonId` antiguos y marca para
+reinicio cualquier investigación todavía activa, sin borrar resultados ya
+terminados. Una pestaña cargada antes del rollout, que aún no envía secreto,
+puede completar consultas aisladas: la Function ignora su UUID visible y crea
+un hilo efímero protegido por petición, sin recuperar contexto. Las respuestas editoriales se registran por ID en
+`POST /api/chat-editorial` antes de admitir un seguimiento inmediato.
 Python sigue preparando el corpus offline.
 El prototipo Edge → FastAPI no se borra y se conserva como evolución futura si
 hacen falta llamadas de más de 60 s o mayor control operativo. Código y operación:

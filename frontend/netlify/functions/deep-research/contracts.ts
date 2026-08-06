@@ -60,6 +60,11 @@ export interface DeepResearchJobRecord {
 }
 
 export interface DeepResearchStore {
+  authorizeConversation(input: {
+    conversationId: string;
+    countryPath: string;
+    conversationAccessHash: string;
+  }): Promise<void>;
   create(input: {
     jobId: string;
     conversationId: string;

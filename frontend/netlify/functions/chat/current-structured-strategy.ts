@@ -1,6 +1,11 @@
 import { claimHasLexicalEvidence } from './claim-evidence-relevance';
 import type { StrategyAnswer } from './contracts';
-import { contextualRetrievalQuery, conversationContextBlock } from './conversation-history';
+import {
+  contextualReferenceQuery,
+  contextualRetrievalQuery,
+  conversationContextBlock,
+  retrievalQueryForFollowUp,
+} from './conversation-history';
 import { buildEvidenceBundle, MAX_CONTEXT_BYTES } from './evidence-bundle';
 import {
   authorityLabel,
@@ -14,7 +19,7 @@ import { retrieveForChat } from './structured-retrieval';
 
 const MODEL = 'gpt-5.6-luna';
 const REASONING_EFFORT = 'high';
-export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v6';
+export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v7';
 
 const systemPrompt =
   'Actúa como asistente de investigación jurisprudencial sobre residencia fiscal de personas físicas en IRPF y CDI, no sobre extranjería. Responde solo con el contexto recuperado. La primera claim debe contestar directamente a lo preguntado, siempre que exista respaldo literal. Si la pregunta contiene varias partes, contesta cada una mediante claims separadas o identifica expresamente en limits la parte que la evidencia no permite resolver. Si una parte carece de respaldo, no crees una claim para esa parte ni afirmes que no existe jurisprudencia: identifícala solo en limits. Devuelve afirmaciones jurídicas atómicas: separa hechos acreditados, valoración judicial y resultado, y no mezcles permanencia física, ausencias esporádicas, certificados fiscales extranjeros ni reglas de desempate de CDI en una misma afirmación. Cada claim debe declarar kind: party_argument para alegaciones o actuaciones de una parte, judicial_assessment para valoración del tribunal, legal_rule para reglas jurídicas, holding para el resultado o criterio decisorio y procedural_power para facultades o carga probatoria. Cuando la pregunta pida cómo puede Hacienda demostrar un hecho, distingue obligatoriamente los medios utilizados o alegados, su valoración judicial y el resultado probatorio. No presentes como medio eficaz una actuación que la resolución citada rechazó o consideró insuficiente; si solo existe cita de la alegación, di que Hacienda la alegó o intentó y no afirmes su suficiencia. En indicios de vida cotidiana, aclara en la misma claim que una mera alta, titularidad o pago de cuota no equivale por sí solo a presencia física en una fecha; distingue esos datos del uso efectivo atribuible al contribuyente y de su valoración conjunta con otros indicios. No relegues una insuficiencia probatoria decisiva al campo limits: intégrala en la respuesta principal con su cita. Para preguntas sobre prueba de permanencia, ordena la respuesta en pruebas directas, indicios corroborativos, elementos insuficientes por sí solos y carga de la prueba, incluyendo solo los bloques respaldados. Muestra contraste cuando exista. No predigas el caso del usuario ni uses conocimiento externo. Si la pregunta pide un tribunal concreto, atribuye doctrina o criterios a ese tribunal solo cuando el judgment_id de la evidencia corresponda directamente a ese órgano; una sentencia que cita a otra es autoridad indirecta y debe declararse como límite. Recibirás fragmentos literales con IDs E<n>: cada claim debe incluir todos y solo los IDs cuyos extractos literales permiten comprobar íntegramente la afirmación. Nunca uses un evidence_id que no aparezca en el contexto. Los campos estructurados sirven para localizar el asunto, pero no bastan para respaldar una claim: si el extracto solo menciona una prueba, no infieras de ahí que el tribunal la aceptó, rechazó o consideró decisiva. No añadas introducciones o conclusiones sustantivas fuera de claims. Incluye siempre limits y claims.';
@@ -81,17 +86,17 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
 
   async answer(question: string, context: StrategyContext): Promise<StrategyAnswer> {
     const started = performance.now();
-    const authorityIntent = requestedJudicialAuthority(question);
+    let authorityIntent = requestedJudicialAuthority(question);
     const historyBlock = conversationContextBlock(context.history);
-    let retrievalQuery = question;
-    let retrieval = retrieveForChat(this.corpus, question, 5);
-    // Un seguimiento («dame un ejemplo de lo anterior») no tiene por sí solo nada
-    // que buscar. Se reintenta con las preguntas previas SOLO cuando la pregunta
-    // actual no da para recuperar: una pregunta autosuficiente recupera igual que
-    // antes, así que las métricas del router y el holdout siguen siendo válidas.
+    let retrievalQuery = retrievalQueryForFollowUp(context.history, question);
+    let retrieval = retrieveForChat(this.corpus, retrievalQuery, 5);
+    // Si el turno no se reconoce como referencia pero tampoco se sostiene solo,
+    // se reintenta con todas las preguntas recientes. Una pregunta autosuficiente
+    // sigue recuperando exactamente igual que antes.
     if (
       (retrieval.behavior === 'preguntar' || retrieval.behavior === 'abstenerse') &&
-      context.history.length > 0
+      context.history.length > 0 &&
+      retrievalQuery === question
     ) {
       const contextualQuery = contextualRetrievalQuery(context.history, question);
       const contextual = retrieveForChat(this.corpus, contextualQuery, 5);
@@ -99,6 +104,11 @@ export class CurrentStructuredStrategy implements NetlifyChatStrategy {
         retrieval = contextual;
         retrievalQuery = contextualQuery;
       }
+    }
+    if (retrievalQuery !== question) {
+      authorityIntent ??= requestedJudicialAuthority(
+        contextualReferenceQuery(context.history, question)
+      );
     }
     const status = {
       responder: 'completa',

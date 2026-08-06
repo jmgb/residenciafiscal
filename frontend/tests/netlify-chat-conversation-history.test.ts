@@ -3,7 +3,10 @@ import {
   contextualRetrievalQuery,
   conversationContextBlock,
   MAX_HISTORY_ANSWER_CHARS,
+  MAX_HISTORY_CONTEXT_BYTES,
   MAX_HISTORY_TURNS,
+  questionReferencesHistory,
+  retrievalQueryForFollowUp,
 } from '../netlify/functions/chat/conversation-history';
 
 describe('contexto conversacional del chat', () => {
@@ -54,6 +57,20 @@ describe('contexto conversacional del chat', () => {
     expect(block).not.toContain('x'.repeat(MAX_HISTORY_ANSWER_CHARS + 1));
   });
 
+  it('acota por bytes el bloque completo aunque el historial use caracteres multibyte', () => {
+    const turns = Array.from({ length: MAX_HISTORY_TURNS }, (_, index) => ({
+      question: `pregunta-${index}-${'🧑‍⚖️'.repeat(250)}`,
+      answer: '🧑‍⚖️'.repeat(MAX_HISTORY_ANSWER_CHARS),
+    }));
+
+    const block = conversationContextBlock(turns);
+
+    expect(new TextEncoder().encode(block).byteLength).toBeLessThanOrEqual(
+      MAX_HISTORY_CONTEXT_BYTES
+    );
+    expect(block).toContain(`pregunta-${MAX_HISTORY_TURNS - 1}`);
+  });
+
   it('compone la consulta de recuperación con las preguntas previas y la actual', () => {
     const query = contextualRetrievalQuery(
       [
@@ -72,5 +89,27 @@ describe('contexto conversacional del chat', () => {
     expect(contextualRetrievalQuery([], '¿Qué pruebas admite el tribunal?')).toBe(
       '¿Qué pruebas admite el tribunal?'
     );
+  });
+
+  it('contextualiza una referencia aunque la pregunta actual ya tenga términos del dominio', () => {
+    expect(
+      retrievalQueryForFollowUp(
+        [
+          {
+            question: '¿Qué valor probatorio tiene un certificado extranjero?',
+            answer: 'Depende de su finalidad y del convenio.',
+          },
+        ],
+        '¿Y qué dice el Tribunal Supremo en ese caso?'
+      )
+    ).toBe(
+      '¿Qué valor probatorio tiene un certificado extranjero?\n' +
+        '¿Y qué dice el Tribunal Supremo en ese caso?'
+    );
+  });
+
+  it('no confunde un periodo anterior autosuficiente con una referencia al diálogo', () => {
+    expect(questionReferencesHistory('¿Qué sucede si fui residente el año anterior?')).toBe(false);
+    expect(questionReferencesHistory('Resume lo anterior.')).toBe(true);
   });
 });

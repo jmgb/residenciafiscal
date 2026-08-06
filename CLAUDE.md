@@ -396,12 +396,20 @@ no es el target de la V1. El runtime conversacional ya está portado a una
 Netlify Function TypeScript: ejecuta las estrategias activas en paralelo, usa un
 deadline global y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
 en Supabase, y mantiene Luna `high`. El chat sostiene conversación: el servidor
-reconstruye los últimos turnos desde el ledger —nunca desde el cuerpo de la
+reconstruye hasta seis turnos y 12 KiB desde el ledger —nunca desde el cuerpo de la
 petición— y da a cada estrategia **solo su propio hilo**, para no contaminar la
 comparación A/B. Una pregunta autosuficiente recupera exactamente igual que
-antes; el contexto solo entra en la recuperación cuando la pregunta no se
-sostiene sola. El coste nunca decide la admisión; el schema
-es privado y el navegador no accede directamente. Contrato y operación:
+antes; una referencia explícita como «ese caso» se contextualiza aunque contenga
+términos jurídicos, y el resto usa contexto en recuperación solo cuando no se
+sostiene solo; «el año anterior» no se trata como referencia conversacional.
+Leer el hilo exige además un secreto local de 256 bits: Supabase
+guarda únicamente su SHA-256 y el UUID visible de `/c/...` no autoriza nada. El
+rollout admite bundles antiguos sin secreto solo en un hilo efímero y sin
+contexto, ignorando su UUID. Al migrar historiales locales se invalidan los
+`comparisonId` y jobs activos ligados al ledger anterior; los resultados
+profundos ya terminados se conservan.
+El coste nunca decide la admisión; el schema es privado y el navegador no accede
+directamente. Contrato y operación:
 [`docs/operations/SUPABASE_CHAT.md`](docs/operations/SUPABASE_CHAT.md). Producción
 conserva el stub hasta completar configuración, privacidad y Deploy Preview;
 decisión, despliegue y rollback:

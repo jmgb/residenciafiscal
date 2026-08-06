@@ -1,13 +1,16 @@
 # Despliegue del chat comparativo
 
 **Estado:** la V1 Netlify-only y su persistencia Supabase están implementadas y
-desplegadas en producción. El proyecto remoto, las migraciones, RLS, RPC
-transaccionales y una consulta A/B productiva están verificados. El endpoint conserva
+desplegadas en producción. El proyecto remoto y el repositorio coinciden hasta
+`20260806015000`; las tres migraciones de historial (`20260805184500`,
+`20260805190000` y `20260806015000`) constan aplicadas en ese orden. RLS, las RPC
+transaccionales vigentes, ambos advisors y una consulta A/B productiva están
+verificados. El endpoint conserva
 los cierres independientes `CHAT_COMPARISON_ENABLED`, los flags de estrategia y
 `VITE_CHAT_MODE`; C tiene sus propios flags de UI y backend. Siguen
 pendientes los requisitos legales indicados en `TASKS.md`. El recorrido Edge →
 FastAPI se conserva como alternativa futura fuera del camino `/api/chat`.
-**Fecha de corte:** 2026-08-01.
+**Fecha de corte:** 2026-08-06.
 
 Este runbook explica la V1 Netlify-only y conserva, en una sección separada, el
 comparador Python futuro. El rollout técnico a 106 está autorizado y conectado;
@@ -31,7 +34,7 @@ React
         │
         ▼
 Netlify Function TypeScript
-  validación + cuota + protocolo SSE 2
+  validación + rate limit + historial acotado + protocolo SSE 2
         │
         ├── A: corpus v3 + redactor LLM ──────────┐
         └── B: Gemini File Search sobre los PDF ──┤ en paralelo si ambas están activas
@@ -39,12 +42,17 @@ Netlify Function TypeScript
                                       una o dos respuestas independientes
                                                   │
                                                   ▼
-                         Supabase: pregunta + A/B + citas + coste
+                         Supabase: pregunta + A/B/editorial + citas + coste
 ```
+
+Las respuestas del catálogo siguen una entrada separada:
+`POST /api/chat-editorial` acepta solo el ID mostrado y materializa el texto en
+otra Function antes de guardarlo en el mismo ledger.
 
 Restricciones deliberadas de la V1:
 
-- Las estrategias activas empiezan en paralelo y no comparten resultados ni contexto;
+- Las estrategias activas empiezan en paralelo y no comparten resultados,
+  recuperación ni respuestas entre sí; cada una recibe solo su propio hilo;
 - la presentación conserva el orden A → B, aunque B termine antes;
 - el deadline interno debe dejar margen al límite no configurable de 60 s de
   Netlify; objetivo inicial: terminar o cancelar antes de 50–55 s;
@@ -112,8 +120,9 @@ no token a token desde el proveedor.
 | Parser | `frontend/src/lib/chat-sse-protocol.ts` | Estado A → B, costes decimales y terminal estricto; admite una o dos estrategias |
 | UI | `frontend/src/components/chat/ChatComparisonAnswers.tsx` | Dos columnas/pestañas para A/B; una columna identificada si solo hay una activa; fuentes, límites, coste y voto ciego |
 | Function V1 | `frontend/netlify/functions/chat/chat.ts` | Entrada, rate limit, registro y protocolo bufferizado |
+| Function editorial | `frontend/netlify/functions/chat-editorial.ts` | Materializa el catálogo del servidor y registra el turno sin aceptar texto del cliente |
 | Runtime A/B | `frontend/netlify/functions/chat/` | Recuperación, proveedores en paralelo, verificación, coste y aislamiento |
-| Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro de consulta, coste y serialización de mensajes A/B |
+| Persistencia | `frontend/netlify/functions/chat/supabase-chat-store.ts` | Registro, historial acotado, coste y mensajes A/B/editorial |
 | Migraciones | `supabase/migrations/` | Tablas privadas de conversaciones, peticiones y mensajes; RPC atómicas |
 | Proxy migración | `frontend/netlify/prototypes/chat-fastapi-edge-v2.ts` | Fachada HMAC fuera de producción hasta superar gates |
 | HTTP Python | `src/api/chat.py` | Entrada acotada, autenticación y serialización SSE |
@@ -196,8 +205,13 @@ El store anterior se conserva durante la observación inicial para rollback.
 
 ## Despliegue seguro de la V1
 
-1. Confirmar que `supabase migration list --linked` muestra las migraciones
-   locales y remotas, y que ambos advisors terminan sin incidencias.
+1. Confirmar que `supabase migration list --linked` muestra en local y remoto
+   `20260805184500_chat_conversation_history.sql`,
+   `20260805190000_chat_editorial_messages.sql` y
+   `20260806015000_chat_history_possession.sql`. Si el destino está rezagado,
+   aplicarlas en ese orden con el flujo autorizado de Supabase y comprobar que
+   ambos advisors terminan sin incidencias. La tercera migración es forward-only:
+   no reescribir las dos migraciones anteriores.
 2. Configurar `SUPABASE_URL`, `SUPABASE_SECRET_KEY` y las variables de proveedor
    como secretos de Functions si el plan lo permite. En el plan Legacy aplicar
    la excepción documentada de variables ordinarias para el contexto
@@ -332,13 +346,21 @@ de una caída.
 - El navegador aplica un límite blando configurable mediante
   `VITE_CHAT_SESSION_MESSAGE_LIMIT`: diez mensajes por ventana móvil de 24 horas
   por defecto. No sustituye una futura cuota fuerte por usuario autenticado.
-- El navegador envía un identificador aleatorio de conversación, la
-  jurisdicción y solo `id`, `role` y `content` de la última pregunta. El backend
-  no recibe el resto del historial local.
-- El historial es por ahora visual, no contexto de inferencia: una pregunta
-  como «¿y en ese caso?» debe reformularse de forma autosuficiente. Incorporar
-  contexto multi-turn exige un contrato de privacidad y grounding separado;
-  no se resuelve reenviando todo el historial por defecto.
+- El navegador envía un identificador aleatorio de conversación, su secreto de
+  posesión, la jurisdicción y solo `id`, `role` y `content` de la última pregunta.
+  El backend no recibe el resto del historial local.
+- La Function reconstruye desde Supabase hasta seis turnos y 12 KiB. Cada
+  estrategia recibe sus respuestas anteriores, nunca las de la otra; ambas ven
+  las preguntas del usuario y los turnos editoriales, marcados como ajenos. La
+  lectura degrada a hilo vacío tras un segundo y el historial nunca se trata
+  como evidencia del turno actual. El navegador acompaña el UUID con un secreto
+  aleatorio; la Function envía solo su SHA-256 al ledger y una URL conocida no
+  basta para leer el hilo.
+- En el rollout del secreto, un bundle anterior que omita el campo continúa
+  respondiendo en un hilo efímero por petición: se ignora su UUID visible y no se
+  recupera contexto. Un token presente pero inválido se rechaza. Al migrar el
+  estado local se conservan resultados profundos terminados, se retiran
+  `comparisonId` obsoletos y los jobs aún activos se ofrecen para reinicio.
 - Sentry elimina cuerpo, cabeceras y variables locales. Supabase guarda la
   pregunta aceptada y una respuesta por estrategia con modelo, tokens, coste,
   duración, citas y límites; no guarda IP, user-agent, cookies ni diagnósticos

@@ -24,6 +24,7 @@ const dependencies = (
 
 const body = {
   conversation_id: 'conversation-1',
+  conversation_access_token: 'a'.repeat(64),
   user_message_id: 'm1',
   country_path: '/espana',
   answer_id: 'sporadic-absences',
@@ -48,6 +49,8 @@ describe('Netlify Function /api/chat-editorial', () => {
     const recorded = vi.mocked(deps.recordEditorial).mock.calls[0]?.[0];
     if (!recorded) throw new Error('no se registró el turno');
     expect(recorded.conversationId).toBe('conversation-1');
+    expect(recorded.conversationAccessHash).toMatch(/^[0-9a-f]{64}$/);
+    expect(recorded.conversationAccessHash).not.toBe(body.conversation_access_token);
     expect(recorded.question).toContain('ausencias esporádicas');
     expect(recorded.content).toContain('esporádicas');
     expect(recorded.content).not.toContain('inventado');
@@ -82,6 +85,16 @@ describe('Netlify Function /api/chat-editorial', () => {
     const response = await createChatEditorialHandler(deps)(
       request({ ...body, conversation_id: 'no válido' })
     );
+
+    expect(response.status).toBe(400);
+    expect(deps.recordEditorial).not.toHaveBeenCalled();
+  });
+
+  it('rechaza registrar el turno sin el secreto de posesión de la conversación', async () => {
+    const deps = dependencies();
+    const { conversation_access_token: _omitted, ...withoutAccessToken } = body;
+
+    const response = await createChatEditorialHandler(deps)(request(withoutAccessToken));
 
     expect(response.status).toBe(400);
     expect(deps.recordEditorial).not.toHaveBeenCalled();

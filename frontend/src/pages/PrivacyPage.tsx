@@ -1,11 +1,12 @@
 import { staticRoute } from '@/data/staticRoutes';
 import { CONTACT_EMAIL } from '@/lib/contribution';
 import { usePageTitle } from '@/lib/usePageTitle';
+import { useConversations } from '@/stores/useConversations';
 
 const META = staticRoute('/privacidad');
 
 /** Fecha de la última revisión editorial del texto, no la del build. */
-const LAST_UPDATED = '5 de agosto de 2026';
+const LAST_UPDATED = '6 de agosto de 2026';
 
 /**
  * Responsable del tratamiento. Es la misma entidad titular del resto de
@@ -106,6 +107,7 @@ const RIGHTS: { name: string; description: string }[] = [
 
 export function PrivacyPage() {
   usePageTitle('Privacidad', META.path, META.description, META.indexable);
+  const conversations = useConversations((state) => state.conversations);
   return (
     <div className='mx-auto w-full max-w-3xl overflow-y-auto px-4 py-8'>
       <h1 className='mb-2 font-heading text-2xl font-semibold'>Privacidad</h1>
@@ -194,9 +196,10 @@ export function PrivacyPage() {
       <section className='mb-8'>
         <h2 className='mb-3 font-heading text-lg font-semibold'>3. Qué se envía al preguntar</h2>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
-          Tu navegador transmite únicamente la última pregunta. La estrategia A la envía a OpenAI
-          junto con fragmentos estructurados de 106 sentencias; la estrategia B la envía a Google
-          Gemini, que busca de forma independiente en el File Search Store de esos 106 PDF.
+          Del contenido de la conversación, tu navegador transmite únicamente la última pregunta. La
+          estrategia A la envía a OpenAI junto con fragmentos estructurados de 106 sentencias; la
+          estrategia B la envía a Google Gemini, que busca de forma independiente en el File Search
+          Store de esos 106 PDF.
         </p>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
           Para que el chat entienda a qué te refieres cuando preguntas por algo ya dicho, el
@@ -232,9 +235,15 @@ export function PrivacyPage() {
         </p>
         <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
           Esas tablas viven en un esquema privado que no está expuesto al navegador: la aplicación
-          web no puede leerlas y solo el endpoint del chat escribe en ellas mediante funciones
-          acotadas. No se guardan IP, agente de usuario, cookies ni el diagnóstico bruto de los
-          proveedores.
+          web no puede leerlas y solo los endpoints del chat y de investigación profunda escriben en
+          ellas mediante funciones acotadas. No se guardan IP, agente de usuario, cookies ni el
+          diagnóstico bruto de los proveedores.
+        </p>
+        <p className='mb-2 text-sm leading-relaxed text-muted-foreground'>
+          Para impedir que conocer la URL permita leer el hilo, tu navegador conserva además un
+          secreto aleatorio de la conversación. Solo lo transmite a los endpoints del chat y de
+          investigación profunda que necesitan demostrar posesión; Supabase guarda su huella
+          SHA-256, nunca el secreto en claro.
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
           El historial visible se conserva además en tu navegador mediante localStorage. Eliminarlo
@@ -336,10 +345,29 @@ export function PrivacyPage() {
           >
             {CONTACT_EMAIL}
           </a>
-          . Como no hay cuentas, para localizar una conversación concreta necesitamos el
-          identificador que aparece en su URL. Ese identificador no basta por sí solo para acreditar
-          la identidad: verificaremos la solicitud por un canal separado antes de borrar nada.
+          . Como no hay cuentas, para localizar una conversación concreta necesitamos su referencia
+          técnica de supresión. Esa referencia no basta por sí sola para acreditar la identidad:
+          verificaremos la solicitud por un canal separado antes de borrar nada.
         </p>
+        {conversations.length > 0 && (
+          <div className='mb-3 rounded-lg border border-border bg-muted p-3 text-sm'>
+            <p className='mb-2 text-foreground'>
+              Referencias técnicas guardadas en este navegador:
+            </p>
+            <ul className='space-y-1 text-muted-foreground'>
+              {conversations.map((conversation, index) => (
+                <li key={conversation.id}>
+                  Conversación {index + 1}: {''}
+                  <code className='break-all text-foreground'>{conversation.ledgerId}</code>
+                </li>
+              ))}
+            </ul>
+            <p className='mt-2 text-xs text-muted-foreground'>
+              Envía solo la referencia necesaria; el secreto de posesión no se muestra ni debe
+              compartirse.
+            </p>
+          </div>
+        )}
         <p className='text-sm leading-relaxed text-muted-foreground'>
           Si consideras que el tratamiento vulnera la normativa, puedes reclamar ante la{' '}
           <a
@@ -375,7 +403,9 @@ export function PrivacyPage() {
         </p>
         <p className='text-sm leading-relaxed text-muted-foreground'>
           Además del historial del chat y de esa marca de exclusión, el almacenamiento local guarda
-          preferencias de la interfaz. Todo ello vive únicamente en tu dispositivo.
+          el secreto aleatorio que protege cada conversación y preferencias de la interfaz. Ese
+          secreto solo sale de tu dispositivo hacia los endpoints del chat y de investigación
+          profunda que deben demostrar que el navegador posee el hilo.
         </p>
       </section>
 

@@ -1,3 +1,4 @@
+import { conversationAccessHash, validConversationAccessToken } from './chat/request-identifiers';
 import { submitDeepResearchJob } from './deep-research/alfredo-client';
 import {
   DEEP_RESEARCH_ALLOWED_TOOLS,
@@ -17,6 +18,7 @@ const MAX_QUESTION_CHARS = 500;
 
 interface StartInput {
   conversationId: string;
+  conversationAccessHash: string;
   comparisonId: string | null;
   countryPath: string;
   question: string;
@@ -57,6 +59,7 @@ const parseInput = async (request: Request): Promise<StartInput | null> => {
   const value = parsed as Record<string, unknown>;
   if (
     !validIdentifier(value.conversation_id) ||
+    !validConversationAccessToken(value.conversation_access_token) ||
     !validComparisonId(value.comparison_id) ||
     !validCountryPath(value.country_path) ||
     typeof value.question !== 'string' ||
@@ -67,6 +70,7 @@ const parseInput = async (request: Request): Promise<StartInput | null> => {
   }
   return {
     conversationId: value.conversation_id,
+    conversationAccessHash: await conversationAccessHash(value.conversation_access_token),
     comparisonId: value.comparison_id === undefined ? null : value.comparison_id,
     countryPath: value.country_path,
     question: value.question.trim(),
@@ -96,6 +100,11 @@ export const createDeepResearchHandler =
 
     const jobId = `deep-${crypto.randomUUID()}`;
     try {
+      await store.authorizeConversation({
+        conversationId: input.conversationId,
+        countryPath: input.countryPath,
+        conversationAccessHash: input.conversationAccessHash,
+      });
       await store.create({
         jobId,
         conversationId: input.conversationId,
@@ -189,6 +198,9 @@ const productionStore = createProductionDeepResearchStore();
 export default createDeepResearchHandler({
   env: productionEnvironment,
   store: productionStore ?? {
+    async authorizeConversation() {
+      throw new Error('deep research persistence unavailable');
+    },
     async create() {
       throw new Error('deep research persistence unavailable');
     },

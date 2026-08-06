@@ -32,6 +32,7 @@ const jsonRequest = async <T>(url: string, init: RequestInit): Promise<T> => {
 
 export async function startDeepResearch(input: {
   conversationId: string;
+  conversationAccessToken: string;
   comparisonId?: string | null;
   countryPath: string;
   question: string;
@@ -40,6 +41,7 @@ export async function startDeepResearch(input: {
     method: 'POST',
     body: JSON.stringify({
       conversation_id: input.conversationId,
+      conversation_access_token: input.conversationAccessToken,
       comparison_id: input.comparisonId ?? null,
       country_path: input.countryPath,
       question: input.question,

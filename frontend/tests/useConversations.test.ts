@@ -41,6 +41,8 @@ describe('useConversations', () => {
 
     expect(conversation).toBeDefined();
     expect(conversation?.messages).toEqual([]);
+    expect(conversation?.ledgerId).toBe(id);
+    expect(conversation?.accessToken).toMatch(/^[0-9a-f]{64}$/);
     expect(useConversations.getState().conversations).toHaveLength(1);
   });
 
@@ -134,7 +136,7 @@ describe('useConversations', () => {
     const stored = window.localStorage.getItem(CONVERSATIONS_STORAGE_KEY);
 
     expect(stored).not.toBeNull();
-    expect(JSON.parse(stored as string).version).toBe(4);
+    expect(JSON.parse(stored as string).version).toBe(5);
   });
 
   it('conserva una respuesta editorial trazable al rehidratar', () => {
@@ -294,11 +296,57 @@ describe('useConversations', () => {
     await useConversations.persist.rehydrate();
 
     const messages = useConversations.getState().getConversation('c1')?.messages;
+    const migrated = useConversations.getState().getConversation('c1');
     expect(messages).toHaveLength(2);
+    expect(migrated?.ledgerId).not.toBe('c1');
+    expect(migrated?.accessToken).toMatch(/^[0-9a-f]{64}$/);
     // El texto que alcanzó a llegar se conserva; el cursor desaparece.
     expect(messages?.[1].content).toBe('El Tribunal Supremo');
     expect(messages?.[1].isStreaming).toBe(false);
     expect(messages?.some((message) => message.isStreaming)).toBe(false);
+  });
+
+  it('invalida vínculos remotos obsoletos al separar el ledger de un historial antiguo', () => {
+    const [migrated] = clearStreamingFlags([
+      {
+        id: 'conversation-visible-en-la-url',
+        title: 'consulta antigua',
+        createdAt: '2026-08-01T10:00:00.000Z',
+        updatedAt: '2026-08-01T10:01:00.000Z',
+        messages: [
+          {
+            id: 'answer-1',
+            role: 'assistant',
+            content: 'Respuesta anterior.',
+            createdAt: '2026-08-01T10:00:30.000Z',
+            comparisonId: 'chat-old-comparison',
+          },
+          {
+            id: 'deep-1',
+            role: 'assistant',
+            content: '',
+            createdAt: '2026-08-01T10:01:00.000Z',
+            deepResearch: {
+              jobId: 'deep-old-job',
+              comparisonId: 'chat-old-comparison',
+              status: 'running',
+              stage: 'reading',
+              result: null,
+            },
+          },
+        ],
+      },
+    ]);
+
+    expect(migrated.ledgerId).not.toBe(migrated.id);
+    expect(migrated.messages[0]).not.toHaveProperty('comparisonId');
+    expect(migrated.messages[1].deepResearch).toMatchObject({
+      comparisonId: null,
+      status: 'error',
+      stage: 'error',
+      result: null,
+    });
+    expect(migrated.messages[1].deepResearch?.error).toMatch(/actualiz/i);
   });
 
   it('descarta un estado persistido con forma incompatible', async () => {
