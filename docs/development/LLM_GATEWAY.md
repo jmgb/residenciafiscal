@@ -218,7 +218,7 @@ latencia dominada por la salida, no por el tamaño de la pregunta.
 El paquete se instala desde PyPI con una versión exacta:
 
 ```toml
-dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.10.1"]
+dependencies = ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.12.0"]
 ```
 
 Cada tramo hasta aquí aporta algo que este proyecto da por hecho: la
@@ -239,6 +239,13 @@ Llama de Groq y GPT-5.1/5.2). Lo que sí obliga es a regenerar
 `frontend/netlify/functions/chat/pricing.generated.json`, que publica esa
 versión de catálogo a la Function TypeScript. La `0.10.1` es solo determinismo
 de la CI del paquete.
+
+Las `0.11.0` y `0.12.0` añaden contratos que este proyecto no usa —imagen,
+vídeo y function calling neutral para OpenAI y Groq— y mueven los builders de
+catálogo a `llm_gateway.catalogs` sin tocar `lookup_model` ni `CATALOG_VERSION`,
+que es lo único que el chat importa. Lo que sí obligan es a regenerar de nuevo
+`pricing.generated.json`: el catálogo pasa a `2026-08-06.1` por los modelos de
+vídeo de Replicate, sin cambiar las tarifas de los tres modelos del chat.
 
 Ese último tramo es el aviso de esta sección cumpliéndose. Hasta la `0.9.0` los
 adaptadores de Groq y OpenRouter pedían `{"type": "json_object"}` y descartaban

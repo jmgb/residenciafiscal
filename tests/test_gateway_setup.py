@@ -7,7 +7,7 @@ from typing import Any
 import pytest
 
 
-def test_gateway_dependency_esta_fijada_exactamente_a_0_10_1() -> None:
+def test_gateway_dependency_esta_fijada_exactamente_a_0_12_0() -> None:
     pyproject = tomllib.loads(
         (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text(encoding="utf-8")
     )
@@ -17,7 +17,7 @@ def test_gateway_dependency_esta_fijada_exactamente_a_0_10_1() -> None:
         if dependencia.startswith("neutral-llm-gateway")
     ]
 
-    assert dependencias == ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.10.1"]
+    assert dependencias == ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.12.0"]
 
 
 def _clear_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
