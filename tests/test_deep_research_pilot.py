@@ -130,9 +130,34 @@ def test_prepare_rechaza_pregunta_que_coincide_con_holdout(tmp_path: Path) -> No
         )
 
 
-def test_comando_codex_es_no_interactivo_y_solo_lectura(tmp_path: Path) -> None:
+def _fake_nvm_codex(home: Path) -> Path:
+    """Replica el layout que instala npm: `bin/codex` es un symlink a `codex.js`."""
+
+    node_root = home / ".nvm/versions/node/v24.19.0"
+    package_bin = node_root / "lib/node_modules/@openai/codex/bin"
+    package_bin.mkdir(parents=True)
+    entrypoint = package_bin / "codex.js"
+    entrypoint.write_text("#!/usr/bin/env node\n", encoding="utf-8")
+    entrypoint.chmod(0o755)
+    (node_root / "bin").mkdir(parents=True)
+    link = node_root / "bin/codex"
+    link.symlink_to(Path("../lib/node_modules/@openai/codex/bin/codex.js"))
+    return link
+
+
+def test_comando_codex_es_no_interactivo_y_solo_lectura(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     from deep_research_contracts import DeepResearchJob
     from deep_research_pilot import codex_command
+
+    # El comando sandbox se construye sobre una instalación real de Codex. Sin
+    # este doble, el test solo pasaba en máquinas que lo tuvieran instalado y CI
+    # fallaba con FileNotFoundError; el contrato que se comprueba aquí —no
+    # interactivo y solo lectura— no depende del host.
+    _fake_nvm_codex(tmp_path)
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: tmp_path))
+    monkeypatch.setenv("PATH", "")
 
     job = DeepResearchJob(
         schema_version="residenciafiscal-deep-research-job/1",
