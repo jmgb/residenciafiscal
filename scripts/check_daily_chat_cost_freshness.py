@@ -23,12 +23,20 @@ escribe, y entonces miente en la dirección peor —diciendo que todo está bien
 
 Solo usa la librería estándar y **no toca el ledger**: lee un fichero local y el
 estado de una unit. No sabe nada del contenido del chat.
+
+Los avisos se envían con `parse_mode=HTML`, así que comparten el formato del
+resumen diario: titular en `<b>`, los comandos en `<code>` y cada uno en su
+línea —copiables de un toque desde el móvil, que es donde se leen—. Todo texto
+que no escribe este fichero (estado de la unit, detalle de una excepción) pasa
+por `html.escape`: un `<` suelto haría que Telegram rechazara el envío, y un
+guardián que no puede avisar es exactamente el silencio que existe para cerrar.
 """
 
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html
 import pathlib
 import subprocess
 import sys
@@ -96,14 +104,18 @@ def timer_state(run: object = None) -> str | None:
 
 
 def build_stale_message(last_sent: dt.date, staleness: int) -> str:
+    """Aviso de desfase. La alineación por espacios no sobrevive al ancho del móvil."""
+    dias = "día" if abs(staleness) == 1 else "días"
     return "\n".join(
         [
-            f"{HEADER_PREFIX} ⚠️ Chat · el resumen diario lleva {staleness} día(s) sin salir",
+            f"<b>{HEADER_PREFIX} ⚠️ Chat · el resumen diario lleva {staleness} {dias} sin salir</b>",
             "",
-            f"Último día resumido: {last_sent.isoformat()}.",
+            f"Último día resumido: {last_sent.isoformat()}",
             "El digest no avisa de esto por su cuenta: si el timer no dispara, calla.",
-            f"Revisa: systemctl --user list-timers {WATCHED_TIMER}",
-            f"        journalctl --user -u {WATCHED_SERVICE} -n 50 --no-pager",
+            "",
+            "<b>Revisa:</b>",
+            f"<code>systemctl --user list-timers {WATCHED_TIMER}</code>",
+            f"<code>journalctl --user -u {WATCHED_SERVICE} -n 50 --no-pager</code>",
         ]
     )
 
@@ -111,11 +123,13 @@ def build_stale_message(last_sent: dt.date, staleness: int) -> str:
 def build_never_sent_message() -> str:
     return "\n".join(
         [
-            f"{HEADER_PREFIX} ⚠️ Chat · el resumen diario no se ha enviado nunca",
+            f"<b>{HEADER_PREFIX} ⚠️ Chat · el resumen diario no se ha enviado nunca</b>",
             "",
             "No hay estado de ningún envío previo.",
             "Si el timer se acaba de instalar, esto se apaga solo tras el primer resumen.",
-            f"Revisa: systemctl --user list-timers {WATCHED_TIMER}",
+            "",
+            "<b>Revisa:</b>",
+            f"<code>systemctl --user list-timers {WATCHED_TIMER}</code>",
         ]
     )
 
@@ -154,14 +168,17 @@ def build_crash_message(error: BaseException) -> str:
     Si revienta y solo lo registra el journal, reaparece el silencio que existe
     para eliminar. El detalle se corta como en el aviso del digest.
     """
+    detail = html.escape(f"{type(error).__name__}: {str(error)[:CRASH_DETAIL_LIMIT]}")
     return "\n".join(
         [
-            f"{HEADER_PREFIX} ⚠️ Chat · el guardián del resumen diario FALLÓ",
-            "",
-            f"{type(error).__name__}: {str(error)[:CRASH_DETAIL_LIMIT]}",
+            f"<b>{HEADER_PREFIX} ⚠️ Chat · el guardián del resumen diario FALLÓ</b>",
             "",
             "No se ha comprobado si el resumen diario sigue saliendo.",
-            f"Revisa: journalctl --user -u {SERVICE_NAME} -n 50 --no-pager",
+            "",
+            "<b>Revisa:</b>",
+            f"<code>journalctl --user -u {SERVICE_NAME} -n 50 --no-pager</code>",
+            "",
+            f"<pre>{detail}</pre>",
         ]
     )
 
@@ -169,11 +186,13 @@ def build_crash_message(error: BaseException) -> str:
 def build_timer_stopped_message(state: str) -> str:
     return "\n".join(
         [
-            f"{HEADER_PREFIX} ⚠️ Chat · el timer del resumen diario no está activo",
+            f"<b>{HEADER_PREFIX} ⚠️ Chat · el timer del resumen diario no está activo</b>",
             "",
-            f"Estado de {WATCHED_TIMER}: {state}.",
-            "Un `git pull` que toque las units no las reinstala solo.",
-            "Repara: bash scripts/agentic/install-daily-chat-cost-telegram-timer.sh",
+            f"Estado de {WATCHED_TIMER}: {html.escape(state)}",
+            "Un «git pull» que toque las units no las reinstala solo.",
+            "",
+            "<b>Repara:</b>",
+            "<code>bash scripts/agentic/install-daily-chat-cost-telegram-timer.sh</code>",
         ]
     )
 

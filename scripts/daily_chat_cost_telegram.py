@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html
 import json
 import os
 import pathlib
@@ -83,6 +84,17 @@ def format_seconds(milliseconds: object) -> str:
     return f"{milliseconds / 1000:.1f} s".replace(".", ",")
 
 
+def label(labels: dict[str, str], key: object) -> str:
+    """Etiqueta legible de un valor del ledger, listo para `parse_mode=HTML`.
+
+    Un código sin etiqueta sale tal cual del ledger, así que se escapa: el
+    mensaje viaja como HTML y un `<` suelto haría que Telegram rechazara el
+    envío entero. Los rótulos propios no llevan nada que escapar.
+    """
+    text = str(key)
+    return labels.get(text, html.escape(text))
+
+
 def build_message(stats: dict, alert_usd: float | None) -> str:
     day = stats.get("day", "?")
     requests = int(stats.get("requests", 0))
@@ -101,8 +113,7 @@ def build_message(stats: dict, alert_usd: float | None) -> str:
         return "\n".join(lines)
 
     status_detail = ", ".join(
-        f"{count} {STATUS_LABELS.get(status, status)}"
-        for status, count in sorted(by_status.items())
+        f"{count} {label(STATUS_LABELS, status)}" for status, count in sorted(by_status.items())
     )
     lines.append(f"Consultas: {requests} ({status_detail})")
     lines.append(
@@ -112,24 +123,27 @@ def build_message(stats: dict, alert_usd: float | None) -> str:
     if exceeded and alert_usd is not None:
         lines.append(f"⚠️ Supera el umbral diario de ${alert_usd:.2f}")
     if by_failure:
-        detail = ", ".join(f"{code} {count}" for code, count in sorted(by_failure.items()))
+        detail = ", ".join(
+            f"{html.escape(str(code))} {count}" for code, count in sorted(by_failure.items())
+        )
         lines.append(f"Fallos: {detail}")
 
     if by_strategy:
         lines.append("")
-        lines.append("Por estrategia")
+        lines.append("<b>Por estrategia</b>")
         for strategy, detail in sorted(by_strategy.items()):
-            label = STRATEGY_LABELS.get(strategy, strategy)
             lines.append(
-                f"· {label} — {detail.get('answers', 0)} resp · "
+                f"· {label(STRATEGY_LABELS, strategy)} — {detail.get('answers', 0)} resp · "
                 f"{format_usd(int(detail.get('cost_microusd') or 0))} · "
                 f"Respuesta en: {format_seconds(detail.get('p50_latency_ms'))}"
             )
 
     if by_measurement:
-        detail = " · ".join(f"{name} {count}" for name, count in sorted(by_measurement.items()))
+        detail = " · ".join(
+            f"{html.escape(str(name))} {count}" for name, count in sorted(by_measurement.items())
+        )
         lines.append("")
-        lines.append(f"Medición: {detail}")
+        lines.append(f"<b>Medición:</b> {detail}")
 
     return "\n".join(lines)
 
@@ -188,10 +202,10 @@ def build_skipped_message(days: list[dt.date]) -> str:
     """Los días que no se recuperan se declaran; el silencio no es una opción."""
     return "\n".join(
         [
-            f"{HEADER_PREFIX} ⚠️ Chat · {len(days)} resúmenes diarios omitidos",
+            f"<b>{HEADER_PREFIX} ⚠️ Chat · {len(days)} resúmenes diarios omitidos</b>",
             "",
             f"Sin enviar del {days[0].isoformat()} al {days[-1].isoformat()}.",
-            "El ledger de Supabase conserva el dato: recupéralo con --day.",
+            "El ledger de Supabase conserva el dato: recupéralo con <code>--day</code>.",
         ]
     )
 
@@ -221,16 +235,20 @@ def build_failure_message(
     """
     prefix = f"{HEADER_PREFIX} 🧪 PRUEBA ·" if manual else f"{HEADER_PREFIX} ⚠️"
     lines = [
-        f"{prefix} Chat · el resumen diario FALLÓ {day.isoformat()}",
+        f"<b>{prefix} Chat · el resumen diario FALLÓ {day.isoformat()}</b>",
         "",
-        f"Exit: {exit_code}.",
-        f"Revisa: journalctl --user -u {SERVICE_NAME} -n 100 --no-pager",
+        f"Exit: {exit_code}",
+        "",
+        "<b>Revisa:</b>",
+        f"<code>journalctl --user -u {SERVICE_NAME} -n 100 --no-pager</code>",
     ]
     if manual:
         lines.insert(1, "")
         lines.insert(2, "Disparo manual fuera de systemd: no ha fallado ningún job.")
     if detail:
-        lines.extend(["", detail[:FAILURE_DETAIL_LIMIT]])
+        # El detalle es stderr ajeno: sin escapar, un `<` bastaría para que
+        # Telegram rechazara el aviso justo el día que hace falta.
+        lines.extend(["", f"<pre>{html.escape(detail[:FAILURE_DETAIL_LIMIT])}</pre>"])
     return "\n".join(lines)
 
 

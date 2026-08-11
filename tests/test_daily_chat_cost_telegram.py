@@ -199,6 +199,35 @@ class AvisoDeFalloTest(unittest.TestCase):
         self.assertIn("residenciafiscal-daily-chat-cost-telegram.service", mensaje)
         self.assertIn("Supabase devolvió 500", mensaje)
 
+    def test_todos_los_avisos_llevan_titular_en_negrita(self) -> None:
+        """Mismo formato que el resumen: el canal mezcla emisores."""
+        avisos = [
+            MODULE.build_failure_message(dt.date(2026, 8, 3), 2),
+            MODULE.build_skipped_message([dt.date(2026, 8, 1), dt.date(2026, 8, 2)]),
+        ]
+
+        for aviso in avisos:
+            titular = aviso.splitlines()[0]
+            with self.subTest(titular=titular):
+                self.assertTrue(titular.startswith("<b>"), titular)
+                self.assertTrue(titular.endswith("</b>"), titular)
+
+    def test_el_detalle_del_fallo_va_escapado(self) -> None:
+        """El detalle es stderr ajeno: un `<` sin escapar tumba el envío."""
+        mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 1, "roto: <urlopen> & 500")
+
+        self.assertIn("&lt;urlopen&gt; &amp; 500", mensaje)
+        self.assertNotIn("<urlopen>", mensaje)
+
+    def test_un_codigo_de_fallo_del_ledger_va_escapado(self) -> None:
+        mensaje = MODULE.build_message(
+            {**STATS, "by_failure_code": {"<provider>": 1}},
+            None,
+        )
+
+        self.assertIn("&lt;provider&gt;", mensaje)
+        self.assertNotIn("<provider>", mensaje)
+
     def test_el_aviso_no_arrastra_diagnosticos_enormes(self) -> None:
         mensaje = MODULE.build_failure_message(dt.date(2026, 8, 3), 1, "x" * 2000)
 

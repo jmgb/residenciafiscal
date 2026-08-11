@@ -677,11 +677,20 @@ def write_history(
 
 
 def build_failure_message(run_date: dt.date, exit_code: int, detail: str = "") -> str:
+    """Mismo esqueleto que los avisos del chat: titular, dato y acción separada.
+
+    Aquí el comando no puede ir en `<code>`: `build_telegram_payload` escapa todo
+    el cuerpo a propósito —trae mensajes de error de GA4, PostHog y Search
+    Console—, así que cualquier etiqueta llegaría literal. Lo que sí se alinea es
+    la estructura: el comando ocupa su línea y no se lee pegado a la etiqueta.
+    """
     lines = [
         f"Tráfico semanal FALLÓ {run_date.isoformat()}",
         "",
         f"Exit: {exit_code}.",
-        f"Revisa: journalctl --user -u {SERVICE_NAME} -n 100 --no-pager",
+        "",
+        "Revisa:",
+        f"journalctl --user -u {SERVICE_NAME} -n 100 --no-pager",
     ]
     if detail:
         lines.extend(["", detail[:500]])

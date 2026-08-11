@@ -62,6 +62,25 @@ class MensajesTest(unittest.TestCase):
         self.assertIn("3", mensaje)
         self.assertIn("residenciafiscal-daily-chat-cost-telegram.timer", mensaje)
 
+    def test_todos_los_avisos_llevan_titular_en_negrita(self) -> None:
+        """El canal mezcla avisos: el titular tiene el mismo peso que en el digest."""
+        avisos = [
+            MODULE.build_stale_message(dt.date(2026, 7, 30), 3),
+            MODULE.build_never_sent_message(),
+            MODULE.build_timer_stopped_message("inactive"),
+            MODULE.build_crash_message(RuntimeError("roto")),
+        ]
+
+        for aviso in avisos:
+            titular = aviso.splitlines()[0]
+            with self.subTest(titular=titular):
+                self.assertTrue(titular.startswith("<b>"), titular)
+                self.assertTrue(titular.endswith("</b>"), titular)
+
+    def test_el_desfase_de_un_solo_dia_se_escribe_en_singular(self) -> None:
+        self.assertIn("1 día sin salir", MODULE.build_stale_message(dt.date(2026, 8, 1), 1))
+        self.assertIn("3 días sin salir", MODULE.build_stale_message(dt.date(2026, 7, 30), 3))
+
     def test_no_haberse_enviado_nunca_se_dice_distinto(self) -> None:
         """«Sin estado» no es lo mismo que «lleva tres días sin mandar»."""
         mensaje = MODULE.build_never_sent_message()
@@ -74,6 +93,13 @@ class MensajesTest(unittest.TestCase):
 
         self.assertIn("residenciafiscal-daily-chat-cost-telegram.timer", mensaje)
         self.assertIn("inactive", mensaje)
+
+    def test_el_detalle_de_una_excepcion_va_escapado(self) -> None:
+        """Un `<` sin escapar hace que Telegram rechace el aviso entero."""
+        mensaje = MODULE.build_crash_message(RuntimeError("timeout en <chat_daily_stats> & co"))
+
+        self.assertIn("&lt;chat_daily_stats&gt; &amp; co", mensaje)
+        self.assertNotIn("<chat_daily_stats>", mensaje)
 
 
 class TimerVigiladoTest(unittest.TestCase):

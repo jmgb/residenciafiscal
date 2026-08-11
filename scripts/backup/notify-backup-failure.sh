@@ -46,10 +46,14 @@ if [[ -n "$DETAILS" ]]; then
 fi
 NOW_UTC="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
+# Mismo formato que los avisos del chat: titular en una sola negrita, un dato por
+# línea y el diagnóstico al final. Título y referencia llegan por entorno desde
+# las units, así que también se escapan: un `<` suelto tumbaría el envío entero.
 MESSAGE="$(cat <<EOF
-<b>[RESIDENCIAFISCAL]</b> ❌ <b>${TITLE}</b>
-referencia=<code>${REFERENCE}</code>
-timestamp=<code>${NOW_UTC}</code>
+<b>[RESIDENCIAFISCAL] ❌ $(printf '%s' "$TITLE" | html_escape)</b>
+
+Referencia: <code>$(printf '%s' "$REFERENCE" | html_escape)</code>
+Timestamp: <code>${NOW_UTC}</code>
 ${DETAILS_BLOCK}
 
 <pre>${STATUS}</pre>
