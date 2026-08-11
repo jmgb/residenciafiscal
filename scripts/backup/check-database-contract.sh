@@ -49,32 +49,57 @@ if [[ -z "$SUPABASE_DB_PASSWORD" || -z "$SUPABASE_REF" ]]; then
 fi
 
 DECLARADAS="$(grep -v -E '^[[:space:]]*(#|$)' "$MANIFEST" | LC_ALL=C sort)"
-[[ -n "$DECLARADAS" ]] || fail "el manifiesto no declara ninguna firma"
+[[ -n "$DECLARADAS" ]] || fail "el manifiesto no declara nada"
 
-# Las funciones cubiertas salen del propio manifiesto: lo que no declara, no se
-# comprueba. Se validan antes de construir la consulta porque acaban dentro de
-# ella como literales.
-CUBIERTAS="$(printf '%s\n' "$DECLARADAS" | cut -d'(' -f1 | LC_ALL=C sort -u)"
-LISTA=""
-while IFS= read -r funcion; do
-    if [[ ! "$funcion" =~ ^[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*$ ]]; then
-        fail "el manifiesto declara un identificador inválido: ${funcion}"
-    fi
-    LISTA+="${LISTA:+,}'${funcion}'"
-done <<< "$CUBIERTAS"
+# Lo cubierto sale del propio manifiesto: lo que no declara, no se comprueba.
+# Los identificadores se validan antes de construir la consulta porque acaban
+# dentro de ella como literales.
+lista_de() {
+    local tipo="$1" campos="$2" lista="" clave
+    while IFS= read -r linea; do
+        [[ -n "$linea" ]] || continue
+        clave="$(printf '%s' "$linea" | cut -d' ' -f2-"$campos" | tr ' ' '.')"
+        clave="${clave%%(*}"
+        if [[ ! "$clave" =~ ^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*){1,2}$ ]]; then
+            fail "el manifiesto declara un identificador inválido: ${clave}"
+        fi
+        lista+="${lista:+,}'${clave}'"
+    done <<< "$(printf '%s\n' "$DECLARADAS" | grep "^${tipo} " || true)"
+    printf '%s' "$lista"
+}
+
+FUNCIONES="$(lista_de firma 2)"
+RESTRICCIONES="$(lista_de restriccion 3)"
+COLUMNAS="$(lista_de columna 3)"
 
 DB_URL="postgresql://postgres.${SUPABASE_REF}:${SUPABASE_DB_PASSWORD}@${POOLER_HOST}:5432/postgres"
 
+# Cada consulta devuelve las líneas ya en el formato del manifiesto, para poder
+# compararlas tal cual. Una lista vacía se traduce a NULL, que no casa con nada.
 if ! VIVAS="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
     "$DB_URL" \
     --no-password \
     --no-align \
     --tuples-only \
     -v ON_ERROR_STOP=1 \
-    -c "SELECT n.nspname || '.' || p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ')'
+    -c "SELECT 'firma ' || n.nspname || '.' || p.proname
+             || '(' || pg_get_function_identity_arguments(p.oid) || ')'
           FROM pg_proc AS p
           JOIN pg_namespace AS n ON n.oid = p.pronamespace
-         WHERE n.nspname || '.' || p.proname IN (${LISTA})
+         WHERE n.nspname || '.' || p.proname IN (${FUNCIONES:-NULL})
+        UNION ALL
+        SELECT 'restriccion ' || n.nspname || '.' || c.relname || ' ' || k.conname
+             || ' ' || pg_get_constraintdef(k.oid)
+          FROM pg_constraint AS k
+          JOIN pg_class AS c ON c.oid = k.conrelid
+          JOIN pg_namespace AS n ON n.oid = c.relnamespace
+         WHERE n.nspname || '.' || c.relname || '.' || k.conname IN (${RESTRICCIONES:-NULL})
+        UNION ALL
+        SELECT 'columna ' || table_schema || '.' || table_name || ' ' || column_name
+             || ' ' || data_type
+             || CASE WHEN is_nullable = 'NO' THEN ' NOT NULL' ELSE '' END
+          FROM information_schema.columns
+         WHERE table_schema || '.' || table_name || '.' || column_name IN (${COLUMNAS:-NULL})
          ORDER BY 1;" 2>&1)"; then
     fail "no se pudo consultar el catálogo: ${VIVAS}"
 fi
@@ -86,11 +111,11 @@ SOBRANTES="$(comm -13 <(printf '%s\n' "$DECLARADAS") <(printf '%s\n' "$VIVAS"))"
 
 if [[ -n "$AUSENTES" || -n "$SOBRANTES" ]]; then
     echo "[$(timestamp)] Database contract DRIFT DETECTED:" >&2
-    while IFS= read -r firma; do
-        [[ -n "$firma" ]] && echo "  - declarada y ausente en la base de datos: ${firma}" >&2
+    while IFS= read -r declarada; do
+        [[ -n "$declarada" ]] && echo "  - declarado y ausente en la base de datos: ${declarada}" >&2
     done <<< "$AUSENTES"
-    while IFS= read -r firma; do
-        [[ -n "$firma" ]] && echo "  - viva y no declarada por el repositorio: ${firma}" >&2
+    while IFS= read -r viva; do
+        [[ -n "$viva" ]] && echo "  - vivo y no declarado por el repositorio: ${viva}" >&2
     done <<< "$SOBRANTES"
     echo "  Una migración aplicada no se edita: se corrige hacia delante." >&2
     echo "  Ver docs/operations/SUPABASE_CHAT.md antes de tocar nada." >&2
@@ -98,4 +123,4 @@ if [[ -n "$AUSENTES" || -n "$SOBRANTES" ]]; then
 fi
 
 TOTAL="$(printf '%s\n' "$DECLARADAS" | wc -l | tr -d ' ')"
-echo "[$(timestamp)] Database contract OK: ${TOTAL} firmas vivas coinciden con el repositorio"
+echo "[$(timestamp)] Database contract OK: ${TOTAL} objetos vivos coinciden con el repositorio"

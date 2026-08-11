@@ -20,10 +20,11 @@ una unit, porque systemd ejecuta su propia copia. Que eso se olvide ya no pasa
 en silencio: `check-operational-drift.sh` compara a diario el checkout, las
 units instaladas y `origin/main`, y alerta por Telegram. Nunca reconcilia solo.
 Su gemelo `check-database-contract.sh` contesta la pregunta de al lado —si la
-base de datos sigue siendo la que declara el repositorio— comparando las firmas
-vivas de las RPC con `database-contract.txt`. Al cambiar una firma en una
-migración hay que actualizar ese manifiesto en el mismo cambio; el test lo
-exige, y sin él una migración editada después de aplicarse vuelve a pasar
-inadvertida.
+base de datos sigue siendo la que declara el repositorio— comparando con
+`database-contract.txt` las firmas de las RPC, las restricciones que sostienen
+una garantía y las columnas de las que depende una auditoría. Es una allowlist:
+lo que no declara, no se vigila. Al cambiar cualquiera de esas cosas en una
+migración hay que actualizar el manifiesto en el mismo cambio; el test lo exige,
+y sin él una migración editada después de aplicarse vuelve a pasar inadvertida.
 Arquitectura, operativa, límites y consecuencias de privacidad:
 [`docs/operations/BACKUPS.md`](../../docs/operations/BACKUPS.md).

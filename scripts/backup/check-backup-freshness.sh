@@ -129,24 +129,24 @@ echo "[$(timestamp)] Backup freshness OK: ${LATEST_BACKUP} (${AGE_HOURS}h old, g
 # Un backup fresco y válido no dice nada sobre si el script que lo produce sigue
 # siendo el del repositorio. Esa pregunta la contesta el guardián de deriva, que
 # no tiene timer propio y cuelga de aquí igual que el verificador de contrato.
+# Un guardián que falta no es un guardián que aprueba: si el fichero no está,
+# el checkout es parcial o viejo, que es justo lo que vienen a detectar.
 DRIFT_SCRIPT="${BACKUP_DRIFT_SCRIPT:-$SCRIPT_DIR/check-operational-drift.sh}"
-if [[ -f "$DRIFT_SCRIPT" ]]; then
-    if ! DRIFT_OUTPUT="$(/bin/bash "$DRIFT_SCRIPT" 2>&1)"; then
-        fail_with_alert "El checkout del VPS ya no coincide con el repositorio: ${DRIFT_OUTPUT}"
-    fi
-    echo "$DRIFT_OUTPUT"
-else
-    echo "[$(timestamp)] WARN: guardián de deriva no encontrado: $DRIFT_SCRIPT" >&2
+if [[ ! -f "$DRIFT_SCRIPT" ]]; then
+    fail_with_alert "Guardián de deriva no encontrado: ${DRIFT_SCRIPT}"
 fi
+if ! DRIFT_OUTPUT="$(/bin/bash "$DRIFT_SCRIPT" 2>&1)"; then
+    fail_with_alert "El checkout del VPS ya no coincide con el repositorio: ${DRIFT_OUTPUT}"
+fi
+echo "$DRIFT_OUTPUT"
 
 # Y que el código sea el del repositorio tampoco dice que la base de datos lo
 # sea: una migración editada después de aplicarse las separa en silencio.
 CONTRACT_SCRIPT="${BACKUP_DATABASE_CONTRACT_SCRIPT:-$SCRIPT_DIR/check-database-contract.sh}"
-if [[ -f "$CONTRACT_SCRIPT" ]]; then
-    if ! CONTRACT_OUTPUT="$(/bin/bash "$CONTRACT_SCRIPT" 2>&1)"; then
-        fail_with_alert "La base de datos ya no coincide con el repositorio: ${CONTRACT_OUTPUT}"
-    fi
-    echo "$CONTRACT_OUTPUT"
-else
-    echo "[$(timestamp)] WARN: guardián del contrato de base de datos no encontrado: $CONTRACT_SCRIPT" >&2
+if [[ ! -f "$CONTRACT_SCRIPT" ]]; then
+    fail_with_alert "Guardián del contrato de base de datos no encontrado: ${CONTRACT_SCRIPT}"
 fi
+if ! CONTRACT_OUTPUT="$(/bin/bash "$CONTRACT_SCRIPT" 2>&1)"; then
+    fail_with_alert "La base de datos ya no coincide con el repositorio: ${CONTRACT_OUTPUT}"
+fi
+echo "$CONTRACT_OUTPUT"

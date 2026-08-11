@@ -30,6 +30,10 @@ DECLARACION = re.compile(
     r"CREATE\s+(?:OR\s+REPLACE\s+)?FUNCTION\s+(?P<funcion>(?:public|private)\.[a-z][a-z0-9_]*)\s*\(",
     re.IGNORECASE,
 )
+BAJA = re.compile(
+    r"DROP\s+FUNCTION\s+(?:IF\s+EXISTS\s+)?(?P<funcion>(?:public|private)\.[a-z][a-z0-9_]*)\s*\(",
+    re.IGNORECASE,
+)
 # Tres formas de llamar: `private.f(` en SQL suelto, y por REST o por cliente
 # desde el runtime. PostgREST solo expone `public`, así que ahí el schema se da.
 LLAMADA_SQL = re.compile(r"\b(?P<funcion>(?:public|private)\.[a-z][a-z0-9_]*)\(")
@@ -50,9 +54,17 @@ ALIAS_DE_TIPO = {
 }
 
 
+def lineas_del_manifiesto(tipo: str) -> list[str]:
+    """Líneas de un tipo (`firma`, `restriccion`, `columna`), sin su prefijo."""
+    return [
+        linea[len(tipo) + 1 :]
+        for linea in MANIFEST.read_text("utf-8").splitlines()
+        if linea.startswith(f"{tipo} ")
+    ]
+
+
 def firmas_declaradas() -> list[str]:
-    lineas = MANIFEST.read_text("utf-8").splitlines()
-    return [linea for linea in lineas if linea.strip() and not linea.startswith("#")]
+    return lineas_del_manifiesto("firma")
 
 
 def bloque_de_parametros(sql: str, apertura: int) -> str:
@@ -92,89 +104,127 @@ def parametros(bloque: str) -> list[str]:
     return partes
 
 
-def normaliza(parametro: str) -> str:
+def sin_valor_por_defecto(parametro: str) -> str:
     """`p_dry_run boolean DEFAULT true` -> `p_dry_run boolean`."""
-    sin_default = re.split(r"\bDEFAULT\b", parametro, flags=re.IGNORECASE)[0]
-    limpio = " ".join(sin_default.split())
+    return " ".join(re.split(r"\bDEFAULT\b", parametro, flags=re.IGNORECASE)[0].split())
+
+
+def normaliza(parametro: str) -> str:
+    limpio = sin_valor_por_defecto(parametro)
     if not limpio:
         return ""
     nombre, _, tipo = limpio.partition(" ")
-    tipo = tipo.strip().lower()
-    return f"{nombre} {ALIAS_DE_TIPO.get(tipo, tipo)}"
+    return f"{nombre} {normaliza_tipo(tipo)}"
 
 
-def firmas_por_migracion(funcion: str) -> list[set[str]]:
-    """Firmas declaradas para `funcion`, una entrada por migración que la declara."""
-    declaraciones: list[set[str]] = []
+def normaliza_tipo(tipo: str) -> str:
+    limpio = " ".join(tipo.split()).lower()
+    return ALIAS_DE_TIPO.get(limpio, limpio)
+
+
+def tipo_de(parametro: str, *, con_nombre: bool) -> str:
+    """El tipo de un parámetro, esté declarado con nombre (`CREATE`) o sin él (`DROP`)."""
+    limpio = sin_valor_por_defecto(parametro)
+    if not limpio:
+        return ""
+    return normaliza_tipo(limpio.partition(" ")[2] if con_nombre else limpio)
+
+
+def estado_declarado() -> dict[tuple[str, tuple[str, ...]], str]:
+    """Reproduce, migración a migración, la firma que el repositorio deja viva.
+
+    La clave es la que usa PostgreSQL para identificar una función: su nombre y
+    los tipos de sus argumentos. `CREATE OR REPLACE` sustituye esa sobrecarga
+    —también si solo cambian los nombres de parámetro— y `DROP FUNCTION` la
+    retira. Comparar solo con la última migración que declara cada función daría
+    por vivo lo que otra posterior dio de baja.
+    """
+    estado: dict[tuple[str, tuple[str, ...]], str] = {}
     for migracion in MIGRATIONS:
         sql = migracion.read_text("utf-8")
-        firmas = {
-            "{}({})".format(
-                funcion,
-                ", ".join(
-                    filter(
-                        None,
-                        (
-                            normaliza(parametro)
-                            for parametro in parametros(
-                                bloque_de_parametros(sql, coincidencia.end() - 1)
-                            )
-                        ),
-                    )
-                ),
+        for coincidencia in DECLARACION.finditer(sql):
+            funcion = coincidencia.group("funcion").lower()
+            declarados = parametros(bloque_de_parametros(sql, coincidencia.end() - 1))
+            firmados = [normaliza(parametro) for parametro in declarados]
+            vivos = [parametro for parametro in firmados if parametro]
+            tipos = tuple(
+                tipo for tipo in (tipo_de(p, con_nombre=True) for p in declarados) if tipo
             )
-            for coincidencia in DECLARACION.finditer(sql)
-            if coincidencia.group("funcion").lower() == funcion
-        }
-        if firmas:
-            declaraciones.append(firmas)
-    return declaraciones
+            estado[(funcion, tipos)] = "{}({})".format(funcion, ", ".join(vivos))
+        for coincidencia in BAJA.finditer(sql):
+            funcion = coincidencia.group("funcion").lower()
+            retirados = parametros(bloque_de_parametros(sql, coincidencia.end() - 1))
+            tipos = tuple(
+                tipo for tipo in (tipo_de(p, con_nombre=False) for p in retirados) if tipo
+            )
+            estado.pop((funcion, tipos), None)
+    return estado
 
 
-def test_el_manifiesto_declara_firmas_bien_formadas() -> None:
-    firmas = firmas_declaradas()
+def test_el_manifiesto_declara_lineas_bien_formadas() -> None:
+    utiles = [
+        linea
+        for linea in MANIFEST.read_text("utf-8").splitlines()
+        if linea.strip() and not linea.startswith("#")
+    ]
 
-    assert firmas, "el manifiesto está vacío"
-    assert len(firmas) == len(set(firmas)), "hay firmas repetidas"
-    for firma in firmas:
+    assert utiles, "el manifiesto está vacío"
+    assert len(utiles) == len(set(utiles)), "hay líneas repetidas"
+    for linea in utiles:
+        assert linea.split(" ", 1)[0] in {"firma", "restriccion", "columna"}, (
+            f"tipo de línea desconocido: {linea}"
+        )
+    for firma in firmas_declaradas():
         assert re.fullmatch(r"(public|private)\.[a-z][a-z0-9_]*\(.*\)", firma), (
             f"firma mal formada: {firma}"
         )
-
-
-def test_cada_firma_declarada_existe_en_las_migraciones() -> None:
-    """Cambiar una firma en el SQL obliga a actualizar el manifiesto.
-
-    Sin esto, editar una migración aplicada volvería a pasar inadvertido: el
-    manifiesto seguiría describiendo la redacción vieja, coincidiría con una
-    producción igual de vieja y el guardián nocturno saldría verde.
-    """
-    for firma in firmas_declaradas():
-        funcion = firma.partition("(")[0]
-        declaradas = firmas_por_migracion(funcion)
-
-        assert declaradas, f"{funcion} no se declara en ninguna migración"
-        assert firma in set().union(*declaradas), (
-            f"el manifiesto declara `{firma}` y ninguna migración la declara así"
+    for linea in lineas_del_manifiesto("restriccion") + lineas_del_manifiesto("columna"):
+        assert re.match(r"(public|private)\.[a-z][a-z0-9_]* [a-z][a-z0-9_]* \S", linea), (
+            f"línea mal formada: {linea}"
         )
 
 
-def test_la_ultima_declaracion_de_cada_funcion_esta_en_el_manifiesto() -> None:
-    """El test anterior mira el SQL entero, y ahí sobreviven redacciones viejas.
+def test_el_manifiesto_es_el_estado_que_declaran_las_migraciones() -> None:
+    """El manifiesto y el SQL dicen lo mismo, firma a firma y en las dos direcciones.
 
-    Sin esta segunda dirección, una migración nueva que cambie la firma dejaría
-    pasar el manifiesto obsoleto: la redacción anterior sigue en su fichero.
+    Sobra una: el manifiesto describe una redacción que ya no está en el SQL, y
+    entonces coincidiría con una producción igual de vieja mientras el guardián
+    nocturno sale verde. Falta una: alguien cambió o añadió una firma sin tocar
+    el manifiesto, y esa función se quedaría sin vigilar.
     """
-    declaradas = set(firmas_declaradas())
-    funciones = {firma.partition("(")[0] for firma in declaradas}
+    declarado = set(estado_declarado().values())
+    manifiesto = set(firmas_declaradas())
 
-    for funcion in sorted(funciones):
-        ultima = firmas_por_migracion(funcion)[-1]
+    assert not manifiesto - declarado, (
+        f"el manifiesto declara firmas que el SQL no deja vivas: {sorted(manifiesto - declarado)}"
+    )
+    assert not declarado - manifiesto, (
+        f"las migraciones dejan vivas firmas que el manifiesto no declara: "
+        f"{sorted(declarado - manifiesto)}"
+    )
 
-        assert ultima <= declaradas, (
-            f"la última migración declara {sorted(ultima - declaradas)} "
-            f"y el manifiesto no lo recoge"
-        )
+
+def test_las_restricciones_y_columnas_declaradas_salen_de_alguna_migracion() -> None:
+    """Estas dos se comprueban por nombre, no por definición, y es deliberado.
+
+    La definición exacta la compara `check-database-contract.sh` contra el
+    catálogo vivo, que ya la imprime normalizada. Reproducirla desde el SQL
+    exigiría interpretar `ADD COLUMN ... DEFAULT ... CHECK (...)`, y ese parser
+    sería más frágil que el hueco que cierra. Aquí basta con impedir que se
+    declare algo que ninguna migración crea, que es como se cuela una errata.
+
+    El límite, dicho claro: si una migración posterior retira la restricción o
+    la columna, esto no lo ve, porque busca el nombre en todo el SQL. Lo canta
+    el guardián contra producción en cuanto se aplique —«declarado y ausente en
+    la base de datos»—, no CI.
+    """
+    sql = "\n".join(migracion.read_text("utf-8") for migracion in MIGRATIONS)
+
+    for linea in lineas_del_manifiesto("restriccion") + lineas_del_manifiesto("columna"):
+        tabla, nombre = linea.split(" ")[:2]
+
+        assert tabla in sql, f"la tabla {tabla} no aparece en ninguna migración"
+        assert nombre in sql, f"{nombre} no aparece en ninguna migración"
 
 
 def test_el_manifiesto_cubre_lo_que_invoca_produccion() -> None:

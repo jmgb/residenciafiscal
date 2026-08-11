@@ -44,23 +44,38 @@ no un automatismo.
 
 Que el código sea el del repositorio tampoco garantiza que la base de datos lo
 sea, y esa sexta pregunta la contesta `check-database-contract.sh`, colgado del
-mismo check. Compara las firmas vivas de las RPC del contrato con las que
-declara `scripts/backup/database-contract.txt`, sobrecarga a sobrecarga, así que
-canta tanto una firma que falta como una antigua que sobrevivió a su sustituta.
+mismo check. Compara lo que declara `scripts/backup/database-contract.txt` con
+lo que hay vivo, línea a línea: las firmas de las RPC del contrato —sobrecarga a
+sobrecarga, así que canta tanto una que falta como una antigua que sobrevivió a
+su sustituta—, las restricciones que sostienen una garantía y las columnas de
+las que depende una auditoría. Es una **allowlist**, no un diff del schema: una
+tabla nueva no entra sola, y es deliberado.
+
 No compara cuerpos de función: la firma es lo que rompe a quien llama y es lo
 que se torció el 3 de agosto de 2026, cuando dos migraciones ya aplicadas se
 editaron en sitio y producción se quedó ocho días con
-`private.purge_expired_deep_research_jobs` de un solo argumento.
+`private.purge_expired_deep_research_jobs` de un solo argumento. Aquel mismo día
+faltaban también la clave ajena en cascada de `deep_research_jobs` y los dos
+contadores de C en la auditoría del purgado, que por eso están declarados.
 
-El manifiesto no puede quedarse atrás por su cuenta:
-`tests/test_database_contract.py` compara firma a firma contra el SQL en las dos
-direcciones —cada firma declarada existe en alguna migración, y lo que declara
-la última migración de cada función está en el manifiesto— y comprueba que este
-cubra lo que invoca producción: los timers del VPS, la Function del chat y el
-prototipo FastAPI, en sus tres formas de llamada. Así el manifiesto tampoco
-puede perder cobertura en silencio. El SQL escribe `timestamptz` y el catálogo
-`timestamp with time zone`, así que hay una tabla de alias en el test; un alias
-nuevo no pasa inadvertido, porque la firma normalizada deja de coincidir.
+El manifiesto no puede quedarse atrás por su cuenta.
+`tests/test_database_contract.py` reproduce el SQL migración a migración
+—`CREATE OR REPLACE` sustituye la sobrecarga, `DROP FUNCTION` la retira— y exige
+que el estado resultante y las firmas del manifiesto sean **el mismo conjunto**.
+Sobra una, y el manifiesto describiría una redacción que ya no existe,
+coincidiendo con una producción igual de vieja mientras el guardián sale verde;
+falta una, y esa función se queda sin vigilar. Comprueba además que el
+manifiesto cubra lo que invoca producción —timers del VPS, Function del chat y
+prototipo FastAPI, en sus tres formas de llamada—, así que tampoco puede perder
+cobertura en silencio.
+
+Restricciones y columnas se comprueban solo por nombre contra el SQL, no por
+definición: la definición exacta la compara el guardián contra el catálogo vivo,
+que ya la imprime normalizada, y reproducirla desde un `ADD COLUMN ... DEFAULT
+... CHECK (...)` pediría un parser más frágil que el hueco que cierra. El SQL
+escribe `timestamptz` y el catálogo `timestamp with time zone`, así que hay una
+tabla de alias en el test; un alias nuevo no pasa inadvertido, porque la firma
+normalizada deja de coincidir.
 
 Los timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
 estaba apagado) y `RandomizedDelaySec=300`. Los huecos horarios están elegidos
