@@ -569,9 +569,13 @@ en cuenta:
     los corpus vive en [`NOTICE.md`](NOTICE.md), que es donde se amplía.
 - **Nada de rutas absolutas** (`/home/ubuntu/...`) en código ni en documentación
   pública: usa rutas relativas a la raíz del repositorio. La única excepción son
-  las units de systemd de `scripts/backup/` y `scripts/agentic/`, donde
-  `WorkingDirectory` y `ExecStart` **exigen** una ruta absoluta; ahí la ruta
-  describe el checkout operativo del VPS, no el de nadie más.
+  las units de systemd de `scripts/backup/`, `scripts/agentic/` y
+  `scripts/privacy/`, donde `WorkingDirectory` y `ExecStart` **exigen** una ruta
+  absoluta; ahí la ruta describe el checkout operativo del VPS, no el de nadie
+  más. Los scripts y tests que comprueban esas units repiten la misma ruta y
+  entran en la excepción por lo mismo. Los dos checkouts del VPS conviven a
+  propósito: los timers de backup y retención cuelgan de `~/residenciafiscal` y
+  los de `scripts/agentic/` de `~/ai_projects/residenciafiscal`.
 - **Ningún workflow de CI usa secrets configurados**, y debe seguir así. Ver la
   sección de calidad de código.
 - **Antes de tocar la visibilidad o de purgar historia**, el escaneo de
@@ -580,7 +584,11 @@ en cuenta:
   valor exacto, nunca excluyendo un directorio.
 - El correo personal no aparece en ningún fichero versionado: los canales de
   contacto de `SECURITY.md` y `CODE_OF_CONDUCT.md` son los avisos privados de
-  GitHub.
+  GitHub. **Sí está en los metadatos de los commits anteriores al 2026-08-11**,
+  que son igual de públicos; desde esa fecha se firma con la dirección
+  `users.noreply.github.com` y no se reescribe la historia, porque cambiar los
+  345 SHA rompería los enlaces a commits de la documentación sin despublicar
+  nada de lo que ya está en forks y cachés.
 
 ## Planes y diseños de trabajo (superpowers)
 

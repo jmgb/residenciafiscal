@@ -212,7 +212,12 @@ def test_run_pilot_solo_persiste_la_salida_estructurada(tmp_path: Path) -> None:
 
     project, spec, source, holdout, bundle = _fixture(tmp_path)
     prepared = tmp_path / "prepared"
-    limits = DeepResearchLimits(timeout_ms=1_000, max_turns=2)
+    # El deadline no es lo que se está probando aquí, y ponerlo en el mínimo del
+    # contrato (1 s) lo convertía en un test intermitente: envuelve dos arranques
+    # reales del intérprete, que con la máquina cargada tardan más de un segundo
+    # y devuelven `error`/`runner_timeout` en vez de `pregunta`. Falló así el
+    # 2026-08-11 en una suite que tardó el triple de lo normal.
+    limits = DeepResearchLimits(timeout_ms=30_000, max_turns=2)
     prepare_pilot(
         project_root=project,
         spec_path=spec,

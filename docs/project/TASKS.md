@@ -1166,16 +1166,17 @@ sola URL para poder encontrarse.
     compatible por más permisiva.
 - [x] **Registrar el sitemap en Google Search Console** (1 de agosto de 2026).
   La propiedad `sc-domain:residenciafiscal.org` **no existía: se creó y
-  verificó por API el mismo día**, sin pasar por la UI. La Site Verification
-  API está deshabilitada en el proyecto GCP `presupuestor-485509` (inaccesible
-  para la cuenta local), así que se habilitó junto a la de Search Console en
-  `doctor-489817` —que sí es del usuario— y la verificación la hizo su service
-  account `claude-mcp-access@doctor-489817`: token DNS, registro TXT creado por
-  la API de Cloudflare y `webResource.insert`. Esa SA delegó después la
-  propiedad a las cuentas personales y a
-  `presupuestor-claude-skill@presupuestor-485509`, la del skill
-  `google-search-console`, que quedó `siteOwner` y envió el sitemap. Google lo
-  descargó con **0 errores y 0 avisos**. Detalle operativo completo en
+  verificó por API el mismo día**, sin pasar por la UI. La Site Verification API
+  estaba deshabilitada en el proyecto de GCP que usa el skill
+  `google-search-console` y su cuenta local no podía habilitarla, así que se
+  activó —junto a la de Search Console— en otro proyecto de GCP del propietario,
+  y la verificación la hizo la service account de ese segundo proyecto: token
+  DNS, registro TXT creado por la API de Cloudflare y `webResource.insert`. Esa
+  cuenta de servicio delegó después la propiedad a las cuentas personales y a la
+  service account del skill, que quedó `siteOwner` y envió el sitemap. Google lo
+  descargó con **0 errores y 0 avisos**. Los identificadores concretos de esos
+  proyectos de GCP viven en sus repositorios privados, no aquí. Detalle
+  operativo completo en
   [`SEO_AUDIT.md`](../product/SEO_AUDIT.md).
   - **No borrar el registro TXT** `google-site-verification=…` de la zona de
     Cloudflare: sostiene la verificación de la propiedad; si desaparece, la
@@ -1188,7 +1189,7 @@ sola URL para poder encontrarse.
   - Verificar el recuento tras cada deploy que añada rutas: un sitemap servido
     correctamente y una versión obsoleta en Google se ven igual desde fuera.
   - Para el próximo dominio, el flujo es repetible sin UI: las dos APIs siguen
-    habilitadas en `doctor-489817` y el procedimiento (token → TXT → verify →
+    habilitadas en ese segundo proyecto y el procedimiento (token → TXT → verify →
     delegar owners → `sites.add` → `sitemaps.submit`) está documentado en la
     auditoría.
   - `GSC_SITE_URL` queda declarada en `.env.example` para que el skill

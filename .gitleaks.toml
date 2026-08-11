@@ -11,16 +11,20 @@ title = "residenciafiscal"
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = """
-Identificadores públicos y nombres de variables, que `generic-api-key` detecta
-por entropía sin distinguir un secreto de una etiqueta:
+Identificadores públicos, nombres de variables y prosa, que `generic-api-key`
+detecta por entropía sin distinguir un secreto de una etiqueta:
 
 - `GA4_PROPERTY_ID` es el **nombre** de una variable de entorno, no su valor.
 - La clave de proyecto de PostHog (`phc_…`) es pública por diseño: viaja en el
   bundle del navegador porque es lo que identifica al proyecto al enviar
   eventos. La que sí es secreta es la personal API key, que no está en el repo.
 - `rf.conversations.v1` es la clave del `localStorage` del historial del chat.
+- `salida/razonamiento` es prosa castellana de la documentación: la mide como
+  cadena de alta entropía porque lleva barra y no lleva espacios.
+- `abc123def456` es el relleno del DSN falso con el que los tests de la Function
+  comprueban que el envelope de Sentry se construye bien.
 
 Ninguna abre ninguna puerta. Los valores reales siguen viniendo del entorno y
 siguen vigilados por el resto de reglas.
@@ -29,4 +33,33 @@ regexes = [
   '''^GA4_PROPERTY_ID$''',
   '''^phc_[A-Za-z0-9]{40,}$''',
   '''^rf\.conversations\.v1$''',
+  '''^salida/razonamiento$''',
+  '''^abc123def456$''',
 ]
+
+# Fuga real, ya cerrada, que sobrevive en la historia y no se puede borrar de
+# ella: el token de usuario de Sentry que estuvo en `.mcp.json` el 2026-03-19.
+# Está **revocado** desde ese día y `.mcp.json` lleva ignorado desde entonces.
+#
+# Se declara **por commit y solo por commit**. No por valor —el token revocado
+# no se copia aquí—, no por regla —cualquier otro `sentry-user-token` sigue
+# disparando— y no por `paths`, que excusaría también un `.mcp.json` futuro.
+#
+# Un commit pasado es inmutable, así que el radio de esta excepción está
+# congelado: ya se escaneó entero y contiene exactamente este hallazgo. Nada que
+# se escriba mañana puede colarse por aquí. Comprobado por mutación el
+# 2026-08-11: cambiando el SHA, el escaneo vuelve a fallar.
+#
+# Ojo al ampliarla: `matchCondition = "AND"` **no** se respeta en un allowlist
+# global de gitleaks 8.30.1 —las condiciones se combinan con OR—, así que añadir
+# `paths` o `regexes` a este bloque lo ensancharía en lugar de estrecharlo.
+#
+# Se declara porque un gate permanentemente rojo deja de avisar, y
+# `gitleaks git --log-opts="--all --remotes"` es el escaneo que `CLAUDE.md`
+# manda ejecutar antes de tocar la visibilidad o purgar historia. Reescribir la
+# historia para eliminarlo se descartó el 2026-08-11: cambiaría los 345 SHA,
+# rompería los enlaces a commits de la documentación y no borraría nada de lo ya
+# publicado en forks y cachés de GitHub.
+[[allowlists]]
+description = "Token de usuario de Sentry revocado, en .mcp.json del commit 13dc89c (2026-03-19)."
+commits = ["13dc89c1807da73f0a74fcacad3b8ee0deece474"]

@@ -27,7 +27,7 @@ esta jerarquía:
 | ¿Qué debe hacer el producto? | Caso de uso y contrato funcional del área |
 | ¿Qué arquitectura y trabajo siguen vigentes? | `ARCHITECTURE.md` y `project/TASKS.md` |
 | ¿Qué se midió y con qué límites? | Documento e informe de la fase experimental |
-| ¿Cómo se pensó o ejecutó un cambio anterior? | Specs y planes de `superpowers/` |
+| ¿Cómo se pensó o ejecutó un cambio anterior? | La historia de git; los specs y planes de `superpowers/` son scratch local y no se versionan |
 
 Los planes y experimentos conservan decisiones y evidencia, pero no sustituyen
 el estado actual ni un contrato posterior. Si cambia una decisión, actualiza en

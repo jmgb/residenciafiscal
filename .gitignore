@@ -127,7 +127,12 @@ SUPABASE_ACCOUNTS.md
 
 # Compañero visual de brainstorming (superpowers)
 .superpowers/
-.superdesign/tmp/
+
+# Contexto autogenerado por la extensión de diseño: `init/` son volcados de
+# `frontend/src/` que envejecen solos, y `theme.md` competía con la fuente única
+# de la marca (`frontend/src/index.css` + el gate `brand-tokens.test.ts`).
+# Se dejó de versionar el 2026-08-11; sigue en local y en la historia.
+.superdesign/
 
 # Specs y planes de implementación internos: citan rutas y decisiones de otros
 # proyectos privados, así que no se publican. Se conservan en local.
