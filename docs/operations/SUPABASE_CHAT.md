@@ -265,6 +265,35 @@ File Search en 6,41 s y costó 1.693 microdólares `ESTIMATED`. Total observado:
 4.542 microdólares (0,004542 USD). Las dos estrategias se ejecutaron en
 paralelo.
 
+### Una migración aplicada no se edita
+
+Se corrige **hacia delante**, con una migración nueva. Editar en sitio el fichero
+de una migración que producción ya aplicó deja la base de datos con la redacción
+anterior y el repositorio declarando otra, y nada avisa.
+
+`supabase migration list --linked` **no lo detecta**: compara versiones, no
+contenido. El 11 de agosto de 2026 daba las dieciocho migraciones en verde
+mientras cinco objetos de producción seguían siendo los de la redacción original
+de `20260803120000` y `20260803123000`, editadas en sitio ocho días antes. La
+deriva salió por la puerta de al lado: `purge-chat-data.sh` llamaba a
+`private.purge_expired_deep_research_jobs` con tres argumentos y en producción
+esa función solo tenía uno, así que el timer de retención habría fallado en su
+siguiente ejecución. Con ella viajaban una supresión por derechos que no borraba
+los jobs C y dos validaciones ausentes.
+
+Lo que sí lo detecta es preguntar a la base de datos por la definición viva —el
+cuerpo de la función en `pg_proc`, la restricción con `pg_get_constraintdef`, las
+columnas en `information_schema`— y compararla con lo que declara el repositorio. Merece la pena hacerlo cuando una
+migración se editó después de aplicarse, aunque el listado salga limpio.
+
+La reparación es también una migración hacia delante:
+`20260811073000_deep_research_review_gaps_forward.sql` sirve de plantilla
+—idempotente, sin tocar datos y con el motivo escrito en la cabecera—. Si además
+limpia filas para imponer una restricción, la restricción entra `NOT VALID`
+primero y se valida al final, como en
+`20260811100000_deep_research_jobs_conversation_fk.sql`: al revés, cualquier
+escritura concurrente durante la limpieza tumba la migración entera.
+
 ## Retención y supresión
 
 Persistir contenido cambia el contrato anterior, que solo guardaba métricas.
