@@ -571,11 +571,15 @@ en cuenta:
   pública: usa rutas relativas a la raíz del repositorio. La única excepción son
   las units de systemd de `scripts/backup/`, `scripts/agentic/` y
   `scripts/privacy/`, donde `WorkingDirectory` y `ExecStart` **exigen** una ruta
-  absoluta; ahí la ruta describe el checkout operativo del VPS, no el de nadie
+  absoluta; ahí la ruta describe un checkout operativo concreto, no el de nadie
   más. Los scripts y tests que comprueban esas units repiten la misma ruta y
-  entran en la excepción por lo mismo. Los dos checkouts del VPS conviven a
-  propósito: los timers de backup y retención cuelgan de `~/residenciafiscal` y
-  los de `scripts/agentic/` de `~/ai_projects/residenciafiscal`.
+  entran en la excepción por lo mismo. Las dos rutas que aparecen son **dos
+  máquinas distintas, no dos checkouts del mismo host**: `~/residenciafiscal` es
+  el único checkout del VPS `alfredo`, y de él cuelgan como units de *sistema*
+  el backup, la retención del chat y el informe semanal de tráfico;
+  `~/ai_projects/residenciafiscal` es el checkout de la máquina de informes,
+  donde el resumen diario de coste del chat corre como unit de *usuario* para no
+  llevar `SUPABASE_SECRET_KEY` al VPS.
 - **Ningún workflow de CI usa secrets configurados**, y debe seguir así. Ver la
   sección de calidad de código.
 - **Antes de tocar la visibilidad o de purgar historia**, el escaneo de

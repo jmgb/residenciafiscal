@@ -281,8 +281,12 @@ credibilidad de todos.
    llama a la RPC `chat_daily_stats` por HTTP y necesita `SUPABASE_URL` y
    `SUPABASE_SECRET_KEY`: llevarlo al VPS ampliaría la superficie de la clave de
    servicio sin ganar nada. Va como unit **de usuario en la máquina de
-   informes**, junto a `residenciafiscal-weekly-ga4-telegram.timer`, que ya
-   corre ahí y comparte `.env`, ruta y patrón.
+   informes**, sobre el checkout `~/ai_projects/residenciafiscal`. Heredó el
+   `.env`, la ruta y el patrón de `residenciafiscal-weekly-ga4-telegram.timer`,
+   que entonces corría ahí; ese informe se mudó al VPS el 2026-08-11 porque una
+   máquina apagada se salta el envío, y el resumen de coste **se quedó** por la
+   razón de arriba. Que su guardián comparta máquina con lo que vigila es la
+   contrapartida asumida.
 
    ```bash
    bash scripts/agentic/install-daily-chat-cost-telegram-timer.sh

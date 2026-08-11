@@ -27,8 +27,8 @@ para que el VPS use el código nuevo.
 |---------|-------|
 | `scripts/weekly_ga4_telegram.py` | Consulta la analítica, compone el mensaje y escribe el histórico. Solo librería estándar mientras GA4 esté apagado. |
 | `scripts/agentic/weekly_ga4_telegram_runner.sh` | Entrada del timer: comprueba el interruptor, elige dependencias y avisa por Telegram si el envío falla. |
-| `scripts/agentic/residenciafiscal-weekly-ga4-telegram.{service,timer}` | Unidades `systemd --user` de la máquina que dispara los informes. |
-| `scripts/agentic/install-weekly-ga4-telegram-timer.sh` | Instalador idempotente de las unidades. |
+| `scripts/agentic/residenciafiscal-weekly-ga4-telegram.{service,timer}` | Unidades `systemd` **de sistema**, instaladas en `/etc/systemd/system` del VPS `alfredo`. |
+| `scripts/agentic/install-weekly-ga4-telegram-timer.sh` | Instalador idempotente de las unidades. Se ejecuta en el VPS y necesita `sudo`. |
 | `scripts/ga4_list_properties.py` | Descubre el ID numérico de las propiedades GA4 visibles. Solo se usa al conectar GA4. |
 | `tests/test_weekly_ga4_telegram.py` | Contrato de ventanas, formato, consulta, mensaje e histórico. Sin red. |
 
