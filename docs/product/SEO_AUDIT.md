@@ -54,7 +54,7 @@
 >   no hay fecha fiable de modificación de página (la vigencia jurídica no lo
 >   es), así que **no se emite** y un test lo fija.
 >
-> Pendientes: Bing Webmaster Tools (manual, cuenta de Miguel), países sin
+> Pendientes: Bing Webmaster Tools (manual, cuenta del propietario), países sin
 > convenio y fichas por sentencia (ambos tras el gate de GSC de 4-6 semanas).
 
 Revisión profunda del SEO de [residenciafiscal.org](https://residenciafiscal.org):

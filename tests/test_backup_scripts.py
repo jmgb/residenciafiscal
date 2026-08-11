@@ -98,10 +98,10 @@ def test_el_instalador_activa_todos_los_timers() -> None:
 def test_ningun_script_ejecuta_el_env() -> None:
     """`source .env` rompe con cualquier valor con espacios sin comillas.
 
-    Es el incidente del 2026-07-01 en Presupuestor: `NOMBRE=Miguel de Presupuestor`
-    hizo que bash intentara ejecutar `de Presupuestor` y los tres jobs murieron con
-    exit 127 el mismo día. Las claves se leen con `lib-read-env.sh`, que parsea sin
-    ejecutar.
+    Es el incidente del 2026-07-01 en un repo hermano: una clave cuyo valor
+    llevaba espacios sin comillar hizo que bash intentara ejecutar la segunda
+    palabra como un comando, y los tres jobs murieron con exit 127 el mismo día.
+    Las claves se leen con `lib-read-env.sh`, que parsea sin ejecutar.
     """
     prohibido = re.compile(r"^\s*(source|\.)\s+.*ENV_FILE", re.MULTILINE)
 
