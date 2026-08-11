@@ -102,6 +102,30 @@ def test_la_supresion_de_conversacion_incluye_la_investigacion_profunda() -> Non
     assert "deep_research_deleted" in migration
 
 
+def test_los_jobs_profundos_caen_con_su_conversacion() -> None:
+    """Sin clave ajena, un job creado a la vez que una supresión la sobrevivía."""
+    migration = (
+        PROJECT_ROOT / "supabase/migrations/20260811100000_deep_research_jobs_conversation_fk.sql"
+    ).read_text("utf-8")
+
+    assert "REFERENCES private.chat_conversations(conversation_id)" in migration
+    assert "ON DELETE CASCADE" in migration
+
+
+def test_el_purgado_cuenta_los_jobs_antes_de_que_caigan_en_cascada() -> None:
+    """Purgar el chat primero borraría los jobs sin auditarlos ni limitarlos."""
+    purge = (PRIVACY_DIR / "purge-chat-data.sh").read_text("utf-8")
+
+    assert purge.index("purge_expired_deep_research_jobs(") < purge.index(
+        "purge_expired_chat_data('$CUTOFF'"
+    )
+    assert "batch_overflow" in purge
+    assert purge.index("batch_overflow") < purge.index("purge_expired_chat_data('$CUTOFF'")
+    # El corte por desbordamiento solo aplica al purgado real: en dry-run no hay
+    # cascada que evitar y el chat debe seguir auditándose.
+    assert '"dry_run"[[:space:]]*:[[:space:]]*false' in purge
+
+
 def test_la_supresion_operativa_exige_ticket_y_confirmacion() -> None:
     deletion = (PRIVACY_DIR / "delete-chat-conversation.sh").read_text("utf-8")
 

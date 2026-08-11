@@ -78,14 +78,12 @@ CUTOFF="$(date -u -d "${RETENTION_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ)"
 DB_URL="postgresql://postgres.${SUPABASE_REF}:${SUPABASE_DB_PASSWORD}@${POOLER_HOST}:5432/postgres"
 
 echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] Purgando chat anterior a ${CUTOFF}..."
-RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
-    "$DB_URL" \
-    --no-password \
-    --no-align \
-    --tuples-only \
-    -v ON_ERROR_STOP=1 \
-    -c "SELECT private.purge_expired_chat_data('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT});")"
-echo "$RESULT"
+# C va primero, y el orden es parte del contrato. `deep_research_jobs` cae en
+# cascada al borrar su conversación, así que purgar el chat antes dejaría esos
+# jobs fuera de la auditoría y del límite de lote: el contador saldría a cero
+# habiendo borrado. Al revés no hay hueco, porque un job posterior al cutoff
+# implica una conversación posterior al cutoff —`authorize_chat_conversation`
+# refresca `updated_at` antes de crearlo— y esa conversación no se purga.
 DEEP_RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
     "$DB_URL" \
     --no-password \
@@ -94,3 +92,25 @@ DEEP_RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
     -v ON_ERROR_STOP=1 \
     -c "SELECT private.purge_expired_deep_research_jobs('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT});")"
 echo "$DEEP_RESULT"
+
+# `batch_overflow` significa que C encontró más candidatos de los permitidos y
+# no borró ninguno, a propósito. Seguir purgando el chat borraría en cascada
+# justo esos jobs, que es lo que el límite acababa de rechazar: se para aquí y
+# el fallo llega por Telegram para que lo mire una persona.
+#
+# La condición se lee del resultado de la RPC, no de la variable de bash: en
+# dry-run no hay cascada que evitar y la observación del chat debe seguir.
+if printf '%s' "$DEEP_RESULT" | grep -Eq '"status"[[:space:]]*:[[:space:]]*"batch_overflow"' \
+    && printf '%s' "$DEEP_RESULT" | grep -Eq '"dry_run"[[:space:]]*:[[:space:]]*false'; then
+    echo "ERROR: el purgado de investigación profunda superó el límite de lote; no se purga el chat" >&2
+    exit 1
+fi
+
+RESULT="$(PGPASSWORD="$SUPABASE_DB_PASSWORD" psql \
+    "$DB_URL" \
+    --no-password \
+    --no-align \
+    --tuples-only \
+    -v ON_ERROR_STOP=1 \
+    -c "SELECT private.purge_expired_chat_data('$CUTOFF'::timestamptz, ${DRY_RUN_SQL}, ${BATCH_LIMIT});")"
+echo "$RESULT"
