@@ -1,12 +1,25 @@
 [Unit]
-Description=Residencia Fiscal weekly traffic Telegram digest
+Description=Residencia Fiscal weekly GA4 and PostHog Telegram digest
+Documentation=https://github.com/jmgb/presupuestor/blob/main/docs/operations/background-notifications.md
 Wants=network-online.target
 After=network-online.target
+# Un digest que no llega es invisible: sin esto el fallo es silencioso, que es
+# exactamente como se perdio el informe del lunes 2026-08-10.
+OnFailure=agent-unit-failure-notify@%n.service
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/ubuntu/ai_projects/residenciafiscal
-ExecStart=/bin/bash /home/ubuntu/ai_projects/residenciafiscal/scripts/agentic/weekly_ga4_telegram_runner.sh
-TimeoutStartSec=300
+User=ubuntu
+Group=ubuntu
+Environment=HOME=/home/ubuntu
+WorkingDirectory=/home/ubuntu/residenciafiscal
+ExecStartPre=/usr/bin/git -C /home/ubuntu/residenciafiscal fetch --quiet origin main
+ExecStartPre=/usr/bin/git -C /home/ubuntu/residenciafiscal merge --ff-only origin/main
+ExecStart=/home/ubuntu/residenciafiscal/scripts/agentic/weekly_ga4_telegram_runner.sh
+TimeoutStartSec=600
+MemoryMax=512M
+NoNewPrivileges=true
+PrivateTmp=true
+Restart=no
 StandardOutput=journal
 StandardError=journal

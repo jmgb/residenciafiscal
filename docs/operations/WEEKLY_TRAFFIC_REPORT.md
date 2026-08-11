@@ -1,12 +1,25 @@
 # Informe semanal de tráfico
 
-Cada **lunes a las 09:00 (Europe/Madrid)** llega a Telegram un resumen del
+Cada **lunes a las 09:10 (Europe/Madrid)** llega a Telegram un resumen del
 tráfico de `residenciafiscal.org`: visitas, usuarios únicos y qué parte de esos
 usuarios ya había visitado el sitio antes.
 
 Es el mismo runner que tienen Presupuestor, Doctor y Comunicador, con un timer
 propio por proyecto: cada repositorio manda su propio mensaje y ninguno depende
 de los demás.
+
+Desde el 2026-08-11 los cinco informes corren en el VPS `alfredo` como unidades
+de **sistema**, escalonadas (Presupuestor 09:00, Comunicador 09:05, este 09:10,
+Doctor 09:15, EmpresaDeUno 09:30). Antes vivían en el portátil como unidades de
+usuario, y el lunes 2026-08-10 quedó claro por qué eso no bastaba: la máquina
+estaba apagada a las 09:00, `Persistent=true` los disparó todos juntos a las
+23:07 al arrancar, dos no completaron y nadie se enteró. El VPS está siempre
+encendido, su journal sobrevive a los reinicios, y un supervisor común
+comprueba los lunes a las 10:00 que los cinco salieron.
+
+La unidad hace `git fetch` + `merge --ff-only` sobre `/home/ubuntu/residenciafiscal`
+antes de ejecutar el runner: **editar en local no basta, hay que hacer push**
+para que el VPS use el código nuevo.
 
 ## Piezas
 
@@ -131,14 +144,13 @@ que ambas acumulen dos semanas completas, la variación semanal aparecerá como
 ### El patrón de los repos hermanos
 
 No hay OAuth ni claves de API: GA4 se lee con una **cuenta de servicio de Google
-Cloud** a la que se le da rol **Lector** dentro de Google Analytics. La cuenta se
-comparte entre proyectos; lo que cambia en cada repo es la propiedad.
+Cloud** a la que se le da rol **Lector** dentro de Google Analytics. Una misma
+cuenta de servicio sirve a varios repos hermanos; lo que cambia en cada uno es la
+propiedad de GA4.
 
-| Repo | Cuenta de servicio | Propiedad |
-|------|--------------------|-----------|
-| Presupuestor | `presupuestor-claude-skill@presupuestor-485509` | `502126208` |
-| Comunicador | la misma | `539999056` |
-| Doctor | `claude-mcp-access@doctor-489817` (cuenta GA distinta) | `343049249` y las cinco traducciones |
+Los identificadores concretos de esos repos —correo de la cuenta de servicio,
+proyecto de GCP y número de propiedad— **no se escriben aquí**: este repositorio
+es público y esos proyectos no lo son. Cada uno los documenta en el suyo.
 
 Cada repo guarda el JSON de la cuenta en `credentials/ga4.json` —ignorado por
 git— y declara en su `.env`:
@@ -153,8 +165,8 @@ pide el ID numérico de la propiedad.
 
 ### Cómo quedó en este repo
 
-La cuenta de servicio tiene rol **Lector a nivel de la cuenta «Nichos»**, así que
-ve las siete propiedades de esa cuenta y los próximos sitios de nicho no exigen
+La cuenta de servicio tiene rol **Lector a nivel de la cuenta de Analytics** que
+agrupa estos sitios, no solo de esta propiedad, así que los próximos no exigen
 repetir el trámite. La credencial está en `credentials/ga4.json` y el `.env`
 declara `GA4_PROPERTY_ID=547477728`.
 
@@ -188,10 +200,10 @@ bash scripts/agentic/weekly_ga4_telegram_runner.sh --dry-run --date 2026-08-03
 # Instalar o reinstalar las unidades tras un git pull que las toque
 bash scripts/agentic/install-weekly-ga4-telegram-timer.sh
 
-# Estado y ejecución manual
-systemctl --user list-timers residenciafiscal-weekly-ga4-telegram.timer
-systemctl --user start residenciafiscal-weekly-ga4-telegram.service
-journalctl --user -u residenciafiscal-weekly-ga4-telegram.service -n 50 --no-pager
+# Estado y ejecución manual (en el VPS alfredo, donde vive la unidad)
+ssh alfredo systemctl list-timers residenciafiscal-weekly-ga4-telegram.timer
+ssh alfredo sudo systemctl start residenciafiscal-weekly-ga4-telegram.service
+ssh alfredo sudo journalctl -u residenciafiscal-weekly-ga4-telegram.service -n 50 --no-pager
 ```
 
 Para silenciar el informe sin desinstalar nada, `WEEKLY_GA4_TELEGRAM_ENABLED=false`

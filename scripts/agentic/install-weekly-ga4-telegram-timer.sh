@@ -2,10 +2,17 @@
 # ============================================================================
 # Instalar el timer semanal de tráfico de Residencia Fiscal
 # ============================================================================
-# Se ejecuta en la máquina que dispara los informes, SIN sudo, porque las
-# units son de usuario igual que las de los proyectos hermanos:
+# Se ejecuta EN EL VPS `alfredo` y necesita sudo, porque desde el 2026-08-11 las
+# units son de sistema y no de usuario:
 #
-#   bash scripts/agentic/install-weekly-ga4-telegram-timer.sh
+#   ssh alfredo
+#   bash /home/ubuntu/residenciafiscal/scripts/agentic/install-weekly-ga4-telegram-timer.sh
+#
+# Por qué cambió: mientras vivían en el portátil como units de usuario, un lunes
+# con la máquina apagada a las 09:00 dejaba el informe sin enviar hasta el
+# arranque (2026-08-10: los cinco informes hermanos se dispararon de golpe a las
+# 23:07 por el catch-up de Persistent=true). El VPS está siempre encendido y su
+# journal sobrevive a los reinicios.
 #
 # Es idempotente: se puede relanzar tras cada `git pull` que toque las units
 # para recopiarlas y recargar systemd.
@@ -16,7 +23,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ENV_FILE="${PROJECT_ROOT}/.env"
-SYSTEMD_DIR="${HOME}/.config/systemd/user"
+SYSTEMD_DIR="/etc/systemd/system"
 
 UNITS=(
     residenciafiscal-weekly-ga4-telegram.service
@@ -46,14 +53,13 @@ if [[ ${#missing[@]} -gt 0 ]]; then
     exit 1
 fi
 
-mkdir -p "$SYSTEMD_DIR"
 for unit in "${UNITS[@]}"; do
-    install -m 644 "${SCRIPT_DIR}/${unit}" "${SYSTEMD_DIR}/${unit}"
+    sudo install -o root -g root -m 644 "${SCRIPT_DIR}/${unit}" "${SYSTEMD_DIR}/${unit}"
     echo "instalado ${SYSTEMD_DIR}/${unit}"
 done
 
-systemctl --user daemon-reload
-systemctl --user enable --now "$TIMER"
+sudo systemctl daemon-reload
+sudo systemctl enable --now "$TIMER"
 
 echo
-systemctl --user list-timers --all --no-pager | grep -E "UNIT|${TIMER}" || true
+systemctl list-timers --all --no-pager | grep -E "UNIT|${TIMER}" || true
