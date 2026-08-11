@@ -138,3 +138,15 @@ if [[ -f "$DRIFT_SCRIPT" ]]; then
 else
     echo "[$(timestamp)] WARN: guardián de deriva no encontrado: $DRIFT_SCRIPT" >&2
 fi
+
+# Y que el código sea el del repositorio tampoco dice que la base de datos lo
+# sea: una migración editada después de aplicarse las separa en silencio.
+CONTRACT_SCRIPT="${BACKUP_DATABASE_CONTRACT_SCRIPT:-$SCRIPT_DIR/check-database-contract.sh}"
+if [[ -f "$CONTRACT_SCRIPT" ]]; then
+    if ! CONTRACT_OUTPUT="$(/bin/bash "$CONTRACT_SCRIPT" 2>&1)"; then
+        fail_with_alert "La base de datos ya no coincide con el repositorio: ${CONTRACT_OUTPUT}"
+    fi
+    echo "$CONTRACT_OUTPUT"
+else
+    echo "[$(timestamp)] WARN: guardián del contrato de base de datos no encontrado: $CONTRACT_SCRIPT" >&2
+fi

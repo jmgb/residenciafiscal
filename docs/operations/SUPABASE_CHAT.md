@@ -283,8 +283,11 @@ los jobs C y dos validaciones ausentes.
 
 Lo que sí lo detecta es preguntar a la base de datos por la definición viva —el
 cuerpo de la función en `pg_proc`, la restricción con `pg_get_constraintdef`, las
-columnas en `information_schema`— y compararla con lo que declara el repositorio. Merece la pena hacerlo cuando una
-migración se editó después de aplicarse, aunque el listado salga limpio.
+columnas en `information_schema`— y compararla con lo que declara el repositorio.
+De las firmas de las RPC del contrato se encarga ya `check-database-contract.sh`
+cada noche, contra `scripts/backup/database-contract.txt`; lo demás sigue siendo
+manual, así que merece la pena mirarlo cuando una migración se editó después de
+aplicarse, aunque el listado salga limpio.
 
 La reparación es también una migración hacia delante:
 `20260811073000_deep_research_review_gaps_forward.sql` sirve de plantilla

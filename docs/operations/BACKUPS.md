@@ -16,7 +16,7 @@ ellos están señaladas donde aparecen.
 
 ## Qué responde cada pieza
 
-El sistema contesta cinco preguntas distintas, y son distintas a propósito: un
+El sistema contesta seis preguntas distintas, y son distintas a propósito: un
 backup puede "ejecutarse bien" y dejar en R2 un fichero corrupto, y puede salir
 verde a diario ejecutando un script que ya no es el del repositorio.
 
@@ -27,6 +27,7 @@ verde a diario ejecutando un script que ya no es el del repositorio.
 | ¿Coincide el backup con el contrato vivo de Supabase? | `residenciafiscal-backup-restore-drill.timer` → `check-backup-restore-drill.sh` | Día 1 de cada mes, 06:35 |
 | ¿Se ha aplicado la retención de Supabase? | `residenciafiscal-chat-retention.timer` → `scripts/privacy/purge-chat-data.sh` | Diario, 03:20 |
 | ¿Lo que se ejecuta sigue siendo lo que dice el repositorio? | `check-operational-drift.sh`, invocado por el check de frescura | Diario, 03:05 |
+| ¿La base de datos sigue siendo la que dice el repositorio? | `check-database-contract.sh`, invocado por el check de frescura | Diario, 03:05 |
 
 El guardián de deriva no tiene timer propio, igual que
 `verify-backup-contract.sh`: cuelga del check de frescura, que ya corre a diario
@@ -40,6 +41,26 @@ comprobable en local, porque quedarse sin GitHub no es un fallo del backup.
 
 Nunca reconcilia por su cuenta: hacerlo tiene consecuencias y es una decisión,
 no un automatismo.
+
+Que el código sea el del repositorio tampoco garantiza que la base de datos lo
+sea, y esa sexta pregunta la contesta `check-database-contract.sh`, colgado del
+mismo check. Compara las firmas vivas de las RPC del contrato con las que
+declara `scripts/backup/database-contract.txt`, sobrecarga a sobrecarga, así que
+canta tanto una firma que falta como una antigua que sobrevivió a su sustituta.
+No compara cuerpos de función: la firma es lo que rompe a quien llama y es lo
+que se torció el 3 de agosto de 2026, cuando dos migraciones ya aplicadas se
+editaron en sitio y producción se quedó ocho días con
+`private.purge_expired_deep_research_jobs` de un solo argumento.
+
+El manifiesto no puede quedarse atrás por su cuenta:
+`tests/test_database_contract.py` compara firma a firma contra el SQL en las dos
+direcciones —cada firma declarada existe en alguna migración, y lo que declara
+la última migración de cada función está en el manifiesto— y comprueba que este
+cubra lo que invoca producción: los timers del VPS, la Function del chat y el
+prototipo FastAPI, en sus tres formas de llamada. Así el manifiesto tampoco
+puede perder cobertura en silencio. El SQL escribe `timestamptz` y el catálogo
+`timestamp with time zone`, así que hay una tabla de alias en el test; un alias
+nuevo no pasa inadvertido, porque la firma normalizada deja de coincidir.
 
 Los timers usan `Persistent=true` (recuperan la ejecución perdida si el VPS
 estaba apagado) y `RandomizedDelaySec=300`. Los huecos horarios están elegidos

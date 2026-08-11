@@ -1,0 +1,37 @@
+# Firmas que el repositorio declara para las RPC del contrato operativo.
+#
+# Es la respuesta a la cuarta pregunta del subsistema: ¿la base de datos es la
+# que el repositorio dice? Las otras tres ya tienen guardián —backup fresco,
+# dump contra Supabase, checkout contra git—, y esta no lo tenía. El 3 de agosto
+# de 2026 se editaron en sitio dos migraciones ya aplicadas y producción se
+# quedó ocho días con `private.purge_expired_deep_research_jobs` de un solo
+# argumento mientras el repositorio la declaraba con tres; nada lo dijo hasta
+# que un script del VPS la llamó y falló.
+#
+# Una línea por firma viva, tal y como la imprime
+# `pg_get_function_identity_arguments`, incluidos los nombres de parámetro:
+# un renombrado también rompe a quien llama por nombre.
+#
+# Las sobrecargas se declaran una a una y a propósito. Sobra o falta cualquiera
+# de ellas, `check-database-contract.sh` lo canta: así se detecta también una
+# firma antigua que sobrevivió a su sustituta.
+#
+# Al cambiar una firma en una migración hay que actualizar esta lista en el
+# mismo cambio; `tests/test_database_contract.py` no deja que se olvide.
+
+private.delete_chat_conversation(p_conversation_id text)
+private.purge_expired_chat_data(p_cutoff timestamp with time zone, p_dry_run boolean, p_batch_limit integer)
+private.purge_expired_deep_research_jobs(p_cutoff timestamp with time zone, p_dry_run boolean, p_batch_limit integer)
+public.authorize_chat_conversation(p_conversation_id text, p_country_path text, p_conversation_access_hash text)
+public.cancel_deep_research_job(p_job_id text, p_conversation_id text)
+public.chat_daily_stats(p_day date)
+public.complete_chat_request(p_request_id text, p_actual_microusd bigint, p_actual_complete boolean, p_answers jsonb)
+public.create_chat_request(p_request_id text, p_conversation_id text, p_user_message_id text, p_country_path text, p_question text)
+public.create_chat_request(p_request_id text, p_conversation_id text, p_user_message_id text, p_country_path text, p_question text, p_experiment jsonb)
+public.create_deep_research_job(p_job_id text, p_conversation_id text, p_comparison_id text, p_country_path text, p_question text, p_bundle_id text)
+public.create_deep_research_job(p_job_id text, p_conversation_id text, p_country_path text, p_question text, p_bundle_id text)
+public.fail_chat_request(p_request_id text, p_status text, p_failure_code text)
+public.get_deep_research_job(p_job_id text, p_conversation_id text)
+public.read_chat_history(p_conversation_id text, p_conversation_access_hash text, p_turn_limit integer)
+public.record_chat_vote(p_request_id text, p_verdict text, p_reason text)
+public.update_deep_research_job(p_job_id text, p_status text, p_stage text, p_result jsonb, p_error text)
