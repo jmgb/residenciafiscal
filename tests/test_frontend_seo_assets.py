@@ -155,12 +155,25 @@ def test_llms_txt_describes_the_public_corpus_without_private_routes() -> None:
 
 
 def test_public_routes_serve_their_prerender_before_the_spa_fallback() -> None:
+    """Que exista el par no basta: la regla tiene que servir el prerender.
+
+    `status` distinto de 200 convertiría la ruta canónica en un salto, y sin
+    `force` Netlify puede resolver la petición antes de llegar aquí. Ninguna de
+    las dos cosas se nota desde fuera —la SPA pinta la misma página— y el fallo
+    solo aparece cuando Search Console lleva semanas sin indexar. `/colaborar`
+    es la crítica: es la única landing cuyo valor depende de ser indexable.
+    """
     config = tomllib.loads((PROJECT_ROOT / "netlify.toml").read_text(encoding="utf-8"))
     redirects = config["redirects"]
+    fallback = redirects.index(next(r for r in redirects if r["from"] == "/*"))
 
-    redirect_pairs = {(redirect["from"], redirect["to"]) for redirect in redirects}
     for path in ("/manifiesto", "/metodologia", "/espana/fuentes", "/colaborar", "/privacidad"):
-        assert (path, f"{path}/index.html") in redirect_pairs
+        rule = next((r for r in redirects if r["from"] == path), None)
+        assert rule is not None, f"{path} sin regla: el fallback 404 se la come"
+        assert rule["to"] == f"{path}/index.html"
+        assert rule["status"] == 200, f"{path} no sirve su prerender, redirige"
+        assert rule["force"] is True, f"{path} sin force"
+        assert redirects.index(rule) < fallback, f"{path} declarada tras el fallback"
     assert redirects[-1] == {"from": "/*", "to": "/404.html", "status": 404}
 
 

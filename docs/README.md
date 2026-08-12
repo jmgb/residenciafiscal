@@ -89,6 +89,9 @@ Documentos especializados:
   versionados o sean locales.
 - Un cambio de contrato debe actualizar el código, su schema en `schemas/`, sus
   tests y el documento de referencia correspondiente.
-- `project/TASKS.md` registra estado y bloqueos; no redefine contratos.
+- `project/TASKS.md` registra estado y bloqueos; no redefine contratos. Su
+  histórico cerrado del backend del chat vive aparte, en
+  [`project/TASKS_ARCHIVE_CHAT.md`](project/TASKS_ARCHIVE_CHAT.md): nada de lo
+  que hay allí está pendiente, pero explica por qué se decidió lo que hoy rige.
 - Los planes históricos se conservan como contexto y deben señalar qué partes
   hayan quedado superadas.

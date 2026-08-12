@@ -91,6 +91,29 @@ contra el dominio público después de cada deploy.
   funciona; si funcionan, esta lista ya está priorizada. Para llegar a los ~98
   convenios hace falta antes la tarea de cruzar cada página con sus sentencias:
   sin eso son 98 URLs con el mismo esqueleto.
+
+  **Primera lectura de Search Console (12 de agosto de 2026, datos del 1 al 9;
+  la API lleva tres días de retraso).** 43 impresiones, 0 clics y 18 URLs
+  distintas de las 149 del sitemap. Nueve de las 34 rutas de país reciben el
+  53 % de las impresiones y salen en primera página: `/alemania` 5 @9,8,
+  `/emiratos-arabes-unidos` 5 @8,6, `/brasil` 4 @15,5, `/el-salvador` 2 @8,
+  `/italia` 2 @5,5, `/suiza` 2 @28,5, y `/kuwait`, `/nicaragua` y `/monaco` con
+  una. Las fichas de precepto aportan el 37 % restante (`lgt-a105` 6 @10,
+  `lirpf-a9` 5 @18,2 y cuatro fichas de CDI con una cada una).
+
+  - **Esto no levanta el gate**, y no debe leerse como si lo hiciera: son nueve
+    días y 43 impresiones frente a las 4-6 semanas que exige esta entrada. La
+    lectura de decisión cae hacia el **12-15 de septiembre de 2026**. El 0 % de
+    CTR sobre 23 impresiones no es una señal de nada.
+  - Lo que sí queda descartado es el riesgo que motivaba el gate: el formato se
+    indexa y posiciona. Seis de las nueve rutas están por debajo del puesto 10.
+  - **El contador `indexed` del sitemap no sirve para medir esto.** La API
+    sigue devolviendo `submitted: 149, indexed: 0` (rastreo del 11 de agosto)
+    mientras 18 URLs reciben impresiones, que es imposible sin estar indexadas.
+    Medir con impresiones o con la API de inspección, nunca con ese contador.
+  - 18 de 149 URLs con impresiones confirma la cola lenta de indexación: pesan
+    más ahora la indexación manual y los primeros backlinks —ambas más abajo—
+    que abrir rutas nuevas.
 - [ ] **P1 — Cruzar cada página de país con las sentencias del corpus que lo
   mencionan.** Vale más que setenta rutas nuevas: es contenido único y
   verificable —Reino Unido aparece en 115 pasajes, Suiza en 111, Argentina en
@@ -183,12 +206,12 @@ contra el dominio público después de cada deploy.
   independientes —corpus v3 estructurado y Gemini File Search sobre PDF— con
   fuentes, métricas y coste en USD separados. Contrato:
   [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md).
-  - [x] **F0.2 — redacción comparable y banco corto.** A redacta sobre unidades
-    estructuradas con IDs de evidencia; B usa File Search sobre PDF. Se
-    ejecutaron ocho preguntas con el mismo modelo, se bloquearon respuestas sin
-    citas verificables y se midieron coste y latencia. El banco de 40 y 3.6
-    quedan aplazados hasta fijar una rúbrica neutral y revisar los gaps:
-    [`CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
+  > **Histórico archivado (12 de agosto de 2026).** Las fases y subtareas ya
+  > cerradas de este bloque —F0.2, fases 0, 0b, 1 y 3, los 22 hitos cerrados de
+  > la fase 2 y C1/C4/C5— se movieron íntegras a
+  > [`TASKS_ARCHIVE_CHAT.md`](TASKS_ARCHIVE_CHAT.md). No se borraron: documentan
+  > decisiones vigentes que no están escritas en ningún otro sitio. Aquí queda
+  > solo lo abierto.
   - [ ] **F0.3 — evaluación neutral y corrección de la muestra.**
     - [x] Congelar una rúbrica que separe gates binarios, utilidad e intención.
     - [x] Generar un paquete ciego saneado y versionado con las ocho parejas
@@ -246,29 +269,6 @@ contra el dominio público después de cada deploy.
       - [ ] Repetir `DAY-05` en un artefacto nuevo y comprobar que ninguna
         respuesta invierte «se computarán [...] salvo que»; no sobrescribir el
         baseline F0.2 ni la revisión jurídica cerrada.
-    - [x] Preparar el compilador post-revelado con confirmación explícita,
-      validación de identidad y resultados JSON/Markdown. No ejecutarlo hasta
-      cerrar y versionar el formulario jurídico.
-    - [x] Separar corpus e inferencia: solo la estrategia A del chat reutiliza
-      el singleton de `gateway_setup` con `UsageSink` y `AlertSink`; el workflow
-      Python + agente no importa el gateway. B conserva File Search fuera del
-      paquete. Se retiraron el analizador LLM y `POST /analizar`.
-      - [x] Instalar el gateway desde PyPI con `>=0.8.0` y sin techo. La `0.7.0`
-        normaliza el esquema estricto de OpenAI y declara
-        `supports_temperature`, así que se retiraron los dos parches locales
-        que suplían ambas cosas, y con ellos la tabla de enrutado heredada
-        del analizador borrado. La `0.8.0` hace que `Execution.model_used`
-        respete el id del proveedor; verificado que Luna sigue reportando el
-        suyo y que el importe llega `ACTUAL` con su versión de tarifas.
-      - [x] Limpiar referencias operativas residuales a `src/model_pricing.py`,
-        ya borrado, en documentación y configuración de imports.
-      - [x] Medir el esfuerzo de razonamiento sobre la evidencia recuperada:
-        `max` tardaba 81-96 s y costaba $0.0113-$0.0128 por respuesta, frente a
-        16-30 s y $0.0038-$0.0060 con `high`, entre tres y cuatro veces menos
-        tiempo y dinero. La política queda en `high`. Falta comparar la
-        **calidad** de ambos con la rúbrica congelada; hasta entonces la
-        elección se justifica por coste y latencia, no por equivalencia
-        demostrada.
     - [ ] Repetir las ocho con la configuración destinada al producto —A con
       Luna + `high`; B con un modelo Gemini permitido por File Search— y una
       segunda revisión ciega. Esta ejecución compara stacks completos, no
@@ -277,59 +277,6 @@ contra el dominio público después de cada deploy.
   - Diseño: [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md)
   - Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
     (scratch local, sin versionar)
-  - [x] **Fase 0 — spike de plataforma (gate).** Ejecutado el 2026-07-29 contra un
-    Deploy Preview. Cuatro de cinco criterios pasan y **la decisión de runtime queda
-    confirmada**: p95 de CPU 15,3 ms, streaming de 19,87 s, cabeceras en 0,30 s y los
-    tres paquetes cargan en Deno. Mediciones en
-    [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md).
-  - [x] **Fase 0b — decidir el mecanismo de cuotas y presupuesto.** El
-    quinto criterio falló: `onlyIfMatch` de Netlify Blobs **no da compare-and-swap**
-    bajo concurrencia. Cinco peticiones simultáneas dejaron un contador de cinco
-    incrementos en dos, y todas creyeron haber escrito. Se eligió la opción del
-    diseño con atomicidad real: Postgres.
-
-    > **Decisión actualizada 2026-08-01:** no se mantiene un presupuesto monetario
-    > global ni una reserva por petición. Supabase/Postgres conserva un ledger
-    > privado de consultas, coste real y estado mediante `create_chat_request`,
-    > `complete_chat_request` y `fail_chat_request`; si Supabase falla, el endpoint
-    > falla cerrado. El navegador aplica `VITE_CHAT_SESSION_MESSAGE_LIMIT=10` como
-    > límite blando por ventana móvil de 24 horas y Netlify mantiene cinco
-    > peticiones por IP y minuto.
-    >
-    > Evidencia histórica: lee en este orden la sección 5 de
-    > [`docs/operations/NETLIFY_EDGE.md`](../operations/NETLIFY_EDGE.md) (la evidencia del
-    > fallo y la alternativa medida) y la sección 4 del diseño (las tres opciones con
-    > sus contrapartidas). La decisión prioriza un ledger privado y una protección
-    > de abuso configurable, sin convertir el coste observado en una cuota de
-    > producto.
-    >
-    > El límite fuerte por usuario queda aplazado hasta que existan cuentas y una
-    > identidad estable; el límite de navegador no se presenta como garantía
-    > antifraude ni como control económico.
-    >
-    > El trabajo vive en la rama `spike/chat-edge-platform`, **sin push**. El código
-    > del spike se borró a propósito; `NETLIFY_EDGE.md` explica cómo reconstruirlo si
-    > hace falta volver a medir.
-  - [x] **Fase 1 — implementación detrás del stub.** La Function, sus módulos
-    puros, ledger privado, límite de sesión y adaptadores están implementados con
-    TDD. Producción sigue simulada.
-
-    > **La fuente del chat ya está decidida e implementada tanto en el comparador
-    > local como en la Function cerrada.** Debe ser
-    > `residenciafiscal-case/3` con anclajes verbatim; no el JSONL ni el perfil
-    > v2 directamente. El plan antiguo genera `lib/corpus.ts` desde el JSONL y
-    > por eso sus tareas 3–6 y las partes del protocolo están marcadas como
-    > parcialmente superadas.
-    >
-    > Las piezas de plataforma y varios módulos siguen siendo reutilizables. La
-    > recuperación cambia de sentencias completas a cuestiones jurídicas, y las
-    > tarjetas llevan hechos, valoración, resultado por cuestión y fragmentos
-    > verbatim. Cada marcador debe resolverse a **sentencia + cuestión + página**.
-    >
-    > El diseño y la validación con 1, 5 y 106 sentencias ya están completados.
-    > Las 106 permanecen como borrador interno `AGENT_REVIEWED_ONLY`; la
-    > conexión técnica al chat está hecha y la aprobación jurídica humana sigue
-    > pendiente.
   - [ ] **Fase 2 — evaluación.** El banco de 40 preguntas está versionado, pero
     sus etiquetas heredadas evalúan el router y no son todavía una rúbrica
     neutral para comparar respuestas A/B. Bloquean los gates binarios
@@ -337,56 +284,6 @@ contra el dominio público después de cada deploy.
     adversariales, presupuesto); `recall@12` se publica como línea base medida.
     El catálogo inicial de comportamiento y preguntas está en
     [`docs/jurisprudence/CHAT_USER_QUESTION_CATALOG.md`](../jurisprudence/CHAT_USER_QUESTION_CATALOG.md).
-    - [x] Seleccionar y contestar manualmente 40 preguntas contra la muestra de
-      cinco, con casos, contracasos, límites y gaps de datos:
-      [`docs/experiments/CHAT_QUESTION_PILOT_5.md`](../experiments/CHAT_QUESTION_PILOT_5.md).
-    - [x] Convertir la referencia manual provisional de recuperación en el
-      banco machine-readable
-      `knowledge/jurisprudencia-v3/evaluations/chat-question-pilot-5.bank.json`.
-    - [x] Evolucionar el contrato de fuentes a `ChatSourceV2` con `sourceId`,
-      `issueId`, `anchorId`, página, fidelidad, hash de fuente y estado de
-      revisión; adaptar persistencia y UI sin perder varios anclajes de una
-      misma sentencia. Los historiales v1 se conservan como fuentes legadas y
-      nunca reciben trazabilidad inventada.
-    - [x] Implementar `chat-engine.live.ts` y la base individual del protocolo 2;
-      validar en la frontera que cada evento `sources` contiene exclusivamente
-      `ChatSourceV2`, sin aceptar fuentes legadas desde el backend. Tolera
-      eventos y UTF-8 partidos, exige un único terminal, distingue errores HTTP
-      no SSE y envía solo `role` y `content`. La extensión A/B posterior conserva
-      esta compatibilidad.
-    - [x] Extender el protocolo 2 al modo comparativo A/B con `strategy`,
-      `answer_start`, `answer_done`, coste y terminal global; adaptar
-      `ChatMessage`/UI antes de conectar el selector al backend.
-    - [x] Implementar el prototipo `POST /chat` en FastAPI con composición
-      perezosa, secreto del proxy, fuentes/coste por estrategia y logs sin
-      consulta ni respuesta. Se conserva como referencia y posible runtime
-      futuro; no es el target de despliegue V1.
-    - [x] Implementar el proxy FastAPI como Edge Function fina con rate limit y
-      transmisión del stream. El prototipo original con secreto estático se
-      retiró al sustituirlo la fachada firmada
-      `netlify/prototypes/chat-fastapi-edge-v2.ts`.
-    - [x] Implementar `/api/chat` como Netlify Function TypeScript autosuficiente:
-      portar solo el runtime online de A/B, sin trasladar a TypeScript el
-      pipeline Python de preparación del corpus.
-    - [x] Ejecutar las estrategias A/B activas en paralelo con aislamiento de errores, conservar el
-      orden visual A → B y cancelar todo trabajo restante antes del deadline
-      global de 50–55 s.
-    - [x] Corregir la regresión de autoridad en B: el comodín
-      `judgment_id="sts-*"` devolvía un falso vacío. El store nuevo contiene
-      106/106 PDF con `authority` explícita y B filtra por igualdad exacta. El
-      store anterior se conserva para rollback.
-    - [x] Vincular cada afirmación de A con sus citas, ampliar de forma segura
-      los anclajes breves desde el verbatim y retirar claims sin respaldo
-      literal suficiente. La batería real del 3 de agosto está en
-      [`CHAT_AB_QUALITY_ITERATION_2026-08-03.md`](../experiments/CHAT_AB_QUALITY_ITERATION_2026-08-03.md).
-    - [x] Persistir versión de experimento, commit, corpus/store, prompts,
-      filtros, documentos recuperados, citas verificadas, claims y diagnóstico
-      acotado en Supabase. Añadir además el endpoint y RPC de voto ciego cerrado.
-    - [x] Aprobar una variante visual de la vista ciega y conectar el voto en la
-      UI. La variante elegida muestra dos columnas en escritorio y pestañas en
-      móvil solo cuando A y B están activas; con una respuesta conserva una
-      columna sin controles experimentales. El voto ciego cerrado usa el
-      `request_id` persistido y no se muestra hasta que ambas opciones terminan.
     - [ ] Mantener Luna `high` en la V1 y medir durante varios días latencia
       total, percentiles, timeouts, tokens, coste y calidad. Evaluar un esfuerzo
       menor solo después, si la evidencia muestra que falta margen bajo 60 s.
@@ -395,26 +292,10 @@ contra el dominio público después de cada deploy.
         `labels` incompatible con Gemini API y el truncado de Luna `high` con
         1.200 tokens. Evidencia:
         [`CHAT_NETLIFY_V1_PAID_SMOKE.md`](../experiments/CHAT_NETLIFY_V1_PAID_SMOKE.md).
-    - [x] Cubrir con tests deterministas la paridad de recuperación, fuentes,
-      estados, modelo, tokens, coste, cancelación y respuesta parcial. El smoke
-      productivo pagado del 31 de julio confirmó además A/B en paralelo y
-      persistencia/reconciliación en Supabase; el prototipo Python se conserva
-      únicamente como referencia de la arquitectura futura.
-    - [x] Cablear el selector seguro: solo `VITE_CHAT_MODE=live` activa el cliente;
-      cualquier otro valor conserva el stub.
     - [ ] Añadir un Deploy Preview reproducible para validar cambios futuros sin
       probar primero en producción. La V1 ya está desplegada y el smoke
       productivo terminó en 20,23 s; esta tarea es un guardarraíl para próximos
       cambios, no un bloqueo técnico de la versión vigente.
-    - [x] Diseñar e implementar contexto multi-turn con privacidad y grounding.
-      El navegador sigue enviando solo la pregunta actual; el servidor reconstruye
-      hasta seis turnos y 12 KiB desde el ledger, entrega a cada estrategia solo
-      su propio hilo y no trata el historial como evidencia. El UUID de la URL no
-      autoriza la lectura: un secreto local de 256 bits protege el hilo y la base
-      solo conserva su SHA-256; las conversaciones locales anteriores empiezan un
-      `ledgerId` nuevo al migrar. Las referencias explícitas se contextualizan
-      incluso si contienen términos del dominio. La evaluación
-      conversacional de calidad sigue perteneciendo al banco de 40 preguntas.
     - [ ] **Piloto controlado — opción C agentiva; promoción general pendiente.**
       C queda separada de las respuestas rápidas A/B y se activa únicamente bajo
       una bandera explícita; nunca entra en el runtime Netlify síncrono. La
@@ -437,22 +318,6 @@ contra el dominio público después de cada deploy.
         nunca en el entorno de herramientas.
         - [x] Añadir contratos Pydantic ejecutables para job, límites, progreso,
           salida, claims y evidencias, sin campo de razonamiento.
-      - [x] **C1 — construir el bundle de investigación.** Exportar únicamente
-        casos v3, verbatim e índices jurídicos JSON necesarios desde
-        una versión congelada del corpus. Validar manifiesto, hashes, límites
-        de tamaño y ausencia de secretos antes de copiarlo al VPS.
-        - [x] Implementar `deep-research-bundle.py` y los targets
-          `make deep-research-bundle` / `make deep-research-bundle-verify`.
-          El builder produce ZIP determinista, no sobrescribe snapshots y el
-          verificador comprueba la allowlist y todos los hashes. La instantánea
-          `rollout-106/1` quedó validada localmente, transferida al VPS de
-          Alfredo y validada allí; bundle y schema se montan en solo lectura.
-        - [x] Construir `rollout-106/2` solo con JSON (sin copias PDF o Markdown),
-          añadir el MCP allowlisted de lectura y verificar localmente el bundle.
-          Instalado en Alfredo y validado E2E el 2026-08-04 con el job
-          `deep-1b556373-3e2b-4deb-a160-c4b67d24226b`: salida v2, cita literal
-          de SAN 1210/2023 página 8, callback enviado y mensaje de asistente
-          persistido con `gpt-5.6-luna` y esfuerzo `high`.
       - [ ] **C2 — piloto controlado con Codex.** Ejecutar una muestra pequeña de
         preguntas difíciles, separada del holdout A/B, en un contenedor o
         microVM con usuario sin privilegios, filesystem de solo lectura, red de
@@ -480,24 +345,6 @@ contra el dominio público después de cada deploy.
         afirmaciones sustantivas sin apoyo verificable. Medir utilidad, cobertura,
         claridad, latencia, coste y cancelaciones; promover solo una mejora
         relevante, repetible y proporcional al coste operativo.
-      - [x] **C4 — sustituir el explorador por herramientas jurídicas.** El
-        perfil v2 expone solo `search_corpus`, `read_case` y
-        `read_verbatim_page` mediante un MCP local, sin shell, navegador,
-        internet accesible al modelo ni acceso general al repositorio. Exigir
-        salida estructurada con estado, respuesta, límites, afirmaciones y
-        evidencias; pasar toda cita por el verificador determinista y retirar
-        cualquier afirmación sin apoyo válido. El texto visible se deriva solo
-        de los claims verificados. Prompt, MCP y verificador viven en el runtime
-        del perfil dentro del contenedor; Alfredo solo transporta y entrega el
-        resultado. No persistir ni mostrar cadena de pensamiento; conservar
-        solo trazas operativas seguras.
-      - [x] **C5 — integrar la experiencia bajo demanda.** Desde A/B mostrar
-        únicamente un botón explícito «Iniciar investigación profunda» o una
-        oferta tras respuestas parciales, abstenciones o discrepancias. No
-        añadir C a la comparación síncrona ni retrasar A/B. Mostrar estados de
-        búsqueda/lectura/verificación y, al terminar, añadir un bloque o pestaña
-        C independiente con fuentes, límites, coste y latencia; permitir votar
-        A, B, C o empate sin declarar automáticamente una ganadora.
       - [ ] **C6 — promoción controlada.** Antes de tráfico real revisar
           autenticación del worker, retención, tratamiento de datos, observabilidad,
           rollback y presupuesto. La promoción requiere decisión explícita y
@@ -515,10 +362,6 @@ contra el dominio público después de cada deploy.
           los gates de calidad, presupuesto, retención, observabilidad y rollback.
       - Contrato, seguridad, UX y gates:
         [`CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md#plan-de-opción-c-investigación-agentiva).
-  - [x] **Fase 3 — activación técnica.** `VITE_CHAT_MODE=live` y el backend están
-    activos en Production desde el 31 de julio de 2026. El rollback es volver a
-    `stub` y deshabilitar el backend. La activación técnica no cierra privacidad,
-    retención ni revisión jurídica.
 - [x] **Procesar técnicamente el corpus v3 de 5 a 106 sentencias.** El rollout
   autorizado se ejecutó el 1 de agosto de 2026 desde un manifiesto bloqueado por
   hashes: 106/106 documentos `BUILD_PASSED` en 11 lotes, 67 casos dentro del
@@ -632,26 +475,25 @@ Arquitectura, invariantes y decisiones en [`NORMATIVA.md`](../normativa/NORMATIV
 antes de tocar nada: el articulado no se reescribe nunca, y hay tests que lo
 comprueban párrafo a párrafo contra la fuente.
 
-- [ ] **Completar la tabla país → convenio: hoy alcanza 16 de los 98 convenios
-  publicados.** `CONVENIOS_POR_PAIS`, en `normativa_citas.py`, solo mapea los
-  países que litigan en el corpus actual. Los otros 82 convenios están
-  publicados con su artículo de residencia y **ninguna cita puede llegar a
-  ellos**: si entra una sentencia sobre Portugal o Italia, su «art. 4 CDI»
-  quedará sin resolver aunque el precepto exista. Hoy no falla porque el corpus
-  solo litiga con esos 16 países.
-  - Los identificadores y títulos oficiales están en
-    `normativa/es/manifest.json` (campo `titulo` de los registros con
-    `grupo: cdi`). **Verifica cada país contra el título**, no lo deduzcas con
-    una regex: los 96 convenios escriben el país de trece formas distintas y un
-    país equivocado enlazaría una sentencia con el derecho de otro Estado. Por
-    eso la tabla es curada y no generada.
-  - Cierra con un test que exija que **ningún convenio publicado quede sin
-    alias**, para que la tabla no vuelva a quedarse atrás en silencio. Modelo:
-    `test_todos_los_convenios_generales_tienen_su_articulo_de_residencia` en
-    `tests/test_normativa_boe.py`.
-  - Ojo con los países que tienen convenio antiguo y moderno: el rango de
-    ejercicios de `ConvenioPais` es lo que decide cuál aplica. Reino Unido y
-    Argentina ya están así; comprueba si hay más al ampliar.
+- [x] **Completar la tabla país → convenio** (cerrada por otra vía; verificado el
+  12 de agosto de 2026). La entrada describía un problema real —`CONVENIOS_POR_PAIS`
+  mapeaba a mano 16 de los 98 convenios, así que el «art. 4 CDI» de una sentencia
+  sobre Portugal o Italia no habría resuelto—, pero el registro bilateral lo
+  resolvió sin que nadie lo marcara aquí: la tabla **ya no se cura a mano**, se
+  deriva de `src/treaty_relations_es.json` (`src/normativa_citas.py:112`,
+  commit `9ed452e`). Medido hoy: 110 grafías → **97 convenios alcanzables**.
+  - El test de cierre que esta entrada exigía —«ningún convenio publicado sin
+    alias»— también existe:
+    `test_el_registro_cubre_todos_los_convenios_generales` en
+    `tests/test_treaty_relations.py:77`, que compara el registro con el
+    manifiesto y falla ante cualquier hueco.
+  - **Sigue rigiendo la regla que motivaba la tabla curada**: el país sale del
+    campo `titulo` de `normativa/es/manifest.json`, verificado uno a uno, nunca
+    deducido con una regex — los convenios escriben el país de trece formas
+    distintas y equivocarlo enlazaría una sentencia con el derecho de otro
+    Estado. Lo que cambió es dónde vive esa curación, no que se pueda automatizar.
+  - Los países con convenio antiguo y moderno se resuelven por el rango de
+    ejercicios de `ConvenioPais`, igual que antes.
 
 - [x] **Guardarraíl contra la pérdida silenciosa de una norma al redescargar.**
   `descargar_normativa.py` reescribe `manifest.json` desde cero y descubre los
@@ -711,6 +553,11 @@ comprueban párrafo a párrafo contra la fuente.
   `/espana/{normativa,sentencias,doctrina}` y refuercen el cluster de
   residencia. Sin datos de keyword tool: la demanda se juzgó por composición de
   SERPs. Secuencia recomendada:
+
+  > Los puntos 1 y 4 los ejecuta la **fase B** del plan de arquitectura
+  > internacional (más abajo), que absorbió también el enriquecimiento editorial
+  > de las landings de país; aquí se conservan por el orden y el criterio, no
+  > como trabajo aparte. Los puntos 2, 3 y 5 sí son verticales nuevas.
 
   - [ ] **1. Publicar lo ya construido**: los 6 hubs de doctrina del art. 9
     (§6.4 de
@@ -1086,10 +933,18 @@ sola URL para poder encontrarse.
 - [x] Configurar CI con lint, typecheck, tests y build del frontend y la API.
 - [ ] Añadir smoke tests de navegador para `/`, `/metodologia`, `/colaborar` y las landings
   públicas, incluyendo comprobación de redirecciones, sitemap, robots y corpus publicado.
-  - `/colaborar` es la que más lo necesita: es la única landing cuyo valor depende de ser
-    indexable, así que hay que comprobar que su redirect sirve el prerender y que la meta
-    `robots` llega como `index, follow`. Si el redirect falla, la SPA responde igual y el
-    fallo no se nota hasta que Search Console no indexa nada.
+  - **Lo determinista ya está cubierto sin navegador** (12 de agosto de 2026), que
+    era el 90 % del valor y cuesta 0,3 s en CI:
+    `tests/test_frontend_seo_assets.py` comprueba que las cinco rutas estáticas
+    sirven su prerender con `status = 200`, `force = true` y por delante del
+    fallback (`test_public_routes_serve_their_prerender_before_the_spa_fallback`,
+    endurecido y verificado por mutación), que cada ruta de país tiene su regla
+    (`test_country_routes_have_prerender_redirects`), que el sitemap solo lleva
+    rutas canónicas y ninguna sentencia, y que la shell es `noindex`.
+  - **Lo que un navegador sí añadiría y sigue pendiente**: que el HTML *servido*
+    por producción —no el que genera el build— llegue con su meta `robots`, y
+    que el corpus publicado responda. Hoy lo vigila UptimeRobot con dos
+    monitores de palabra clave, así que esto ya no es un hueco urgente.
   - Las páginas de país sin corpus deben comprobarse al revés: que siguen respondiendo
     `noindex, follow` y que **no** aparecen en el sitemap.
 - [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
@@ -1100,10 +955,11 @@ sola URL para poder encontrarse.
 
 ## SEO y operación
 
-- [ ] **Enriquecer editorialmente las landings de país** (`/espana`, `/portugal`, etc.)
-  con información detallada sobre residencia fiscal, criterios, obligaciones y
-  particularidades de cada país. La superficie técnica reutilizable, las URLs canónicas
-  y las redirecciones ya están cerradas arriba; queda contenido diferencial y verificable.
+- **Enriquecer editorialmente las landings de país** → fusionada el 12 de agosto
+  de 2026 en la **fase B** del plan de arquitectura internacional, más abajo, que
+  es la única de las entradas que describía este trabajo con gates. Era el mismo
+  contenido diferencial y verificable contado desde tres sitios distintos (aquí,
+  en los nichos SEO adyacentes y en la fase B).
 - [x] Configurar Sentry para la API y el frontend y documentar sus variables de
   entorno (`c0fb582`), reflejado en `README.md` y `CLAUDE.md` el 1 de agosto de
   2026 con la tabla de variables. El límite que describía esta entrada —«la
@@ -1127,9 +983,14 @@ sola URL para poder encontrarse.
     fallos transitorios.
   - Si se habilitan eventos de entrega, verificar la firma del webhook y procesar
     de forma idempotente al menos `delivered`, `bounced` y `complained`.
-  - Añadir pruebas con mocks, documentar únicamente los nombres de variables en
-    `.env.example` y ejecutar un único smoke real explícito después de verificar
-    dominio y destinatario.
+  - Añadir pruebas con mocks y ejecutar un único smoke real explícito después de
+    verificar dominio y destinatario.
+    - [x] Los nombres de variables ya están declarados en `.env.example`
+      (12 de agosto de 2026), solo los nombres y sin un solo valor, con la nota
+      de que no hay flujo implementado todavía. Se añadieron en el mismo cambio
+      `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`, que ya se usaban a mano
+      —son las que necesita la revisión del WAF, más abajo— y no estaban
+      declaradas en ningún fichero versionado.
 - [x] Configurar PostHog para el frontend y documentar sus variables de entorno.
   Estaba implementado (`PostHogAnalytics.tsx`, montado una vez en `AppLayout`, con
   su suite) y sin documentar; documentado el 1 de agosto de 2026 en
@@ -1263,17 +1124,27 @@ orden recomendado:
   404 real de toda ruta `internal_preview` en producción, allowlist sin fugas.
   Este gate no concede publicación.
 - [ ] **Decisión de producto: ficha documental sin análisis** (§6.3 del
-  diseño; decidir antes de arrancar la fase B, orientativo semana del
-  2026-08-10). Solo metadatos primarios y citas literales verificadas, sin
+  diseño). Solo metadatos primarios y citas literales verificadas, sin
   resultados ni resúmenes del agente. Es la única vía de contenido
   jurisprudencial indexable mientras no haya revisor; exige su propia decisión
   jurídica de alcance, pero no revisión caso a caso.
-- [ ] **Fase B — piloto de 3 bilaterales** (tras el Gate A; orientativo desde
-  la semana del 2026-08-10). `/espana/convenios`, tres bilaterales que cubran
+  - **Fecha orientativa vencida** (era la semana del 2026-08-10; sin decidir el
+    12 de agosto). No se refecha a ciegas: es una decisión del propietario y no
+    depende de trabajo previo. Mientras siga abierta, el renderer jurisprudencial
+    está construido y verificado (Gate C1) publicando **cero** fichas —
+    `LOTES_PUBLICADOS = {}` en `src/export_public_judgments.py:45`— y la fase B
+    no puede arrancar.
+- [ ] **Fase B — piloto de 3 bilaterales** (tras el Gate A y tras la decisión
+  §6.3; su fecha orientativa, la semana del 2026-08-10, venció sin arrancar).
+  `/espana/convenios`, tres bilaterales que cubran
   convenio único, sucesión (Japón/Rumanía/China) y fuente del diario; sus
   páginas de país se convierten en hubs en el mismo lote. Ampliar por lotes
   solo si el Gate B pasa. Los componentes se implementan desde el inicio por
   jurisdicción, aunque `es` sea la única instancia con datos.
+  - Absorbe **el enriquecimiento editorial de las landings de país**, que estaba
+    duplicado en «SEO y operación», y es el vehículo de los puntos 1 y 4 de la
+    secuencia de nichos SEO adyacentes. Los tres describían el mismo trabajo;
+    esta entrada es la única de las tres con gates.
 - [ ] **Checkpoint GSC de las fichas de CDI** (2026-09-01). Si las 97 aparecen
   de forma masiva como «Crawled – currently not indexed», activar la
   diferenciación prevista; hasta entonces no podar el sitemap (§12.1 del
