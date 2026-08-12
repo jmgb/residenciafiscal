@@ -18,9 +18,9 @@ classifiers = [
 
 dependencies = [
     # LLM providers
-    "openai>=2.51.0,<3.0.0",
+    "openai>=2.54.0,<3.0.0",
     "groq>=0.11.0,<2.0.0",
-    "google-genai>=2.16.0,<3.0.0",
+    "google-genai>=2.17.0,<3.0.0",
     # PDF / datos / exports
     "pypdf>=5.0.0,<7.0.0",
     # Runtime
