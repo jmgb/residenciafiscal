@@ -8,6 +8,22 @@ mediante pull request. Está activo para los tres runtimes:
 - `residencia-fiscal-frontend`: SPA React.
 - `residencia-fiscal-chat`: Netlify Function del chat.
 
+## Nombres que no son equivalentes
+
+Tres identificadores parecidos describen piezas distintas y no se deben usar
+como sinónimos:
+
+| Identificador | Sistema | Qué representa |
+|---|---|---|
+| `residencia-fiscal-chat` | Sentry/Autofix | La Netlify Function productiva |
+| `residenciafiscal-chat` | Docker | El contenedor FastAPI cerrado de Alfredo |
+| `residencia-fiscal-chat-backend` | Sentry/Autofix | El futuro proyecto del FastAPI de Alfredo; todavía no existe en Sentry |
+
+La presencia del contenedor no mueve ni renombra el proyecto de la Function.
+Cuando se active el FastAPI, su proyecto nuevo se asignará a Autofix Alfredo;
+los tres proyectos actuales permanecen en Autofix Finanzas mientras sus
+runtimes sigan fuera de Alfredo.
+
 ## Flujo
 
 ```text
@@ -39,6 +55,16 @@ Los eventos resueltos, no productivos, no accionables, duplicados o sin contexto
 técnico se archivan sin lanzar un agente. Los arreglos nunca se escriben en un
 checkout de despliegue ni despliegan directamente; se preparan en un worktree
 temporal y el despliegue sigue dependiendo del flujo normal del repositorio.
+
+### Límite actual del chat
+
+El enrutado de `residencia-fiscal-chat` funciona, pero sus eventos sintéticos se
+minimizan a propósito y no llevan stacktrace ni `culprit`. El filtro actual del
+control plane los archiva como `skip_missing_stacktrace_and_culprit`, por lo que
+«activo» significa hoy que Autofix recibe y clasifica la incidencia, no que
+llegue a invocar al agente. El backlog exige hacer accionable el contrato
+estructurado seguro sin enviar pregunta, respuesta, mensaje bruto del proveedor,
+body, cabeceras ni cookies.
 
 ## Guardrails del repositorio
 

@@ -28,6 +28,12 @@ tráfico. Confundir ambas cosas es el error más fácil al retomar esto:
 | Runtime FastAPI del chat | Host de operaciones | **Instalado y cerrado**: sin credenciales, sin persistencia, solo loopback |
 | Fachada firmada Edge → FastAPI | `frontend/netlify/prototypes/` | Prototipo, no desplegada |
 
+**Nomenclatura operativa:** `residencia-fiscal-chat` es el proyecto Sentry de
+la Function de Netlify; `residenciafiscal-chat` es el nombre del contenedor
+FastAPI cerrado; y `residencia-fiscal-chat-backend` será el proyecto Sentry y
+Autofix de ese FastAPI cuando se active. Que el contenedor exista en Alfredo no
+convierte el proyecto Sentry de Netlify en un runtime de Alfredo.
+
 ## 2. Lo que quedó corriendo en el host
 
 Hay un contenedor **activo pero cerrado** en la máquina de operaciones. No

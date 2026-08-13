@@ -839,6 +839,18 @@ sola URL para poder encontrarse.
     - **Dos reglas de alerta, no una.** Con el tráfico actual una alerta por tasa
       no saltaría nunca, así que además de «5 fallos en 1 h» hay otra que avisa
       del primer fallo nuevo y de las regresiones.
+    - [ ] **Hacer accionables para Autofix los eventos saneados de
+      `residencia-fiscal-chat` sin debilitar su privacidad.** Reproducir primero
+      el descarte real `skip_missing_stacktrace_and_culprit` con un test rojo en
+      `autofix-control-plane`; admitir como contexto técnico alternativo solo el
+      contrato versionado del chat (`failure_code`, etapa o estrategia,
+      `error_name`, `error_context` saneado y release); mantener el requisito de
+      stacktrace/`culprit` para los demás proyectos; y cubrir con tests negativos
+      que nunca pasan pregunta, respuesta, mensaje bruto del proveedor, body,
+      cabeceras ni cookies. Cerrar con una entrega sintética extremo a extremo,
+      sin datos de usuario ni llamada pagada, que llegue a invocar al agente o
+      quede explícitamente en revisión humana por un motivo distinto de falta de
+      contexto.
     - El gasto sale de la RPC `chat_daily_stats`, que devuelve solo recuentos,
       sumas y percentiles: el script no puede leer contenido aunque quiera.
     - [x] **Configurado en producción** (2 de agosto de 2026).
@@ -1203,8 +1215,19 @@ solo en loopback, y `POST /chat` responde `503`. No atiende usuarios ni gasta.
   tres RPC de ciclo de vida y tests de privilegios negativos. Bloquea abrir la
   persistencia y, con ella, el contenedor del host.
 - [ ] **Dar de alta el monitor externo del health** (alta manual: UptimeRobot
-  rechaza escrituras por API en este plan) y el **DSN de Sentry** del cuarto
-  runtime, hoy declarado en `.autofix.yml` pero sin recibir eventos.
+  rechaza escrituras por API en este plan).
+- [ ] **Dar de alta Sentry y Autofix Alfredo para el cuarto runtime
+  `residencia-fiscal-chat-backend` al activarlo.** Antes del DSN o del canary:
+  crear en Alfredo un workspace de Autofix dedicado y separado del checkout
+  operativo `~/residenciafiscal`; crear el proyecto de Sentry y su regla con la
+  integración `Autofix Alfredo`; añadir al registro compartido del control
+  plane un override explícito `host: alfredo` que resuelva al repo y workspace
+  correctos; desplegar y verificar el registro en ambos hosts; y probar una
+  entrega extremo a extremo (`202` en Alfredo, job procesado allí y descarte
+  `skip_wrong_host` esperado en Finanzas). Los tres proyectos actuales
+  (`backend`, `frontend` y `chat`) permanecen en Autofix Finanzas mientras sus
+  runtimes sigan fuera de Alfredo; no moverlos por la mera existencia del
+  contenedor cerrado.
 - [ ] **Actualizar `/privacidad`** en el mismo cambio que enrute al primer
   usuario real. Es prerrequisito bloqueante del canary, no limpieza posterior.
 - [ ] **Decidir si se retira.** Si la migración se abandona, el paso único es
