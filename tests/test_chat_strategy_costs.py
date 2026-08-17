@@ -5,7 +5,7 @@ from decimal import Decimal
 from pathlib import Path
 
 
-def test_coste_gemini_36_flash_usa_su_tarifa_versionada() -> None:
+def test_coste_gemini_37_flash_usa_su_tarifa_versionada() -> None:
     from chat_strategy_costs import PRICING_VERSION, GeminiUsage, calculate_gemini_file_search_cost
 
     cost = calculate_gemini_file_search_cost(
@@ -15,12 +15,12 @@ def test_coste_gemini_36_flash_usa_su_tarifa_versionada() -> None:
             output_tokens=631,
             usage_complete=True,
         ),
-        model="gemini-3.6-flash",
+        model="gemini-3.7-flash",
     )
 
     assert cost.currency == "USD"
-    assert cost.amount_usd == Decimal("0.017364")
-    assert cost.cost_microusd == 17_364
+    assert cost.amount_usd == Decimal("0.008682")
+    assert cost.cost_microusd == 8_682
     assert cost.measurement == "ACTUAL"
     assert cost.pricing_version == PRICING_VERSION
     assert cost.input_tokens == 3_321

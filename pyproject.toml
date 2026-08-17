@@ -39,7 +39,7 @@ dependencies = [
     # es el que el comparador publica como modelo de la respuesta; la 0.9.0 hace
     # que un `response_schema` llegue a los proveedores que no lo imponen, y la
     # 0.10.x deja el enrutado de fallback gobernado solo por el catálogo.
-    "neutral-llm-gateway[gemini,groq,openai,openrouter]==0.13.0",
+    "neutral-llm-gateway[gemini,groq,openai,openrouter]==0.14.0",
 ]
 
 # Va después de `dependencies`: en TOML todo lo que sigue a una cabecera de tabla

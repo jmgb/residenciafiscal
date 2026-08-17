@@ -116,7 +116,7 @@ del runtime Python es:
 
 - primario: `gpt-5.6-luna`;
 - esfuerzo: `high`;
-- fallback cross-provider explícito: `gemini-3.6-flash`;
+- fallback cross-provider explícito: `gemini-3.7-flash`;
 - ejecución y atribución de todos los intentos: `neutral-llm-gateway`.
 
 `CHAT_MODEL` y `CHAT_FALLBACK_MODELS` permiten cambiar la política sin tocar el

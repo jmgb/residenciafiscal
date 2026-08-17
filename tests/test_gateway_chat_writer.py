@@ -180,18 +180,18 @@ class TestPolicies:
         await _writer(adapter).write(
             _request(
                 model="gpt-5.6-luna",
-                fallback_models=("gemini-3.6-flash",),
+                fallback_models=("gemini-3.7-flash",),
             )
         )
 
-        assert adapter.requests[0].fallback_policy.models == ("gemini-3.6-flash",)
+        assert adapter.requests[0].fallback_policy.models == ("gemini-3.7-flash",)
 
     async def test_the_requested_model_is_pinned(self) -> None:
         adapter = FakeProviderAdapter()
 
-        await _writer(adapter).write(_request(model="gemini-3.6-flash"))
+        await _writer(adapter).write(_request(model="gemini-3.7-flash"))
 
-        assert adapter.requests[0].model == "gemini-3.6-flash"
+        assert adapter.requests[0].model == "gemini-3.7-flash"
 
     async def test_a_retry_is_bounded_and_visible(self) -> None:
         adapter = FakeProviderAdapter()
@@ -291,14 +291,14 @@ class TestFailures:
         result = await _writer(adapter).write(
             _request(
                 model="gpt-5.6-luna",
-                fallback_models=("gemini-3.6-flash",),
+                fallback_models=("gemini-3.7-flash",),
             )
         )
 
-        assert result.model_used == "gemini-3.6-flash"
+        assert result.model_used == "gemini-3.7-flash"
         assert adapter.models == [
             "gpt-5.6-luna",
-            "gemini-3.6-flash",
+            "gemini-3.7-flash",
         ]
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:

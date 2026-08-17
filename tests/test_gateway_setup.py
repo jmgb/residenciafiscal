@@ -17,7 +17,7 @@ def test_gateway_dependency_esta_fijada_a_una_version_exacta() -> None:
         if dependencia.startswith("neutral-llm-gateway")
     ]
 
-    assert dependencias == ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.13.0"]
+    assert dependencias == ["neutral-llm-gateway[gemini,groq,openai,openrouter]==0.14.0"]
 
 
 def _clear_credentials(monkeypatch: pytest.MonkeyPatch) -> None:

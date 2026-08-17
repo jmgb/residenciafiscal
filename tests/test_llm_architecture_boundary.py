@@ -19,7 +19,7 @@ def test_la_politica_del_modelo_pertenece_al_chat() -> None:
     assert CHAT_MODEL == "gpt-5.6-luna"
     assert CHAT_REASONING_EFFORT == "high"
     assert CHAT_REASONING_EFFORT in CHAT_SUPPORTED_REASONING_EFFORTS
-    assert CHAT_FALLBACK_MODELS == ("gemini-3.6-flash",)
+    assert CHAT_FALLBACK_MODELS == ("gemini-3.7-flash",)
     fallback_info = lookup_model(CHAT_FALLBACK_MODELS[0])
     primary_info = lookup_model(CHAT_MODEL)
     assert fallback_info is not None

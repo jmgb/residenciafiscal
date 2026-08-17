@@ -128,7 +128,7 @@ tokens de los documentos recuperados.
 ## Decisión
 
 No se ejecuta todavía el banco completo de 40 ni se promociona a
-`gemini-3.6-flash`.
+`gemini-3.7-flash`.
 
 Antes deben completarse estos gates:
 

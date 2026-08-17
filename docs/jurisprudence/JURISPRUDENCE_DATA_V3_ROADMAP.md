@@ -458,7 +458,7 @@ de desarrollo antes de considerar el banco completo:
   PDF originales y sus metadatos deterministas;
 - respuesta A con recuperación estructurada y redactor LLM verificable;
 - respuesta B con File Search, inicialmente con `gemini-3.5-flash-lite`, dejando
-  `gemini-3.6-flash` para una promoción manual posterior;
+  `gemini-3.7-flash` para una promoción manual posterior;
 - verificación local de cada extracto contra página, hash y verbatim;
 - coste marginal visible en USD, calculado en microdólares, y logs JSONL sin
   pregunta ni respuesta;
@@ -606,7 +606,7 @@ El orden vigente es:
    segunda revisión ciega. Esta ejecución compara stacks completos; no atribuir
    las diferencias exclusivamente a la recuperación.
 6. Ejecutar las 40 como evaluación conversacional A/B solo si pasan los gates.
-7. Probar `gemini-3.6-flash` únicamente si persiste un problema atribuible al
+7. Probar `gemini-3.7-flash` únicamente si persiste un problema atribuible al
    redactor.
 8. Desplegar el backend y transporte comparativo ya implementados solo después
    de resolver cuotas y presupuesto; mantener `stub` como modo productivo hasta
