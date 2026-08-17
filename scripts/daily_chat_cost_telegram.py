@@ -17,6 +17,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 import urllib.error
 import urllib.request
 from decimal import ROUND_HALF_UP, Decimal
@@ -27,6 +28,9 @@ from lib_telegram import env_value, load_env, send_telegram  # noqa: E402
 
 HEADER_PREFIX = "[RESIDENCIAFISCAL]"
 RPC_TIMEOUT_SECONDS = 30
+RPC_RETRY_DELAYS_SECONDS = (1, 2)
+RPC_MAX_ATTEMPTS = len(RPC_RETRY_DELAYS_SECONDS) + 1
+TRANSIENT_RPC_STATUS_CODES = frozenset({408, 429, 500, 502, 503, 504})
 SERVICE_NAME = "residenciafiscal-daily-chat-cost-telegram.service"
 PROJECT_DIR = pathlib.Path(__file__).resolve().parents[1]
 DEFAULT_STATE_PATH = PROJECT_DIR / "reports" / "daily_chat_cost_telegram" / "last_day.txt"
@@ -64,11 +68,22 @@ def fetch_stats(day: dt.date, env: dict[str, str]) -> dict:
             "Authorization": f"Bearer {key}",
         },
     )
-    try:
-        with urllib.request.urlopen(request, timeout=RPC_TIMEOUT_SECONDS) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as error:  # pragma: no cover - red
-        raise RuntimeError(f"Supabase devolvió {error.code} al pedir chat_daily_stats") from None
+    for attempt in range(RPC_MAX_ATTEMPTS):
+        try:
+            with urllib.request.urlopen(request, timeout=RPC_TIMEOUT_SECONDS) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except urllib.error.HTTPError as error:  # pragma: no cover - red
+            if error.code not in TRANSIENT_RPC_STATUS_CODES or attempt == RPC_MAX_ATTEMPTS - 1:
+                raise RuntimeError(
+                    f"Supabase devolvió {error.code} al pedir chat_daily_stats"
+                ) from None
+        except urllib.error.URLError as error:
+            if not isinstance(error.reason, OSError) or attempt == RPC_MAX_ATTEMPTS - 1:
+                raise
+
+        time.sleep(RPC_RETRY_DELAYS_SECONDS[attempt])
+
+    raise AssertionError("RPC retry loop terminó sin resultado")
 
 
 def format_usd(microusd: int) -> str:

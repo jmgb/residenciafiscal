@@ -9,9 +9,12 @@ from __future__ import annotations
 import datetime as dt
 import importlib.util
 import pathlib
+import socket
 import tempfile
 import types
 import unittest
+import urllib.error
+from email.message import Message
 from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -54,6 +57,8 @@ STATS = {
 
 
 class ResumenDiarioTest(unittest.TestCase):
+    RPC_ENV = {"SUPABASE_URL": "https://supabase.test", "SUPABASE_SECRET_KEY": "secret"}
+
     def test_resume_consultas_coste_y_estrategias(self) -> None:
         mensaje = MODULE.build_message({**STATS, "by_failure_code": {}}, None)
 
@@ -102,6 +107,61 @@ class ResumenDiarioTest(unittest.TestCase):
 
     def test_latencia_ausente_no_se_inventa(self) -> None:
         self.assertEqual(MODULE.format_seconds(None), "—")
+
+    def test_fetch_stats_reintenta_un_fallo_dns_con_backoff(self) -> None:
+        respuesta = mock.MagicMock()
+        respuesta.__enter__.return_value.read.return_value = b'{"day":"2026-08-01"}'
+        fallo_dns = urllib.error.URLError(
+            socket.gaierror(-3, "Temporary failure in name resolution")
+        )
+
+        with (
+            mock.patch.object(
+                MODULE.urllib.request,
+                "urlopen",
+                side_effect=[fallo_dns, fallo_dns, respuesta],
+            ) as urlopen,
+            mock.patch("time.sleep") as sleep,
+        ):
+            resultado = MODULE.fetch_stats(dt.date(2026, 8, 1), self.RPC_ENV)
+
+        self.assertEqual(resultado, {"day": "2026-08-01"})
+        self.assertEqual(urlopen.call_count, 3)
+        self.assertEqual(sleep.call_args_list, [mock.call(1), mock.call(2)])
+
+    def test_fetch_stats_reintenta_http_transitorio(self) -> None:
+        respuesta = mock.MagicMock()
+        respuesta.__enter__.return_value.read.return_value = b'{"day":"2026-08-01"}'
+        fallo_rpc = urllib.error.HTTPError(
+            "https://supabase.test", 503, "unavailable", Message(), None
+        )
+
+        with (
+            mock.patch.object(
+                MODULE.urllib.request, "urlopen", side_effect=[fallo_rpc, respuesta]
+            ) as urlopen,
+            mock.patch("time.sleep") as sleep,
+        ):
+            resultado = MODULE.fetch_stats(dt.date(2026, 8, 1), self.RPC_ENV)
+
+        self.assertEqual(resultado, {"day": "2026-08-01"})
+        self.assertEqual(urlopen.call_count, 2)
+        sleep.assert_called_once_with(1)
+
+    def test_fetch_stats_no_reintenta_http_permanente(self) -> None:
+        fallo_rpc = urllib.error.HTTPError(
+            "https://supabase.test", 400, "bad request", Message(), None
+        )
+
+        with (
+            mock.patch.object(MODULE.urllib.request, "urlopen", side_effect=fallo_rpc) as urlopen,
+            mock.patch("time.sleep") as sleep,
+        ):
+            with self.assertRaisesRegex(RuntimeError, "Supabase devolvió 400"):
+                MODULE.fetch_stats(dt.date(2026, 8, 1), self.RPC_ENV)
+
+        urlopen.assert_called_once()
+        sleep.assert_not_called()
 
 
 class RecuperacionDeDiasTest(unittest.TestCase):
@@ -407,7 +467,11 @@ class RunnerDelTimerTest(unittest.TestCase):
         RPC y su timeout de Telegram, más el aviso de días omitidos.
         """
         lib_telegram = load_script("lib_telegram")
-        por_dia = MODULE.RPC_TIMEOUT_SECONDS + lib_telegram.TELEGRAM_TIMEOUT_SECONDS
+        por_dia = (
+            MODULE.RPC_TIMEOUT_SECONDS * MODULE.RPC_MAX_ATTEMPTS
+            + sum(MODULE.RPC_RETRY_DELAYS_SECONDS)
+            + lib_telegram.TELEGRAM_TIMEOUT_SECONDS
+        )
         peor_caso = (MODULE.MAX_CATCH_UP_DAYS + 1) * por_dia
 
         declarado = next(

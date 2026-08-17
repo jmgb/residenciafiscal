@@ -176,6 +176,12 @@ un día tranquilo. El runner captura el fallo y avisa por Telegram con
 entorno, el aviso tiene que salir igual. Es el mismo patrón del informe semanal
 de tráfico.
 
+Antes de declarar fallida la consulta, `fetch_stats` hace tres intentos contra
+la RPC `chat_daily_stats`: reintenta errores DNS/transporte y respuestas HTTP
+408, 429 y 5xx, con esperas de 1 y 2 segundos. Un HTTP permanente falla sin
+reintentar. El `TimeoutStartSec=1000` de la unit cubre esos reintentos durante
+el `--catch-up` de hasta siete días.
+
 No se usa `OnFailure=agent-unit-failure-notify@`, la plantilla que sí emplean
 otras units de la máquina: apunta al checkout y al `.env` de *presupuestor*, y
 acoplaría la alerta de este proyecto a otro repositorio.
