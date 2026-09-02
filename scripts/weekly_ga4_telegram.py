@@ -23,6 +23,11 @@ import pathlib
 import sys
 import tempfile
 import urllib.request
+
+try:
+    import telegram_activity  # registro best-effort para el triage matinal
+except Exception:  # sin registro no se bloquea el aviso
+    telegram_activity = None
 from typing import IO, Any, NamedTuple
 
 PROJECT_DIR = pathlib.Path(__file__).resolve().parents[1]
@@ -726,6 +731,8 @@ def send_telegram(message: str, env: dict[str, str]) -> None:
     payload = build_telegram_payload(chat_id, message)
     if thread_id:
         payload["message_thread_id"] = thread_id
+    if telegram_activity:
+        telegram_activity.registrar(message, referencia="weekly_ga4_telegram")
     request = urllib.request.Request(
         f"https://api.telegram.org/bot{token}/sendMessage",
         data=json.dumps(payload).encode(),

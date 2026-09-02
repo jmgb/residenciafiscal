@@ -60,6 +60,14 @@ ${DETAILS_BLOCK}
 EOF
 )"
 
+# Registro best-effort para el triage matinal (autofix-control-plane).
+for _tal in /home/ubuntu/autofix-control-plane/tools/telegram-activity-log.sh \
+    "$HOME/ai_projects/autofix-control-plane/tools/telegram-activity-log.sh"; do
+    [ -f "$_tal" ] && . "$_tal" && break
+done
+type telegram_activity_log > /dev/null 2>&1 \
+    && telegram_activity_log "residenciafiscal" "error" "backup_failure" "$MESSAGE"
+
 curl -sS --max-time 8 -X POST \
     "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
     --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \

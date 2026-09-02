@@ -15,6 +15,11 @@ import os
 import pathlib
 import urllib.request
 
+try:
+    import telegram_activity  # registro best-effort para el triage matinal
+except Exception:  # sin registro no se bloquea el aviso
+    telegram_activity = None
+
 PROJECT_DIR = pathlib.Path(__file__).resolve().parents[1]
 ENV_PATHS = [PROJECT_DIR / ".env"]
 TELEGRAM_TIMEOUT_SECONDS = 30
@@ -63,6 +68,8 @@ def send_telegram(message: str, env: dict[str, str]) -> None:
     }
     if thread_id:
         payload["message_thread_id"] = thread_id
+    if telegram_activity:
+        telegram_activity.registrar(message, referencia="lib_telegram")
     request = urllib.request.Request(
         f"https://api.telegram.org/bot{token}/sendMessage",
         data=json.dumps(payload).encode(),
