@@ -18,7 +18,7 @@ classifiers = [
 
 dependencies = [
     # LLM providers
-    "openai>=2.54.0,<3.0.0",
+    "openai>=2.54.0,<4.0.0",
     "groq>=1.7.0,<2.0.0",
     "google-genai>=2.20.0,<3.0.0",
     # PDF / datos / exports
@@ -27,7 +27,7 @@ dependencies = [
     # con la instalada. Todo lo versionado hoy se extrajo con 6.14.2, así
     # que cualquier otra versión invalida los artefactos. Subirla exige
     # regenerarlos y revisar los bytes resultantes.
-    "pypdf==6.14.2",
+    "pypdf==6.16.2",
     # Runtime
     "aiohttp>=3.14.3,<4.0.0",
     "pydantic>=2.13.4,<3.0.0",
