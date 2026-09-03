@@ -18,7 +18,7 @@ import urllib.request
 try:
     import telegram_activity  # registro best-effort para el triage matinal
 except Exception:  # sin registro no se bloquea el aviso
-    telegram_activity = None
+    telegram_activity = None  # type: ignore[assignment]
 
 PROJECT_DIR = pathlib.Path(__file__).resolve().parents[1]
 ENV_PATHS = [PROJECT_DIR / ".env"]

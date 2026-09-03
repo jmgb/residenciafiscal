@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 import os
 import socket
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 _WRITER = "residenciafiscal"
@@ -47,7 +47,7 @@ def registrar(texto: str, referencia: str = "", nivel: str | None = None) -> Non
         recorte = texto.encode("utf-8")[:1000].decode("utf-8", errors="ignore")
         linea = json.dumps(
             {
-                "ts": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "ts": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "repo": _REPO,
                 "host": os.environ.get("TELEGRAM_ACTIVITY_HOST")
                 or socket.gethostname().split(".")[0],
