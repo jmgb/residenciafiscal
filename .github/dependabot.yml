@@ -23,6 +23,14 @@ updates:
         dependency-type: "development"
       python-runtime:
         dependency-type: "production"
+    ignore:
+      # `pypdf` está pineado en `==6.14.2` a propósito: los artefactos verbatim
+      # y los casos de jurisprudencia guardan `extractor: pypdf/6.14.2` y
+      # `verbatim_validation.py` lo compara con la versión instalada, así que
+      # cualquier otra invalida el corpus hasta regenerarlo y revisar los bytes.
+      # Sin esto, el bump vuelve cada lunes dentro del grupo `python-runtime` y
+      # arrastra al resto del grupo a un PR que no se puede mergear.
+      - dependency-name: "pypdf"
 
   - package-ecosystem: "npm"
     directory: "/frontend"
