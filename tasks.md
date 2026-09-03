@@ -33,5 +33,8 @@ Prioridades: **P0** bloquea producción · **P1** evita regresión relevante · 
   porque un cambio en la extracción de texto altera el contenido, no solo la etiqueta. Decidir
   entonces si la validación debe seguir siendo por igualdad exacta o basta con registrar la versión
   usada sin exigir coincidencia.
-  **Cierre:** `pypdf` sin pin exacto en `pyproject.toml` y `make test` en verde con los artefactos
-  regenerados.
+  **2026-09-03:** dependabot ignora ahora `pypdf` en `.github/dependabot.yml`. Reabría el bump cada
+  lunes dentro del grupo `python-runtime` y arrastraba al resto del grupo —openai, pydantic— a un PR
+  que no se podía mergear, así que el pin se sostenía a base de cerrar PRs a mano.
+  **Cierre:** `pypdf` sin pin exacto en `pyproject.toml`, sin la entrada `ignore` de dependabot, y
+  `make test` en verde con los artefactos regenerados.
