@@ -29,7 +29,7 @@ from jurisprudence_case_catalogs import JurisprudenceCaseModel
 DEFAULT_FILE_SEARCH_MODEL = "gemini-3.5-flash-lite"
 SUPPORTED_FILE_SEARCH_MODELS = (
     "gemini-3.5-flash-lite",
-    "gemini-3.7-flash",
+    "gemini-3.8-flash",
 )
 PRICING_VERSION = CATALOG_VERSION
 

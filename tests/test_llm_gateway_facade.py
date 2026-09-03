@@ -31,7 +31,7 @@ async def test_gpt_request_traduce_el_contrato_y_devuelve_el_resultado_del_gatew
         gateway=gateway,
         temperature=0,
         reasoning_effort="high",
-        fallback_models=("gemini-3.7-flash",),
+        fallback_models=("gemini-3.8-flash",),
         request_id="req-facade",
         source="test-facade",
     )
@@ -42,7 +42,7 @@ async def test_gpt_request_traduce_el_contrato_y_devuelve_el_resultado_del_gatew
     assert gateway.request.messages[0].content == "¿Qué valor se dio al certificado?"
     assert gateway.request.temperature == 0
     assert gateway.request.reasoning_effort == "high"
-    assert gateway.request.fallback_policy.models == ("gemini-3.7-flash",)
+    assert gateway.request.fallback_policy.models == ("gemini-3.8-flash",)
     assert gateway.request.request_id == "req-facade"
     assert gateway.request.source == "test-facade"
     assert gateway.request.response_format is ResponseFormat.TEXT

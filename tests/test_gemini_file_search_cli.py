@@ -45,7 +45,7 @@ def test_modelo_inicial_y_promocion_manual_estan_en_la_allowlist() -> None:
     assert DEFAULT_FILE_SEARCH_MODEL == "gemini-3.5-flash-lite"
     assert SUPPORTED_FILE_SEARCH_MODELS == (
         "gemini-3.5-flash-lite",
-        "gemini-3.7-flash",
+        "gemini-3.8-flash",
     )
 
 
@@ -124,11 +124,11 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
             "--output",
             str(tmp_path / "result.json"),
             "--model",
-            "gemini-3.7-flash",
+            "gemini-3.8-flash",
             "--chat-model",
             "gpt-5.6-luna",
             "--chat-fallback-model",
-            "gemini-3.7-flash",
+            "gemini-3.8-flash",
             "--confirm-paid",
         ]
     )
@@ -144,9 +144,9 @@ def test_compare_da_a_cada_estrategia_el_modelo_que_le_corresponde(
     # que B no puede correr sobre otro proveedor; atar A a esa restricción era
     # lo que dejaba la política del chat sin llegar a ninguna llamada.
     assert captured["file_search"]._gateway is gateway
-    assert captured["file_search"]._model == "gemini-3.7-flash"
+    assert captured["file_search"]._model == "gemini-3.8-flash"
 
     assert captured["structured"]._model == "gpt-5.6-luna"
     assert captured["structured"]._reasoning_effort == CHAT_REASONING_EFFORT
-    assert captured["structured"]._fallback_models == ("gemini-3.7-flash",)
+    assert captured["structured"]._fallback_models == ("gemini-3.8-flash",)
     assert captured["structured"]._model != captured["file_search"]._model

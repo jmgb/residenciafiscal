@@ -35,7 +35,7 @@ aceptarse en junio de 2026. El proyecto fija la serie 2.x y tiene un test de
 regresión que impide volver a instalar una versión 1.x.
 
 El modelo inicial de pruebas es `gemini-3.5-flash-lite`, elegido para medir el
-flujo completo con menor coste. `gemini-3.7-flash` está en la allowlist, pero el
+flujo completo con menor coste. `gemini-3.8-flash` está en la allowlist, pero el
 cambio será manual y visible: no se usa un alias `latest` ni existe promoción
 automática. Después de revisar calidad, citas, latencia y coste de las primeras
 comparaciones se ejecutará explícitamente:
@@ -43,7 +43,7 @@ comparaciones se ejecutará explícitamente:
 ```bash
 make compare-chat-strategies \
   CONFIRM_PAID=1 \
-  FILE_SEARCH_MODEL=gemini-3.7-flash \
+  FILE_SEARCH_MODEL=gemini-3.8-flash \
   CHAT_QUESTION='...'
 ```
 
@@ -84,7 +84,7 @@ El catálogo F0 aplica las tarifas estándar vigentes y las identifica con
 | Modelo | Entrada y documentos recuperados | Salida, incluido razonamiento |
 |---|---:|---:|
 | `gemini-3.5-flash-lite` | USD 0,30 / 1 M tokens | USD 2,50 / 1 M tokens |
-| `gemini-3.7-flash` | USD 0,75 / 1 M tokens | USD 3,75 / 1 M tokens |
+| `gemini-3.8-flash` | USD 0,75 / 1 M tokens | USD 3,75 / 1 M tokens |
 
 Interactions devuelve el total y el desglose de uso. El adaptador admite tanto
 el contrato histórico `input_tokens_by_modality=document` como el contrato

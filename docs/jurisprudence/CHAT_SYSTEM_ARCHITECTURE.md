@@ -442,7 +442,7 @@ Contrato congelado:
    recuperador.
 10. Si pasan los gates, ejecutar el banco de 40 como evaluación conversacional
    A/B.
-11. Probar `gemini-3.7-flash` solo si queda un problema atribuible a redacción,
+11. Probar `gemini-3.8-flash` solo si queda un problema atribuible a redacción,
    no a datos, grounding o evaluación.
 12. Resolver cuotas y presupuesto, desplegar la V1 Netlify-only en un entorno
    de integración y completar la revisión del corpus antes de producción.

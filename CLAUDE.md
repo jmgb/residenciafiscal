@@ -98,7 +98,7 @@ El prototipo Python conservado fuera del despliegue V1 sí usa la fachada
 funcional `gpt_request` de `src/llm_gateway_facade.py`: mantiene el contrato de
 entrada y traduce a **`neutral-llm-gateway`**, fijado a una referencia
 inmutable. `src/chat_model_policy.py` declara `gpt-5.6-luna` + `high` por
-defecto y `gemini-3.7-flash` como fallback cross-provider explícito; el gateway registra el
+defecto y `gemini-3.8-flash` como fallback cross-provider explícito; el gateway registra el
 modelo efectivo, uso, alertas y coste. Los límites y tests de ambos composition
 roots están en
 [`docs/development/LLM_GATEWAY.md`](docs/development/LLM_GATEWAY.md).

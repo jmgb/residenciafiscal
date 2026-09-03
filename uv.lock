@@ -1289,14 +1289,14 @@ wheels = [
 
 [[package]]
 name = "neutral-llm-gateway"
-version = "0.14.1"
+version = "0.15.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cb/97/9ac70fcc3ecf8d13baf004b0d22d644259bc586217db0195919670edf546/neutral_llm_gateway-0.14.1.tar.gz", hash = "sha256:2b9bb79604b81c1523b73ea36410e3b35e2536604bf82ce57f26c721dfebde99", size = 266639, upload-time = "2026-08-26T08:41:43.274Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/5d/d8cd14494613cbfd8e9dc26b488744d05cd965f85607195d8c8b3a25f569/neutral_llm_gateway-0.15.1.tar.gz", hash = "sha256:b4a840f7070eb12cfc9822be25b7a3640c3c498eac7b81a9796a4982a483710c", size = 282494, upload-time = "2026-09-03T11:07:59.19Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/44/e0/4d318d22ab0605212328d40aa29072b94d108170d637bc870dcb8bcb7953/neutral_llm_gateway-0.14.1-py3-none-any.whl", hash = "sha256:ca1a88e70349a4fa9156cb3377b3af5f675998c4c0c2c396c6cd1e3796f0bdd9", size = 99361, upload-time = "2026-08-26T08:41:41.606Z" },
+    { url = "https://files.pythonhosted.org/packages/8a/f8/2f8d7814e457e58ebc3aad428cfa63d33164338d64a1c229935ce771da4b/neutral_llm_gateway-0.15.1-py3-none-any.whl", hash = "sha256:ecb718ae81941eff4ab584b902c2941fe92fee26c840626cade1e4ebc19caf81", size = 99359, upload-time = "2026-09-03T11:07:57.748Z" },
 ]
 
 [package.optional-dependencies]
@@ -1784,7 +1784,7 @@ requires-dist = [
     { name = "fastapi", extras = ["standard"], specifier = ">=0.141.1,<1.0.0" },
     { name = "google-genai", specifier = ">=2.20.0,<3.0.0" },
     { name = "groq", specifier = ">=1.7.0,<2.0.0" },
-    { name = "neutral-llm-gateway", extras = ["gemini", "groq", "openai", "openrouter"], specifier = "==0.14.1" },
+    { name = "neutral-llm-gateway", extras = ["gemini", "groq", "openai", "openrouter"], specifier = "==0.15.1" },
     { name = "openai", specifier = ">=2.54.0,<3.0.0" },
     { name = "pydantic", specifier = ">=2.13.4,<3.0.0" },
     { name = "pypdf", specifier = "==6.14.2" },

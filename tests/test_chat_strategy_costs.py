@@ -15,7 +15,7 @@ def test_coste_gemini_37_flash_usa_su_tarifa_versionada() -> None:
             output_tokens=631,
             usage_complete=True,
         ),
-        model="gemini-3.7-flash",
+        model="gemini-3.8-flash",
     )
 
     assert cost.currency == "USD"

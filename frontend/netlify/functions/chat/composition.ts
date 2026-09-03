@@ -126,7 +126,7 @@ export const createProductionDependencies = (
   const enabledStrategyIds = resolveEnabledStrategyIds(environment);
   const structuredEnabled = enabledStrategyIds.includes('current_structured');
   const fileSearchEnabled = enabledStrategyIds.includes('gemini_file_search');
-  const validFileSearchModel = ['gemini-3.5-flash-lite', 'gemini-3.7-flash'].includes(
+  const validFileSearchModel = ['gemini-3.5-flash-lite', 'gemini-3.8-flash'].includes(
     fileSearchModel
   );
   const needsStructuredConfiguration = structuredEnabled || !masterEnabled;
