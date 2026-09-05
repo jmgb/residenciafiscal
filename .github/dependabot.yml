@@ -1,58 +1,79 @@
-# Actualizaciones automáticas de dependencias.
-#
-# Agrupadas para que no lleguen 15 PRs sueltos: el gate de CI corre entero en
-# cada PR, así que un PR agrupado por ecosistema cuesta lo mismo de revisar que
-# uno individual y da mucho menos ruido.
-#
-# `uv` es un ecosistema soportado nativamente por Dependabot y actualiza
-# pyproject.toml + uv.lock a la vez, que es justo lo que exige `uv sync --locked`
-# en ci.yml.
+# Dependency maintenance: reviewed pull requests, no automatic merge.
+# Policy: https://github.com/jmgb/autofix-control-plane/blob/main/docs/DEPENDENCY_MAINTENANCE.md
+# Security updates are enabled separately and do not wait for this schedule.
+# Keep pypdf pinned: updating it requires regenerating the verified corpus.
 version: 2
-
 updates:
-  - package-ecosystem: "uv"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: "chore(deps)"
-    groups:
-      python-dev:
-        dependency-type: "development"
-      python-runtime:
-        dependency-type: "production"
-    ignore:
-      # `pypdf` está pineado en `==6.14.2` a propósito: los artefactos verbatim
-      # y los casos de jurisprudencia guardan `extractor: pypdf/6.14.2` y
-      # `verbatim_validation.py` lo compara con la versión instalada, así que
-      # cualquier otra invalida el corpus hasta regenerarlo y revisar los bytes.
-      # Sin esto, el bump vuelve cada lunes dentro del grupo `python-runtime` y
-      # arrastra al resto del grupo a un PR que no se puede mergear.
-      - dependency-name: "pypdf"
-
-  - package-ecosystem: "npm"
-    directory: "/frontend"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: "chore(deps)"
-    groups:
-      frontend-dev:
-        dependency-type: "development"
-      frontend-runtime:
-        dependency-type: "production"
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    commit-message:
-      prefix: "ci(deps)"
-    groups:
-      actions:
-        patterns:
-          - "*"
+- package-ecosystem: uv
+  directory: /
+  schedule:
+    interval: weekly
+    time: 05:00
+    timezone: Europe/Madrid
+    day: monday
+  cooldown:
+    default-days: 7
+  open-pull-requests-limit: 2
+  allow:
+  - dependency-name: '*'
+    update-types:
+    - version-update:semver-minor
+    - version-update:semver-patch
+  groups:
+    minor-patch:
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  commit-message:
+    prefix: chore(deps)
+  ignore:
+  - dependency-name: pypdf
+- package-ecosystem: npm
+  directory: /frontend
+  schedule:
+    interval: weekly
+    time: 05:00
+    timezone: Europe/Madrid
+    day: monday
+  cooldown:
+    default-days: 7
+  open-pull-requests-limit: 2
+  allow:
+  - dependency-name: '*'
+    update-types:
+    - version-update:semver-minor
+    - version-update:semver-patch
+  groups:
+    minor-patch:
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: github-actions
+  directory: /
+  schedule:
+    interval: monthly
+    time: 05:00
+    timezone: Europe/Madrid
+  cooldown:
+    default-days: 7
+  open-pull-requests-limit: 2
+  allow:
+  - dependency-name: '*'
+    update-types:
+    - version-update:semver-minor
+    - version-update:semver-patch
+  groups:
+    minor-patch:
+      patterns:
+      - '*'
+      update-types:
+      - minor
+      - patch
+  commit-message:
+    prefix: chore(deps)
