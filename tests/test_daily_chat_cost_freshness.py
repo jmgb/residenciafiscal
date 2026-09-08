@@ -398,6 +398,31 @@ class UnitsTest(unittest.TestCase):
 
         self.assertGreater(hora(check), hora(digest))
 
+    def test_el_check_espera_al_digest_en_el_arranque(self) -> None:
+        """La hora del `OnCalendar` no separa los dos timers en la recuperación.
+
+        Con `Persistent=true` en ambos, un arranque tras un apagón los dispara a
+        la vez: sin orden explícito el guardián lee el estado mientras el digest
+        lo está poniendo al día y alerta de un desfase que ya no existe.
+        """
+        contenido = (
+            self.AGENTIC / "residenciafiscal-daily-chat-cost-freshness.service"
+        ).read_text()
+
+        self.assertIn("After=residenciafiscal-daily-chat-cost-telegram.service", contenido)
+
+    def test_el_check_no_arranca_el_digest(self) -> None:
+        """Un guardián que arranca lo que vigila no puede detectar su ausencia."""
+        contenido = (
+            self.AGENTIC / "residenciafiscal-daily-chat-cost-freshness.service"
+        ).read_text()
+
+        directivas = [x for x in contenido.splitlines() if not x.startswith("#")]
+        self.assertNotIn(
+            "residenciafiscal-daily-chat-cost-telegram.service",
+            "\n".join(x for x in directivas if x.startswith(("Wants=", "Requires="))),
+        )
+
     def test_el_timer_del_check_recupera_el_disparo_perdido(self) -> None:
         """Sin `Persistent=true` el guardián callaría justo tras un apagón largo."""
         contenido = (self.AGENTIC / "residenciafiscal-daily-chat-cost-freshness.timer").read_text()

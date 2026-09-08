@@ -228,6 +228,15 @@ guardián que parsea el fichero por su cuenta acaba divergiendo de quien lo
 escribe, y entonces miente en la dirección peor, diciendo que todo está bien.
 Corre con `python3` del sistema por el mismo motivo que el aviso de fallo.
 
+La hora del `OnCalendar` solo los separa mientras la máquina está encendida: al
+arrancar tras un apagón, `Persistent=true` dispara los dos timers a la vez. Por
+eso la unit del guardián lleva
+`After=residenciafiscal-daily-chat-cost-telegram.service`, y espera a que el
+digest termine de ponerse al día antes de leer el estado. Sin ese orden alertaba
+de un desfase que el propio digest cerraba un segundo después. No lleva `Wants=`
+a propósito: si el guardián arrancara el digest, dejaría de poder detectar que no
+corre.
+
 **Su límite es real y no se disimula**: comparte máquina con lo que vigila, así
 que no puede avisar de un apagón *mientras* dura; `Persistent=true` lo dispara al
 arrancar y el aviso sale entonces. Vigilarlo desde fuera exigiría mover el timer

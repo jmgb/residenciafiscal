@@ -3,6 +3,12 @@ Description=Residencia Fiscal daily chat digest freshness guard
 # No toca la red salvo para mandar la alerta: sin frescura que declarar, calla.
 Wants=network-online.target
 After=network-online.target
+# Tras un apagón, `Persistent=true` dispara los dos timers a la vez al arrancar
+# y la hora del `OnCalendar` deja de separarlos: sin este orden el guardián leía
+# el estado mientras el digest todavía estaba poniéndolo al día y alertaba de un
+# desfase que se cerraba un segundo después. No es `Wants=`: el guardián vigila
+# que el digest corra, no lo arranca él, o dejaría de poder detectar su ausencia.
+After=residenciafiscal-daily-chat-cost-telegram.service
 
 [Service]
 Type=oneshot
