@@ -25,7 +25,7 @@ puede crear primero una conversación sin protección.
 | Elemento | Valor |
 |---|---|
 | Perfil | `residenciafiscal-deep-research-v2` |
-| Modelo | `gpt-5.6-luna` |
+| Modelo | `gpt-6-luna` |
 | Esfuerzo | `high` |
 | Bundle | `rollout-106/2` |
 | Borrador de Codex | `residenciafiscal-deep-research-draft/2` |
@@ -295,7 +295,7 @@ determinista antes de publicar cualquier texto.
 
 1. Comprobar el manifiesto instalado: bundle `rollout-106/2`, formato
    `json-only` y hashes válidos.
-2. Confirmar en Alfredo el perfil v2, `gpt-5.6-luna`, esfuerzo `high` y las tres
+2. Confirmar en Alfredo el perfil v2, `gpt-6-luna`, esfuerzo `high` y las tres
    herramientas exactas.
 3. Lanzar un job que requiera una cita y revisar que el audit contenga
    `search_corpus` y `read_verbatim_page` completadas.
@@ -306,7 +306,7 @@ determinista antes de publicar cualquier texto.
 
 El smoke v2 del 2026-08-04, job
 `deep-1b556373-3e2b-4deb-a160-c4b67d24226b`, completó el recorrido real en
-29,6 s: `gpt-5.6-luna`, esfuerzo `high`, salida v2, cita EXACT de SAN 1210/2023
+29,6 s: `gpt-6-luna`, esfuerzo `high`, salida v2, cita EXACT de SAN 1210/2023
 página 8, callback en el primer intento y fila `assistant`/`deep_research` en
 `private.chat_messages`. El smoke del 2026-08-03 queda como evidencia histórica
 del transporte v1.

@@ -53,7 +53,7 @@ def _bundle(tmp_path):
             {
                 "schema_version": "residenciafiscal-model-pricing/1",
                 "catalog_version": "test-catalog",
-                "model": "gpt-5.6-luna",
+                "model": "gpt-6-luna",
                 "input_usd_per_mtok": "0.20",
                 "output_usd_per_mtok": "1.20",
             }
@@ -151,14 +151,14 @@ def _audit():
 def test_runtime_command_has_only_corpus_tools_and_receives_request_over_stdin(tmp_path):
     command = codex_command(
         codex_bin="/usr/local/bin/codex",
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         schema_path=tmp_path / "schema.json",
         mcp_path=tmp_path / "mcp.py",
         bundle_path=tmp_path / "bundle",
     )
     assert command[-1] == "-"
-    assert command[command.index("--model") + 1] == "gpt-5.6-luna"
+    assert command[command.index("--model") + 1] == "gpt-6-luna"
     joined = "\n".join(command)
     assert 'model_reasoning_effort="high"' in joined
     assert 'web_search="disabled"' in joined
@@ -197,7 +197,7 @@ def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=123,
         usage={"input_tokens": 80, "cache_read_input_tokens": 20, "output_tokens": 50},
@@ -210,7 +210,7 @@ def test_finalizer_derives_visible_text_only_from_verified_claims_and_normalizes
     assert "Texto paralelo" not in final["text"]
     assert final["cost_microusd"] == 80
     assert final["pricing_version"] == "test-catalog"
-    assert final["model"] == "gpt-5.6-luna"
+    assert final["model"] == "gpt-6-luna"
     assert final["reasoning_effort"] == "high"
 
 
@@ -223,7 +223,7 @@ def test_finalizer_trims_only_exterior_whitespace_before_exact_evidence_checks(t
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -244,7 +244,7 @@ def test_finalizer_recovers_unique_exact_raw_quote_from_whitespace_variant(tmp_p
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -264,7 +264,7 @@ def test_finalizer_recovers_unique_exact_raw_quote_from_punctuation_variant(tmp_
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -291,7 +291,7 @@ def test_finalizer_accepts_complete_evidence_quote_over_400_chars(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=bundle,
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -318,7 +318,7 @@ def test_finalizer_rejects_quote_cut_mid_sentence(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=bundle,
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -339,7 +339,7 @@ def test_finalizer_abstains_when_no_quote_can_be_verified(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -368,7 +368,7 @@ def test_finalizer_keeps_verified_quotes_and_drops_only_unmatched_quotes(tmp_pat
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -399,7 +399,7 @@ def test_finalizer_abstains_from_ambiguous_whitespace_variant(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=bundle,
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -418,7 +418,7 @@ def test_finalizer_derives_claim_indexes_instead_of_trusting_model_indexes(tmp_p
         json.dumps(draft),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -465,7 +465,7 @@ def test_parser_rejects_and_audits_any_non_corpus_execution(tmp_path):
             _draft(),
             job_id="deep-job-1",
             bundle_path=_bundle(tmp_path),
-            model="gpt-5.6-luna",
+            model="gpt-6-luna",
             reasoning_effort="high",
             latency_ms=1,
             usage=None,
@@ -482,7 +482,7 @@ def test_finalizer_discards_untrusted_claim_text_and_uses_exact_evidence(tmp_pat
         json.dumps(unsupported),
         job_id="deep-job-1",
         bundle_path=bundle,
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -518,7 +518,7 @@ def test_finalizer_drops_claim_when_one_of_its_evidence_items_is_unverified(tmp_
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -554,7 +554,7 @@ def test_finalizer_rejects_named_legal_criteria_absent_from_linked_quote(tmp_pat
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=bundle,
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -574,7 +574,7 @@ def test_finalizer_rejects_negation_absent_from_linked_quote(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -620,7 +620,7 @@ def test_finalizer_normalizes_pdf_ligatures_in_visible_claims(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -642,7 +642,7 @@ def test_finalizer_rejects_whitespace_only_claims(tmp_path):
             json.dumps(whitespace),
             job_id="deep-job-1",
             bundle_path=bundle,
-            model="gpt-5.6-luna",
+            model="gpt-6-luna",
             reasoning_effort="high",
             latency_ms=1,
             usage=None,
@@ -664,7 +664,7 @@ def test_finalizer_binds_verbatim_document_and_hash_to_rollout_manifest(tmp_path
             json.dumps(draft),
             job_id="deep-job-1",
             bundle_path=bundle,
-            model="gpt-5.6-luna",
+            model="gpt-6-luna",
             reasoning_effort="high",
             latency_ms=1,
             usage=None,
@@ -684,7 +684,7 @@ def test_finalizer_rejects_verbatim_whose_internal_hashes_do_not_match(tmp_path)
             _draft(),
             job_id="deep-job-1",
             bundle_path=bundle,
-            model="gpt-5.6-luna",
+            model="gpt-6-luna",
             reasoning_effort="high",
             latency_ms=1,
             usage=None,
@@ -706,7 +706,7 @@ def test_finalizer_replaces_all_non_substantive_model_prose_with_safe_templates(
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -726,7 +726,7 @@ def test_finalizer_replaces_substantive_limits_with_deterministic_metadata(tmp_p
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -758,7 +758,7 @@ def test_finalizer_publishes_what_the_graph_retired_with_counts(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -781,7 +781,7 @@ def test_finalizer_explains_verified_evidence_that_no_claim_uses(tmp_path):
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -808,7 +808,7 @@ def test_finalizer_distinguishes_a_verified_quote_that_does_not_ground_its_claim
         json.dumps(draft, ensure_ascii=False),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=None,
@@ -828,7 +828,7 @@ def test_finalizer_treats_empty_or_zero_usage_as_unavailable(tmp_path, usage):
         _draft(),
         job_id="deep-job-1",
         bundle_path=_bundle(tmp_path),
-        model="gpt-5.6-luna",
+        model="gpt-6-luna",
         reasoning_effort="high",
         latency_ms=1,
         usage=usage,
@@ -894,7 +894,7 @@ def test_runtime_budget_tracker_stops_excessive_tool_and_resource_reads(tmp_path
             max_pages=1,
             max_cost_microusd=10_000,
         ),
-        pricing=load_model_pricing(_bundle(tmp_path), "gpt-5.6-luna"),
+        pricing=load_model_pricing(_bundle(tmp_path), "gpt-6-luna"),
     )
     tracker.observe(
         {
@@ -958,7 +958,7 @@ def test_runtime_budget_tracker_stops_cost_as_soon_as_usage_is_reported(tmp_path
             max_pages=5,
             max_cost_microusd=100,
         ),
-        pricing=load_model_pricing(_bundle(tmp_path), "gpt-5.6-luna"),
+        pricing=load_model_pricing(_bundle(tmp_path), "gpt-6-luna"),
     )
 
     with pytest.raises(BudgetExceeded, match="max_cost_microusd"):
@@ -1011,7 +1011,7 @@ def test_draft_schema_worst_case_fits_callback_envelope():
         "cost_microusd": 1,
         "cost_measurement": "ESTIMATED",
         "pricing_version": "test-catalog",
-        "model": "gpt-5.6-luna",
+        "model": "gpt-6-luna",
         "reasoning_effort": "high",
         "latency_ms": 1,
     }

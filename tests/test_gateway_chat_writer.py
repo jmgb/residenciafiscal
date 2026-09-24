@@ -57,7 +57,7 @@ class FallbackProviderAdapter(FakeProviderAdapter):
         self.requests.append(request)
         self.models.append(model)
         return ProviderResponse(
-            output_text="esto no es json" if model == "gpt-5.6-luna" else DRAFT_JSON,
+            output_text="esto no es json" if model == "gpt-6-luna" else DRAFT_JSON,
             usage=TokenUsage(120, 30),
             finish_reason="stop",
             model_used=model,
@@ -179,7 +179,7 @@ class TestPolicies:
 
         await _writer(adapter).write(
             _request(
-                model="gpt-5.6-luna",
+                model="gpt-6-luna",
                 fallback_models=("gemini-3.8-flash",),
             )
         )
@@ -253,7 +253,7 @@ class TestPortFidelity:
         assert set(result.model_dump()) == {"draft", "usage", "model_used", "cost"}
 
     async def test_the_transported_cost_is_the_one_the_gateway_measured(self) -> None:
-        """120 de entrada y 30 de salida a la tarifa de Luna: 0,20 y 1,20 USD/Mtok."""
+        """120 de entrada y 30 de salida a la tarifa de Luna: 0,10 y 0,50 USD/Mtok."""
         from chat_model_policy import CHAT_MODEL
 
         adapter = FakeProviderAdapter()
@@ -261,7 +261,7 @@ class TestPortFidelity:
 
         result = await _writer(adapter).write(_request(model=CHAT_MODEL))
 
-        assert result.cost.microusd == 60
+        assert result.cost.microusd == 27
         assert result.cost.measurement.value == "ACTUAL"
         assert result.cost.pricing_version
 
@@ -290,14 +290,14 @@ class TestFailures:
 
         result = await _writer(adapter).write(
             _request(
-                model="gpt-5.6-luna",
+                model="gpt-6-luna",
                 fallback_models=("gemini-3.8-flash",),
             )
         )
 
         assert result.model_used == "gemini-3.8-flash"
         assert adapter.models == [
-            "gpt-5.6-luna",
+            "gpt-6-luna",
             "gemini-3.8-flash",
         ]
 

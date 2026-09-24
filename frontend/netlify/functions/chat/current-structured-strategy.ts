@@ -17,7 +17,7 @@ import { marginalCost, zeroCost } from './pricing';
 import type { NetlifyChatStrategy, StrategyContext } from './runtime';
 import { retrieveForChat } from './structured-retrieval';
 
-const MODEL = 'gpt-5.6-luna';
+const MODEL = 'gpt-6-luna';
 const REASONING_EFFORT = 'high';
 export const STRUCTURED_PROMPT_VERSION = 'structured-claims-v7';
 

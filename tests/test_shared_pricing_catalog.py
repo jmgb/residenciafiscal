@@ -87,4 +87,4 @@ class TestCostsStillBehave:
             calculate_gemini_file_search_cost(usage, model="modelo-inexistente")
 
         with pytest.raises(ValueError, match="no admitido en File Search"):
-            calculate_gemini_file_search_cost(usage, model="gpt-5.6-luna")
+            calculate_gemini_file_search_cost(usage, model="gpt-6-luna")

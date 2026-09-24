@@ -32,14 +32,14 @@ describe('adaptador OpenAI de la Function', () => {
         limits: [],
       }),
       usage: { input_tokens: 10, output_tokens: 5 },
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
     });
     const writer = createOpenAIWriter('test-key');
 
     await writer.write({
       systemPrompt: 'instrucciones',
       userPrompt: 'pregunta',
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       reasoningEffort: 'high',
       requestId: 'chat-test',
       signal: new AbortController().signal,
@@ -64,7 +64,7 @@ describe('adaptador OpenAI de la Function', () => {
       writer.write({
         systemPrompt: 'instrucciones',
         userPrompt: 'pregunta',
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
         reasoningEffort: 'high',
         requestId: 'chat-test',
         signal: new AbortController().signal,

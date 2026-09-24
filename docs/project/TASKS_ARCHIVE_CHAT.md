@@ -200,7 +200,7 @@ sangría del bloque padre: el texto es literal, solo se movió de fichero.
     Instalado en Alfredo y validado E2E el 2026-08-04 con el job
     `deep-1b556373-3e2b-4deb-a160-c4b67d24226b`: salida v2, cita literal
     de SAN 1210/2023 página 8, callback enviado y mensaje de asistente
-    persistido con `gpt-5.6-luna` y esfuerzo `high`.
+    persistido con `gpt-6-luna` y esfuerzo `high`.
 
 ## Opción C — C4 herramientas jurídicas y C5 experiencia bajo demanda
 

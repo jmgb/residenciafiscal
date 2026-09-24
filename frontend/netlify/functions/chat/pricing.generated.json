@@ -1,5 +1,5 @@
 {
-  "catalog_version": "2026-09-03.2",
+  "catalog_version": "2026-09-24",
   "models": {
     "gemini-3.5-flash-lite": {
       "input_usd_per_mtok": 0.3,
@@ -9,9 +9,9 @@
       "input_usd_per_mtok": 0.75,
       "output_usd_per_mtok": 3.75
     },
-    "gpt-5.6-luna": {
-      "input_usd_per_mtok": 0.2,
-      "output_usd_per_mtok": 1.2
+    "gpt-6-luna": {
+      "input_usd_per_mtok": 0.1,
+      "output_usd_per_mtok": 0.5
     }
   }
 }

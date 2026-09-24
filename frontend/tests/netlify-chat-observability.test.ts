@@ -19,7 +19,7 @@ const costEvent = {
     {
       strategy: 'current_structured',
       status: 'completa',
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       reasoning_effort: 'high',
       latency_ms: 20230,
       cost_microusd: 2491,

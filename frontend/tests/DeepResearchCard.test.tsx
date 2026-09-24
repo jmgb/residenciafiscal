@@ -38,7 +38,7 @@ const completed: DeepResearchJob = {
     costMicrousd: 1200,
     costMeasurement: 'ACTUAL',
     pricingVersion: 'test-catalog',
-    model: 'gpt-5.6-luna',
+    model: 'gpt-6-luna',
     reasoningEffort: 'high',
     latencyMs: 4200,
   },
@@ -136,7 +136,7 @@ describe('DeepResearchCard', () => {
     expect(screen.getByText('No sustituye asesoramiento profesional.')).toBeInTheDocument();
     expect(screen.getByText(/Coste real: 0,00 USD/)).toBeInTheDocument();
     expect(screen.getByText(/Respuesta en: 4 s/)).toBeInTheDocument();
-    expect(screen.getByText('Modelo: gpt-5.6-luna high')).toBeInTheDocument();
+    expect(screen.getByText('Modelo: gpt-6-luna high')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Copiar respuesta' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Descargar fuentes' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Ver fuentes' })).toHaveAttribute(

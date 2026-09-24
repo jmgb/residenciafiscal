@@ -54,7 +54,7 @@ body:
         SO: Ubuntu 24.04 (WSL2)
         Python: 3.13.1
         Commit: e5204f5
-        Modelo: gpt-5.6-luna
+        Modelo: gpt-6-luna
     validations:
       required: true
 

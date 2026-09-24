@@ -2,7 +2,7 @@ export const DEEP_RESEARCH_PROFILE = 'residenciafiscal-deep-research-v2';
 export const DEEP_RESEARCH_DRAFT_SCHEMA = 'residenciafiscal-deep-research-draft/2';
 export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/2';
 export const DEEP_RESEARCH_LEGACY_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
-export const DEEP_RESEARCH_MODEL = 'gpt-5.6-luna';
+export const DEEP_RESEARCH_MODEL = 'gpt-6-luna';
 export const DEEP_RESEARCH_REASONING_EFFORT = 'high';
 export const DEEP_RESEARCH_ALLOWED_TOOLS = [
   'corpus.search_corpus',

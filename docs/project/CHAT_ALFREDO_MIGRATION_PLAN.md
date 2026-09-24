@@ -380,7 +380,7 @@ aplique los mismos cierres de seguridad.
       sigue conteniendo el anclaje; sin ello se publicaba la línea suelta.
 - [x] Portar `structured-claims-v4` y su gate de relevancia literal.
 - [x] Configurar A exclusivamente mediante `GatewayChatWriter(get_gateway())`.
-- [x] Configurar A con `gpt-5.6-luna` + `high` y fallback explícito en el gateway.
+- [x] Configurar A con `gpt-6-luna` + `high` y fallback explícito en el gateway.
 - [ ] Activar el store con metadata exacta de autoridad y verificar 106/106 PDF.
 - [x] Portar `file-search-authority-v8`, con pistas terminológicas y filtro por sentencia.
 - [ ] Forzar File Search en B cuando el SDK Python lo permita; si el SDK no

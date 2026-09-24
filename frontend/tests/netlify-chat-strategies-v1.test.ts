@@ -29,7 +29,7 @@ describe('estrategia A estructurada', () => {
         limits: [],
       },
       usage: { input_tokens: 100, output_tokens: 40, complete: true },
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
     }));
     const strategy = new CurrentStructuredStrategy(corpus, { write });
 
@@ -71,7 +71,7 @@ describe('estrategia A estructurada', () => {
     const write = vi.fn(async (_input: Parameters<StructuredWriter['write']>[0]) => ({
       draft: { status: 'completa' as const, claims: [], limits: [] },
       usage: { input_tokens: 1, output_tokens: 1, complete: true },
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
     }));
     const question = '¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?';
     const strategy = new CurrentStructuredStrategy(corpus, { write });
@@ -102,7 +102,7 @@ describe('estrategia A estructurada', () => {
         limits: ['Muestra piloto de cinco sentencias.'],
       },
       usage: { input_tokens: 100, output_tokens: 40, complete: true },
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
     }));
     const strategy = new CurrentStructuredStrategy(corpus, { write });
 
@@ -113,7 +113,7 @@ describe('estrategia A estructurada', () => {
 
     expect(write).toHaveBeenCalledOnce();
     expect(write.mock.calls[0]?.[0]).toMatchObject({
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       reasoningEffort: 'high',
     });
     const writerInput = write.mock.calls[0]?.[0];
@@ -152,7 +152,7 @@ describe('estrategia A estructurada', () => {
           source_indexes: [1],
         },
       ],
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       reasoning_effort: 'high',
       sources: [{ strategy: 'current_structured', verification: 'EXACT' }],
       cost: {
@@ -175,7 +175,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -200,7 +200,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -228,7 +228,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -256,7 +256,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -289,7 +289,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -321,7 +321,7 @@ describe('estrategia A estructurada', () => {
           limits: ['Los extractos recuperados no bastan para responder.'],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 
@@ -354,7 +354,7 @@ describe('estrategia A estructurada', () => {
           limits: [],
         },
         usage: { input_tokens: 10, output_tokens: 10, complete: true },
-        model: 'gpt-5.6-luna',
+        model: 'gpt-6-luna',
       }),
     });
 

@@ -25,7 +25,7 @@ tokens, coste y deadline sí fueron los de la Function.
 | Dimensión | A · corpus estructurado | B · Gemini File Search |
 |---|---:|---:|
 | Estado | `completa` | `completa` |
-| Modelo | `gpt-5.6-luna`, `high` | `gemini-3.5-flash-lite` |
+| Modelo | `gpt-6-luna`, `high` | `gemini-3.5-flash-lite` |
 | Latencia propia | 13.536 ms | 9.444 ms |
 | Tokens de entrada declarados | 5.457 | 78 |
 | Tokens de salida declarados | 1.166 | 902 |

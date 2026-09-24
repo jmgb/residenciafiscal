@@ -10,7 +10,7 @@ from llm_gateway.models import CATALOG_VERSION, lookup_model
 CHAT_MODELS = (
     "gemini-3.5-flash-lite",
     "gemini-3.8-flash",
-    "gpt-5.6-luna",
+    "gpt-6-luna",
 )
 
 

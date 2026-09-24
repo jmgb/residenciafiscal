@@ -69,7 +69,7 @@ dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
 
 | Estrategia | Modelo | De dónde sale |
 |---|---|---|
-| A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Por defecto `gpt-5.6-luna` + `high`; la cadena se entrega al gateway |
+| A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Por defecto `gpt-6-luna` + `high`; la cadena se entrega al gateway |
 | B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
 
 El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
@@ -151,13 +151,13 @@ El paquete no selecciona un fallback por defecto: `LLMRequest` usa
 `FallbackPolicy.disabled()`. Su helper `FallbackPolicy.cheaper_than()` deriva
 modelos del mismo proveedor de forma deliberada. Como A necesita reducir el
 riesgo de caída de un proveedor, la aplicación declara explícitamente una
-cadena cross-provider (`gpt-5.6-luna` → `gemini-3.8-flash`) y la fachada rechaza
+cadena cross-provider (`gpt-6-luna` → `gemini-3.8-flash`) y la fachada rechaza
 fallbacks conocidos del mismo proveedor.
 
 La política vigente de A es:
 
 ```bash
-CHAT_MODEL=gpt-5.6-luna
+CHAT_MODEL=gpt-6-luna
 CHAT_FALLBACK_MODELS=gemini-3.8-flash
 ```
 
@@ -169,7 +169,7 @@ reproducible:
 ```bash
 uv run python src/gemini_file_search_cli.py compare \
   "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?" \
-  --only a --chat-model gpt-5.6-luna \
+  --only a --chat-model gpt-6-luna \
   --chat-fallback-model gemini-3.8-flash --confirm-paid
 ```
 
@@ -229,7 +229,7 @@ el que el comparador publica como modelo de la respuesta, la `0.9.0` hace que
 un `response_schema` llegue a los proveedores que no lo imponen, y la `0.10.0`
 retira las conjeturas por familia de proveedor y por namespace del enrutado de
 fallback: un modelo desconocido ya no se adivina, exige entrada explícita en el
-catálogo. La cadena vigente (`gpt-5.6-luna` → `gemini-3.8-flash`) está
+catálogo. La cadena vigente (`gpt-6-luna` → `gemini-3.8-flash`) está
 catalogada, así que ese cambio no la altera.
 
 La `0.10.0` mueve además el catálogo compartido a `2026-08-04.5` sin tocar las

@@ -176,7 +176,7 @@ describe('composition root de la Function con Supabase', () => {
           text: 'Dato fiscal que no debe aparecer en logs',
           sources: [],
           limits: [],
-          model: 'gpt-5.6-luna',
+          model: 'gpt-6-luna',
           reasoning_effort: 'high',
           latency_ms: 1_500,
           cost: {

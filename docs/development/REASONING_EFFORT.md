@@ -10,7 +10,7 @@ La única fuente de verdad es `src/chat_model_policy.py`:
 
 | Campo | Valor |
 |---|---|
-| Modelo del chat | `gpt-5.6-luna` |
+| Modelo del chat | `gpt-6-luna` |
 | Esfuerzo | `high` |
 | Valores admitidos | Derivados de `reasoning_efforts` en el catálogo del gateway |
 
@@ -22,7 +22,7 @@ La única fuente de verdad es `src/chat_model_policy.py`:
 
 Es una decisión de producto que prioriza la calidad de la respuesta jurídica
 manteniendo una latencia compatible con el chat. Es el esfuerzo que viaja por
-defecto en A junto a `gpt-5.6-luna`.
+defecto en A junto a `gpt-6-luna`.
 No garantiza por sí sola mayor precisión. Puede aumentar razonamiento, latencia
 y coste, por lo que cada respuesta debe mostrar y registrar:
 

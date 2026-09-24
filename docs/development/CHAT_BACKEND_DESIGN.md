@@ -113,7 +113,7 @@ completo y mantiene esa adaptación explícita.
 conviene arreglarlo aparte para que no siga induciendo a error:
 
 - Enumera **5 resultados finales**; `config.py:156-164` define **7**.
-- Su tabla de costes da **$0.006 por PDF** con `gpt-5.6-luna`, pero
+- Su tabla de costes da **$0.006 por PDF** con `gpt-6-luna`, pero
   `model_pricing.py:23` tarifa ese modelo a **$1/M de entrada y $6/M de salida**, y
   los registros reales del JSONL rondan **$0.017 por sentencia**. Esa cifra
   optimista es la misma que me llevó a estimar el coste del chat tres veces por
@@ -175,8 +175,8 @@ y [consistencia/escrituras condicionales de Blobs](https://docs.netlify.com/buil
 
 | Paso | Modelo | Por qué |
 |---|---|---|
-| Router | `gpt-5.6-luna` | Clasificación con salida JSON estricta; recibe el historial acotado para resolver preguntas de seguimiento |
-| Redacción | `gpt-5.6-luna` | Política exclusiva del chat; contexto total limitado a 48 KB y salida a 1.200 tokens, incluido razonamiento |
+| Router | `gpt-6-luna` | Clasificación con salida JSON estricta; recibe el historial acotado para resolver preguntas de seguimiento |
+| Redacción | `gpt-6-luna` | Política exclusiva del chat; contexto total limitado a 48 KB y salida a 1.200 tokens, incluido razonamiento |
 
 Ambos pasos usan el mismo modelo **porque hoy no hay uno más barato disponible**:
 `src/chat_model_policy.py` lo fija como política conversacional. No es una
@@ -313,7 +313,7 @@ POST /api/chat  { messages: [...] }
   │     body/roles/tamaños · 10 preguntas/hora por IP
   │     reserva atómica del coste máximo dentro del techo diario
   │
-  ├─ 2. Router — gpt-5.6-luna, JSON Schema estricto, sin streaming
+  ├─ 2. Router — gpt-6-luna, JSON Schema estricto, sin streaming
   │     { criterios[], organo, resultado, anios[], categorias_prueba[],
   │       foco, terminos[] }
   │     Si falla o su salida no valida → ruta léxica, no error al usuario
@@ -325,7 +325,7 @@ POST /api/chat  { messages: [...] }
   ├─ 4a. ¿0 resultados? → respuesta honesta, sin segunda llamada;
   │                       se contabiliza solo el router
   │
-  ├─ 4b. Redacción — gpt-5.6-luna, max_output_tokens acotado
+  ├─ 4b. Redacción — gpt-6-luna, max_output_tokens acotado
   │      El modelo cita solo marcadores [S1]…[S12].
   │      Cada párrafo se valida y el servidor sustituye el marcador por el ROJ
   │      real antes de emitirlo al cliente.

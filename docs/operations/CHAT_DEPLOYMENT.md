@@ -143,7 +143,7 @@ convertirlas a secretos Functions y rotarlas.
 | `CHAT_COMPARISON_ENABLED` | Interruptor maestro; debe ser exactamente `true` para habilitar A o B |
 | `CHAT_STRATEGY_A_ENABLED` | Activa/desactiva A (`current_structured`). Si se omite, hereda `true` cuando el maestro está activo |
 | `CHAT_STRATEGY_B_ENABLED` | Activa/desactiva B (`gemini_file_search`). Si se omite, hereda `true` cuando el maestro está activo |
-| `OPENAI_API_KEY` | Obligatoria solo si A está activa; redactor Luna `gpt-5.6-luna`, esfuerzo `high` |
+| `OPENAI_API_KEY` | Obligatoria solo si A está activa; redactor Luna `gpt-6-luna`, esfuerzo `high` |
 | `GEMINI_API_KEY` | Obligatoria solo si B está activa; Gemini File Search |
 | `CHAT_FILE_SEARCH_STORE_NAME` | Obligatoria solo si B está activa; nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
 | `CHAT_FILE_SEARCH_MODEL` | Solo se valida si B está activa; `gemini-3.5-flash-lite` por defecto; allowlist cerrada |

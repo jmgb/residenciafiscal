@@ -34,7 +34,7 @@ const report: ComparisonReport = {
         retrieved_document_tokens: 0,
         excludes_corpus_preparation: true as const,
       },
-      model: 'gpt-5.6-luna',
+      model: 'gpt-6-luna',
       reasoning_effort: 'high',
       latency_ms: 10,
     },

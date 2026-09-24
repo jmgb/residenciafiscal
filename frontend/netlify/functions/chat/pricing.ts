@@ -31,7 +31,7 @@ export const marginalCost = (model: string, usage: TokenUsage): MarginalCost => 
   };
 };
 
-export const zeroCost = (model = 'gpt-5.6-luna') =>
+export const zeroCost = (model = 'gpt-6-luna') =>
   marginalCost(model, {
     inputTokens: 0,
     outputTokens: 0,

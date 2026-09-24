@@ -25,7 +25,7 @@ async def test_gpt_request_traduce_el_contrato_y_devuelve_el_resultado_del_gatew
     gateway = RecordingGateway(expected)
 
     result = await gpt_request(
-        "gpt-5.6-luna",
+        "gpt-6-luna",
         "Responde solo desde la evidencia.",
         "¿Qué valor se dio al certificado?",
         gateway=gateway,
@@ -37,7 +37,7 @@ async def test_gpt_request_traduce_el_contrato_y_devuelve_el_resultado_del_gatew
     )
 
     assert result is expected
-    assert gateway.request.model == "gpt-5.6-luna"
+    assert gateway.request.model == "gpt-6-luna"
     assert gateway.request.system_prompt == "Responde solo desde la evidencia."
     assert gateway.request.messages[0].content == "¿Qué valor se dio al certificado?"
     assert gateway.request.temperature == 0
@@ -53,7 +53,7 @@ async def test_gpt_request_rechaza_fallback_del_mismo_proveedor() -> None:
 
     with pytest.raises(ValueError, match="otro proveedor"):
         await gpt_request(
-            "gpt-5.6-luna",
+            "gpt-6-luna",
             None,
             "mensaje",
             gateway=RecordingGateway(object()),

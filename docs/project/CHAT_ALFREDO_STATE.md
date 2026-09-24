@@ -114,7 +114,7 @@ con usuarios autenticados y coste atado a una cuenta.
 La deuda documental del commit `f2e7633` está cerrada. La configuración vigente
 del runtime Python es:
 
-- primario: `gpt-5.6-luna`;
+- primario: `gpt-6-luna`;
 - esfuerzo: `high`;
 - fallback cross-provider explícito: `gemini-3.8-flash`;
 - ejecución y atribución de todos los intentos: `neutral-llm-gateway`.
