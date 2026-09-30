@@ -29,7 +29,7 @@ SHELL := /bin/bash
 	export-frontend-projections check-frontend-projections \
 	export-public-judgments check-public-judgments verify-public-judgments \
 	test \
-	lint format format-check fix typecheck fast-check \
+	lint format format-check fix typecheck fast-check ci-local ci-changed \
 	lock upgrade export-requirements \
 	clean clean-output env-print
 
@@ -575,6 +575,13 @@ enlazar-normativa:
 # 3. CALIDAD
 # =============================================================================
 fast-check: lint format-check typecheck test
+
+# CI local (GitHub Actions sin minutos): reproduce ci.yml, frontend.yml y gitleaks.yml.
+ci-local:
+	bash scripts/ci-local.sh all
+
+ci-changed:
+	bash scripts/ci-local.sh changed
 
 lint:
 	uv run ruff check .

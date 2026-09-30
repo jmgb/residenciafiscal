@@ -367,6 +367,7 @@ código anterior si alguna investigación histórica necesita consultarlo.
 Todo pasa por el Makefile (`make help` los lista todos). Los no evidentes:
 
 - `make fast-check` — el gate obligatorio antes de commitear (lint + tipos + tests).
+- `make ci-local` / `make ci-changed` — si GitHub Actions no tiene minutos, reproducen en local los checks bloqueantes de `ci.yml`, `frontend.yml` (lint + typecheck) y gitleaks (`scripts/ci-local.sh`; test: `bash scripts/tests/test-ci-local.sh`).
 - `make test` no llama a ningún LLM ni necesita secrets.
 - `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
   los ocho artefactos locales, sin LLM; valida todos sus hashes.
