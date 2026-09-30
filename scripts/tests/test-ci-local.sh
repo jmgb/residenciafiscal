@@ -55,6 +55,13 @@ run frontend >/dev/null
 called 'pytest' && fail 'modo frontend lanzó pytest'
 called 'npm run typecheck' || fail 'modo frontend sin typecheck'
 
+# modo python: pasos de ci.yml sin gitleaks ni npm
+: > "$CHECK_CALLS"
+PATH="$gl:$BASE_PATH" run python >/dev/null || fail 'modo python: exit != 0'
+called 'make rollout-reproducibility' && called 'mypy' || fail 'modo python incompleto'
+called 'gitleaks' && fail 'modo python lanzó gitleaks'
+called 'npm' && fail 'modo python lanzó npm'
+
 # fallo bloqueante no corta el resto y da exit 1
 : > "$CHECK_CALLS"
 if FAIL_PATTERN='mypy' run all >/dev/null 2>&1; then fail 'mypy fallido debería dar exit 1'; fi

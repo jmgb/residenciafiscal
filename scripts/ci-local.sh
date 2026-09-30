@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 # CI local: reproduce los checks BLOQUEANTES de .github/workflows/ci.yml,
 # frontend.yml y gitleaks.yml para cuando GitHub Actions no tiene minutos.
+# FUENTE ÚNICA: ci.yml (`python`) y frontend.yml (`frontend`) también llaman a
+# este script, así que local y remoto no pueden divergir. gitleaks.yml sigue
+# usando su acción (integración con el PR); aquí solo se ejecuta en `all`,
+# `backend`, `changed` y `pre-push`, no en `python`.
 #
-#   bash scripts/ci-local.sh [all|backend|frontend|changed [base]|pre-push]
+#   bash scripts/ci-local.sh [all|backend|python|frontend|changed [base]|pre-push]
+#   `python` = solo los pasos de ci.yml (ruff, format, mypy, pytest, rollout), sin gitleaks
 #   bash scripts/ci-local.sh changed [base]   # según el diff vs base (origin/main)
 #   bash scripts/ci-local.sh pre-push         # rutas por stdin (formato `git diff --name-only`)
 #
@@ -19,7 +24,7 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 mode="${1:-all}"
-python=0 frontend=0
+python=0 frontend=0 gitleaks=0
 
 select_from_paths() {
     while IFS= read -r path; do
@@ -27,27 +32,28 @@ select_from_paths() {
             '') ;;
             # ci.yml ignora docs/** y los *.md de la raíz (no los de knowledge/, frontend/...).
             docs/*) ;;
-            .github/workflows/*|scripts/ci-local.sh) python=1; frontend=1 ;;
+            .github/workflows/*|scripts/ci-local.sh) python=1; gitleaks=1; frontend=1 ;;
             frontend/*|knowledge/normativa/*)
                 # frontend/** también dispara pytest: hay tests que leen robots.txt, sitemap...
-                python=1; frontend=1 ;;
-            */*) python=1 ;;
+                python=1; gitleaks=1; frontend=1 ;;
+            */*) python=1; gitleaks=1 ;;
             *.md|LICENSE) ;;
-            *) python=1 ;;
+            *) python=1; gitleaks=1 ;;
         esac
     done
 }
 
 case "$mode" in
-    all) python=1; frontend=1 ;;
-    backend) python=1 ;;
+    all) python=1; gitleaks=1; frontend=1 ;;
+    backend) python=1; gitleaks=1 ;;
+    python) python=1 ;;
     frontend) frontend=1 ;;
     pre-push) select_from_paths ;;
     changed)
         base="${2:-origin/main}"
         merge_base=$(git merge-base "$base" HEAD) || { echo "ci-local: no encuentro $base (¿git fetch?)" >&2; exit 2; }
         select_from_paths < <({ git diff --name-only "$merge_base"; git ls-files --others --exclude-standard; } | sort -u) ;;
-    *) echo "usage: bash scripts/ci-local.sh [all|backend|frontend|changed [base]|pre-push]" >&2; exit 2 ;;
+    *) echo "usage: bash scripts/ci-local.sh [all|backend|python|frontend|changed [base]|pre-push]" >&2; exit 2 ;;
 esac
 
 LOG_DIR="${CI_LOCAL_LOG_DIR:-${TMPDIR:-/tmp}/ci-local-residenciafiscal}"
@@ -93,7 +99,8 @@ if (( python )); then
     step "python: pytest" 'uv run pytest -q'
     step "rollout: verify" 'make rollout-verify'
     step "rollout: reproducibility" 'make rollout-reproducibility'
-    if command -v gitleaks >/dev/null 2>&1; then
+    if (( ! gitleaks )); then :
+    elif command -v gitleaks >/dev/null 2>&1; then
         step "gitleaks" 'gitleaks git --no-banner --redact'
     else
         advisory "gitleaks" 'echo "gitleaks no está instalado: no se escanean secretos"; exit 1'

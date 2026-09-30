@@ -81,20 +81,8 @@ jobs:
           UV_HTTP_TIMEOUT: 120
         run: uv sync --locked
 
-      - name: Ruff
-        run: uv run ruff check .
-
-      - name: Ruff format
-        run: uv run ruff format --check .
-
-      - name: Mypy
-        run: uv run mypy .
-
-      - name: Pytest
-        run: uv run pytest -q
-
-      - name: Verify jurisprudence rollout integrity
-        run: make rollout-verify
-
-      - name: Rebuild deterministic rollout aggregates
-        run: make rollout-reproducibility
+      # ruff, ruff format, mypy, pytest y rollout viven en scripts/ci-local.sh
+      # (fuente única, la misma que se ejecuta en local). gitleaks queda en su
+      # propio workflow.
+      - name: Python checks (shared with local)
+        run: bash scripts/ci-local.sh python
