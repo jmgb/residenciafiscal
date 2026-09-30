@@ -35,7 +35,21 @@ export const initializeSentryRuntime = (config: FrontendSentryConfig): boolean =
     release: config.release,
     integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: config.tracesSampleRate,
-    sendDefaultPii: false,
+    // @sentry/react 11 retiró `sendDefaultPii` en favor de `dataCollection`, cuyos
+    // valores por defecto sí recogen PII (IP inferida, cookies, cabeceras, query
+    // params). Hay que desactivar cada categoría explícitamente para mantener la
+    // política declarada en /privacidad.
+    dataCollection: {
+      userInfo: false,
+      cookies: false,
+      httpHeaders: false,
+      httpBodies: [],
+      urlQueryParams: false,
+      graphQL: { document: false, variables: false },
+      genAI: { inputs: false, outputs: false },
+      databaseQueryData: false,
+      queues: false,
+    },
     beforeSend,
   });
   return true;

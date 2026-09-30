@@ -42,12 +42,25 @@ describe('Sentry frontend runtime', () => {
     ).toBe(true);
 
     expect(sentryMock.browserTracingIntegration).toHaveBeenCalledOnce();
+    // `sendDefaultPii` ya no existe en @sentry/react 11: si reapareciese sería
+    // una opción ignorada y la recogida de PII volvería a los valores por defecto.
+    expect(sentryMock.init.mock.calls[0]?.[0]).not.toHaveProperty('sendDefaultPii');
     expect(sentryMock.init).toHaveBeenCalledWith(
       expect.objectContaining({
         dsn: 'https://public@example.ingest.sentry.io/1',
         environment: 'production',
         release: 'residencia-fiscal-frontend@test',
-        sendDefaultPii: false,
+        dataCollection: {
+          userInfo: false,
+          cookies: false,
+          httpHeaders: false,
+          httpBodies: [],
+          urlQueryParams: false,
+          graphQL: { document: false, variables: false },
+          genAI: { inputs: false, outputs: false },
+          databaseQueryData: false,
+          queues: false,
+        },
         tracesSampleRate: 0.2,
       })
     );
