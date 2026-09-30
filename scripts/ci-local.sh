@@ -11,10 +11,9 @@
 # salen como WARN y no cambian el exit code. Un log por paso en $CI_LOCAL_LOG_DIR;
 # con $CI la salida va también a stdout.
 #
-# no se reproduce: `npm ci` (red; usa el node_modules instalado), `npm run test`
-# (vitest) y `npm run build` de frontend.yml (procesos node pesados: ejecútalos a
-# mano con `cd frontend && npm run test && npm run build` si tocas el frontend),
-# el comentario del PR de gitleaks-action (necesita GITHUB_TOKEN).
+# no se reproduce: `npm ci` (red; usa el node_modules instalado) y el comentario
+# del PR de gitleaks-action (necesita GITHUB_TOKEN). Los pasos de node (lint,
+# typecheck, vitest, build) van en serie: nunca dos procesos node a la vez.
 # Ojo: `make rollout-reproducibility` regenera ficheros de knowledge/jurisprudencia-v3
 # y compara con git: con esos ficheros modificados sin commitear dará falso FAIL.
 set -uo pipefail
@@ -104,6 +103,8 @@ fi
 if (( frontend )); then
     step "frontend: lint" 'cd frontend && npm run lint'
     step "frontend: typecheck" 'cd frontend && npm run typecheck'
+    step "frontend: vitest" 'cd frontend && npm run test'
+    step "frontend: build" 'cd frontend && npm run build'
 fi
 
 echo

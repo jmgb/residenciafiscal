@@ -21,7 +21,11 @@ describe('navegación del chat de España', () => {
     vi.restoreAllMocks();
   });
 
-  it('conserva la primera respuesta al pasar de /espana a la conversación', async () => {
+  // Monta la app completa y encadena dos navegaciones: bajo carga (suite en
+  // paralelo, runners lentos) roza los 5 s por defecto aunque aislado tarde <1 s.
+  it('conserva la primera respuesta al pasar de /espana a la conversación', {
+    timeout: 15_000,
+  }, async () => {
     const user = userEvent.setup();
     let releaseResponse = () => {};
     const responseGate = new Promise<void>((resolve) => {
