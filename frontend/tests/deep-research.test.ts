@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createDeepResearchHandler } from '../netlify/functions/deep-research';
-import { verifyAlfredoSignature } from '../netlify/functions/deep-research/alfredo-client';
+import {
+  cancelDeepResearchJob,
+  verifyAlfredoSignature,
+} from '../netlify/functions/deep-research/alfredo-client';
 import type {
   DeepResearchJobRecord,
   DeepResearchStore,
@@ -639,5 +642,36 @@ describe('deep research HTTP contract', () => {
     const timestamp = String(Math.floor(Date.now() / 1000));
 
     expect(await verifyAlfredoSignature('', timestamp, '0'.repeat(64), body)).toBe(false);
+  });
+});
+
+describe('cancelDeepResearchJob', () => {
+  it('signs a body that names the job, so a captured signature cannot cancel another job', async () => {
+    const env = {
+      enabled: true,
+      alfredoJobsUrl: 'https://alfredo.example/jobs',
+      alfredoHmacSecret: 'secret',
+      callbackUrl: 'https://residenciafiscal.example/api/deep-research-callback',
+      bundleId: 'bundle',
+    };
+    const fetchImpl = vi.fn(async () => new Response(null, { status: 202 }));
+
+    expect(
+      await cancelDeepResearchJob(env, 'deep-job-1', fetchImpl as unknown as typeof fetch)
+    ).toBe(true);
+
+    const [url, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
+    const headers = init.headers as Record<string, string>;
+    expect(url).toBe('https://alfredo.example/jobs/deep-job-1/cancel');
+    expect(headers['content-type']).toBe('application/json');
+    expect(JSON.parse(init.body as string)).toEqual({ job_id: 'deep-job-1' });
+    expect(
+      await verifyAlfredoSignature(
+        'secret',
+        headers['X-VA-Timestamp'],
+        headers['X-VA-Signature'],
+        init.body as string
+      )
+    ).toBe(true);
   });
 });

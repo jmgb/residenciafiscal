@@ -71,14 +71,19 @@ export async function cancelDeepResearchJob(
 ): Promise<boolean> {
   const url = `${environment.alfredoJobsUrl.replace(/\/$/, '')}/${encodeURIComponent(jobId)}/cancel`;
   const timestamp = String(Math.floor(Date.now() / 1000));
-  const body = '';
+  // El job_id va en el cuerpo firmado: con un cuerpo vacío la firma valía para
+  // cancelar cualquier job durante la ventana HMAC. Alfredo exige que coincida
+  // con el de la ruta.
+  const body = JSON.stringify({ job_id: jobId });
   const signature = await hmacSha256(environment.alfredoHmacSecret, `${timestamp}.${body}`);
   const response = await fetchImpl(url, {
     method: 'POST',
     headers: {
+      'content-type': 'application/json',
       'X-VA-Timestamp': timestamp,
       'X-VA-Signature': signature,
     },
+    body,
   });
   return response.ok;
 }
