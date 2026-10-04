@@ -64,15 +64,33 @@ class FallbackProviderAdapter(FakeProviderAdapter):
         )
 
 
+class _MismoDobleComo:
+    """El mismo doble, registrado con el nombre de otro proveedor.
+
+    Desde la v0.21.0 un modelo del catálogo solo se enruta al adaptador de su
+    proveedor, nunca por el prefijo de otro: para que un único doble atienda
+    `gpt-6-luna` y su fallback `gemini-3.8-flash` tiene que figurar como ambos.
+    """
+
+    def __init__(self, adapter: FakeProviderAdapter, name: str) -> None:
+        self.name = name
+        self._adapter = adapter
+
+    async def generate(self, request: Any, *, model: str) -> Any:
+        return await self._adapter.generate(request, model=model)
+
+
 def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
     from llm_gateway import LLMGateway, ProviderRegistry
 
     registry = ProviderRegistry()
     prefixes = {
-        "openai": ("gpt-", "gemini"),
+        "openai": ("gpt-",),
         "groq": ("meta-llama/",),
     }.get(adapter.name, ("gemini",))
     registry.register(adapter, model_prefixes=prefixes)
+    if adapter.name == "openai":
+        registry.register(_MismoDobleComo(adapter, "gemini"), model_prefixes=("gemini",))
     return GatewayChatWriter(LLMGateway(registry=registry))
 
 
