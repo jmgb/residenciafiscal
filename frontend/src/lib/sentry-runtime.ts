@@ -35,7 +35,16 @@ export const initializeSentryRuntime = (config: FrontendSentryConfig): boolean =
     release: config.release,
     integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: config.tracesSampleRate,
-    sendDefaultPii: false,
+    // Sentry v11 sustituye `sendDefaultPii: false` por `dataCollection`, cuyos
+    // defaults recogen IP, cookies y cuerpos: se fijan aquí explícitamente.
+    dataCollection: {
+      userInfo: false,
+      cookies: false,
+      httpHeaders: { request: { allow: ['User-Agent', 'Referer'] }, response: false },
+      httpBodies: [],
+      genAI: { inputs: false, outputs: false },
+      databaseQueryData: false,
+    },
     beforeSend,
   });
   return true;
