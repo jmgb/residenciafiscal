@@ -47,10 +47,18 @@ describe('Sentry frontend runtime', () => {
         dsn: 'https://public@example.ingest.sentry.io/1',
         environment: 'production',
         release: 'residencia-fiscal-frontend@test',
-        sendDefaultPii: false,
         tracesSampleRate: 0.2,
+        dataCollection: {
+          userInfo: false,
+          cookies: false,
+          httpHeaders: { request: { allow: ['User-Agent', 'Referer'] }, response: false },
+          httpBodies: [],
+          genAI: { inputs: false, outputs: false },
+          databaseQueryData: false,
+        },
       })
     );
+    expect(sentryMock.init.mock.calls[0]?.[0]).not.toHaveProperty('sendDefaultPii');
   });
 
   it('removes request headers, cookies and bodies before sending an event', () => {
