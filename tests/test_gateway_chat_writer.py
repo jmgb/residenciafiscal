@@ -64,15 +64,33 @@ class FallbackProviderAdapter(FakeProviderAdapter):
         )
 
 
+class _SameDoubleAs:
+    """El mismo doble, registrado bajo otro proveedor del catálogo.
+
+    Desde la v0.21.0 un modelo catalogado solo llega al adaptador registrado con
+    el nombre de su proveedor: un fallback Gemini ya no puede colarse por el
+    prefijo de un adaptador llamado ``openai``.
+    """
+
+    def __init__(self, adapter: FakeProviderAdapter, name: str) -> None:
+        self._adapter = adapter
+        self.name = name
+
+    async def generate(self, request: Any, *, model: str) -> Any:
+        return await self._adapter.generate(request, model=model)
+
+
 def _writer(adapter: FakeProviderAdapter) -> GatewayChatWriter:
     from llm_gateway import LLMGateway, ProviderRegistry
 
     registry = ProviderRegistry()
     prefixes = {
-        "openai": ("gpt-", "gemini"),
+        "openai": ("gpt-",),
         "groq": ("meta-llama/",),
     }.get(adapter.name, ("gemini",))
     registry.register(adapter, model_prefixes=prefixes)
+    if adapter.name == "openai":
+        registry.register(_SameDoubleAs(adapter, "gemini"), model_prefixes=("gemini",))
     return GatewayChatWriter(LLMGateway(registry=registry))
 
 
@@ -300,6 +318,27 @@ class TestFailures:
             "gpt-6-luna",
             "gemini-3.8-flash",
         ]
+
+    async def test_a_fallback_without_its_provider_fails_before_any_call(self) -> None:
+        """Sin cliente Gemini, el fallback no se desvía a otro proveedor.
+
+        Antes de la v0.21.0 el prefijo de un adaptador ajeno podía servir un
+        modelo catalogado de Gemini; ahora el plan se rechaza antes de pagar
+        el primario.
+        """
+        from llm_gateway import LLMGateway, ProviderRegistry, UnknownModelError
+
+        adapter = FakeProviderAdapter()
+        adapter.name = "openai"
+        registry = ProviderRegistry()
+        registry.register(adapter, model_prefixes=("gpt-", "gemini"))
+
+        with pytest.raises(UnknownModelError, match="no registered client"):
+            await GatewayChatWriter(LLMGateway(registry=registry)).write(
+                _request(model="gpt-6-luna", fallback_models=("gemini-3.8-flash",))
+            )
+
+        assert adapter.requests == []
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:
         """Las credenciales son de la aplicación, no del redactor."""
