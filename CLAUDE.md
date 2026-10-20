@@ -686,3 +686,13 @@ Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --
 
 - Puede haber varias sesiones de agentes trabajando a la vez en este repo: comprueba `git status` y que el HEAD es tuyo antes de stagear, commitear o reescribir historia.
 - Aplica siempre KISS: la solución más pequeña y simple que resuelva el caso actual.
+- **Tablas nuevas en `public` (Supabase, desde el 30-10-2026):** Supabase ya no concede
+  acceso por la Data API a las tablas nuevas, tampoco a `service_role`. La migración que
+  crea una tabla que use el backend incluye
+  `GRANT SELECT, INSERT, UPDATE, DELETE ON public.<tabla> TO service_role;` (solo las
+  operaciones que use) y, si tiene `serial`/`bigserial`,
+  `GRANT USAGE ON SEQUENCE public.<secuencia> TO service_role;`. `service_role` se salta
+  RLS, no los GRANT: sin ellos el backend recibe `42501 permission denied`. Nunca
+  `GRANT ... ON ALL TABLES` ni grants a `anon`/`authenticated` fuera de lo documentado.
+  Ante un `42501`, conceder solo lo que falta sobre ese objeto en una migración nueva.
+  Contexto: `~/ai_projects/presupuestor/docs/plans/2026-10-20-supabase-data-api-grants-30-octubre.md`.
