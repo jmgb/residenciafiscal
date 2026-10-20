@@ -699,3 +699,10 @@ Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --
   `public` con `REVOKE ALL` + `GRANT EXECUTE` explícitos por función. El cambio no afecta
   a funciones, así que esta regla solo aplica si algún día se crea una tabla en `public`.
   Contexto: `~/ai_projects/presupuestor/docs/plans/2026-10-20-supabase-data-api-grants-30-octubre.md`.
+  Red de seguridad (2026-10-21): en producción `postgres` tiene además privilegios por
+  defecto **globales** para `service_role` (CRUD de tablas, USAGE/SELECT de secuencias), que
+  el revoke por esquema de Supabase no puede retirar; si falta el GRANT, el backend ya no
+  recibe `42501`. Sigue escribiendo el GRANT explícito: deja la migración autocontenida y
+  reproducible en entornos nuevos. SQL:
+  `~/ai_projects/finance-news/migrations/046_service_role_global_defaults.sql`, aplicado en
+  los 10 proyectos.
