@@ -695,4 +695,7 @@ Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --
   RLS, no los GRANT: sin ellos el backend recibe `42501 permission denied`. Nunca
   `GRANT ... ON ALL TABLES` ni grants a `anon`/`authenticated` fuera de lo documentado.
   Ante un `42501`, conceder solo lo que falta sobre ese objeto en una migración nueva.
+  Hoy `public` no tiene tablas: los datos viven en `private` y se accede solo por RPC de
+  `public` con `REVOKE ALL` + `GRANT EXECUTE` explícitos por función. El cambio no afecta
+  a funciones, así que esta regla solo aplica si algún día se crea una tabla en `public`.
   Contexto: `~/ai_projects/presupuestor/docs/plans/2026-10-20-supabase-data-api-grants-30-octubre.md`.
