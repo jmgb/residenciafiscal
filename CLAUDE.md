@@ -698,6 +698,8 @@ Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --
   Hoy `public` no tiene tablas: los datos viven en `private` y se accede solo por RPC de
   `public` con `REVOKE ALL` + `GRANT EXECUTE` explícitos por función. El cambio no afecta
   a funciones, así que esta regla solo aplica si algún día se crea una tabla en `public`.
+  Desde el 2026-10-21 (`20261020233000_close_client_default_privileges.sql`) una tabla nueva
+  en `public` ya no nace con privilegios para `anon`/`authenticated`.
   Contexto: `~/ai_projects/presupuestor/docs/plans/2026-10-20-supabase-data-api-grants-30-octubre.md`.
   Red de seguridad (2026-10-21): en producción `postgres` tiene además privilegios por
   defecto **globales** para `service_role` (CRUD de tablas, USAGE/SELECT de secuencias), que
