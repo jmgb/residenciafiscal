@@ -150,6 +150,14 @@ volvió a 6.14.2. Los avisos de pypdf 6.14.2 (corregidos entre 6.15.0 y 6.19.0)
 quedan aceptados mientras tanto: los PDF de entrada son resoluciones oficiales
 descargadas por el propio pipeline, no subidas de terceros.
 
+Son todos de denegación de servicio (tiempo o memoria disparados con un PDF
+manipulado) y pypdf solo corre en los procesos batch offline, sin ningún endpoint
+de subida. Por eso el 2026-10-21 se descartaron en GitHub las 28 alertas
+Dependabot de pypdf 6.14.2 como *tolerable risk*: con el `ignore` de pypdf en
+`.github/dependabot.yml`, cada alerta abierta hacía fallar el security update job
+(`all_versions_ignored`). Si aparece una alerta nueva de pypdf que no sea DoS, se
+reevalúa en vez de descartarla.
+
 Para subir pypdf: cambiar el pin, reextraer cada artefacto con la nueva versión,
 revisar el diff de `raw_page_text` página a página (cualquier cambio de texto es
 un cambio del corpus citado), regenerar los exports y actualizar los fixtures que

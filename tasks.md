@@ -36,5 +36,9 @@ Prioridades: **P0** bloquea producción · **P1** evita regresión relevante · 
   **2026-09-03:** dependabot ignora ahora `pypdf` en `.github/dependabot.yml`. Reabría el bump cada
   lunes dentro del grupo `python-runtime` y arrastraba al resto del grupo —openai, pydantic— a un PR
   que no se podía mergear, así que el pin se sostenía a base de cerrar PRs a mano.
+  **2026-10-21:** 28 alertas Dependabot de pypdf 6.14.2 (16 high, todas DoS por PDF manipulado,
+  corregidas entre 6.15.0 y 6.19.0) descartadas como *tolerable risk*: el `ignore` hacía fallar el
+  security update job (`all_versions_ignored`). Motivo en `docs/jurisprudence/VERBATIM_CORPUS.md`.
+  Al migrar, el objetivo mínimo es 6.19.0.
   **Cierre:** `pypdf` sin pin exacto en `pyproject.toml`, sin la entrada `ignore` de dependabot, y
   `make test` en verde con los artefactos regenerados.
