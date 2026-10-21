@@ -137,6 +137,26 @@ El Markdown verbatim debe renderizar `raw_page_text`. Si por una limitación
 técnica fuera imprescindible transformar un carácter de control, la regla, el
 conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
 
+## Versión del extractor
+
+`pyproject.toml` fija `pypdf==6.14.2` a propósito. Cada artefacto registra
+`extractor.version` y `validate_verbatim_artifact` reextrae el PDF con esa misma
+versión; con otra, la validación falla («extractor no coincide con la versión de
+validación») y los exports del caso piloto dejan de ser byte a byte idénticos.
+
+El 2026-10-21 se probó subir a 6.19.0 por avisos de `pip-audit` y fallaron 5 tests
+(`test_verbatim_pilot_artifact.py`, `test_export_jurisprudence_case*.py`); se
+volvió a 6.14.2. Los avisos de pypdf 6.14.2 (corregidos entre 6.15.0 y 6.19.0)
+quedan aceptados mientras tanto: los PDF de entrada son resoluciones oficiales
+descargadas por el propio pipeline, no subidas de terceros.
+
+Para subir pypdf: cambiar el pin, reextraer cada artefacto con la nueva versión,
+revisar el diff de `raw_page_text` página a página (cualquier cambio de texto es
+un cambio del corpus citado), regenerar los exports y actualizar los fixtures que
+fijan la versión (`tests/fixtures/*/valid_minimal.json`,
+`tests/jurisprudence_case_v3_factory.py`). Es un cambio de datos, no una subida
+rutinaria de dependencias.
+
 ## Contrato v1
 
 ### JSON canónico

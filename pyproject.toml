@@ -27,7 +27,10 @@ dependencies = [
     # con la instalada. Todo lo versionado hoy se extrajo con 6.14.2, así
     # que cualquier otra versión invalida los artefactos. Subirla exige
     # regenerarlos y revisar los bytes resultantes.
-    "pypdf==6.19.0",
+    # Pin exacto a propósito: el corpus verbatim registra `pypdf/<versión>` y la validación
+    # reextrae con esa misma versión. Subirlo exige reextraer y revalidar el corpus
+    # (docs/jurisprudence/VERBATIM_CORPUS.md §Versión del extractor).
+    "pypdf==6.14.2",
     # Runtime
     "aiohttp>=3.14.3,<4.0.0",
     "pydantic>=2.13.4,<3.0.0",
