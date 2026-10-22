@@ -5,7 +5,7 @@ set -euo pipefail
 REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
-BUNDLE="${DEEP_RESEARCH_BUNDLE:-$REPO_ROOT/output/deep-research/rollout-106-v2.bundle.zip}"
+BUNDLE="${DEEP_RESEARCH_BUNDLE:-$REPO_ROOT/output/deep-research/rollout-106-v3.bundle.zip}"
 SCHEMA_SOURCE="${DEEP_RESEARCH_SCHEMA_SOURCE:-$REPO_ROOT/schemas/residenciafiscal-deep-research-draft-v2.schema.json}"
 CODEX_RUNTIME_SOURCE="${DEEP_RESEARCH_CODEX_RUNTIME_SOURCE:-$REPO_ROOT/src/deep_research_codex_runtime.py}"
 CORPUS_RUNTIME_SOURCE="${DEEP_RESEARCH_CORPUS_RUNTIME_SOURCE:-$REPO_ROOT/src/deep_research_corpus.py}"

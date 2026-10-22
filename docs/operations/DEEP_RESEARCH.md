@@ -27,7 +27,7 @@ puede crear primero una conversación sin protección.
 | Perfil | `residenciafiscal-deep-research-v2` |
 | Modelo | `gpt-6-luna` |
 | Esfuerzo | `max` (hasta el 2026-10-23, `high`) |
-| Bundle | `rollout-106/2` |
+| Bundle | `rollout-106/3` (hasta el 2026-10-23, `rollout-106/2`) |
 | Borrador de Codex | `residenciafiscal-deep-research-draft/2` |
 | Resultado confiable | `residenciafiscal-deep-research-output/2` |
 | Fuentes | JSON local únicamente |
@@ -48,6 +48,15 @@ también fuera del modelo. Las tarifas y su `pricing_version` se generan desde e
 catálogo versionado de `llm_gateway` y viajan dentro del bundle; el runtime no
 mantiene ninguna tabla de precios propia. Si no hay uso medible, el coste queda
 `UNAVAILABLE`, nunca como cero.
+
+`rollout-106/3` (2026-10-23) sustituye a `rollout-106/2`, cuya tarifa declaraba
+`gpt-5.6-luna`: desde el paso a `gpt-6-luna` el runtime abortaba antes de lanzar
+Codex (`versioned model pricing is invalid`) y ningún job podía completarse. Se
+reconstruyó desde el repositorio, así que incluye además el corpus con los
+anclajes y la carga de la prueba mejorados desde agosto. Un bundle instalado no
+se sobrescribe: corregirlo exige un id nuevo en `src/deep_research_bundle.py`,
+en Alfredo (`app/deep_research_profile.py`) y en `DEEP_RESEARCH_BUNDLE_ID` de
+Netlify, con el mismo orden de transición que el esfuerzo.
 
 ## Corpus y herramientas
 
@@ -187,7 +196,7 @@ En Netlify `production`, sin prefijo `VITE_` salvo la bandera de build:
 | `ALFREDO_JOBS_URL` | URL HTTPS de `/jobs` de Alfredo |
 | `ALFREDO_HMAC_SECRET` | secreto compartido del contrato VA–Alfredo |
 | `DEEP_RESEARCH_CALLBACK_URL` | `https://residenciafiscal.org/api/deep-research-callback` |
-| `DEEP_RESEARCH_BUNDLE_ID` | `rollout-106/2` |
+| `DEEP_RESEARCH_BUNDLE_ID` | `rollout-106/3` |
 | `VITE_DEEP_RESEARCH_ENABLED` | `true` para mostrar la UI |
 
 `SUPABASE_URL` y `SUPABASE_SECRET_KEY` son obligatorias porque las RPC de jobs
@@ -310,7 +319,7 @@ determinista antes de publicar cualquier texto.
 
 ## Verificación operativa tras un cambio
 
-1. Comprobar el manifiesto instalado: bundle `rollout-106/2`, formato
+1. Comprobar el manifiesto instalado: bundle `rollout-106/3`, formato
    `json-only` y hashes válidos.
 2. Confirmar en Alfredo el perfil v2, `gpt-6-luna`, esfuerzo `max` y las tres
    herramientas exactas.

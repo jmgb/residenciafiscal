@@ -97,7 +97,7 @@ def test_prepare_materializa_jobs_y_bloquea_el_holdout(tmp_path: Path) -> None:
         output_dir=output,
     )
 
-    assert plan.bundle_id == "rollout-106/2"
+    assert plan.bundle_id == "rollout-106/3"
     assert [item.question_id for item in plan.questions] == ["GEN-01", "DAY-01"]
     assert [item.job_id for item in plan.jobs] == ["c2-2026-08-03-01", "c2-2026-08-03-02"]
     assert json.loads((output / "PLAN.json").read_text()) == plan.model_dump(mode="json")

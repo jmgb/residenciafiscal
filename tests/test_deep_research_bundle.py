@@ -134,7 +134,7 @@ def test_bundle_contiene_solo_material_permitido_y_hashes_verificables(tmp_path:
             "retrieval/rollout-106.corpus.json",
             "jurisdicciones/san-1-2020.roles.json",
         }
-        assert archived_manifest["bundle_id"] == "rollout-106/2"
+        assert archived_manifest["bundle_id"] == "rollout-106/3"
         assert archived_manifest["scope"]["format"] == "json-only"
         pricing = json.loads(archive.read("metadata/model-pricing.json"))
         from llm_gateway.models import CATALOG_VERSION, lookup_model

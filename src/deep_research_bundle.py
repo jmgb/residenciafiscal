@@ -203,7 +203,7 @@ def build_deep_research_bundle(
     source_manifest_relative = rollout_manifest_path.relative_to(project_root).as_posix()
     manifest = DeepResearchBundleManifest(
         schema_version=BUNDLE_SCHEMA_VERSION,
-        bundle_id="rollout-106/2",
+        bundle_id="rollout-106/3",
         source_manifest_path=source_manifest_relative,
         source_manifest_sha256=sha256_file(rollout_manifest_path),
         files=dict(sorted(file_hashes.items())),
@@ -340,7 +340,7 @@ def main(argv: list[str] | None = None) -> int:
     build.add_argument(
         "--output",
         type=Path,
-        default=Path("output/deep-research/rollout-106-v2.bundle.zip"),
+        default=Path("output/deep-research/rollout-106-v3.bundle.zip"),
     )
     verify = subparsers.add_parser("verify")
     verify.add_argument("bundle", type=Path)
