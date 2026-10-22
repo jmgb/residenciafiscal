@@ -2,7 +2,7 @@
 # verificada por hash en el host; la imagen no clona el repositorio ni trae
 # credenciales. No incluye los PDF de fuente: el runtime necesita el caso v3 y
 # las páginas verbatim derivadas, no los originales.
-FROM python:3.13-slim
+FROM python:3.13.17-slim-trixie
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
