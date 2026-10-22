@@ -47,7 +47,12 @@ describe('Sentry frontend runtime', () => {
         dsn: 'https://public@example.ingest.sentry.io/1',
         environment: 'production',
         release: 'residencia-fiscal-frontend@test',
-        sendDefaultPii: false,
+        dataCollection: {
+          userInfo: false,
+          cookies: false,
+          httpHeaders: false,
+          httpBodies: [],
+        },
         tracesSampleRate: 0.2,
       })
     );
