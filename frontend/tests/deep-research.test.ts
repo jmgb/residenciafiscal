@@ -274,17 +274,14 @@ describe('deep research HTTP contract', () => {
       return vi.mocked(store.update).mock.calls[0]?.[0];
     };
 
-    // Un job admitido con `high` antes del paso a `max` sigue pudiendo cerrar.
-    expect(await callback('high', 'high')).toEqual(
+    expect(await callback('max', 'max')).toEqual(
       expect.objectContaining({
         status: 'completed',
-        result: expect.objectContaining({ reasoningEffort: 'high' }),
+        result: expect.objectContaining({ reasoningEffort: 'max' }),
       })
     );
-    expect(await callback('max', 'max')).toEqual(
-      expect.objectContaining({ result: expect.objectContaining({ reasoningEffort: 'max' }) })
-    );
     for (const [payloadEffort, resultEffort] of [
+      ['high', 'high'],
       ['medium', 'medium'],
       ['max', 'high'],
     ]) {

@@ -6,12 +6,11 @@ export const DEEP_RESEARCH_MODEL = 'gpt-6-luna';
 export const DEEP_RESEARCH_REASONING_EFFORT = 'max';
 // Resultados guardados antes del 2026-10-23 declaran `high`: siguen siendo legibles.
 export type DeepResearchReasoningEffort = 'high' | typeof DEEP_RESEARCH_REASONING_EFFORT;
-// Transición `high` -> `max` (2026-10-23): un job admitido con `high` antes del
-// despliegue aún puede devolver su callback. Retirar `high` cuando no quede
-// ninguno en vuelo (deadline de 900 s).
+// El callback acepta solo este valor. Cambiarlo exige una transición: añadir el
+// nuevo aquí y en Alfredo, desplegar, y retirar el antiguo cuando no quede ningún
+// job suyo en vuelo (deadline de 900 s). Ver docs/operations/DEEP_RESEARCH.md.
 export const DEEP_RESEARCH_CALLBACK_REASONING_EFFORTS: readonly DeepResearchReasoningEffort[] = [
   DEEP_RESEARCH_REASONING_EFFORT,
-  'high',
 ];
 export const DEEP_RESEARCH_ALLOWED_TOOLS = [
   'corpus.search_corpus',
