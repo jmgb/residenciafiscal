@@ -19,6 +19,7 @@ from deep_research_corpus import CorpusRepository
 from deep_research_corpus_mcp import dispatch_tool
 from deep_research_verifier import (
     _claim_is_grounded,
+    _verify_tool_audit,
     finalize_deep_research_output,
     load_model_pricing,
 )
@@ -179,6 +180,44 @@ def test_runtime_command_has_only_corpus_tools_and_receives_request_over_stdin(t
         'mcp_servers.corpus.enabled_tools=["search_corpus","read_case","read_verbatim_page"]'
         in joined
     )
+
+
+def test_runtime_keeps_code_mode_off_without_disabling_its_host(tmp_path):
+    """Codex CLI 0.163.0 emite un item `error` si se desactiva `code_mode_host`, y
+    el verificador rechaza cualquier entrada del audit que no sea del corpus."""
+    command = codex_command(
+        codex_bin="/usr/local/bin/codex",
+        model="gpt-6-luna",
+        reasoning_effort="max",
+        schema_path=tmp_path / "schema.json",
+        mcp_path=tmp_path / "mcp.py",
+        bundle_path=tmp_path / "bundle",
+    )
+
+    assert "features.code_mode=false" in command
+    assert not any(arg.startswith("features.code_mode_host") for arg in command)
+
+
+def test_codex_error_items_reach_the_audit_and_fail_the_verifier():
+    """Fija por qué importa el test anterior: un item `error` de Codex no se
+    descarta, entra en el audit y el verificador lo rechaza."""
+    stdout = "\n".join(
+        json.dumps(event)
+        for event in (
+            {"type": "thread.started", "thread_id": "thread-1"},
+            {
+                "type": "item.completed",
+                "item": {"id": "item_0", "type": "error", "message": "Code Mode is unavailable"},
+            },
+            {"type": "item.completed", "item": {"type": "agent_message", "text": "{}"}},
+        )
+    )
+
+    _, _, _, audit = parse_codex_events(stdout)
+
+    assert audit == [{"type": "error", "server": "codex", "tool": "error", "status": "completed"}]
+    with pytest.raises(ValueError, match="unexpected call"):
+        _verify_tool_audit("pregunta", audit)
 
 
 def test_runtime_resolves_schema_inside_its_immutable_release(tmp_path):

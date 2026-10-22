@@ -25,7 +25,7 @@ describe('deep research assistant message', () => {
         costMeasurement: 'UNAVAILABLE',
         pricingVersion: 'test-catalog',
         model: 'gpt-5-codex',
-        reasoningEffort: 'high',
+        reasoningEffort: 'max',
         latencyMs: 4200,
       },
     };

@@ -26,13 +26,22 @@ puede crear primero una conversación sin protección.
 |---|---|
 | Perfil | `residenciafiscal-deep-research-v2` |
 | Modelo | `gpt-6-luna` |
-| Esfuerzo | `high` |
+| Esfuerzo | `max` (hasta el 2026-10-23, `high`) |
 | Bundle | `rollout-106/2` |
 | Borrador de Codex | `residenciafiscal-deep-research-draft/2` |
 | Resultado confiable | `residenciafiscal-deep-research-output/2` |
 | Fuentes | JSON local únicamente |
 
-Frontend y Alfredo fijan y validan el modelo y el esfuerzo. Codex no puede
+Frontend y Alfredo fijan y validan el modelo y el esfuerzo. El esfuerzo pasó de
+`high` a `max` el 2026-10-23 para seguir la política de agentes (Luna siempre con
+`max`). Es un contrato exacto en cuatro sitios —`DEEP_RESEARCH_REASONING_EFFORT` en
+`frontend/netlify/functions/deep-research/contracts.ts` y `src/deep_research_policy.py`,
+`app/deep_research_profile.py` de Alfredo y el callback—, así que un cambio de
+esfuerzo se despliega en este orden para no rechazar ningún job: Alfredo admite
+ambos valores; Netlify pasa a enviar el nuevo y su callback acepta los dos;
+cuando no queda ningún job del valor anterior en vuelo (deadline 900 s), Alfredo
+y el callback retiran el antiguo. Las salidas guardadas con `high` siguen siendo
+legibles. Codex no puede
 declarar esos metadatos: el runtime instalado del perfil los añade al resultado
 después de ejecutar y verificar el borrador. Latencia y coste se calculan
 también fuera del modelo. Las tarifas y su `pricing_version` se generan desde el
@@ -235,6 +244,14 @@ Docker y falla si el rootfs no es read-only o si el origen host exacto de
 `runtime` no está montado en la misma ruta del contenedor con `RW=false`. Un
 reintento valida también hashes y permisos `0555`/`0444` de la release existente.
 
+El wrapper desactiva por `-c features.*=false` todas las superficies de Codex
+salvo el MCP del corpus, con una excepción: `code_mode_host`. Con `code_mode`
+apagado no ejecuta nada, y desde Codex CLI 0.163.0 desactivarlo emite al
+arrancar un item `error` que el wrapper anota en el audit y el verificador
+rechaza, tumbando cada job. Al subir Codex CLI en el contenedor hay que repetir
+el comando exacto de `codex_command()` y comprobar que no aparece ningún item
+fuera de `agent_message`, `reasoning`, `todo_list` y `mcp_tool_call`.
+
 El contenedor dedicado debe conservar estos dos mounts separados:
 
 ```text
@@ -295,7 +312,7 @@ determinista antes de publicar cualquier texto.
 
 1. Comprobar el manifiesto instalado: bundle `rollout-106/2`, formato
    `json-only` y hashes válidos.
-2. Confirmar en Alfredo el perfil v2, `gpt-6-luna`, esfuerzo `high` y las tres
+2. Confirmar en Alfredo el perfil v2, `gpt-6-luna`, esfuerzo `max` y las tres
    herramientas exactas.
 3. Lanzar un job que requiera una cita y revisar que el audit contenga
    `search_corpus` y `read_verbatim_page` completadas.

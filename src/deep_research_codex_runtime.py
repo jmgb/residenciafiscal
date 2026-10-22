@@ -42,6 +42,10 @@ El verificador descarta el campo text, valida las citas y deriva la respuesta vi
 Devuelve text y limits vacíos. Para pregunta, abstención o error devuelve también claims y evidence vacíos; el verificador usa mensajes fijos y seguros.
 Devuelve únicamente el JSON del schema solicitado. No incluyas modelo, coste, tokens, latencia, razonamiento interno ni cadena de pensamiento."""
 
+# `code_mode_host` NO se desactiva: con `code_mode` ya apagado no ejecuta nada, y
+# desde Codex CLI 0.163.0 apagarlo emite al arrancar un item `error` («Code Mode is
+# unavailable because code-mode host is disabled») que `parse_codex_events` anota
+# en el audit y que `_verify_tool_audit` rechaza, tumbando todos los jobs.
 _DISABLED_FEATURES = (
     "apps",
     "auth_elicitation",
@@ -49,7 +53,6 @@ _DISABLED_FEATURES = (
     "browser_use_external",
     "browser_use_full_cdp_access",
     "code_mode",
-    "code_mode_host",
     "computer_use",
     "enable_mcp_apps",
     "goals",

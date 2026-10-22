@@ -93,12 +93,37 @@ def test_el_contrato_python_acepta_la_salida_v2_con_esfuerzo_fijado() -> None:
         limits=(),
         claims=(),
         evidence=(),
-        reasoning_effort="high",
+        reasoning_effort="max",
         pricing_version="test-catalog",
     )
 
     assert result.schema_version.endswith("/2")
-    assert result.reasoning_effort == "high"
+    assert result.reasoning_effort == "max"
+
+
+@pytest.mark.parametrize(("effort", "valid"), [("high", True), (None, False), ("medium", False)])
+def test_v2_output_keeps_historical_high_and_requires_a_known_effort(effort, valid):
+    from deep_research_contracts import DeepResearchOutput
+
+    def build():
+        return DeepResearchOutput(
+            schema_version="residenciafiscal-deep-research-output/2",
+            job_id="job-1",
+            request_id="request-1",
+            status="pregunta",
+            text="",
+            limits=(),
+            claims=(),
+            evidence=(),
+            reasoning_effort=effort,
+            pricing_version="test-catalog",
+        )
+
+    if valid:
+        assert build().reasoning_effort == effort
+    else:
+        with pytest.raises(ValueError):
+            build()
 
 
 @pytest.mark.parametrize(

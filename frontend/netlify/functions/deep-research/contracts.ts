@@ -3,7 +3,16 @@ export const DEEP_RESEARCH_DRAFT_SCHEMA = 'residenciafiscal-deep-research-draft/
 export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/2';
 export const DEEP_RESEARCH_LEGACY_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
 export const DEEP_RESEARCH_MODEL = 'gpt-6-luna';
-export const DEEP_RESEARCH_REASONING_EFFORT = 'high';
+export const DEEP_RESEARCH_REASONING_EFFORT = 'max';
+// Resultados guardados antes del 2026-10-23 declaran `high`: siguen siendo legibles.
+export type DeepResearchReasoningEffort = 'high' | typeof DEEP_RESEARCH_REASONING_EFFORT;
+// Transición `high` -> `max` (2026-10-23): un job admitido con `high` antes del
+// despliegue aún puede devolver su callback. Retirar `high` cuando no quede
+// ninguno en vuelo (deadline de 900 s).
+export const DEEP_RESEARCH_CALLBACK_REASONING_EFFORTS: readonly DeepResearchReasoningEffort[] = [
+  DEEP_RESEARCH_REASONING_EFFORT,
+  'high',
+];
 export const DEEP_RESEARCH_ALLOWED_TOOLS = [
   'corpus.search_corpus',
   'corpus.read_case',
@@ -45,7 +54,7 @@ export interface DeepResearchOutput {
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
   pricingVersion: string;
   model: string;
-  reasoningEffort: typeof DEEP_RESEARCH_REASONING_EFFORT;
+  reasoningEffort: DeepResearchReasoningEffort;
   latencyMs: number;
 }
 

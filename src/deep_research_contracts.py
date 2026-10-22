@@ -94,13 +94,14 @@ class DeepResearchOutput(JurisprudenceCaseModel):
     cost_measurement: CostMeasurement = "UNAVAILABLE"
     pricing_version: NonEmptyText | None = None
     model: NonEmptyText = "unavailable"
-    reasoning_effort: Literal["high"] | None = None
+    # `max` desde el 2026-10-23; las salidas v2 anteriores declaran `high`.
+    reasoning_effort: Literal["high", "max"] | None = None
     latency_ms: Annotated[int, Field(ge=0)] = 0
 
     @model_validator(mode="after")
     def validate_claim_references(self) -> DeepResearchOutput:
-        if self.schema_version.endswith("/2") and self.reasoning_effort != "high":
-            raise ValueError("la salida v2 exige reasoning_effort high")
+        if self.schema_version.endswith("/2") and self.reasoning_effort is None:
+            raise ValueError("la salida v2 exige reasoning_effort")
         if self.schema_version.endswith("/2") and self.pricing_version is None:
             raise ValueError("la salida v2 exige pricing_version")
         evidence_count = len(self.evidence)

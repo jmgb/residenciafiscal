@@ -96,7 +96,7 @@ export interface DeepResearchOutput {
   costMeasurement: 'ACTUAL' | 'ESTIMATED' | 'UNAVAILABLE';
   pricingVersion: string;
   model: string;
-  reasoningEffort: 'high';
+  reasoningEffort: 'high' | 'max';
   latencyMs: number;
 }
 

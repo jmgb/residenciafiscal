@@ -104,7 +104,7 @@ describe('deep research HTTP contract', () => {
         runtime: expect.objectContaining({
           profile: 'residenciafiscal-deep-research-v2',
           model: 'gpt-6-luna',
-          reasoning_effort: 'high',
+          reasoning_effort: 'max',
           sandbox: 'read-only',
           mode: 'exec_json',
           output_schema: 'residenciafiscal-deep-research-draft/2',
@@ -173,7 +173,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         pricing_version: 'test-catalog',
@@ -195,7 +195,7 @@ describe('deep research HTTP contract', () => {
         cost_microusd: 1200,
         cost_measurement: 'ACTUAL',
         model: 'gpt-6-luna',
-        reasoning_effort: 'high',
+        reasoning_effort: 'max',
         latency_ms: 4200,
       }),
     });
@@ -228,11 +228,70 @@ describe('deep research HTTP contract', () => {
       expect.objectContaining({
         result: expect.objectContaining({
           model: 'gpt-6-luna',
-          reasoningEffort: 'high',
+          reasoningEffort: 'max',
           pricingVersion: 'test-catalog',
         }),
       })
     );
+  });
+
+  it('records the effort a job actually ran with and rejects any other', async () => {
+    const callback = async (payloadEffort: string, resultEffort: string) => {
+      const store = createStore();
+      const handler = createDeepResearchCallbackHandler({
+        secret: 'secret',
+        store,
+        verifySignature: vi.fn(async () => true),
+      });
+      await handler(
+        new Request('https://residenciafiscal.example/api/deep-research-callback', {
+          method: 'POST',
+          body: JSON.stringify({
+            job_id: 'deep-job-effort',
+            status: 'completed',
+            model: 'gpt-6-luna',
+            reasoning_effort: payloadEffort,
+            final_text: JSON.stringify({
+              schema_version: 'residenciafiscal-deep-research-output/2',
+              pricing_version: 'test-catalog',
+              job_id: 'deep-job-effort',
+              request_id: 'deep-job-effort',
+              status: 'pregunta',
+              text: 'Faltan hechos.',
+              limits: [],
+              claims: [],
+              evidence: [],
+              cost_microusd: null,
+              cost_measurement: 'UNAVAILABLE',
+              model: 'gpt-6-luna',
+              reasoning_effort: resultEffort,
+              latency_ms: 1200,
+            }),
+          }),
+          headers: { 'X-Alfredo-Timestamp': '1770000000', 'X-Alfredo-Signature': 'valid' },
+        })
+      );
+      return vi.mocked(store.update).mock.calls[0]?.[0];
+    };
+
+    // Un job admitido con `high` antes del paso a `max` sigue pudiendo cerrar.
+    expect(await callback('high', 'high')).toEqual(
+      expect.objectContaining({
+        status: 'completed',
+        result: expect.objectContaining({ reasoningEffort: 'high' }),
+      })
+    );
+    expect(await callback('max', 'max')).toEqual(
+      expect.objectContaining({ result: expect.objectContaining({ reasoningEffort: 'max' }) })
+    );
+    for (const [payloadEffort, resultEffort] of [
+      ['medium', 'medium'],
+      ['max', 'high'],
+    ]) {
+      expect(await callback(payloadEffort, resultEffort)).toEqual(
+        expect.objectContaining({ status: 'error', result: null })
+      );
+    }
   });
 
   it('rejects authenticated v1 callbacks instead of downgrading v2 verification', async () => {
@@ -241,7 +300,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-v1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/1',
         job_id: 'deep-job-v1',
@@ -285,7 +344,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         pricing_version: 'test-catalog',
@@ -321,7 +380,7 @@ describe('deep research HTTP contract', () => {
         cost_microusd: null,
         cost_measurement: 'UNAVAILABLE',
         model: 'gpt-6-luna',
-        reasoning_effort: 'high',
+        reasoning_effort: 'max',
         latency_ms: 4200,
       }),
     });
@@ -359,7 +418,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-5.5',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
@@ -407,7 +466,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
@@ -469,7 +528,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
@@ -522,7 +581,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
@@ -563,7 +622,7 @@ describe('deep research HTTP contract', () => {
       job_id: 'deep-job-1',
       status: 'completed',
       model: 'gpt-6-luna',
-      reasoning_effort: 'high',
+      reasoning_effort: 'max',
       final_text: JSON.stringify({
         schema_version: 'residenciafiscal-deep-research-output/2',
         job_id: 'deep-job-1',
