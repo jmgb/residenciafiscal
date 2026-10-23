@@ -8,7 +8,7 @@ updates:
   directory: /
   schedule:
     interval: weekly
-    time: 05:00
+    time: "05:00"
     timezone: Europe/Madrid
     day: monday
   cooldown:
@@ -38,7 +38,7 @@ updates:
   directory: /frontend
   schedule:
     interval: weekly
-    time: 05:00
+    time: "05:00"
     timezone: Europe/Madrid
     day: monday
   cooldown:
@@ -66,7 +66,7 @@ updates:
   directory: /
   schedule:
     interval: monthly
-    time: 05:00
+    time: "05:00"
     timezone: Europe/Madrid
   cooldown:
     default-days: 7
