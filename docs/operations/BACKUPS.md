@@ -169,6 +169,16 @@ Ajustables por entorno sin tocar código: `BACKUP_R2_BUCKET`,
 `BACKUP_RETENTION_DAYS` (30), `BACKUP_POOLER_HOST`,
 `BACKUP_FRESHNESS_MAX_AGE_HOURS` (30) y las rutas `BACKUP_*_ENV_FILE`.
 
+**Clave R2 (desde el 2026-10-30).** Las `R2_*` de `~/residenciafiscal/.env` en
+`alfredo` (`158.220.112.17`) son el account token de Cloudflare
+`r2-alfredo-residenciafiscal`: "Workers R2 Storage Bucket Item Write" solo en
+`residenciafiscal-backup` y con filtro de IP de `alfredo`. No puede listar ni crear
+buckets, cambiar su configuración ni tocar los de otras apps; la antigua clave
+compartida `mvp-apps-backend` ya no existe. En local, `r2-local-dev` vive solo en
+el `.env` de localhost y nunca se copia al VPS. Bucket o VPS nuevo: editar el token
+en Cloudflare (R2 → Manage API tokens) o crear uno; nunca reutilizar la clave de
+otra app.
+
 ## Instalación en el VPS
 
 ```bash
@@ -178,7 +188,8 @@ git clone https://github.com/jmgb/residenciafiscal.git ~/residenciafiscal
 
 # 2. .env mínimo con las claves de backup de la tabla anterior y, si se instala
 #    el purgado, CHAT_RETENTION_DAYS con el plazo aprobado
-#    (copiar los valores desde el .env local; nunca versionarlo)
+#    (R2_* = token r2-alfredo-residenciafiscal, nunca la clave del .env local;
+#    el resto desde el .env local; nunca versionarlo)
 vi ~/residenciafiscal/.env
 chmod 600 ~/residenciafiscal/.env
 
@@ -195,13 +206,8 @@ un servidor 17— y AWS CLI v2, copia las units, recarga systemd y activa los tr
 timers.
 
 El bucket `residenciafiscal-backup` debe existir antes del primer backup. Se crea
-desde el panel de Cloudflare (R2 → Create bucket, ubicación *Auto*) o con las
-credenciales del `.env`:
-
-```bash
-aws s3 mb s3://residenciafiscal-backup \
-  --endpoint-url "https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"
-```
+desde el panel de Cloudflare (R2 → Create bucket, ubicación *Auto*): la clave R2
+del VPS no puede crear buckets.
 
 **El checkout del VPS no se actualiza solo.** Tras cambiar cualquier script o
 unit hay que sincronizar las rutas operativas indicadas abajo y volver a lanzar
