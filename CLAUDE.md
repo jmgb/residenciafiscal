@@ -1,3 +1,9 @@
+> **Acceso SSH de los agentes desde este equipo (2026-11-02).** Para los agentes de trabajo que Jesús lance en su Ubuntu/WSL, con el usuario local `ubuntu`: `ssh alfredo-admin` y `ssh finanzas-admin` conectan como `prod-admin`, con `sudo -n` disponible.
+>
+> El acceso es permanente, sin passphrase ni caducidad de cuatro horas: SSH carga las claves locales automáticamente, también tras reiniciar. No pedir desbloqueos, ejecutar `ssh-add` ni buscar credenciales SSH en `.env`. Comprobación sin cambios: `ssh -o BatchMode=yes -o ConnectTimeout=10 alfredo-admin 'sudo -n true'` (o `finanzas-admin`).
+>
+> Esta nota prevalece sobre referencias SSH antiguas de esta guía para **esas sesiones locales**. En otros equipos, Javier y los demás colaboradores necesitan su propia cuenta/clave. No compartir privadas ni copiarlas a CI. Se conservan las restricciones de CI, runners y jobs autónomos; disponer de acceso no valida un comando de deploy ni autoriza publicaciones o reactivaciones. Seguir el procedimiento vigente del proyecto.
+
 # CLAUDE.md
 
 Guía para Claude Code en el proyecto **Residencia Fiscal** — [residenciafiscal.org](https://residenciafiscal.org).
