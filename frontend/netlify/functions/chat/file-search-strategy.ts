@@ -26,7 +26,7 @@ export interface Interaction {
   output_text?: string;
   steps?: Array<{
     type?: string;
-    content?: Array<{ text?: string; annotations?: FileCitation[] }>;
+    content?: Array<{ type?: string; text?: string; annotations?: FileCitation[] }>;
   }>;
   usage?: {
     total_input_tokens?: number;
