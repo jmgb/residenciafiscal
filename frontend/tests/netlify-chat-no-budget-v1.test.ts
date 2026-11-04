@@ -5,11 +5,6 @@ const { createClient } = vi.hoisted(() => ({
 }));
 
 vi.mock('@supabase/supabase-js', () => ({ createClient }));
-vi.mock('@google/genai', () => ({
-  GoogleGenAI: class GoogleGenAI {
-    interactions = { create: vi.fn() };
-  },
-}));
 vi.mock('openai', () => ({
   default: class OpenAI {
     responses = { create: vi.fn() };

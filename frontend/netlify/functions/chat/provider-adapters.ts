@@ -1,4 +1,3 @@
-import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
 import { ChatDiagnosticError, providerDiagnostic } from './chat-diagnostics';
 import type {
@@ -46,6 +45,9 @@ const structuredDraftSchema = {
     },
   },
 };
+
+const GEMINI_INTERACTIONS_URL = 'https://generativelanguage.googleapis.com/v1beta/interactions';
+const GEMINI_TIMEOUT_MS = 50_000;
 
 const fileSearchDraftSchema = {
   type: 'object',
@@ -133,8 +135,63 @@ export const createOpenAIWriter = (apiKey: string): StructuredWriter => {
   };
 };
 
+class GeminiRequestError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+    readonly code?: string
+  ) {
+    super(`${status} ${message}`);
+    this.name = 'GeminiRequestError';
+  }
+}
+
+const geminiRequestError = async (response: Response): Promise<GeminiRequestError> => {
+  const body = await response.text();
+  let payload: { error?: { code?: unknown; message?: unknown } } | null = null;
+  try {
+    payload = JSON.parse(body);
+  } catch {
+    // Un cuerpo no JSON no aporta más que el estado.
+  }
+  const { code, message } = payload?.error ?? {};
+  return new GeminiRequestError(
+    response.status,
+    typeof message === 'string' ? message : 'respuesta inesperada',
+    typeof code === 'string' ? code : undefined
+  );
+};
+
+/** Último tramo continuo de texto del modelo: el `output_text` que calculaba el SDK. */
+const interactionOutputText = (steps: NonNullable<Interaction['steps']>): string => {
+  const parts: string[] = [];
+  let collecting = false;
+  for (const step of [...steps].reverse()) {
+    if (step.type === 'user_input') break;
+    if (step.type === 'thought') continue;
+    if (step.type !== 'model_output') {
+      if (collecting) break;
+      continue;
+    }
+    for (const item of [...(step.content ?? [])].reverse()) {
+      if (item.type === 'text') {
+        collecting = true;
+        parts.push(item.text ?? '');
+      } else if (collecting) {
+        return parts.reverse().join('');
+      }
+    }
+  }
+  return parts.reverse().join('');
+};
+
+const normalizedInteraction = (interaction: Interaction): Interaction => {
+  const steps = Array.isArray(interaction.steps) ? interaction.steps : [];
+  const outputText = interactionOutputText(steps);
+  return { ...interaction, steps, ...(outputText ? { output_text: outputText } : {}) };
+};
+
 export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions['interact'] => {
-  const client = new GoogleGenAI({ apiKey });
   return async (input: GeminiInteractionInput, signal: AbortSignal): Promise<Interaction> => {
     const fileSearchTool = {
       type: 'file_search' as const,
@@ -142,8 +199,14 @@ export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions
       ...(input.metadataFilter ? { metadata_filter: input.metadataFilter } : {}),
     };
     try {
-      return (await client.interactions.create(
-        {
+      const response = await fetch(GEMINI_INTERACTIONS_URL, {
+        method: 'POST',
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
+        body: JSON.stringify({
           model: input.model,
           input: input.prompt,
           tools: [fileSearchTool],
@@ -154,13 +217,14 @@ export const createGeminiInteraction = (apiKey: string): GeminiFileSearchOptions
           },
           generation_config: { max_output_tokens: 2_000, tool_choice: 'any' },
           store: false,
-        },
-        {
-          maxRetries: 0,
-          timeout: 50_000,
-          fetchOptions: { signal },
-        }
-      )) as unknown as Interaction;
+        }),
+        signal: AbortSignal.any([signal, AbortSignal.timeout(GEMINI_TIMEOUT_MS)]),
+      });
+      const contentType = response.headers.get('content-type')?.toLowerCase() ?? '';
+      if (response.status !== 200 || !contentType.startsWith('application/json')) {
+        throw await geminiRequestError(response);
+      }
+      return normalizedInteraction((await response.json()) as Interaction);
     } catch (error) {
       if (error instanceof ChatDiagnosticError) throw error;
       throw new ChatDiagnosticError(
