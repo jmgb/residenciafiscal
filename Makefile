@@ -209,13 +209,13 @@ setup:
 
 dev:
 	@set -m; \
-	uv run python -m fastapi dev $(PYTHON_SOURCE)/api/main.py --host $(HOST) --port $(PORT) & api_pid=$$!; \
+	uv run uvicorn --app-dir $(PYTHON_SOURCE) api.main:app --reload --reload-dir $(PYTHON_SOURCE) --host $(HOST) --port $(PORT) & api_pid=$$!; \
 	(cd frontend && npm run dev) & frontend_pid=$$!; \
 	trap 'kill "$$api_pid" "$$frontend_pid" 2>/dev/null || true' EXIT INT TERM; \
 	wait -n "$$api_pid" "$$frontend_pid"
 
 dev-api:
-	uv run python -m fastapi dev $(PYTHON_SOURCE)/api/main.py --host $(HOST) --port $(PORT)
+	uv run uvicorn --app-dir $(PYTHON_SOURCE) api.main:app --reload --reload-dir $(PYTHON_SOURCE) --host $(HOST) --port $(PORT)
 
 dev-frontend:
 	cd frontend && npm run dev

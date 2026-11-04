@@ -18,8 +18,6 @@ classifiers = [
 
 dependencies = [
     # LLM providers
-    "openai>=2.54.0,<4.0.0",
-    "groq>=1.7.0,<2.0.0",
     "google-genai>=2.20.0,<3.0.0",
     # PDF / datos / exports
     # Pin exacto: los artefactos verbatim y los casos de jurisprudencia
@@ -32,11 +30,11 @@ dependencies = [
     # (docs/jurisprudence/VERBATIM_CORPUS.md §Versión del extractor).
     "pypdf==6.14.2",
     # Runtime
-    "aiohttp>=3.14.3,<4.0.0",
+    "httpx2>=2.12.0,<3.0.0",
     "pydantic>=2.13.4,<3.0.0",
     "python-dotenv>=1.2.3,<2.0.0",
     # API HTTP (make dev)
-    "fastapi[standard]>=0.141.1,<1.0.0",
+    "fastapi>=0.141.1,<1.0.0",
     "uvicorn[standard]>=0.52.4,<1.0.0",
     "sentry-sdk[fastapi]>=2.68.1,<3.0.0",
     "rapidfuzz>=3.14.5,<4.0.0",
@@ -71,7 +69,6 @@ dev = [
     "pytest-timeout>=2.4.0",
     "ruff>=0.16.4",
     "mypy>=2.3.1",
-    "httpx2>=2.12.0,<3.0.0",
 ]
 
 [tool.pytest.ini_options]
