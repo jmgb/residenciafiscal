@@ -714,3 +714,7 @@ Tras una feature/cambio **relevante**, lanzar automáticamente `/codex:review --
   reproducible en entornos nuevos. SQL:
   `~/ai_projects/finance-news/migrations/046_service_role_global_defaults.sql`, aplicado en
   los 10 proyectos.
+
+## Secretos
+
+Leer o ver un secreto en una sesión no obliga a rotarlo. Se rotan cada 90 días para minimizar riesgos, salvo que se expongan en un sitio público o a terceros o queden invalidados: entonces, en el momento.

@@ -42,3 +42,7 @@ Prioridades: **P0** bloquea producción · **P1** evita regresión relevante · 
   Al migrar, el objetivo mínimo es 6.19.0.
   **Cierre:** `pypdf` sin pin exacto en `pyproject.toml`, sin la entrada `ignore` de dependabot, y
   `make test` en verde con los artefactos regenerados.
+
+## Mantenimiento periódico
+
+- [ ] **Rotar secretos de alto impacto cada 90 días (próxima: 2027-02-03).** Alcance en este repo: Supabase, R2, Cloudflare. El resto, una vez al año o tras un incidente. Al terminar, mover la fecha 90 días. Excepción: un secreto expuesto en un sitio público o a terceros (repo, Sentry, email, servicio externo) o invalidado se rota en el momento; una aparición en la transcripción local de una sesión espera al calendario.
