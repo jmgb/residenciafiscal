@@ -7,14 +7,18 @@ contra el schema privado.
 
 from __future__ import annotations
 
+import asyncio
 import os
+import re
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 from typing import Any, Protocol
 
-import aiohttp
+import httpx2
 
 from chat_strategy_models import ComparisonReport
+
+_JSON_CONTENT_TYPE = re.compile(r"^application/(?:[\w.+-]+?\+)?json")
 
 
 class SupabaseRpcClient(Protocol):
@@ -30,32 +34,50 @@ class SupabaseRpcError(RuntimeError):
         self.status = status
 
 
-class AiohttpSupabaseRpcClient:
+class HttpSupabaseRpcClient:
     """Cliente mínimo para PostgREST RPC con una credencial server-side."""
 
-    def __init__(self, url: str, key: str, *, timeout_seconds: float = 10.0) -> None:
+    def __init__(
+        self,
+        url: str,
+        key: str,
+        *,
+        timeout_seconds: float = 10.0,
+        transport: httpx2.AsyncBaseTransport | None = None,
+    ) -> None:
         if not url or not key:
             raise ValueError("faltan credenciales de Supabase")
         self._rpc_url = f"{url.rstrip('/')}/rest/v1/rpc"
         self._key = key
-        self._timeout = aiohttp.ClientTimeout(total=timeout_seconds)
+        self._timeout_seconds = timeout_seconds
+        self._transport = transport
 
     async def rpc(self, function_name: str, parameters: dict[str, Any]) -> Any:
-        async with aiohttp.ClientSession(timeout=self._timeout) as session:
-            async with session.post(
-                f"{self._rpc_url}/{function_name}",
-                headers={
-                    "apikey": self._key,
-                    "authorization": f"Bearer {self._key}",
-                    "content-type": "application/json",
-                },
-                json=parameters,
-            ) as response:
-                if response.status >= 400:
-                    raise SupabaseRpcError(function_name, response.status)
-                if response.status == 204:
-                    return None
-                return await response.json()
+        # `httpx2` limita cada fase por separado. El plazo es de la llamada completa
+        # y `asyncio.timeout` emite el `TimeoutError` que ya traduce `api.chat`.
+        async with asyncio.timeout(self._timeout_seconds):
+            async with httpx2.AsyncClient(
+                timeout=None,
+                follow_redirects=True,
+                trust_env=False,
+                transport=self._transport,
+            ) as client:
+                response = await client.post(
+                    f"{self._rpc_url}/{function_name}",
+                    headers={
+                        "apikey": self._key,
+                        "authorization": f"Bearer {self._key}",
+                        "content-type": "application/json",
+                    },
+                    json=parameters,
+                )
+        if response.status_code >= 400:
+            raise SupabaseRpcError(function_name, response.status_code)
+        if response.status_code == 204:
+            return None
+        if not _JSON_CONTENT_TYPE.match(response.headers.get("content-type", "").lower()):
+            raise SupabaseRpcError(function_name, 502)
+        return response.json() if response.content.strip() else None
 
 
 @dataclass(frozen=True)
@@ -180,4 +202,4 @@ def get_production_chat_repository() -> SupabaseChatRepository | None:
             "CHAT_FILE_SEARCH_PROMPT_VERSION", "file-search-authority-v8"
         ),
     )
-    return SupabaseChatRepository(AiohttpSupabaseRpcClient(url, key), experiment)
+    return SupabaseChatRepository(HttpSupabaseRpcClient(url, key), experiment)

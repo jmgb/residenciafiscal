@@ -15,6 +15,9 @@ documentación.
 | `openai` | 7.1.0 |
 | `zod` | 4.4.3 |
 
+Son las versiones de aquel spike. `@netlify/blobs` ya no es dependencia del proyecto:
+el criterio 5 descartó su compare-and-swap y ningún código lo usa.
+
 El spike se ejecutó con un corpus sintético de **891 KB**, calibrado para igualar
 el tamaño que tendrá `_corpus.ts` con las 106 sentencias reales (el JSONL de
 origen pesa 888 KB). Medir con un bundle más pequeño habría dado un CPU
