@@ -31,6 +31,8 @@ Prioridades: **P0** bloquea producción · **P1** evita regresión relevante · 
 
 ## P2
 
+- 🔲 **Decidir #72: sustituir `@google/genai` por `fetch` en el chat.** Es un borrador con el smoke en rojo desde la auditoría de dependencias del 4 nov 2026 (`repos/residenciafiscal.md`, candidata 7). **Cierre:** smoke en verde e integrado, o PR cerrado.
+
 - 🔲 **`pypdf` está pineado en `==6.14.2` porque los artefactos guardan la versión del extractor.**
   Los casos de `knowledge/jurisprudencia-v3/` y los artefactos verbatim registran
   `extractor: pypdf/6.14.2`, y `src/verbatim_validation.py:49` compara ese valor con
