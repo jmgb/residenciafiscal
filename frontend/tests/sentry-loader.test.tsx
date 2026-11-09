@@ -19,6 +19,10 @@ const config = {
   tracesSampleRate: 0.1,
 };
 
+function BrokenComponent({ error }: { error: Error }): never {
+  throw error;
+}
+
 describe('Sentry lazy loader', () => {
   beforeEach(() => {
     runtimeMock.captureReactException.mockClear();
@@ -70,14 +74,11 @@ describe('Sentry lazy loader', () => {
   it('captures render errors after showing the fallback', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const error = new Error('render failed');
-    const BrokenComponent = () => {
-      throw error;
-    };
     await initializeSentry(config);
 
     render(
       <SentryErrorBoundary fallback={<p>Fallback visible</p>}>
-        <BrokenComponent />
+        <BrokenComponent error={error} />
       </SentryErrorBoundary>
     );
 
