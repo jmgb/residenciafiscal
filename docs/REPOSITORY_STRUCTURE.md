@@ -103,3 +103,77 @@ automatización son puntos de entrada reconocibles por personas o herramientas.
 Los secretos (`.env`), dependencias instaladas, caches y enlaces personales
 pueden existir localmente en la raíz, pero están ignorados y no forman parte de
 la estructura versionada.
+
+
+## Ficheros públicos del repositorio
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Ficheros públicos del repositorio
+
+El repo **es público** desde el 1 de agosto de 2026. Al tocar estas piezas, ten
+en cuenta:
+
+- **`LICENSE` (MIT) cubre código y documentación, no los documentos jurídicos.**
+  Hay dos corpus de fuente con condiciones propias, cada uno con su aviso legal
+  y su inventario `readme.txt`: las sentencias del CENDOJ en `sentencias/` y los
+  textos del BOE en `normativa/`. Si añades ficheros a cualquiera de los dos,
+  actualiza su inventario y comprueba su `AVISO_LEGAL.md`. El del BOE recuerda
+  además que la única versión con valor jurídico es la edición oficial.
+  - **`LICENSE` contiene el texto MIT y nada más**, byte a byte igual a la
+    plantilla canónica: cualquier nota añadida hace que GitHub clasifique el
+    repositorio como `Other` y deje de mostrar la licencia. La salvedad sobre
+    los corpus vive en [`NOTICE.md`](../NOTICE.md), que es donde se amplía.
+- **Nada de rutas absolutas** (`/home/ubuntu/...`) en código ni en documentación
+  pública: usa rutas relativas a la raíz del repositorio. La única excepción son
+  las units de systemd de `scripts/backup/`, `scripts/agentic/` y
+  `scripts/privacy/`, donde `WorkingDirectory` y `ExecStart` **exigen** una ruta
+  absoluta; ahí la ruta describe un checkout operativo concreto, no el de nadie
+  más. Los scripts y tests que comprueban esas units repiten la misma ruta y
+  entran en la excepción por lo mismo. Las dos rutas que aparecen son **dos
+  máquinas distintas, no dos checkouts del mismo host**: `~/residenciafiscal` es
+  el único checkout del VPS `alfredo`, y de él cuelgan como units de *sistema*
+  el backup, la retención del chat y el informe semanal de tráfico;
+  `~/ai_projects/residenciafiscal` es el checkout de la máquina de informes,
+  donde el resumen diario de coste del chat corre como unit de *usuario* para no
+  llevar `SUPABASE_SECRET_KEY` al VPS.
+- **Ningún workflow de CI usa secrets configurados**, y debe seguir así. Ver la
+  sección de calidad de código.
+- **Antes de tocar la visibilidad o de purgar historia**, el escaneo de
+  referencia es `gitleaks git --log-opts="--all --remotes"` sobre todas las refs,
+  no solo sobre `main`. Las excepciones se declaran en `.gitleaks.toml` con el
+  valor exacto, nunca excluyendo un directorio.
+- El correo personal no aparece en ningún fichero versionado: los canales de
+  contacto de `SECURITY.md` y `CODE_OF_CONDUCT.md` son los avisos privados de
+  GitHub. **Sí está en los metadatos de los commits anteriores al 2026-08-11**,
+  que son igual de públicos; desde esa fecha se firma con la dirección
+  `users.noreply.github.com` y no se reescribe la historia, porque cambiar los
+  345 SHA rompería los enlaces a commits de la documentación sin despublicar
+  nada de lo que ya está en forks y cachés.
+
+
+## Planes y diseños de trabajo (superpowers)
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Planes y diseños de trabajo (superpowers)
+
+`docs/superpowers/` (`plans/` y `specs/`) está en `.gitignore` y es scratch
+local: contiene rutas absolutas y referencias a otros proyectos privados, y no
+se versiona ni se sanea retroactivamente. La regla de promoción:
+
+- Un **diseño** que fija decisiones vigentes se gradúa al aprobarse: se mueve
+  al área correspondiente de `docs/` (p. ej.
+  `docs/product/INTERNATIONAL_ARCHITECTURE.md`), se enlaza desde
+  `docs/README.md` y desde entonces se mantiene ahí, no en el scratch.
+- **Un documento que haya que enlazar desde `TASKS.md` u otro fichero versionado
+  se promociona siempre**, aunque todavía no esté aprobado: se mueve a `docs/`
+  con su estado declarado en la cabecera («propuesta», «valoración»,
+  «investigación»...) y se enlaza con ruta relativa normal. Nunca se enlaza
+  desde un fichero versionado hacia `docs/superpowers/` —el enlace nacería roto
+  para cualquiera que clone el repo— ni se quita ese directorio del
+  `.gitignore`, que contiene material no saneado.
+- Antes de promocionar, comprobar que no contiene rutas absolutas, referencias
+  a repos privados ni credenciales: el repositorio es público.
+- Los **planes de ejecución** (checklists paso a paso) no se promocionan nunca:
+  su valor termina con la ejecución y el registro real es la historia de git.

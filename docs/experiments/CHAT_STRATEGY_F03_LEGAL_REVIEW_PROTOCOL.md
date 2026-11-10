@@ -134,3 +134,20 @@ se abre la clave para completar el informe a mano.
 Una revisión de ocho parejas sirve como baseline y detector de fallos. No basta
 para declarar una estrategia ganadora ni para autorizar por sí sola el rollout
 de cinco a 106 sentencias.
+
+
+## Comandos make de la evaluación F0.3 y ausencias
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+- `make build-chat-f03-review` — regenera el paquete ciego y su plantilla desde
+  los ocho artefactos locales, sin LLM; valida todos sus hashes.
+- `make build-chat-f03-legal-bundle` — genera el único ZIP que debe recibir el
+  abogado, sin clave X/Y ni resultados previos.
+- `make validate-chat-f03-review` — comprueba mecánicamente que el formulario
+  jurídico cerrado no deja casillas, puntuaciones ni declaraciones pendientes.
+- `make validate-chat-absences-candidate` — comprueba hashes, páginas y
+  literalidad de la propuesta aislada `DAY-05`; no la aplica al corpus.
+- `make compile-chat-f03-results CONFIRM_REVEAL=1
+  CHAT_F03_REVIEW_COMMIT=<commit>` — revela X/Y únicamente después de cerrar y
+  versionar la revisión jurídica.

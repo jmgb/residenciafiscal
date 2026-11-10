@@ -366,3 +366,52 @@ El frontend regenera sus datos en el `prebuild`
 - **Los 95 convenios publican solo su artículo de residencia.** Las citas al
   art. 19 (pensiones), 13 (ganancias) o 20 aparecen en el corpus y quedan sin
   resolver. Ampliar la selección es una decisión jurídica, no técnica.
+
+
+## Corpus normativo: reglas y comandos
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+### Corpus normativo
+
+`normativa/es/` guarda el XML del BOE de las 106 normas que deciden la
+residencia fiscal (LIRPF, LGT, reglamentos y los 98 CDI de España), versionado
+igual que los PDF de `sentencias/` y con su propio `AVISO_LEGAL.md`. Dos
+convenios en vigor —Venezuela y Paraguay— no salen del índice consolidado del
+BOE y están declarados a mano en `CDI_NO_CONSOLIDADO`; se bajan del diario, pero
+**no están derogados**, y el manifiesto separa por eso la `fuente` del grupo.
+`knowledge/normativa/es/preceptos/` contiene un Markdown **por artículo**, no por
+ley: se publica el precepto que decide o prueba la residencia, no las 270
+secciones de la LIRPF.
+
+No hay LLM en este pipeline y por eso tampoco hay verificación de citas: el
+texto se copia de un XML ya estructurado por el BOE, y hay tests —verificados
+por mutación— de que cada párrafo publicado es idéntico al de origen. Rige el
+mismo invariante que en las sentencias: el articulado no se reescribe. **No
+normalizar a NFKC**: convierte los ordinales `1.º` en `1.o` y eso es reescribir
+la norma.
+
+Cuatro preceptos son de normas **derogadas** (TR del IRPF de 2004 y los CDI con
+Argentina de 1992 y Reino Unido de 1975). Están porque rigen ejercicios que el
+corpus enjuicia, y se rotulan como tales para que nadie los lea como derecho
+vigente.
+
+`knowledge/normativa/es/enlaces/` resuelve las citas de las sentencias al
+precepto, declarando la certeza y la redacción aplicable al ejercicio. El
+directorio lleva el **código de jurisdicción** (ISO 3166-1 alfa-2) para que un
+segundo país no exija migrar nada.
+
+El artículo de residencia de cada CDI es además el contenido público de las
+páginas de país: `/francia` publica el convenio España-Francia con su enlace
+oficial al BOE. Por eso esas rutas ya no son `noindex` y entran en el sitemap;
+el contrato está en [`docs/product/COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
+
+Selección de preceptos, detección del artículo de residencia de cada CDI,
+vigencia por ejercicio, normas derogadas, enlace con la jurisprudencia y el
+contrato para añadir un país están en [`docs/normativa/NORMATIVA.md`](NORMATIVA.md).
+
+```bash
+make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
+make export-normativa     # regenera los 110 preceptos (sin red, sin LLM)
+make enlazar-normativa    # resuelve las citas de las sentencias a los preceptos
+```

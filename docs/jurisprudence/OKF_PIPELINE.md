@@ -479,3 +479,33 @@ referencia manual ya existen en
 [`experiments/CHAT_QUESTION_PILOT_5.md`](../experiments/CHAT_QUESTION_PILOT_5.md).
 No bloquea la generación de borradores, pero el contrato de datos que revela sí
 debe fijarse antes de regenerar las cinco y ampliar a 106.
+
+
+## Exportación jurisprudencial OKF
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+### Exportación jurisprudencial OKF
+
+El ciclo JSONL → perfil jurídico → verificación de todas las citas anidadas →
+sidecars → Markdown OKF está implementado para el piloto y para la muestra fija
+de cinco definida en `sentencias/okf_muestra_5.json`. El enfoque es híbrido:
+el agente propone cuestiones con anclajes literales y Python valida fuentes,
+hashes, modelos, citas y renderizado. No editar `knowledge/jurisprudencia/` ni
+`knowledge/jurisprudencia-muestra-5/` a mano: se regeneran con el pipeline. Las
+revisiones viven en `knowledge/annotations/` y nunca pueden alterar el texto
+legal. Arquitectura, contrato, resultado y gates:
+[`docs/jurisprudence/OKF_PIPELINE.md`](OKF_PIPELINE.md).
+
+El bundle OKF/2 legado usa `knowledge/jurisprudencia/`. El caso, perfiles e
+índices v3 usan exclusivamente `knowledge/jurisprudencia-v3/`; no mezclar ambos
+árboles, porque tienen contratos y manifiestos distintos.
+
+El contrato campo por campo y el orden de secciones están en
+[`docs/jurisprudence/OKF_MARKDOWN_CONTRACT.md`](OKF_MARKDOWN_CONTRACT.md). La
+representación íntegra por páginas recomendada para un futuro RAG se especifica
+en [`docs/jurisprudence/VERBATIM_CORPUS.md`](VERBATIM_CORPUS.md). Su contrato, extractor
+crudo, JSON Schema y artefacto piloto de `SAN 1210/2023` ya están implementados
+y validados. `src/pdf_page_extraction.py` produce texto saneado para matching y no
+debe usarse como fuente verbatim; esa responsabilidad pertenece exclusivamente
+a `src/verbatim_extraction.py`.

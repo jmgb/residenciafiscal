@@ -361,3 +361,69 @@ del EEE, el plazo de 15 días y el límite de las copias. Siguen pendientes fuer
 del código: los contratos de encargo verificados con Supabase, OpenAI y Google,
 la validación jurídica formal del texto, el consentimiento previo de la analítica
 y la decisión sobre el representante del art. 27 RGPD.
+
+
+## API HTTP y runtime del chat
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## API HTTP
+
+`make dev` levanta FastAPI en `127.0.0.1:8010` y el frontend Vite en
+`127.0.0.1:5174` (el puerto 8010 evita chocar con el backend de presupuestor).
+Para levantar solo la API, usa `make dev-api`. Las rutas y esquemas están en `/docs`.
+
+La API no expone `/analizar`. `GET /config` publica la política del chat y los
+catálogos jurídicos. `POST /chat` implementa la comparación A/B por SSE, pero
+falla cerrado salvo activación y autenticación explícitas. Es el prototipo local
+y se conserva como posible arquitectura futura para peticiones de más de 60 s;
+no es el target de la V1. El runtime conversacional ya está portado a una
+Netlify Function TypeScript: ejecuta las estrategias activas en paralelo, usa un
+deadline global y persiste consultas, mensajes, estados y coste observado mediante RPC atómicas
+en Supabase, y mantiene Luna `high`. El chat sostiene conversación: el servidor
+reconstruye hasta seis turnos y 12 KiB desde el ledger —nunca desde el cuerpo de la
+petición— y da a cada estrategia **solo su propio hilo**, para no contaminar la
+comparación A/B. Una pregunta autosuficiente recupera exactamente igual que
+antes; una referencia explícita como «ese caso» se contextualiza aunque contenga
+términos jurídicos, y el resto usa contexto en recuperación solo cuando no se
+sostiene solo; «el año anterior» no se trata como referencia conversacional.
+Leer el hilo exige además un secreto local de 256 bits: Supabase
+guarda únicamente su SHA-256 y el UUID visible de `/c/...` no autoriza nada. El
+rollout admite bundles antiguos sin secreto solo en un hilo efímero y sin
+contexto, ignorando su UUID. Al migrar historiales locales se invalidan los
+`comparisonId` y jobs activos ligados al ledger anterior; los resultados
+profundos ya terminados se conservan.
+El coste nunca decide la admisión; el schema es privado y el navegador no accede
+directamente. Contrato y operación:
+[`docs/operations/SUPABASE_CHAT.md`](SUPABASE_CHAT.md). Producción
+conserva el stub hasta completar configuración, privacidad y Deploy Preview;
+decisión, despliegue y rollback:
+[`docs/operations/CHAT_DEPLOYMENT.md`](CHAT_DEPLOYMENT.md).
+
+
+## Tablas nuevas en public: GRANT a service_role
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+- **Tablas nuevas en `public` (Supabase, desde el 30-10-2026):** Supabase ya no concede
+  acceso por la Data API a las tablas nuevas, tampoco a `service_role`. La migración que
+  crea una tabla que use el backend incluye
+  `GRANT SELECT, INSERT, UPDATE, DELETE ON public.<tabla> TO service_role;` (solo las
+  operaciones que use) y, si tiene `serial`/`bigserial`,
+  `GRANT USAGE ON SEQUENCE public.<secuencia> TO service_role;`. `service_role` se salta
+  RLS, no los GRANT: sin ellos el backend recibe `42501 permission denied`. Nunca
+  `GRANT ... ON ALL TABLES` ni grants a `anon`/`authenticated` fuera de lo documentado.
+  Ante un `42501`, conceder solo lo que falta sobre ese objeto en una migración nueva.
+  Hoy `public` no tiene tablas: los datos viven en `private` y se accede solo por RPC de
+  `public` con `REVOKE ALL` + `GRANT EXECUTE` explícitos por función. El cambio no afecta
+  a funciones, así que esta regla solo aplica si algún día se crea una tabla en `public`.
+  Desde el 2026-10-21 (`20261020233000_close_client_default_privileges.sql`) una tabla nueva
+  en `public` ya no nace con privilegios para `anon`/`authenticated`.
+  Contexto: `~/ai_projects/presupuestor/docs/plans/2026-10-20-supabase-data-api-grants-30-octubre.md`.
+  Red de seguridad (2026-10-21): en producción `postgres` tiene además privilegios por
+  defecto **globales** para `service_role` (CRUD de tablas, USAGE/SELECT de secuencias), que
+  el revoke por esquema de Supabase no puede retirar; si falta el GRANT, el backend ya no
+  recibe `42501`. Sigue escribiendo el GRANT explícito: deja la migración autocontenida y
+  reproducible en entornos nuevos. SQL:
+  `~/ai_projects/finance-news/migrations/046_service_role_global_defaults.sql`, aplicado en
+  los 10 proyectos.

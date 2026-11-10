@@ -331,3 +331,38 @@ suficiente para perderlos. `frontend/src/lib/contribution.ts` es la fuente únic
   `/peru` compartida en redes anuncia eso y no contenido que no tenemos.
 
 Al publicar un país, esta sección de su página desaparece junto con la plantilla.
+
+
+## Un país, un corpus: copy y circuito de colaboración
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Un país, un corpus
+
+El proyecto es colaborativo. Solo España tiene corpus, y no por una limitación
+del código —el pipeline es agnóstico de la jurisdicción—, sino porque abrir un
+país exige criterio jurídico-tributario. La invitación se dirige por eso a
+**expertos en fiscalidad y tributación internacional**, y pide tres cosas: una
+fuente pública oficial con condiciones de reutilización claras, el precepto
+nacional equivalente al art. 9 LIRPF y **un especialista que valide** el análisis
+del modelo. El criterio para arrancar el siguiente país no es el orden de llegada:
+es el primero que reúna fuente reutilizable y revisor comprometido.
+
+Al escribir copy sobre esto, dos límites:
+
+- **No se afirma que el corpus español esté revisado por expertos.** Las
+  anotaciones de `knowledge/annotations/` están en `status: proposed` y la web
+  advierte de que el análisis lo genera un modelo. Lo que sí se afirma es que su
+  jurisprudencia **se delimitó** con criterio tributario, y la validación se
+  enuncia como requisito para publicar, no como hecho consumado.
+- **El registro es profesional.** «Lo puede abrir cualquiera» abarata el trabajo y
+  describe mal el requisito; hay un test que impide que esa fórmula reaparezca.
+
+Canales, perfiles y ruta viven en `frontend/src/lib/contribution.ts`; la página
+pública del circuito es `/colaborar`. Las páginas de país sin corpus también son
+indexables desde que publican contenido bilateral propio y verificable; eso no
+significa que tengan jurisprudencia nacional. El recuento no se escribe en
+prosa: sale de `countryRoutes.json` y cambia al reservar una ruta. El formulario es
+[`.github/ISSUE_TEMPLATE/aportar_pais.yml`](../../.github/ISSUE_TEMPLATE/aportar_pais.yml).
+Contrato operativo en [`CONTRIBUTING.md`](../../CONTRIBUTING.md) y estado de las páginas
+en [`docs/product/COUNTRY_PAGES.md`](COUNTRY_PAGES.md).

@@ -334,3 +334,20 @@ una capa separada:
 
 No se recomienda usarla para inyectar las 106 sentencias completas en cada
 llamada. Su valor está en permitir recuperación selectiva, trazable y económica.
+
+
+## Extracción de texto de los PDF (no hay OCR)
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+### Extracción de texto de los PDF (no hay OCR)
+
+Los PDF del CENDOJ son digitales con capa de texto embebida. El corpus verbatim
+se extrae con **pypdf** en `src/verbatim_extraction.py`: Python puro,
+determinista y sin LLM. Conserva texto crudo por página, índices físicos y
+hashes; el agente trabaja después sobre ese artefacto.
+
+No hay OCR en el proyecto: un PDF escaneado (imagen, sin capa de texto) devuelve
+texto vacío y no se procesa. Si algún día llega uno, las opciones son OCR
+clásico (`ocrmypdf`/Tesseract) o un modelo de visión — no añadirlo antes de que
+exista el caso real.

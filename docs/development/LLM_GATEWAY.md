@@ -275,3 +275,41 @@ mutable ni una ruta local.
 El lock resuelve además `cryptography==50.0.0` a través de `google-auth`. Se
 actualizó desde `49.0.0` para cerrar la alerta alta de GitHub sobre el descifrado
 PKCS#7; no cambia el pin ni el contrato público de `neutral-llm-gateway`.
+
+
+## Llamadas a modelos: V1 Node y prototipo Python
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+### Llamadas a modelos: V1 Node y prototipo Python
+
+La V1 de producción es la Netlify Function TypeScript autosuficiente. Sus
+adaptadores Node llaman directamente a OpenAI Responses para A y a Gemini
+Interactions + File Search para B. A se ejecuta una sola vez; B permite un
+segundo y último intento con el mismo modelo únicamente cuando una respuesta
+sustantiva no aporta ninguna cita verificable. No existe fallback de modelo ni
+`gpt_request` en este runtime Node legado.
+
+El prototipo Python conservado fuera del despliegue V1 sí usa la fachada
+funcional `gpt_request` de `src/llm_gateway_facade.py`: mantiene el contrato de
+entrada y traduce a **`neutral-llm-gateway`**, fijado a una referencia
+inmutable. `src/chat_model_policy.py` declara `gpt-6-luna` + `high` por
+defecto y `gemini-3.8-flash` como fallback cross-provider explícito; el gateway registra el
+modelo efectivo, uso, alertas y coste. Los límites y tests de ambos composition
+roots están en
+[`docs/development/LLM_GATEWAY.md`](LLM_GATEWAY.md).
+
+En el prototipo Python no hay tabla de precios ni de enrutado local: las tarifas
+y el proveedor salen del catálogo versionado del paquete. En la V1 Node, los
+adaptadores mínimos y sus esquemas pertenecen al runtime del producto; no deben
+crecer con routing ni fallback.
+
+En el chat, un coste no calculable nunca se presenta como cero y la medición
+distingue `ACTUAL`, `ESTIMATED` y `UNAVAILABLE`.
+
+El paquete no tiene tools, ficheros ni streaming, y es deliberado; por eso el
+chat B sigue usando Gemini File Search por su cuenta. Rige la **regla de los dos
+consumidores**: nada entra en su API pública hasta que dos proyectos distintos
+lo necesiten, y lo que solo necesita este repositorio se resuelve con un puerto.
+Corte, trampas del contrato con OpenAI, evidencia de paridad y cómo subir de
+versión: [`docs/development/LLM_GATEWAY.md`](LLM_GATEWAY.md).

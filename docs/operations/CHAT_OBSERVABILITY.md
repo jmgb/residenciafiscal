@@ -352,3 +352,54 @@ credibilidad de todos.
   enviado nunca; y **con el timer del digest parado de verdad** avisó aunque el
   estado estuviera fresco, quedando el timer restaurado a `active`. Una
   ejecución del service terminó en `0/SUCCESS` sin mandar nada.
+
+
+## Errores en producción (Sentry) y costes del chat
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Errores en producción (Sentry)
+
+Los **tres** runtimes mandan a Sentry, cada uno a su proyecto: la API FastAPI
+(`src/api/sentry_config.py`), la SPA React (`frontend/src/lib/sentry-runtime.ts`)
+y, desde el 1 de agosto de 2026, la Netlify Function del chat
+(`frontend/netlify/functions/chat/observability.ts` → `residencia-fiscal-chat`).
+
+Los tres fallan cerrado —sin `*_ENABLED` y sin DSN no arrancan— y borran
+cabeceras, cookies y cuerpo antes de enviar el evento, con
+`send_default_pii=False`. Es deliberado: una pregunta del chat es dato fiscal y
+no puede acabar en un servicio de errores. `init_sentry()` además se desactiva
+bajo pytest, porque la suite provoca excepciones a propósito.
+
+**La Function no usa el SDK de Sentry, y es deliberado.** Construye el envelope a
+mano con `fetch` porque `@sentry/node` captura breadcrumbs de consola y contexto
+del runtime por defecto, y este runtime loguea eventos estructurados por consola;
+desactivar cada captura automática es más frágil que escribir el payload. Lo que
+sale hacia Sentry es exactamente lo que se lee en `buildEnvelope`: código de
+fallo, etapa, `request_id` y nombre de clase del error, **nunca** la pregunta, la
+respuesta ni el `message` de la excepción del proveedor, que puede traer el
+prompt incrustado. `error.name` se sanea contra `[A-Za-z][A-Za-z0-9_]{0,39}` y
+cualquier otra cosa se descarta como `unknown`. El coste **no** va a Sentry: no
+es un error y su canal es el resumen diario sobre el ledger de Supabase.
+
+Variables en `.env.example` y tabla en [`README.md`](../../README.md#errores-en-producción-sentry).
+Dos trampas: todo `VITE_*` viaja **público** en el bundle (el DSN puede, un token
+no), y `SENTRY_TOKEN`/`SENTRY_ORG_SLUG` son solo del build de sourcemaps y nunca
+llevan ese prefijo. El token de Sentry filtrado en la historia de git el
+2026-03-19 está revocado; la variable canónica vigente es `SENTRY_TOKEN`.
+
+Los tres proyectos alimentan el autofix compartido con Presupuestor. El contrato
+repo-local, los gates de publicación y los guardrails operativos están en
+[`docs/operations/AUTOFIX.md`](AUTOFIX.md). Si se añade un cuarto
+runtime de Sentry, hay que declararlo también en `.autofix.yml` y en el registro
+del control plane; instrumentarlo por sí solo no lo hace resoluble.
+
+## Costes del chat
+
+Cada respuesta real del chat debe registrar por separado tokens, modelo
+efectivo, coste marginal en USD, medición y latencia. **El coste no se muestra
+en la interfaz**: es una cifra operativa, no información para quien consulta.
+Vive en el ledger de Supabase y, para diagnóstico local, en la consola del
+navegador (`[chat] respuesta`). La tarjeta de investigación profunda conserva su
+propia línea de coste. Las antiguas cifras por PDF son históricas y no se usan
+para presupuestar: ya no se analizan sentencias mediante el gateway.

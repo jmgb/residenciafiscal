@@ -339,3 +339,20 @@ Todavía no está autorizado. La muestra debe permitir:
 - Las decisiones humanas futuras deben vivir en sidecars; no se edita un
   resultado generado para hacerlo pasar.
 - Localizar texto no demuestra que la interpretación jurídica sea correcta.
+
+
+## Pipeline de verificación de citas y rollout
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+Las `frases_clave` del JSONL se contrastan con los PDF mediante un pipeline
+determinista, sin llamadas LLM. El rollout está limitado primero a una sentencia,
+después a una muestra fija de cinco y solo entonces al corpus completo. El
+resultado separa localización de evidencia y fidelidad literal, y registra tanto
+el índice físico del PDF como la etiqueta impresa. La arquitectura, las
+puntuaciones, el manifiesto, el resultado del piloto y los gates están en
+[`docs/jurisprudence/CITATION_VERIFICATION.md`](CITATION_VERIFICATION.md).
+
+```bash
+make verify-citations  # hoy: SAN_1071_2025.pdf, 4 citas, umbral provisional 85
+```

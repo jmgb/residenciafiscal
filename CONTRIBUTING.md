@@ -196,3 +196,39 @@ job de CI que consuma secrets. Si hace falta, va en un workflow aparte con
 Abre una issue con la plantilla correspondiente. Si el fallo implica una clave,
 un dato personal o una vulnerabilidad, **no abras una issue pública**: sigue
 [`SECURITY.md`](SECURITY.md).
+
+
+## CI: workflows, secrets y gate del frontend
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+En CI hay tres workflows (`ci.yml`, `frontend.yml`, `gitleaks.yml`), todos en push
+y PR contra `main`.
+
+**Ninguno usa secrets configurados, a propósito**: la suite Python por defecto no
+llama a ningún LLM. La única credencial que aparece es el `secrets.GITHUB_TOKEN`
+que GitHub inyecta solo en `gitleaks.yml` para comentar en el PR; no se declara
+en la configuración del repositorio ni sale de él. Si algún día hace falta un job
+con API real, va en un workflow aparte con `workflow_dispatch`, nunca en estos.
+`uv sync --locked` además falla si `uv.lock` se queda desincronizado de
+`pyproject.toml`.
+
+`ci.yml` **no ignora `frontend/**`** aunque el frontend tenga su propio workflow: hay
+tests de pytest que leen ficheros del frontend (`test_frontend_seo_assets.py` valida
+`frontend/public/robots.txt`, `sitemap.xml` y `llms.txt`). Ignorarlo dejaría esos
+tests sin gate, porque `frontend.yml` no corre pytest. Si añades un test Python que
+lea otra ruta, comprueba que no esté en `paths-ignore`.
+
+El gate de CI del frontend cubre lint, tipos, tests y build, en ese orden. El
+gate local `npm run fast-check` ejecuta los tres primeros; usa además
+`npm run build` cuando cambien build, prerender, Edge o configuración de Vite:
+
+- **Corre `npm run build`**, y con él los hooks `prebuild`/`postbuild` de npm. No
+  necesita `output/`, que no se versiona: sin JSONL del pipeline,
+  `frontend/scripts/build-corpus.mjs` conserva el `frontend/public/data/corpus.json`
+  versionado y avisa por stderr.
+- **Vitest corre sin `--passWithNoTests`**: ya hay suites en `frontend/tests/`, así que
+  borrarlas accidentalmente vuelve a poner el gate rojo.
+
+La configuración de biome tiene sus propias trampas: ver
+[`frontend/CLAUDE.md`](frontend/CLAUDE.md).

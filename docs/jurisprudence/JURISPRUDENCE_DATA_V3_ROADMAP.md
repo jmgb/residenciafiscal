@@ -629,3 +629,90 @@ Esta iniciativa termina cuando:
 - el sistema pide información o se abstiene cuando corresponde;
 - la evaluación y revisión jurídica tienen resultados versionados;
 - ninguna respuesta necesita inyectar el corpus completo.
+
+
+## Historial de fases del corpus v3 y comandos de exportación
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+El caso de uso rector del corpus es la investigación jurisprudencial
+conversacional: ante los hechos y preguntas de un abogado, recuperar por
+cuestión jurídica los casos comparables, explicar hechos, pruebas, valoración y
+resultado por cuestión, y respaldarlo con sentencia, página y extracto literal.
+No es un predictor del caso del usuario. El contrato funcional y la auditoría de
+adecuación del perfil v2 están en
+[`docs/jurisprudence/CHAT_JURISPRUDENCE_USE_CASE.md`](CHAT_JURISPRUDENCE_USE_CASE.md).
+El piloto manual de 40 preguntas sobre las cinco sentencias demuestra que no se
+debe ampliar el schema actual a 106 sin modelar primero cuestiones, hechos,
+relaciones prueba→hecho→cuestión y anclajes por proposición.
+El orden operativo, el contrato preliminar, las responsabilidades
+Python/agente/persona y los gates 1 → 5 → 106 están en
+[`docs/jurisprudence/JURISPRUDENCE_DATA_V3_ROADMAP.md`](JURISPRUDENCE_DATA_V3_ROADMAP.md).
+El caso v3 híbrido de `SAN 1210/2023` ya está compilado: 17 anclajes literales,
+3 cuestiones y 18 preguntas aplicables validadas. Su pipeline, reparto de
+responsabilidades y artefactos se documentan en
+[`docs/jurisprudence/JURISPRUDENCE_CASE_PIPELINE.md`](JURISPRUDENCE_CASE_PIPELINE.md).
+El mismo flujo ya regenera la muestra fija de cinco: 12 unidades, 62 anclajes
+exactos, evaluación ejecutable de 40 preguntas y las 17 citas heredadas
+clasificadas. Ese baseline de fase C sigue siendo `RETRIEVAL_ONLY`:
+[`docs/jurisprudence/JURISPRUDENCE_SAMPLE_PHASE_C.md`](JURISPRUDENCE_SAMPLE_PHASE_C.md).
+La fase D añade recuperación estructurada, diversificación, 20 paráfrasis y las
+conductas `preguntar`/`abstenerse`; supera sus gates y aplaza embeddings para el
+piloto. Método, métricas y límites:
+[`docs/jurisprudence/JURISPRUDENCE_RETRIEVAL_PHASE_D.md`](JURISPRUDENCE_RETRIEVAL_PHASE_D.md).
+E0 añadió determinación residencial tipada, regeneró las cinco sin regresión,
+congeló un holdout independiente y preparó estado reanudable y gates por lote.
+La fase E autorizada se ejecutó el 1 de agosto de 2026: 106/106 builds pasan,
+67 casos entran en recuperación, 39 quedan marcados fuera de ámbito y el corpus
+agregado contiene 74 unidades. Todo el contenido nuevo sigue
+`AGENT_REVIEWED_ONLY`; el holdout obtiene 75 % de conducta y no puede usarse
+para ajustar el retriever. Solo etiqueta 5 de 106 fuentes, por lo que su
+precisión sobre el corpus completo no es válida. El banco de desarrollo de
+lookup, la auditoría de los 42 casos HIGH y la verificación reproducible están
+separados del holdout. Contrato operativo, resultados y política de revisión:
+[`docs/jurisprudence/JURISPRUDENCE_PHASE_E0.md`](JURISPRUDENCE_PHASE_E0.md).
+El Markdown OKF/3 y las unidades de recuperación por cuestión se derivan de
+cada caso canónico. Su contrato está en
+[`docs/jurisprudence/JURISPRUDENCE_DERIVATIVES_B4.md`](JURISPRUDENCE_DERIVATIVES_B4.md).
+El manifiesto real, los borradores, los 11 lotes y los informes de fase E ya
+están materializados. El siguiente gate es jurídico y de producto: no registrar
+aprobación humana inexistente ni conectar el corpus completo directamente al
+chat, porque su holdout de recuperación no justifica esa promoción.
+La retención de derivados y sus límites se rige por
+[`docs/jurisprudence/JURISPRUDENCE_ARTIFACT_POLICY.md`](JURISPRUDENCE_ARTIFACT_POLICY.md).
+
+El baseline histórico F0.2 redactó A sobre el corpus v3 y B con Gemini File
+Search sobre los PDF usando el mismo modelo y fuentes independientes. La
+política vigente ya no comparte modelo: A usa Luna + `high` y B un modelo Gemini
+permitido por File Search. Por tanto, las siguientes ejecuciones comparan dos
+stacks de producto y no aíslan por sí solas el efecto de la recuperación. Ocho
+consultas reales del baseline detectaron una rúbrica heredada no neutral y
+falta de cobertura estructurada sobre ausencias esporádicas; por eso no deben
+ejecutarse todavía las 40 ni promoverse a 3.6. La arquitectura vigente, los
+aprendizajes y el orden autorizado están en
+[`docs/jurisprudence/CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md);
+las cifras están en
+[`docs/experiments/CHAT_STRATEGY_F02_RESULTS.md`](../experiments/CHAT_STRATEGY_F02_RESULTS.md).
+F0.3 ya congeló la rúbrica y generó el paquete X/Y; la siguiente intervención
+es una revisión jurídica ciega por un abogado especialista, sin abrir la clave.
+El revisor debe recibir solo el ZIP reproducible generado por
+`make build-chat-f03-legal-bundle`. La propuesta sobre ausencias esporádicas ya
+está validada, pero permanece aislada y no aplicada hasta revisión humana. El
+compilador post-revelado también está preparado y exige
+`CONFIRM_REVEAL=1`; no se ejecuta antes de cerrar el formulario. Protocolo,
+rúbrica, paquete, plantilla y gap:
+[`docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](../experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md),
+[`docs/experiments/CHAT_STRATEGY_F03_RUBRIC.md`](../experiments/CHAT_STRATEGY_F03_RUBRIC.md),
+[`docs/experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md`](../experiments/CHAT_STRATEGY_F03_BLIND_REVIEW.md) y
+[`docs/experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md`](../experiments/CHAT_STRATEGY_F03_REVIEW_FORM_TEMPLATE.md);
+[`docs/experiments/CHAT_DATA_GAP_ABSENCES.md`](../experiments/CHAT_DATA_GAP_ABSENCES.md).
+
+```bash
+make export-okf  # hoy: genera y valida exactamente 1 sentencia
+make export-okf-sample OKF_SAMPLE_OUTPUT=knowledge/jurisprudencia-muestra-5-nueva
+make export-case-v3  # compila y valida el caso canónico de SAN 1210/2023
+make export-case-v3-derivatives  # deriva OKF/3 e índice por cuestión
+make export-case-v3-sample  # regenera 5, evalúa 40 preguntas y ejecuta gates
+make evaluate-retrieval-phase-d  # mide router, paráfrasis y recuperación @3
+make evaluate-holdout-e0  # observación congelada; nunca ajusta el router
+```

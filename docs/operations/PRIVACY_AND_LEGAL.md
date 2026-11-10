@@ -124,3 +124,29 @@ por un canal separado y un ticket operativo antes de borrar nada
 ([`SUPABASE_CHAT.md`](SUPABASE_CHAT.md)). La respuesta al solicitante debe
 informar de que la copia de seguridad que contenga el registro desaparece al
 expirar su propio plazo, y **no puede prometer borrado inmediato de las copias**.
+
+
+## Privacidad y marco legal (reglas del sitio)
+
+> Movido desde `CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Privacidad y marco legal
+
+`/privacidad` es la única página legal del sitio: declara el responsable
+—Intangible Land LLC, titularidad estadounidense—, la base jurídica por
+finalidad, los ocho encargados con su ubicación, las transferencias fuera del
+EEE, los 15 días de conservación del chat, los derechos y las cookies. Cumple
+además la identificación del art. 10 LSSI-CE, así que **no hay ni debe crearse
+una página de aviso legal separada**.
+
+Cada afirmación de esa página corresponde a algo verificable en el código; si
+cambias el `store: false` de la estrategia A, el rate limit, la región de
+Supabase, el plazo de retención o un proveedor, la página deja de ser cierta y
+hay que actualizarla en el mismo cambio.
+
+**No se designa representante en la UE (art. 27 RGPD) y no es un pendiente**: es
+una decisión tomada el 1 de agosto de 2026. No publiques uno inexistente ni
+afirmes en la página que no hace falta; el silencio actual es deliberado. Mapa
+afirmación→código, riesgo asumido y lo que sigue abierto —consentimiento previo
+de la analítica, contratos de encargo y validación jurídica del texto— en
+[`docs/operations/PRIVACY_AND_LEGAL.md`](PRIVACY_AND_LEGAL.md).
