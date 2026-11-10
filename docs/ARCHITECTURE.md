@@ -196,3 +196,24 @@ Arquitectura, estado, aprendizajes y siguiente gate:
 Los contratos detallados están indexados en la
 [documentación de jurisprudencia](README.md#jurisprudencia) y en la
 [documentación normativa](normativa/NORMATIVA.md).
+
+
+## Frontend: puntos de entrada no evidentes
+
+> Movido desde `frontend/CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+| Ruta | Por qué importa |
+|---|---|
+| `src/lib/chat-engine.ts` | Punto **único** de selección del motor. Es el fichero a cambiar al conectar el backend |
+| `src/lib/corpus.ts` | Degrada a corpus vacío si falla la carga, en vez de romper la app |
+| `src/lib/chat-answer-status.ts` | Fuente **única** de las etiquetas de estado de una respuesta, compartida por el panel de estrategia y la tarjeta de investigación profunda. `completa` **no se rotula** a propósito: el chat no puede certificar que una respuesta agote la cuestión sobre un corpus sin revisión jurídica humana, así que solo se avisa de los límites, nunca de su ausencia. Una tercera superficie usa este módulo, no su propia tabla |
+| `scripts/build-corpus.mjs` | Genera `public/data/corpus.json` desde `output/analisis_*.jsonl` en el prebuild |
+| `src/lib/normativa.ts` | Corpus normativo: índice ligero + articulado bajo demanda, un fichero por precepto |
+| `src/lib/structured-data.ts` | JSON-LD de las páginas de país: `BreadcrumbList` y `Legislation`, y nada más. Se emite con `components/seo/JsonLd.tsx` **dentro del árbol de React**, para que el HTML prerenderizado y la SPA no puedan divergir. Lo que el corpus no sabe se omite; contrato en [`docs/product/COUNTRY_PAGES.md`](product/COUNTRY_PAGES.md) |
+| `scripts/build-normativa.mjs` | Genera `public/data/normativa.json` y `public/data/preceptos/*.json` desde `knowledge/normativa/es/` |
+| `src/lib/contribution.ts` | Fuente **única** de la invitación a contribuir: URL del repo, correo de contacto, ruta `/colaborar` y los seis `EXPERT_PROFILES`. Los comparten `/colaborar` y las páginas de país sin corpus, y `tests/test_contribucion_perfiles.py` ata los perfiles a la tabla de `CONTRIBUTING.md` |
+| `src/data/countryRoutes.json` | Configuración de **producto y SEO** de cada país: `code` (ISO 3166-1 alfa-2) es la clave que comparte con el dato (`normativa/es/`), `corpusStatus` gobierna disponibilidad, `indexable` gobierna solo SEO, `title`/`description`/`sitemap` son la metadata que compite en el buscador y `legalReferences` conserva citas, fuentes oficiales y `reviewedAt`. La fecha refleja una comprobación editorial real, nunca la fecha del build. **Ya no guarda `name` ni `treatyBoeId`**: los compone `countryRoutes.ts` desde el catálogo compartido |
+| `src/data/jurisdictions.{json,ts}` + `treatyRelations.json` | Proyecciones **generadas** por `src/export_frontend_projections.py` desde `src/jurisdiction_catalog.json` y `src/treaty_relations_es.json`. Dan nombre y slug de cada jurisdicción, y qué convenio rige entre España y cada contraparte con sus rangos de ejercicio. Se versionan para que Netlify no ejecute Python; editarlas a mano no sirve y `tests/test_frontend_projections.py` falla si se desincronizan. `jurisdictionPath()` construye el hub y `jurisdictionSectionPath()` los cinco subárboles comunes |
+| `src/lib/normativa-fichas.ts` + `src/data/normativaFichas.json` | Metadatos SEO de las fichas de precepto (`/espana/normativa/<slug>`, una por artículo del corpus normativo). El nombre común del país de cada convenio no existe en el BOE y ya **no** se duplica aquí: sale de `treatyRelations.json` a través de `jurisdictions.ts`, y `tests/normativa-fichas.test.ts` exige cobertura completa. Las fichas se prerenderizan con su articulado embebido (`src/lib/precepto-preload.ts`, mismo mecanismo que el convenio) y entran en sitemap y `_redirects` desde sus generadores |
+| `src/lib/sentencias.ts` + `src/lib/sentencia-metadata.ts` | Fichas de sentencia multijurisdicción: `public/data/sentencias.json` contiene índices por código y cada ficha vive en `public/data/sentencias/<codigo>/<slug>.json`, evitando colisiones entre países. `scripts/build-sentencias.mjs` acepta varias fuentes, verifica cada hash y sitemap, redirects y prerender consumen `scripts/sentencia-route-inventory.mjs`. Sin `SENTENCIAS_PREVIEW=1` solo entran casos `published` —hoy ninguno—, así que esas rutas no existen en producción y el fallback devuelve 404 |
+| `src/data/staticRoutes.{json,ts}` | Metadatos SEO de las rutas de contenido estático (`/manifiesto`, `/metodologia`, `/espana/fuentes`, `/colaborar`, `/privacidad`). Los leen la página, `scripts/prerender.mjs` y `scripts/build-sitemap.mjs`, para que el bot y la SPA no puedan discrepar. `/espana/fuentes` es contenido de país (fuentes + normativa de España); la metodología es común a todas las jurisdicciones |

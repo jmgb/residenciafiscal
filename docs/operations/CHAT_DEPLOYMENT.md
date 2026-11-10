@@ -396,3 +396,92 @@ CHAT_STRATEGY_B_ENABLED=true
 
 Ambas barreras son independientes: si una configuración queda rezagada, la
 otra mantiene cerrado el gasto.
+
+
+## Frontend: estado del motor del chat y contrato de fuentes
+
+> Movido desde `frontend/CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Estado del motor
+
+Producción funciona hoy con un **stub**. `src/lib/chat-engine.ts` es el selector
+único: solo `VITE_CHAT_MODE=live` elige el cliente real; cualquier valor ausente
+o inesperado conserva el stub. El modo real mantiene un aviso de investigación
+experimental, privacidad y revisión de fuentes; no reutiliza el aviso de
+contenido simulado.
+
+### Contrato de fuentes
+
+`src/types/chat.ts` define `ChatSourceV2`: cada cita nueva debe incluir
+`sourceId`, cuestión jurídica, anclaje, página física, página impresa opcional,
+extracto literal, fidelidad, SHA-256 del PDF y estado de revisión técnica y
+jurídica. `src/lib/chat-source.ts` es el validador canónico del navegador.
+
+La persistencia usa schema interno 3 y conserva los historiales previos como
+`LegacyChatSource`. No se deben rellenar sus campos ausentes por inferencia: la
+UI los rotula como fuentes históricas sin anclaje v2. El stub solo produce ese
+tipo legado porque sus extractos son resúmenes simulados.
+
+El protocolo 2 conserva compatibilidad con la respuesta individual anterior y
+añade el modo comparativo A → B configurable: `answer_start`, tokens y fuentes
+con `strategy`, `answer_done` con coste decimal y un único terminal global.
+Puede devolver A, B o ambas en ese orden. Las fuentes comparativas usan
+`ChatStrategySource` —estrategia, sentencia, página, hash y cita exacta—; no se
+convierten artificialmente en `ChatSourceV2` porque B
+no dispone de cuestión y anclaje canónicos. `ChatMessage.answers` mantiene los
+bloques activos y el schema 3 apaga cualquier streaming huérfano al rehidratar.
+
+El runtime V1 implementado es una Netlify Function TypeScript autosuficiente.
+Ejecuta en paralelo las estrategias activas, conserva el orden visual A → B,
+mantiene Luna `high` cuando A está activa y cancela antes del límite de 60 s.
+El servidor reconstruye hasta seis turnos y 12 KiB desde Supabase: A y B reciben
+solo su propio hilo, y el historial se marca como conversación previa, nunca como
+evidencia. La lectura exige el secreto de posesión que crea el navegador; el
+ledger solo conserva su SHA-256 y un historial local anterior abre un `ledgerId`
+nuevo al migrar; esa migración retira los `comparisonId` antiguos y marca para
+reinicio cualquier investigación todavía activa, sin borrar resultados ya
+terminados. Una pestaña cargada antes del rollout, que aún no envía secreto,
+puede completar consultas aisladas: la Function ignora su UUID visible y crea
+un hilo efímero protegido por petición, sin recuperar contexto. Las respuestas editoriales se registran por ID en
+`POST /api/chat-editorial` antes de admitir un seguimiento inmediato.
+Python sigue preparando el corpus offline.
+El prototipo Edge → FastAPI no se borra y se conserva como evolución futura si
+hacen falta llamadas de más de 60 s o mayor control operativo. Código y operación:
+[`docs/operations/CHAT_DEPLOYMENT.md`](CHAT_DEPLOYMENT.md).
+
+La estrategia de recuperación se debe medir con una o dos respuestas
+independientes: la actual, basada en el corpus v3 estructurado, y Gemini File
+Search sobre los PDF de la muestra. Cada respuesta mantiene sus propias fuentes,
+errores, métricas y coste, pero el coste **no se pinta en la interfaz**: se
+registra en el ledger y se emite por consola en `ChatView` al cerrar cada
+estrategia. Cuando solo hay una estrategia activa tampoco se rotula «Opción A»
+ni se enmarca la respuesta en tarjeta: etiqueta, pestañas y marco solo existen
+si hay comparación. No se ha adoptado
+`pgvector`; una unión futura de candidatos con reranking local solo se evaluará
+después de esta comparación.
+
+- Diseño: `docs/development/CHAT_BACKEND_DESIGN.md`
+- Plan de ejecución: `docs/superpowers/plans/2026-07-29-chat-backend.md`
+  (scratch local, sin versionar)
+- Contrato de la comparación:
+  [`docs/jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md`](../jurisprudence/CHAT_RETRIEVAL_STRATEGY_COMPARISON.md)
+- Límites de plataforma medidos: [`docs/operations/NETLIFY_EDGE.md`](NETLIFY_EDGE.md)
+
+Si vas a modificar el proxy Edge conservado, lee primero el último: tiene tres
+trampas que cuestan un deploy cada una. La más cara es que **todo `.ts` en la
+raíz de `netlify/edge-functions/` es un endpoint** —el prefijo `_` no exime—,
+así que sus módulos compartidos van en `lib/`. No extrapoles automáticamente
+esas reglas al directorio de Functions estándar de la V1.
+
+La V1 usa Supabase/Postgres mediante dos RPC transaccionales y bloqueo de fila;
+no usa el compare-and-swap no atómico de Blobs. `private.chat_messages` conserva
+la pregunta y una respuesta por estrategia, incluidas citas y costes, sin IP ni
+user-agent. Solo la Function usa `SUPABASE_SECRET_KEY`; el navegador no accede a
+Supabase. Contrato: `docs/operations/SUPABASE_CHAT.md`. La activación productiva
+sigue condicionada por el Deploy Preview y la política legal de `TASKS.md`.
+
+El prototipo Edge está conservado en `netlify/prototypes/`. La Function estándar
+y sus adaptadores viven en `netlify/functions/chat/`; devuelve el protocolo SSE
+2 como cuerpo bufferizado, no como `ReadableStream`.
+`netlify-cli` **no** está y no debe añadirse: no arranca contra el TypeScript 7
+del repositorio.

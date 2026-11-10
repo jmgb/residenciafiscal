@@ -415,3 +415,33 @@ make descargar-normativa  # solo si el BOE actualiza algo (~3 min, con red)
 make export-normativa     # regenera los 110 preceptos (sin red, sin LLM)
 make enlazar-normativa    # resuelve las citas de las sentencias a los preceptos
 ```
+
+
+## Corpus normativo en el frontend
+
+> Movido desde `frontend/CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Corpus normativo
+
+El frontend sirve también el texto de la ley, no solo las sentencias. Dos
+niveles a propósito: `normativa.json` es el índice de los 110 preceptos (~100 KB)
+y `preceptos/<slug>.json` el articulado literal de uno solo. Cargar los 110
+juntos serían ~480 KB para que alguien lea el artículo 9 LIRPF.
+
+La página de cada país usa esos dos niveles para publicar el **convenio de doble
+imposición entre España y esa jurisdicción**: `countryRoutes.json` aporta el
+código ISO, `treatyRelations.json` resuelve el instrumento vigente y
+`TaxTreaty.tsx` cruza su `boeId` con el índice para pedir el articulado. El
+convenio es norma española y no describe la ley interna del otro país; el copy
+lo dice y `tests/CountryPage.test.tsx` lo fija.
+
+**El articulado es texto legal literal.** No se recorta, une ni reformatea en
+ninguna capa del frontend: `tests/normativa.test.ts` comprueba que cada párrafo
+publicado aparece tal cual en el Markdown de origen. Si hay que abreviar para la
+UI, se abrevia con CSS, no tocando la cadena.
+
+La fuente se regenera desde la raíz con `make export-normativa` y
+`make enlazar-normativa`; `build-normativa.mjs` corre en el `prebuild` y, si no
+encuentra `knowledge/normativa/es/`, conserva lo versionado y avisa por stderr en
+lugar de romper el build. Contrato y decisiones:
+[`docs/normativa/NORMATIVA.md`](NORMATIVA.md).

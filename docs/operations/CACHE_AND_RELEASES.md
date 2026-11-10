@@ -114,3 +114,70 @@ inexistente (no un 200 con HTML) y un JSON con la revisión desplegada.
   navegación atrás.
 - Cloudflare está por delante y sirve el HTML como `DYNAMIC` (no lo cachea). Si
   algún día se activase caché de HTML ahí, habría que purgarla en cada deploy.
+
+
+## Prerenderizado: el HTML se sirve con contenido
+
+> Movido desde `frontend/CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Prerenderizado: el HTML se sirve con contenido
+
+`npm run build` genera **dos** bundles. El de siempre para el navegador y uno de
+servidor (`npm run build:ssr` → `dist-ssr/entry-server.js`, no versionado) que
+`scripts/prerender.mjs` usa en el `postbuild` para renderizar cada ruta pública
+a HTML y escribirla dentro de `<div id="root">`.
+
+Antes el HTML era la shell vacía: sin JavaScript no había una sola línea de
+texto, así que un buscador que no ejecute el bundle indexaba páginas en blanco.
+Ahora `/francia` se sirve con su `h1`, el convenio, el artículo literal y el
+enlace al BOE —unos 8 KB de texto— y en el navegador se monta encima la misma
+aplicación de siempre.
+
+Cuatro cosas que conviene saber antes de tocarlo:
+
+- **No hay hidratación.** `main.tsx` sigue usando `createRoot`, que descarta el
+  markup y vuelve a pintar. Es deliberado: `hydrateRoot` exigiría que el primer
+  render del cliente coincidiera con el del build, y los datos que llegan por
+  `fetch` no coinciden nunca.
+- **Los efectos no corren en el build.** Cualquier contenido que dependa de un
+  `useEffect` sale como su estado de carga. Por eso el convenio se pasa resuelto
+  vía `TreatyPreloadContext` (`src/lib/treaty-preload.ts`), y viaja embebido en
+  un `<script type="application/json">` para que el navegador no lo repida ni el
+  visitante lo vea desaparecer al montar.
+- **Un módulo que toque `window` al importarse rompe el build**, no la página:
+  el árbol entero se ejecuta en Node. `tests/entry-server.test.tsx` lo detecta
+  sin necesidad de build.
+- **El `preload` de las fuentes se inyecta antes de prerenderizar.** Las dos
+  familias se autoalojan (`@fontsource-variable/*` en `main.tsx`) y vite emite
+  sus woff2 con hash, así que `index.html` no puede declararlas a mano:
+  `scripts/inject-font-preload.mjs` las lee del CSS compilado y escribe las
+  etiquetas en `dist/index.html`. Va **antes** de `prerender.mjs` en el
+  `postbuild` porque cada copia por ruta se saca de esa shell; invertir el orden
+  deja las ~150 páginas sin `preload` y solo lo delata una auditoría de LCP.
+- **`vite.config.ts` desactiva el plugin de Sentry en el build SSR**
+  (`isSsrBuild`): ese bundle no se despliega, así que subir sus sourcemaps sería
+  publicar un artefacto que ningún error puede mencionar.
+
+
+## Caché y versión desplegada (frontend)
+
+> Movido desde `frontend/CLAUDE.md` el 2026-11-10 (allí queda un resumen con enlace aquí).
+
+## Caché y versión desplegada
+
+Una SPA no vuelve a pedir el HTML mientras la pestaña viva, y un móvil conserva
+la pestaña días. Por eso el shell monta `AppUpdateBanner`, que compara
+`__APP_RELEASE__` con `/version.json` al arrancar, al recuperar el foco y al
+volver del back/forward cache: recarga sola si no hay nada en curso y avisa si
+lo hay. `main.tsx` instala además la recuperación de `vite:preloadError`, que
+recarga **una vez por bundle** cuando falta un chunk del deploy anterior.
+
+Dos trampas antes de tocar `netlify.toml`: sus cabeceras se aplican por **ruta
+pedida** (una regla para `/index.html` no cubre `/`), y el fallback `/*` **ya no
+sirve la shell**: devuelve `404.html` con 404, porque toda ruta pública tiene
+fichero prerenderizado y una URL inexistente servida con 200 era un soft 404
+(la shell además es `noindex`). Las únicas rutas sin fichero físico —`/consulta`
+y `/c/*`— tienen su propia regla 200 antes del fallback; si añades otra ruta
+solo-SPA, necesita la suya o morirá con 404. Contrato completo, tabla de rutas y
+verificación en producción:
+[`docs/operations/CACHE_AND_RELEASES.md`](CACHE_AND_RELEASES.md).
