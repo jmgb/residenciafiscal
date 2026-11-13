@@ -85,6 +85,25 @@ describe('composition root de la Function con Supabase', () => {
     expect(dependencies.enabled).toBe(true);
   });
 
+  it('acepta Hydrogen como modelo File Search explícito', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_FILE_SEARCH_MODEL: 'gemini-4-hydrogen',
+    });
+
+    expect(dependencies.enabled).toBe(true);
+  });
+
+  it('rechaza el Flash normal retirado como override de File Search', () => {
+    const dependencies = createProductionDependencies({
+      ...environment,
+      CHAT_FILE_SEARCH_MODEL: 'gemini-3.8-flash',
+    });
+
+    expect(dependencies.enabled).toBe(false);
+    expect(dependencies.disabledDiagnostic?.missing).toContain('CHAT_FILE_SEARCH_MODEL');
+  });
+
   it('permanece cerrado si A y B están desactivadas', () => {
     const dependencies = createProductionDependencies({
       ...environment,

@@ -21,7 +21,7 @@ pagado a precio de salida. Nadie había medido qué calidad compraba a cambio.""
 
 
 def _fallback_models() -> tuple[str, ...]:
-    raw = os.getenv("CHAT_FALLBACK_MODELS", "gemini-3.8-flash")
+    raw = os.getenv("CHAT_FALLBACK_MODELS", "gemini-4-hydrogen")
     return tuple(dict.fromkeys(model.strip() for model in raw.split(",") if model.strip()))
 
 

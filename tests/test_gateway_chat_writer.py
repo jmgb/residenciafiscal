@@ -69,7 +69,7 @@ class _MismoDobleComo:
 
     Desde la v0.21.0 un modelo del catálogo solo se enruta al adaptador de su
     proveedor, nunca por el prefijo de otro: para que un único doble atienda
-    `gpt-6-luna` y su fallback `gemini-3.8-flash` tiene que figurar como ambos.
+    `gpt-6-luna` y su fallback `gemini-4-hydrogen` tiene que figurar como ambos.
     """
 
     def __init__(self, adapter: FakeProviderAdapter, name: str) -> None:
@@ -198,18 +198,18 @@ class TestPolicies:
         await _writer(adapter).write(
             _request(
                 model="gpt-6-luna",
-                fallback_models=("gemini-3.8-flash",),
+                fallback_models=("gemini-4-hydrogen",),
             )
         )
 
-        assert adapter.requests[0].fallback_policy.models == ("gemini-3.8-flash",)
+        assert adapter.requests[0].fallback_policy.models == ("gemini-4-hydrogen",)
 
     async def test_the_requested_model_is_pinned(self) -> None:
         adapter = FakeProviderAdapter()
 
-        await _writer(adapter).write(_request(model="gemini-3.8-flash"))
+        await _writer(adapter).write(_request(model="gemini-4-hydrogen"))
 
-        assert adapter.requests[0].model == "gemini-3.8-flash"
+        assert adapter.requests[0].model == "gemini-4-hydrogen"
 
     async def test_a_retry_is_bounded_and_visible(self) -> None:
         adapter = FakeProviderAdapter()
@@ -309,14 +309,14 @@ class TestFailures:
         result = await _writer(adapter).write(
             _request(
                 model="gpt-6-luna",
-                fallback_models=("gemini-3.8-flash",),
+                fallback_models=("gemini-4-hydrogen",),
             )
         )
 
-        assert result.model_used == "gemini-3.8-flash"
+        assert result.model_used == "gemini-4-hydrogen"
         assert adapter.models == [
             "gpt-6-luna",
-            "gemini-3.8-flash",
+            "gemini-4-hydrogen",
         ]
 
     async def test_the_writer_exposes_no_factory_that_builds_its_own_client(self) -> None:

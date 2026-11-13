@@ -146,7 +146,7 @@ convertirlas a secretos Functions y rotarlas.
 | `OPENAI_API_KEY` | Obligatoria solo si A está activa; redactor Luna `gpt-6-luna`, esfuerzo `high` |
 | `GEMINI_API_KEY` | Obligatoria solo si B está activa; Gemini File Search |
 | `CHAT_FILE_SEARCH_STORE_NAME` | Obligatoria solo si B está activa; nombre remoto `fileSearchStores/...` del rollout de 106 PDF |
-| `CHAT_FILE_SEARCH_MODEL` | Solo se valida si B está activa; `gemini-3.5-flash-lite` por defecto; allowlist cerrada |
+| `CHAT_FILE_SEARCH_MODEL` | Solo se valida si B está activa; `gemini-3.5-flash-lite` por defecto; permite promoción manual a `gemini-4-hydrogen` |
 | `CHAT_DEADLINE_MS` | `52000` por defecto; la Function rechaza valores mayores de `55000` |
 | `SUPABASE_URL` | URL del proyecto Supabase; solo backend |
 | `SUPABASE_SECRET_KEY` | Clave secreta de servidor; sin ella el endpoint falla cerrado |
@@ -256,7 +256,7 @@ comparación provisional de calidad, latencia y coste están en
 | `SUPABASE_CHAT_RUNTIME_KEY` | sí al activar persistencia | Rol RPC restringido; no es la clave global de Supabase |
 | `OPENAI_API_KEY` | sí para Luna | Credencial de la estrategia A mediante el gateway |
 | `GEMINI_API_KEY` | sí | Credencial de File Search B |
-| `CHAT_FILE_SEARCH_MODEL` | no | Por defecto `gemini-3.5-flash-lite`; debe estar en la lista permitida |
+| `CHAT_FILE_SEARCH_MODEL` | no | `gemini-3.5-flash-lite` por defecto; el modelo debe ser Flash Lite o `gemini-4-hydrogen` |
 | `CHAT_RETRIEVAL_CORPUS` | no | Corpus v3; usa la ruta versionada por defecto |
 | `CHAT_FILE_SEARCH_STORE_STATE` | no | Recibo local del store; por defecto `output/file-search/rollout-106-store.json` |
 | `CHAT_RUNTIME_HASH_REQUIRED` | sí en el host de Alfredo | Exige el manifiesto y verifica sus hashes antes de aceptar tráfico |

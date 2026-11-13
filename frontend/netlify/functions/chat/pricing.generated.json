@@ -1,13 +1,13 @@
 {
-  "catalog_version": "2026-09-30.1",
+  "catalog_version": "2026-11-13",
   "models": {
     "gemini-3.5-flash-lite": {
       "input_usd_per_mtok": 0.3,
       "output_usd_per_mtok": 2.5
     },
-    "gemini-3.8-flash": {
-      "input_usd_per_mtok": 0.75,
-      "output_usd_per_mtok": 3.75
+    "gemini-4-hydrogen": {
+      "input_usd_per_mtok": 1.5,
+      "output_usd_per_mtok": 7.5
     },
     "gpt-6-luna": {
       "input_usd_per_mtok": 0.1,

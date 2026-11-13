@@ -24,7 +24,12 @@ def _annotation(
     )
 
 
-def _interaction(answer: dict[str, Any], annotations: list[Any]) -> Any:
+def _interaction(
+    answer: dict[str, Any],
+    annotations: list[Any],
+    *,
+    model: str = "gemini-3.5-flash-lite",
+) -> Any:
     content = SimpleNamespace(
         type="text",
         text=json.dumps(answer, ensure_ascii=False),
@@ -32,7 +37,7 @@ def _interaction(answer: dict[str, Any], annotations: list[Any]) -> Any:
     )
     return SimpleNamespace(
         id="interaction-1",
-        model="gemini-3.8-flash",
+        model=model,
         status="completed",
         output_text=json.dumps(answer, ensure_ascii=False),
         steps=[SimpleNamespace(type="model_output", content=[content])],
@@ -225,7 +230,7 @@ async def test_coste_es_estimado_si_usage_omite_tokens_de_documentos_recuperados
     assert result.cost.measurement == "ESTIMATED"
 
 
-async def test_permite_promocion_manual_explicita_a_gemini_37_flash(
+async def test_permite_promocion_manual_explicita_a_gemini_4_hydrogen(
     tmp_path: Path,
 ) -> None:
     from gemini_file_search_answer import GeminiFileSearchResponder
@@ -234,19 +239,20 @@ async def test_permite_promocion_manual_explicita_a_gemini_37_flash(
     response = _interaction(
         {"status": "abstención", "answer": "", "limits": ["Sin cobertura."]},
         [],
+        model="gemini-4-hydrogen",
     )
     client = FakeGoogleClient(response)
     responder = GeminiFileSearchResponder(
         gateway=GoogleGenAIFileSearchGateway(client),
         store_name="fileSearchStores/f0",
         verbatim_artifacts={},
-        model="gemini-3.8-flash",
+        model="gemini-4-hydrogen",
     )
 
     result = await responder.answer("Pregunta", request_id="req-promotion")
 
-    assert result.model == "gemini-3.8-flash"
-    assert client.interactions.requests[0]["model"] == "gemini-3.8-flash"
+    assert result.model == "gemini-4-hydrogen"
+    assert client.interactions.requests[0]["model"] == "gemini-4-hydrogen"
 
 
 async def test_reintenta_una_vez_si_la_respuesta_sustantiva_no_tiene_cita_verificable(

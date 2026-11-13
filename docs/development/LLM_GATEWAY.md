@@ -70,7 +70,7 @@ dejaba la política de `chat_model_policy` sin llegar a ninguna llamada.
 | Estrategia | Modelo | De dónde sale |
 |---|---|---|
 | A, respuesta estructurada | `CHAT_MODEL` + `CHAT_REASONING_EFFORT` + `CHAT_FALLBACK_MODELS` | Por defecto `gpt-6-luna` + `high`; la cadena se entrega al gateway |
-| B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist de File Search |
+| B, File Search | `--model`, por defecto `gemini-3.5-flash-lite` | Allowlist cerrada: `gemini-3.5-flash-lite` y promoción manual a `gemini-4-hydrogen` |
 
 El esfuerzo de razonamiento viaja con la petición de A. Sin él, la petición
 salía con el valor por defecto del proveedor y declararlo en la política no
@@ -151,14 +151,14 @@ El paquete no selecciona un fallback por defecto: `LLMRequest` usa
 `FallbackPolicy.disabled()`. Su helper `FallbackPolicy.cheaper_than()` deriva
 modelos del mismo proveedor de forma deliberada. Como A necesita reducir el
 riesgo de caída de un proveedor, la aplicación declara explícitamente una
-cadena cross-provider (`gpt-6-luna` → `gemini-3.8-flash`) y la fachada rechaza
+cadena cross-provider (`gpt-6-luna` → `gemini-4-hydrogen`) y la fachada rechaza
 fallbacks conocidos del mismo proveedor.
 
 La política vigente de A es:
 
 ```bash
 CHAT_MODEL=gpt-6-luna
-CHAT_FALLBACK_MODELS=gemini-3.8-flash
+CHAT_FALLBACK_MODELS=gemini-4-hydrogen
 ```
 
 El modelo y la cadena se pueden cambiar sin tocar el adaptador, pero los
@@ -170,7 +170,7 @@ reproducible:
 uv run python src/gemini_file_search_cli.py compare \
   "¿Qué tiene en cuenta Hacienda para demostrar la residencia en España?" \
   --only a --chat-model gpt-6-luna \
-  --chat-fallback-model gemini-3.8-flash --confirm-paid
+  --chat-fallback-model gemini-4-hydrogen --confirm-paid
 ```
 
 El catálogo conoce los IDs Llama 4 —la `0.10.0` los marca *deprecated* y los
@@ -229,8 +229,8 @@ el que el comparador publica como modelo de la respuesta, la `0.9.0` hace que
 un `response_schema` llegue a los proveedores que no lo imponen, y la `0.10.0`
 retira las conjeturas por familia de proveedor y por namespace del enrutado de
 fallback: un modelo desconocido ya no se adivina, exige entrada explícita en el
-catálogo. La cadena vigente (`gpt-6-luna` → `gemini-3.8-flash`) está
-catalogada, así que ese cambio no la altera.
+catálogo. En aquel momento, la cadena vigente (`gpt-6-luna` →
+`gemini-3.8-flash`) estaba catalogada, así que ese cambio no la alteró.
 
 La `0.10.0` mueve además el catálogo compartido a `2026-08-04.5` sin tocar las
 tarifas de los tres modelos del chat, y marca como *deprecated* —sin dejar de
@@ -294,8 +294,8 @@ El prototipo Python conservado fuera del despliegue V1 sí usa la fachada
 funcional `gpt_request` de `src/llm_gateway_facade.py`: mantiene el contrato de
 entrada y traduce a **`neutral-llm-gateway`**, fijado a una referencia
 inmutable. `src/chat_model_policy.py` declara `gpt-6-luna` + `high` por
-defecto y `gemini-3.8-flash` como fallback cross-provider explícito; el gateway registra el
-modelo efectivo, uso, alertas y coste. Los límites y tests de ambos composition
+defecto y `gemini-4-hydrogen` como fallback cross-provider explícito. El
+gateway registra el modelo efectivo, uso, alertas y coste. Los límites y tests de ambos composition
 roots están en
 [`docs/development/LLM_GATEWAY.md`](LLM_GATEWAY.md).
 
