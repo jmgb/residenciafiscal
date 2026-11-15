@@ -167,13 +167,18 @@ resoluciones oficiales descargadas por el propio pipeline, pypdf solo corre en
 procesos batch offline y no hay ningún endpoint de subida (la API y el runtime
 del chat no importan pypdf).
 
-El pin sigue siendo exacto y Dependabot sigue ignorando pypdf en
-`.github/dependabot.yml`: los tests solo reextraen el piloto SAN 1210/2023, así
-que cada subida exige comprobar todo el corpus. Para subir pypdf:
+El pin sigue siendo exacto y Dependabot puede proponer actualizaciones de pypdf.
+El gate `make validate-verbatim-corpus`, compartido por CI y `make ci-local`,
+reextrae todos los PDF del manifiesto de rollout (106 documentos, 1.312 páginas
+en el corpus actual). Comprueba cobertura, identidad y hash de fuente antes de
+reproducir cada artefacto con `validate_verbatim_artifact`. No escribe ni
+consulta propuestas, anotaciones o entradas históricas de `output/`, por lo que
+funciona en un clon limpio y sin secretos. Un cambio de una sola página bloquea
+el check de CI en `ubuntu-latest`. Para subir pypdf:
 
 1. Cambiar el pin y ejecutar `uv lock --upgrade-package pypdf`.
-2. Revalidar los 106 artefactos de `knowledge/jurisprudencia-v3/verbatim/` con
-   `validate_verbatim_artifact`; los 67 publicables también con
+2. Ejecutar `make validate-verbatim-corpus` para revalidar los 106 artefactos de
+   `knowledge/jurisprudencia-v3/verbatim/`; los 67 publicables también con
    `make verify-public-judgments`.
 3. Si todos validan, el corpus no cambia y basta con el pin y el lock.
 4. Si alguno falla, revisar el diff de `raw_page_text` página a página

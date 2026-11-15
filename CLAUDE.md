@@ -179,6 +179,11 @@ La fuente de verdad es `pyproject.toml`; `uv.lock` fija las versiones exactas y 
 versiona en git**. No hay `requirements.txt` en el repo (se genera bajo demanda con
 `make export-requirements` si algún consumidor externo lo necesita).
 
+El pin exacto de pypdf puede actualizarse mediante Dependabot: CI ejecuta
+`make validate-verbatim-corpus` y reproduce las páginas de los 106 PDF sin
+entradas históricas de `output/`. Registrar una nueva versión en la procedencia
+del corpus sigue siendo una migración opcional separada (`make migrate-pypdf`).
+
 ## Calidad de código
 
 ruff, mypy y pytest están configurados en `pyproject.toml`. La suite ordinaria

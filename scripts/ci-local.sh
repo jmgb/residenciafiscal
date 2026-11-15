@@ -7,7 +7,7 @@
 # `backend`, `changed` y `pre-push`, no en `python`.
 #
 #   bash scripts/ci-local.sh [all|backend|python|frontend|changed [base]|pre-push]
-#   `python` = solo los pasos de ci.yml (ruff, format, mypy, pytest, rollout), sin gitleaks
+#   `python` = pasos de ci.yml (ruff, format, mypy, pytest, verbatim, rollout), sin gitleaks
 #   bash scripts/ci-local.sh changed [base]   # según el diff vs base (origin/main)
 #   bash scripts/ci-local.sh pre-push         # rutas por stdin (formato `git diff --name-only`)
 #
@@ -97,6 +97,7 @@ if (( python )); then
     step "python: ruff format --check" 'uv run ruff format --check .'
     step "python: mypy" 'uv run mypy .'
     step "python: pytest" 'uv run pytest -q'
+    step "verbatim: reextraction" 'make validate-verbatim-corpus'
     step "rollout: verify" 'make rollout-verify'
     step "rollout: reproducibility" 'make rollout-reproducibility'
     if (( ! gitleaks )); then :

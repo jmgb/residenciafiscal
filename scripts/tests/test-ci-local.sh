@@ -59,6 +59,7 @@ called 'npm run typecheck' || fail 'modo frontend sin typecheck'
 : > "$CHECK_CALLS"
 PATH="$gl:$BASE_PATH" run python >/dev/null || fail 'modo python: exit != 0'
 called 'make rollout-reproducibility' && called 'mypy' || fail 'modo python incompleto'
+called 'make validate-verbatim-corpus' || fail 'modo python no reextrae todo el corpus'
 called 'gitleaks' && fail 'modo python lanzó gitleaks'
 called 'npm' && fail 'modo python lanzó npm'
 
@@ -66,6 +67,10 @@ called 'npm' && fail 'modo python lanzó npm'
 : > "$CHECK_CALLS"
 if FAIL_PATTERN='mypy' run all >/dev/null 2>&1; then fail 'mypy fallido debería dar exit 1'; fi
 called 'pytest -q' && called 'npm run typecheck' || fail 'el fallo de mypy cortó pasos posteriores'
+
+if FAIL_PATTERN='make validate-verbatim-corpus' run python >/dev/null 2>&1; then
+    fail 'una reextracción fallida debería bloquear CI'
+fi
 
 # gitleaks ausente -> WARN y exit 0; presente -> se ejecuta
 out=$(run all 2>&1) || fail 'gitleaks ausente dio exit != 0'

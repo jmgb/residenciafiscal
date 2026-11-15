@@ -17,33 +17,10 @@ Prioridades: **P0** bloquea producción · **P1** evita regresión relevante · 
 
 ---
 
-## P1
-
-- 🔲 **El digest semanal ya no se actualiza solo en alfredo (2026-11-05, auditoría GitHub G02).**
-  `residenciafiscal-weekly-ga4-telegram` hacía `fetch`+`merge` de `main` y ejecutaba el checkout como
-  `ubuntu`, que tiene `sudo` y `docker`; el repo es público, así que esa ruta no necesitaba credencial.
-  Un drop-in (`10-no-autoupdate.conf`) quitó esos pasos: un cambio en
-  `scripts/weekly_ga4_telegram.py` ya no llega a producción hasta hacer a mano
-  `git merge --ff-only` en `/home/ubuntu/residenciafiscal`. **Cierre:** el digest corre con usuario
-  propio y runtime fijo fuera del checkout, como `comunicador-weekly`, o queda documentado el paso
-  manual en la guía de operación, y una pasada natural de lunes llega por Telegram. Primera pasada
-  con el cambio: 2026-11-09, 09:10.
-
-## P2
-
-- 🔲 **Decidir #72: sustituir `@google/genai` por `fetch` en el chat.** Es un borrador con el smoke en rojo desde la auditoría de dependencias del 4 nov 2026 (`repos/residenciafiscal.md`, candidata 7). **Cierre:** smoke en verde e integrado, o PR cerrado.
-
-- 🔲 **`pypdf` sigue fuera de Dependabot: falta un gate que revalide todo el corpus.**
-  **2026-11-15:** subido de 6.14.2 a 6.21.4 por 18 alertas Dependabot (10 high, DoS por PDF
-  manipulado). `src/verbatim_validation.py` ya no exige que `extractor.version` coincida con el
-  pypdf instalado: es procedencia, y la validación exige reproducir el texto página a página.
-  Las 1.312 páginas de los 106 PDF salen idénticas con ambas versiones, así que el corpus no se
-  regeneró. Historial y procedimiento: `docs/jurisprudence/VERBATIM_CORPUS.md` §Versión del
-  extractor. Queda el pin exacto y el `ignore` de `.github/dependabot.yml` porque los tests solo
-  reextraen el piloto SAN 1210/2023; con el `ignore`, cada alerta nueva hace fallar el security
-  update job (`all_versions_ignored`) y hay que subirlo a mano.
-  **Cierre:** un `make` que revalide los 106 artefactos verbatim contra el pypdf instalado, en CI
-  o como requisito de los PR de pypdf, y entonces quitar el `ignore` de pypdf.
+Los pendientes operativos de esta revisión están cerrados; su evidencia vive
+en [`docs/project/TASKS_ARCHIVE.md`](docs/project/TASKS_ARCHIVE.md#cierres-operativos-del-15-de-noviembre-de-2026).
+El backlog de producto, SEO y sus bloqueos sigue en
+[`docs/project/TASKS.md`](docs/project/TASKS.md).
 
 ## Mantenimiento periódico
 

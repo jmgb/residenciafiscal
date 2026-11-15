@@ -169,6 +169,7 @@ No hace falta activar ningún entorno: `uv run` lo resuelve solo.
 
 ```bash
 make export-verbatim        # extrae el PDF piloto sin LLM
+make validate-verbatim-corpus # reextrae los 106 PDF sin escribir ni necesitar output/
 make export-case-v3         # compila el caso propuesto por el agente
 make export-case-v3-sample  # regenera y valida la muestra de cinco
 make migrate-pypdf          # migra el extractor conservando texto; ver VERBATIM_CORPUS.md
