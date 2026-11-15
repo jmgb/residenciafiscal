@@ -154,7 +154,8 @@ texto no cambiase. Ese día se subió de 6.14.2 a 6.21.4 para corregir 18 alerta
 Dependabot (todas DoS por PDF manipulado salvo una baja de carga de JPEG sin
 validar). Antes se comprobó que 6.14.2 y 6.21.4 devuelven el mismo texto en las
 1.312 páginas de los 106 PDF de `sentencias/`, y los 106 artefactos de
-`knowledge/jurisprudencia-v3/verbatim/` validan con 6.21.4. Inicialmente se conservó la procedencia `6.14.2`; la reextracción posterior de
+`knowledge/jurisprudencia-v3/verbatim/` validan con 6.21.4. Inicialmente se
+conservó la procedencia `6.14.2`; la reextracción posterior de
 los 106 PDF registra `6.21.4`, tras verificar que las 1.312 páginas son
 idénticas. Se recompilaron casos y derivados, actualizando únicamente la
 versión del extractor y los hashes asociados, sin cambiar el contenido
@@ -168,7 +169,7 @@ del chat no importan pypdf).
 
 El pin sigue siendo exacto y Dependabot sigue ignorando pypdf en
 `.github/dependabot.yml`: los tests solo reextraen el piloto SAN 1210/2023, así
-que cada subida exige comprobar a mano todo el corpus. Para subir pypdf:
+que cada subida exige comprobar todo el corpus. Para subir pypdf:
 
 1. Cambiar el pin y ejecutar `uv lock --upgrade-package pypdf`.
 2. Revalidar los 106 artefactos de `knowledge/jurisprudencia-v3/verbatim/` con
@@ -179,6 +180,54 @@ que cada subida exige comprobar a mano todo el corpus. Para subir pypdf:
    (cualquier cambio de texto es un cambio del corpus citado), reextraer esos
    artefactos y regenerar sus derivados. Es un cambio de datos, no una subida
    rutinaria de dependencias.
+
+### Migrar el extractor
+
+La revalidación puede conservar la procedencia histórica cuando el texto sea
+idéntico. Este target es opcional: se usa cuando se quiere reextraer y registrar
+la versión instalada como nueva procedencia, renovando también sus derivados.
+
+Después de revisar el changelog, editar el pin exacto de `pypdf` en
+`pyproject.toml` y regenerar el lock:
+
+```bash
+make lock
+make migrate-pypdf
+make fast-check
+```
+
+Deben estar disponibles todas las entradas declaradas en la procedencia de los
+casos, incluidos los JSONL históricos de `output/` que no se versionan. El
+comando no los reconstruye ni descarga: si falta una fuente, aborta sin escribir.
+
+`make migrate-pypdf` usa la versión instalada por uv. Primero comprueba los
+hashes del rollout y de sus entradas y reextrae todos los PDF del manifiesto.
+Si cambia una página —texto, etiqueta, estado o número de páginas—, falla
+indicando la sentencia y página afectadas, sin publicar ningún artefacto.
+Un cambio de texto requiere una migración jurídica específica; este comando no
+lo acepta ni lo normaliza automáticamente.
+
+Con páginas idénticas, construye una copia temporal del proyecto con las fuentes
+necesarias y llama a los exportadores existentes. Comprueba que cada caso solo
+cambie en el extractor y el hash del verbatim, actualiza perfiles, índices,
+informes de build, calidad y estado del rollout, y reconstruye el agregado del
+piloto. Conserva los intentos y revisiones del estado, las evaluaciones históricas
+y los bundles OKF/2. No llama a modelos ni modifica el pin, los fixtures o la
+selección del corpus del chat.
+
+Publica únicamente después de validar el lote completo y comprobar que las
+entradas y los destinos no cambiaron durante la operación. Rechaza también
+cambios en los campos de recuperación o en las unidades de sus agregados:
+solo permite renovar sus hashes. Cada archivo se reemplaza de forma
+atómica; si una escritura lanza una excepción, restaura los ya publicados.
+Repetirlo con el mismo extractor y las mismas fuentes no cambia los bytes.
+Revisar el diff y actualizar los fixtures que fijen la versión antes del commit.
+
+Para comparar sin regenerar ni publicar:
+
+```bash
+make migrate-pypdf PYPDF_MIGRATION_ARGS=--check
+```
 
 ## Contrato v1
 

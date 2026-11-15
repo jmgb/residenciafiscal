@@ -171,10 +171,14 @@ No hace falta activar ningún entorno: `uv run` lo resuelve solo.
 make export-verbatim        # extrae el PDF piloto sin LLM
 make export-case-v3         # compila el caso propuesto por el agente
 make export-case-v3-sample  # regenera y valida la muestra de cinco
+make migrate-pypdf          # migra el extractor conservando texto; ver VERBATIM_CORPUS.md
 make dev                    # API + frontend en desarrollo
 make dev-api                # solo API HTTP, Swagger en http://127.0.0.1:8010/docs
 make fast-check             # lint + typecheck + tests
 ```
+
+La migración del extractor y su modo de solo comprobación se describen en
+[`VERBATIM_CORPUS.md`](docs/jurisprudence/VERBATIM_CORPUS.md#migrar-el-extractor).
 
 La propuesta jurídica de cada sentencia se prepara en una sesión de agente. No
 existe un target que envíe los PDF a OpenAI. Los comandos Python extraen,

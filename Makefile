@@ -13,7 +13,7 @@ SHELL := /bin/bash
 .SILENT:
 .PHONY: help setup dev dev-api dev-frontend dev-public serve \
 	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
-	export-case-v3-derivatives export-case-v3-sample evaluate-retrieval-phase-d \
+	export-case-v3-derivatives export-case-v3-sample migrate-pypdf evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 evaluate-rollout-e rollout-init rollout-status rollout-next \
 	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
 	rollout-bootstrap rollout-finalize rollout-verify rollout-reproducibility \
@@ -61,6 +61,7 @@ VERBATIM_PDF ?= ./sentencias/SAN_1210_2023.pdf
 VERBATIM_DOCUMENT_ID ?= san-1210-2023
 VERBATIM_SOURCE_FILE ?= sentencias/SAN_1210_2023.pdf
 VERBATIM_OUTPUT ?= ./knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json
+PYPDF_MIGRATION_ARGS ?=
 CASE_PROPOSAL ?= ./knowledge/jurisprudence-case-proposals/san-1210-2023.proposal.json
 CASE_VERBATIM ?= $(VERBATIM_OUTPUT)
 CASE_EVALUATION ?= ./knowledge/jurisprudencia-v3/evaluations/san-1210-2023.questions.json
@@ -194,6 +195,7 @@ help:
 	@echo ""
 	@echo "=== DEPS ==="
 	@echo "  make lock                 Regenera uv.lock"
+	@echo "  make migrate-pypdf        Migra la procedencia tras subir el pin, sin cambiar texto"
 	@echo "  make upgrade              Actualiza dependencias dentro de los rangos"
 	@echo "  make export-requirements  Genera requirements.txt desde el lock"
 	@echo ""
@@ -266,6 +268,9 @@ export-verbatim:
 		--source-file $(VERBATIM_SOURCE_FILE) \
 		--output $(VERBATIM_OUTPUT) \
 		--project-root .
+
+migrate-pypdf:
+	uv run python $(PYTHON_SOURCE)/migrate_pypdf.py --project-root . $(PYPDF_MIGRATION_ARGS)
 
 export-case-v3:
 	uv run python $(PYTHON_SOURCE)/export_jurisprudence_case.py \

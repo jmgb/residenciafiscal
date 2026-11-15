@@ -135,6 +135,10 @@ código anterior si alguna investigación histórica necesita consultarlo.
 Todo pasa por el Makefile (`make help` los lista todos). Los no evidentes:
 
 - `make fast-check` — el gate obligatorio antes de commitear (lint + tipos + tests).
+- `make migrate-pypdf` — tras subir el pin y regenerar el lock, compara todas las
+  páginas y regenera la procedencia en staging; aborta si cambia texto o contenido
+  jurídico. Modo de solo comprobación: `PYPDF_MIGRATION_ARGS=--check`. Detalle:
+  [`docs/jurisprudence/VERBATIM_CORPUS.md`](docs/jurisprudence/VERBATIM_CORPUS.md#migrar-el-extractor).
 - `make ci-local` / `make ci-changed` — si GitHub Actions no tiene minutos, reproducen en local los checks bloqueantes de `ci.yml`, `frontend.yml` (lint + typecheck) y gitleaks (`scripts/ci-local.sh`; test: `bash scripts/tests/test-ci-local.sh`).
 - `make test` no llama a ningún LLM ni necesita secrets.
 - Evaluación F0.3 (`make build-chat-f03-review`, `build-chat-f03-legal-bundle`, `validate-chat-f03-review`, `validate-chat-absences-candidate`, `compile-chat-f03-results`): [`docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md`](docs/experiments/CHAT_STRATEGY_F03_LEGAL_REVIEW_PROTOCOL.md#comandos-make-de-la-evaluación-f03-y-ausencias). Al abogado solo se le entrega el ZIP de `build-chat-f03-legal-bundle`, sin clave X/Y ni resultados previos.
