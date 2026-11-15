@@ -1,7 +1,8 @@
 # Dependency maintenance: reviewed pull requests, no automatic merge.
 # Policy: https://github.com/jmgb/autofix-control-plane/blob/main/docs/DEPENDENCY_MAINTENANCE.md
 # Security updates are enabled separately and do not wait for this schedule.
-# Keep pypdf pinned: updating it requires regenerating the verified corpus.
+# Keep pypdf pinned: updating it requires revalidating the whole verbatim corpus
+# (docs/jurisprudence/VERBATIM_CORPUS.md, "Versión del extractor").
 version: 2
 updates:
 - package-ecosystem: uv

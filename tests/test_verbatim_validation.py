@@ -40,7 +40,6 @@ def test_valida_pdf_hash_y_reextraccion_completa(tmp_path: Path) -> None:
         artifact_path,
         project_root=tmp_path,
         reader_factory=lambda _: _FakeReader(("Texto original\n1\n",)),
-        extractor_version="test-version",
     )
 
     assert result.document_id == "documento-prueba"
@@ -60,7 +59,6 @@ def test_rechaza_si_el_pdf_cambia_despues_del_build(tmp_path: Path) -> None:
             artifact_path,
             project_root=tmp_path,
             reader_factory=lambda _: _FakeReader(("Texto original\n1\n",)),
-            extractor_version="test-version",
         )
 
 
@@ -76,19 +74,41 @@ def test_rechaza_si_la_reextraccion_no_reproduce_las_paginas(
             artifact_path,
             project_root=tmp_path,
             reader_factory=lambda _: _FakeReader(("Texto diferente\n1\n",)),
-            extractor_version="test-version",
         )
 
 
-def test_rechaza_si_la_version_del_extractor_no_coincide(tmp_path: Path) -> None:
+def test_la_version_del_extractor_es_procedencia_no_requisito(tmp_path: Path) -> None:
+    """Otra versión de pypdf valida el artefacto si reproduce cada página."""
+    from importlib.metadata import version
+
+    from verbatim_artifact import load_verbatim_corpus
     from verbatim_validation import validate_verbatim_artifact
 
     _, artifact_path = _build_artifact(tmp_path)
+    assert version("pypdf") != "test-version"
+
+    result = validate_verbatim_artifact(
+        artifact_path,
+        project_root=tmp_path,
+        reader_factory=lambda _: _FakeReader(("Texto original\n1\n",)),
+    )
+
+    assert result.page_count == 1
+    assert load_verbatim_corpus(artifact_path.read_bytes()).extractor.version == "test-version"
+
+
+def test_rechaza_un_extractor_que_no_es_pypdf(tmp_path: Path) -> None:
+    from verbatim_validation import validate_verbatim_artifact
+
+    _, artifact_path = _build_artifact(tmp_path)
+    artifact_path.write_text(
+        artifact_path.read_text(encoding="utf-8").replace('"name": "pypdf"', '"name": "otro"'),
+        encoding="utf-8",
+    )
 
     with pytest.raises(ValueError, match="extractor"):
         validate_verbatim_artifact(
             artifact_path,
             project_root=tmp_path,
             reader_factory=lambda _: _FakeReader(("Texto original\n1\n",)),
-            extractor_version="other-version",
         )

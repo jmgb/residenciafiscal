@@ -139,31 +139,42 @@ conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
 
 ## Versión del extractor
 
-`pyproject.toml` fija `pypdf==6.14.2` a propósito. Cada artefacto registra
-`extractor.version` y `validate_verbatim_artifact` reextrae el PDF con esa misma
-versión; con otra, la validación falla («extractor no coincide con la versión de
-validación») y los exports del caso piloto dejan de ser byte a byte idénticos.
+`pyproject.toml` fija pypdf con pin exacto (hoy `pypdf==6.21.4`). Cada artefacto
+registra en `extractor.version` la versión con la que se **generó**; es
+procedencia, no un requisito de validación. `validate_verbatim_artifact`
+reextrae el PDF con el pypdf instalado y exige que reproduzca página a página el
+texto versionado (mismo `raw_page_text`, `text_sha256` y `pages_sha256`). Si una
+versión nueva cambia una sola página, la validación falla con «la reextracción no
+reproduce el corpus verbatim» y la subida pasa a ser un cambio de datos.
 
-El 2026-10-21 se probó subir a 6.19.0 por avisos de `pip-audit` y fallaron 5 tests
-(`test_verbatim_pilot_artifact.py`, `test_export_jurisprudence_case*.py`); se
-volvió a 6.14.2. Los avisos de pypdf 6.14.2 (corregidos entre 6.15.0 y 6.19.0)
-quedan aceptados mientras tanto: los PDF de entrada son resoluciones oficiales
-descargadas por el propio pipeline, no subidas de terceros.
+Hasta el 2026-11-15 la validación exigía además que la versión registrada fuera
+igual a la instalada, y eso obligaba a regenerar todo el corpus (y la cascada de
+hashes de casos, derivados, rollout y runtime del chat) en cada subida aunque el
+texto no cambiase. Ese día se subió de 6.14.2 a 6.21.4 para corregir 18 alertas
+Dependabot (todas DoS por PDF manipulado salvo una baja de carga de JPEG sin
+validar). Antes se comprobó que 6.14.2 y 6.21.4 devuelven el mismo texto en las
+1.312 páginas de los 106 PDF de `sentencias/`, y los 106 artefactos de
+`knowledge/jurisprudencia-v3/verbatim/` validan con 6.21.4. Los artefactos
+conservan `extractor.version: 6.14.2` porque se generaron con esa versión.
 
-Son todos de denegación de servicio (tiempo o memoria disparados con un PDF
-manipulado) y pypdf solo corre en los procesos batch offline, sin ningún endpoint
-de subida. Por eso el 2026-10-21 se descartaron en GitHub las 28 alertas
-Dependabot de pypdf 6.14.2 como *tolerable risk*: con el `ignore` de pypdf en
-`.github/dependabot.yml`, cada alerta abierta hacía fallar el security update job
-(`all_versions_ignored`). Si aparece una alerta nueva de pypdf que no sea DoS, se
-reevalúa en vez de descartarla.
+El riesgo de esos avisos es bajo en este proyecto: los PDF de entrada son
+resoluciones oficiales descargadas por el propio pipeline, pypdf solo corre en
+procesos batch offline y no hay ningún endpoint de subida (la API y el runtime
+del chat no importan pypdf).
 
-Para subir pypdf: cambiar el pin, reextraer cada artefacto con la nueva versión,
-revisar el diff de `raw_page_text` página a página (cualquier cambio de texto es
-un cambio del corpus citado), regenerar los exports y actualizar los fixtures que
-fijan la versión (`tests/fixtures/*/valid_minimal.json`,
-`tests/jurisprudence_case_v3_factory.py`). Es un cambio de datos, no una subida
-rutinaria de dependencias.
+El pin sigue siendo exacto y Dependabot sigue ignorando pypdf en
+`.github/dependabot.yml`: los tests solo reextraen el piloto SAN 1210/2023, así
+que cada subida exige comprobar a mano todo el corpus. Para subir pypdf:
+
+1. Cambiar el pin y ejecutar `uv lock --upgrade-package pypdf`.
+2. Revalidar los 106 artefactos de `knowledge/jurisprudencia-v3/verbatim/` con
+   `validate_verbatim_artifact`; los 67 publicables también con
+   `make verify-public-judgments`.
+3. Si todos validan, el corpus no cambia y basta con el pin y el lock.
+4. Si alguno falla, revisar el diff de `raw_page_text` página a página
+   (cualquier cambio de texto es un cambio del corpus citado), reextraer esos
+   artefactos y regenerar sus derivados. Es un cambio de datos, no una subida
+   rutinaria de dependencias.
 
 ## Contrato v1
 
@@ -202,7 +213,7 @@ cerrada: no se produce un corpus parcial silencioso.
 | `resource` | Ruta al PDF original |
 | `source_sha256` | SHA-256 binario del PDF |
 | `schema_version` | `residenciafiscal-verbatim/1` |
-| `extractor` | Nombre y versión exacta, por ejemplo `pypdf/6.14.2` |
+| `extractor` | Nombre y versión exacta con la que se generó, por ejemplo `pypdf/6.14.2` |
 | `page_count` | Número de páginas físicas |
 | `pages_sha256` | Hash de la lista canónica y ordenada de registros de página |
 | `status` | Derivado del estado del JSON canónico |
