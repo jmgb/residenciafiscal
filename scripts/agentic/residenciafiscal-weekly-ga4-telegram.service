@@ -13,8 +13,6 @@ User=ubuntu
 Group=ubuntu
 Environment=HOME=/home/ubuntu
 WorkingDirectory=/home/ubuntu/residenciafiscal
-ExecStartPre=/usr/bin/git -C /home/ubuntu/residenciafiscal fetch --quiet origin main
-ExecStartPre=/usr/bin/git -C /home/ubuntu/residenciafiscal merge --ff-only origin/main
 ExecStart=/home/ubuntu/residenciafiscal/scripts/agentic/weekly_ga4_telegram_runner.sh
 TimeoutStartSec=600
 MemoryMax=512M

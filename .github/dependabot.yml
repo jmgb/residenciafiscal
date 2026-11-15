@@ -1,7 +1,7 @@
 # Dependency maintenance: reviewed pull requests, no automatic merge.
 # Policy: https://github.com/jmgb/autofix-control-plane/blob/main/docs/DEPENDENCY_MAINTENANCE.md
 # Security updates are enabled separately and do not wait for this schedule.
-# Keep pypdf pinned: updating it requires revalidating the whole verbatim corpus
+# Keep pypdf pinned: CI revalidates the whole verbatim corpus on every update
 # (docs/jurisprudence/VERBATIM_CORPUS.md, "Versión del extractor").
 version: 2
 updates:
@@ -33,8 +33,6 @@ updates:
       - patch
   commit-message:
     prefix: chore(deps)
-  ignore:
-  - dependency-name: pypdf
 - package-ecosystem: npm
   directory: /frontend
   schedule:

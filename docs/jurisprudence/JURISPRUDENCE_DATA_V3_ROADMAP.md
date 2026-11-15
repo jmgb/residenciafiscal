@@ -1,8 +1,9 @@
 # Roadmap del corpus jurisprudencial v3
 
-**Estado:** fases A–D y preparación E0 completadas; contrato v3 congelado.
-**Siguiente unidad de trabajo:** manifiesto y ejecución de fase E, bloqueados
-hasta autorización expresa.
+**Estado:** fases A–E ejecutadas técnicamente; contrato v3 congelado. Los 106
+casos conservan `AGENT_REVIEWED_ONLY`, sin aprobación jurídica humana.
+**Siguiente unidad de trabajo:** cerrar la revisión jurídica ciega F0.3 con un
+abogado especialista antes de revelar X/Y. El paquete y su validador ya existen.
 **Rollout obligatorio:** 1 → 5 → 106.
 
 ## 1. Contexto
@@ -480,15 +481,15 @@ de revisar las mediciones iniciales; no cambia silenciosamente por alias.
 
 ### Fase F — chat productivo
 
-El backend se implementa después de validar el índice:
+La implementación técnica del backend V1 ya está disponible. Su contrato es:
 
 - durante el experimento comparativo con A y B activas, muestra dos respuestas
   separadas por mensaje; con una sola estrategia activa muestra una;
   sistema estructurado actual y Gemini File Search sobre los PDF;
 - mantiene independientes recuperación, redacción, fuentes, errores y métricas
   de cada estrategia;
-- muestra el coste marginal en USD de cada respuesta y conserva el mismo
-  desglose por estrategia en observabilidad;
+- registra el coste marginal en USD de cada respuesta por estrategia en
+  observabilidad, sin mostrarlo en la interfaz;
 - recupera cuestiones, no documentos completos;
 - inyecta solo 6–12 unidades relevantes dentro del presupuesto;
 - incluye casos principales y de contraste;
@@ -608,11 +609,11 @@ El orden vigente es:
 6. Ejecutar las 40 como evaluación conversacional A/B solo si pasan los gates.
 7. Probar `gemini-4-hydrogen` únicamente si persiste un problema atribuible al
    redactor.
-8. Desplegar el backend y transporte comparativo ya implementados solo después
-   de resolver cuotas y presupuesto; mantener `stub` como modo productivo hasta
-   recibir autorización expresa.
-9. Ampliar v3 de 5 a 106 únicamente mediante autorización expresa y el rollout
-   reanudable de fase E.
+8. **Completado técnicamente:** backend V1 y transporte comparativo desplegados
+   en Netlify. Su activación operativa no cierra los gates jurídicos ni promueve
+   el retriever como estrategia definitiva.
+9. **Completado técnicamente:** ampliación autorizada de v3 de 5 a 106 mediante
+   el rollout reanudable de fase E, conservando `AGENT_REVIEWED_ONLY`.
 
 La arquitectura y el handoff canónicos están en
 [`CHAT_SYSTEM_ARCHITECTURE.md`](CHAT_SYSTEM_ARCHITECTURE.md).

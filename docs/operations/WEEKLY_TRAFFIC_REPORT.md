@@ -17,9 +17,15 @@ estaba apagada a las 09:00, `Persistent=true` los disparó todos juntos a las
 encendido, su journal sobrevive a los reinicios, y un supervisor común
 comprueba los lunes a las 10:00 que los cinco salieron.
 
-La unidad hace `git fetch` + `merge --ff-only` sobre `/home/ubuntu/residenciafiscal`
-antes de ejecutar el runner: **editar en local no basta, hay que hacer push**
-para que el VPS use el código nuevo.
+Desde el 2026-11-05 la unidad **no actualiza el checkout automáticamente**.
+El drop-in `10-no-autoupdate.conf` vacía sus `ExecStartPre`: el repositorio es
+público y el timer ejecuta como `ubuntu`, por lo que no debe incorporar código
+nuevo sin revisión. Hacer push no actualiza por sí solo el código del informe
+en Alfredo. El template versionado tampoco incluye ya esos pasos.
+
+La pasada natural del lunes 2026-11-09 a las 09:10 terminó con `Result=success`,
+`ExecMainStatus=0` y «Mensaje enviado por Telegram.» en el journal, comprobado
+el 2026-11-15. El siguiente apartado describe cómo publicar cambios revisados.
 
 ## Piezas
 
@@ -192,6 +198,32 @@ total se lee sin dimensión y el desglose solo aporta los recurrentes.
 
 ## Operación
 
+### Actualizar el código del informe
+
+Tras revisar los cambios y sus checks, actualizar manualmente el checkout al
+commit validado. Sustituir `SHA_VALIDADO` por ese commit; el comando no elige
+automáticamente la última revisión de `main`:
+
+```bash
+ssh alfredo-admin 'sudo -n -u ubuntu -H bash -s' <<'REMOTE'
+set -euo pipefail
+cd ~/residenciafiscal
+test "$(git branch --show-current)" = main
+test -z "$(git status --porcelain --untracked-files=no)"
+git fetch origin main
+validated_commit=SHA_VALIDADO
+git merge-base --is-ancestor "$validated_commit" origin/main
+git merge --ff-only "$validated_commit"
+uv sync --locked
+REMOTE
+```
+
+Conservar el drop-in que desactiva la autoactualización. Si cambian las units,
+reinstalarlas según el comando siguiente. Un cambio solo en el runner no
+necesita reiniciar el timer: lo leerá en su próxima ejecución.
+
+### Comprobar y ejecutar
+
 ```bash
 # Ver el mensaje sin enviarlo (útil para revisar redacción o una fecha concreta)
 bash scripts/agentic/weekly_ga4_telegram_runner.sh --dry-run
@@ -201,9 +233,9 @@ bash scripts/agentic/weekly_ga4_telegram_runner.sh --dry-run --date 2026-08-03
 bash scripts/agentic/install-weekly-ga4-telegram-timer.sh
 
 # Estado y ejecución manual (en el VPS alfredo, donde vive la unidad)
-ssh alfredo systemctl list-timers residenciafiscal-weekly-ga4-telegram.timer
-ssh alfredo sudo systemctl start residenciafiscal-weekly-ga4-telegram.service
-ssh alfredo sudo journalctl -u residenciafiscal-weekly-ga4-telegram.service -n 50 --no-pager
+ssh alfredo-admin systemctl list-timers residenciafiscal-weekly-ga4-telegram.timer
+ssh alfredo-admin sudo -n systemctl start residenciafiscal-weekly-ga4-telegram.service
+ssh alfredo-admin sudo -n journalctl -u residenciafiscal-weekly-ga4-telegram.service -n 50 --no-pager
 ```
 
 Para silenciar el informe sin desinstalar nada, `WEEKLY_GA4_TELEGRAM_ENABLED=false`

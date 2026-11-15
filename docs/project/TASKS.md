@@ -1,7 +1,9 @@
 # Tareas pendientes
 
 Backlog operativo del proyecto. Las tareas SEO y de despliegue deben verificarse
-contra el dominio público después de cada deploy.
+contra el dominio público después de cada deploy. Los pendientes operativos
+breves están en [`tasks.md`](../../tasks.md); los hitos cerrados sin subtareas
+abiertas se conservan en [`TASKS_ARCHIVE.md`](TASKS_ARCHIVE.md).
 
 > **Si retomas el backend del chat**, separa dos líneas: el experimento de
 > comparación entre el corpus v3 y Gemini File Search, y la activación
@@ -23,59 +25,14 @@ contra el dominio público después de cada deploy.
 > el plan de ejecución quedó como scratch local en `docs/superpowers/`, que está
 > en `.gitignore` y no se versiona (regla de promoción en `CLAUDE.md`).
 
-> **Si retomas el corpus normativo**, las cuatro entradas de «Corpus normativo»
+> **Si retomas el corpus normativo**, los dos pendientes de «Corpus normativo»
 > son independientes entre sí y se pueden coger por separado. El schema v3 ya
 > está congelado: añadir las normas citadas exige una extensión opcional
-> compatible o una versión nueva. La tarea más silenciosa sigue siendo el
-> guardarraíl de la redescarga.
+> compatible o una versión nueva. La tabla de convenios y el guardarraíl de la
+> redescarga ya están implementados; su evidencia se conserva en el histórico.
 
 ## Prioridad alta
 
-- [x] **Rotar el token de Sentry filtrado en la historia de git.** El token real
-  commiteado dentro de `.mcp.json` el 2026-03-19 (commits `13dc89c` y
-  `098e492`) se revocó y sustituyó el 2026-07-29. La variable canónica vigente
-  es `SENTRY_TOKEN`.
-  - Purgar la historia **no sustituye a rotar**: un force-push no borra el objeto
-    del servidor, que sigue siendo alcanzable por su SHA. El secreto histórico
-    permanece documentado como revocado.
-- [x] Mantener un único `.env` en la raíz: `frontend/.env` ya no existe y Vite
-  carga la configuración desde el directorio raíz.
-- [x] Verificar el deploy público de `https://residenciafiscal.org/`: home y recursos
-  públicos responden correctamente detrás de Netlify y Cloudflare, también desde EE. UU.
-- [x] Implementar la ruta pública `/metodologia` con el método, el corpus de 106
-  sentencias y sus limitaciones.
-- [x] Añadir `/metodologia` a `frontend/public/sitemap.xml`
-  y enlazarla desde `frontend/public/llms.txt`.
-- [x] **P1 — Primera ampliación de rutas de país por presencia en el corpus**
-  (1 de agosto de 2026). Se añadieron cinco: **Mónaco** (`/monaco`, sin
-  convenio), **Marruecos**, **Rusia**, **Emiratos Árabes Unidos** y **Kuwait**.
-  Son las jurisdicciones que más aparecen en las resoluciones y no tenían ruta.
-  Cada una es una entrada en `countryRoutes.json` (`name`, `code`, `path`,
-  `treatyBoeId`, `title`, `description`, `sitemap`); el bloque del convenio, el
-  prerenderizado, los redirects y el sitemap salen solos. Contrato en
-  [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
-
-  **Dos correcciones al criterio que estaba escrito aquí**, ambas medidas:
-
-  1. **La saga de becarios infla el recuento por menciones.** 31 de las 106
-     sentencias son el mismo pleito —becas ICEX y ausencias esporádicas— y en
-     ellas el país es el destino de la beca, no la jurisdicción en disputa. Eso
-     descarta Kenia, Taiwán, Irán, Túnez, Egipto, Corea del Sur, Ucrania,
-     Noruega, Rumanía, Israel, China, Turquía, Arabia Saudí, Dinamarca y
-     Bélgica: una sentencia cada uno, misma doctrina, sin análisis de su
-     convenio. El campo fiable es `judgment.countries`, no contar el nombre del
-     país en el texto.
-  2. **Una ruta nueva no trae hoy ni una sentencia a la página.** El bloque «lo
-     aplican N sentencias» de `TaxTreaty.tsx` sale de `normativa.json`, y solo
-     cuatro preceptos de convenio tienen sentencias enlazadas: Reino Unido (4),
-     Suiza (2), EE. UU. (1) y el CDI argentino de 1992 (1). Mientras 41 de las
-     106 no citen ningún artículo en su registro estructurado, una página nueva
-     es el articulado del convenio y nada más.
-
-  Quedan fuera y necesitan trabajo previo, no una entrada en JSON: **Gibraltar**
-  (el acuerdo fiscal de 2019 no está en `normativa/es/`), **Guinea Ecuatorial**
-  (sin convenio) y **Ucrania** (solo existiría el convenio con la URSS de 1986,
-  `BOE-A-1986-25055`, y aplicárselo hay que verificarlo, no deducirlo).
 - [ ] **P1 — Segunda tanda de rutas de país, solo después de medir la primera.**
   Diez países con convenio ya publicado, coste de una línea cada uno: **Países
   Bajos, Bélgica, Irlanda, Luxemburgo, Malta, Chipre, Canadá, Singapur,
@@ -114,6 +71,13 @@ contra el dominio público después de cada deploy.
   - 18 de 149 URLs con impresiones confirma la cola lenta de indexación: pesan
     más ahora la indexación manual y los primeros backlinks —ambas más abajo—
     que abrir rutas nuevas.
+
+  **Actualización del 15 de noviembre de 2026:** la ventana de espera ya venció.
+  La consulta de Search Console del 16 de octubre al 12 de noviembre está
+  guardada en el informe operativo local `reports/gsc_checkpoint/2026-11-15.json`.
+  El checkpoint de fichas CDI se cerró más abajo; decidir la segunda tanda
+  requiere valorar las páginas de país de esa consulta, no seguir esperando
+  septiembre ni ampliar rutas automáticamente.
 - [ ] **P1 — Cruzar cada página de país con las sentencias del corpus que lo
   mencionan.** Vale más que setenta rutas nuevas: es contenido único y
   verificable —Reino Unido aparece en 115 pasajes, Suiza en 111, Argentina en
@@ -121,11 +85,12 @@ contra el dominio público después de cada deploy.
   BOE y en cualquier despacho. Requiere decidir cómo se extrae la mención
   (el nombre del país en los hechos probados no siempre es la jurisdicción en
   disputa) y respetar el invariante de literalidad.
-  - El campo que sirve es `judgment.countries`, pero **es texto libre sin
-    normalizar**: conviven `JAPÓN`, `Méjico`, `Tailandia;Dinamarca` y
-    `Reino Unido (CDI 1975; referido también CDI 2013)`. Normalizarlo a ISO
-    3166-1 alfa-2 —la misma clave `code` que ya usa `countryRoutes.json`— es el
-    primer paso, y solapa con tipar las 36 determinaciones residenciales.
+  - La fase A ya aporta el catálogo `src/jurisdiction_catalog.json` y los
+    sidecars de roles de `knowledge/jurisprudencia-v3/jurisdicciones/`.
+    Reutilizar esa clave y esos roles: `judgment.countries` es texto libre y no
+    sirve para cruzar datos. El enriquecimiento público sigue sujeto a los
+    gates de la fase B de
+    [`INTERNATIONAL_ARCHITECTURE.md`](../product/INTERNATIONAL_ARCHITECTURE.md).
 
 ## Producto y arquitectura
 
@@ -445,15 +410,6 @@ contra el dominio público después de cada deploy.
     [`docs/jurisprudence/VERBATIM_CORPUS.md`](../jurisprudence/VERBATIM_CORPUS.md)
     como JSON canónico y decidir en E0 su almacenamiento para la futura
     expansión. El Markdown verbatim sigue siendo una vista humana opcional.
-- [x] Diseñar las landings por país con un modelo de datos reutilizable, URLs canónicas
-  ASCII (`/espana`, `/portugal`, etc.) y redirecciones para variantes con caracteres especiales.
-  Cerrado el 2 de agosto de 2026 con `countryRoutes.json`, constructores compartidos,
-  prerender, sitemap y redirects generados; el enriquecimiento editorial queda separado.
-- [x] Definir el contrato del endpoint de chat, manejo de errores, cancelación de peticiones,
-  límites de uso y estrategia de fallback del proveedor LLM. Cerrado en las secciones 5 y 6
-  del diseño: eventos SSE, los dos `429` (el del limitador nativo llega sin ejecutar la
-  función y no es SSE), `502` antes del primer token frente a `event: error` a mitad de
-  stream, cancelación por `AbortSignal` y degradación a búsqueda léxica si el router falla.
 - [ ] **Futuro — API/MCP para agentes externos con créditos prepagados.** Vender
   la consulta del corpus y las respuestas del chat a agentes de IA de terceros:
   cuenta por organización, API keys hasheadas, ledger de créditos append-only en
@@ -474,39 +430,6 @@ contra el dominio público después de cada deploy.
 Arquitectura, invariantes y decisiones en [`NORMATIVA.md`](../normativa/NORMATIVA.md). Léelo
 antes de tocar nada: el articulado no se reescribe nunca, y hay tests que lo
 comprueban párrafo a párrafo contra la fuente.
-
-- [x] **Completar la tabla país → convenio** (cerrada por otra vía; verificado el
-  12 de agosto de 2026). La entrada describía un problema real —`CONVENIOS_POR_PAIS`
-  mapeaba a mano 16 de los 98 convenios, así que el «art. 4 CDI» de una sentencia
-  sobre Portugal o Italia no habría resuelto—, pero el registro bilateral lo
-  resolvió sin que nadie lo marcara aquí: la tabla **ya no se cura a mano**, se
-  deriva de `src/treaty_relations_es.json` (`src/normativa_citas.py:112`,
-  commit `9ed452e`). Medido hoy: 110 grafías → **97 convenios alcanzables**.
-  - El test de cierre que esta entrada exigía —«ningún convenio publicado sin
-    alias»— también existe:
-    `test_el_registro_cubre_todos_los_convenios_generales` en
-    `tests/test_treaty_relations.py:77`, que compara el registro con el
-    manifiesto y falla ante cualquier hueco.
-  - **Sigue rigiendo la regla que motivaba la tabla curada**: el país sale del
-    campo `titulo` de `normativa/es/manifest.json`, verificado uno a uno, nunca
-    deducido con una regex — los convenios escriben el país de trece formas
-    distintas y equivocarlo enlazaría una sentencia con el derecho de otro
-    Estado. Lo que cambió es dónde vive esa curación, no que se pueda automatizar.
-  - Los países con convenio antiguo y moderno se resuelven por el rango de
-    ejercicios de `ConvenioPais`, igual que antes.
-
-- [x] **Guardarraíl contra la pérdida silenciosa de una norma al redescargar.**
-  `descargar_normativa.py` reescribe `manifest.json` desde cero y descubre los
-  convenios vigentes filtrando por título el índice del BOE. Si España denuncia
-  un convenio, la siguiente descarga simplemente lo omite, `export_normativa`
-  publica un precepto menos y **el test de «corpus al día» pasa**, porque compara
-  la salida con la entrada nueva. La pérdida no la ve nadie.
-  - Implementado el 4 de agosto de 2026: una descarga completa compara el
-    manifiesto anterior y falla antes de sobrescribirlo ante cualquier
-    desaparición no declarada. Si la norma sigue citándose se añade a
-    `CDI_DEROGADO`; si deja de ser necesaria se registra con motivo en
-    `BAJAS_DECLARADAS`.
-  - Cubierto por `tests/test_descargar_normativa.py` (10 tests verdes).
 
 - [ ] **Recoger en el schema v3 las normas que cita la sentencia, como campo
   propio.** Es el techo del enlazado: de las 106 sentencias, **41 no citan ningún
@@ -595,46 +518,6 @@ comprueban párrafo a párrafo contra la fuente.
   vigentes: sin thin content, corpus antes de afirmar doctrina, revisión humana
   antes de publicar análisis y «un precepto, una URL».
 
-- [x] **La raíz `/` servía una página en blanco y no era canónica de nada**
-  (medido y resuelto el 1 de agosto de 2026). `dist/index.html` conserva el
-  `<div id="root">` **vacío** —el prerenderizado escribe una copia por ruta en su
-  subdirectorio, pero no toca la shell—, declaraba `canonical` hacia sí misma y
-  no está en el sitemap: la home era una URL sin contenido que no apuntaba a
-  `/espana`. Ahora `netlify.toml` la redirige con un `301` a `/espana`, que es la
-  que el sitemap publica con prioridad `1.0`. `force` es imprescindible, porque
-  el fichero existe y Netlify lo serviría antes que la redirección;
-  `tests/test_frontend_cache_policy.py` lo fija junto al orden respecto al
-  fallback `/*`.
-  - [x] **Verificado el 4 de agosto de 2026**: el monitor `803628459` de
-    UptimeRobot está `UP` y la raíz responde `301` hacia `/espana` con el
-    User-Agent del monitor ([`UPTIMEROBOT.md`](../operations/UPTIMEROBOT.md)).
-- [x] Marcar con `BreadcrumbList` las rutas estáticas indexables `/manifiesto`,
-  `/metodologia` y `/colaborar`, además de `/espana/fuentes`, que cuelga de
-  España. `/privacidad` queda fuera por ser `noindex`: los datos estructurados
-  son para el buscador. `tests/entry-server.test.tsx` recorre las rutas
-  indexables y comprueba además que lo `noindex` no emite nada.
-
-- [x] Añadir metadatos, canonical, Open Graph y enlaces internos específicos para cada
-  landing de país (1 de agosto de 2026): `title` y `description` propios en
-  `countryRoutes.json`, prerenderizados por ruta y con las 34 en el sitemap.
-  El marcado `schema.org` queda cerrado en la tarea siguiente.
-- [x] Marcar cada landing de país con datos estructurados (`schema.org`) (1 de agosto de
-  2026): `BreadcrumbList` en `CountryPage` y en `SpainPage` —`/espana` monta el chat y
-  no la plantilla compartida, así que se quedaba fuera siendo la landing de mayor
-  prioridad— y `Legislation` en `TaxTreaty`, este último solo cuando el convenio de
-  **esa** página está resuelto: al navegar entre países, el render previo al efecto
-  llegaba a declarar el convenio de la jurisdicción anterior. Sin `FAQPage` ni
-  `Article`. Se componen en
-  `frontend/src/lib/structured-data.ts`, se emiten desde el árbol de React —así el HTML
-  prerenderizado y la SPA no divergen— y `tests/entry-server.test.tsx` comprueba que
-  llegan al HTML servido. La fecha se publica como `legislationDateVersion`, nunca como
-  `legislationDate`: el corpus conoce la redacción vigente, no la firma del convenio.
-  Contrato en [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
-- [x] Mostrar en cada landing las fuentes legales del convenio con España: título oficial,
-  artículo de residencia, redacción vigente, texto literal y enlace al BOE, o la
-  declaración explícita de que no hay convenio en vigor. Todo sale del corpus normativo
-  versionado, así que el «proceso editorial» es regenerarlo (`make export-normativa`).
-  Alcance y limitaciones siguen en la propia página: no hay jurisprudencia de ese país.
 - [ ] **Futuro (en unos meses, cuando exista volumen de preguntas/respuestas en
   el chat): runner diario que convierta las consultas en landings long tail.**
   Evaluar un runner o agente programado (systemd timer, como el informe semanal
@@ -772,9 +655,6 @@ sola URL para poder encontrarse.
   - [x] Comprobación anónima realizada: GitHub conserva `template`, `title` y
     `pais` íntegros en el `return_to`; queda pendiente únicamente la comprobación
     visual con una sesión iniciada.
-- [x] **Crear la etiqueta `corpus` en el repositorio** y añadirla a
-  `labels:` de la plantilla (4 de agosto de 2026). La plantilla aplica ahora
-  `help wanted` y `corpus`; cambio publicado en `f39ba835a64dab7a4901b17213238b1b5949901e`.
 - [ ] **Difundir `/colaborar` fuera de GitHub.** Desde que las landings de país son
   indexables, el descubrimiento ya no depende de una sola URL, pero sigue
   necesitando canales externos (colegios de abogados, asociaciones de fiscalistas,
@@ -937,12 +817,9 @@ sola URL para poder encontrarse.
     turno y sus respuestas A/B o editorial; para un seguimiento, la Function
     relee una proyección acotada de las mismas filas. No se guardan IP, user-agent
     ni diagnósticos brutos.
-- [x] Añadir validación automática del schema del corpus, detección de duplicados y
-  trazabilidad de cada criterio hasta su sentencia de origen.
 
 ## Calidad y despliegue
 
-- [x] Configurar CI con lint, typecheck, tests y build del frontend y la API.
 - [ ] Añadir smoke tests de navegador para `/`, `/metodologia`, `/colaborar` y las landings
   públicas, incluyendo comprobación de redirecciones, sitemap, robots y corpus publicado.
   - **Lo determinista ya está cubierto sin navegador** (12 de agosto de 2026), que
@@ -957,13 +834,10 @@ sola URL para poder encontrarse.
     por producción —no el que genera el build— llegue con su meta `robots`, y
     que el corpus publicado responda. Hoy lo vigila UptimeRobot con dos
     monitores de palabra clave, así que esto ya no es un hueco urgente.
-  - Las páginas de país sin corpus deben comprobarse al revés: que siguen respondiendo
-    `noindex, follow` y que **no** aparecen en el sitemap.
-- [x] Documentar y automatizar el pipeline reproducible de actualización del corpus y su deploy.
-- [x] **Corregir `CLAUDE.md`, desfasado respecto al código.** Ya documenta los
-  siete resultados finales y marca como desfasada la tabla histórica de costes;
-  las tarifas vigentes proceden exclusivamente del catálogo versionado de
-  `llm_gateway`.
+  - Una página de país con convenio puede ser indexable aunque no tenga corpus
+    jurisprudencial propio. Verificar su estado según `countryRoutes.json`;
+    una sección sin contenido suficiente debe devolver 404, conforme a
+    [`COUNTRY_PAGES.md`](../product/COUNTRY_PAGES.md).
 
 ## SEO y operación
 
@@ -972,13 +846,6 @@ sola URL para poder encontrarse.
   es la única de las entradas que describía este trabajo con gates. Era el mismo
   contenido diferencial y verificable contado desde tres sitios distintos (aquí,
   en los nichos SEO adyacentes y en la fase B).
-- [x] Configurar Sentry para la API y el frontend y documentar sus variables de
-  entorno (`c0fb582`), reflejado en `README.md` y `CLAUDE.md` el 1 de agosto de
-  2026 con la tabla de variables. El límite que describía esta entrada —«la
-  Netlify Function del chat no está instrumentada»— **ya no rige**: la Function
-  manda a su propio proyecto `residencia-fiscal-chat` desde el 1 de agosto y
-  quedó activada en producción el 2 de agosto
-  ([`CHAT_OBSERVABILITY.md`](../operations/CHAT_OBSERVABILITY.md)).
 - [ ] **Configurar Resend para correo transaccional.** Las credenciales necesarias
   ya están disponibles en el `.env` de la raíz; reutilizar sus nombres sin leer,
   imprimir, copiar ni versionar los valores.
@@ -1003,40 +870,6 @@ sola URL para poder encontrarse.
       `CLOUDFLARE_ACCOUNT_ID` y `CLOUDFLARE_API_TOKEN`, que ya se usaban a mano
       —son las que necesita la revisión del WAF, más abajo— y no estaban
       declaradas en ningún fichero versionado.
-- [x] Configurar PostHog para el frontend y documentar sus variables de entorno.
-  Estaba implementado (`PostHogAnalytics.tsx`, montado una vez en `AppLayout`, con
-  su suite) y sin documentar; documentado el 1 de agosto de 2026 en
-  [`ANALYTICS.md`](../product/ANALYTICS.md) junto a GA4. **El frontend no lee
-  ninguna variable**: el ID de GA4 y la clave de proyecto de PostHog son públicos
-  por diseño y viajan en el bundle; las `POSTHOG_*` del `.env` son de servidor y
-  las usa el informe semanal. La puerta de activación es única
-  (`isGoogleAnalyticsEnabled`) para las dos analíticas.
-- [x] Tras un deploy correcto, comprobar que `robots.txt`, `sitemap.xml` y `llms.txt`
-  devuelven `200` desde `https://residenciafiscal.org/`.
-- [x] **Autoalojar Space Grotesk e Inter** (2 de agosto de 2026, punto 8 de
-  [`SEO_AUDIT.md`](../product/SEO_AUDIT.md)). Salían de Google Fonts: dos
-  conexiones a un tercero y una hoja de estilo bloqueante delante del primer
-  pintado, más dos excepciones en la CSP. Ahora vienen de
-  `@fontsource-variable/*` (`src/main.tsx`) y la CSP queda en `font-src 'self'`
-  y `style-src 'self' 'unsafe-inline'`.
-  - **Un fichero por familia, no uno por peso.** Son las versiones variables
-    (`wght` 100–900 y 300–700): 48 KB de Inter y 22 KB de Space Grotesk cubren
-    los siete pesos del brandbook. Los otros seis subconjuntos viajan en el
-    deploy, pero su `unicode-range` los deja sin pedir.
-  - **El `preload` no puede escribirse en `index.html`**: el woff2 emitido lleva
-    hash de contenido. Lo inyecta `scripts/inject-font-preload.mjs` leyendo el
-    CSS ya compilado, y va **antes** de `prerender.mjs` en el `postbuild` porque
-    de esa shell salen las ~150 copias por ruta. Solo precarga los dos
-    subconjuntos `latin`, que son los que pinta el castellano.
-  - **No se afirma mejora de LCP**: sin datos de campo de Core Web Vitals solo
-    consta que desaparecen las dos conexiones externas y el CSS bloqueante.
-    Comprobado en Chromium contra el build: 0 peticiones a Google Fonts y
-    exactamente los 2 woff2 precargados.
-  - Queda fuera a propósito `frontend/og/*.html`, que sí sigue pidiendo Google
-    Fonts: es el generador local del PNG (`npm run og`), no se sirve a nadie y no
-    toca la CSP. Migrarlo obligaría a regenerar los dos PNG en el mismo commit.
-  - **El cambio de CSP exige redeploy**; hasta entonces rige la anterior, que era
-    compatible por más permisiva.
 - [x] **Registrar el sitemap en Google Search Console** (1 de agosto de 2026).
   La propiedad `sc-domain:residenciafiscal.org` **no existía: se creó y
   verificó por API el mismo día**, sin pasar por la UI. La Site Verification API
@@ -1078,10 +911,9 @@ sola URL para poder encontrarse.
 
 ### Pendientes de evaluación
 
-- [ ] Evaluar si merece la pena mostrar automáticamente en la barra lateral el país activo
-  cuando quede fuera de los tres países visibles inicialmente.
-- [x] Generar los redirects de Netlify desde `countryRoutes.json` para evitar mantener una
-  segunda lista manual en `netlify.toml`.
+- [x] Mantener visible en la barra lateral el país activo además de los tres
+  iniciales, también al entrar en una subruta o navegar sin desplegar la lista
+  completa (2026-11-15). Cubierto por `CountryNavigation.test.tsx`.
 - [ ] Evaluar si merece la pena añadir tests de aislamiento que garanticen que cada país consulta
   únicamente su propio corpus cuando existan corpus nacionales adicionales.
 
@@ -1095,15 +927,6 @@ quedaron **ejecutadas y verificadas el 2 de agosto de 2026**. La fase
 depende de ella y el gate de `HUMAN_APPROVED` no se rebaja. Lo pendiente, en el
 orden recomendado:
 
-- [x] **Cerrar una única arquitectura SEO para todos los países** (2 de agosto
-  de 2026). España es la primera instancia de
-  `/<pais>/{fuentes,normativa,convenios,sentencias,doctrina}`. La plantilla,
-  constructores de ruta, canonicales, breadcrumbs, prerender, sitemap y gates
-  se reutilizan para cada jurisdicción; las ramas sin corpus suficiente no se
-  materializan y devuelven 404. Alineados el diseño rector, `CLAUDE.md`,
-  arquitectura, estructura del repositorio, páginas de país, normativa y esta
-  auditoría/backlog.
-
 - [ ] **Pedir indexación manual en la UI de GSC** (2026-08-03, ~15 min). Unas
   diez URLs prioritarias: `/espana/normativa`, `lirpf-a9`, las fichas de CDI
   con más demanda (Andorra, Portugal, Francia, Emiratos), `/colaborar` y dos o
@@ -1115,26 +938,10 @@ orden recomendado:
     permisos sobre `sc-domain:residenciafiscal.org`.
   - [x] La inspección API sí funciona y confirma para `/espana/normativa`
     `Discovered - currently not indexed`; no sustituye la solicitud manual.
-- [x] **Confirmado que el sitemap registra 149 URLs y no 38** (2 de agosto de
-  2026, por la API de Search Console, sin esperar al informe del lunes). Google
-  descargó la versión antigua el 1 de agosto a las 19:38 —antes del deploy de
-  normativa—; tras el reenvío del 2 de agosto, `sitemaps list` devuelve
-  `submitted: 149`, `errors: 0` y `warnings: 0`, con `lastDownloaded` el mismo 2
-  de agosto a las 11:36 UTC. `indexed: 0` es lo esperado en un sitemap recién
-  descargado y no mide la indexación real.
-- [x] **Materializar el 301 de la raíz.** Ya existía antes de esta ejecución:
-  `/` → `/espana` como `301!` generado por `build-netlify-redirects.mjs`, con
-  test. La fase B hereda esta base y no debe duplicarla (§5.1 del diseño).
 - [ ] **Primeros backlinks** (continuo desde 2026-08-03). Repositorio público
   de GitHub, perfiles y comunidades de fiscalidad internacional o expats. Sin
   autoridad entrante, la cola de indexación de un dominio nuevo seguirá lenta
   con independencia de los ajustes técnicos.
-- [x] **Gate A.** Verificado contra §9 del
-  diseño: schemas válidos, cobertura completa, sin solapes de periodos, ningún
-  `countries` desconocido, diff vacío al regenerar dos veces.
-- [x] **Gate C1 técnico.** Build preview con `X-Robots-Tag: noindex`,
-  404 real de toda ruta `internal_preview` en producción, allowlist sin fugas.
-  Este gate no concede publicación.
 - [ ] **Decisión de producto: ficha documental sin análisis** (§6.3 del
   diseño). Solo metadatos primarios y citas literales verificadas, sin
   resultados ni resúmenes del agente. Es la única vía de contenido
@@ -1157,13 +964,19 @@ orden recomendado:
     duplicado en «SEO y operación», y es el vehículo de los puntos 1 y 4 de la
     secuencia de nichos SEO adyacentes. Los tres describían el mismo trabajo;
     esta entrada es la única de las tres con gates.
-- [ ] **Checkpoint GSC de las fichas de CDI** (2026-09-01). Si las 97 aparecen
-  de forma masiva como «Crawled – currently not indexed», activar la
-  diferenciación prevista; hasta entonces no podar el sitemap (§12.1 del
-  diseño y decisión del 2 de agosto de no reducir URLs).
-- [x] **Actualizar los documentos de §13 del diseño con cada fase**, no al
-  final: `COUNTRY_PAGES.md`, `SEO_AUDIT.md`, `NORMATIVA.md`, `ARCHITECTURE.md`
-  y este backlog (las tareas absorbidas por el plan se marcan al implementarse).
+- [x] **Checkpoint GSC de las fichas de CDI**, cerrado el 2026-11-15 (fecha
+  inicial: 2026-09-01). Se inspeccionaron por API las 97 URLs del artefacto
+  actual: 95 vigentes y 2 históricas. Hay indexación parcial; predominan las
+  fichas indexadas frente al resto y no aparece el patrón masivo de
+  «Crawled – currently not indexed» que disparaba este gate. Las demás combinan
+  descubrimiento pendiente, URLs desconocidas y exclusiones tras rastreo.
+  **Decisión:** mantener el sitemap; esta medición no justifica una poda ni
+  activa por sí sola la diferenciación masiva (§12.1 del diseño).
+  La consulta de rendimiento usa la ventana final del 2026-10-16 al 2026-11-12.
+  Respuestas de inspección y métricas quedan en
+  `reports/gsc_checkpoint/2026-11-15.json`, ignorado por git por contener datos
+  de tráfico. El estado observado es el de la API en esta fecha; no se usa el
+  contador `indexed` del sitemap como medida de cobertura.
 - [ ] **Opcional, sin fecha — Fase C2 (publicación con análisis).** Solo si
   aparece un revisor humano comprometido: lote pequeño y diverso,
   `HUMAN_APPROVED` por caso con identidad y fecha. No programar; no bloquea
@@ -1174,17 +987,11 @@ orden recomendado:
 - [ ] **Fase E — primera jurisprudencia no española.** Migrar antes el layout
   físico por jurisdicción y activar el mismo renderer de `sentencias` y
   `doctrina`, preservando hashes y gates de aprobación.
-- [x] **Limpieza menor de excepciones históricas** (2026-08-02). El diseño del
-  chat backend se promocionó a
-  [`docs/development/CHAT_BACKEND_DESIGN.md`](../development/CHAT_BACKEND_DESIGN.md)
-  —seguía referenciado desde `NETLIFY_EDGE.md`, este backlog y
-  `frontend/CLAUDE.md`— y el plan de ejecución se desversionó (queda como
-  scratch local). `docs/superpowers/` ya no contiene ningún fichero versionado
-  y la regla de `CLAUDE.md` se cumple sin excepciones.
 
 ## Criterio de cierre SEO
 
-- El home y `/metodologia` responden `200` y tienen canonical propia.
+- `/` redirige con `301` a `/espana`; `/espana` y `/metodologia` responden
+  `200` y tienen canonical propia.
 - El sitemap sólo contiene URLs públicas, canónicas y rastreables.
 - `/c/` permanece fuera del índice por ser contenido de conversación dinámico.
 - El WAF no bloquea Googlebot, crawlers LLM ni monitores autorizados.
@@ -1200,11 +1007,6 @@ en [`ADR-20260804-chat-alfredo.md`](../decisions/ADR-20260804-chat-alfredo.md).
 en el host de operaciones pero **cerrado**: sin credenciales, sin persistencia,
 solo en loopback, y `POST /chat` responde `503`. No atiende usuarios ni gasta.
 
-- [x] **Cerrar la deuda documental del fallback de modelo.** La política
-  vigente deja `gpt-6-luna` + `high` como configuración primaria de A,
-  `gemini-4-hydrogen` como fallback cross-provider explícito y `CHAT_MODEL`
-  configurable por entorno. La cadena la ejecuta `neutral-llm-gateway`; no
-  existe fallback cruzado entre A y B.
 - [ ] **Materializar el banco de regresión congelado de la fase 0.** Las cuatro
   divergencias del port que destapó el smoke real aparecieron comparando
   constantes a mano; sin banco, la paridad seguirá dependiendo de eso.

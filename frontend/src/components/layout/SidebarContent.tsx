@@ -79,6 +79,11 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
 
   const location = useLocation();
 
+  const activeCountry = getJurisdictionRoute(location.pathname);
+  const visibleCountries = COUNTRY_ROUTES.filter(
+    (country, index) => showAllCountries || index < 3 || country.path === activeCountry?.path
+  );
+
   return (
     <>
       <nav
@@ -157,8 +162,8 @@ export function SidebarNavigation({ collapsed = false, onNavigate }: SidebarCont
               <Globe2 className='h-3.5 w-3.5' aria-hidden='true' />
               Países
             </h2>
-            {(showAllCountries ? COUNTRY_ROUTES : COUNTRY_ROUTES.slice(0, 3)).map((country) => {
-              const isActive = getJurisdictionRoute(location.pathname)?.path === country.path;
+            {visibleCountries.map((country) => {
+              const isActive = activeCountry?.path === country.path;
               return (
                 <Link
                   key={country.path}

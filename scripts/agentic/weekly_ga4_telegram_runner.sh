@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Informe semanal de tráfico de residenciafiscal.org enviado por Telegram.
 #
-# Lo dispara `residenciafiscal-weekly-ga4-telegram.timer` cada lunes a las 09:00
+# Lo dispara `residenciafiscal-weekly-ga4-telegram.timer` cada lunes a las 09:10
 # (Europe/Madrid). Si el envío falla, intenta avisar por Telegram del fallo con
 # el intérprete del sistema, para que un entorno roto no silencie la alerta.
 set -euo pipefail

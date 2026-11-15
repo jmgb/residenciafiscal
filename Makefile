@@ -12,7 +12,7 @@ SHELL := /bin/bash
 
 .SILENT:
 .PHONY: help setup dev dev-api dev-frontend dev-public serve \
-	verify-citations export-okf export-okf-sample export-verbatim export-case-v3 \
+	verify-citations export-okf export-okf-sample export-verbatim validate-verbatim-corpus export-case-v3 \
 	export-case-v3-derivatives export-case-v3-sample migrate-pypdf evaluate-retrieval-phase-d \
 	evaluate-holdout-e0 evaluate-rollout-e rollout-init rollout-status rollout-next \
 	evaluate-rollout-development evaluate-rollout-holdout rollout-holdout-coverage rollout-audit \
@@ -136,6 +136,7 @@ help:
 	@echo "  make export-okf           Genera el bundle OKF piloto de 1 sentencia (sin LLM)"
 	@echo "  make export-okf-sample    Genera la muestra OKF congelada (sin llamadas LLM)"
 	@echo "  make export-verbatim      Genera y revalida el verbatim piloto (sin LLM)"
+	@echo "  make validate-verbatim-corpus  Reextrae todo el corpus sin escribir (sin LLM)"
 	@echo "  make export-case-v3       Compila y valida el caso v3 piloto (sin LLM)"
 	@echo "  make export-case-v3-derivatives  Deriva OKF e índice del caso v3 (sin LLM)"
 	@echo "  make export-case-v3-sample  Regenera y evalúa las 5 sentencias v3 (sin LLM)"
@@ -268,6 +269,9 @@ export-verbatim:
 		--source-file $(VERBATIM_SOURCE_FILE) \
 		--output $(VERBATIM_OUTPUT) \
 		--project-root .
+
+validate-verbatim-corpus:
+	uv run python $(PYTHON_SOURCE)/validate_verbatim_corpus.py --project-root .
 
 migrate-pypdf:
 	uv run python $(PYTHON_SOURCE)/migrate_pypdf.py --project-root . $(PYPDF_MIGRATION_ARGS)
