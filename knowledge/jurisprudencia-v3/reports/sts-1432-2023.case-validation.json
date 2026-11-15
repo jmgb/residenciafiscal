@@ -1,6 +1,6 @@
 {
   "anchor_count": 1,
-  "case_sha256": "06872329301a1371a07f311e3fbf9a522995c140053bc65f2a902801a8765b4d",
+  "case_sha256": "42f58d51959a698f4d2130948415c1b1f61c9439791564602718848b18eec004",
   "evidence_finding_count": 0,
   "fact_count": 0,
   "fragment_count": 1,
@@ -12,5 +12,5 @@
   "question_evaluation_count": 1,
   "technical_review": "VALIDATED",
   "validation": "passed",
-  "verbatim_sha256": "54cf3cf5a1d9b60cf962cd78266fabe84fe895ed78616b1e568e3945ccc06789"
+  "verbatim_sha256": "924dcbecd46c77d8fba07b832cf62cbf6baf6d7940099ea7452e0a636a7fde61"
 }

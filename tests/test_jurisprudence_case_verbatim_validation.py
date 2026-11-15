@@ -38,7 +38,7 @@ def _verbatim():
             "document_id": "san-1210-2023",
             "source_file": "SAN_1210_2023.pdf",
             "source_sha256": "a" * 64,
-            "extractor": {"name": "pypdf", "version": "6.14.2"},
+            "extractor": {"name": "pypdf", "version": "6.21.4"},
             "page_count": 10,
             "pages_sha256": sha256_canonical_pages(pages),
             "status": "COMPLETE",

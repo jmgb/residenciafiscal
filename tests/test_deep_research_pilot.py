@@ -524,7 +524,7 @@ def test_evidencia_literal_pasa_con_bundle_json_sin_pdf(tmp_path: Path) -> None:
         "document_id": "san-1-2020",
         "source_file": "sentencias/SAN_1_2020.pdf",
         "source_sha256": "a" * 64,
-        "extractor": {"name": "pypdf", "version": "6.14.2"},
+        "extractor": {"name": "pypdf", "version": "6.21.4"},
         "status": "COMPLETE",
         "page_count": 1,
         "pages": [page],

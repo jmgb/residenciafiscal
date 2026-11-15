@@ -54,7 +54,7 @@ def _verbatim_document(judgment_id: str, source_sha256: str) -> dict[str, object
         "document_id": judgment_id,
         "source_file": "sentencias/SAN_1_2020.pdf",
         "source_sha256": source_sha256,
-        "extractor": {"name": "pypdf", "version": "6.14.2"},
+        "extractor": {"name": "pypdf", "version": "6.21.4"},
         "page_count": 1,
         "pages_sha256": hashlib.sha256(pages_payload).hexdigest(),
         "status": "COMPLETE",

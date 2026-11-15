@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-1136-2016.case.json",
-    "case_sha256": "ec75d3b4f208b7735cb94b6018baab7e0b7293d2796894f213191072145811d4",
+    "case_sha256": "58f7ab578642e8429e40eff0997ded9a50f99230088b10d39a663f58414ab2e4",
     "source_sha256": "65987bc7d63f4987f1b84e53013ebcb12b8683237e1a2d2cfec94809692d7480"
   },
   "units": [

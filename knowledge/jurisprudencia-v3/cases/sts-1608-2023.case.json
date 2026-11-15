@@ -29,7 +29,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "271edf552117070c20a9f0d8bde08dfcbd05d76d8ffbac0f83f2b3c28f358daa",
+          "sha256": "2d04b6e542d9fd5c283ab88400fbf7583211471b101dd2359f55c499d540058e",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-1608-2023.pages.json"
         },
         {
@@ -54,7 +54,7 @@
     "ecli": "ECLI:ES:TS:2023:1608",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": false,
     "judgment_id": "sts-1608-2023",

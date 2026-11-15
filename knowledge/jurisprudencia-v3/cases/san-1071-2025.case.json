@@ -485,7 +485,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "8a905436476de84845cc84c65f72acb9e32eeb4bcd8de91de5dad4bc11cbb7a0",
+          "sha256": "35cd1ac4a160e7955c08d2349c6c8b412905e579fb07c6001ebefa58ec4d7c0d",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-1071-2025.pages.json"
         },
         {
@@ -515,7 +515,7 @@
     "ecli": "ECLI:ES:AN:2025:1071",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-1071-2025",

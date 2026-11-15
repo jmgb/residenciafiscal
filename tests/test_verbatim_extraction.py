@@ -32,7 +32,7 @@ def test_conserva_exactamente_la_salida_de_pypdf(tmp_path: Path) -> None:
         document_id="san-1210-2023",
         source_file="sentencias/SAN_1210_2023.pdf",
         reader_factory=lambda _: _FakeReader((raw_text,)),
-        extractor_version="6.14.2",
+        extractor_version="6.21.4",
     )
 
     assert corpus.pages[0].raw_page_text == raw_text

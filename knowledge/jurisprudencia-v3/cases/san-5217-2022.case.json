@@ -150,7 +150,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "0662581356bbd8986d502c7540d49ddaeefc816c5a110b2407187bad45b47b78",
+          "sha256": "aad3530650090abf2f4206c62574cc182de3a2a52c0fc3007bf632dd18500628",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5217-2022.pages.json"
         },
         {
@@ -175,7 +175,7 @@
     "ecli": "ECLI:ES:AN:2022:5217",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-5217-2022",

@@ -46,7 +46,7 @@ def _valid_payload() -> dict[str, object]:
         "document_id": "san-1210-2023",
         "source_file": "sentencias/SAN_1210_2023.pdf",
         "source_sha256": "a" * 64,
-        "extractor": {"name": "pypdf", "version": "6.14.2"},
+        "extractor": {"name": "pypdf", "version": "6.21.4"},
         "page_count": 2,
         "pages_sha256": _pages_sha256(pages),
         "status": "NEEDS_REVIEW",

@@ -29,7 +29,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "3c4d904024fdeafc030ce0b7bed6121f05d8b2f6c3d808a7b666e7df98fa1d04",
+          "sha256": "ee7a74f18c1d6c6aa301fe74782588a8c64cf0f88f88c8baff4251d6377b0712",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-4619-2025.pages.json"
         },
         {
@@ -53,7 +53,7 @@
     "ecli": "ECLI:ES:TS:2025:4619",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": false,
     "judgment_id": "sts-4619-2025",

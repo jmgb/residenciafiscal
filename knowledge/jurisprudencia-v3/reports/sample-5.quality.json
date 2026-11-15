@@ -3,7 +3,7 @@
   "by_case": [
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1071-2025.case.json",
-      "case_sha256": "ae17b898747829a64040f9814934df77c4f3426291ee07322613d78632198e7f",
+      "case_sha256": "40a1f118a9596ea37dabb2dbd24851d54e7ea786c9b1e7654644530b48f056b8",
       "entity_count": 36,
       "items_requiring_human_review": 38,
       "judgment_id": "san-1071-2025",
@@ -12,7 +12,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1136-2016.case.json",
-      "case_sha256": "ec75d3b4f208b7735cb94b6018baab7e0b7293d2796894f213191072145811d4",
+      "case_sha256": "58f7ab578642e8429e40eff0997ded9a50f99230088b10d39a663f58414ab2e4",
       "entity_count": 29,
       "items_requiring_human_review": 31,
       "judgment_id": "san-1136-2016",
@@ -21,7 +21,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1210-2023.case.json",
-      "case_sha256": "48bf29a09772e5aba0010e5a9048ee593cc2321952341348a65dd6ffa373b24a",
+      "case_sha256": "92024c51c3984c7ff5738ec378944215749353116333fa11063284705275733d",
       "entity_count": 47,
       "items_requiring_human_review": 49,
       "judgment_id": "san-1210-2023",
@@ -30,7 +30,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1226-2021.case.json",
-      "case_sha256": "c39d17b58d3eaaeecb6859c6b6b58193a44b3a48638c1ee2716001b8fe4295c9",
+      "case_sha256": "f506a742d50057e3a177e775f5ff0bb809db250db0e76ea0d42f6cbe2984e247",
       "entity_count": 27,
       "items_requiring_human_review": 29,
       "judgment_id": "san-1226-2021",
@@ -39,7 +39,7 @@
     },
     {
       "case_resource": "knowledge/jurisprudencia-v3/cases/san-1386-2017.case.json",
-      "case_sha256": "dcef299182ed2cc77baaeb3289454c3a4b53329b7bbbef9a6d904c6869d901a6",
+      "case_sha256": "02a123e221424ac57b8aa8fa9f31cacf0d29103d2085513e1d2892854df46d5b",
       "entity_count": 42,
       "items_requiring_human_review": 46,
       "judgment_id": "san-1386-2017",

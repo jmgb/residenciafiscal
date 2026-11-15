@@ -290,7 +290,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "a453520517eda73fbef24e8455c5bec60a518dbf8d8deffd4f2068cef6ff0cf5",
+          "sha256": "5ab1aa0a2e745fb9fcd2216273557b93dc71f83a0022926397e69af2ce466462",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5640-2023.pages.json"
         },
         {
@@ -315,7 +315,7 @@
     "ecli": "ES:AN:2023:5640",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-5640-2023",

@@ -299,7 +299,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "a1899f27cfd60f7943a003ae9ebcfb4aeeb00a4a2d64ab8acf4588db24e43e91",
+          "sha256": "b5fb58f57a998a7140e4f5e29f53d2a85e18238b1c568cb225d21fd2ef2d181e",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5151-2019.pages.json"
         },
         {
@@ -324,7 +324,7 @@
     "ecli": "ES:AN:2019:5151",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-5151-2019",

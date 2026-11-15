@@ -29,7 +29,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "45b72cafaa7b6282b9cd9c5a56481b1bf4bc356c6828914fae2357bb45dc10cb",
+          "sha256": "9fed6bd027bd14549019a22c10cd10af769140158119d74e50143847dae65afb",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-2637-2022.pages.json"
         },
         {
@@ -53,7 +53,7 @@
     "ecli": "ES:TS:2022:2637",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": false,
     "judgment_id": "sts-2637-2022",

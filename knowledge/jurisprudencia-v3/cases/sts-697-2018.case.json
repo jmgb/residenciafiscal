@@ -191,7 +191,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "89ae2daa284bd46f04b3109d28734dd865133bf6e4817d98e89d3d701347a041",
+          "sha256": "63360cfa14ff58e41a39d126d578e019ceac7991779a3932b559b1b9937e126c",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-697-2018.pages.json"
         },
         {
@@ -216,7 +216,7 @@
     "ecli": "ES:TS:2018:697",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "sts-697-2018",

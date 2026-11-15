@@ -490,7 +490,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "f7f7f008a970ce59f2308a2c2b04883e40c96074aec06b9bd90af6cceecfbd1d",
+          "sha256": "2a3d1331fc745e1ee67c9a7df51de27fe7f0c347412f0fa0d9bf46660a2fda03",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-699-2015.pages.json"
         },
         {
@@ -515,7 +515,7 @@
     "ecli": "ES:AN:2015:699",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-699-2015",

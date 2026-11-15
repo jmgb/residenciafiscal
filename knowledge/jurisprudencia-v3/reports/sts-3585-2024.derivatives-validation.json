@@ -1,12 +1,12 @@
 {
-  "case_sha256": "ceb379ca08b57dd758cf449892452c638c60054ccc6a01292aa2f010932597ec",
+  "case_sha256": "013fdd2540c0b2d21f17394c722d185101222ccf9bda7efa7ec3363466bba851",
   "judgment_id": "sts-3585-2024",
   "legal_issue_count": 1,
   "literal_anchor_count": 10,
   "literal_fragment_count": 14,
-  "markdown_sha256": "739aeb473fb76269e832e4eda198a08925f22b7940fb032d1cd9c189bdadf11e",
-  "retrieval_sha256": "4024f0a044ed05b98f589e544a66448ec7d910172fb31bc4daaaba9e84ccebf8",
+  "markdown_sha256": "f96be2e7e2f78019d0a305f657ba132cbac608e848a5a74d6220cdb51ba3899d",
+  "retrieval_sha256": "8327a01eaa8be919ae49cdee6935a05ef95bbcf116e8e2a155df918bbeabd585",
   "retrieval_unit_count": 1,
   "validation": "passed",
-  "verbatim_sha256": "bb80d4d52918667d0a99e25db64a923b7d5d4773c7221916447dc41e8d97a725"
+  "verbatim_sha256": "687f97c4a6824eb22d430088aa44218e3f41474eaf0a0d00cb770b8989b3f71c"
 }

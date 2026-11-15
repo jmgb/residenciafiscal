@@ -2,7 +2,7 @@
   "document_id": "san-5983-2024",
   "extractor": {
     "name": "pypdf",
-    "version": "6.14.2"
+    "version": "6.21.4"
   },
   "page_count": 8,
   "pages": [

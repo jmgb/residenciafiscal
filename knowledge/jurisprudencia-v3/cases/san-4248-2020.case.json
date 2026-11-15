@@ -411,7 +411,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "b0fd37eed1b01938ce30aa306487fbbc6ad932a41d01416505567ea8b608bd87",
+          "sha256": "57a3ebef326bea8eb4347fa96478fc425f0b6e255c6e700bb3a467ea939830d7",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-4248-2020.pages.json"
         },
         {
@@ -437,7 +437,7 @@
     "ecli": "ES:AN:2020:4248",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-4248-2020",

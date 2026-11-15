@@ -191,7 +191,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "9b0b4a204998731f805cf188c002ad1d2fd25affba9ac2554e0dd6457aa9bb35",
+          "sha256": "fd76e38f658311083af2a47f26c831d1c9c4b1534c86b1f66062ea0674703431",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-840-2018.pages.json"
         },
         {
@@ -216,7 +216,7 @@
     "ecli": "ECLI:ES:TS:2018:840",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "sts-840-2018",

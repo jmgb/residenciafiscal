@@ -217,7 +217,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "6d6d8bdb5891c7aa2353716e7384564a63af10178e5b81f005cd37ccc9366b4e",
+          "sha256": "85c934d7d3a675e6dc3528f7af74845a84daf6b0b38e628fffec0dc6f645872f",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-4438-2025.pages.json"
         },
         {
@@ -242,7 +242,7 @@
     "ecli": "ES:AN:2025:4438",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-4438-2025",

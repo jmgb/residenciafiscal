@@ -54,13 +54,13 @@ mediante una segunda extracción y solo entonces reemplaza el destino.
 | Dato | Valor |
 |---|---|
 | Artefacto | `knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json` |
-| Extractor | `pypdf/6.14.2` |
+| Extractor | `pypdf/6.21.4` |
 | Páginas | 10, todas `TEXT_EXTRACTED` |
 | Estado | `COMPLETE` |
 | Tamaño | 46.569 bytes |
 | SHA-256 del PDF | `4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d` |
 | SHA-256 de páginas | `76a3bd4547c840d2e0f23eb2e6986c7c4c14f4eca528fe98ebd7e93d9ba658ae` |
-| SHA-256 del artefacto | `de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1` |
+| SHA-256 del artefacto | `8f8a7bf91593769e6698ef3aadc3f292451a415c1a67a593adb6bac782698f89` |
 
 Dos builds consecutivos produjeron los mismos tres hashes y los mismos bytes.
 El test del piloto reextrae el PDF y exige que el resultado serializado coincida
@@ -154,8 +154,12 @@ texto no cambiase. Ese día se subió de 6.14.2 a 6.21.4 para corregir 18 alerta
 Dependabot (todas DoS por PDF manipulado salvo una baja de carga de JPEG sin
 validar). Antes se comprobó que 6.14.2 y 6.21.4 devuelven el mismo texto en las
 1.312 páginas de los 106 PDF de `sentencias/`, y los 106 artefactos de
-`knowledge/jurisprudencia-v3/verbatim/` validan con 6.21.4. Los artefactos
-conservan `extractor.version: 6.14.2` porque se generaron con esa versión.
+`knowledge/jurisprudencia-v3/verbatim/` validan con 6.21.4. Inicialmente se conservó la procedencia `6.14.2`; la reextracción posterior de
+los 106 PDF registra `6.21.4`, tras verificar que las 1.312 páginas son
+idénticas. Se recompilaron casos y derivados, actualizando únicamente la
+versión del extractor y los hashes asociados, sin cambiar el contenido
+jurídico ni sus revisiones. Los bundles OKF/2 históricos conservan su versión
+original.
 
 El riesgo de esos avisos es bajo en este proyecto: los PDF de entrada son
 resoluciones oficiales descargadas por el propio pipeline, pypdf solo corre en

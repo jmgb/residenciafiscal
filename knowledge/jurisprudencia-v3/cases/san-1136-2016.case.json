@@ -382,7 +382,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "18a30238d2643e4d83759cc1e021a99eed6d26372cd438af04144b94805f7692",
+          "sha256": "99db6c92fe3920d4583e3e572e632f520ed3ada74b7257fa0b2ea7863674177a",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-1136-2016.pages.json"
         },
         {
@@ -412,7 +412,7 @@
     "ecli": "ECLI:ES:AN:2016:1136",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-1136-2016",

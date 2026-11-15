@@ -29,7 +29,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "40b56b9453c55490fb1e5f65aa8f3721621c3bca742da7fe433de1040a1ce8f9",
+          "sha256": "20f9059996347bf451189a17bb19b0a1c54ddde8f875144cb92d82366005d630",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-5408-2017.pages.json"
         },
         {
@@ -53,7 +53,7 @@
     "ecli": "ES:AN:2017:5408",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": false,
     "judgment_id": "san-5408-2017",
