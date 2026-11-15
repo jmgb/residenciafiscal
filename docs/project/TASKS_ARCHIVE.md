@@ -284,6 +284,10 @@ se ha movido aquí. El histórico específico del chat sigue en
   esa línea. Las subidas menores de `rolldown` siguen ahora las de Vite; los
   parches mantienen el cooldown y las actualizaciones de seguridad no quedan
   filtradas. No se añade un pin ni un override al frontend.
+  Confirmado tras fusionar el PR #82: la
+  [ejecución npm 43770485345](https://github.com/jmgb/residenciafiscal/actions/runs/43770485345)
+  terminó en verde el 2026-11-15; el log conserva el cooldown y declara
+  `No update needed for rolldown 1.2.16`.
 - La verificación pública posterior al deploy responde con el User-Agent
   propio ya documentado en `CLOUDFLARE.md`: rutas, versión, corpus, robots y
   sitemap correctos, y assets inexistentes con 404. El 403 previo correspondía
