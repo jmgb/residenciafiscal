@@ -182,6 +182,50 @@ fijan la versión (`tests/fixtures/*/valid_minimal.json`,
 `tests/jurisprudence_case_v3_factory.py`). Es un cambio de datos, no una subida
 rutinaria de dependencias.
 
+### Migrar el extractor
+
+Después de revisar el changelog, editar el pin exacto de `pypdf` en
+`pyproject.toml` y regenerar el lock:
+
+```bash
+make lock
+make migrate-pypdf
+make fast-check
+```
+
+Deben estar disponibles todas las entradas declaradas en la procedencia de los
+casos, incluidos los JSONL históricos de `output/` que no se versionan. El
+comando no los reconstruye ni descarga: si falta una fuente, aborta sin escribir.
+
+`make migrate-pypdf` usa la versión instalada por uv. Primero comprueba los
+hashes del rollout y de sus entradas y reextrae todos los PDF del manifiesto.
+Si cambia una página —texto, etiqueta, estado o número de páginas—, falla
+indicando la sentencia y página afectadas, sin publicar ningún artefacto.
+Un cambio de texto requiere una migración jurídica específica; este comando no
+lo acepta ni lo normaliza automáticamente.
+
+Con páginas idénticas, construye una copia temporal del proyecto con las fuentes
+necesarias y llama a los exportadores existentes. Comprueba que cada caso solo
+cambie en el extractor y el hash del verbatim, actualiza perfiles, índices,
+informes de build, calidad y estado del rollout, y reconstruye el agregado del
+piloto. Conserva los intentos y revisiones del estado, las evaluaciones históricas
+y los bundles OKF/2. No llama a modelos ni modifica el pin, los fixtures o la
+selección del corpus del chat.
+
+Publica únicamente después de validar el lote completo y comprobar que las
+entradas y los destinos no cambiaron durante la operación. Rechaza también
+cambios en los campos de recuperación o en las unidades de sus agregados:
+solo permite renovar sus hashes. Cada archivo se reemplaza de forma
+atómica; si una escritura lanza una excepción, restaura los ya publicados.
+Repetirlo con el mismo extractor y las mismas fuentes no cambia los bytes.
+Revisar el diff y actualizar los fixtures que fijen la versión antes del commit.
+
+Para comparar sin regenerar ni publicar:
+
+```bash
+make migrate-pypdf PYPDF_MIGRATION_ARGS=--check
+```
+
 ## Contrato v1
 
 ### JSON canónico
