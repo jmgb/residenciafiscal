@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from importlib.metadata import version
 from pathlib import Path
 
 from okf_provenance import sha256_file
@@ -37,25 +36,29 @@ def validate_verbatim_artifact(
     *,
     project_root: Path,
     reader_factory: ReaderFactory | None = None,
-    extractor_version: str | None = None,
 ) -> VerbatimValidationResult:
-    """Revalida hashes y reproduce la extracción completa desde el PDF."""
+    """Revalida hashes y reproduce la extracción completa desde el PDF.
+
+    La reextracción usa el pypdf instalado y debe reproducir página a página
+    el texto versionado. `extractor.version` es procedencia: registra con qué
+    versión se generó el artefacto y no tiene que coincidir con la instalada.
+    Si una versión nueva de pypdf cambia una sola página, la validación falla.
+    """
 
     corpus = load_verbatim_corpus(artifact_path.read_bytes())
     source_path = _resolve_source(project_root, corpus.source_file)
     if sha256_file(source_path) != corpus.source_sha256:
         raise ValueError("source_sha256 no coincide con el PDF actual")
 
-    expected_extractor_version = extractor_version or version("pypdf")
-    if corpus.extractor.name != "pypdf" or corpus.extractor.version != expected_extractor_version:
-        raise ValueError("extractor no coincide con la versión de validación")
+    if corpus.extractor.name != "pypdf":
+        raise ValueError("extractor no soportado: solo pypdf")
 
     if reader_factory is None:
         regenerated = extract_verbatim_corpus(
             source_path,
             document_id=corpus.document_id,
             source_file=corpus.source_file,
-            extractor_version=expected_extractor_version,
+            extractor_version=corpus.extractor.version,
         )
     else:
         regenerated = extract_verbatim_corpus(
@@ -63,7 +66,7 @@ def validate_verbatim_artifact(
             document_id=corpus.document_id,
             source_file=corpus.source_file,
             reader_factory=reader_factory,
-            extractor_version=expected_extractor_version,
+            extractor_version=corpus.extractor.version,
         )
     if regenerated != corpus:
         raise ValueError("la reextracción no reproduce el corpus verbatim")

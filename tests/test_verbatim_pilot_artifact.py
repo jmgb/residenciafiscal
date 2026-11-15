@@ -27,13 +27,16 @@ def test_artefacto_piloto_coincide_con_pdf_y_reextraccion() -> None:
 
 
 def test_build_repetido_produce_exactamente_los_bytes_versionados() -> None:
-    from verbatim_artifact import render_verbatim_corpus
+    """El pypdf instalado reproduce los bytes; la versión registrada es procedencia."""
+    from verbatim_artifact import load_verbatim_corpus, render_verbatim_corpus
     from verbatim_extraction import extract_verbatim_corpus
 
+    versioned = load_verbatim_corpus(ARTIFACT_PATH.read_bytes())
     regenerated = extract_verbatim_corpus(
         PDF_PATH,
         document_id="san-1210-2023",
         source_file="sentencias/SAN_1210_2023.pdf",
+        extractor_version=versioned.extractor.version,
     )
 
     assert ARTIFACT_PATH.read_text(encoding="utf-8") == render_verbatim_corpus(regenerated)
