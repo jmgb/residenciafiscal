@@ -214,7 +214,7 @@ git fetch origin main
 validated_commit=SHA_VALIDADO
 git merge-base --is-ancestor "$validated_commit" origin/main
 git merge --ff-only "$validated_commit"
-uv sync --locked
+"$HOME/.local/bin/uv" sync --locked
 REMOTE
 ```
 
