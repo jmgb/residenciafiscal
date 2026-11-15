@@ -378,7 +378,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "0fb76d2e225b1398db6a967ebbf098cf17bdc42cdd5e2c754a3899c166fbb9cd",
+          "sha256": "84d41937fadee05c81727eaaa55384a07a2c81fa09d7859ca4c4df60dff402bc",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-4992-2021.pages.json"
         },
         {
@@ -403,7 +403,7 @@
     "ecli": "ECLI:ES:AN:2021:4992",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-4992-2021",

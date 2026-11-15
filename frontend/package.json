@@ -46,6 +46,11 @@
     "zod": "4.6.7",
     "zustand": "5.0.16"
   },
+  "overrides": {
+    "glob": {
+      "minimatch": "11.0.8"
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
     "@netlify/edge-functions": "4.0.3",

@@ -35,7 +35,7 @@ def _verbatim() -> VerbatimCorpus:
             "document_id": "san-1-2026",
             "source_file": "sentencias/SAN_1_2026.pdf",
             "source_sha256": "a" * 64,
-            "extractor": {"name": "pypdf", "version": "6.14.2"},
+            "extractor": {"name": "pypdf", "version": "6.21.4"},
             "page_count": 2,
             "pages_sha256": sha256_canonical_pages(pages),
             "status": "COMPLETE",

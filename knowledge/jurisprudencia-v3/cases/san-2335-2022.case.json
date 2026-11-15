@@ -292,7 +292,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "38a74af47698a869ae1d2d26baaccb57e3b4e4ef541cce01e890be07de501e84",
+          "sha256": "621b406880858b3dab9e5a59c4214e378b2da80f8df95e91d84706c8c18ab271",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-2335-2022.pages.json"
         },
         {
@@ -317,7 +317,7 @@
     "ecli": "ES:AN:2022:2335",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-2335-2022",

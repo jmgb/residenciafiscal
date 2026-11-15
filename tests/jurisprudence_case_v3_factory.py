@@ -40,7 +40,7 @@ def valid_case() -> dict[str, Any]:
             "is_tax_residence_case": True,
             "source_sha256": source_sha256,
             "page_count": 10,
-            "extractor": {"name": "pypdf", "version": "6.14.2"},
+            "extractor": {"name": "pypdf", "version": "6.21.4"},
             "analysis_provenance": {
                 "producer": "residenciafiscal-agent-pipeline",
                 "model_id": "gpt-5",

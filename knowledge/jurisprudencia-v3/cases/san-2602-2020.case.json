@@ -279,7 +279,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "65e63955731f06ad4d43b9d1d41483ee304d069519371eca6df96ae890e0ad84",
+          "sha256": "387435d9edb30eec8442fb57066f1afddcf5b4f6dce885c47f6e922976b7a00a",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-2602-2020.pages.json"
         },
         {
@@ -304,7 +304,7 @@
     "ecli": "ECLI:ES:AN:2020:2602",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-2602-2020",

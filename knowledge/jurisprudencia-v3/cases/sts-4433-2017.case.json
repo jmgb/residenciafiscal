@@ -264,7 +264,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "ddb3fe63720892077d46d2ea20d2b944c9f5f270170a7809020e99d292121474",
+          "sha256": "918d8c4c2c4c5c6f48d54debec4eaf0b5cd8b980b1a1cd99a4d4b5d570045296",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-4433-2017.pages.json"
         },
         {
@@ -289,7 +289,7 @@
     "ecli": "ECLI:ES:TS:2017:4433",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "sts-4433-2017",

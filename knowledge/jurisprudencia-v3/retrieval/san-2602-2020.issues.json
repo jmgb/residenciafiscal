@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-2602-2020.case.json",
-    "case_sha256": "9ee876f4f5e725112a0500a0a9a88f28ccb9e17fa69fd9fb42b604e36bd03e0b",
+    "case_sha256": "4b31f4c0d016de97d241050fdd7a044adebce77c4c98f332ce6faf4ab7023261",
     "source_sha256": "000dc2f0ca7ce2064db109de370beaa97a1f8e190fdccd353c3059170d72f2f8"
   },
   "units": [

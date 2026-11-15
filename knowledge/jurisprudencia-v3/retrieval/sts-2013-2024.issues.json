@@ -18,7 +18,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/sts-2013-2024.case.json",
-    "case_sha256": "8f00f3c712850bd82d38617500ae9c21658c6294a7735751f7b6bb8e03e62c3f",
+    "case_sha256": "34387ca3c06b5b60d7ab848531664987ab25936e8256575cc15b3a66248d3994",
     "source_sha256": "e8bb414ff1d309aaf558571e11606c3a5cbd43877e8efee299cfd13e3f36c923"
   },
   "units": [

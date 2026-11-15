@@ -29,7 +29,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "4e5ad27423c4709f6b335050a9b419a0153cc4ecb92f2a030c29f78b478c856d",
+          "sha256": "3b00afe74168d8d568630d44d1926eed167e899c21edbae8ba5d1b8e3b411aa8",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-3270-2019.pages.json"
         },
         {
@@ -53,7 +53,7 @@
     "ecli": "ES:TS:2019:3270",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": false,
     "judgment_id": "sts-3270-2019",

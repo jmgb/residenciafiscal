@@ -20,15 +20,10 @@ dependencies = [
     # LLM providers
     "google-genai>=2.20.0,<3.0.0",
     # PDF / datos / exports
-    # Pin exacto: los artefactos verbatim y los casos de jurisprudencia
-    # guardan la versión del extractor, y verbatim_validation.py la compara
-    # con la instalada. Todo lo versionado hoy se extrajo con 6.14.2, así
-    # que cualquier otra versión invalida los artefactos. Subirla exige
-    # regenerarlos y revisar los bytes resultantes.
     # Pin exacto a propósito: el corpus verbatim registra `pypdf/<versión>` y la validación
     # reextrae con esa misma versión. Subirlo exige reextraer y revalidar el corpus
     # (docs/jurisprudence/VERBATIM_CORPUS.md §Versión del extractor).
-    "pypdf==6.14.2",
+    "pypdf==6.21.4",
     # Runtime
     "httpx2>=2.12.0,<3.0.0",
     "pydantic>=2.13.4,<3.0.0",

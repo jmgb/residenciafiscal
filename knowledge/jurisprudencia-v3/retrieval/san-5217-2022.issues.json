@@ -19,7 +19,7 @@
   "schema_version": "residenciafiscal-retrieval/1",
   "source": {
     "case_resource": "../cases/san-5217-2022.case.json",
-    "case_sha256": "793c0547f132ea7267ec573b45bc9733de28ead62242389338fe0c71c7dac2ef",
+    "case_sha256": "2360b8ffed821ac298f72ea402447f0bb9b146b6ed47d563f5511d372e326c3d",
     "source_sha256": "69417dd024369cc5c3a86281bc13a24ba264ec020bc2b1df43df34ebee454485"
   },
   "units": [

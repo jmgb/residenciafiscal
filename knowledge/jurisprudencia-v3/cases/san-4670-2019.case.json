@@ -141,7 +141,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "39aef34f72cec11733cb07b0d4b6261deaf18f7082d54c2e1d049235a8b7501b",
+          "sha256": "91f126ff5147cfdda9dce8ba675f32a5a95dd5d7895dabff4703ea529a6570be",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-4670-2019.pages.json"
         },
         {
@@ -166,7 +166,7 @@
     "ecli": "ES:AN:2019:4670",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-4670-2019",

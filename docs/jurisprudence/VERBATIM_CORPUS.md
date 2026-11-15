@@ -54,13 +54,13 @@ mediante una segunda extracción y solo entonces reemplaza el destino.
 | Dato | Valor |
 |---|---|
 | Artefacto | `knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json` |
-| Extractor | `pypdf/6.14.2` |
+| Extractor | `pypdf/6.21.4` |
 | Páginas | 10, todas `TEXT_EXTRACTED` |
 | Estado | `COMPLETE` |
 | Tamaño | 46.569 bytes |
 | SHA-256 del PDF | `4d2f5f31cf8824a4fd9df1214c791e8009d16a250990533b64047467d8459d5d` |
 | SHA-256 de páginas | `76a3bd4547c840d2e0f23eb2e6986c7c4c14f4eca528fe98ebd7e93d9ba658ae` |
-| SHA-256 del artefacto | `de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1` |
+| SHA-256 del artefacto | `8f8a7bf91593769e6698ef3aadc3f292451a415c1a67a593adb6bac782698f89` |
 
 Dos builds consecutivos produjeron los mismos tres hashes y los mismos bytes.
 El test del piloto reextrae el PDF y exige que el resultado serializado coincida
@@ -139,15 +139,15 @@ conteo y el hash anterior y posterior deben quedar explícitos en el manifiesto.
 
 ## Versión del extractor
 
-`pyproject.toml` fija `pypdf==6.14.2` a propósito. Cada artefacto registra
+`pyproject.toml` fija `pypdf==6.21.4` a propósito. Cada artefacto registra
 `extractor.version` y `validate_verbatim_artifact` reextrae el PDF con esa misma
 versión; con otra, la validación falla («extractor no coincide con la versión de
 validación») y los exports del caso piloto dejan de ser byte a byte idénticos.
 
 El 2026-10-21 se probó subir a 6.19.0 por avisos de `pip-audit` y fallaron 5 tests
 (`test_verbatim_pilot_artifact.py`, `test_export_jurisprudence_case*.py`); se
-volvió a 6.14.2. Los avisos de pypdf 6.14.2 (corregidos entre 6.15.0 y 6.19.0)
-quedan aceptados mientras tanto: los PDF de entrada son resoluciones oficiales
+volvió a 6.14.2. Se aceptó temporalmente el riesgo de esos avisos:
+los PDF de entrada son resoluciones oficiales
 descargadas por el propio pipeline, no subidas de terceros.
 
 Son todos de denegación de servicio (tiempo o memoria disparados con un PDF
@@ -157,6 +157,23 @@ Dependabot de pypdf 6.14.2 como *tolerable risk*: con el `ignore` de pypdf en
 `.github/dependabot.yml`, cada alerta abierta hacía fallar el security update job
 (`all_versions_ignored`). Si aparece una alerta nueva de pypdf que no sea DoS, se
 reevalúa en vez de descartarla.
+
+El 2026-11-15 se actualizó a **6.21.4**, la primera versión que corrige todos
+los avisos de pypdf abiertos en Dependabot en esa fecha. El
+[changelog oficial](https://pypdf.readthedocs.io/en/6.21.4/meta/CHANGELOG.html)
+no exige adaptar `PdfReader`, `pages` ni `extract_text()` como se usan aquí.
+Las deprecaciones de configuración, `inline_images` y `add_js` no afectan a
+estos adaptadores. La actualización conserva el pin exacto y exige regenerar
+la procedencia y los derivados con el pipeline; no se relaja la comprobación
+de versión ni se atribuye una revisión jurídica humana nueva.
+
+La reextracción completa comparó **106 PDF y 1.312 páginas**: los registros de
+página, incluidos `raw_page_text`, etiquetas, estados y hashes, son idénticos
+a los de 6.14.2. La recompilación usa las propuestas originales y comprueba que
+el contenido jurídico y sus revisiones no cambien. Solo se actualizan la versión
+del extractor y las huellas de procedencia que dependen de ella, incluidos casos,
+perfiles, índices, informes de build y estado del rollout. Los bundles OKF/2
+históricos conservan la versión con la que realmente se generaron.
 
 Para subir pypdf: cambiar el pin, reextraer cada artefacto con la nueva versión,
 revisar el diff de `raw_page_text` página a página (cualquier cambio de texto es

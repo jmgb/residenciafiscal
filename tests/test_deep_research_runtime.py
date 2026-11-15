@@ -99,7 +99,7 @@ def _bundle(tmp_path):
                 "document_id": "san-1-2020",
                 "source_file": "sentencias/SAN_1_2020.pdf",
                 "source_sha256": "a" * 64,
-                "extractor": {"name": "pypdf", "version": "6.14.2"},
+                "extractor": {"name": "pypdf", "version": "6.21.4"},
                 "page_count": 1,
                 "pages_sha256": _canonical_pages_sha256(pages),
                 "status": "COMPLETE",

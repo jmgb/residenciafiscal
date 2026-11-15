@@ -228,7 +228,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "0f9e2b0f529bc4b36701121832013811a118418f4b9aecd528c7e5bc5d7e323c",
+          "sha256": "540a4583f17bedcce26b3ee850e970a42215686132c7ff9c1b62742eb025069c",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/sts-115-2018.pages.json"
         },
         {
@@ -253,7 +253,7 @@
     "ecli": "ECLI:ES:TS:2018:115",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "sts-115-2018",

@@ -691,7 +691,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "de079bd93436d3c6c4d71604e9efe1573ecd041f14fb3fe52b9e34df38d0d5c1",
+          "sha256": "8f8a7bf91593769e6698ef3aadc3f292451a415c1a67a593adb6bac782698f89",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-1210-2023.pages.json"
         },
         {
@@ -721,7 +721,7 @@
     "ecli": "ECLI:ES:AN:2023:1210",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-1210-2023",

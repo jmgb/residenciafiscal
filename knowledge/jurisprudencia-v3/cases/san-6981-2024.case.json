@@ -305,7 +305,7 @@
       "input_artifacts": [
         {
           "kind": "VERBATIM",
-          "sha256": "0f75c1983373c5a31449d0a052b39becea32291e22fa48a5af372024805199a9",
+          "sha256": "277130bdd23db9ae449829d2035f63419401849d73b67abe6b802d03ba12295a",
           "source_path": "knowledge/jurisprudencia-v3/verbatim/san-6981-2024.pages.json"
         },
         {
@@ -330,7 +330,7 @@
     "ecli": "ES:AN:2024:6981",
     "extractor": {
       "name": "pypdf",
-      "version": "6.14.2"
+      "version": "6.21.4"
     },
     "is_tax_residence_case": true,
     "judgment_id": "san-6981-2024",
