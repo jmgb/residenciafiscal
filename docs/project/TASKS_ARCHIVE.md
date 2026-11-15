@@ -278,6 +278,16 @@ se ha movido aquí. El histórico específico del chat sigue en
 
 ## Cierres operativos del 15 de noviembre de 2026
 
+- El job npm de Dependabot fallaba con `NoChangeError` para `rolldown`: Vite
+  admite `~1.2.16`, pero el resolvedor seleccionaba 1.2.19, todavía dentro del
+  cooldown de siete días, después de considerar una versión menor externa a
+  esa línea. Las subidas menores de `rolldown` siguen ahora las de Vite; los
+  parches mantienen el cooldown y las actualizaciones de seguridad no quedan
+  filtradas. No se añade un pin ni un override al frontend.
+- La verificación pública posterior al deploy responde con el User-Agent
+  propio ya documentado en `CLOUDFLARE.md`: rutas, versión, corpus, robots y
+  sitemap correctos, y assets inexistentes con 404. El 403 previo correspondía
+  al bloqueo intencionado de clientes genéricos del WAF.
 - El PR #72 se cerró sin fusionar el 2026-11-09. El pendiente de decidirlo
   se retira del índice operativo; no se ha sustituido el SDK de Gemini.
 - Se documentó la actualización manual del informe semanal y se retiró la

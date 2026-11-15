@@ -98,6 +98,14 @@ renovar el certificado TLS de ambos nombres.
 
 ## Verificación después de un deploy
 
+Las comprobaciones HTTP del dominio canónico usan el User-Agent documentado
+en [`CLOUDFLARE.md`](CLOUDFLARE.md#verificación):
+`Mozilla/5.0 (compatible; residenciafiscal-verifier/1.0)`.
+El WAF bloquea intencionadamente clientes genéricos como `curl` y
+`python-requests`; un `403` con esos agentes no demuestra un fallo del deploy.
+Con el verificador propio deben responder las rutas públicas y `/version.json`
+debe identificar la revisión publicada. No hace falta modificar el WAF.
+
 Desde la raíz del repositorio:
 
 ```bash
@@ -112,7 +120,8 @@ netlify functions:build --src frontend/netlify/functions --functions "$build_dir
 
 En producción comprobar:
 
-1. `https://residenciafiscal.org/` responde `200` y `www` redirige al dominio primario.
+1. `https://residenciafiscal.org/` redirige con `301` a `/espana`, que responde
+   `200`, y `www` redirige al dominio primario.
 2. La navegación directa a una ruta SPA no devuelve `404`.
 3. `/data/corpus.json` contiene sentencias y no `[]`.
 4. DevTools → Network muestra `gtag/js` y peticiones de GA4.
