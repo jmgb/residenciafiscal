@@ -112,6 +112,17 @@ class ConsultaPostHogTests(unittest.TestCase):
         # El límite superior es exclusivo: el día siguiente al final de la ventana.
         self.assertIn("2026-08-03 00:00:00", query)
 
+    def test_la_consulta_filtra_bots_en_ventanas_e_historico_y_conserva_sin_user_agent(self):
+        current = MODULE.DateWindow(dt.date(2026, 7, 27), dt.date(2026, 8, 2))
+        previous = MODULE.DateWindow(dt.date(2026, 7, 20), dt.date(2026, 7, 26))
+        predicate = "(empty(coalesce(properties.$raw_user_agent, '')) OR NOT coalesce(properties.$virt_is_bot, false))"
+
+        query = MODULE.build_posthog_query("residenciafiscal.org", current, previous)
+
+        self.assertEqual(query.count(predicate), 2)
+        self.assertEqual(query.count("event = '$pageview'"), 2)
+        self.assertNotIn("rawUA()", query)
+
     def test_el_host_no_puede_inyectar_hogql(self):
         window = MODULE.DateWindow(dt.date(2026, 7, 27), dt.date(2026, 8, 2))
 
@@ -244,6 +255,7 @@ class MensajeTests(unittest.TestCase):
         )
         self.assertIn("Fuente: PostHog (residenciafiscal.org).", message)
         self.assertNotIn("GA4", message)
+        self.assertIn("tras filtro de automatización probable", message)
 
     def test_el_singular_concuerda_en_las_tres_magnitudes(self):
         singular = posthog(
@@ -484,6 +496,10 @@ class HistoricoTests(unittest.TestCase):
         self.assertEqual(posthog_record["pageviews"], 7)
         self.assertEqual(posthog_record["users"], 1)
         self.assertEqual(posthog_record["returning_share_pct"], 0.0)
+        self.assertEqual(
+            posthog_record["automation_filter"]["predicate"],
+            "(empty(coalesce(properties.$raw_user_agent, '')) OR NOT coalesce(properties.$virt_is_bot, false))",
+        )
 
     def test_el_bloque_ga4_desglosa_propiedad_no_clasificados_y_totales(self):
         ga4 = self.registro()["ga4"]

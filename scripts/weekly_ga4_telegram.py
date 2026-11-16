@@ -40,6 +40,11 @@ SERVICE_NAME = "residenciafiscal-weekly-ga4-telegram.service"
 DEFAULT_HISTORY_DIR = PROJECT_DIR / "reports" / "weekly_ga4_telegram"
 POSTHOG_TRAFFIC_HOST = "residenciafiscal.org"
 POSTHOG_QUERY_TIMEOUT_SECONDS = 90
+POSTHOG_AUTOMATION_FILTER = (
+    "(empty(coalesce(properties.$raw_user_agent, '')) OR "
+    "NOT coalesce(properties.$virt_is_bot, false))"
+)
+POSTHOG_AUTOMATION_NOTE = "PostHog: métricas tras filtro de automatización probable."
 TELEGRAM_TIMEOUT_SECONDS = 30
 
 
@@ -214,6 +219,7 @@ def build_posthog_query(host: str, current: DateWindow, previous: DateWindow) ->
         " FROM events"
         " WHERE event = '$pageview'"
         f" AND properties.$host = '{safe_host}'"
+        f" AND {POSTHOG_AUTOMATION_FILTER}"
         " GROUP BY person_id"
         ")"
         " SELECT v.period AS period,"
@@ -229,6 +235,7 @@ def build_posthog_query(host: str, current: DateWindow, previous: DateWindow) ->
         " FROM events"
         " WHERE event = '$pageview'"
         f" AND properties.$host = '{safe_host}'"
+        f" AND {POSTHOG_AUTOMATION_FILTER}"
         f" AND timestamp >= toDateTime('{previous_start}')"
         f" AND timestamp < toDateTime('{exclusive_end}')"
         ") AS v"
@@ -574,6 +581,7 @@ def build_message(
         lines.append(build_source_line("GA4", current, previous))
         sources.append(f"GA4 ({', '.join(f'propiedad {row.property_id}' for row in ga4_rows)})")
     lines.append(build_source_line("PostHog", posthog.current, posthog.previous))
+    lines.append(POSTHOG_AUTOMATION_NOTE)
     sources.append(f"PostHog ({posthog.host})")
     if search_console is not None:
         lines.append(build_gsc_line(search_console))
@@ -662,7 +670,11 @@ def build_history_record(
         "generated_for": run_date.isoformat(),
         "window": window_to_dict(current_window),
         "previous_window": window_to_dict(previous_window),
-        "posthog": {"host": posthog.host, **period_to_dict(posthog.current, posthog.previous)},
+        "posthog": {
+            "host": posthog.host,
+            "automation_filter": {"predicate": POSTHOG_AUTOMATION_FILTER},
+            **period_to_dict(posthog.current, posthog.previous),
+        },
         "ga4": ga4,
         "search_console": search_console_to_dict(search_console),
     }

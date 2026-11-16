@@ -257,3 +257,19 @@ máquina que ejecuta el timer.
 Las claves (`POSTHOG_*`, `TELEGRAM_*`) están únicamente en `.env`, que tampoco se
 versiona. El script **nunca hace `source` del `.env`**: lo parsea línea a línea,
 igual que los scripts de backup, para que un valor con `$(...)` no se ejecute.
+
+## Filtro común de automatización (2026-11-16)
+
+El informe consulta la clasificación nativa de PostHog (`$virt_is_bot`), incluidas
+las reglas personalizadas compartidas de `~/ai_projects/vps-scripts/common/posthog-traffic-policy/`.
+Excluye los pageviews clasificados como automatización cuando tienen
+`$raw_user_agent`; conserva los eventos sin ese dato. El mismo predicado se
+aplica a ambas ventanas y al histórico usado para calcular recurrencia.
+El mensaje indica «tras filtro de automatización probable» y el JSON conserva
+el predicado. Es una estimación, sin certificar que cada visitante sea humano.
+
+La configuración nativa está aplicada en los seis proyectos y 95 insights de
+PostHog; sus eventos originales se conservan. El cambio de este script está
+validado localmente y pendiente de promoción al runtime que ejecuta el timer.
+El horario, el canal, los interruptores y el supervisor existentes se mantienen;
+no se enviaron notificaciones durante la validación.
