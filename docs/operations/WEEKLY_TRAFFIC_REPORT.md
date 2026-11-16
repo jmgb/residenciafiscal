@@ -200,23 +200,15 @@ total se lee sin dimensión y el desglose solo aporta los recurrentes.
 
 ### Actualizar el código del informe
 
-Tras revisar los cambios y sus checks, actualizar manualmente el checkout al
-commit validado. Sustituir `SHA_VALIDADO` por ese commit; el comando no elige
-automáticamente la última revisión de `main`:
+Desde el 16-11-2026 la unidad usa una release root-owned fijada por SHA.
+Publicar código no modifica por sí solo ese runtime. Para promover otra versión,
+crear un directorio nuevo bajo `/usr/local/libexec/residenciafiscal-weekly-traffic/`
+con el script y el runner del commit revisado, `SOURCE_COMMIT` y `SHA256SUMS`.
+Enlazar la configuración, credenciales e histórico existentes sin copiarlos ni
+cambiar valores. Validar con `--dry-run --no-history` desde ese directorio como
+`ubuntu`; actualizar únicamente `60-traffic-release.conf`, hacer `daemon-reload`
+y comprobar el arranque y el timer. Conservar la versión anterior.
 
-```bash
-ssh alfredo-admin 'sudo -n -u ubuntu -H bash -s' <<'REMOTE'
-set -euo pipefail
-cd ~/residenciafiscal
-test "$(git branch --show-current)" = main
-test -z "$(git status --porcelain --untracked-files=no)"
-git fetch origin main
-validated_commit=SHA_VALIDADO
-git merge-base --is-ancestor "$validated_commit" origin/main
-git merge --ff-only "$validated_commit"
-"$HOME/.local/bin/uv" sync --locked
-REMOTE
-```
 
 Conservar el drop-in que desactiva la autoactualización. Si cambian las units,
 reinstalarlas según el comando siguiente. Un cambio solo en el runner no
@@ -270,6 +262,16 @@ el predicado. Es una estimación, sin certificar que cada visitante sea humano.
 
 La configuración nativa está aplicada en los seis proyectos y 95 insights de
 PostHog; sus eventos originales se conservan. El cambio de este script está
-validado localmente y pendiente de promoción al runtime que ejecuta el timer.
+publicado y promovido al runtime que ejecuta el timer.
 El horario, el canal, los interruptores y el supervisor existentes se mantienen;
 no se enviaron notificaciones durante la validación.
+
+### Promoción del 2026-11-16
+
+Código publicado `96cb5b9`, runtime `/usr/local/libexec/residenciafiscal-weekly-traffic/96cb5b9a9df8adf1f426346a6d8a83c9197a51d8`.
+El nuevo `60-traffic-release.conf` fija directorio y runner; conserva la
+restricción de no autoactualizar y los destinos originales de `.env`,
+credenciales e histórico. Dry-run real correcto, sin escritura de histórico ni
+envío. Timer intacto para el 23-11 a las 09:10 Madrid, con supervisor existente.
+Recibo: `/var/lib/posthog-traffic-policy/deployments/20261116/`. Rollback con servicio inactivo: retirar solo ese
+drop-in nuevo y hacer `daemon-reload`; conservar las releases y el histórico.
