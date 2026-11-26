@@ -43,6 +43,14 @@ set +a
 SSH_TARGET="$ALFREDO_VPS_SSH_USER@$ALFREDO_VPS_HOST"
 SSH_OPTS=(-o ConnectTimeout=10 -p "$ALFREDO_VPS_SSH_PORT")
 SCP_OPTS=(-o ConnectTimeout=10 -P "$ALFREDO_VPS_SSH_PORT")
+# Desde el 2 nov 2026 ubuntu ya no entra por SSH en Alfredo: con
+# ALFREDO_VPS_SSH_ALIAS (el perfil administrativo de ~/.ssh/config, con sudo -n)
+# se entra por ese perfil, igual que scripts/vps_deploy.sh de pymechat-alfredo.
+if [ -n "${ALFREDO_VPS_SSH_ALIAS:-}" ]; then
+    SSH_TARGET="$ALFREDO_VPS_SSH_ALIAS"
+    SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=10)
+    SCP_OPTS=(-o BatchMode=yes -o ConnectTimeout=10)
+fi
 
 bundle_id="$(PYTHONPATH=src uv run python -c 'import json, sys, zipfile; print(json.loads(zipfile.ZipFile(sys.argv[1]).read("MANIFEST.json"))["bundle_id"])' "$BUNDLE")"
 if [[ ! "$bundle_id" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$ ]] \
@@ -62,7 +70,7 @@ scp "${SCP_OPTS[@]}" "$CODEX_RUNTIME_SOURCE" "$SSH_TARGET:$REMOTE_CODEX_RUNTIME"
 scp "${SCP_OPTS[@]}" "$VERIFIER_RUNTIME_SOURCE" "$SSH_TARGET:$REMOTE_VERIFIER_RUNTIME"
 scp "${SCP_OPTS[@]}" "$REPO_ROOT/scripts/deep_research_bundle_install.py" "$SSH_TARGET:$REMOTE_SCRIPT"
 printf -v REMOTE_INSTALL_COMMAND '%q ' \
-    sudo python3 "$REMOTE_SCRIPT" \
+    sudo -n python3 "$REMOTE_SCRIPT" \
     --bundle "$REMOTE_BUNDLE" \
     --root "$REMOTE_ROOT" \
     --bundle-id "$bundle_id" \
