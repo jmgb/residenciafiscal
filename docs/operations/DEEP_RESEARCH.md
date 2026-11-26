@@ -25,9 +25,9 @@ puede crear primero una conversación sin protección.
 | Elemento | Valor |
 |---|---|
 | Perfil | `residenciafiscal-deep-research-v2` |
-| Modelo | `gpt-6-luna` |
-| Esfuerzo | `max` (hasta el 2026-10-23, `high`) |
-| Bundle | `rollout-106/3` (hasta el 2026-10-23, `rollout-106/2`) |
+| Modelo | `gpt-6.2-sol` (hasta el 2026-11-26, `gpt-6-luna`) |
+| Esfuerzo | `high` (con Luna: `max` desde el 2026-10-23, `high` antes) |
+| Bundle | `rollout-106/4` (hasta el 2026-11-26, `rollout-106/3`; hasta el 2026-10-23, `rollout-106/2`) |
 | Borrador de Codex | `residenciafiscal-deep-research-draft/2` |
 | Resultado confiable | `residenciafiscal-deep-research-output/2` |
 | Fuentes | JSON local únicamente |
@@ -48,6 +48,17 @@ también fuera del modelo. Las tarifas y su `pricing_version` se generan desde e
 catálogo versionado de `llm_gateway` y viajan dentro del bundle; el runtime no
 mantiene ninguna tabla de precios propia. Si no hay uso medible, el coste queda
 `UNAVAILABLE`, nunca como cero.
+
+El 2026-11-26 el contrato pasó a `gpt-6.2-sol` + `high` con `rollout-106/4`, por la
+decisión de no usar `gpt-6-luna` en el CLI de Codex. El runtime corre con
+`--ignore-user-config` y no lee el `config.toml` del contenedor, así que el modelo es una
+copia a mano en los cuatro sitios del contrato, como en las demás identidades aisladas
+(`doctor/docs/AGENT_PROVIDER_CHAIN.md`, «Modelos»). `rollout-106/4` lleva la tarifa de Sol
+del catálogo `2026-11-21.1` de `neutral-llm-gateway` 0.25.0 (2,00/10,00 USD por Mtok; el
+bundle no recoge el tramo de más de 272k de contexto). El callback acepta pares
+modelo/esfuerzo (`DEEP_RESEARCH_CALLBACK_CONTRACTS`) y Alfredo pares
+modelo/esfuerzo/bundle, cada uno con su tope de coste: Sol cuesta 20 veces Luna, y el tope
+de 0,20 USD de Luna habría cortado casi todos los jobs reales.
 
 `rollout-106/3` (2026-10-23) sustituye a `rollout-106/2`, cuya tarifa declaraba
 `gpt-5.6-luna`: desde el paso a `gpt-6-luna` el runtime abortaba antes de lanzar
@@ -196,7 +207,7 @@ En Netlify `production`, sin prefijo `VITE_` salvo la bandera de build:
 | `ALFREDO_JOBS_URL` | URL HTTPS de `/jobs` de Alfredo |
 | `ALFREDO_HMAC_SECRET` | secreto compartido del contrato VA–Alfredo |
 | `DEEP_RESEARCH_CALLBACK_URL` | `https://residenciafiscal.org/api/deep-research-callback` |
-| `DEEP_RESEARCH_BUNDLE_ID` | `rollout-106/3` |
+| `DEEP_RESEARCH_BUNDLE_ID` | `rollout-106/4` |
 | `VITE_DEEP_RESEARCH_ENABLED` | `true` para mostrar la UI |
 
 `SUPABASE_URL` y `SUPABASE_SECRET_KEY` son obligatorias porque las RPC de jobs
@@ -319,9 +330,9 @@ determinista antes de publicar cualquier texto.
 
 ## Verificación operativa tras un cambio
 
-1. Comprobar el manifiesto instalado: bundle `rollout-106/3`, formato
+1. Comprobar el manifiesto instalado: bundle `rollout-106/4`, formato
    `json-only` y hashes válidos.
-2. Confirmar en Alfredo el perfil v2, `gpt-6-luna`, esfuerzo `max` y las tres
+2. Confirmar en Alfredo el perfil v2, `gpt-6.2-sol`, esfuerzo `high` y las tres
    herramientas exactas.
 3. Lanzar un job que requiera una cita y revisar que el audit contenga
    `search_corpus` y `read_verbatim_page` completadas.

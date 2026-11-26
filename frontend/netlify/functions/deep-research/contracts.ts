@@ -2,15 +2,25 @@ export const DEEP_RESEARCH_PROFILE = 'residenciafiscal-deep-research-v2';
 export const DEEP_RESEARCH_DRAFT_SCHEMA = 'residenciafiscal-deep-research-draft/2';
 export const DEEP_RESEARCH_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/2';
 export const DEEP_RESEARCH_LEGACY_OUTPUT_SCHEMA = 'residenciafiscal-deep-research-output/1';
-export const DEEP_RESEARCH_MODEL = 'gpt-6-luna';
-export const DEEP_RESEARCH_REASONING_EFFORT = 'max';
-// Resultados guardados antes del 2026-10-23 declaran `high`: siguen siendo legibles.
-export type DeepResearchReasoningEffort = 'high' | typeof DEEP_RESEARCH_REASONING_EFFORT;
-// El callback acepta solo este valor. Cambiarlo exige una transición: añadir el
-// nuevo aquí y en Alfredo, desplegar, y retirar el antiguo cuando no quede ningún
-// job suyo en vuelo (deadline de 900 s). Ver docs/operations/DEEP_RESEARCH.md.
-export const DEEP_RESEARCH_CALLBACK_REASONING_EFFORTS: readonly DeepResearchReasoningEffort[] = [
-  DEEP_RESEARCH_REASONING_EFFORT,
+// Copia a mano del modelo de Codex (decisión del 2026-11-26), igual que
+// src/deep_research_policy.py y Alfredo.
+export const DEEP_RESEARCH_MODEL = 'gpt-6.2-sol';
+export const DEEP_RESEARCH_REASONING_EFFORT = 'high';
+// Resultados guardados con Luna declaran `max` (desde el 2026-10-23) o `high`
+// (antes): siguen siendo legibles.
+export type DeepResearchReasoningEffort = 'high' | 'max';
+export interface DeepResearchCallbackContract {
+  model: string;
+  reasoningEffort: DeepResearchReasoningEffort;
+}
+// El callback acepta solo estos pares. Cambiar modelo o esfuerzo exige una
+// transición: Alfredo admite los dos, Netlify envía el nuevo y su callback acepta
+// los dos, y el antiguo se retira cuando no quede ningún job suyo en vuelo
+// (deadline de 900 s). Ver docs/operations/DEEP_RESEARCH.md.
+export const DEEP_RESEARCH_CALLBACK_CONTRACTS: readonly DeepResearchCallbackContract[] = [
+  { model: DEEP_RESEARCH_MODEL, reasoningEffort: DEEP_RESEARCH_REASONING_EFFORT },
+  // Transición del 2026-11-26: se retira cuando no quede ningún job de Luna en vuelo.
+  { model: 'gpt-6-luna', reasoningEffort: 'max' },
 ];
 export const DEEP_RESEARCH_ALLOWED_TOOLS = [
   'corpus.search_corpus',

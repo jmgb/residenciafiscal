@@ -767,14 +767,14 @@ wheels = [
 
 [[package]]
 name = "neutral-llm-gateway"
-version = "0.22.0"
+version = "0.25.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/be/a5/8dc6bcb584b908f6ac19aa70c1f77ccd5e4ffb29c561213096b6edb6e34e/neutral_llm_gateway-0.22.0.tar.gz", hash = "sha256:62e6d6ed4ace545b2a599ed67a120b7f5189111f82341204722719d82aab24ff", size = 309815, upload-time = "2026-11-13T16:15:48.363Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d2/64/901d8a4b1f61be19996dce578b8cef5999a2788a3087d1e6f83692ac8203/neutral_llm_gateway-0.25.0.tar.gz", hash = "sha256:4302e599030727d4e3711cb1ed61b179529ed8671f3013739fe0936fd32c5a6a", size = 333254, upload-time = "2026-11-21T09:23:32.315Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ce/bd/9f1fe7d1e99a389e055b243f7388a8371bfdae65ccefd9331ece479fd97c/neutral_llm_gateway-0.22.0-py3-none-any.whl", hash = "sha256:23c76c3446661f47895ea57bf3d6e24ce6547312d55c0d90a66faf3a37a86abd", size = 114038, upload-time = "2026-11-13T16:15:46.822Z" },
+    { url = "https://files.pythonhosted.org/packages/dc/5a/5ffcec9c3eb84439da9b39ef5d2347bc64d977556fbfc78cfebd27392079/neutral_llm_gateway-0.25.0-py3-none-any.whl", hash = "sha256:16ef517109c81b86a6d6fe1b1e74a57f21f32f7b19c7a8ac096e4053c669617a", size = 124522, upload-time = "2026-11-21T09:23:30.735Z" },
 ]
 
 [package.optional-dependencies]
@@ -1161,7 +1161,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.141.1,<1.0.0" },
     { name = "google-genai", specifier = ">=2.20.0,<3.0.0" },
     { name = "httpx2", specifier = ">=2.12.0,<3.0.0" },
-    { name = "neutral-llm-gateway", extras = ["gemini", "groq", "openai", "openrouter"], specifier = "==0.22.0" },
+    { name = "neutral-llm-gateway", extras = ["gemini", "groq", "openai", "openrouter"], specifier = "==0.25.0" },
     { name = "pydantic", specifier = ">=2.13.4,<3.0.0" },
     { name = "pypdf", specifier = "==6.21.4" },
     { name = "python-dotenv", specifier = ">=1.2.3,<2.0.0" },

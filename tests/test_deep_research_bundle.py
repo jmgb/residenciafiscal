@@ -21,7 +21,7 @@ def test_bundle_pricing_does_not_follow_the_independent_ab_chat_model(monkeypatc
 
         pricing = json.loads(reloaded._render_model_pricing())
 
-        assert pricing["model"] == "gpt-6-luna"
+        assert pricing["model"] == "gpt-6.2-sol"
     finally:
         monkeypatch.undo()
         importlib.reload(deep_research_bundle)
@@ -134,17 +134,17 @@ def test_bundle_contiene_solo_material_permitido_y_hashes_verificables(tmp_path:
             "retrieval/rollout-106.corpus.json",
             "jurisdicciones/san-1-2020.roles.json",
         }
-        assert archived_manifest["bundle_id"] == "rollout-106/3"
+        assert archived_manifest["bundle_id"] == "rollout-106/4"
         assert archived_manifest["scope"]["format"] == "json-only"
         pricing = json.loads(archive.read("metadata/model-pricing.json"))
         from llm_gateway.models import CATALOG_VERSION, lookup_model
 
-        model = lookup_model("gpt-6-luna")
+        model = lookup_model("gpt-6.2-sol")
         assert model is not None
         assert pricing == {
             "schema_version": "residenciafiscal-model-pricing/1",
             "catalog_version": CATALOG_VERSION,
-            "model": "gpt-6-luna",
+            "model": "gpt-6.2-sol",
             "input_usd_per_mtok": str(model.input_usd_per_mtok),
             "output_usd_per_mtok": str(model.output_usd_per_mtok),
         }

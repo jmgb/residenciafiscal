@@ -1,7 +1,6 @@
 import { verifyAlfredoSignature } from './deep-research/alfredo-client';
 import {
-  DEEP_RESEARCH_CALLBACK_REASONING_EFFORTS,
-  DEEP_RESEARCH_MODEL,
+  DEEP_RESEARCH_CALLBACK_CONTRACTS,
   DEEP_RESEARCH_OUTPUT_SCHEMA,
   type DeepResearchOutput,
   type DeepResearchReasoningEffort,
@@ -31,8 +30,10 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const validHash = (value: unknown): value is string =>
   typeof value === 'string' && /^[0-9a-f]{64}$/i.test(value);
 
-const acceptedEffort = (value: unknown): value is DeepResearchReasoningEffort =>
-  DEEP_RESEARCH_CALLBACK_REASONING_EFFORTS.some((effort) => effort === value);
+const acceptedContract = (model: unknown, effort: unknown): effort is DeepResearchReasoningEffort =>
+  DEEP_RESEARCH_CALLBACK_CONTRACTS.some(
+    (contract) => contract.model === model && contract.reasoningEffort === effort
+  );
 
 const validMeasuredCost = (cost: unknown, measurement: unknown): boolean => {
   if (measurement === 'UNAVAILABLE') return cost === null || cost === undefined;
@@ -47,6 +48,7 @@ const validMeasuredCost = (cost: unknown, measurement: unknown): boolean => {
 const parseOutput = (
   value: unknown,
   jobId: string,
+  model: string,
   reasoningEffort: DeepResearchReasoningEffort
 ): DeepResearchOutput | null => {
   if (!isRecord(value)) return null;
@@ -65,7 +67,7 @@ const parseOutput = (
     value.pricing_version.trim().length < 1 ||
     typeof value.model !== 'string' ||
     value.model.trim().length < 1 ||
-    value.model !== DEEP_RESEARCH_MODEL ||
+    value.model !== model ||
     value.reasoning_effort !== reasoningEffort ||
     typeof value.latency_ms !== 'number' ||
     value.latency_ms < 0 ||
@@ -151,7 +153,7 @@ const parseOutput = (
     costMicrousd: typeof value.cost_microusd === 'number' ? value.cost_microusd : null,
     costMeasurement: value.cost_measurement as DeepResearchOutput['costMeasurement'],
     pricingVersion: value.pricing_version,
-    model: DEEP_RESEARCH_MODEL,
+    model,
     reasoningEffort,
     latencyMs: value.latency_ms,
   };
@@ -192,14 +194,15 @@ export const createDeepResearchCallbackHandler =
     let output: DeepResearchOutput | null = null;
     if (
       payload.status === 'completed' &&
-      payload.model === DEEP_RESEARCH_MODEL &&
-      acceptedEffort(payload.reasoning_effort) &&
+      typeof payload.model === 'string' &&
+      acceptedContract(payload.model, payload.reasoning_effort) &&
       typeof payload.final_text === 'string'
     ) {
       try {
         output = parseOutput(
           JSON.parse(payload.final_text),
           payload.job_id,
+          payload.model,
           payload.reasoning_effort
         );
       } catch {
