@@ -58,7 +58,12 @@ def dispatch_tool(repository: CorpusRepository, name: str, arguments: object) ->
     if not isinstance(arguments, dict):
         raise ValueError("tool arguments must be an object")
     if name == "search_corpus":
-        return repository.search(arguments.get("query", ""), limit=arguments.get("limit", 8))
+        # Los modelos ignoran el máximo del schema: un `limit` fuera de rango se acota
+        # en vez de fallar, porque cualquier llamada fallida invalida el job entero.
+        limit = arguments.get("limit", 6)
+        if not isinstance(limit, int) or isinstance(limit, bool):
+            limit = 6
+        return repository.search(arguments.get("query", ""), limit=min(max(limit, 1), 6))
     if name == "read_case":
         return repository.read_case(arguments.get("judgment_id", ""))
     if name == "read_verbatim_page":

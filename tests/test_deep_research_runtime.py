@@ -908,6 +908,26 @@ def test_corpus_default_search_returns_at_most_six_candidates():
     assert len(result["results"]) == 6
 
 
+def test_mcp_search_clamps_the_limit_instead_of_failing_the_job():
+    # Un search_corpus fallido tumba el job entero en el verificador. Luna y Sol
+    # piden `limit` 10 pese al máximo 6 del schema (smoke del 2026-11-26).
+    repository = CorpusRepository(Path("knowledge/jurisprudencia-v3"))
+
+    for arguments in (
+        {"query": "residencia fiscal certificado", "limit": 10},
+        {"query": "residencia fiscal certificado"},
+    ):
+        assert len(dispatch_tool(repository, "search_corpus", arguments)["results"]) == 6
+    assert (
+        len(
+            dispatch_tool(
+                repository, "search_corpus", {"query": "residencia fiscal certificado", "limit": 0}
+            )["results"]
+        )
+        == 1
+    )
+
+
 def test_mcp_exposes_case_and_verbatim_reads_but_no_generic_file_access(tmp_path):
     repository = CorpusRepository(_bundle(tmp_path))
 
