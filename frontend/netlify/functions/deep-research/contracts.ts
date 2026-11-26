@@ -19,8 +19,6 @@ export interface DeepResearchCallbackContract {
 // (deadline de 900 s). Ver docs/operations/DEEP_RESEARCH.md.
 export const DEEP_RESEARCH_CALLBACK_CONTRACTS: readonly DeepResearchCallbackContract[] = [
   { model: DEEP_RESEARCH_MODEL, reasoningEffort: DEEP_RESEARCH_REASONING_EFFORT },
-  // Transición del 2026-11-26: se retira cuando no quede ningún job de Luna en vuelo.
-  { model: 'gpt-6-luna', reasoningEffort: 'max' },
 ];
 export const DEEP_RESEARCH_ALLOWED_TOOLS = [
   'corpus.search_corpus',

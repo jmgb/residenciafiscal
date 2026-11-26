@@ -285,19 +285,14 @@ describe('deep research HTTP contract', () => {
         result: expect.objectContaining({ model: 'gpt-6.2-sol', reasoningEffort: 'high' }),
       })
     );
-    // Transición del 2026-11-26: los jobs de Luna aún en vuelo siguen entrando.
-    expect(await callback('max', 'max', 'gpt-6-luna')).toEqual(
-      expect.objectContaining({
-        status: 'completed',
-        result: expect.objectContaining({ model: 'gpt-6-luna', reasoningEffort: 'max' }),
-      })
-    );
     for (const [payloadEffort, resultEffort, model, resultModel] of [
       ['max', 'max', 'gpt-6.2-sol', 'gpt-6.2-sol'],
       ['high', 'high', 'gpt-6-luna', 'gpt-6-luna'],
       ['medium', 'medium', 'gpt-6.2-sol', 'gpt-6.2-sol'],
       ['high', 'max', 'gpt-6.2-sol', 'gpt-6.2-sol'],
       ['high', 'high', 'gpt-6.2-sol', 'gpt-6-luna'],
+      // Luna se retiró tras la transición del 2026-11-26.
+      ['max', 'max', 'gpt-6-luna', 'gpt-6-luna'],
     ]) {
       expect(await callback(payloadEffort, resultEffort, model, resultModel)).toEqual(
         expect.objectContaining({ status: 'error', result: null })

@@ -58,7 +58,12 @@ del catálogo `2026-11-21.1` de `neutral-llm-gateway` 0.25.0 (2,00/10,00 USD por
 bundle no recoge el tramo de más de 272k de contexto). El callback acepta pares
 modelo/esfuerzo (`DEEP_RESEARCH_CALLBACK_CONTRACTS`) y Alfredo pares
 modelo/esfuerzo/bundle, cada uno con su tope de coste: Sol cuesta 20 veces Luna, y el tope
-de 0,20 USD de Luna habría cortado casi todos los jobs reales.
+de 0,20 USD de Luna habría cortado casi todos los jobs reales. El par de Luna se retiró
+ese mismo día, pasados los 900 s desde que Netlify empezó a enviar el de Sol.
+
+Al preparar el cambio salió que `search_corpus` fallaba cuando el modelo pedía un `limit`
+mayor que 6 (lo hacían Luna y Sol), y que cualquier llamada fallida invalida el job.
+Desde ese día el MCP acota el `limit`.
 
 `rollout-106/3` (2026-10-23) sustituye a `rollout-106/2`, cuya tarifa declaraba
 `gpt-5.6-luna`: desde el paso a `gpt-6-luna` el runtime abortaba antes de lanzar
