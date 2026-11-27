@@ -148,3 +148,13 @@ def test_el_resultado_exige_coherencia_entre_coste_y_medicion(
             cost_microusd=cost_microusd,
             cost_measurement=measurement,
         )
+
+
+def test_limits_admit_the_sol_notional_quota_cap_of_four_dollars() -> None:
+    from pydantic import ValidationError
+
+    from deep_research_contracts import DeepResearchLimits
+
+    assert DeepResearchLimits(max_cost_microusd=4_000_000).max_cost_microusd == 4_000_000
+    with pytest.raises(ValidationError):
+        DeepResearchLimits(max_cost_microusd=4_000_001)

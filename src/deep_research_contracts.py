@@ -34,7 +34,9 @@ class DeepResearchLimits(JurisprudenceCaseModel):
     max_tool_calls: Annotated[int, Field(ge=1, le=200)] = 80
     max_documents: Annotated[int, Field(ge=1, le=106)] = 12
     max_pages: Annotated[int, Field(ge=1, le=1_200)] = 120
-    max_cost_microusd: Annotated[int, Field(ge=1, le=2_000_000)] = 200_000
+    # Límite nocional de cuota de la suscripción de Codex, calculado con la tarifa
+    # pública del catálogo: no es un gasto real (deep research nunca va por la API).
+    max_cost_microusd: Annotated[int, Field(ge=1, le=4_000_000)] = 200_000
 
 
 class DeepResearchJob(JurisprudenceCaseModel):

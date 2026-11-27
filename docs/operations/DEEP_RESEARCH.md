@@ -58,7 +58,10 @@ del catálogo `2026-11-21.1` de `neutral-llm-gateway` 0.25.0 (2,00/10,00 USD por
 bundle no recoge el tramo de más de 272k de contexto). El callback acepta pares
 modelo/esfuerzo (`DEEP_RESEARCH_CALLBACK_CONTRACTS`) y Alfredo pares
 modelo/esfuerzo/bundle, cada uno con su tope de coste: Sol cuesta 20 veces Luna, y el tope
-de 0,20 USD de Luna habría cortado casi todos los jobs reales. El par de Luna se retiró
+de 0,20 USD de Luna habría cortado casi todos los jobs reales. Ese tope es un límite nocional de cuota de
+la suscripción, calculado con la tarifa pública, y no un gasto real: deep research va
+siempre por la suscripción de Codex (CLI con OAuth), nunca por la API. La tarifa del
+bundle solo sirve para ese cálculo. El par de Luna se retiró
 ese mismo día, pasados los 900 s desde que Netlify empezó a enviar el de Sol.
 
 Al preparar el cambio salió que `search_corpus` fallaba cuando el modelo pedía un `limit`
